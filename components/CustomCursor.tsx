@@ -1,63 +1,70 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 const CustomCursor: React.FC = () => {
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const followerRef = useRef<HTMLDivElement>(null);
   const [isHovering, setIsHovering] = useState(false);
+  const cursorSize = isHovering ? 60 : 20;
+
+  const mouse = {
+    x: useMotionValue(0),
+    y: useMotionValue(0)
+  };
+
+  const smoothOptions = { damping: 20, stiffness: 300, mass: 0.5 };
+  const smoothMouse = {
+    x: useSpring(mouse.x, smoothOptions),
+    y: useSpring(mouse.y, smoothOptions)
+  };
+
+  const manageMouseMove = (e: MouseEvent) => {
+    const { clientX, clientY } = e;
+    mouse.x.set(clientX - cursorSize / 2);
+    mouse.y.set(clientY - cursorSize / 2);
+  };
+
+  const handleMouseOver = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const isClickable = 
+      target.tagName === 'BUTTON' || 
+      target.tagName === 'A' || 
+      target.closest('button') || 
+      target.closest('a') ||
+      target.getAttribute('role') === 'button' ||
+      target.classList.contains('cursor-pointer');
+    
+    setIsHovering(!!isClickable);
+  };
 
   useEffect(() => {
-    const cursor = cursorRef.current;
-    const follower = followerRef.current;
-
-    if (!cursor || !follower) return;
-
-    const moveCursor = (e: MouseEvent) => {
-      // Main dot follows instantly
-      cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-      
-      // Follower has a slight delay/physics (simulated via CSS transition)
-      follower.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-    };
-
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      // Expand cursor when hovering interactive elements
-      const isClickable = 
-        target.tagName === 'BUTTON' || 
-        target.tagName === 'A' || 
-        target.closest('button') || 
-        target.closest('a') ||
-        target.getAttribute('role') === 'button' ||
-        target.classList.contains('cursor-pointer');
-      
-      setIsHovering(!!isClickable);
-    };
-
-    window.addEventListener('mousemove', moveCursor);
+    window.addEventListener('mousemove', manageMouseMove);
     window.addEventListener('mouseover', handleMouseOver);
-
     return () => {
-      window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('mousemove', manageMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, []);
+  }, [isHovering, cursorSize]); // Re-bind listener when cursor size changes to update offset correctly
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[100] hidden lg:block">
-      {/* Main Dot */}
-      <div 
-        ref={cursorRef}
-        className="fixed top-0 left-0 w-2 h-2 bg-yellow-400 rounded-full -mt-1 -ml-1 mix-blend-difference"
-      />
-      
-      {/* Trailing Ring */}
-      <div 
-        ref={followerRef}
-        className={`fixed top-0 left-0 w-8 h-8 border border-yellow-400 rounded-full -mt-4 -ml-4 transition-all duration-200 ease-out mix-blend-difference ${
-          isHovering ? 'scale-150 bg-yellow-400/20 border-transparent' : 'scale-100 opacity-50'
+      <motion.div
+        style={{
+          left: smoothMouse.x,
+          top: smoothMouse.y,
+        }}
+        animate={{
+          width: cursorSize,
+          height: cursorSize,
+        }}
+        className={`fixed rounded-full border border-yellow-400 mix-blend-difference transition-colors duration-200 ${
+          isHovering ? 'bg-yellow-400/20 border-transparent backdrop-blur-[1px]' : ''
         }`}
-      />
+      >
+        {/* Center Dot */}
+        {!isHovering && (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-yellow-400 rounded-full" />
+        )}
+      </motion.div>
     </div>
   );
 };

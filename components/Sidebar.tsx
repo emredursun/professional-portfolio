@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { PERSONAL_INFO, SOCIAL_LINKS } from '../constants.tsx';
 import ThemeSwitcher from './ThemeSwitcher.tsx';
+import Magnetic from './Magnetic.tsx';
 import { Page } from '../types.ts';
 
 interface SidebarProps {
@@ -25,20 +26,22 @@ const NavButton: React.FC<{
   onNavigate: (page: Page) => void;
 }> = React.memo(({ page, isActive, onNavigate }) => (
     <li>
-        <button
-            onClick={() => onNavigate(page.label)}
-            className={`w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all duration-300 font-semibold group relative overflow-hidden
-                ${isActive
-                    ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20'
-                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'
-                }`
-            }
-        >
-            <span className={`text-xl w-6 flex justify-center transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
-                {page.icon}
-            </span>
-            <span className="relative z-10 tracking-wide text-sm">{page.label}</span>
-        </button>
+        <Magnetic>
+            <button
+                onClick={() => onNavigate(page.label)}
+                className={`w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all duration-300 font-semibold group relative overflow-hidden
+                    ${isActive
+                        ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20'
+                        : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'
+                    }`
+                }
+            >
+                <span className={`text-xl w-6 flex justify-center transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
+                    {page.icon}
+                </span>
+                <span className="relative z-10 tracking-wide text-sm">{page.label}</span>
+            </button>
+        </Magnetic>
     </li>
 ));
 
@@ -163,17 +166,19 @@ const Sidebar: React.FC<SidebarProps> = ({QD, theme, toggleTheme, activePage, on
                 )}
 
                 <div className="mt-auto">
-                   <a 
-                        href={PERSONAL_INFO.resumeUrl}
-                        onClick={handleDownloadResume}
-                        download={isDirectDownload}
-                        className="group w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold py-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-yellow-400/20 transition-all duration-300 hover:shadow-yellow-400/40 hover:-translate-y-0.5 overflow-hidden relative ring-1 ring-white/20"
-                    >
-                        {/* Shine Effect */}
-                        <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent z-10"></div>
-                        <span className="text-sm uppercase tracking-wider font-extrabold z-20">Download CV</span>
-                        <i className="fas fa-download z-20"></i>
-                    </a>
+                   <Magnetic>
+                       <a 
+                            href={PERSONAL_INFO.resumeUrl}
+                            onClick={handleDownloadResume}
+                            download={isDirectDownload}
+                            className="group w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold py-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-yellow-400/20 transition-all duration-300 hover:shadow-yellow-400/40 hover:-translate-y-0.5 overflow-hidden relative ring-1 ring-white/20"
+                        >
+                            {/* Shine Effect */}
+                            <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent z-10"></div>
+                            <span className="text-sm uppercase tracking-wider font-extrabold z-20">Download CV</span>
+                            <i className="fas fa-download z-20"></i>
+                        </a>
+                   </Magnetic>
                 </div>
             </div>
         </aside>

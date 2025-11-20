@@ -1,5 +1,6 @@
 
 import React from 'react';
+import Magnetic from './Magnetic.tsx';
 import { Page } from '../types.ts';
 
 interface NavbarProps {
@@ -20,23 +21,25 @@ const NavButton: React.FC<{
   onNavigate: (page: Page) => void;
 }> = React.memo(({ page, isActive, onNavigate }) => (
     <li className="flex-1 flex justify-center">
-        <button
-            onClick={() => onNavigate(page.label)}
-            className={`relative flex flex-col items-center justify-center w-full max-w-[70px] py-2.5 rounded-2xl transition-all duration-300 group ${isActive ? 'text-yellow-500 dark:text-yellow-400' : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'}`}
-            aria-current={isActive ? 'page' : undefined}
-        >
-            {/* Active Indicator: Subtle Glow Background */}
-            <span className={`absolute inset-0 bg-yellow-400/10 dark:bg-yellow-400/5 rounded-2xl transition-all duration-500 ${isActive ? 'opacity-100 scale-100 shadow-[0_0_20px_rgba(250,204,21,0.15)]' : 'opacity-0 scale-75'}`}></span>
+        <Magnetic>
+            <button
+                onClick={() => onNavigate(page.label)}
+                className={`relative flex flex-col items-center justify-center w-full max-w-[70px] py-2.5 rounded-2xl transition-all duration-300 group ${isActive ? 'text-yellow-500 dark:text-yellow-400' : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'}`}
+                aria-current={isActive ? 'page' : undefined}
+            >
+                {/* Active Indicator: Subtle Glow Background */}
+                <span className={`absolute inset-0 bg-yellow-400/10 dark:bg-yellow-400/5 rounded-2xl transition-all duration-500 ${isActive ? 'opacity-100 scale-100 shadow-[0_0_20px_rgba(250,204,21,0.15)]' : 'opacity-0 scale-75'}`}></span>
 
-            <span className={`text-xl mb-1 z-10 transition-transform duration-300 ease-out ${isActive ? 'scale-110 -translate-y-0.5' : 'group-hover:scale-110'}`}>
-                {page.icon}
-            </span>
-            
-            {/* Label */}
-            <span className={`text-[10px] font-bold uppercase tracking-wider z-10 transition-all duration-300 whitespace-nowrap ${isActive ? 'opacity-100 translate-y-0 font-extrabold' : 'opacity-70'}`}>
-                {page.label}
-            </span>
-        </button>
+                <span className={`text-xl mb-1 z-10 transition-transform duration-300 ease-out ${isActive ? 'scale-110 -translate-y-0.5' : 'group-hover:scale-110'}`}>
+                    {page.icon}
+                </span>
+                
+                {/* Label */}
+                <span className={`text-[10px] font-bold uppercase tracking-wider z-10 transition-all duration-300 whitespace-nowrap ${isActive ? 'opacity-100 translate-y-0 font-extrabold' : 'opacity-70'}`}>
+                    {page.label}
+                </span>
+            </button>
+        </Magnetic>
     </li>
 ));
 

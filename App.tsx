@@ -6,6 +6,7 @@ import Navbar from './components/Navbar.tsx';
 import ScrollToTopButton from './components/ScrollToTopButton.tsx';
 import CustomCursor from './components/CustomCursor.tsx';
 import PrintableResume from './components/PrintableResume.tsx';
+import SmoothScroll from './components/SmoothScroll.tsx';
 import { Page } from './types.ts';
 
 const App: React.FC = () => {
@@ -132,7 +133,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <SmoothScroll contentRef={contentRef} isMobileView={isMobileView}>
       <PrintableResume />
 
       <main className={`print:hidden relative bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-gray-100 font-sans transition-colors duration-500 ${isMobileView ? 'min-h-screen p-4' : 'h-screen overflow-hidden p-6 lg:p-8'}`}>
@@ -170,9 +171,9 @@ const App: React.FC = () => {
           {/* Main Content Area - Glassmorphism Container */}
           <div 
             ref={contentRef} 
-            className={`flex-1 scroll-smooth relative rounded-[2.5rem] transition-all duration-500
+            className={`flex-1 relative rounded-[2.5rem] transition-all duration-500
               ${!isMobileView 
-                ? 'overflow-y-auto no-scrollbar bg-white/40 dark:bg-[#121212]/60 border border-white/60 dark:border-white/5 backdrop-blur-3xl shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)]' 
+                ? 'overflow-hidden bg-white/40 dark:bg-[#121212]/60 border border-white/60 dark:border-white/5 backdrop-blur-3xl shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)]' 
                 : ''}
             `}
           >
@@ -189,7 +190,7 @@ const App: React.FC = () => {
 
         {isScrollButtonVisible && <ScrollToTopButton onClick={isMobileView ? scrollToWindowTop : scrollToContentTop} />}
       </main>
-    </>
+    </SmoothScroll>
   );
 };
 
