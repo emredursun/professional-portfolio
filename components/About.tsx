@@ -159,9 +159,9 @@ const About: React.FC = () => {
                 {/* Services - Grid */}
                 <div className="md:col-span-12 mt-8">
                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">What I Do</h3>
-                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                         {SERVICES.map((service, i) => (
-                            <BentoCard key={i} noDefaultBg={true} className="min-h-[320px] bg-[#0f0f11] dark:bg-[#0f0f11] border border-white/5 hover:border-yellow-500/50 group">
+                            <BentoCard key={i} noDefaultBg={true} className="min-h-[260px] bg-[#0f0f11] dark:bg-[#0f0f11] border border-white/5 hover:border-yellow-500/50 group">
                                 <ServiceItem service={service} />
                             </BentoCard>
                         ))}
