@@ -57,10 +57,8 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
 };
 
 const Projects: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState("All Categories");
-  const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>(
-    []
-  );
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isTechnologyOpen, setIsTechnologyOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -70,8 +68,7 @@ const Projects: React.FC = () => {
 
   // Extract unique categories and technologies
   const categories = useMemo(
-    () =>
-      ["All Categories", ...new Set(PROJECTS.map((p) => p.category))].sort(),
+    () => [...new Set(PROJECTS.map((p) => p.category))].sort(),
     []
   );
   const allTechnologies = useMemo(() => {
@@ -82,12 +79,12 @@ const Projects: React.FC = () => {
     return Array.from(techs).sort();
   }, []);
 
-  // Filter projects based on category and technologies
+  // Filter projects based on categories and technologies
   const filteredProjects = useMemo(() => {
     return PROJECTS.filter((project) => {
       const categoryMatch =
-        activeCategory === "All Categories" ||
-        project.category === activeCategory;
+        selectedCategories.length === 0 ||
+        selectedCategories.includes(project.category);
       const techMatch =
         selectedTechnologies.length === 0 ||
         selectedTechnologies.every((tech) =>
@@ -95,7 +92,16 @@ const Projects: React.FC = () => {
         );
       return categoryMatch && techMatch;
     });
-  }, [activeCategory, selectedTechnologies]);
+  }, [selectedCategories, selectedTechnologies]);
+
+  // Handle category toggle
+  const toggleCategory = (category: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
 
   // Handle technology toggle
   const toggleTechnology = (tech: string) => {
@@ -106,7 +112,7 @@ const Projects: React.FC = () => {
 
   // Clear all filters
   const clearFilters = () => {
-    setActiveCategory("All Categories");
+    setSelectedCategories([]);
     setSelectedTechnologies([]);
   };
 
@@ -147,6 +153,11 @@ const Projects: React.FC = () => {
           <div ref={categoryRef} className="relative flex-1">
             <label className="block text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
               Category
+              {selectedCategories.length > 0 && (
+                <span className="ml-2 inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold bg-yellow-400 text-black rounded-full">
+                  {selectedCategories.length}
+                </span>
+              )}
             </label>
             <button
               onClick={() => {
@@ -160,7 +171,11 @@ const Projects: React.FC = () => {
                                     : "bg-white dark:bg-[#18181b] text-gray-700 dark:text-gray-300 border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20"
                                 }`}
             >
-              <span>{activeCategory}</span>
+              <span>
+                {selectedCategories.length === 0
+                  ? "All Categories"
+                  : `${selectedCategories.length} selected`}
+              </span>
               <i
                 className={`fas fa-chevron-down transition-transform duration-300 ${
                   isCategoryOpen ? "rotate-180" : ""
@@ -169,23 +184,22 @@ const Projects: React.FC = () => {
             </button>
 
             {isCategoryOpen && (
-              <div className="absolute z-50 w-full mt-2 bg-white dark:bg-[#18181b] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-fade-in">
+              <div className="absolute z-50 w-full mt-2 bg-white dark:bg-[#18181b] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl max-h-80 overflow-y-auto animate-fade-in">
                 {categories.map((cat) => (
-                  <button
+                  <label
                     key={cat}
-                    onClick={() => {
-                      setActiveCategory(cat);
-                      setIsCategoryOpen(false);
-                    }}
-                    className={`w-full text-left px-6 py-3 text-sm transition-colors duration-200
-                                            ${
-                                              activeCategory === cat
-                                                ? "bg-yellow-400 text-black font-bold"
-                                                : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5"
-                                            }`}
+                    className="flex items-center px-6 py-3 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-white/5 transition-colors duration-200"
                   >
-                    {cat}
-                  </button>
+                    <input
+                      type="checkbox"
+                      checked={selectedCategories.includes(cat)}
+                      onChange={() => toggleCategory(cat)}
+                      className="w-4 h-4 rounded border-gray-300 dark:border-white/20 text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0 cursor-pointer"
+                    />
+                    <span className="ml-3 text-gray-700 dark:text-gray-300">
+                      {cat}
+                    </span>
+                  </label>
                 ))}
               </div>
             )}
@@ -249,23 +263,26 @@ const Projects: React.FC = () => {
         </div>
 
         {/* Active Filters & Clear Button */}
-        {(activeCategory !== "All Categories" ||
+        {(selectedCategories.length > 0 ||
           selectedTechnologies.length > 0) && (
           <div className="flex items-center gap-3 flex-wrap">
             <span className="text-sm text-gray-500 dark:text-gray-400">
               Active filters:
             </span>
-            {activeCategory !== "All Categories" && (
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-xs font-semibold text-yellow-600 dark:text-yellow-400">
-                {activeCategory}
+            {selectedCategories.map((cat) => (
+              <span
+                key={cat}
+                className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-xs font-semibold text-yellow-600 dark:text-yellow-400"
+              >
+                {cat}
                 <button
-                  onClick={() => setActiveCategory("All Categories")}
+                  onClick={() => toggleCategory(cat)}
                   className="hover:text-yellow-700 dark:hover:text-yellow-300"
                 >
                   <i className="fas fa-times"></i>
                 </button>
               </span>
-            )}
+            ))}
             {selectedTechnologies.map((tech) => (
               <span
                 key={tech}
