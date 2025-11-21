@@ -1,8 +1,10 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { PERSONAL_INFO, SOCIAL_LINKS } from '../constants.tsx';
 import ThemeSwitcher from './ThemeSwitcher.tsx';
 import Magnetic from './Magnetic.tsx';
+import Tilt3D from './Tilt3D.tsx';
 import { Page } from '../types.ts';
 
 interface SidebarProps {
@@ -45,7 +47,7 @@ const NavButton: React.FC<{
     </li>
 ));
 
-const Sidebar: React.FC<SidebarProps> = ({QD, theme, toggleTheme, activePage, onNavigate, isMobileView }) => {
+const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNavigate, isMobileView }) => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const sidebarRef = useRef<HTMLElement>(null);
 
@@ -86,68 +88,143 @@ const Sidebar: React.FC<SidebarProps> = ({QD, theme, toggleTheme, activePage, on
             <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} />
 
             {/* Profile Header */}
-            <div className="pt-10 px-8 pb-6 flex flex-col items-center relative z-10">
+            <motion.div 
+                className="pt-10 px-8 pb-6 flex flex-col items-center relative z-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+            >
                 
                 {/* Avatar Container with Status */}
-                <div className="relative mb-6 group cursor-pointer">
-                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-[2rem] blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
-                    <div className="relative p-1.5 bg-white dark:bg-[#18181b] rounded-[2rem] shadow-xl border border-gray-100 dark:border-white/5"> 
-                        <div className="relative overflow-hidden rounded-[1.7rem] w-36 h-36 bg-gray-100 dark:bg-gray-800">
-                            <img
-                                src={PERSONAL_INFO.avatar}
-                                alt={PERSONAL_INFO.name}
-                                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                            />
+                <Tilt3D tiltMaxAngle={10} scale={1.05}>
+                    <motion.div 
+                        className="relative mb-6 group cursor-pointer"
+                        animate={{ y: [0, -8, 0] }}
+                        transition={{ 
+                            duration: 4, 
+                            repeat: Infinity, 
+                            ease: 'easeInOut' 
+                        }}
+                    >
+                        {/* Enhanced Glow Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 via-orange-500 to-yellow-600 rounded-[2rem] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-pulse-slow"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-[2rem] blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                        
+                        <div className="relative p-1.5 bg-white dark:bg-[#18181b] rounded-[2rem] shadow-xl border border-gray-100 dark:border-white/5"> 
+                            <div className="relative overflow-hidden rounded-[1.7rem] w-36 h-36 bg-gray-100 dark:bg-gray-800">
+                                <img
+                                    src={PERSONAL_INFO.avatar}
+                                    alt={PERSONAL_INFO.name}
+                                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    
-                    {/* Status Badge */}
-                     <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white dark:bg-[#222] backdrop-blur-md py-1.5 px-4 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 flex items-center gap-2 z-20 whitespace-nowrap">
-                        <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                        </span>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300">Available</span>
-                    </div>
-                </div>
+                        
+                        {/* Enhanced Status Badge */}
+                        <motion.div 
+                            className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white dark:bg-[#222] backdrop-blur-md py-1.5 px-4 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 flex items-center gap-2 z-20 whitespace-nowrap"
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 0.3, duration: 0.4, type: 'spring' }}
+                        >
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+                            </span>
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300">Available</span>
+                        </motion.div>
+                    </motion.div>
+                </Tilt3D>
 
-                {/* Identity */}
-                <div className="text-center mb-2">
-                    <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-2">
+                {/* Identity with Gradient Name */}
+                <motion.div 
+                    className="text-center mb-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                >
+                    <h1 className="text-3xl font-extrabold tracking-tight mb-2 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
                         {PERSONAL_INFO.name}
                     </h1>
-                    <div className="inline-block px-4 py-1.5 rounded-lg bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/5 backdrop-blur-sm">
+                    <motion.div 
+                        className="inline-block px-4 py-1.5 rounded-lg bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/5 backdrop-blur-sm"
+                        whileHover={{ scale: 1.05, borderColor: 'rgba(250, 204, 21, 0.3)' }}
+                        transition={{ duration: 0.2 }}
+                    >
                         {PERSONAL_INFO.title}
-                    </div>
-                </div>
-            </div>
+                    </motion.div>
+                </motion.div>
+            </motion.div>
 
             <div className="flex-1 px-8 pb-8 overflow-y-auto no-scrollbar flex flex-col">
                  
                  <div className="w-full border-t border-gray-200 dark:border-white/5 mb-6"></div>
 
                 {/* Contact Details */}
-                <div className="space-y-5 mb-8">
+                <motion.div 
+                    className="space-y-5 mb-8"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                            opacity: 1,
+                            transition: {
+                                staggerChildren: 0.1,
+                                delayChildren: 0.4,
+                            },
+                        },
+                    }}
+                >
                     <InfoRow icon="fa-envelope" value={PERSONAL_INFO.email} label="Email" isLink href={`mailto:${PERSONAL_INFO.email}`} />
                     <InfoRow icon="fa-phone" value={PERSONAL_INFO.phone} label="Phone" isLink href={`tel:${PERSONAL_INFO.phone}`} />
                     <InfoRow icon="fa-map-marker-alt" value={PERSONAL_INFO.location} label="Location" />
-                </div>
+                </motion.div>
 
-                {/* Socials */}
-                <div className="flex gap-3 justify-center mb-8">
+                {/* Socials with Enhanced Animations */}
+                <motion.div 
+                    className="flex gap-3 justify-center mb-8"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                            opacity: 1,
+                            transition: {
+                                staggerChildren: 0.08,
+                                delayChildren: 0.6,
+                            },
+                        },
+                    }}
+                >
                     {SOCIAL_LINKS.map(link => (
-                        <a 
+                        <motion.a 
                             key={link.name} 
                             href={link.url} 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="w-11 h-11 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-yellow-400/20"
+                            className="w-11 h-11 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 flex items-center justify-center text-gray-500 dark:text-gray-400 transition-all duration-300 relative overflow-hidden group"
                             aria-label={link.name}
+                            variants={{
+                                hidden: { opacity: 0, y: 20 },
+                                visible: { opacity: 1, y: 0 },
+                            }}
+                            whileHover={{ 
+                                y: -4,
+                                scale: 1.1,
+                                backgroundColor: 'rgb(250, 204, 21)',
+                                color: 'rgb(0, 0, 0)',
+                                borderColor: 'rgb(250, 204, 21)',
+                                boxShadow: '0 10px 25px -5px rgba(250, 204, 21, 0.4)',
+                            }}
+                            whileTap={{ scale: 0.95 }}
                         >
-                            {link.icon}
-                        </a>
+                            {/* Glow effect */}
+                            <span className="absolute inset-0 rounded-xl bg-yellow-400 opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300"></span>
+                            <span className="relative z-10">{link.icon}</span>
+                        </motion.a>
                     ))}
-                </div>
+                </motion.div>
 
                 {/* Navigation (Desktop) */}
                 {!isMobileView && (
@@ -185,9 +262,10 @@ const Sidebar: React.FC<SidebarProps> = ({QD, theme, toggleTheme, activePage, on
     );
 };
 
+
 const InfoRow: React.FC<{ icon: string; value: string; label: string; isLink?: boolean; href?: string }> = ({ icon, value, label, isLink, href }) => {
-    const Content = () => (
-         <div className="flex items-center gap-4 group cursor-default">
+    const content = (
+        <div className="flex items-center gap-4 group cursor-default">
             <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center justify-center text-gray-400 dark:text-gray-500 shadow-sm shrink-0 group-hover:text-yellow-500 group-hover:scale-110 transition-all duration-300">
                 <i className={`fas ${icon}`}></i>
             </div>
@@ -200,12 +278,30 @@ const InfoRow: React.FC<{ icon: string; value: string; label: string; isLink?: b
 
     if (isLink) {
         return (
-            <a href={href} className="block hover:bg-gray-50 dark:hover:bg-white/5 -mx-2 px-2 py-2 rounded-xl transition-colors">
-                <Content />
-            </a>
+            <motion.a 
+                href={href} 
+                className="block hover:bg-gray-50 dark:hover:bg-white/5 -mx-2 px-2 py-2 rounded-xl transition-colors"
+                variants={{
+                    hidden: { opacity: 0, x: -20 },
+                    visible: { opacity: 1, x: 0 },
+                }}
+            >
+                {content}
+            </motion.a>
         )
     }
-    return <div className="-mx-2 px-2 py-2"><Content /></div>;
+    return (
+        <motion.div 
+            className="-mx-2 px-2 py-2"
+            variants={{
+                hidden: { opacity: 0, x: -20 },
+                visible: { opacity: 1, x: 0 },
+            }}
+        >
+            {content}
+        </motion.div>
+    );
 }
 
 export default Sidebar;
+

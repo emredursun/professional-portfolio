@@ -1,7 +1,10 @@
 
 import React, { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Service } from '../types.ts';
 import { ABOUT_TEXT, SERVICES, ABOUT_INTRO, ABOUT_STORY } from '../constants.tsx';
+import Tilt3D from './Tilt3D.tsx';
+import { useScrollReveal } from './hooks/useScrollReveal.tsx';
 
 const BentoCard: React.FC<{ children: React.ReactNode; className?: string; title?: string; onClick?: () => void; noDefaultBg?: boolean }> = ({ children, className = "", title, onClick, noDefaultBg = false }) => {
     const divRef = useRef<HTMLDivElement>(null);
@@ -76,99 +79,229 @@ const ServiceItem: React.FC<{ service: Service }> = ({ service }) => (
 );
 
 const About: React.FC = () => {
+    const headerRef = useRef<HTMLElement>(null);
+    const isHeaderVisible = useScrollReveal(headerRef, { threshold: 0.2 });
+
     return (
         <section className="animate-fade-in">
-            <header className="mb-12">
-                <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6 tracking-tight">
-                    About <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">Me</span>
-                </h2>
-            </header>
+            <motion.header 
+                ref={headerRef}
+                className="mb-12"
+                initial={{ opacity: 0, y: 30 }}
+                animate={isHeaderVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+            >
+                <motion.h2 
+                    className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6"
+                    animate={{ y: [0, -5, 0] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                    <span className="text-gray-900 dark:text-white">About </span>
+                    <span className="relative inline-block">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 animate-gradient bg-[length:200%_auto]">
+                            Me
+                        </span>
+                        {/* Glow effect */}
+                        <span className="absolute inset-0 blur-lg bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 opacity-30 animate-pulse-slow"></span>
+                    </span>
+                </motion.h2>
+            </motion.header>
 
             {/* Bento Grid Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <motion.div 
+                className="grid grid-cols-1 md:grid-cols-12 gap-6"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                    hidden: { opacity: 0 },
+                    visible: {
+                        opacity: 1,
+                        transition: {
+                            staggerChildren: 0.15,
+                            delayChildren: 0.3,
+                        },
+                    },
+                }}
+            >
                 
                 {/* Intro Card - Large */}
-                <BentoCard className="md:col-span-8 bg-gradient-to-br from-white to-gray-50 dark:from-[#1e1e20] dark:to-[#18181b]">
-                    <i className="fas fa-quote-left text-5xl text-gray-200 dark:text-white/5 absolute top-6 right-8"></i>
-                    <p className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100 leading-tight mb-8 relative z-10">
-                        "{ABOUT_INTRO}"
-                    </p>
-                    <div className="mt-auto relative z-10">
-                         <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-base font-medium">
-                            {ABOUT_TEXT}
-                         </p>
-                    </div>
-                </BentoCard>
+                <motion.div
+                    className="md:col-span-8"
+                    variants={{
+                        hidden: { opacity: 0, y: 30 },
+                        visible: { opacity: 1, y: 0 },
+                    }}
+                >
+                    <Tilt3D tiltMaxAngle={8} scale={1.01}>
+                        <BentoCard className="bg-gradient-to-br from-white to-gray-50 dark:from-[#1e1e20] dark:to-[#18181b]">
+                            <i className="fas fa-quote-left text-5xl text-gray-200 dark:text-white/5 absolute top-6 right-8"></i>
+                            <p className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100 leading-tight mb-8 relative z-10">
+                                "{ABOUT_INTRO}"
+                            </p>
+                            <div className="mt-auto relative z-10">
+                                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-base font-medium">
+                                    {ABOUT_TEXT}
+                                 </p>
+                            </div>
+                        </BentoCard>
+                    </Tilt3D>
+                </motion.div>
 
-                {/* Stats / Quick Info - Small Vertical - High Contrast for Legibility */}
-                <BentoCard className="md:col-span-4 flex flex-col justify-center items-center text-center bg-yellow-400 border-yellow-500 relative overflow-hidden">
-                    {/* Decorative circles */}
-                    <div className="absolute top-[-20%] right-[-20%] w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
-                    <div className="absolute bottom-[-10%] left-[-10%] w-24 h-24 bg-white/20 rounded-full blur-xl"></div>
+                {/* Stats / Quick Info - Small Vertical */}
+                <motion.div
+                    className="md:col-span-4"
+                    variants={{
+                        hidden: { opacity: 0, y: 30 },
+                        visible: { opacity: 1, y: 0 },
+                    }}
+                >
+                    <Tilt3D tiltMaxAngle={12} scale={1.02}>
+                        <BentoCard className="flex flex-col justify-center items-center text-center bg-yellow-400 border-yellow-500 relative overflow-hidden">
+                            {/* Decorative circles */}
+                            <div className="absolute top-[-20%] right-[-20%] w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
+                            <div className="absolute bottom-[-10%] left-[-10%] w-24 h-24 bg-white/20 rounded-full blur-xl"></div>
 
-                    <div className="w-full h-full flex flex-col justify-center items-center relative z-10 py-6">
-                        <div className="text-7xl font-black mb-2 text-gray-900 tracking-tighter">5<span className="text-4xl align-top">+</span></div>
-                        <div className="text-sm font-extrabold uppercase tracking-widest text-gray-800 opacity-80 mb-8">Years Experience</div>
-                        
-                        <div className="w-full space-y-3">
-                            <div className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 text-sm font-bold text-gray-900 flex items-center gap-3">
-                                <i className="fas fa-certificate text-lg"></i> ISTQB® Certified
+                            <div className="w-full h-full flex flex-col justify-center items-center relative z-10 py-6">
+                                <motion.div 
+                                    className="text-7xl font-black mb-2 text-gray-900 tracking-tighter"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
+                                >
+                                    5<span className="text-4xl align-top">+</span>
+                                </motion.div>
+                                <div className="text-sm font-extrabold uppercase tracking-widest text-gray-800 opacity-80 mb-8">Years Experience</div>
+                                
+                                <motion.div 
+                                    className="w-full space-y-3"
+                                    initial="hidden"
+                                    animate="visible"
+                                    variants={{
+                                        hidden: { opacity: 0 },
+                                        visible: {
+                                            opacity: 1,
+                                            transition: {
+                                                staggerChildren: 0.1,
+                                                delayChildren: 0.7,
+                                            },
+                                        },
+                                    }}
+                                >
+                                    {[
+                                        { icon: 'fa-certificate', text: 'ISTQB® Certified' },
+                                        { icon: 'fa-sync', text: 'Agile & Scrum' },
+                                        { icon: 'fa-layer-group', text: 'Full-Stack QA' },
+                                    ].map((badge, idx) => (
+                                        <motion.div
+                                            key={idx}
+                                            className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 text-sm font-bold text-gray-900 flex items-center gap-3"
+                                            variants={{
+                                                hidden: { opacity: 0, x: -20 },
+                                                visible: { opacity: 1, x: 0 },
+                                            }}
+                                            whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.3)' }}
+                                        >
+                                            <i className={`fas ${badge.icon} text-lg`}></i> {badge.text}
+                                        </motion.div>
+                                    ))}
+                                </motion.div>
                             </div>
-                            <div className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 text-sm font-bold text-gray-900 flex items-center gap-3">
-                                <i className="fas fa-sync text-lg"></i> Agile & Scrum
-                            </div>
-                            <div className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 text-sm font-bold text-gray-900 flex items-center gap-3">
-                                <i className="fas fa-layer-group text-lg"></i> Full-Stack QA
-                            </div>
-                        </div>
-                    </div>
-                </BentoCard>
+                        </BentoCard>
+                    </Tilt3D>
+                </motion.div>
 
                 {/* Story Section - Wide */}
-                <BentoCard className="md:col-span-12">
-                     <div className="flex flex-col lg:flex-row gap-10 items-center">
-                        <div className="flex-1">
-                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-3">
-                                <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.5)]"></span>
-                                My Journey
-                            </h3>
-                            <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg font-medium">
-                                {ABOUT_STORY}
-                            </p>
-                        </div>
-                        <div className="hidden lg:block w-px h-32 bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent"></div>
-                        <div className="w-full lg:w-1/3 flex flex-col sm:flex-row lg:flex-col gap-4">
-                             <div className="flex-1 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-300 text-xl"><i className="fas fa-map-pin"></i></div>
-                                <div>
-                                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Based in</div>
-                                    <div className="font-bold text-gray-900 dark:text-white text-lg">Netherlands</div>
+                <motion.div
+                    className="md:col-span-12"
+                    variants={{
+                        hidden: { opacity: 0, y: 30 },
+                        visible: { opacity: 1, y: 0 },
+                    }}
+                >
+                    <Tilt3D tiltMaxAngle={6} scale={1.005}>
+                        <BentoCard>
+                             <div className="flex flex-col lg:flex-row gap-10 items-center">
+                                <div className="flex-1">
+                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-3">
+                                        <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.5)] animate-pulse"></span>
+                                        My Journey
+                                    </h3>
+                                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg font-medium">
+                                        {ABOUT_STORY}
+                                    </p>
+                                </div>
+                                <div className="hidden lg:block w-px h-32 bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent"></div>
+                                <div className="w-full lg:w-1/3 flex flex-col sm:flex-row lg:flex-col gap-4">
+                                     <motion.div 
+                                        className="flex-1 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center gap-4"
+                                        whileHover={{ scale: 1.02, borderColor: 'rgba(250, 204, 21, 0.3)' }}
+                                     >
+                                        <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-300 text-xl"><i className="fas fa-map-pin"></i></div>
+                                        <div>
+                                            <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Based in</div>
+                                            <div className="font-bold text-gray-900 dark:text-white text-lg">Netherlands</div>
+                                        </div>
+                                     </motion.div>
+                                     <motion.div 
+                                        className="flex-1 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center gap-4"
+                                        whileHover={{ scale: 1.02, borderColor: 'rgba(250, 204, 21, 0.3)' }}
+                                     >
+                                        <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-300 text-xl"><i className="fas fa-globe"></i></div>
+                                        <div>
+                                            <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Languages</div>
+                                            <div className="font-bold text-gray-900 dark:text-white text-sm">English, Dutch, Turkish</div>
+                                        </div>
+                                     </motion.div>
                                 </div>
                              </div>
-                             <div className="flex-1 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-300 text-xl"><i className="fas fa-globe"></i></div>
-                                <div>
-                                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Languages</div>
-                                    <div className="font-bold text-gray-900 dark:text-white text-sm">English, Dutch, Turkish</div>
-                                </div>
-                             </div>
-                        </div>
-                     </div>
-                </BentoCard>
+                        </BentoCard>
+                    </Tilt3D>
+                </motion.div>
                 
                 {/* Services - Grid */}
                 <div className="md:col-span-12 mt-8">
-                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">What I Do</h3>
-                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                     <motion.h3 
+                        className="text-2xl font-bold text-gray-900 dark:text-white mb-6"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.8 }}
+                     >
+                        What I Do
+                     </motion.h3>
+                     <motion.div 
+                        className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                            hidden: { opacity: 0 },
+                            visible: {
+                                opacity: 1,
+                                transition: {
+                                    staggerChildren: 0.12,
+                                    delayChildren: 0.9,
+                                },
+                            },
+                        }}
+                     >
                         {SERVICES.map((service, i) => (
-                            <BentoCard key={i} noDefaultBg={true} className="min-h-[260px] bg-[#0f0f11] dark:bg-[#0f0f11] border border-white/5 hover:border-yellow-500/50 group">
-                                <ServiceItem service={service} />
-                            </BentoCard>
+                            <motion.div
+                                key={i}
+                                variants={{
+                                    hidden: { opacity: 0, y: 30 },
+                                    visible: { opacity: 1, y: 0 },
+                                }}
+                            >
+                                <Tilt3D tiltMaxAngle={10} scale={1.03}>
+                                    <BentoCard noDefaultBg={true} className="min-h-[260px] bg-[#0f0f11] dark:bg-[#0f0f11] border border-white/5 hover:border-yellow-500/50 group">
+                                        <ServiceItem service={service} />
+                                    </BentoCard>
+                                </Tilt3D>
+                            </motion.div>
                         ))}
-                     </div>
+                     </motion.div>
                 </div>
 
-            </div>
+            </motion.div>
         </section>
     );
 };

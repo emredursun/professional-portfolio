@@ -7,6 +7,7 @@ import ScrollToTopButton from './components/ScrollToTopButton.tsx';
 import CustomCursor from './components/CustomCursor.tsx';
 import PrintableResume from './components/PrintableResume.tsx';
 import SmoothScroll from './components/SmoothScroll.tsx';
+import ParticleBackground from './components/ParticleBackground.tsx';
 import { Page } from './types.ts';
 
 const App: React.FC = () => {
@@ -140,6 +141,9 @@ const App: React.FC = () => {
         
         {/* Global Noise Texture */}
         <div className="bg-noise"></div>
+
+        {/* Particle Background System */}
+        <ParticleBackground particleCount={150} connectionDistance={120} mouseInfluence={80} />
 
         <CustomCursor />
 
