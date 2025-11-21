@@ -1,6 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { SOCIAL_LINKS } from '../constants.tsx';
+import Tilt3D from './Tilt3D.tsx';
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -129,7 +130,7 @@ const Contact: React.FC = () => {
                             <input
                                 type="text"
                                 placeholder="Full Name"
-                                className="w-full bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300 hover:border-yellow-400 hover:shadow-md focus:shadow-lg focus:scale-[1.01]"
+                                className="w-full bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent focus:shadow-[0_0_20px_rgba(250,204,21,0.3)] transition-all duration-300 hover:border-yellow-400 hover:shadow-md focus:shadow-lg focus:scale-[1.01]"
                                 required
                                 disabled={submissionStatus === 'submitting'}
                             />
@@ -138,7 +139,7 @@ const Contact: React.FC = () => {
                             <input
                                 type="email"
                                 placeholder="Email Address"
-                                className="w-full bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300 hover:border-yellow-400 hover:shadow-md focus:shadow-lg focus:scale-[1.01]"
+                                className="w-full bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent focus:shadow-[0_0_20px_rgba(250,204,21,0.3)] transition-all duration-300 hover:border-yellow-400 hover:shadow-md focus:shadow-lg focus:scale-[1.01]"
                                 required
                                 disabled={submissionStatus === 'submitting'}
                             />
@@ -147,7 +148,7 @@ const Contact: React.FC = () => {
                             <textarea
                                 placeholder="Your Message"
                                 rows={5}
-                                className="w-full bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300 hover:border-yellow-400 hover:shadow-md focus:shadow-lg focus:scale-[1.01] resize-none"
+                                className="w-full bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent focus:shadow-[0_0_20px_rgba(250,204,21,0.3)] transition-all duration-300 hover:border-yellow-400 hover:shadow-md focus:shadow-lg focus:scale-[1.01] resize-none"
                                 required
                                 disabled={submissionStatus === 'submitting'}
                             ></textarea>

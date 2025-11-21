@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import { Project } from "../types.ts";
 import { PROJECTS } from "../constants.tsx";
 import ProjectModal from "./ProjectModal.tsx";
+import Tilt3D from "./Tilt3D.tsx";
 
 const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
   project,
@@ -302,7 +303,7 @@ const Projects: React.FC = () => {
             ))}
             <button
               onClick={clearFilters}
-              className="text-xs font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline"
+              className="text-xs font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline hover:scale-110 transition-all duration-300"
             >
               Clear all
             </button>
@@ -318,10 +319,12 @@ const Projects: React.FC = () => {
               className="animate-fade-in-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <ProjectCard
-                project={project}
-                onOpen={() => setSelectedProject(project)}
-              />
+              <Tilt3D tiltMaxAngle={10} scale={1.03}>
+                <ProjectCard
+                  project={project}
+                  onOpen={() => setSelectedProject(project)}
+                />
+              </Tilt3D>
             </div>
           ))}
         </div>
@@ -338,7 +341,7 @@ const Projects: React.FC = () => {
           </p>
           <button
             onClick={clearFilters}
-            className="px-6 py-2 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-500 transition-colors"
+            className="px-6 py-2 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-500 hover:scale-105 hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
           >
             Clear Filters
           </button>
