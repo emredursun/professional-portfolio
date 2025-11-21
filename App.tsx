@@ -179,6 +179,14 @@ const App: React.FC = () => {
           >
             <MainContent activePage={activePage} isMobileView={isMobileView} />
           </div>
+          {/* Scroll To Top Button - Positioned inside container for Desktop, Fixed for Mobile */}
+          {isScrollButtonVisible && (
+            <ScrollToTopButton 
+              onClick={isMobileView ? scrollToWindowTop : scrollToContentTop} 
+              progress={readingProgress}
+              isMobileView={isMobileView}
+            />
+          )}
         </div>
 
         {isMobileView && (
@@ -187,8 +195,6 @@ const App: React.FC = () => {
             onNavigate={handleNavigation}
           />
         )}
-
-        {isScrollButtonVisible && <ScrollToTopButton onClick={isMobileView ? scrollToWindowTop : scrollToContentTop} />}
       </main>
     </SmoothScroll>
   );

@@ -1,24 +1,81 @@
-
 import React from 'react';
 
 interface ScrollToTopButtonProps {
   onClick: () => void;
+  progress: number;
+  isMobileView: boolean;
 }
 
-const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ onClick }) => {
+const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ onClick, progress, isMobileView }) => {
+  // Calculate circle properties for the progress ring
+  const radius = 24;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
   return (
-    <button
-      onClick={onClick}
-      // Layout Logic:
-      // 'bottom-32' (128px) is used for mobile/tablet (< 1024px) to clear the floating Navbar (bottom-6 + height).
-      // 'lg:bottom-12' (48px) is used for desktop (>= 1024px) where there is no bottom Navbar.
-      className="fixed right-4 bottom-32 lg:bottom-12 lg:right-12 xl:right-[calc((100vw-80rem)/2+3rem)] z-40 w-12 h-12 lg:w-14 lg:h-14 bg-yellow-400/80 backdrop-blur-xl text-gray-900 rounded-full flex items-center justify-center text-xl shadow-[0_8px_32px_rgba(250,204,21,0.3)] border border-white/40 hover:bg-yellow-400 transition-all duration-500 cubic-bezier(0.68,-0.55,0.27,1.55) hover:scale-110 hover:-translate-y-2 animate-icon-pop-in ring-1 ring-yellow-400/20"
-      aria-label="Scroll to top"
+    <div 
+      className={`z-50 transition-all duration-500 ease-out
+        ${isMobileView 
+          ? 'fixed right-6 bottom-24' // Mobile: Fixed to viewport
+          : 'absolute right-0 bottom-0 lg:right-[-20px] lg:bottom-10 xl:right-[-30px]' // Desktop: Absolute to container
+        }`}
     >
-      <i className="fas fa-arrow-up text-lg lg:text-xl relative z-10"></i>
-      {/* Subtle Inner Glow */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/40 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-    </button>
+      <button
+        onClick={onClick}
+        className="group relative flex items-center justify-center w-14 h-14 rounded-full 
+          bg-white/10 dark:bg-black/40 backdrop-blur-md 
+          border border-white/20 dark:border-white/10
+          shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+          hover:scale-110 hover:-translate-y-1 transition-all duration-300 ease-out"
+        aria-label="Scroll to top"
+      >
+        {/* Progress Ring SVG */}
+        <svg 
+          className="absolute inset-0 w-full h-full -rotate-90 transform pointer-events-none"
+          viewBox="0 0 60 60"
+        >
+          {/* Background Circle */}
+          <circle
+            cx="30"
+            cy="30"
+            r={radius}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            className="text-gray-300/30 dark:text-gray-700/30"
+          />
+          {/* Progress Circle */}
+          <circle
+            cx="30"
+            cy="30"
+            r={radius}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            className="text-yellow-500 transition-all duration-150 ease-out"
+          />
+        </svg>
+
+        {/* Inner Button Content */}
+        <div className="relative z-10 flex items-center justify-center w-10 h-10 rounded-full bg-yellow-400 text-gray-900 shadow-lg group-hover:bg-yellow-300 transition-colors duration-300">
+          <i className="fas fa-arrow-up text-lg group-hover:animate-bounce-custom"></i>
+        </div>
+
+        {/* Glow Effect */}
+        <div className="absolute inset-0 rounded-full bg-yellow-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+      </button>
+
+      {/* Tooltip text (optional, appears on hover) */}
+      <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 
+        bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-xs font-medium text-gray-800 dark:text-gray-200 
+        rounded-lg shadow-lg opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 
+        transition-all duration-300 pointer-events-none whitespace-nowrap hidden lg:block">
+        Back to Top
+      </span>
+    </div>
   );
 };
 
