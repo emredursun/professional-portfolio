@@ -2,15 +2,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { SOCIAL_LINKS } from '../constants.tsx';
 
-const PageTitle: React.FC<{ title: string }> = React.memo(({ title }) => (
-    <div className="mb-12">
-        <h2 className="text-4xl font-bold text-gray-900 dark:text-white relative inline-block">
-            {title}
-            <span className="absolute bottom-[-10px] left-0 w-full h-1 bg-yellow-400 rounded-full"></span>
-        </h2>
-    </div>
-));
-
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 const ConfettiCanvas: React.FC = () => {
@@ -185,7 +176,16 @@ const Contact: React.FC = () => {
 
     return (
         <section>
-            <PageTitle title="Contact" />
+            <header className="mb-12">
+                <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
+                    <span className="relative inline-block">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 animate-gradient bg-[length:200%_auto]">
+                            Contact
+                        </span>
+                        <span className="absolute inset-0 blur-lg bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 opacity-30 animate-pulse-slow"></span>
+                    </span>
+                </h2>
+            </header>
             <div className="flex flex-col xl:flex-row gap-12">
                 <div className="flex-1">
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">

@@ -66,8 +66,14 @@ const Resume: React.FC = () => {
     return (
         <section className="animate-fade-in">
             <header className="mb-12">
-                 <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6 tracking-tight">
-                    My <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">Resume</span>
+                <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
+                    <span className="text-gray-900 dark:text-white">My </span>
+                    <span className="relative inline-block">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 animate-gradient bg-[length:200%_auto]">
+                            Resume
+                        </span>
+                        <span className="absolute inset-0 blur-lg bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 opacity-30 animate-pulse-slow"></span>
+                    </span>
                 </h2>
             </header>
 

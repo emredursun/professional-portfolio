@@ -140,10 +140,13 @@ const Projects: React.FC = () => {
   return (
     <section className="animate-fade-in h-full flex flex-col">
       <header className="mb-10">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-8 tracking-tight">
-          Featured{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
-            Projects
+        <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-8">
+          <span className="text-gray-900 dark:text-white">Featured </span>
+          <span className="relative inline-block">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 animate-gradient bg-[length:200%_auto]">
+              Projects
+            </span>
+            <span className="absolute inset-0 blur-lg bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 opacity-30 animate-pulse-slow"></span>
           </span>
         </h2>
 

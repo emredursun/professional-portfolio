@@ -91,11 +91,7 @@ const About: React.FC = () => {
                 animate={isHeaderVisible ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
             >
-                <motion.h2 
-                    className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6"
-                    animate={{ y: [0, -5, 0] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                >
+                <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
                     <span className="text-gray-900 dark:text-white">About </span>
                     <span className="relative inline-block">
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 animate-gradient bg-[length:200%_auto]">
@@ -104,7 +100,7 @@ const About: React.FC = () => {
                         {/* Glow effect */}
                         <span className="absolute inset-0 blur-lg bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 opacity-30 animate-pulse-slow"></span>
                     </span>
-                </motion.h2>
+                </h2>
             </motion.header>
 
             {/* Bento Grid Layout */}
