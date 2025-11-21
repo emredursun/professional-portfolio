@@ -168,25 +168,28 @@ const App: React.FC = () => {
             isMobileView={isMobileView}
           />
 
-          {/* Main Content Area - Glassmorphism Container */}
-          <div 
-            ref={contentRef} 
-            className={`flex-1 relative rounded-[2.5rem] transition-all duration-500
-              ${!isMobileView 
-                ? 'overflow-hidden bg-white/40 dark:bg-[#121212]/60 border border-white/60 dark:border-white/5 backdrop-blur-3xl shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)]' 
-                : ''}
-            `}
-          >
-            <MainContent activePage={activePage} isMobileView={isMobileView} />
+          {/* Main Content Area - Glassmorphism Container Wrapper */}
+          <div className="flex-1 relative h-full">
+            <div 
+              ref={contentRef} 
+              className={`h-full w-full rounded-[2.5rem] transition-all duration-500
+                ${!isMobileView 
+                  ? 'overflow-hidden bg-white/40 dark:bg-[#121212]/60 border border-white/60 dark:border-white/5 backdrop-blur-3xl shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)]' 
+                  : ''}
+              `}
+            >
+              <MainContent activePage={activePage} isMobileView={isMobileView} />
+            </div>
+
+            {/* Scroll To Top Button - Positioned absolute relative to this wrapper for Desktop */}
+            {isScrollButtonVisible && (
+              <ScrollToTopButton 
+                onClick={isMobileView ? scrollToWindowTop : scrollToContentTop} 
+                progress={readingProgress}
+                isMobileView={isMobileView}
+              />
+            )}
           </div>
-          {/* Scroll To Top Button - Positioned inside container for Desktop, Fixed for Mobile */}
-          {isScrollButtonVisible && (
-            <ScrollToTopButton 
-              onClick={isMobileView ? scrollToWindowTop : scrollToContentTop} 
-              progress={readingProgress}
-              isMobileView={isMobileView}
-            />
-          )}
         </div>
 
         {isMobileView && (
