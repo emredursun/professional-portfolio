@@ -169,11 +169,24 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({
 
       particlesRef.current.geometry.attributes.position.needsUpdate = true;
 
-      // Update line connections
-      linesRef.current.geometry.setAttribute(
-        'position',
-        new THREE.Float32BufferAttribute(linePositions, 3)
-      );
+      // Update line connections - reuse buffer instead of creating new one
+      const lineGeom = linesRef.current.geometry;
+      const existingPositions = lineGeom.attributes.position;
+      
+      if (!existingPositions || existingPositions.array.length !== linePositions.length) {
+        // Only create new buffer if size changed
+        lineGeom.setAttribute(
+          'position',
+          new THREE.Float32BufferAttribute(linePositions, 3)
+        );
+      } else {
+        // Reuse existing buffer
+        const posArray = existingPositions.array as Float32Array;
+        for (let i = 0; i < linePositions.length; i++) {
+          posArray[i] = linePositions[i];
+        }
+        existingPositions.needsUpdate = true;
+      }
 
       // Rotate particles slowly
       particlesRef.current.rotation.y += 0.0002;
