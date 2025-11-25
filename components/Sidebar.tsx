@@ -5,6 +5,7 @@ import { PERSONAL_INFO, SOCIAL_LINKS } from '../constants.tsx';
 import ThemeSwitcher from './ThemeSwitcher.tsx';
 import Magnetic from './Magnetic.tsx';
 import Tilt3D from './Tilt3D.tsx';
+import Particles from './Particles.tsx';
 import { Page } from '../types.ts';
 
 interface SidebarProps {
@@ -47,9 +48,26 @@ const NavButton: React.FC<{
     </li>
 ));
 
+// Dynamic greeting based on time of day
+const getGreeting = (): string => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning";
+    if (hour < 18) return "Good Afternoon";
+    return "Good Evening";
+};
+
 const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNavigate, isMobileView }) => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const [greeting, setGreeting] = useState(getGreeting());
     const sidebarRef = useRef<HTMLElement>(null);
+
+    // Update greeting every minute
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setGreeting(getGreeting());
+        }, 60000);
+        return () => clearInterval(interval);
+    }, []);
 
     const handleMouseMove = (e: React.MouseEvent) => {
         if (sidebarRef.current) {
@@ -77,6 +95,9 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
             className={`relative bg-white/70 dark:bg-[#121212]/80 backdrop-blur-2xl rounded-[2.5rem] border border-white/60 dark:border-white/5 shadow-2xl dark:shadow-[0_0_40px_-5px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden group/sidebar
             ${isMobileView ? 'w-full' : 'w-[360px] shrink-0 h-full max-h-[calc(100vh-4rem)] sticky top-8'}`}
         >
+             {/* Animated Background Particles */}
+             <Particles count={25} />
+
              {/* Interactive Spotlight Effect */}
              <div 
                 className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover/sidebar:opacity-100 z-50 rounded-[2.5rem]"
@@ -135,6 +156,23 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                         </motion.div>
                     </motion.div>
                 </Tilt3D>
+
+                {/* Dynamic Greeting */}
+                <motion.div
+                    className="text-center mb-3 mt-2"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                >
+                    <p className="text-sm font-normal italic">
+                        <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent">
+                            {greeting},{" "}
+                        </span>
+                        <span className="bg-gradient-to-r from-red-400 to-rose-500 bg-clip-text text-transparent">
+                            I'm
+                        </span>
+                    </p>
+                </motion.div>
 
                 {/* Identity with Gradient Name */}
                 <motion.div 
