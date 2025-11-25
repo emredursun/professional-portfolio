@@ -203,25 +203,40 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                             href={link.url} 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="w-11 h-11 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 flex items-center justify-center text-gray-500 dark:text-gray-400 transition-all duration-300 relative overflow-hidden group"
+                            className="w-11 h-11 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 flex items-center justify-center text-gray-500 dark:text-gray-400 relative overflow-hidden group cursor-pointer"
                             aria-label={link.name}
                             variants={{
                                 hidden: { opacity: 0, y: 20 },
                                 visible: { opacity: 1, y: 0 },
                             }}
                             whileHover={{ 
-                                y: -4,
-                                scale: 1.1,
+                                scale: 1.15,
+                                rotate: 8,
                                 backgroundColor: 'rgb(250, 204, 21)',
-                                color: 'rgb(0, 0, 0)',
                                 borderColor: 'rgb(250, 204, 21)',
-                                boxShadow: '0 10px 25px -5px rgba(250, 204, 21, 0.4)',
+                                boxShadow: '0 8px 25px -5px rgba(250, 204, 21, 0.5)',
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 300,
+                                    damping: 15
+                                }
                             }}
-                            whileTap={{ scale: 0.95 }}
+                            whileTap={{ 
+                                scale: 0.9,
+                                rotate: -8,
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 400,
+                                    damping: 10
+                                }
+                            }}
                         >
                             {/* Glow effect */}
-                            <span className="absolute inset-0 rounded-xl bg-yellow-400 opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300"></span>
-                            <span className="relative z-10">{link.icon}</span>
+                            <span className="absolute inset-0 rounded-xl bg-yellow-400 opacity-0 group-hover:opacity-40 blur-lg transition-opacity duration-200"></span>
+                            {/* Icon */}
+                            <span className="relative z-10 group-hover:text-black transition-colors duration-200">
+                                {link.icon}
+                            </span>
                         </motion.a>
                     ))}
                 </motion.div>

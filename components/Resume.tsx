@@ -115,46 +115,40 @@ const Resume: React.FC = () => {
                 <div className="xl:col-span-4">
                     <div className="sticky top-8 space-y-8">
                         {/* Tech Stack Cloud */}
-                        <Tilt3D tiltMaxAngle={8} scale={1.02}>
-                            <div className="bg-white dark:bg-[#18181b] p-8 rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow duration-300">
-                                <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5 pb-4">Tech Stack</h3>
-                                <div className="flex flex-wrap gap-2">
-                                    {TECH_STACK.flatMap(c => c.technologies).map(tech => (
-                                        <div key={tech.name} className="group flex items-center gap-2 px-3 py-2 bg-gray-50 dark:bg-white/5 rounded-xl border border-gray-200 dark:border-white/5 hover:border-yellow-400/50 hover:bg-yellow-400/5 hover:scale-105 transition-all duration-300 cursor-default">
-                                            <span className="text-lg grayscale group-hover:grayscale-0 transition-all scale-90 group-hover:scale-100">{tech.icon}</span>
-                                            <span className="text-xs font-bold text-gray-600 dark:text-gray-300">{tech.name}</span>
-                                        </div>
-                                    ))}
-                                </div>
+                        <div className="bg-white dark:bg-[#18181b] p-8 rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow duration-300">
+                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5 pb-4">Tech Stack</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {TECH_STACK.flatMap(c => c.technologies).map(tech => (
+                                    <div key={tech.name} className="group flex items-center gap-2 px-3 py-2 bg-gray-50 dark:bg-white/5 rounded-xl border border-gray-200 dark:border-white/5 hover:border-yellow-400/50 hover:bg-yellow-400/5 hover:scale-105 transition-all duration-300 cursor-default">
+                                        <span className="text-lg grayscale group-hover:grayscale-0 transition-all scale-90 group-hover:scale-100">{tech.icon}</span>
+                                        <span className="text-xs font-bold text-gray-600 dark:text-gray-300">{tech.name}</span>
+                                    </div>
+                                ))}
                             </div>
-                        </Tilt3D>
+                        </div>
 
                         {/* Skills Bars */}
-                        <Tilt3D tiltMaxAngle={8} scale={1.02}>
-                            <div className="bg-white dark:bg-[#18181b] p-8 rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow duration-300">
-                                <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5 pb-4">Professional Skills</h3>
-                                <div className="space-y-6">
-                                    {SKILLS.map((skill, index) => (
-                                        <SkillBar key={index} skill={skill} />
-                                    ))}
-                                </div>
+                        <div className="bg-white dark:bg-[#18181b] p-8 rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow duration-300">
+                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5 pb-4">Professional Skills</h3>
+                            <div className="space-y-6">
+                                {SKILLS.map((skill, index) => (
+                                    <SkillBar key={index} skill={skill} />
+                                ))}
                             </div>
-                        </Tilt3D>
+                        </div>
 
                          {/* Languages */}
-                         <Tilt3D tiltMaxAngle={8} scale={1.02}>
-                             <div className="bg-white dark:bg-[#18181b] p-8 rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow duration-300">
-                                <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5 pb-4">Languages</h3>
-                                <div className="grid grid-cols-2 gap-4">
-                                    {LANGUAGES.map((lang, index) => (
-                                        <div key={index} className="p-4 bg-gray-50 dark:bg-white/5 rounded-2xl text-center border border-transparent hover:border-yellow-400/30 hover:shadow-[0_0_15px_rgba(250,204,21,0.1)] dark:hover:border-white/10 transition-all duration-300">
-                                            <div className="text-sm font-bold text-gray-900 dark:text-white mb-1">{lang.name}</div>
-                                            <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">{lang.level}</div>
-                                        </div>
-                                    ))}
-                                </div>
+                         <div className="bg-white dark:bg-[#18181b] p-8 rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow duration-300">
+                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5 pb-4">Languages</h3>
+                            <div className="grid grid-cols-2 gap-4">
+                                {LANGUAGES.map((lang, index) => (
+                                    <div key={index} className="p-4 bg-gray-50 dark:bg-white/5 rounded-2xl text-center border border-transparent hover:border-yellow-400/30 hover:shadow-[0_0_15px_rgba(250,204,21,0.1)] dark:hover:border-white/10 transition-all duration-300">
+                                        <div className="text-sm font-bold text-gray-900 dark:text-white mb-1">{lang.name}</div>
+                                        <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">{lang.level}</div>
+                                    </div>
+                                ))}
                             </div>
-                        </Tilt3D>
+                        </div>
                     </div>
                 </div>
             </div>

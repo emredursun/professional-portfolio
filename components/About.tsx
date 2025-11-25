@@ -128,19 +128,17 @@ const About: React.FC = () => {
                         visible: { opacity: 1, y: 0 },
                     }}
                 >
-                    <Tilt3D tiltMaxAngle={8} scale={1.01}>
-                        <BentoCard className="bg-gradient-to-br from-white to-gray-50 dark:from-[#1e1e20] dark:to-[#18181b]">
-                            <i className="fas fa-quote-left text-5xl text-gray-200 dark:text-white/5 absolute top-6 right-8"></i>
-                            <p className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100 leading-tight mb-8 relative z-10">
-                                "{ABOUT_INTRO}"
-                            </p>
-                            <div className="mt-auto relative z-10">
-                                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-base font-medium">
-                                    {ABOUT_TEXT}
-                                 </p>
-                            </div>
-                        </BentoCard>
-                    </Tilt3D>
+                    <BentoCard className="bg-gradient-to-br from-white to-gray-50 dark:from-[#1e1e20] dark:to-[#18181b]">
+                        <i className="fas fa-quote-left text-5xl text-gray-200 dark:text-white/5 absolute top-6 right-8"></i>
+                        <p className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100 leading-tight mb-8 relative z-10">
+                            "{ABOUT_INTRO}"
+                        </p>
+                        <div className="mt-auto relative z-10">
+                             <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-base font-medium">
+                                {ABOUT_TEXT}
+                             </p>
+                        </div>
+                    </BentoCard>
                 </motion.div>
 
                 {/* Stats / Quick Info - Small Vertical */}
@@ -214,44 +212,42 @@ const About: React.FC = () => {
                         visible: { opacity: 1, y: 0 },
                     }}
                 >
-                    <Tilt3D tiltMaxAngle={6} scale={1.005}>
-                        <BentoCard>
-                             <div className="flex flex-col lg:flex-row gap-10 items-center">
-                                <div className="flex-1">
-                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-3">
-                                        <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.5)] animate-pulse"></span>
-                                        My Journey
-                                    </h3>
-                                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg font-medium">
-                                        {ABOUT_STORY}
-                                    </p>
-                                </div>
-                                <div className="hidden lg:block w-px h-32 bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent"></div>
-                                <div className="w-full lg:w-1/3 flex flex-col sm:flex-row lg:flex-col gap-4">
-                                     <motion.div 
-                                        className="flex-1 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center gap-4"
-                                        whileHover={{ scale: 1.02, borderColor: 'rgba(250, 204, 21, 0.3)' }}
-                                     >
-                                        <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-300 text-xl"><i className="fas fa-map-pin"></i></div>
-                                        <div>
-                                            <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Based in</div>
-                                            <div className="font-bold text-gray-900 dark:text-white text-lg">Netherlands</div>
-                                        </div>
-                                     </motion.div>
-                                     <motion.div 
-                                        className="flex-1 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center gap-4"
-                                        whileHover={{ scale: 1.02, borderColor: 'rgba(250, 204, 21, 0.3)' }}
-                                     >
-                                        <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-300 text-xl"><i className="fas fa-globe"></i></div>
-                                        <div>
-                                            <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Languages</div>
-                                            <div className="font-bold text-gray-900 dark:text-white text-sm">English, Dutch, Turkish</div>
-                                        </div>
-                                     </motion.div>
-                                </div>
-                             </div>
-                        </BentoCard>
-                    </Tilt3D>
+                    <BentoCard>
+                         <div className="flex flex-col lg:flex-row gap-10 items-center">
+                            <div className="flex-1">
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-3">
+                                    <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.5)] animate-pulse"></span>
+                                    My Journey
+                                </h3>
+                                <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg font-medium">
+                                    {ABOUT_STORY}
+                                </p>
+                            </div>
+                            <div className="hidden lg:block w-px h-32 bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent"></div>
+                            <div className="w-full lg:w-1/3 flex flex-col sm:flex-row lg:flex-col gap-4">
+                                 <motion.div 
+                                    className="flex-1 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center gap-4"
+                                    whileHover={{ scale: 1.02, borderColor: 'rgba(250, 204, 21, 0.3)' }}
+                                 >
+                                    <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-300 text-xl"><i className="fas fa-map-pin"></i></div>
+                                    <div>
+                                        <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Based in</div>
+                                        <div className="font-bold text-gray-900 dark:text-white text-lg">Netherlands</div>
+                                    </div>
+                                 </motion.div>
+                                 <motion.div 
+                                    className="flex-1 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center gap-4"
+                                    whileHover={{ scale: 1.02, borderColor: 'rgba(250, 204, 21, 0.3)' }}
+                                 >
+                                    <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-300 text-xl"><i className="fas fa-globe"></i></div>
+                                    <div>
+                                        <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Languages</div>
+                                        <div className="font-bold text-gray-900 dark:text-white text-sm">English, Dutch, Turkish</div>
+                                    </div>
+                                 </motion.div>
+                            </div>
+                         </div>
+                    </BentoCard>
                 </motion.div>
                 
                 {/* Services - Grid */}
