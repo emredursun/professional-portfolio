@@ -142,14 +142,14 @@ const Projects: React.FC = () => {
     <section className="animate-fade-in h-full flex flex-col">
       <header className="mb-10">
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-8">
-          <span className="text-gray-900 dark:text-white">Featured </span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">Featured </span>
           <span className="relative inline-block">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 animate-gradient bg-[length:200%_auto]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark animate-gradient bg-[length:200%_auto]">
               Projects
             </span>
-            <span className="absolute inset-0 blur-lg bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 opacity-30 animate-pulse-slow"></span>
+            <span className="absolute inset-0 blur-lg bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark opacity-50 animate-pulse-slow"></span>
             {/* Animated Underline */}
-            <span className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 rounded-full animate-gradient bg-[length:200%_auto]"></span>
+            <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark animate-gradient bg-[length:200%_auto]"></span>
           </span>
         </h2>
 
