@@ -159,21 +159,47 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
 
                 {/* Dynamic Greeting */}
                 <motion.div
-                    className="text-center mb-3 mt-2 relative"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="text-center mb-3 mt-2 relative overflow-visible py-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
                 >
-                    {/* Glow effect */}
-                    <div className="absolute inset-0 blur-xl opacity-30 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 animate-pulse"></div>
+                    {/* Glow effect with proper padding */}
+                    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-8 blur-2xl opacity-20 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-pulse"></div>
                     
-                    <p className="text-base font-medium tracking-wide relative">
-                        <span className="inline-block bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
-                            {greeting},{ " "}
-                        </span>
-                        <span className="inline-block bg-gradient-to-r from-red-400 via-rose-500 to-red-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto] font-semibold">
+                    <p className="text-base font-medium tracking-wide relative z-10">
+                        <motion.span 
+                            className="inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]"
+                            animate={{ 
+                                y: [-20, 0, 0, 0],
+                                opacity: [0, 1, 1, 1]
+                            }}
+                            transition={{ 
+                                duration: 4,
+                                repeat: Infinity,
+                                repeatDelay: 0,
+                                times: [0, 0.15, 0.85, 1],
+                                ease: "easeOut"
+                            }}
+                        >
+                            {greeting},{" "}
+                        </motion.span>
+                        <motion.span 
+                            className="inline-block bg-gradient-to-r from-purple-600 via-pink-600 to-purple-700 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto] font-semibold"
+                            animate={{ 
+                                y: [-20, 0, 0, 0],
+                                opacity: [0, 1, 1, 1]
+                            }}
+                            transition={{ 
+                                duration: 4,
+                                repeat: Infinity,
+                                repeatDelay: 0,
+                                times: [0, 0.2, 0.85, 1],
+                                ease: "easeOut"
+                            }}
+                        >
                             I'm
-                        </span>
+                        </motion.span>
                     </p>
                 </motion.div>
 
