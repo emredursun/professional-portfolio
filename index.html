@@ -104,6 +104,21 @@
               sans: ['"Plus Jakarta Sans"', "sans-serif"],
             },
             colors: {
+              // Neon Minimalism Palette
+              neon: {
+                bg: "#000000",           // Pure Black
+                card: "#050505",         // Almost Black
+                surface: "#0a0a0a",      // Very Dark Gray
+                border: "rgba(255, 255, 255, 0.2)", // High contrast border
+                cyan: "#06b6d4",         // Cyan-500 (Bright)
+                purple: "#a855f7",       // Purple-500 (Bright)
+                text: {
+                  primary: "#FFFFFF",    // Pure White
+                  secondary: "#e5e5e5",  // Light Gray
+                  tertiary: "#a3a3a3",   // Mid Gray
+                }
+              },
+              
               // Premium Dark Mode with Proper Elevation
               dark: {
                 // Backgrounds (Progressive Elevation)
@@ -145,6 +160,11 @@
               }
             },
             boxShadow: {
+              // Neon Shadows
+              'neon-cyan': '0 0 5px rgba(6, 182, 212, 0.5), 0 0 20px rgba(6, 182, 212, 0.3)',
+              'neon-purple': '0 0 5px rgba(168, 85, 247, 0.5), 0 0 20px rgba(168, 85, 247, 0.3)',
+              'neon-white': '0 0 5px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2)',
+              
               // Premium shadows
               'dark-sm': '0 1px 2px 0 rgba(0, 0, 0, 0.5)',
               'dark-md': '0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3)',
