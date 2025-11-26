@@ -223,7 +223,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                 </motion.div>
             </motion.div>
 
-            <div className="flex-1 px-8 pb-8 overflow-y-auto no-scrollbar flex flex-col">
+            <div className="flex-1 px-8 pb-8 overflow-y-auto no-scrollbar flex flex-col" data-lenis-prevent>
                  
                  <div className="w-full border-t border-gray-200 dark:border-white/5 mb-6"></div>
 

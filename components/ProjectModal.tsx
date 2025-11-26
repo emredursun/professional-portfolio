@@ -41,7 +41,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
         >
           &times;
         </button>
-        <div className="flex-1 overflow-y-auto p-8">
+        <div className="flex-1 overflow-y-auto p-8" data-lenis-prevent>
           <div className="flex flex-col lg:flex-row gap-8">
             <div className="lg:w-1/2">
             <img

@@ -190,7 +190,10 @@ const Projects: React.FC = () => {
             </button>
 
             {isCategoryOpen && (
-              <div className="absolute z-50 w-full mt-2 bg-white dark:bg-[#18181b] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl max-h-80 overflow-y-auto animate-fade-in">
+              <div 
+                className="absolute z-50 w-full mt-2 bg-white dark:bg-[#18181b] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl max-h-80 overflow-y-auto animate-fade-in"
+                data-lenis-prevent
+              >
                 {categories.map((cat) => (
                   <label
                     key={cat}
@@ -246,7 +249,10 @@ const Projects: React.FC = () => {
             </button>
 
             {isTechnologyOpen && (
-              <div className="absolute z-50 w-full mt-2 bg-white dark:bg-[#18181b] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl max-h-80 overflow-y-auto animate-fade-in">
+              <div 
+                className="absolute z-50 w-full mt-2 bg-white dark:bg-[#18181b] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl max-h-80 overflow-y-auto animate-fade-in"
+                data-lenis-prevent
+              >
                 {allTechnologies.map((tech) => (
                   <label
                     key={tech}
