@@ -148,6 +148,8 @@ const Projects: React.FC = () => {
               Projects
             </span>
             <span className="absolute inset-0 blur-lg bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 opacity-30 animate-pulse-slow"></span>
+            {/* Animated Underline */}
+            <span className="absolute -bottom-2 left-0 w-full h-1.5 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 rounded-full animate-gradient bg-[length:200%_auto]"></span>
           </span>
         </h2>
 
