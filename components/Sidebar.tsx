@@ -159,16 +159,19 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
 
                 {/* Dynamic Greeting */}
                 <motion.div
-                    className="text-center mb-3 mt-2"
+                    className="text-center mb-3 mt-2 relative"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
                 >
-                    <p className="text-sm font-normal italic">
-                        <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent">
-                            {greeting},{" "}
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 blur-xl opacity-30 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 animate-pulse"></div>
+                    
+                    <p className="text-base font-medium tracking-wide relative">
+                        <span className="inline-block bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                            {greeting},{ " "}
                         </span>
-                        <span className="bg-gradient-to-r from-red-400 to-rose-500 bg-clip-text text-transparent">
+                        <span className="inline-block bg-gradient-to-r from-red-400 via-rose-500 to-red-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto] font-semibold">
                             I'm
                         </span>
                     </p>
