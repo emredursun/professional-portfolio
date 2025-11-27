@@ -34,8 +34,8 @@ const NavButton: React.FC<{
                 onClick={() => onNavigate(page.label)}
                 className={`w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all duration-300 font-semibold group relative overflow-hidden
                     ${isActive
-                        ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20'
-                        : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'
+                        ? 'bg-yellow-400 text-black shadow-[0_0_20px_rgba(250,204,21,0.4)]'
+                        : 'text-gray-500 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] dark:hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] border border-transparent hover:border-yellow-400/50 dark:hover:border-neon-cyan/50'
                     }`
                 }
             >
@@ -128,10 +128,10 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                         }}
                     >
                         {/* Enhanced Glow Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 via-orange-500 to-yellow-600 rounded-[2rem] blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-pulse-slow"></div>
-                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-[2rem] blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 via-orange-500 to-yellow-600 dark:from-neon-cyan dark:via-blue-500 dark:to-purple-600 rounded-[2rem] blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 animate-pulse-slow"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-purple-600 rounded-[2rem] blur opacity-20 group-hover:opacity-50 transition-opacity duration-500"></div>
                         
-                        <div className="relative p-1.5 bg-white dark:bg-[#18181b] rounded-[2rem] shadow-xl border border-gray-100 dark:border-white/5"> 
+                        <div className="relative p-1.5 bg-white dark:bg-[#18181b] rounded-[2rem] shadow-xl border border-gray-100 dark:border-white/10 group-hover:border-yellow-400 dark:group-hover:border-neon-cyan transition-colors duration-500"> 
                             <div className="relative overflow-hidden rounded-[1.7rem] w-36 h-36 bg-gray-100 dark:bg-gray-800">
                                 <img
                                     src={PERSONAL_INFO.avatar}

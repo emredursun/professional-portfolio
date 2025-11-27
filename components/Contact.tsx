@@ -95,9 +95,9 @@ const Contact: React.FC = () => {
         switch (submissionStatus) {
             case 'success':
                 return (
-                    <div className="bg-gray-50 dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-700 rounded-2xl p-8 flex flex-col items-center justify-center text-center h-[436px] animate-fade-in relative overflow-hidden">
+                    <div className="bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border rounded-[2rem] p-8 flex flex-col items-center justify-center text-center h-[436px] animate-fade-in relative overflow-hidden shadow-2xl dark:shadow-[0_0_40px_-10px_rgba(6,182,212,0.3)]">
                         <ConfettiCanvas />
-                        <div className="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-6 animate-icon-pop-in z-10">
+                        <div className="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-6 animate-icon-pop-in z-10 border border-green-200 dark:border-green-500/30">
                             <i className="fas fa-check text-4xl text-green-500"></i>
                         </div>
                         <h4 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 z-10">Thank You!</h4>
@@ -125,52 +125,54 @@ const Contact: React.FC = () => {
             case 'submitting':
             default:
                 return (
-                    <form className="space-y-6" onSubmit={handleSubmit}>
-                        <div className="group">
-                            <input
-                                type="text"
-                                placeholder="Full Name"
-                                className="w-full bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent focus:shadow-[0_0_20px_rgba(250,204,21,0.3)] transition-all duration-300 hover:border-yellow-400 hover:shadow-md focus:shadow-lg focus:scale-[1.01]"
-                                required
+                    <div className="bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border rounded-[2rem] p-8 shadow-2xl dark:shadow-[0_0_40px_-10px_rgba(6,182,212,0.15)]">
+                        <form className="space-y-6" onSubmit={handleSubmit}>
+                            <div className="group">
+                                <input
+                                    type="text"
+                                    placeholder="Full Name"
+                                    className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
+                                    required
+                                    disabled={submissionStatus === 'submitting'}
+                                />
+                            </div>
+                            <div className="group">
+                                <input
+                                    type="email"
+                                    placeholder="Email Address"
+                                    className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
+                                    required
+                                    disabled={submissionStatus === 'submitting'}
+                                />
+                            </div>
+                            <div className="group">
+                                <textarea
+                                    placeholder="Your Message"
+                                    rows={5}
+                                    className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)] resize-none"
+                                    required
+                                    disabled={submissionStatus === 'submitting'}
+                                ></textarea>
+                            </div>
+                            <button
+                                type="submit"
+                                className="w-full bg-yellow-400 text-black font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-yellow-500 transition-all duration-300 disabled:bg-yellow-300 disabled:cursor-not-allowed hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(234,179,8,0.4)] hover:scale-[1.02] active:scale-[0.98]"
                                 disabled={submissionStatus === 'submitting'}
-                            />
-                        </div>
-                        <div className="group">
-                            <input
-                                type="email"
-                                placeholder="Email Address"
-                                className="w-full bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent focus:shadow-[0_0_20px_rgba(250,204,21,0.3)] transition-all duration-300 hover:border-yellow-400 hover:shadow-md focus:shadow-lg focus:scale-[1.01]"
-                                required
-                                disabled={submissionStatus === 'submitting'}
-                            />
-                        </div>
-                        <div className="group">
-                            <textarea
-                                placeholder="Your Message"
-                                rows={5}
-                                className="w-full bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent focus:shadow-[0_0_20px_rgba(250,204,21,0.3)] transition-all duration-300 hover:border-yellow-400 hover:shadow-md focus:shadow-lg focus:scale-[1.01] resize-none"
-                                required
-                                disabled={submissionStatus === 'submitting'}
-                            ></textarea>
-                        </div>
-                        <button
-                            type="submit"
-                            className="w-full bg-yellow-400 text-gray-900 font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-yellow-500 transition-all duration-300 disabled:bg-yellow-300 disabled:cursor-not-allowed hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(250,204,21,0.4)] hover:scale-[1.02] active:scale-[0.98]"
-                            disabled={submissionStatus === 'submitting'}
-                        >
-                             {submissionStatus === 'submitting' ? (
-                                <>
-                                    <i className="fas fa-spinner fa-spin"></i>
-                                    Sending...
-                                </>
-                            ) : (
-                                <>
-                                    <i className="fas fa-paper-plane"></i>
-                                    Send Message
-                                </>
-                            )}
-                        </button>
-                    </form>
+                            >
+                                 {submissionStatus === 'submitting' ? (
+                                    <>
+                                        <i className="fas fa-spinner fa-spin"></i>
+                                        Sending...
+                                    </>
+                                ) : (
+                                    <>
+                                        <i className="fas fa-paper-plane"></i>
+                                        Send Message
+                                    </>
+                                )}
+                            </button>
+                        </form>
+                    </div>
                 );
         }
     };
@@ -207,8 +209,8 @@ const Contact: React.FC = () => {
                         </div>
                         Find Me Here
                     </h3>
-                     <div className="h-[300px] rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-lg group relative">
-                        <div className="absolute inset-0 border-4 border-transparent group-hover:border-yellow-400/30 transition-colors duration-300 pointer-events-none z-10 rounded-2xl"></div>
+                     <div className="h-[300px] rounded-[2rem] overflow-hidden border border-gray-200/50 dark:border-neon-border shadow-2xl dark:shadow-none group relative transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
+                        <div className="absolute inset-0 border-4 border-transparent group-hover:border-yellow-400/30 dark:group-hover:border-neon-cyan/30 transition-colors duration-300 pointer-events-none z-10 rounded-[2rem]"></div>
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d38740.16919139266!2d5.13280806443481!3d52.69614777894901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c61c3b531a3977%3A0x868b248a39151740!2sHoogkarspel!5e0!3m2!1sen!2snl!4v1721323330345!5m2!1sen!2snl"
                             width="100%"
@@ -231,7 +233,7 @@ const Contact: React.FC = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label={`Follow me on ${link.name}`}
-                                    className="w-14 h-14 bg-gray-100 dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-700 rounded-2xl flex items-center justify-center text-2xl shadow-md text-gray-500 dark:text-gray-400 hover:text-white hover:bg-yellow-400 dark:hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-yellow-400/30 hover:rotate-[360deg]"
+                                    className="w-14 h-14 rounded-2xl bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border flex items-center justify-center text-2xl text-gray-500 dark:text-gray-400 hover:text-white dark:hover:text-black hover:bg-yellow-400 dark:hover:bg-neon-cyan transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_-5px_rgba(234,179,8,0.5)] dark:hover:shadow-[0_10px_20px_-5px_rgba(6,182,212,0.5)] hover:rotate-12 hover:scale-110"
                                 >
                                     {link.icon}
                                 </a>

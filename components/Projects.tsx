@@ -9,24 +9,24 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
 }) => {
   return (
     <div
-      className="group relative rounded-3xl bg-white/80 dark:bg-[#18181b]/80 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)] h-[520px] flex flex-col"
+      className="group relative rounded-3xl bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] h-[520px] flex flex-col"
       onClick={onOpen}
     >
       {/* Image Section - Fixed Height */}
       <div className="relative h-56 overflow-hidden flex-shrink-0">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-colors duration-500 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-yellow-900/40 dark:group-hover:from-neon-purple/40 transition-colors duration-500 z-10"></div>
         <img
           src={project.image}
           alt={project.title}
           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
           loading="lazy"
         />
-        <div className="absolute top-5 left-5 z-20 bg-yellow-400/90 dark:bg-yellow-500/90 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-black border border-yellow-500/20 shadow-lg uppercase tracking-wide">
+        <div className="absolute top-5 left-5 z-20 bg-yellow-400/90 dark:bg-neon-cyan/90 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-black border border-yellow-500/20 shadow-lg uppercase tracking-wide">
           {project.category}
         </div>
 
         <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-          <div className="w-14 h-14 bg-yellow-400 rounded-full flex items-center justify-center text-black text-xl shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
+          <div className="w-14 h-14 bg-yellow-400 dark:bg-neon-cyan rounded-full flex items-center justify-center text-black text-xl shadow-[0_0_20px_rgba(250,204,21,0.5)] dark:shadow-[0_0_20px_rgba(6,182,212,0.5)] transform scale-75 group-hover:scale-100 transition-transform duration-300">
             <i className="fas fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-500"></i>
           </div>
         </div>
@@ -49,7 +49,7 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
           {project.technologies.map((tech) => (
             <span
               key={tech}
-              className="text-[10px] font-bold uppercase tracking-wide text-gray-600 dark:text-gray-400 bg-gray-100/80 dark:bg-white/5 px-3 py-1.5 rounded-lg border border-gray-200/50 dark:border-white/5 hover:border-yellow-400 dark:hover:border-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-400/10 hover:text-yellow-700 dark:hover:text-yellow-400 hover:scale-105 transition-all duration-300"
+              className="text-[10px] font-bold uppercase tracking-wide text-gray-600 dark:text-gray-400 bg-gray-100/80 dark:bg-white/5 px-3 py-1.5 rounded-lg border border-gray-200/50 dark:border-white/5 hover:border-yellow-400 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 hover:text-yellow-700 dark:hover:text-neon-cyan hover:scale-105 transition-all duration-300"
             >
               {tech}
             </span>
@@ -174,10 +174,10 @@ const Projects: React.FC = () => {
                 setIsTechnologyOpen(false);
               }}
               className={`w-full flex items-center justify-between px-6 py-4 rounded-2xl text-sm font-semibold transition-all duration-300 border-2
-                                ${
+                                  ${
                                   isCategoryOpen
-                                    ? "bg-[#18181b] dark:bg-[#18181b] text-white border-yellow-400 shadow-lg shadow-yellow-400/20"
-                                    : "bg-white dark:bg-[#18181b] text-gray-700 dark:text-gray-300 border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20"
+                                    ? "bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                                    : "bg-white/80 dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-200 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan"
                                 }`}
             >
               <span>
@@ -235,8 +235,8 @@ const Projects: React.FC = () => {
               className={`w-full flex items-center justify-between px-6 py-4 rounded-2xl text-sm font-semibold transition-all duration-300 border-2
                                 ${
                                   isTechnologyOpen
-                                    ? "bg-[#18181b] dark:bg-[#18181b] text-white border-yellow-400 shadow-lg shadow-yellow-400/20"
-                                    : "bg-white dark:bg-[#18181b] text-gray-700 dark:text-gray-300 border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20"
+                                    ? "bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                                    : "bg-white/80 dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-200 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan"
                                 }`}
             >
               <span>
