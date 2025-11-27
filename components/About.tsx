@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Service } from "../types.ts";
 import {
@@ -92,6 +92,28 @@ const BentoCard: React.FC<{
 
 const ServiceItem: React.FC<{ service: Service }> = ({ service }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState<'top' | 'bottom'>('bottom');
+  const descriptionRef = useRef<HTMLDivElement>(null);
+
+  // Determine tooltip position based on available viewport space
+  useEffect(() => {
+    if (showFullDescription && descriptionRef.current) {
+      const rect = descriptionRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      
+      // If less than 200px below and more space above, show tooltip on top
+      if (spaceBelow < 200 && spaceAbove > spaceBelow) {
+        setTooltipPosition('top');
+      } else {
+        setTooltipPosition('bottom');
+      }
+    }
+  }, [showFullDescription]);
+
+  const handleToggleDescription = () => {
+    setShowFullDescription(prev => !prev);
+  };
 
   return (
     <div className="flex flex-col h-full justify-between">
@@ -103,32 +125,51 @@ const ServiceItem: React.FC<{ service: Service }> = ({ service }) => {
           {service.title}
         </h4>
         
-        {/* Description with line-clamp and hover tooltip */}
-        <div className="relative mb-6">
+        {/* Description with line-clamp and hover/click tooltip */}
+        <div className="relative mb-6" ref={descriptionRef}>
           <p 
-            className="text-gray-600 dark:text-neon-text-secondary text-sm leading-relaxed line-clamp-3 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-300"
+            className="text-gray-600 dark:text-neon-text-secondary text-sm leading-relaxed line-clamp-3 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-300 cursor-pointer"
             onMouseEnter={() => setShowFullDescription(true)}
             onMouseLeave={() => setShowFullDescription(false)}
+            onClick={handleToggleDescription}
           >
             {service.description}
           </p>
           
-          {/* Hover tooltip with full description */}
+          {/* Tooltip with full description - smart positioning */}
           {showFullDescription && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: tooltipPosition === 'bottom' ? -10 : 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={{ opacity: 0, y: tooltipPosition === 'bottom' ? -10 : 10 }}
               transition={{ duration: 0.2 }}
-              className="absolute z-50 left-0 right-0 top-full mt-2 p-4 bg-white dark:bg-black border-2 border-accent-yellow dark:border-neon-cyan rounded-xl shadow-2xl dark:shadow-[0_0_30px_rgba(6,182,212,0.3)]"
+              className={`absolute z-[60] left-0 right-0 p-4 bg-white dark:bg-black border-2 border-accent-yellow dark:border-neon-cyan rounded-xl shadow-2xl dark:shadow-[0_0_30px_rgba(6,182,212,0.3)] ${
+                tooltipPosition === 'bottom' ? 'top-full mt-2' : 'bottom-full mb-2'
+              }`}
               onMouseEnter={() => setShowFullDescription(true)}
               onMouseLeave={() => setShowFullDescription(false)}
             >
               <p className="text-gray-900 dark:text-white text-sm leading-relaxed">
                 {service.description}
               </p>
+              
+              {/* Close button for mobile */}
+              <button
+                onClick={handleToggleDescription}
+                className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors md:hidden"
+                aria-label="Close description"
+              >
+                <i className="fas fa-times text-xs"></i>
+              </button>
+              
               {/* Arrow indicator */}
-              <div className="absolute -top-2 left-6 w-4 h-4 bg-white dark:bg-black border-l-2 border-t-2 border-accent-yellow dark:border-neon-cyan transform rotate-45"></div>
+              <div 
+                className={`absolute left-6 w-4 h-4 bg-white dark:bg-black border-accent-yellow dark:border-neon-cyan transform rotate-45 ${
+                  tooltipPosition === 'bottom'
+                    ? '-top-2 border-l-2 border-t-2'
+                    : '-bottom-2 border-r-2 border-b-2'
+                }`}
+              ></div>
             </motion.div>
           )}
         </div>
@@ -386,7 +427,7 @@ const About: React.FC = () => {
                 <Tilt3D tiltMaxAngle={10} scale={1.03}>
                   <BentoCard
                     noDefaultBg={true}
-                    className="h-[420px] bg-white dark:bg-black border border-gray-100 dark:border-neon-border hover:border-accent-yellow/50 dark:hover:border-neon-cyan group hover:shadow-[0_20px_40px_rgba(251,191,36,0.1)] dark:hover:shadow-neon-cyan"
+                    className="min-h-[420px] bg-white dark:bg-black border border-gray-100 dark:border-neon-border hover:border-accent-yellow/50 dark:hover:border-neon-cyan group hover:shadow-[0_20px_40px_rgba(251,191,36,0.1)] dark:hover:shadow-neon-cyan"
                   >
                     <ServiceItem service={service} />
                   </BentoCard>
