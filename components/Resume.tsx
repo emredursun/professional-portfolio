@@ -2,7 +2,7 @@
 import React from 'react';
 import { TimelineItem, Skill, Language } from '../types.ts';
 import { EDUCATION, EXPERIENCE, SKILLS, TECH_STACK, LANGUAGES } from '../constants.tsx';
-import Tilt3D from './Tilt3D.tsx';
+
 
 const TimelineCard: React.FC<{ item: TimelineItem; isFirst?: boolean; isLast?: boolean }> = ({ item, isFirst, isLast }) => {
     return (

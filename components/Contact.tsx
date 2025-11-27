@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { SOCIAL_LINKS } from '../constants.tsx';
-import Tilt3D from './Tilt3D.tsx';
+
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 

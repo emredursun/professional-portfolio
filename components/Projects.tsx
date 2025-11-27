@@ -2,7 +2,6 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import { Project } from "../types.ts";
 import { PROJECTS } from "../constants.tsx";
 import ProjectModal from "./ProjectModal.tsx";
-import Tilt3D from "./Tilt3D.tsx";
 
 const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
   project,
@@ -331,12 +330,10 @@ const Projects: React.FC = () => {
               className="animate-fade-in-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <Tilt3D tiltMaxAngle={10} scale={1.03}>
-                <ProjectCard
-                  project={project}
-                  onOpen={() => setSelectedProject(project)}
-                />
-              </Tilt3D>
+              <ProjectCard
+                project={project}
+                onOpen={() => setSelectedProject(project)}
+              />
             </div>
           ))}
         </div>
