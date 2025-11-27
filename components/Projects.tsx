@@ -10,16 +10,16 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
 }) => {
   return (
     <div
-      className="group relative rounded-3xl bg-white dark:bg-[#18181b] border border-gray-200 dark:border-white/5 overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl dark:hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] h-full flex flex-col"
+      className="group relative rounded-3xl bg-white/80 dark:bg-[#18181b]/80 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)] h-[520px] flex flex-col"
       onClick={onOpen}
     >
-      {/* Image Section */}
-      <div className="relative h-56 overflow-hidden">
-        <div className="absolute inset-0 bg-gray-900/10 dark:bg-black/20 group-hover:bg-black/40 transition-colors duration-500 z-10"></div>
+      {/* Image Section - Fixed Height */}
+      <div className="relative h-56 overflow-hidden flex-shrink-0">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-colors duration-500 z-10"></div>
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
           loading="lazy"
         />
         <div className="absolute top-5 left-5 z-20 bg-yellow-400/90 dark:bg-yellow-500/90 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-black border border-yellow-500/20 shadow-lg uppercase tracking-wide">
@@ -33,20 +33,24 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
         </div>
       </div>
 
-      {/* Content Section */}
-      <div className="p-8 flex-1 flex flex-col border-t border-gray-100 dark:border-white/5">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 leading-tight group-hover:text-yellow-500 transition-colors">
+      {/* Content Section - Flex Layout */}
+      <div className="p-8 flex-1 flex flex-col border-t border-gray-100/50 dark:border-white/5">
+        {/* Title - Fixed Height with Line Clamp */}
+        <h3 className="h-[3rem] text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-3 leading-tight line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-yellow-400 group-hover:to-orange-500 transition-all duration-300">
           {project.title}
         </h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 line-clamp-3 leading-relaxed">
+        
+        {/* Description - Fixed Height with Line Clamp */}
+        <p className="h-[4.5rem] text-sm text-gray-500 dark:text-gray-400 mb-6 line-clamp-3 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
           {project.description}
         </p>
 
+        {/* Tags - Pushed to Bottom */}
         <div className="mt-auto flex flex-wrap gap-2">
           {project.technologies.map((tech) => (
             <span
               key={tech}
-              className="text-[10px] font-bold uppercase tracking-wide text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-white/5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/5"
+              className="text-[10px] font-bold uppercase tracking-wide text-gray-600 dark:text-gray-400 bg-gray-100/80 dark:bg-white/5 px-3 py-1.5 rounded-lg border border-gray-200/50 dark:border-white/5 hover:border-yellow-400 dark:hover:border-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-400/10 hover:text-yellow-700 dark:hover:text-yellow-400 hover:scale-105 transition-all duration-300"
             >
               {tech}
             </span>

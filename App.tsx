@@ -8,6 +8,7 @@ import CustomCursor from './components/CustomCursor.tsx';
 import PrintableResume from './components/PrintableResume.tsx';
 import SmoothScroll from './components/SmoothScroll.tsx';
 import ParticleBackground from './components/ParticleBackground.tsx';
+import FloatingElements from './components/FloatingElements.tsx';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
 import { Page } from './types.ts';
 
@@ -146,6 +147,9 @@ const App: React.FC = () => {
 
           {/* Particle Background System */}
           <ParticleBackground particleCount={150} connectionDistance={120} mouseInfluence={80} />
+
+          {/* Floating Ambient Elements */}
+          <FloatingElements />
 
           <CustomCursor />
 
