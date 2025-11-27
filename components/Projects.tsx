@@ -9,7 +9,7 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
 }) => {
   return (
     <div
-      className="group relative rounded-3xl bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] h-[520px] flex flex-col"
+      className="group relative rounded-3xl bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] h-[520px] flex flex-col shadow-xl dark:shadow-none"
       onClick={onOpen}
     >
       {/* Image Section - Fixed Height */}
@@ -35,12 +35,12 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
       {/* Content Section - Flex Layout */}
       <div className="p-8 flex-1 flex flex-col border-t border-gray-100/50 dark:border-white/5">
         {/* Title - Fixed Height with Line Clamp */}
-        <h3 className="h-[3rem] text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-3 leading-tight line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-yellow-400 group-hover:to-orange-500 transition-all duration-300">
+        <h3 className="h-[3rem] text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-3 leading-tight line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-yellow-500 group-hover:to-orange-500 dark:group-hover:from-yellow-400 dark:group-hover:to-orange-500 transition-all duration-300">
           {project.title}
         </h3>
         
         {/* Description - Fixed Height with Line Clamp */}
-        <p className="h-[4.5rem] text-sm text-gray-500 dark:text-gray-400 mb-6 line-clamp-3 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
+        <p className="h-[4.5rem] text-sm text-gray-700 dark:text-gray-400 mb-6 line-clamp-3 leading-relaxed group-hover:text-gray-900 dark:group-hover:text-gray-300 transition-colors duration-300">
           {project.description}
         </p>
 
@@ -49,7 +49,7 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
           {project.technologies.map((tech) => (
             <span
               key={tech}
-              className="text-[10px] font-bold uppercase tracking-wide text-gray-600 dark:text-gray-400 bg-gray-100/80 dark:bg-white/5 px-3 py-1.5 rounded-lg border border-gray-200/50 dark:border-white/5 hover:border-yellow-400 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 hover:text-yellow-700 dark:hover:text-neon-cyan hover:scale-105 transition-all duration-300"
+              className="text-[10px] font-bold uppercase tracking-wide text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-white/5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/5 hover:border-yellow-400 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 hover:text-gray-900 dark:hover:text-neon-cyan hover:scale-105 transition-all duration-300"
             >
               {tech}
             </span>
@@ -177,7 +177,7 @@ const Projects: React.FC = () => {
                                   ${
                                   isCategoryOpen
                                     ? "bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-                                    : "bg-white/80 dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-200 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan"
+                                    : "bg-white dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-300 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan shadow-lg dark:shadow-none"
                                 }`}
             >
               <span>
@@ -194,7 +194,7 @@ const Projects: React.FC = () => {
 
             {isCategoryOpen && (
               <div 
-                className="absolute z-50 w-full mt-2 bg-white dark:bg-[#18181b] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl max-h-80 overflow-y-auto animate-fade-in"
+                className="absolute z-50 w-full mt-2 bg-white dark:bg-black border border-gray-300 dark:border-white/10 rounded-2xl shadow-2xl max-h-80 overflow-y-auto animate-fade-in"
                 data-lenis-prevent
               >
                 {categories.map((cat) => (
@@ -236,7 +236,7 @@ const Projects: React.FC = () => {
                                 ${
                                   isTechnologyOpen
                                     ? "bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-                                    : "bg-white/80 dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-200 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan"
+                                    : "bg-white dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-300 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan shadow-lg dark:shadow-none"
                                 }`}
             >
               <span>
@@ -253,7 +253,7 @@ const Projects: React.FC = () => {
 
             {isTechnologyOpen && (
               <div 
-                className="absolute z-50 w-full mt-2 bg-white dark:bg-[#18181b] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl max-h-80 overflow-y-auto animate-fade-in"
+                className="absolute z-50 w-full mt-2 bg-white dark:bg-black border border-gray-300 dark:border-white/10 rounded-2xl shadow-2xl max-h-80 overflow-y-auto animate-fade-in"
                 data-lenis-prevent
               >
                 {allTechnologies.map((tech) => (

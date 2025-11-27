@@ -128,8 +128,9 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                         }}
                     >
                         {/* Enhanced Glow Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 via-orange-500 to-yellow-600 dark:from-neon-cyan dark:via-blue-500 dark:to-purple-600 rounded-[2rem] blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 animate-pulse-slow"></div>
-                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-purple-600 rounded-[2rem] blur opacity-20 group-hover:opacity-50 transition-opacity duration-500"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 dark:from-cyan-400 dark:via-blue-500 dark:to-purple-500 rounded-[2rem] blur-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-500 animate-pulse-slow"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-600 dark:from-neon-cyan dark:to-purple-600 rounded-[2rem] blur-xl opacity-40 group-hover:opacity-70 transition-opacity duration-500"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-300 to-orange-400 dark:from-cyan-300 dark:to-purple-400 rounded-[2rem] blur-md opacity-30 group-hover:opacity-60 transition-opacity duration-500"></div>
                         
                         <div className="relative p-1.5 bg-white dark:bg-[#18181b] rounded-[2rem] shadow-xl border border-gray-100 dark:border-white/10 group-hover:border-yellow-400 dark:group-hover:border-neon-cyan transition-colors duration-500"> 
                             <div className="relative overflow-hidden rounded-[1.7rem] w-36 h-36 bg-gray-100 dark:bg-gray-800">

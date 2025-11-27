@@ -51,10 +51,10 @@ const TimelineCard: React.FC<{ item: TimelineItem; isFirst?: boolean; isLast?: b
 const SkillBar: React.FC<{ skill: Skill }> = ({ skill }) => (
     <div>
         <div className="flex justify-between mb-3">
-            <span className="text-sm font-medium text-dark-text-primary dark:text-dark-text-primary">{skill.name}</span>
-            <span className="text-xs font-mono font-semibold text-dark-text-tertiary dark:text-dark-text-tertiary">{skill.level}%</span>
+            <span className="text-sm font-bold text-gray-900 dark:text-white">{skill.name}</span>
+            <span className="text-xs font-mono font-bold text-gray-600 dark:text-gray-400">{skill.level}%</span>
         </div>
-        <div className="w-full bg-dark-card dark:bg-dark-card rounded-full h-2.5 overflow-hidden shadow-neu-inset-sm dark:shadow-neu-inset-sm">
+        <div className="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2.5 overflow-hidden shadow-inner">
             <div 
                 className="bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple h-full rounded-full relative transition-all duration-1000 ease-out w-0 animate-[progressFill_1.2s_ease-out_forwards] shadow-[0_0_10px_rgba(234,179,8,0.4)] dark:shadow-[0_0_10px_rgba(6,182,212,0.4)]" 
                 style={{ width: `${skill.level}%` }}
@@ -117,21 +117,21 @@ const Resume: React.FC = () => {
                 <div className="xl:col-span-4">
                     <div className="sticky top-8 space-y-8">
                         {/* Tech Stack Cloud */}
-                        <div className="p-8 rounded-[2rem] bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
-                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-white/10">Tech Stack</h3>
+                        <div className="p-8 rounded-[2rem] bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border shadow-xl dark:shadow-none transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
+                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-white/10">Tech Stack</h3>
                             <div className="flex flex-wrap gap-3">
                                 {TECH_STACK.flatMap(c => c.technologies).map(tech => (
-                                    <div key={tech.name} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:border-yellow-400 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 transition-all duration-300 cursor-default group/tech">
+                                    <div key={tech.name} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 hover:border-yellow-400 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 transition-all duration-300 cursor-default group/tech">
                                         <span className="text-lg opacity-70 group-hover/tech:opacity-100 transition-all group-hover/tech:scale-110">{tech.icon}</span>
-                                        <span className="text-xs font-bold text-gray-600 dark:text-gray-300 group-hover/tech:text-black dark:group-hover/tech:text-white">{tech.name}</span>
+                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-300 group-hover/tech:text-gray-900 dark:group-hover/tech:text-white">{tech.name}</span>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
                         {/* Skills Bars */}
-                        <div className="p-8 rounded-[2rem] bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
-                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-white/10">Professional Skills</h3>
+                        <div className="p-8 rounded-[2rem] bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border shadow-xl dark:shadow-none transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
+                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-white/10">Professional Skills</h3>
                             <div className="space-y-6">
                                 {SKILLS.map((skill, index) => (
                                     <SkillBar key={index} skill={skill} />
@@ -140,13 +140,13 @@ const Resume: React.FC = () => {
                         </div>
 
                          {/* Languages */}
-                         <div className="p-8 rounded-[2rem] bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
-                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-white/10">Languages</h3>
+                         <div className="p-8 rounded-[2rem] bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border shadow-xl dark:shadow-none transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
+                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-white/10">Languages</h3>
                             <div className="grid grid-cols-2 gap-4">
                                 {LANGUAGES.map((lang, index) => (
-                                    <div key={index} className="p-4 rounded-xl text-center transition-all duration-300 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:border-yellow-400 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 hover:-translate-y-1">
+                                    <div key={index} className="p-4 rounded-xl text-center transition-all duration-300 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 hover:border-yellow-400 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 hover:-translate-y-1">
                                         <div className="text-sm font-bold text-gray-900 dark:text-white mb-1">{lang.name}</div>
-                                        <div className="text-xs text-gray-500 dark:text-gray-400 font-semibold">{lang.level}</div>
+                                        <div className="text-xs text-gray-600 dark:text-gray-400 font-semibold">{lang.level}</div>
                                     </div>
                                 ))}
                             </div>
