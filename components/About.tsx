@@ -90,33 +90,64 @@ const BentoCard: React.FC<{
   );
 };
 
-const ServiceItem: React.FC<{ service: Service }> = ({ service }) => (
-  <div className="flex flex-col h-full justify-between">
-    <div>
-      <div className="w-14 h-14 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-cyan flex items-center justify-center text-2xl mb-6 text-accent-yellow dark:text-neon-cyan shadow-[0_8px_20px_rgba(251,191,36,0.15)] dark:shadow-neon-cyan group-hover:scale-110 group-hover:bg-accent-yellow dark:group-hover:bg-neon-cyan group-hover:text-white dark:group-hover:text-black transition-all duration-500">
-        {service.icon}
-      </div>
-      <h4 className="text-xl font-bold text-gray-900 dark:text-neon-text-primary mb-3 group-hover:text-accent-yellow-dark dark:group-hover:text-neon-cyan transition-colors duration-300">
-        {service.title}
-      </h4>
-      <p className="text-gray-600 dark:text-neon-text-secondary text-sm leading-relaxed mb-6 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-300">
-        {service.description}
-      </p>
-    </div>
+const ServiceItem: React.FC<{ service: Service }> = ({ service }) => {
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
-    {/* Tags */}
-    <div className="flex flex-wrap gap-2 mt-auto">
-      {service.tags?.map((tag, idx) => (
-        <span
-          key={idx}
-          className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-600 dark:text-neon-text-primary bg-gray-50 dark:bg-black border border-gray-200 dark:border-neon-border rounded-lg dark:rounded-none group-hover:border-accent-yellow/50 dark:hover:border-neon-cyan group-hover:text-gray-900 dark:hover:text-neon-cyan group-hover:bg-white dark:hover:bg-black transition-all duration-300 shadow-sm group-hover:shadow-md"
-        >
-          {tag}
-        </span>
-      ))}
+  return (
+    <div className="flex flex-col h-full justify-between">
+      <div>
+        <div className="w-14 h-14 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-cyan flex items-center justify-center text-2xl mb-6 text-accent-yellow dark:text-neon-cyan shadow-[0_8px_20px_rgba(251,191,36,0.15)] dark:shadow-neon-cyan group-hover:scale-110 group-hover:bg-accent-yellow dark:group-hover:bg-neon-cyan group-hover:text-white dark:group-hover:text-black transition-all duration-500">
+          {service.icon}
+        </div>
+        <h4 className="text-xl font-bold text-gray-900 dark:text-neon-text-primary mb-3 group-hover:text-accent-yellow-dark dark:group-hover:text-neon-cyan transition-colors duration-300">
+          {service.title}
+        </h4>
+        
+        {/* Description with line-clamp and hover tooltip */}
+        <div className="relative mb-6">
+          <p 
+            className="text-gray-600 dark:text-neon-text-secondary text-sm leading-relaxed line-clamp-3 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-300"
+            onMouseEnter={() => setShowFullDescription(true)}
+            onMouseLeave={() => setShowFullDescription(false)}
+          >
+            {service.description}
+          </p>
+          
+          {/* Hover tooltip with full description */}
+          {showFullDescription && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute z-50 left-0 right-0 top-full mt-2 p-4 bg-white dark:bg-black border-2 border-accent-yellow dark:border-neon-cyan rounded-xl shadow-2xl dark:shadow-[0_0_30px_rgba(6,182,212,0.3)]"
+              onMouseEnter={() => setShowFullDescription(true)}
+              onMouseLeave={() => setShowFullDescription(false)}
+            >
+              <p className="text-gray-900 dark:text-white text-sm leading-relaxed">
+                {service.description}
+              </p>
+              {/* Arrow indicator */}
+              <div className="absolute -top-2 left-6 w-4 h-4 bg-white dark:bg-black border-l-2 border-t-2 border-accent-yellow dark:border-neon-cyan transform rotate-45"></div>
+            </motion.div>
+          )}
+        </div>
+      </div>
+
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2 mt-auto">
+        {service.tags?.map((tag, idx) => (
+          <span
+            key={idx}
+            className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-600 dark:text-neon-text-primary bg-gray-50 dark:bg-black border border-gray-200 dark:border-neon-border rounded-lg dark:rounded-none group-hover:border-accent-yellow/50 dark:hover:border-neon-cyan group-hover:text-gray-900 dark:hover:text-neon-cyan group-hover:bg-white dark:hover:bg-black transition-all duration-300 shadow-sm group-hover:shadow-md"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const About: React.FC = () => {
   const headerRef = useRef<HTMLElement>(null);
@@ -355,7 +386,7 @@ const About: React.FC = () => {
                 <Tilt3D tiltMaxAngle={10} scale={1.03}>
                   <BentoCard
                     noDefaultBg={true}
-                    className="min-h-[260px] bg-white dark:bg-black border border-gray-100 dark:border-neon-border hover:border-accent-yellow/50 dark:hover:border-neon-cyan group hover:shadow-[0_20px_40px_rgba(251,191,36,0.1)] dark:hover:shadow-neon-cyan"
+                    className="h-[420px] bg-white dark:bg-black border border-gray-100 dark:border-neon-border hover:border-accent-yellow/50 dark:hover:border-neon-cyan group hover:shadow-[0_20px_40px_rgba(251,191,36,0.1)] dark:hover:shadow-neon-cyan"
                   >
                     <ServiceItem service={service} />
                   </BentoCard>
