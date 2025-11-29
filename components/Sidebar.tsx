@@ -6,6 +6,7 @@ import ThemeSwitcher from './ThemeSwitcher.tsx';
 import Magnetic from './Magnetic.tsx';
 import Tilt3D from './Tilt3D.tsx';
 import Particles from './Particles.tsx';
+import WordByWordAnimation from './WordByWordAnimation.tsx';
 import { Page } from '../types.ts';
 
 interface SidebarProps {
@@ -174,7 +175,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                     </motion.div>
                 </Tilt3D>
 
-                {/* Dynamic Greeting */}
+                {/* Dynamic Greeting - Continuous Word by Word Animation */}
                 <motion.div
                     className="text-center mb-3 mt-2 relative overflow-visible py-2"
                     initial={{ opacity: 0 }}
@@ -184,39 +185,17 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                     {/* Glow effect with proper padding */}
                     <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-8 blur-2xl opacity-20 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-pulse"></div>
                     
-                    <p className="text-base font-medium tracking-wide relative z-10">
-                        <motion.span 
-                            className="inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]"
-                            animate={{ 
-                                y: [-20, 0, 0, 0],
-                                opacity: [0, 1, 1, 1]
-                            }}
-                            transition={{ 
-                                duration: 4,
-                                repeat: Infinity,
-                                repeatDelay: 0,
-                                times: [0, 0.15, 0.85, 1],
-                                ease: "easeOut"
-                            }}
-                        >
-                            {greeting},{" "}
-                        </motion.span>
-                        <motion.span 
-                            className="inline-block bg-gradient-to-r from-purple-600 via-pink-600 to-purple-700 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto] font-semibold"
-                            animate={{ 
-                                y: [-20, 0, 0, 0],
-                                opacity: [0, 1, 1, 1]
-                            }}
-                            transition={{ 
-                                duration: 4,
-                                repeat: Infinity,
-                                repeatDelay: 0,
-                                times: [0, 0.2, 0.85, 1],
-                                ease: "easeOut"
-                            }}
-                        >
-                            I'm
-                        </motion.span>
+                    <p className="text-base font-medium tracking-wide relative z-10 flex flex-wrap items-center justify-center gap-x-2">
+                        <WordByWordAnimation
+                            text={`${greeting}, I'm`}
+                            className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto] font-medium"
+                            staggerDelay={0.15}
+                            initialDelay={0.5}
+                            dropDistance={30}
+                            animationDuration={0.6}
+                            repeat={true}
+                            repeatDelay={3}
+                        />
                     </p>
                 </motion.div>
 
@@ -227,13 +206,24 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.6 }}
                 >
-                    <h1 className="text-3xl font-extrabold tracking-tight mb-2 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                    <motion.h1 
+                        className="text-3xl font-extrabold tracking-tight mb-2 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.8, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    >
                         {PERSONAL_INFO.name}
-                    </h1>
+                    </motion.h1>
                     <motion.div 
                         className="inline-block px-4 py-1.5 rounded-lg bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/5 backdrop-blur-sm"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ 
+                            delay: 1.2,
+                            duration: 0.5,
+                            ease: [0.34, 1.56, 0.64, 1] // Bouncy easing
+                        }}
                         whileHover={{ scale: 1.05, borderColor: 'rgba(250, 204, 21, 0.3)' }}
-                        transition={{ duration: 0.2 }}
                     >
                         {PERSONAL_INFO.title}
                     </motion.div>
