@@ -16,7 +16,7 @@ const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ onClick, progress
     <div 
       className={`z-50 transition-all duration-500 ease-out
         ${isMobileView 
-          ? 'fixed right-6 bottom-24' // Mobile: Fixed to viewport
+          ? 'fixed right-6 bottom-36' // Mobile: Fixed to viewport, positioned comfortably above navbar
           : 'absolute right-8 bottom-8' // Desktop: Absolute to the content wrapper
         }`}
     >
