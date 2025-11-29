@@ -127,33 +127,49 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                             ease: 'easeInOut' 
                         }}
                     >
-                        {/* Enhanced Glow Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 dark:from-cyan-400 dark:via-blue-500 dark:to-purple-500 rounded-[2rem] blur-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-500 animate-pulse-slow"></div>
-                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-600 dark:from-neon-cyan dark:to-purple-600 rounded-[2rem] blur-xl opacity-40 group-hover:opacity-70 transition-opacity duration-500"></div>
-                        <div className="absolute inset-0 bg-gradient-to-br from-amber-300 to-orange-400 dark:from-cyan-300 dark:to-purple-400 rounded-[2rem] blur-md opacity-30 group-hover:opacity-60 transition-opacity duration-500"></div>
+                        {/* Premium Glow Effect - Extended outward for better separation */}
+                        <div className="absolute -inset-6 bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 dark:from-cyan-400 dark:via-blue-500 dark:to-purple-500 rounded-[3rem] blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse-slow -z-20"></div>
+                        <div className="absolute -inset-4 bg-gradient-to-br from-yellow-400 to-orange-600 dark:from-neon-cyan dark:to-purple-600 rounded-[2.8rem] blur-2xl opacity-25 group-hover:opacity-40 transition-opacity duration-500 -z-20"></div>
                         
-                        <div className="relative p-1.5 bg-white dark:bg-[#18181b] rounded-[2rem] shadow-xl border border-gray-100 dark:border-white/10 group-hover:border-yellow-400 dark:group-hover:border-neon-cyan transition-colors duration-500"> 
-                            <div className="relative overflow-hidden rounded-[1.7rem] w-36 h-36 bg-gray-100 dark:bg-gray-800">
-                                <img
-                                    src={PERSONAL_INFO.avatar}
-                                    alt={PERSONAL_INFO.name}
-                                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                                />
+                        {/* Outer frame with premium styling */}
+                        <div className="relative p-2 bg-gradient-to-br from-gray-50 to-white dark:from-[#1a1a1a] dark:to-[#18181b] rounded-[2.2rem] shadow-2xl border-[1.5px] border-gray-200/50 dark:border-white/10 group-hover:border-yellow-400/70 dark:group-hover:border-neon-cyan/70 transition-all duration-500 z-10 isolate">
+                            {/* Inner border for premium effect */}
+                            <div className="p-[3px] bg-gradient-to-br from-yellow-400/20 via-orange-400/10 to-yellow-400/20 dark:from-cyan-400/20 dark:via-purple-400/10 dark:to-cyan-400/20 rounded-[2rem] group-hover:from-yellow-400/40 group-hover:to-orange-400/40 dark:group-hover:from-cyan-400/40 dark:group-hover:to-purple-400/40 transition-all duration-500">
+                                <div className="relative overflow-hidden rounded-[1.9rem] w-40 h-40 bg-white dark:bg-gray-900 ring-1 ring-black/5 dark:ring-white/5">
+                                    <img
+                                        src={PERSONAL_INFO.avatar}
+                                        alt={PERSONAL_INFO.name}
+                                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 select-none"
+                                        style={{ 
+                                            imageRendering: 'auto',
+                                            WebkitFontSmoothing: 'antialiased',
+                                            backfaceVisibility: 'hidden',
+                                            transform: 'translateZ(0)',
+                                            willChange: 'transform'
+                                        }}
+                                        draggable={false}
+                                    />
+                                </div>
                             </div>
                         </div>
                         
-                        {/* Enhanced Status Badge */}
+                        {/* Ultra-Sharp Status Badge with solid background */}
                         <motion.div 
-                            className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white dark:bg-[#222] backdrop-blur-md py-1.5 px-4 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 flex items-center gap-2 z-20 whitespace-nowrap"
+                            className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white dark:bg-[#1f1f1f] py-2 px-5 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)] border-[1.5px] border-gray-200 dark:border-gray-700 flex items-center gap-2.5 z-40 whitespace-nowrap isolate"
                             initial={{ scale: 0, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.3, duration: 0.4, type: 'spring' }}
+                            style={{ 
+                                WebkitFontSmoothing: 'antialiased',
+                                backfaceVisibility: 'hidden',
+                                transform: 'translateZ(0)'
+                            }}
                         >
-                            <span className="relative flex h-2 w-2">
+                            <span className="relative flex h-2.5 w-2.5">
                               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+                              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)] ring-2 ring-green-400/30"></span>
                             </span>
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300">Available</span>
+                            <span className="text-[11px] font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-200" style={{ letterSpacing: '0.08em' }}>Available</span>
                         </motion.div>
                     </motion.div>
                 </Tilt3D>

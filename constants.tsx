@@ -8,7 +8,7 @@ export const PERSONAL_INFO = {
     email: 'info.emredursun@gmail.com',
     phone: '+31 6 2878 8948',
     location: 'Amsterdam, Netherlands',
-    avatar: 'https://www.emredursun.nl/images/profile.png',
+    avatar: '/images/profile.png',
     resumeUrl: '#',
 };
 
