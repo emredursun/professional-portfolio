@@ -75,8 +75,8 @@ const App: React.FC = () => {
       if (isMobileView) {
         if (activePage === 'About') {
           // On About page, show button when user has scrolled down into content
-          // This happens when they've scrolled past the profile section (~400px)
-          shouldShowButton = scrollTop > 400;
+          // This happens when they've scrolled past the profile section (~850px)
+          shouldShowButton = scrollTop > 850;
         } else {
           // For Resume/Projects/Contact on mobile, keep it visible
           shouldShowButton = true;
