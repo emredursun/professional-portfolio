@@ -83,10 +83,15 @@ const App: React.FC = () => {
           showThreshold = contentStart + 300;
       }
 
+      // Control button visibility based on scroll position
       if (scrollTop > showThreshold) {
         setIsScrollButtonVisible(true);
       } else {
-        setIsScrollButtonVisible(false);
+        // Only hide the button if we're on About page (mobile) or desktop
+        // For Resume/Projects/Contact on mobile, keep it visible (controlled by page useEffect)
+        if (!isMobileView || activePage === 'About') {
+          setIsScrollButtonVisible(false);
+        }
       }
     };
 
@@ -100,7 +105,16 @@ const App: React.FC = () => {
         scrollableElement.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [isMobileView]);
+  }, [isMobileView, activePage]);
+
+  // Show scroll button immediately on content pages (Resume, Projects, Contact)
+  // since profile is above and users should have quick access to it
+  useEffect(() => {
+    if (isMobileView && activePage !== 'About') {
+      setIsScrollButtonVisible(true);
+    }
+  }, [isMobileView, activePage]);
+
 
   const scrollToContentTop = useCallback(() => {
     if (contentRef.current) {
