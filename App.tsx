@@ -70,9 +70,15 @@ const App: React.FC = () => {
       setReadingProgress(isNaN(scrolled) ? 0 : scrolled);
       
       // Scroll Button Logic
-      let showThreshold = 300; 
+      let showThreshold = 300; // Default for desktop (scroll inside container)
 
       if (isMobileView && contentRef.current) {
+          // On mobile, the window scrolls. The content is stacked below the Sidebar.
+          // We only want to show the "Scroll to Top" button if the user has scrolled
+          // DEEP into the actual content section.
+          // contentRef.current.offsetTop gives us the Y position where the MainContent starts.
+          // We add a buffer (e.g., 300px) so the button doesn't appear if the user just 
+          // sees the top of the content or if the content is short.
           const contentStart = contentRef.current.offsetTop;
           showThreshold = contentStart + 300;
       }
@@ -101,7 +107,7 @@ const App: React.FC = () => {
       if (isMobileView) {
         const topOffset = contentRef.current.offsetTop;
         window.scrollTo({
-          top: topOffset - 20,
+          top: topOffset,
           behavior: 'smooth',
         });
       } else {
@@ -178,26 +184,11 @@ const App: React.FC = () => {
               isMobileView={isMobileView}
             />
 
-            {/* Main Content Area - Glassmorphism Container Wrapper */}
-            <div className="flex-1 relative h-full">
-              <div 
-                ref={contentRef} 
-                className={`h-full w-full rounded-[2.5rem] transition-all duration-500
-                  ${!isMobileView 
-                    ? 'overflow-hidden bg-white/40 dark:bg-[#121212]/60 border border-white/60 dark:border-white/5 backdrop-blur-3xl shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)]' 
-                    : ''}`}
-              >
-                <MainContent activePage={activePage} isMobileView={isMobileView} />
-              </div>
-
-              {/* Scroll To Top Button - Positioned absolute relative to this wrapper for Desktop */}
-              {isScrollButtonVisible && (
-                <ScrollToTopButton 
-                  onClick={isMobileView ? scrollToWindowTop : scrollToContentTop} 
-                  progress={readingProgress}
-                  isMobileView={isMobileView}
-                />
-              )}
+            <div 
+              ref={contentRef} 
+              className={`flex-1 scroll-smooth transition-all duration-500 ${!isMobileView ? 'overflow-y-auto no-scrollbar rounded-[2.5rem] bg-white/40 dark:bg-[#121212]/60 border border-white/60 dark:border-white/5 backdrop-blur-3xl shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)]' : ''}`}
+            >
+              <MainContent activePage={activePage} isMobileView={isMobileView} />
             </div>
           </div>
 
@@ -205,6 +196,14 @@ const App: React.FC = () => {
             <Navbar 
               activePage={activePage}
               onNavigate={handleNavigation}
+            />
+          )}
+
+          {isScrollButtonVisible && (
+            <ScrollToTopButton 
+              onClick={isMobileView ? scrollToWindowTop : scrollToContentTop} 
+              progress={readingProgress}
+              isMobileView={isMobileView}
             />
           )}
         </main>
