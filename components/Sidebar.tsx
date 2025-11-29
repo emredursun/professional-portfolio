@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { PERSONAL_INFO, SOCIAL_LINKS } from '../constants.tsx';
@@ -7,6 +6,7 @@ import Magnetic from './Magnetic.tsx';
 import Tilt3D from './Tilt3D.tsx';
 import Particles from './Particles.tsx';
 import WordByWordAnimation from './WordByWordAnimation.tsx';
+import AnimatedName from './AnimatedName.tsx';
 import { Page } from '../types.ts';
 
 interface SidebarProps {
@@ -176,7 +176,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                 </Tilt3D>
 
                 {/* Dynamic Greeting - Word by Word Drop Animation */}
-                <div className="text-center mb-3 mt-2 overflow-visible py-2">
+                <div className="text-center mb-2 mt-2 overflow-visible py-2">
                     <p className="text-lg font-semibold flex flex-wrap items-center justify-center gap-x-2">
                         <WordByWordAnimation
                             text={`${greeting},`}
@@ -186,36 +186,39 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                             dropDistance={35}
                             animationDuration={0.8}
                             repeat={true}
-                            repeatDelay={2.5}
+                            repeatDelay={3.5}
                         />
                         <WordByWordAnimation
                             text="I'm"
                             className="bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-400 dark:to-orange-400 bg-clip-text text-transparent font-bold"
                             staggerDelay={0.35}
-                            initialDelay={1.2}
+                            initialDelay={1.85}
                             dropDistance={35}
                             animationDuration={0.8}
                             repeat={true}
-                            repeatDelay={2.5}
+                            repeatDelay={3.5}
                         />
                     </p>
                 </div>
 
-                {/* Identity with Gradient Name */}
+                {/* Identity with Animated Name */}
                 <motion.div 
-                    className="text-center mb-2"
+                    className="text-center mb-5"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.6 }}
                 >
-                    <motion.h1 
-                        className="text-3xl font-extrabold tracking-tight mb-2 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]"
+                    <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.8, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        className="mb-3"
                     >
-                        {PERSONAL_INFO.name}
-                    </motion.h1>
+                        <AnimatedName 
+                            name={PERSONAL_INFO.name} 
+                            variant="hacker"
+                        />
+                    </motion.div>
                     <motion.div 
                         className="inline-block px-4 py-1.5 rounded-lg bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/5 backdrop-blur-sm"
                         initial={{ opacity: 0, scale: 0.8 }}
