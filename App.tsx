@@ -70,29 +70,23 @@ const App: React.FC = () => {
       setReadingProgress(isNaN(scrolled) ? 0 : scrolled);
       
       // Scroll Button Logic
-      let showThreshold = 300; // Default for desktop (scroll inside container)
+      let shouldShowButton = false;
 
-      if (isMobileView && contentRef.current) {
-          // On mobile, the window scrolls. The content is stacked below the Sidebar.
-          // We only want to show the "Scroll to Top" button if the user has scrolled
-          // DEEP into the actual content section.
-          // contentRef.current.offsetTop gives us the Y position where the MainContent starts.
-          // We add a buffer (e.g., 300px) so the button doesn't appear if the user just 
-          // sees the top of the content or if the content is short.
-          const contentStart = contentRef.current.offsetTop;
-          showThreshold = contentStart + 300;
-      }
-
-      // Control button visibility based on scroll position
-      if (scrollTop > showThreshold) {
-        setIsScrollButtonVisible(true);
-      } else {
-        // Only hide the button if we're on About page (mobile) or desktop
-        // For Resume/Projects/Contact on mobile, keep it visible (controlled by page useEffect)
-        if (!isMobileView || activePage === 'About') {
-          setIsScrollButtonVisible(false);
+      if (isMobileView) {
+        if (activePage === 'About') {
+          // On About page, show button when user has scrolled down into content
+          // This happens when they've scrolled past the profile section (~400px)
+          shouldShowButton = scrollTop > 400;
+        } else {
+          // For Resume/Projects/Contact on mobile, keep it visible
+          shouldShowButton = true;
         }
+      } else {
+        // Desktop: show after scrolling 300px in the content container
+        shouldShowButton = scrollTop > 300;
       }
+
+      setIsScrollButtonVisible(shouldShowButton);
     };
 
     const scrollableElement = isMobileView ? window : contentRef.current;
