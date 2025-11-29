@@ -175,29 +175,31 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                     </motion.div>
                 </Tilt3D>
 
-                {/* Dynamic Greeting - Continuous Word by Word Animation */}
-                <motion.div
-                    className="text-center mb-3 mt-2 relative overflow-visible py-2"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3, duration: 0.6 }}
-                >
-                    {/* Glow effect with proper padding */}
-                    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-8 blur-2xl opacity-20 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-pulse"></div>
-                    
-                    <p className="text-base font-medium tracking-wide relative z-10 flex flex-wrap items-center justify-center gap-x-2">
+                {/* Dynamic Greeting - Word by Word Drop Animation */}
+                <div className="text-center mb-3 mt-2 overflow-visible py-2">
+                    <p className="text-lg font-semibold flex flex-wrap items-center justify-center gap-x-2">
                         <WordByWordAnimation
-                            text={`${greeting}, I'm`}
-                            className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto] font-medium"
-                            staggerDelay={0.15}
+                            text={`${greeting},`}
+                            className="bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 dark:from-cyan-400 dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent font-bold"
+                            staggerDelay={0.35}
                             initialDelay={0.5}
-                            dropDistance={30}
-                            animationDuration={0.6}
+                            dropDistance={35}
+                            animationDuration={0.8}
                             repeat={true}
-                            repeatDelay={3}
+                            repeatDelay={2.5}
+                        />
+                        <WordByWordAnimation
+                            text="I'm"
+                            className="bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-400 dark:to-orange-400 bg-clip-text text-transparent font-bold"
+                            staggerDelay={0.35}
+                            initialDelay={1.2}
+                            dropDistance={35}
+                            animationDuration={0.8}
+                            repeat={true}
+                            repeatDelay={2.5}
                         />
                     </p>
-                </motion.div>
+                </div>
 
                 {/* Identity with Gradient Name */}
                 <motion.div 
