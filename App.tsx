@@ -113,7 +113,14 @@ const App: React.FC = () => {
   const scrollToContentTop = useCallback(() => {
     if (contentRef.current) {
       if (isMobileView) {
-        const topOffset = contentRef.current.offsetTop;
+        // On mobile, we need to scroll the window to the top of the content container
+        // Since contentRef is now inside a relative wrapper, offsetTop might be 0 relative to wrapper
+        // So we use getBoundingClientRect to get the absolute position
+        const element = contentRef.current;
+        const rect = element.getBoundingClientRect();
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const topOffset = rect.top + scrollTop - 20; // -20 for some padding/margin
+
         window.scrollTo({
           top: topOffset,
           behavior: 'smooth',
@@ -192,11 +199,21 @@ const App: React.FC = () => {
               isMobileView={isMobileView}
             />
 
-            <div 
-              ref={contentRef} 
-              className={`flex-1 scroll-smooth transition-all duration-500 ${!isMobileView ? 'overflow-y-auto no-scrollbar rounded-[2.5rem] bg-white/40 dark:bg-[#121212]/60 border border-white/60 dark:border-white/5 backdrop-blur-3xl shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)]' : ''}`}
-            >
-              <MainContent activePage={activePage} isMobileView={isMobileView} />
+            <div className={`relative flex-1 ${!isMobileView ? 'rounded-[2.5rem] bg-white/40 dark:bg-[#121212]/60 border border-white/60 dark:border-white/5 backdrop-blur-3xl shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)]' : ''}`}>
+              <div 
+                ref={contentRef} 
+                className={`w-full h-full scroll-smooth transition-all duration-500 ${!isMobileView ? 'overflow-y-auto no-scrollbar rounded-[2.5rem]' : ''}`}
+              >
+                <MainContent activePage={activePage} isMobileView={isMobileView} />
+              </div>
+
+              {isScrollButtonVisible && (
+                <ScrollToTopButton 
+                  onClick={isMobileView ? scrollToWindowTop : scrollToContentTop} 
+                  progress={readingProgress}
+                  isMobileView={isMobileView}
+                />
+              )}
             </div>
           </div>
 
@@ -204,14 +221,6 @@ const App: React.FC = () => {
             <Navbar 
               activePage={activePage}
               onNavigate={handleNavigation}
-            />
-          )}
-
-          {isScrollButtonVisible && (
-            <ScrollToTopButton 
-              onClick={isMobileView ? scrollToWindowTop : scrollToContentTop} 
-              progress={readingProgress}
-              isMobileView={isMobileView}
             />
           )}
         </main>
