@@ -228,16 +228,37 @@ tailwind.config = {
 
 ## 🌐 Deployment
 
-### **Recommended Platforms**
+### **Firebase Hosting (Current)**
 
-| Platform         | Best For                | Deploy Command                      |
-| ---------------- | ----------------------- | ----------------------------------- |
-| **Vercel**       | Zero-config React apps  | `vercel --prod`                     |
-| **Netlify**      | Static sites with CI/CD | `netlify deploy --prod`             |
-| **GitHub Pages** | Free hosting            | `npm run build && gh-pages -d dist` |
+This portfolio is deployed on **Firebase Hosting** with Google Analytics integration.
 
-> [!NOTE]
-> The project includes pre-configured `robots.txt`, `sitemap.xml`, and `site.webmanifest` for production deployment.
+**Live Site:** [https://emredursun-portfolio.web.app](https://emredursun-portfolio.web.app)
+
+#### Deploy Your Own
+
+```bash
+# Install Firebase CLI
+npm install -g firebase-tools
+
+# Login to Firebase
+firebase login
+
+# Deploy to production
+npm run build
+firebase deploy
+```
+
+#### Features Included
+
+- ✅ **Security Headers** — X-Frame-Options, Content-Security-Policy, etc.
+- ✅ **SSL/HTTPS** — Automatic certificate provisioning
+- ✅ **Global CDN** — Fast delivery worldwide
+- ✅ **Google Analytics** — Integrated tracking
+- ✅ **SPA Routing** — All routes handled correctly
+- ✅ **Optimized Caching** — Static assets cached for 1 year
+
+> [!TIP]
+> Configuration files included: `firebase.json`, `.firebaserc`, `robots.txt`, `sitemap.xml`, and `site.webmanifest`
 
 <br/>
 
