@@ -9,6 +9,10 @@
       content="Emre Dursun — ISTQB® Certified Full-Stack Automation Engineer specializing in automation frameworks, CI/CD, API, UI & DB testing. Based in the Netherlands."
     />
     <meta name="author" content="Emre Dursun" />
+    <meta
+      name="keywords"
+      content="Automation Engineer, ISTQB Certified, Test Automation, CI/CD, Selenium, Playwright, Java, TypeScript, Netherlands, Full-Stack Engineer, API Testing, UI Testing, Cucumber, Azure DevOps, Amsterdam, Cypress, Jenkins, Docker"
+    />
 
     <meta
       property="og:title"
@@ -60,9 +64,10 @@
     <link rel="manifest" href="/site.webmanifest" />
     <!-- Safari Pinned Tab icon - optional, can be added if needed -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileColor" content="#0a0a0a" />
     <!-- Windows tile config - optional, can be added if needed -->
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 
     <script type="application/ld+json">
       {
@@ -89,6 +94,42 @@
           "addressLocality": "Netherlands",
           "addressCountry": "NL"
         }
+      }
+    </script>
+
+    <!-- WebSite Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Emre Dursun Portfolio",
+        "url": "https://emredursun.nl",
+        "author": {
+          "@type": "Person",
+          "name": "Emre Dursun"
+        },
+        "description": "Professional portfolio of Emre Dursun, ISTQB® Certified Full-Stack Automation Engineer",
+        "inLanguage": "en"
+      }
+    </script>
+
+    <!-- ProfessionalService Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Emre Dursun - Automation Engineering Services",
+        "serviceType": "Test Automation & CI/CD",
+        "provider": {
+          "@type": "Person",
+          "name": "Emre Dursun",
+          "jobTitle": "ISTQB® Certified Full-Stack Automation Engineer"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "Netherlands"
+        },
+        "description": "Professional test automation and CI/CD services including framework development, API testing, and full-stack automation solutions"
       }
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -350,6 +391,16 @@
           "react": "https://aistudiocdn.com/react@^19.2.0"
         }
       }
+    </script>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X74Z930BRH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-X74Z930BRH');
     </script>
   </head>
   <body>
