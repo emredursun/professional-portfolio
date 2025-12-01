@@ -39,6 +39,11 @@ const App: React.FC = () => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  // Track page changes with favicon controller
+  useEffect(() => {
+    faviconController.setPageContext(activePage as 'About' | 'Resume' | 'Projects' | 'Contact');
+  }, [activePage]);
+
   // Initialize animated favicon controller
   useEffect(() => {
     // Expose to window for debugging (optional, can be removed in production)
