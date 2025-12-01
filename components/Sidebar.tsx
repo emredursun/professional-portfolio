@@ -220,7 +220,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                         />
                     </motion.div>
                     <motion.div 
-                        className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200 dark:border-white/5 backdrop-blur-sm overflow-hidden"
+                        className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-700 dark:text-gray-300 shadow-sm dark:shadow-[0_4px_16px_rgba(6,182,212,0.3)] border border-gray-200 dark:border-white/5 backdrop-blur-sm overflow-hidden"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ 
