@@ -10,6 +10,7 @@ class FaviconController {
   private faviconLink: HTMLLinkElement | null = null;
   private originalTitle: string = '';
   private blinkInterval: number | null = null;
+  private badgeCount: number = 0;
 
   private icons = {
     default: '/favicon-96x96.png',
@@ -140,6 +141,80 @@ class FaviconController {
    */
   getCurrentState(): FaviconState {
     return this.currentState;
+  }
+
+  /**
+   * Set badge count on favicon (e.g., unread messages)
+   */
+  setBadgeCount(count: number): void {
+    this.badgeCount = Math.max(0, count);
+    this.updateFaviconWithBadge();
+  }
+
+  /**
+   * Update favicon with badge overlay
+   */
+  private async updateFaviconWithBadge(): Promise<void> {
+    if (this.badgeCount === 0) {
+      // No badge, show normal favicon
+      this.setState(this.currentState);
+      return;
+    }
+
+    try {
+      // Load current favicon image
+      const currentIcon = this.icons[this.currentState];
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const size = 96;
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        
+        if (!ctx) return;
+        
+        // Draw original favicon
+        ctx.drawImage(img, 0, 0, size, size);
+        
+        // Draw badge
+        const badgeSize = 32;
+        const badgeX = size - badgeSize;
+        const badgeY = 0;
+        
+        // Badge background
+        ctx.fillStyle = '#ef4444'; // red-500
+        ctx.beginPath();
+        ctx.arc(badgeX + badgeSize/2, badgeY + badgeSize/2, badgeSize/2, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Badge border
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        
+        // Badge text
+        const badgeText = this.badgeCount > 9 ? '9+' : this.badgeCount.toString();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 20px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(badgeText, badgeX + badgeSize/2, badgeY + badgeSize/2 + 1);
+        
+        // Update favicon
+        if (this.faviconLink) {
+          this.faviconLink.href = canvas.toDataURL();
+        }
+      };
+      
+      img.src = currentIcon;
+    } catch (error) {
+      console.error('Failed to create badge favicon:', error);
+      // Fallback to normal favicon
+      this.setState(this.currentState);
+    }
   }
 
   /**
