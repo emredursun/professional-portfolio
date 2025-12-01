@@ -11,6 +11,7 @@ import ParticleBackground from './components/ParticleBackground.tsx';
 import FloatingElements from './components/FloatingElements.tsx';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
 import { Page } from './types.ts';
+import { faviconController } from './src/utils/faviconController';
 
 const App: React.FC = () => {
   const [activePage, setActivePage] = useState<Page>('About');
@@ -37,6 +38,22 @@ const App: React.FC = () => {
     }
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  // Initialize animated favicon controller
+  useEffect(() => {
+    // Expose to window for debugging (optional, can be removed in production)
+    if (typeof window !== 'undefined') {
+      (window as any).faviconController = faviconController;
+    }
+    
+    // The controller is automatically initialized on import and starts working
+    // It will automatically switch favicons when tab visibility changes
+    
+    // Optional: Uncomment to test notification faviconafter 5 seconds
+    // setTimeout(() => {
+    //   faviconController.showNotification('Check this out!');
+    // }, 5000);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
