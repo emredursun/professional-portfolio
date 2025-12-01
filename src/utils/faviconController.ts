@@ -12,9 +12,9 @@ class FaviconController {
   private blinkInterval: number | null = null;
 
   private icons = {
-    default: '/android-chrome-192x192.png',
-    pulse: '/android-chrome-192x192.png', // Will be replaced with animated version later
-    notification: '/android-chrome-192x192.png', // Will be replaced with notification version later
+    default: '/favicon-96x96.png',
+    pulse: '/favicon-pulse-96x96.png',
+    notification: '/favicon-notification-96x96.png',
   };
 
   constructor() {
