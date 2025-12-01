@@ -239,8 +239,12 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                             }
                         }}
                     >
-                        {/* Animated shimmer overlay */}
-                        <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                        {/* Continuous shimmer overlay - always animating */}
+                        <div className="absolute inset-0 animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                        
+                        {/* Gradient glow border on hover */}
+                        <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-yellow-400/20 via-amber-400/30 to-yellow-400/20 dark:from-cyan-400/20 dark:via-blue-400/30 dark:to-cyan-400/20 blur-sm -z-10"></div>
+                        
                         <i className="fas fa-certificate text-base relative z-10"></i>
                         <span className="relative z-10" style={{ wordSpacing: '0.15em' }}>{PERSONAL_INFO.title}</span>
                     </motion.div>
