@@ -67,27 +67,84 @@ const ConfettiCanvas: React.FC = () => {
 
 const Contact: React.FC = () => {
     const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
+    const [formStartTime, setFormStartTime] = useState<number>(0);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const form = event.currentTarget;
+        const formData = new FormData(form);
+        
+        // Add Web3Forms access key
+        formData.append("access_key", "309ce373-4042-4a9a-b924-e7684e84ba0a");
+        
+        // Track form submission attempt
+        const formDuration = formStartTime ? Date.now() - formStartTime : 0;
+        
         setSubmissionStatus('submitting');
+        
+        // Show loading favicon
+        if (typeof window !== 'undefined' && (window as any).faviconController) {
+            (window as any).faviconController.showLoading();
+        }
+        
+        // Track with Plausible if available
+        if (typeof window !== 'undefined' && (window as any).plausible) {
+            (window as any).plausible('form_submit', { 
+                props: { duration: formDuration } 
+            });
+        }
 
         try {
-            // Simulate an API call that might fail
-            await new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    if (Math.random() > 0.1) { // 90% success rate
-                        resolve('Success!');
-                    } else {
-                        reject(new Error('Failed to send message.'));
-                    }
-                }, 1500);
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData
             });
-            setSubmissionStatus('success');
-            form.reset();
+
+            const data = await response.json();
+
+            if (data.success) {
+                setSubmissionStatus('success');
+                form.reset();
+                setFormStartTime(0);
+                
+                // Hide loading and show notification
+                if (typeof window !== 'undefined' && (window as any).faviconController) {
+                    (window as any).faviconController.hideLoading();
+                    (window as any).faviconController.showNotification('Message sent! ✉️', 8000);
+                }
+                
+                // Track success
+                if (typeof window !== 'undefined' && (window as any).plausible) {
+                    (window as any).plausible('form_success');
+                }
+            } else {
+                throw new Error(data.message || 'Failed to send message');
+            }
         } catch (error) {
+            console.error('Form submission error:', error);
             setSubmissionStatus('error');
+            
+            // Hide loading
+            if (typeof window !== 'undefined' && (window as any).faviconController) {
+                (window as any).faviconController.hideLoading();
+            }
+            
+            // Track error
+            if (typeof window !== 'undefined' && (window as any).plausible) {
+                (window as any).plausible('form_error');
+            }
+        }
+    };
+
+    // Track form start
+    const handleFormFocus = () => {
+        if (!formStartTime) {
+            setFormStartTime(Date.now());
+            
+            // Track form start
+            if (typeof window !== 'undefined' && (window as any).plausible) {
+                (window as any).plausible('form_start');
+            }
         }
     };
 
@@ -130,28 +187,34 @@ const Contact: React.FC = () => {
                             <div className="group">
                                 <input
                                     type="text"
+                                    name="name"
                                     placeholder="Full Name"
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                                     required
                                     disabled={submissionStatus === 'submitting'}
+                                    onFocus={handleFormFocus}
                                 />
                             </div>
                             <div className="group">
                                 <input
                                     type="email"
+                                    name="email"
                                     placeholder="Email Address"
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                                     required
                                     disabled={submissionStatus === 'submitting'}
+                                    onFocus={handleFormFocus}
                                 />
                             </div>
                             <div className="group">
                                 <textarea
+                                    name="message"
                                     placeholder="Your Message"
                                     rows={5}
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)] resize-none"
                                     required
                                     disabled={submissionStatus === 'submitting'}
+                                    onFocus={handleFormFocus}
                                 ></textarea>
                             </div>
                             <button
