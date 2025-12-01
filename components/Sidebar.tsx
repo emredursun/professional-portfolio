@@ -220,17 +220,29 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                         />
                     </motion.div>
                     <motion.div 
-                        className="inline-block px-4 py-1.5 rounded-lg bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/5 backdrop-blur-sm"
+                        className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-700 dark:text-gray-300 shadow-sm border border-gray-200 dark:border-white/5 backdrop-blur-sm overflow-hidden"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ 
                             delay: 1.2,
                             duration: 0.5,
-                            ease: [0.34, 1.56, 0.64, 1] // Bouncy easing
+                            ease: [0.34, 1.56, 0.64, 1]
                         }}
-                        whileHover={{ scale: 1.05, borderColor: 'rgba(250, 204, 21, 0.3)' }}
+                        whileHover={{ 
+                            scale: 1.05,
+                            y: -2,
+                            boxShadow: '0 8px 24px rgba(251,191,36,0.6)',
+                            transition: {
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 10
+                            }
+                        }}
                     >
-                        {PERSONAL_INFO.title}
+                        {/* Animated shimmer overlay */}
+                        <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                        <i className="fas fa-certificate text-base relative z-10"></i>
+                        <span className="relative z-10" style={{ wordSpacing: '0.15em' }}>{PERSONAL_INFO.title}</span>
                     </motion.div>
                 </motion.div>
             </motion.div>
