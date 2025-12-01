@@ -46,7 +46,7 @@ const BentoCard: React.FC<{
 
   const baseClasses = noDefaultBg
     ? `relative overflow-hidden rounded-2xl transition-all duration-500`
-    : `relative overflow-hidden rounded-2xl bg-white dark:bg-neon-bg border border-gray-100 dark:border-neon-border shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-none hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] dark:hover:shadow-neon-white transition-all duration-500`;
+    : `relative overflow-hidden rounded-2xl bg-white dark:bg-neon-bg border border-gray-100 dark:border-neon-border shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-none hover:border-yellow-600 dark:hover:border-neon-cyan hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.8)] dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] hover:-translate-y-1 transition-all duration-500`;
 
   return (
     <div
@@ -313,7 +313,7 @@ const About: React.FC = () => {
                   ].map((badge, idx) => (
                     <motion.div
                       key={idx}
-                      className="bg-white dark:bg-black border border-gray-200 dark:border-neon-cyan/50 rounded-xl dark:rounded-none px-4 py-2.5 text-sm font-bold text-gray-900 dark:text-white flex items-center gap-3 shadow-sm transition-all duration-300 hover:bg-accent-yellow dark:hover:bg-neon-cyan hover:border-accent-yellow dark:hover:border-neon-cyan hover:text-black dark:hover:text-white hover:shadow-[0_0_20px_rgba(251,191,36,0.4)] dark:hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+                      className="bg-white dark:bg-black border border-gray-200 dark:border-neon-cyan/50 rounded-xl dark:rounded-none px-4 py-2.5 text-sm font-bold text-gray-900 dark:text-white flex items-center gap-3 shadow-sm transition-all duration-300 hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 hover:border-yellow-600 dark:hover:border-neon-cyan hover:text-gray-900 dark:hover:text-white hover:shadow-[0_0_20px_rgba(234,179,8,0.6)] dark:hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
                       variants={{
                         hidden: { opacity: 0, x: -20 },
                         visible: { opacity: 1, x: 0 },
@@ -431,7 +431,7 @@ const About: React.FC = () => {
               >
                 <BentoCard
                   noDefaultBg={true}
-                  className="h-[440px] bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border hover:border-accent-yellow/50 dark:hover:border-neon-cyan group hover:shadow-[0_30px_60px_-15px_rgba(251,191,36,0.2)] dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] transition-all duration-500 hover:-translate-y-1"
+                  className="h-[440px] bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border hover:border-yellow-600 dark:hover:border-neon-cyan group hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.8)] dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] transition-all duration-500 hover:-translate-y-1"
                 >
                   <ServiceItem service={service} />
                 </BentoCard>
