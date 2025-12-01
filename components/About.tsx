@@ -313,14 +313,13 @@ const About: React.FC = () => {
                   ].map((badge, idx) => (
                     <motion.div
                       key={idx}
-                      className="bg-white dark:bg-black border border-gray-200 dark:border-neon-cyan/50 rounded-xl dark:rounded-none px-4 py-2.5 text-sm font-bold text-gray-900 dark:text-white flex items-center gap-3 shadow-sm transition-all duration-300 hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 hover:border-yellow-600 dark:hover:border-neon-cyan hover:text-gray-900 dark:hover:text-white hover:shadow-[0_0_20px_rgba(234,179,8,0.6)] dark:hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+                      className="group/badge relative bg-gradient-to-br from-yellow-400 to-amber-500 dark:from-cyan-400 dark:to-blue-500 border border-yellow-500 dark:border-cyan-400 rounded-xl dark:rounded-none px-4 py-2.5 text-sm font-bold text-black dark:text-black flex items-center gap-3 shadow-[0_4px_16px_rgba(251,191,36,0.3)] dark:shadow-[0_4px_16px_rgba(6,182,212,0.4)] transition-all duration-500 ease-out hover:bg-gradient-to-br hover:from-yellow-400 hover:to-amber-500 dark:hover:bg-gray-900 hover:border-yellow-500 dark:hover:border-cyan-300 hover:text-white dark:hover:text-white hover:shadow-[0_12px_32px_rgba(251,191,36,0.8)] dark:hover:shadow-[0_8px_24px_rgba(6,182,212,0.6)] hover:scale-110 hover:-translate-y-2"
                       variants={{
                         hidden: { opacity: 0, x: -20 },
                         visible: { opacity: 1, x: 0 },
                       }}
-                      whileHover={{ scale: 1.05 }}
                     >
-                      <i className={`fas ${badge.icon} text-lg`}></i>{" "}
+                      <i className={`fas ${badge.icon} text-lg transition-all duration-500 group-hover/badge:scale-110 group-hover/badge:rotate-12`}></i>{" "}
                       {badge.text}
                     </motion.div>
                   ))}
