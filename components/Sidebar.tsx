@@ -220,7 +220,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                         />
                     </motion.div>
                     <motion.div 
-                        className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-700 dark:text-gray-300 shadow-sm dark:shadow-[0_4px_16px_rgba(6,182,212,0.3)] border border-gray-200 dark:border-white/5 backdrop-blur-sm overflow-hidden"
+                        className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-700 dark:text-gray-300 shadow-[0_4px_12px_rgba(251,191,36,0.3)] dark:shadow-[0_4px_16px_rgba(6,182,212,0.5)] border border-gray-200 dark:border-white/5 backdrop-blur-sm overflow-hidden"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ 
@@ -239,8 +239,8 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                             }
                         }}
                     >
-                        {/* Continuous shimmer overlay - always animating */}
-                        <div className="absolute inset-0 animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                        {/* Continuous shimmer overlay - visible in both themes */}
+                        <div className="absolute inset-0 animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-amber-200/60 dark:via-white/30 to-transparent"></div>
                         
                         {/* Gradient glow border on hover */}
                         <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-yellow-400/20 via-amber-400/30 to-yellow-400/20 dark:from-cyan-400/20 dark:via-blue-400/30 dark:to-cyan-400/20 blur-sm -z-10"></div>
