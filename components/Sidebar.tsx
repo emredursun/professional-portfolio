@@ -10,11 +10,11 @@ import AnimatedName from './AnimatedName.tsx';
 import { Page } from '../types.ts';
 
 interface SidebarProps {
-  theme: string;
-  toggleTheme: () => void;
-  activePage: Page;
-  onNavigate: (page: Page) => void;
-  isMobileView: boolean;
+    theme: string;
+    toggleTheme: () => void;
+    activePage: Page;
+    onNavigate: (page: Page) => void;
+    isMobileView: boolean;
 }
 
 const pages: { label: Page; icon: React.ReactNode }[] = [
@@ -25,9 +25,9 @@ const pages: { label: Page; icon: React.ReactNode }[] = [
 ];
 
 const NavButton: React.FC<{
-  page: { label: Page; icon: React.ReactNode };
-  isActive: boolean;
-  onNavigate: (page: Page) => void;
+    page: { label: Page; icon: React.ReactNode };
+    isActive: boolean;
+    onNavigate: (page: Page) => void;
 }> = React.memo(({ page, isActive, onNavigate }) => (
     <li>
         <Magnetic>
@@ -52,9 +52,10 @@ const NavButton: React.FC<{
 // Dynamic greeting based on time of day
 const getGreeting = (): string => {
     const hour = new Date().getHours();
-    if (hour < 12) return "Good Morning";
-    if (hour < 18) return "Good Afternoon";
-    return "Good Evening";
+    if (hour >= 0 && hour < 6) return "Good Night";
+    if (hour >= 6 && hour < 12) return "Good Morning";
+    if (hour >= 12 && hour < 18) return "Good Afternoon";
+    return "Good Evening"; // 18:00 - 24:00
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNavigate, isMobileView }) => {
@@ -90,17 +91,17 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
     const isDirectDownload = PERSONAL_INFO.resumeUrl && PERSONAL_INFO.resumeUrl !== '#';
 
     return (
-        <aside 
+        <aside
             ref={sidebarRef}
             onMouseMove={handleMouseMove}
             className={`relative bg-white/70 dark:bg-[#121212]/80 backdrop-blur-2xl rounded-[2.5rem] border border-white/60 dark:border-white/5 shadow-2xl dark:shadow-[0_0_40px_-5px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden group/sidebar
             ${isMobileView ? 'w-full' : 'w-[360px] shrink-0 h-full max-h-[calc(100vh-4rem)] sticky top-8'}`}
         >
-             {/* Animated Background Particles */}
-             <Particles count={25} />
+            {/* Animated Background Particles */}
+            <Particles count={25} />
 
-             {/* Interactive Spotlight Effect */}
-             <div 
+            {/* Interactive Spotlight Effect */}
+            <div
                 className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover/sidebar:opacity-100 z-50 rounded-[2.5rem]"
                 style={{
                     background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.05), transparent 40%)`,
@@ -110,28 +111,28 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
             <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} />
 
             {/* Profile Header */}
-            <motion.div 
+            <motion.div
                 className="pt-10 px-8 pb-6 flex flex-col items-center relative z-10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
             >
-                
+
                 {/* Avatar Container with Status */}
                 <Tilt3D tiltMaxAngle={10} scale={1.05}>
-                    <motion.div 
+                    <motion.div
                         className="relative mb-6 group cursor-pointer"
                         animate={{ y: [0, -8, 0] }}
-                        transition={{ 
-                            duration: 4, 
-                            repeat: Infinity, 
-                            ease: 'easeInOut' 
+                        transition={{
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: 'easeInOut'
                         }}
                     >
                         {/* Premium Glow Effect - Extended outward for better separation */}
                         <div className="absolute -inset-6 bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 dark:from-cyan-400 dark:via-blue-500 dark:to-purple-500 rounded-[3rem] blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse-slow -z-20"></div>
                         <div className="absolute -inset-4 bg-gradient-to-br from-yellow-400 to-orange-600 dark:from-neon-cyan dark:to-purple-600 rounded-[2.8rem] blur-2xl opacity-25 group-hover:opacity-40 transition-opacity duration-500 -z-20"></div>
-                        
+
                         {/* Outer frame with premium styling */}
                         <div className="relative p-2 bg-gradient-to-br from-gray-50 to-white dark:from-[#1a1a1a] dark:to-[#18181b] rounded-[2.2rem] shadow-2xl border-[1.5px] border-gray-200/50 dark:border-white/10 group-hover:border-yellow-400/70 dark:group-hover:border-neon-cyan/70 transition-all duration-500 z-10 isolate">
                             {/* Inner border for premium effect */}
@@ -141,7 +142,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                                         src={PERSONAL_INFO.avatar}
                                         alt={PERSONAL_INFO.name}
                                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 select-none"
-                                        style={{ 
+                                        style={{
                                             imageRendering: 'auto',
                                             WebkitFontSmoothing: 'antialiased',
                                             backfaceVisibility: 'hidden',
@@ -153,22 +154,22 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                                 </div>
                             </div>
                         </div>
-                        
+
                         {/* Ultra-Sharp Status Badge with solid background */}
-                        <motion.div 
+                        <motion.div
                             className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white dark:bg-[#1f1f1f] py-2 px-5 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)] border-[1.5px] border-gray-200 dark:border-gray-700 flex items-center gap-2.5 z-40 whitespace-nowrap isolate"
                             initial={{ scale: 0, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.3, duration: 0.4, type: 'spring' }}
-                            style={{ 
+                            style={{
                                 WebkitFontSmoothing: 'antialiased',
                                 backfaceVisibility: 'hidden',
                                 transform: 'translateZ(0)'
                             }}
                         >
                             <span className="relative flex h-2.5 w-2.5">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)] ring-2 ring-green-400/30"></span>
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)] ring-2 ring-green-400/30"></span>
                             </span>
                             <span className="text-[11px] font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-200" style={{ letterSpacing: '0.08em' }}>Available</span>
                         </motion.div>
@@ -202,7 +203,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                 </div>
 
                 {/* Identity with Animated Name */}
-                <motion.div 
+                <motion.div
                     className="text-center mb-5"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -214,21 +215,21 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                         transition={{ delay: 0.8, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
                         className="mb-3"
                     >
-                        <AnimatedName 
-                            name={PERSONAL_INFO.name} 
+                        <AnimatedName
+                            name={PERSONAL_INFO.name}
                             variant="hacker"
                         />
                     </motion.div>
-                    <motion.div 
+                    <motion.div
                         className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-700 dark:text-gray-300 shadow-[0_4px_12px_rgba(251,191,36,0.3)] dark:shadow-[0_4px_16px_rgba(6,182,212,0.5)] border border-gray-200 dark:border-white/5 backdrop-blur-sm overflow-hidden"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ 
+                        transition={{
                             delay: 1.2,
                             duration: 0.5,
                             ease: [0.34, 1.56, 0.64, 1]
                         }}
-                        whileHover={{ 
+                        whileHover={{
                             scale: 1.05,
                             y: -2,
                             boxShadow: '0 8px 24px rgba(251,191,36,0.6)',
@@ -241,10 +242,10 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                     >
                         {/* Continuous shimmer overlay - visible in both themes */}
                         <div className="absolute inset-0 animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-amber-200/60 dark:via-white/30 to-transparent"></div>
-                        
+
                         {/* Gradient glow border on hover */}
                         <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-yellow-400/20 via-amber-400/30 to-yellow-400/20 dark:from-cyan-400/20 dark:via-blue-400/30 dark:to-cyan-400/20 blur-sm -z-10"></div>
-                        
+
                         <i className="fas fa-certificate text-base relative z-10"></i>
                         <span className="relative z-10" style={{ wordSpacing: '0.15em' }}>{PERSONAL_INFO.title}</span>
                     </motion.div>
@@ -252,11 +253,11 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
             </motion.div>
 
             <div className="flex-1 px-8 pb-8 overflow-y-auto no-scrollbar flex flex-col" data-lenis-prevent>
-                 
-                 <div className="w-full border-t border-gray-200 dark:border-white/5 mb-6"></div>
+
+                <div className="w-full border-t border-gray-200 dark:border-white/5 mb-6"></div>
 
                 {/* Contact Details */}
-                <motion.div 
+                <motion.div
                     className="space-y-5 mb-8"
                     initial="hidden"
                     animate="visible"
@@ -277,7 +278,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                 </motion.div>
 
                 {/* Socials with Enhanced Animations */}
-                <motion.div 
+                <motion.div
                     className="flex gap-3 justify-center mb-8"
                     initial="hidden"
                     animate="visible"
@@ -293,18 +294,18 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                     }}
                 >
                     {SOCIAL_LINKS.map(link => (
-                        <motion.a 
-                            key={link.name} 
-                            href={link.url} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
+                        <motion.a
+                            key={link.name}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="w-11 h-11 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 flex items-center justify-center text-gray-500 dark:text-gray-400 relative overflow-hidden group cursor-pointer"
                             aria-label={link.name}
                             variants={{
                                 hidden: { opacity: 0, y: 20 },
                                 visible: { opacity: 1, y: 0 },
                             }}
-                            whileHover={{ 
+                            whileHover={{
                                 scale: 1.15,
                                 rotate: 8,
                                 backgroundColor: 'rgb(250, 204, 21)',
@@ -316,7 +317,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                                     damping: 15
                                 }
                             }}
-                            whileTap={{ 
+                            whileTap={{
                                 scale: 0.9,
                                 rotate: -8,
                                 transition: {
@@ -338,23 +339,23 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
 
                 {/* Navigation (Desktop) */}
                 {!isMobileView && (
-                  <nav className="flex-1 mb-8">
-                      <ul className="space-y-2">
-                          {pages.map((page) => (
-                              <NavButton
-                                  key={page.label}
-                                  page={page}
-                                  isActive={activePage === page.label}
-                                  onNavigate={onNavigate}
-                              />
-                          ))}
-                      </ul>
-                  </nav>
+                    <nav className="flex-1 mb-8">
+                        <ul className="space-y-2">
+                            {pages.map((page) => (
+                                <NavButton
+                                    key={page.label}
+                                    page={page}
+                                    isActive={activePage === page.label}
+                                    onNavigate={onNavigate}
+                                />
+                            ))}
+                        </ul>
+                    </nav>
                 )}
 
                 <div className="mt-auto">
-                   <Magnetic>
-                       <a 
+                    <Magnetic>
+                        <a
                             href={PERSONAL_INFO.resumeUrl}
                             onClick={handleDownloadResume}
                             download={isDirectDownload}
@@ -365,7 +366,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                             <span className="text-sm uppercase tracking-wider font-extrabold z-20">Download CV</span>
                             <i className="fas fa-download z-20"></i>
                         </a>
-                   </Magnetic>
+                    </Magnetic>
                 </div>
             </div>
         </aside>
@@ -388,8 +389,8 @@ const InfoRow: React.FC<{ icon: string; value: string; label: string; isLink?: b
 
     if (isLink) {
         return (
-            <motion.a 
-                href={href} 
+            <motion.a
+                href={href}
                 className="block hover:bg-gray-50 dark:hover:bg-white/5 -mx-2 px-2 py-2 rounded-xl transition-colors"
                 variants={{
                     hidden: { opacity: 0, x: -20 },
@@ -401,7 +402,7 @@ const InfoRow: React.FC<{ icon: string; value: string; label: string; isLink?: b
         )
     }
     return (
-        <motion.div 
+        <motion.div
             className="-mx-2 px-2 py-2"
             variants={{
                 hidden: { opacity: 0, x: -20 },
