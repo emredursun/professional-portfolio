@@ -17,7 +17,7 @@ const ConfettiCanvas: React.FC = () => {
         canvas.width = canvas.parentElement?.clientWidth || 300;
         canvas.height = canvas.parentElement?.clientHeight || 300;
 
-        const particles: { x: number; y: number; vx: number;vy: number; color: string; size: number }[] = [];
+        const particles: { x: number; y: number; vx: number; vy: number; color: string; size: number }[] = [];
         const colors = ['#FBBF24', '#EF4444', '#3B82F6', '#10B981', '#F472B6'];
 
         for (let i = 0; i < 100; i++) {
@@ -34,7 +34,7 @@ const ConfettiCanvas: React.FC = () => {
         let animationId: number;
         const render = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+
             for (let i = 0; i < particles.length; i++) {
                 const p = particles[i];
                 p.x += p.vx;
@@ -50,7 +50,7 @@ const ConfettiCanvas: React.FC = () => {
 
             // Remove tiny particles
             for (let i = particles.length - 1; i >= 0; i--) {
-                 if (particles[i].size < 0.5) particles.splice(i, 1);
+                if (particles[i].size < 0.5) particles.splice(i, 1);
             }
 
             if (particles.length > 0) {
@@ -73,24 +73,24 @@ const Contact: React.FC = () => {
         event.preventDefault();
         const form = event.currentTarget;
         const formData = new FormData(form);
-        
+
         // Add Web3Forms access key
         formData.append("access_key", "309ce373-4042-4a9a-b924-e7684e84ba0a");
-        
+
         // Track form submission attempt
         const formDuration = formStartTime ? Date.now() - formStartTime : 0;
-        
+
         setSubmissionStatus('submitting');
-        
+
         // Show loading favicon
         if (typeof window !== 'undefined' && (window as any).faviconController) {
             (window as any).faviconController.showLoading();
         }
-        
+
         // Track with Plausible if available
         if (typeof window !== 'undefined' && (window as any).plausible) {
-            (window as any).plausible('form_submit', { 
-                props: { duration: formDuration } 
+            (window as any).plausible('form_submit', {
+                props: { duration: formDuration }
             });
         }
 
@@ -106,13 +106,13 @@ const Contact: React.FC = () => {
                 setSubmissionStatus('success');
                 form.reset();
                 setFormStartTime(0);
-                
+
                 // Hide loading and show notification
                 if (typeof window !== 'undefined' && (window as any).faviconController) {
                     (window as any).faviconController.hideLoading();
                     (window as any).faviconController.showNotification('Message sent! ✉️', 8000);
                 }
-                
+
                 // Track success
                 if (typeof window !== 'undefined' && (window as any).plausible) {
                     (window as any).plausible('form_success');
@@ -123,12 +123,12 @@ const Contact: React.FC = () => {
         } catch (error) {
             console.error('Form submission error:', error);
             setSubmissionStatus('error');
-            
+
             // Hide loading
             if (typeof window !== 'undefined' && (window as any).faviconController) {
                 (window as any).faviconController.hideLoading();
             }
-            
+
             // Track error
             if (typeof window !== 'undefined' && (window as any).plausible) {
                 (window as any).plausible('form_error');
@@ -140,7 +140,7 @@ const Contact: React.FC = () => {
     const handleFormFocus = () => {
         if (!formStartTime) {
             setFormStartTime(Date.now());
-            
+
             // Track form start
             if (typeof window !== 'undefined' && (window as any).plausible) {
                 (window as any).plausible('form_start');
@@ -158,11 +158,11 @@ const Contact: React.FC = () => {
                             <i className="fas fa-check text-4xl text-green-500"></i>
                         </div>
                         <h4 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 z-10">Thank You!</h4>
-                        <p className="text-gray-700 dark:text-gray-300 text-lg z-10">Your message has been sent successfully.<br/>I will get back to you soon.</p>
+                        <p className="text-gray-700 dark:text-gray-300 text-lg z-10">Your message has been sent successfully.<br />I will get back to you soon.</p>
                     </div>
                 );
             case 'error':
-                 return (
+                return (
                     <div className="bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800 rounded-2xl p-8 flex flex-col items-center justify-center text-center h-[436px] animate-fade-in">
                         <div className="w-20 h-20 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mb-6">
                             <i className="fas fa-exclamation-triangle text-4xl text-red-500"></i>
@@ -209,12 +209,14 @@ const Contact: React.FC = () => {
                             <div className="group">
                                 <textarea
                                     name="message"
-                                    placeholder="Your Message"
+                                    placeholder="Your Message (minimum 20 characters)"
                                     rows={5}
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)] resize-none"
                                     required
+                                    minLength={20}
                                     disabled={submissionStatus === 'submitting'}
                                     onFocus={handleFormFocus}
+                                    title="Please enter at least 20 characters for your message"
                                 ></textarea>
                             </div>
                             <button
@@ -222,7 +224,7 @@ const Contact: React.FC = () => {
                                 className="w-full bg-yellow-400 text-black font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-yellow-500 transition-all duration-300 disabled:bg-yellow-300 disabled:cursor-not-allowed hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(234,179,8,0.4)] hover:scale-[1.02] active:scale-[0.98]"
                                 disabled={submissionStatus === 'submitting'}
                             >
-                                 {submissionStatus === 'submitting' ? (
+                                {submissionStatus === 'submitting' ? (
                                     <>
                                         <i className="fas fa-spinner fa-spin"></i>
                                         Sending...
@@ -272,7 +274,7 @@ const Contact: React.FC = () => {
                         </div>
                         Find Me Here
                     </h3>
-                     <div className="h-[300px] rounded-[2rem] overflow-hidden border border-gray-200 dark:border-neon-border shadow-2xl dark:shadow-none group relative transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
+                    <div className="h-[300px] rounded-[2rem] overflow-hidden border border-gray-200 dark:border-neon-border shadow-2xl dark:shadow-none group relative transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
                         <div className="absolute inset-0 border-4 border-transparent group-hover:border-yellow-400/30 dark:group-hover:border-neon-cyan/30 transition-colors duration-300 pointer-events-none z-10 rounded-[2rem]"></div>
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d38740.16919139266!2d5.13280806443481!3d52.69614777894901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c61c3b531a3977%3A0x868b248a39151740!2sHoogkarspel!5e0!3m2!1sen!2snl!4v1721323330345!5m2!1sen!2snl"
