@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Share Image Generator - Free Tool by Emre Dursun</title>
+    <meta name="description"
+        content="Create professional social media images with custom dimensions. Free online tool with effects, animations, and templates for Facebook, Twitter, Instagram, LinkedIn.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --accent: #fbbf24;
+            --success: #48bb78;
+            --dark: #1e293b;
+            --gray: #f8f9fa;
+            --border: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--dark) 0%, #312e81 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23fbbf24" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .credit {
+            margin-top: 15px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .header .credit a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .sidebar {
+            background: var(--gray);
+            padding: 30px;
+            border-radius: 12px;
+            height: fit-content;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-group {
+            margin-bottom: 24px;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .control-group input[type="number"],
+        .control-group input[type="text"],
+        .control-group input[type="color"],
+        .control-group select,
+        .control-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .control-group input:focus,
+        .control-group select:focus,
+        .control-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .color-picker-group {
+            text-align: center;
+        }
+
+        .color-picker-group small {
+            display: block;
+            margin-bottom: 6px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .color-picker-group input[type="color"] {
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .preset-btn {
+            padding: 10px 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .preset-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-upload label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .file-upload label:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .preview-area {
+            background: var(--gray);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .canvas-wrapper {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin: 0 auto 20px;
+        }
+
+        canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .dimensions-display {
+            margin: 20px 0;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        .btn-accent:hover {
+            background: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 16px;
+            margin-top: 24px;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #1976d2;
+        }
+
+        .effect-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .effect-btn {
+            padding: 8px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .effect-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .effect-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        @media (max-width: 1400px) {
+            .content {
+                grid-template-columns: 400px 1fr;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .preset-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-image"></i> Social Share Image Generator</h1>
+            <p class="subtitle">Create stunning social media images with precise dimensions and custom effects</p>
+            <p class="credit">100% Free Tool by <a href="https://emredursun.nl" target="_blank">Emre Dursun</a></p>
+        </div>
+
+        <div class="content">
+            <div class="sidebar">
+                <div class="section-title">
+                    <i class="fas fa-sliders-h"></i> Image Settings
+                </div>
+
+                <div class="control-group">
+                    <label><i class="fas fa-ruler-combined"></i> Dimensions (Width × Height)</label>
+                    <div class="dimension-grid">
+                        <input type="number" id="width" value="1200" min="100" max="5000" placeholder="Width">
+                        <input type="number" id="height" value="630" min="100" max="5000" placeholder="Height">
+                    </div>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" onclick="setDimensions(1200, 630)">
+                            <i class="fab fa-facebook"></i> OG Standard
+                        </button>
+                        <button class="preset-btn" onclick="setDimensions(1200, 675)">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </button>
+                        <button class="preset-btn" onclick="setDimensions(1080, 1080)">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </button>
+                        <button class="preset-btn" onclick="setDimensions(1920, 1080)">
+                            <i class="fab fa-youtube"></i> YouTube
+                        </button>
+                        <button class="preset-btn" onclick="setDimensions(1200, 1200)">
+                            <i class="fas fa-square"></i> Square
+                        </button>
+                        <button class="preset-btn" onclick="setDimensions(1920, 1920)">
+                            <i class="fas fa-expand"></i> Large Square
+                        </button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label><i class="fas fa-image"></i> Profile Image</label>
+                    <div class="file-upload">
+                        <input type="file" id="profileUpload" accept="image/*" onchange="loadProfileImage(event)">
+                        <label for="profileUpload">
+                            <i class="fas fa-upload"></i> Choose Image
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label><i class="fas fa-user"></i> Name</label>
+                    <input type="text" id="nameText" value="Your Name" oninput="regenerateImage()">
+                </div>
+
+                <div class="control-group">
+                    <label><i class="fas fa-briefcase"></i> Title</label>
+                    <input type="text" id="titleText" value="Your Professional Title" oninput="regenerateImage()">
+                </div>
+
+                <div class="control-group">
+                    <label><i class="fas fa-comment-dots"></i> Subtitle (Optional)</label>
+                    <input type="text" id="subtitleText" value="Additional Info" oninput="regenerateImage()">
+                </div>
+
+                <div class="control-group">
+                    <label><i class="fas fa-globe"></i> Website (Optional)</label>
+                    <input type="text" id="websiteText" value="yourwebsite.com" oninput="regenerateImage()">
+                </div>
+
+                <div class="control-group">
+                    <label><i class="fas fa-palette"></i> Background Colors</label>
+                    <div class="color-grid">
+                        <div class="color-picker-group">
+                            <small>Start Color</small>
+                            <input type="color" id="colorStart" value="#1e293b" onchange="regenerateImage()">
+                        </div>
+                        <div class="color-picker-group">
+                            <small>End Color</small>
+                            <input type="color" id="colorEnd" value="#312e81" onchange="regenerateImage()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label><i class="fas fa-star"></i> Accent Color</label>
+                    <input type="color" id="accentColor" value="#fbbf24" onchange="regenerateImage()">
+                </div>
+
+                <div class="control-group">
+                    <label><i class="fas fa-magic"></i> Visual Effects</label>
+                    <div class="effect-grid">
+                        <button class="effect-btn" id="effect-none" onclick="setEffect('none')">None</button>
+                        <button class="effect-btn" id="effect-pattern" onclick="setEffect('pattern')">Pattern</button>
+                        <button class="effect-btn" id="effect-circles" onclick="setEffect('circles')">Circles</button>
+                        <button class="effect-btn" id="effect-grid" onclick="setEffect('grid')">Grid</button>
+                        <button class="effect-btn" id="effect-waves" onclick="setEffect('waves')">Waves</button>
+                        <button class="effect-btn" id="effect-dots" onclick="setEffect('dots')">Dots</button>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong><i class="fas fa-info-circle"></i> Quick Guide</strong>
+                    • Upload your photo or use default<br>
+                    • Select platform preset or custom size<br>
+                    • Customize text, colors & effects<br>
+                    • Download and share!
+                </div>
+            </div>
+
+            <div class="preview-area">
+                <h3 style="margin-bottom: 20px; color: #333; font-size: 20px;">
+                    <i class="fas fa-eye"></i> Live Preview
+                </h3>
+                <div class="canvas-wrapper">
+                    <canvas id="socialCanvas"></canvas>
+                </div>
+                <div class="dimensions-display" id="dimensionsDisplay">1200 × 630 pixels</div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="regenerateImage()">
+                        <i class="fas fa-sync-alt"></i> Regenerate
+                    </button>
+                    <button class="btn btn-success" onclick="downloadImage()">
+                        <i class="fas fa-download"></i> Download PNG
+                    </button>
+                    <button class="btn btn-accent" onclick="copyToClipboard()">
+                        <i class="fas fa-copy"></i> Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let canvas = document.getElementById('socialCanvas');
+        let ctx = canvas.getContext('2d');
+        let profileImage = null;
+        let currentEffect = 'pattern';
+
+        // Initialize
+        window.onload = function () {
+            document.getElementById('effect-pattern').classList.add('active');
+            regenerateImage();
+        };
+
+        function setDimensions(width, height) {
+            document.getElementById('width').value = width;
+            document.getElementById('height').value = height;
+            regenerateImage();
+        }
+
+        function loadProfileImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.onload = function () {
+                        profileImage = img;
+                        regenerateImage();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function setEffect(effect) {
+            currentEffect = effect;
+            document.querySelectorAll('.effect-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`effect-${effect}`).classList.add('active');
+            regenerateImage();
+        }
+
+        function regenerateImage() {
+            const width = parseInt(document.getElementById('width').value);
+            const height = parseInt(document.getElementById('height').value);
+
+            canvas.width = width;
+            canvas.height = height;
+
+            document.getElementById('dimensionsDisplay').textContent = `${width} × ${height} pixels`;
+
+            const colorStart = document.getElementById('colorStart').value;
+            const colorEnd = document.getElementById('colorEnd').value;
+            const accentColor = document.getElementById('accentColor').value;
+
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, colorStart);
+            gradient.addColorStop(1, colorEnd);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // Apply visual effects
+            applyEffect(width, height, accentColor);
+
+            // Calculate proportional sizes
+            const scale = Math.min(width / 1200, height / 630);
+
+            // Draw profile image if available
+            if (profileImage) {
+                const photoSize = 350 * scale;
+                const photoX = 180 * scale;
+                const photoY = height / 2;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(photoX, photoY, photoSize / 2, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.clip();
+
+                ctx.drawImage(profileImage,
+                    photoX - photoSize / 2,
+                    photoY - photoSize / 2,
+                    photoSize,
+                    photoSize);
+                ctx.restore();
+
+                // Add a subtle border
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.lineWidth = 4 * scale;
+                ctx.beginPath();
+                ctx.arc(photoX, photoY, photoSize / 2, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Add accent bar
+            ctx.fillStyle = accentColor;
+            const barX = 420 * scale;
+            const barY = 180 * scale;
+            const barHeight = 270 * scale;
+            ctx.fillRect(barX, barY, 6 * scale, barHeight);
+
+            // Add text with proper sizing
+            ctx.fillStyle = '#ffffff';
+            const textX = 480 * scale;
+
+            // Name
+            const nameSize = Math.max(40, 70 * scale);
+            ctx.font = `bold ${nameSize}px "Plus Jakarta Sans", sans-serif`;
+            ctx.fillText(document.getElementById('nameText').value, textX, 280 * scale);
+
+            // Title
+            const titleSize = Math.max(20, 32 * scale);
+            ctx.font = `${titleSize}px "Plus Jakarta Sans", sans-serif`;
+            ctx.fillText(document.getElementById('titleText').value, textX, 340 * scale);
+
+            // Subtitle
+            const subtitleText = document.getElementById('subtitleText').value;
+            if (subtitleText) {
+                ctx.fillText(subtitleText, textX, 385 * scale);
+            }
+
+            // Website
+            const websiteText = document.getElementById('websiteText').value;
+            if (websiteText) {
+                ctx.font = `${24 * scale}px "Plus Jakarta Sans", sans-serif`;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                const websiteX = width - (250 * scale);
+                const websiteY = height - (40 * scale);
+                ctx.fillText(websiteText, websiteX, websiteY);
+            }
+        }
+
+        function applyEffect(width, height, accentColor) {
+            ctx.globalAlpha = 0.1;
+
+            switch (currentEffect) {
+                case 'pattern':
+                    ctx.strokeStyle = accentColor;
+                    ctx.lineWidth = 1;
+                    for (let i = 0; i < Math.floor(width / 60); i++) {
+                        ctx.beginPath();
+                        ctx.moveTo(i * 60, 0);
+                        ctx.lineTo(i * 60 + 200, height);
+                        ctx.stroke();
+                    }
+                    break;
+
+                case 'circles':
+                    ctx.strokeStyle = accentColor;
+                    ctx.lineWidth = 2;
+                    for (let i = 0; i < 10; i++) {
+                        ctx.beginPath();
+                        ctx.arc(Math.random() * width, Math.random() * height,
+                            50 + Math.random() * 100, 0, Math.PI * 2);
+                        ctx.stroke();
+                    }
+                    break;
+
+                case 'grid':
+                    ctx.strokeStyle = accentColor;
+                    ctx.lineWidth = 1;
+                    for (let i = 0; i < width; i += 60) {
+                        ctx.beginPath();
+                        ctx.moveTo(i, 0);
+                        ctx.lineTo(i, height);
+                        ctx.stroke();
+                    }
+                    for (let i = 0; i < height; i += 60) {
+                        ctx.beginPath();
+                        ctx.moveTo(0, i);
+                        ctx.lineTo(width, i);
+                        ctx.stroke();
+                    }
+                    break;
+
+                case 'waves':
+                    ctx.strokeStyle = accentColor;
+                    ctx.lineWidth = 3;
+                    for (let i = 0; i < 5; i++) {
+                        ctx.beginPath();
+                        for (let x = 0; x < width; x += 10) {
+                            const y = Math.sin(x / 50 + i) * 50 + height / 2;
+                            if (x === 0) ctx.moveTo(x, y);
+                            else ctx.lineTo(x, y);
+                        }
+                        ctx.stroke();
+                    }
+                    break;
+
+                case 'dots':
+                    ctx.fillStyle = accentColor;
+                    for (let i = 0; i < 100; i++) {
+                        ctx.beginPath();
+                        ctx.arc(Math.random() * width, Math.random() * height,
+                            5 + Math.random() * 10, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    break;
+            }
+
+            ctx.globalAlpha = 1.0;
+        }
+
+        function downloadImage() {
+            const fileName = `social-share-${canvas.width}x${canvas.height}.png`;
+            const link = document.createElement('a');
+            link.download = fileName;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        async function copyToClipboard() {
+            try {
+                const blob = await new Promise(resolve => canvas.toBlob(resolve));
+                await navigator.clipboard.write([
+                    new ClipboardItem({ 'image/png': blob })
+                ]);
+                alert('✅ Image copied to clipboard!');
+            } catch (err) {
+                alert('❌ Copy failed. Please use the Download button instead.');
+            }
+        }
+    </script>
+</body>
+
+</html>
