@@ -188,11 +188,12 @@ export const TECH_STACK: TechCategory[] = [
 export const PROJECTS: Project[] = [
     {
         title: 'Social Share Image Generator',
-        category: 'Web Tool',
+        category: 'Open Source',
         image: '/images/social-generator-thumbnail.png',
-        description: 'Free open-source tool with intelligent adaptive layouts for any dimension. Features 6 professional templates, smart text sizing, and platform presets for Facebook, Twitter, Instagram, YouTube.',
-        technologies: ['HTML5', 'Canvas API', 'JavaScript', 'CSS3'],
-        url: 'https://emredursun.github.io/social-share-image-generator/'
+        description: 'Professional tool with intelligent adaptive layouts. Auto-adjusts to any dimension with 6 layout templates, smart text sizing, and one-click platform presets (Facebook, Twitter, Instagram, YouTube).',
+        technologies: ['Canvas API', 'JavaScript', 'HTML5', 'CSS3'],
+        url: 'https://emredursun.github.io/social-share-image-generator/',
+        github: 'https://github.com/emredursun/social-share-image-generator'
     },
     {
         title: 'Banking Payment Automation',

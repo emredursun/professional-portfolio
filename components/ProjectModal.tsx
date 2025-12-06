@@ -44,36 +44,49 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
         <div className="flex-1 overflow-y-auto p-8" data-lenis-prevent>
           <div className="flex flex-col lg:flex-row gap-8">
             <div className="lg:w-1/2">
-            <img
+              <img
                 src={project.image}
                 alt={project.title}
                 className="w-full h-auto object-cover rounded-lg shadow-md"
                 loading="lazy"
-            />
+              />
             </div>
             <div className="lg:w-1/2">
-            <p className="text-sm text-yellow-400 font-bold uppercase mb-2">{project.category}</p>
-            <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">{project.title}</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">{project.description}</p>
-            <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Technologies Used</h3>
-            <div className="flex flex-wrap gap-2 mb-8">
+              <p className="text-sm text-yellow-400 font-bold uppercase mb-2">{project.category}</p>
+              <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">{project.title}</h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">{project.description}</p>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Technologies Used</h3>
+              <div className="flex flex-wrap gap-2 mb-8">
                 {project.technologies.map(tech => (
-                <span key={tech} className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-md px-3 py-1 text-sm font-medium">
+                  <span key={tech} className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-md px-3 py-1 text-sm font-medium">
                     {tech}
-                </span>
+                  </span>
                 ))}
-            </div>
-            {project.url && project.url !== '#' && (
-                <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-yellow-400 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1"
-                >
-                <i className="fas fa-external-link-alt"></i>
-                Visit Website
-                </a>
-            )}
+              </div>
+              <div className="flex flex-wrap gap-4">
+                {project.url && project.url !== '#' && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-yellow-400 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    <i className="fas fa-external-link-alt"></i>
+                    Live Demo
+                  </a>
+                )}
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    <i className="fab fa-github"></i>
+                    View on GitHub
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </div>

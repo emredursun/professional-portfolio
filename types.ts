@@ -23,11 +23,11 @@ export interface Skill {
 }
 
 export interface Language {
-    name: string;
-    level: string;
-    code: string;
-    percentage: number;
-    greeting: string;
+  name: string;
+  level: string;
+  code: string;
+  percentage: number;
+  greeting: string;
 }
 
 export interface Project {
@@ -35,6 +35,7 @@ export interface Project {
   category: string;
   image: string;
   url?: string;
+  github?: string;
   description: string;
   technologies: string[];
 }
