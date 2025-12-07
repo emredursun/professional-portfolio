@@ -31,45 +31,45 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
       role="dialog"
     >
       <div
-        className="relative bg-white dark:bg-[#2a2a2a] rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-700 shadow-2xl animate-fade-in-up flex flex-col"
+        className="relative bg-white dark:bg-[#2a2a2a] rounded-2xl w-full max-w-4xl max-h-[85vh] md:max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-700 shadow-2xl animate-fade-in-up flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-10 h-10 bg-gray-200 dark:bg-[#1e1e1e] rounded-full text-gray-600 dark:text-gray-300 hover:bg-yellow-400 hover:text-gray-900 transition-all duration-300 flex items-center justify-center text-2xl z-10 hover:rotate-90"
+          className="absolute top-3 right-3 md:top-4 md:right-4 w-8 h-8 md:w-10 md:h-10 bg-yellow-400 rounded-full text-gray-900 hover:bg-yellow-500 transition-all duration-300 flex items-center justify-center text-xl md:text-2xl z-10 hover:rotate-90"
           aria-label="Close project details"
         >
           &times;
         </button>
-        <div className="flex-1 overflow-y-auto p-8" data-lenis-prevent>
-          <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex-1 overflow-y-auto p-5 md:p-8" data-lenis-prevent>
+          <div className="flex flex-col lg:flex-row gap-5 md:gap-8">
             <div className="lg:w-1/2">
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full h-auto object-cover rounded-lg shadow-md"
+                className="w-full h-auto max-h-[40vh] lg:max-h-none object-cover rounded-lg shadow-md"
                 loading="lazy"
               />
             </div>
             <div className="lg:w-1/2">
-              <p className="text-sm text-yellow-400 font-bold uppercase mb-2">{project.category}</p>
-              <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">{project.title}</h2>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">{project.description}</p>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Technologies Used</h3>
-              <div className="flex flex-wrap gap-2 mb-8">
+              <p className="text-xs md:text-sm text-yellow-400 font-bold uppercase mb-2">{project.category}</p>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-gray-900 dark:text-white">{project.title}</h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-4 md:mb-6 text-sm md:text-base">{project.description}</p>
+              <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-gray-900 dark:text-white">Technologies Used</h3>
+              <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
                 {project.technologies.map(tech => (
-                  <span key={tech} className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-md px-3 py-1 text-sm font-medium">
+                  <span key={tech} className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-md px-2 py-1 md:px-3 md:py-1 text-xs md:text-sm font-medium">
                     {tech}
                   </span>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3 md:gap-4 pb-2">
                 {project.url && project.url !== '#' && (
                   <a
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-yellow-400 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                    className="inline-flex items-center gap-2 bg-yellow-400 text-gray-900 font-bold py-2 px-4 md:py-3 md:px-6 rounded-lg hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg text-sm md:text-base"
                   >
                     <i className="fas fa-external-link-alt"></i>
                     Live Demo
@@ -80,7 +80,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                    className="inline-flex items-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-2 px-4 md:py-3 md:px-6 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg text-sm md:text-base"
                   >
                     <i className="fab fa-github"></i>
                     View on GitHub
