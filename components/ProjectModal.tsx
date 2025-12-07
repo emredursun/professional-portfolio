@@ -31,7 +31,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
       role="dialog"
     >
       <div
-        className="relative bg-white dark:bg-[#2a2a2a] rounded-2xl w-full max-w-4xl max-h-[85vh] md:max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-700 shadow-2xl animate-fade-in-up flex flex-col"
+        className="relative bg-white dark:bg-[#2a2a2a] rounded-2xl w-[95%] sm:w-full max-w-4xl max-h-[90dvh] md:max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-700 shadow-2xl animate-fade-in-up flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -41,13 +41,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
         >
           &times;
         </button>
-        <div className="flex-1 overflow-y-auto p-5 md:p-8" data-lenis-prevent>
+        <div className="flex-1 overflow-y-auto p-5 md:p-8 pb-24 md:pb-8" data-lenis-prevent>
           <div className="flex flex-col lg:flex-row gap-5 md:gap-8">
             <div className="lg:w-1/2">
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full h-auto max-h-[40vh] lg:max-h-none object-cover rounded-lg shadow-md"
+                className="w-full h-auto max-h-[30dvh] lg:max-h-none object-cover rounded-lg shadow-md"
                 loading="lazy"
               />
             </div>
@@ -63,7 +63,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                   </span>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-3 md:gap-4 pb-2">
+              <div className="flex flex-wrap gap-3 md:gap-4">
                 {project.url && project.url !== '#' && (
                   <a
                     href={project.url}
