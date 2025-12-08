@@ -204,6 +204,23 @@ export const PROJECTS: Project[] = [
         ]
     },
     {
+        title: 'Playwright Testing Suite',
+        slug: 'playwright-testing-project',
+        category: 'Open Source',
+        image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+        description: 'Comprehensive Playwright test automation suite demonstrating UI, API, and visual testing capabilities with Page Object Model, cross-browser testing, and advanced debugging.',
+        detailedDescription: 'A production-ready Playwright test automation suite developed as part of mastering modern test automation practices. Features comprehensive test coverage including UI end-to-end tests, RESTful API integration testing, and visual regression testing. Built with TypeScript, it implements the Page Object Model pattern for maintainable test code, supports cross-browser testing (Chromium, Firefox, WebKit), and includes advanced features like trace viewer debugging, parallel test execution, screenshot/video recording, and cookie-based authentication handling. The project demonstrates modern testing best practices with multiple reporters and environment-based configuration.',
+        technologies: ['Playwright', 'TypeScript', 'Node.js', 'API Testing', 'Visual Testing'],
+        url: '#',
+        github: 'https://github.com/emredursun/playwright-testing-project',
+        metrics: [
+            'UI, API & Visual Testing',
+            'Cross-Browser Support (3 Engines)',
+            'Parallel Execution',
+            'Trace Viewer & Debugging Tools'
+        ]
+    },
+    {
         title: 'Social Share Image Generator',
         slug: 'social-share-image-generator',
         category: 'Open Source',
