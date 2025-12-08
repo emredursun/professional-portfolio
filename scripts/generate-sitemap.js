@@ -32,20 +32,38 @@ const pages = [
         changefreq: 'weekly',
         priority: '1.0'
     }
-    // Example: Add more pages when you create them
-    // {
-    //     loc: '/blog',
-    //     changefreq: 'daily',
-    //     priority: '0.8'
-    // }
 ];
+
+// Extract project slugs from constants.tsx
+try {
+    const constantsPath = path.join(__dirname, '../constants.tsx');
+    const constantsContent = fs.readFileSync(constantsPath, 'utf8');
+
+    // Regex to find slugs in the projects array
+    // Matches: slug: 'some-slug-value'
+    const slugRegex = /slug:\s*'([^']+)'/g;
+    let match;
+
+    while ((match = slugRegex.exec(constantsContent)) !== null) {
+        pages.push({
+            loc: `/#project-${match[1]}`, // Hash-based URL
+            changefreq: 'monthly',
+            priority: '0.8'
+        });
+    }
+
+    console.log(`Found ${pages.length - 1} projects to link.`);
+
+} catch (error) {
+    console.warn('⚠️ Could not read constants.tsx to extract projects:', error.message);
+}
 
 /**
  * Generate sitemap XML content
  */
 function generateSitemap() {
     const currentDate = new Date().toISOString();
-    
+
     const urls = pages.map(page => {
         return `    <url>
         <loc>${SITE_URL}${page.loc}</loc>
@@ -67,22 +85,22 @@ ${urls}
 function writeSitemap() {
     try {
         const sitemapContent = generateSitemap();
-        
+
         // Ensure the public directory exists
         const publicDir = path.dirname(OUTPUT_PATH);
         if (!fs.existsSync(publicDir)) {
             fs.mkdirSync(publicDir, { recursive: true });
         }
-        
+
         // Write the sitemap file
         fs.writeFileSync(OUTPUT_PATH, sitemapContent, 'utf8');
-        
+
         console.log('✅ Sitemap generated successfully!');
         console.log(`📍 Location: ${OUTPUT_PATH}`);
         console.log(`🔗 URL: ${SITE_URL}/sitemap.xml`);
         console.log(`📅 Last Modified: ${new Date().toISOString()}`);
         console.log(`📄 Total URLs: ${pages.length}`);
-        
+
     } catch (error) {
         console.error('❌ Error generating sitemap:', error.message);
         process.exit(1);

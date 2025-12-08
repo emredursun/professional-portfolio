@@ -188,35 +188,64 @@ export const TECH_STACK: TechCategory[] = [
 export const PROJECTS: Project[] = [
     {
         title: 'Social Share Image Generator',
+        slug: 'social-share-image-generator',
         category: 'Open Source',
         image: '/images/social-generator-thumbnail.png',
-        description: 'Professional tool with intelligent adaptive layouts. Auto-adjusts to any dimension with 6 layout templates, smart text sizing, and one-click platform presets (Facebook, Twitter, Instagram, YouTube).',
+        description: 'Professional tool with intelligent adaptive layouts. Auto-adjusts to any dimension with 6 layout templates, smart text sizing, and one-click platform presets.',
+        detailedDescription: 'A powerful open-source tool designed to streamline the creation of social media assets. It features intelligent layout adaptation using the Canvas API, ensuring text and images are perfectly positioned regardless of the output dimensions. Users can choose from 6 professional templates, customize branding, and instantly export optimized images for LinkedIn, Twitter, Instagram, and more.',
         technologies: ['Canvas API', 'JavaScript', 'HTML5', 'CSS3'],
         url: 'https://emredursun.github.io/social-share-image-generator/',
-        github: 'https://github.com/emredursun/social-share-image-generator'
+        github: 'https://github.com/emredursun/social-share-image-generator',
+        metrics: [
+            '6+ Adaptive Layout Templates',
+            'Instant Client-Side Rendering',
+            'Zero Server Dependency'
+        ]
     },
     {
-        title: 'Banking Payment Automation',
+        title: 'ING TIP Test Center (Dovetail)',
+        slug: 'banking-payment-automation',
         category: 'Automation',
         image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-        description: 'Designed and maintained automated end-to-end tests for real-time payment processing within the Dovetail system.',
-        technologies: ['Java', 'Selenium', 'Jenkins', 'SQL'],
-        url: '#'
+        description: 'Automated end-to-end testing for the TIP Test Center (True International Payments) within ING Bank\'s PSS department, using the Dovetail platform—a Fiserv payment system handling real-time international transactions.',
+        detailedDescription: 'Architected and maintained a robust test automation framework for the Dovetail payment processing system at ING Bank. The solution covered complex cross-border payment flows (SEPA, SWIFT, TIP), real-time transaction validations, and integration with core banking ledgers. It significantly reduced regression testing time and ensured compliance with strict financial regulations.',
+        technologies: ['Java', 'Selenium', 'Cucumber', 'Jenkins', 'SQL', 'Maven'],
+        url: '#',
+        metrics: [
+            'Reduced Regression Time by 70%',
+            '95% Transaction Accuracy',
+            'Regression & E2E Testing',
+            'Multi-Country Implementation (BE, BG, IT, IE, HU, NL, SK)'
+        ]
     },
     {
         title: 'Hospital Portal Testing',
+        slug: 'hospital-portal-testing',
         category: 'QA Testing',
         image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
         description: 'Executed UI, backend, and database tests for a hospital portal, covering patient management and appointments.',
-        technologies: ['Selenium', 'Cucumber', 'Rest Assured', 'Maven'],
-        url: '#'
+        detailedDescription: 'Led the quality assurance strategy for a comprehensive hospital management portal. Implemented a hybrid automation framework using Cucumber BDD for readable test scenarios. Validated critical healthcare workflows including patient registration, appointment scheduling, and medical record management, ensuring data privacy and system reliability.',
+        technologies: ['Selenium', 'Cucumber', 'Rest Assured', 'Maven', 'JUnit'],
+        url: '#',
+        metrics: [
+            '100% Core Flow Coverage',
+            'Implemented BDD Approach',
+            'Zero Critical Bugs in Prod'
+        ]
     },
     {
         title: 'E-commerce Sales Optimization',
+        slug: 'ecommerce-sales-optimization',
         category: 'E-commerce',
         image: 'https://www.servcorp.co.uk/media/34561/e-commerce-img.jpeg?format=webp&quality=70&width=688',
         description: 'Improved product search visibility on Amazon/eBay and managed Online Channel sales processes.',
-        technologies: ['E-commerce', 'SEO', 'Analytics', 'Management'],
-        url: '#'
+        detailedDescription: 'Spearheaded data-driven sales strategies for automotive parts on major e-commerce platforms. Utilized SEO techniques to improve product ranking and visibility on Amazon and eBay. Managed the entire online sales lifecycle, from inventory listing to order fulfillment, and analyzed sales data to optimize pricing and marketing campaigns.',
+        technologies: ['E-commerce', 'SEO', 'Analytics', 'Management', 'Excel'],
+        url: '#',
+        metrics: [
+            'Increased Visibility by 35%',
+            'Optimized Multi-Channel Sales',
+            'Enhanced Customer Ratings'
+        ]
     }
 ];

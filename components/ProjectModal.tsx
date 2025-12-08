@@ -54,7 +54,24 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             <div className="lg:w-1/2">
               <p className="text-xs md:text-sm text-yellow-400 font-bold uppercase mb-2">{project.category}</p>
               <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-gray-900 dark:text-white">{project.title}</h2>
-              <p className="text-gray-600 dark:text-gray-300 mb-4 md:mb-6 text-sm md:text-base">{project.description}</p>
+
+              <div className="text-gray-600 dark:text-gray-300 mb-6 text-sm md:text-base leading-relaxed">
+                {project.detailedDescription || project.description}
+              </div>
+
+              {project.metrics && project.metrics.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-lg md:text-xl font-semibold mb-3 text-gray-900 dark:text-white">Key Achievements</h3>
+                  <ul className="space-y-2">
+                    {project.metrics.map((metric, index) => (
+                      <li key={index} className="flex items-start text-sm md:text-base text-gray-700 dark:text-gray-300">
+                        <i className="fas fa-check-circle text-green-500 mt-1 mr-2 flex-shrink-0"></i>
+                        <span>{metric}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-gray-900 dark:text-white">Technologies Used</h3>
               <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
                 {project.technologies.map(tech => (

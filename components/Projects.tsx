@@ -38,7 +38,7 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
         <h3 className="h-[3rem] text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-3 leading-tight line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-yellow-500 group-hover:to-orange-500 dark:group-hover:from-yellow-400 dark:group-hover:to-orange-500 transition-all duration-300">
           {project.title}
         </h3>
-        
+
         {/* Description - Fixed Height with Line Clamp */}
         <p className="h-[4.5rem] text-sm text-gray-700 dark:text-gray-400 mb-6 line-clamp-3 leading-relaxed group-hover:text-gray-900 dark:group-hover:text-gray-300 transition-colors duration-300">
           {project.description}
@@ -69,6 +69,42 @@ const Projects: React.FC = () => {
 
   const categoryRef = useRef<HTMLDivElement>(null);
   const technologyRef = useRef<HTMLDivElement>(null);
+
+  // Handle Hash Navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash.startsWith('#project-')) {
+        const slug = hash.replace('#project-', '');
+        const project = PROJECTS.find(p => p.slug === slug);
+        if (project) {
+          setSelectedProject(project);
+        }
+      } else if (!hash) {
+        setSelectedProject(null);
+      }
+    };
+
+    // Check initial hash
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Update URL on Project Selection
+  const handleProjectClick = (project: Project) => {
+    setSelectedProject(project);
+    window.location.hash = `project-${project.slug}`;
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProject(null);
+    // Reset hash without scrolling to top (history.pushState or replaceState would be cleaner but hash is simple)
+    // Using history.pushState to remove hash cleanly without jumping
+    history.pushState("", document.title, window.location.pathname + window.location.search);
+  };
 
   // Extract unique categories and technologies
   const categories = useMemo(
@@ -174,11 +210,10 @@ const Projects: React.FC = () => {
                 setIsTechnologyOpen(false);
               }}
               className={`w-full flex items-center justify-between px-6 py-4 rounded-2xl text-sm font-semibold transition-all duration-300 border-2
-                                  ${
-                                  isCategoryOpen
-                                    ? "bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-                                    : "bg-white dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-300 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan shadow-lg dark:shadow-none"
-                                }`}
+                                  ${isCategoryOpen
+                  ? "bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                  : "bg-white dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-300 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan shadow-lg dark:shadow-none"
+                }`}
             >
               <span>
                 {selectedCategories.length === 0
@@ -186,14 +221,13 @@ const Projects: React.FC = () => {
                   : `${selectedCategories.length} selected`}
               </span>
               <i
-                className={`fas fa-chevron-down transition-transform duration-300 ${
-                  isCategoryOpen ? "rotate-180" : ""
-                }`}
+                className={`fas fa-chevron-down transition-transform duration-300 ${isCategoryOpen ? "rotate-180" : ""
+                  }`}
               ></i>
             </button>
 
             {isCategoryOpen && (
-              <div 
+              <div
                 className="absolute z-50 w-full mt-2 bg-white dark:bg-black border border-gray-300 dark:border-white/10 rounded-2xl shadow-2xl max-h-80 overflow-y-auto animate-fade-in"
                 data-lenis-prevent
               >
@@ -233,11 +267,10 @@ const Projects: React.FC = () => {
                 setIsCategoryOpen(false);
               }}
               className={`w-full flex items-center justify-between px-6 py-4 rounded-2xl text-sm font-semibold transition-all duration-300 border-2
-                                ${
-                                  isTechnologyOpen
-                                    ? "bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-                                    : "bg-white dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-300 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan shadow-lg dark:shadow-none"
-                                }`}
+                                ${isTechnologyOpen
+                  ? "bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                  : "bg-white dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-300 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan shadow-lg dark:shadow-none"
+                }`}
             >
               <span>
                 {selectedTechnologies.length === 0
@@ -245,14 +278,13 @@ const Projects: React.FC = () => {
                   : `${selectedTechnologies.length} selected`}
               </span>
               <i
-                className={`fas fa-chevron-down transition-transform duration-300 ${
-                  isTechnologyOpen ? "rotate-180" : ""
-                }`}
+                className={`fas fa-chevron-down transition-transform duration-300 ${isTechnologyOpen ? "rotate-180" : ""
+                  }`}
               ></i>
             </button>
 
             {isTechnologyOpen && (
-              <div 
+              <div
                 className="absolute z-50 w-full mt-2 bg-white dark:bg-black border border-gray-300 dark:border-white/10 rounded-2xl shadow-2xl max-h-80 overflow-y-auto animate-fade-in"
                 data-lenis-prevent
               >
@@ -280,46 +312,46 @@ const Projects: React.FC = () => {
         {/* Active Filters & Clear Button */}
         {(selectedCategories.length > 0 ||
           selectedTechnologies.length > 0) && (
-          <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              Active filters:
-            </span>
-            {selectedCategories.map((cat) => (
-              <span
-                key={cat}
-                className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-xs font-semibold text-yellow-600 dark:text-yellow-400"
-              >
-                {cat}
-                <button
-                  onClick={() => toggleCategory(cat)}
-                  className="hover:text-yellow-700 dark:hover:text-yellow-300"
-                >
-                  <i className="fas fa-times"></i>
-                </button>
+            <div className="flex items-center gap-3 flex-wrap">
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                Active filters:
               </span>
-            ))}
-            {selectedTechnologies.map((tech) => (
-              <span
-                key={tech}
-                className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-400/10 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-600 dark:text-blue-400"
-              >
-                {tech}
-                <button
-                  onClick={() => toggleTechnology(tech)}
-                  className="hover:text-blue-700 dark:hover:text-blue-300"
+              {selectedCategories.map((cat) => (
+                <span
+                  key={cat}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-xs font-semibold text-yellow-600 dark:text-yellow-400"
                 >
-                  <i className="fas fa-times"></i>
-                </button>
-              </span>
-            ))}
-            <button
-              onClick={clearFilters}
-              className="text-xs font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline hover:scale-110 transition-all duration-300"
-            >
-              Clear all
-            </button>
-          </div>
-        )}
+                  {cat}
+                  <button
+                    onClick={() => toggleCategory(cat)}
+                    className="hover:text-yellow-700 dark:hover:text-yellow-300"
+                  >
+                    <i className="fas fa-times"></i>
+                  </button>
+                </span>
+              ))}
+              {selectedTechnologies.map((tech) => (
+                <span
+                  key={tech}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-400/10 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-600 dark:text-blue-400"
+                >
+                  {tech}
+                  <button
+                    onClick={() => toggleTechnology(tech)}
+                    className="hover:text-blue-700 dark:hover:text-blue-300"
+                  >
+                    <i className="fas fa-times"></i>
+                  </button>
+                </span>
+              ))}
+              <button
+                onClick={clearFilters}
+                className="text-xs font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline hover:scale-110 transition-all duration-300"
+              >
+                Clear all
+              </button>
+            </div>
+          )}
       </header>
 
       {filteredProjects.length > 0 ? (
@@ -332,7 +364,7 @@ const Projects: React.FC = () => {
             >
               <ProjectCard
                 project={project}
-                onOpen={() => setSelectedProject(project)}
+                onOpen={() => handleProjectClick(project)}
               />
             </div>
           ))}
@@ -360,7 +392,7 @@ const Projects: React.FC = () => {
       {selectedProject && (
         <ProjectModal
           project={selectedProject}
-          onClose={() => setSelectedProject(null)}
+          onClose={handleCloseModal}
         />
       )}
     </section>

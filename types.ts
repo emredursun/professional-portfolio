@@ -38,6 +38,9 @@ export interface Project {
   github?: string;
   description: string;
   technologies: string[];
+  slug: string;
+  detailedDescription?: string;
+  metrics?: string[];
 }
 
 export interface Technology {
