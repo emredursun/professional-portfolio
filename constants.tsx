@@ -187,6 +187,23 @@ export const TECH_STACK: TechCategory[] = [
 
 export const PROJECTS: Project[] = [
     {
+        title: 'QASmartTestLab',
+        slug: 'qa-smart-test-lab',
+        category: 'Open Source',
+        image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+        description: 'A comprehensive test automation framework built with Java 17+, Selenium 4, and Cucumber for UI, API, and database testing with clean architecture and runtime configuration.',
+        detailedDescription: 'QASmartTestLab is a production-ready test automation framework demonstrating best practices in test automation. Built with Java 17+, Selenium 4, and Cucumber (JVM), it provides a clean, maintainable structure for UI, API, and database testing. The framework features runtime configuration for browsers (Chrome, Firefox, Edge), headless execution, remote Grid/Selenoid support, and comprehensive reporting. Following the Page Object Model pattern with clear separation of concerns, it includes configurable timeouts, parallel execution capabilities, and tag-based test filtering for flexible test management.',
+        technologies: ['Java 17', 'Selenium 4', 'Cucumber', 'Maven', 'JUnit 5', 'Selenium Grid'],
+        url: '#',
+        github: 'https://github.com/emredursun/QASmartTestLab',
+        metrics: [
+            'Multi-Layer Testing (UI, API, DB)',
+            'Parallel Execution Support',
+            'Remote Grid Integration',
+            'Clean Architecture \u0026 POM Pattern'
+        ]
+    },
+    {
         title: 'Social Share Image Generator',
         slug: 'social-share-image-generator',
         category: 'Open Source',
