@@ -225,15 +225,15 @@ export const PROJECTS: Project[] = [
         slug: 'social-share-image-generator',
         category: 'Open Source',
         image: '/images/social-generator-thumbnail.png',
-        description: 'Professional tool with intelligent adaptive layouts. Auto-adjusts to any dimension with 6 layout templates, smart text sizing, and one-click platform presets.',
-        detailedDescription: 'A powerful open-source tool designed to streamline the creation of social media assets. It features intelligent layout adaptation using the Canvas API, ensuring text and images are perfectly positioned regardless of the output dimensions. Users can choose from 6 professional templates, customize branding, and instantly export optimized images for LinkedIn, Twitter, Instagram, and more.',
+        description: 'Professional social media image generator with intelligent adaptive layouts. Features 5 premium templates, 6 visual effects, and instant presets for LinkedIn, Twitter, Instagram, YouTube & Stories.',
+        detailedDescription: 'A powerful open-source tool for creating stunning social media assets. Features an intelligent adaptive layout system that auto-adjusts to any dimension (100px-5000px). Includes 5 premium template styles (Centered, Split, Minimal, Bold, Elegant), 6 visual effects (Pattern, Circles, Grid, Waves, Dots), and one-click presets for all major platforms. Built with vanilla JavaScript and Canvas API—no frameworks or server dependencies. Export as high-quality PNG or copy directly to clipboard.',
         technologies: ['Canvas API', 'JavaScript', 'HTML5', 'CSS3'],
         url: 'https://emredursun.github.io/social-share-image-generator/',
         github: 'https://github.com/emredursun/social-share-image-generator',
         metrics: [
-            '6+ Adaptive Layout Templates',
-            'Instant Client-Side Rendering',
-            'Zero Server Dependency'
+            '5 Platform Presets & Custom Sizes',
+            '5 Premium Templates & 6 Effects',
+            'Zero Dependencies & Instant Export'
         ]
     },
     {
