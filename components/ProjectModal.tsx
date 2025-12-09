@@ -25,13 +25,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-70 z-[100] flex items-center justify-center p-4 animate-fade-in"
+      className="fixed inset-0 bg-black bg-opacity-70 z-[100] flex items-start md:items-center justify-center pt-4 px-4 pb-28 md:pb-4 animate-fade-in overflow-y-auto"
       onClick={onClose}
       aria-modal="true"
       role="dialog"
     >
       <div
-        className="relative bg-white dark:bg-[#2a2a2a] rounded-2xl w-[95%] sm:w-full max-w-4xl max-h-[90dvh] md:max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-700 shadow-2xl animate-fade-in-up flex flex-col"
+        className="relative bg-white dark:bg-[#2a2a2a] rounded-2xl w-[95%] sm:w-full max-w-4xl max-h-[calc(100dvh-8rem)] md:max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-700 shadow-2xl animate-fade-in-up flex flex-col my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
