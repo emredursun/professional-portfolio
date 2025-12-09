@@ -9,7 +9,7 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
 }) => {
   return (
     <div
-      className="group relative rounded-3xl bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] h-[520px] flex flex-col shadow-xl dark:shadow-none"
+      className="group relative rounded-3xl bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] h-[540px] flex flex-col shadow-xl dark:shadow-none"
       onClick={onOpen}
     >
       {/* Image Section - Fixed Height */}
