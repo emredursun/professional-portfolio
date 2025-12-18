@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { useGSAP } from "./hooks/useGSAP.tsx";
 import { Service } from "../types.ts";
 import {
   ABOUT_TEXT,
@@ -198,9 +200,55 @@ const ServiceItem: React.FC<{ service: Service }> = ({ service }) => {
 const About: React.FC = () => {
   const headerRef = useRef<HTMLElement>(null);
   const isHeaderVisible = useScrollReveal(headerRef, { threshold: 0.2 });
+  
+  const containerRef = useRef<HTMLDivElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const counterRef = useRef<HTMLDivElement>(null);
+  const [statsCount, setStatsCount] = useState(0);
+
+  useGSAP((context) => {
+    // 1. Service Cards Stagger
+    if (servicesRef.current) {
+        gsap.fromTo(servicesRef.current.children, 
+            { y: 50, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: servicesRef.current,
+                    start: "top 80%",
+                }
+            }
+        );
+    }
+
+    // 2. Number Counter Animation (0 to 5)
+    // We animate a proxy object and update state
+    if (counterRef.current) {
+        const proxy = { val: 0 };
+        gsap.to(proxy, {
+            val: 5,
+            duration: 2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: counterRef.current,
+                start: "top 85%",
+                once: true, // Only count up once
+            },
+            onUpdate: () => {
+                setStatsCount(Math.ceil(proxy.val));
+            }
+        });
+    }
+
+  }, { scope: containerRef }); // Scope GSAP to this section
+
 
   return (
-    <section className="animate-fade-in">
+    <section ref={containerRef} className="animate-fade-in">
       <motion.header
         ref={headerRef}
         className="mb-12"
@@ -277,12 +325,13 @@ const About: React.FC = () => {
 
               <div className="w-full h-full flex flex-col justify-center items-center relative z-10 py-6">
                 <motion.div
+                  ref={counterRef}
                   className="text-7xl font-black mb-2 text-gray-900 dark:text-white tracking-tighter drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
                 >
-                  5
+                  {statsCount}
                   <span className="text-4xl align-top text-accent-yellow dark:text-neon-cyan">
                     +
                   </span>
@@ -405,28 +454,13 @@ const About: React.FC = () => {
           >
             What I Do
           </motion.h3>
-          <motion.div
+          <div
+            ref={servicesRef}
             className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.12,
-                  delayChildren: 0.9,
-                },
-              },
-            }}
           >
             {SERVICES.map((service, i) => (
-              <motion.div
+              <div
                 key={i}
-                variants={{
-                  hidden: { opacity: 0, y: 30 },
-                  visible: { opacity: 1, y: 0 },
-                }}
               >
                 <BentoCard
                   noDefaultBg={true}
@@ -434,9 +468,9 @@ const About: React.FC = () => {
                 >
                   <ServiceItem service={service} />
                 </BentoCard>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </motion.div>
     </section>

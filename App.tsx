@@ -1,5 +1,8 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useGSAP } from "./components/hooks/useGSAP.tsx";
+import gsap from "gsap"; 
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Sidebar from './components/Sidebar.tsx';
 import MainContent from './components/MainContent.tsx';
 import Navbar from './components/Navbar.tsx';
@@ -123,6 +126,51 @@ const App: React.FC = () => {
     };
   }, [isMobileView, activePage]);
 
+
+  // GSAP Parallax Effects
+  const bgOrbsRef = useRef<HTMLDivElement>(null);
+  const floatingRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    // Only apply parallax if we have refs and (optional) if not mobile to save battery?
+    // User requested "Multi-layer depth on scroll", so we apply it.
+    
+    const scroller = isMobileView ? window : contentRef.current;
+    
+    if (bgOrbsRef.current) {
+        gsap.to(bgOrbsRef.current, {
+            y: 100, // Move down slightly as we scroll down (distant background)
+            ease: "none",
+            scrollTrigger: {
+                trigger: document.body,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+                scroller: scroller
+            }
+        });
+    }
+
+    if (floatingRef.current) {
+        gsap.to(floatingRef.current, {
+            y: -150, // Move up (closer foreground feel or inverse movement)
+            ease: "none",
+            scrollTrigger: {
+                 trigger: document.body,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.5,
+                scroller: scroller
+            }
+        });
+    }
+
+    // Refresh ScrollTrigger when view changes
+    ScrollTrigger.refresh();
+
+  }, { dependencies: [isMobileView], scope: document.body }); // Scope generally or just use dependencies
+
+
   // Show scroll button immediately on content pages (Resume, Projects, Contact)
   // since profile is above and users should have quick access to it
   useEffect(() => {
@@ -191,13 +239,15 @@ const App: React.FC = () => {
           {/* Particle Background System */}
           <ParticleBackground particleCount={150} connectionDistance={120} mouseInfluence={80} />
 
-          {/* Floating Ambient Elements */}
-          <FloatingElements />
+          {/* Floating Ambient Elements - Parallax Layer */}
+          <div ref={floatingRef} className="absolute inset-0 pointer-events-none z-[1]">
+              <FloatingElements />
+          </div>
 
           <CustomCursor />
 
           {/* Ambient Light Orbs (Softer, more spread out for less distraction) */}
-          <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+          <div ref={bgOrbsRef} className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
             {/* Top Left Warmth */}
             <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-yellow-400/10 dark:bg-yellow-600/5 blur-[130px] animate-blob"></div>
             {/* Bottom Right Coolness */}
