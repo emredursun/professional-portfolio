@@ -16,7 +16,10 @@ import ErrorBoundary from './components/ErrorBoundary.tsx';
 import { Page } from './types.ts';
 import { faviconController } from './src/utils/faviconController';
 
+import Preloader from './components/Preloader.tsx';
+
 const App: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [activePage, setActivePage] = useState<Page>('About');
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -32,6 +35,20 @@ const App: React.FC = () => {
   const [isScrollButtonVisible, setIsScrollButtonVisible] = useState(false);
   const [readingProgress, setReadingProgress] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  // Lock scroll while loading
+  useEffect(() => {
+    if (isLoading) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isLoading]);
+
+  // Handle Loading Complete
+  const handlePreloaderComplete = () => {
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -227,11 +244,14 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <ErrorBoundary>
-      <SmoothScroll contentRef={contentRef} isMobileView={isMobileView}>
-        <PrintableResume />
-
-        <main className={`print:hidden relative bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-gray-100 font-sans transition-colors duration-500 ${isMobileView ? 'min-h-screen p-4' : 'h-screen overflow-hidden p-6 lg:p-8'}`}>
+    <>
+      {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
+      {!isLoading && (
+        <ErrorBoundary>
+          <SmoothScroll contentRef={contentRef} isMobileView={isMobileView}>
+            <PrintableResume />
+    
+            <main className={`print:hidden relative bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-gray-100 font-sans transition-colors duration-500 ${isMobileView ? 'min-h-screen p-4' : 'h-screen overflow-hidden p-6 lg:p-8'}`}>
           
           {/* Global Noise Texture */}
           <div className="bg-noise"></div>
@@ -298,6 +318,8 @@ const App: React.FC = () => {
         </main>
       </SmoothScroll>
     </ErrorBoundary>
+      )}
+    </>
   );
 };
 
