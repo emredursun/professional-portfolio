@@ -52,3 +52,27 @@ export interface TechCategory {
   title: string;
   technologies: Technology[];
 }
+
+// Command Palette Types
+export type CommandCategory = 'Navigation' | 'Theme' | 'Projects' | 'Actions';
+
+export interface Command {
+  id: string;
+  label: string;
+  description: string;
+  icon: React.ReactNode;
+  category: CommandCategory;
+  keywords: string[];
+  shortcut?: string;
+  action: () => void;
+}
+
+export interface CommandPaletteProps {
+  isOpen: boolean;
+  onClose: () => void;
+  activePage: Page;
+  onNavigate: (page: Page) => void;
+  theme: string;
+  toggleTheme: () => void;
+  isMobileView: boolean;
+}

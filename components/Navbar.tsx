@@ -6,6 +6,7 @@ import { Page } from '../types.ts';
 interface NavbarProps {
     activePage: Page;
     onNavigate: (page: Page) => void;
+    onOpenCommandPalette?: () => void;
 }
 
 const pages: { label: Page; icon: React.ReactNode }[] = [
@@ -43,21 +44,36 @@ const NavButton: React.FC<{
     </li>
 ));
 
-const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate }) => {
+const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onOpenCommandPalette }) => {
     return (
         <nav className="fixed bottom-6 left-0 right-0 z-50 px-4 flex justify-center pointer-events-none pb-[env(safe-area-inset-bottom)]">
             {/* Premium Glass Dock */}
-            <div className="pointer-events-auto w-full max-w-[380px] bg-white/80 dark:bg-[#121212]/80 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.7)] border border-white/50 dark:border-white/10 rounded-[2rem] p-1.5 animate-fade-in-up ring-1 ring-black/5 dark:ring-white/5 transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(0,0,0,0.25)]">
-                <ul className="flex justify-between items-center px-1">
-                    {pages.map((page) => (
-                        <NavButton
-                            key={page.label}
-                            page={page}
-                            isActive={activePage === page.label}
-                            onNavigate={onNavigate}
-                        />
-                    ))}
-                </ul>
+            <div className="pointer-events-auto w-full max-w-[480px] flex gap-2">
+                {/* Command Palette Button */}
+                {onOpenCommandPalette && (
+                    <button
+                        onClick={onOpenCommandPalette}
+                        className="flex-shrink-0 bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-cyan-400 dark:to-blue-500 text-white rounded-2xl px-4 py-3 shadow-[0_10px_40px_-10px_rgba(234,179,8,0.6)] dark:shadow-[0_10px_40px_-10px_rgba(6,182,212,0.6)] hover:shadow-[0_15px_50px_-10px_rgba(234,179,8,0.8)] dark:hover:shadow-[0_15px_50px_-10px_rgba(6,182,212,0.8)] transition-all duration-300 hover:scale-105 active:scale-95 animate-fade-in-up ring-1 ring-black/10 dark:ring-white/20"
+                        aria-label="Open command palette"
+                        title="Search (⌘K)"
+                    >
+                        <i className="fas fa-search text-lg" />
+                    </button>
+                )}
+                
+                {/* Navigation Dock */}
+                <div className="flex-1 bg-white/80 dark:bg-[#121212]/80 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.7)] border border-white/50 dark:border-white/10 rounded-[2rem] p-1.5 animate-fade-in-up ring-1 ring-black/5 dark:ring-white/5 transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(0,0,0,0.25)]">
+                    <ul className="flex justify-between items-center px-1">
+                        {pages.map((page) => (
+                            <NavButton
+                                key={page.label}
+                                page={page}
+                                isActive={activePage === page.label}
+                                onNavigate={onNavigate}
+                            />
+                        ))}
+                    </ul>
+                </div>
             </div>
         </nav>
     );

@@ -13,6 +13,7 @@ import SmoothScroll from './components/SmoothScroll.tsx';
 import ParticleBackground from './components/ParticleBackground.tsx';
 import FloatingElements from './components/FloatingElements.tsx';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
+import CommandPalette from './components/CommandPalette.tsx';
 import { Page } from './types.ts';
 import { faviconController } from './src/utils/faviconController';
 
@@ -34,6 +35,7 @@ const App: React.FC = () => {
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 1024);
   const [isScrollButtonVisible, setIsScrollButtonVisible] = useState(false);
   const [readingProgress, setReadingProgress] = useState(0);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   // Lock scroll while loading
@@ -243,11 +245,34 @@ const App: React.FC = () => {
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   }, []);
 
+  // Command Palette keyboard shortcut (Cmd+K / Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen(prev => !prev);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <>
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
       {!isLoading && (
         <ErrorBoundary>
+          {/* Command Palette */}
+          <CommandPalette
+            isOpen={isCommandPaletteOpen}
+            onClose={() => setIsCommandPaletteOpen(false)}
+            activePage={activePage}
+            onNavigate={handleNavigation}
+            theme={theme}
+            toggleTheme={toggleTheme}
+            isMobileView={isMobileView}
+          />
           <SmoothScroll contentRef={contentRef} isMobileView={isMobileView}>
             <PrintableResume />
     
@@ -313,6 +338,7 @@ const App: React.FC = () => {
             <Navbar 
               activePage={activePage}
               onNavigate={handleNavigation}
+              onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
             />
           )}
         </main>
