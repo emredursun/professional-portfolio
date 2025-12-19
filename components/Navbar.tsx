@@ -25,18 +25,33 @@ const NavButton: React.FC<{
         <Magnetic>
             <button
                 onClick={() => onNavigate(page.label)}
-                className={`relative flex flex-col items-center justify-center w-full max-w-[70px] py-2.5 rounded-2xl transition-all duration-300 group ${isActive ? 'text-yellow-500 dark:text-yellow-400' : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'}`}
+                className={`relative flex flex-col items-center justify-center w-full min-w-[60px] py-1.5 rounded-xl transition-all duration-300 group touch-manipulation ${
+                    isActive 
+                        ? 'text-yellow-600 dark:text-yellow-400' 
+                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                }`}
                 aria-current={isActive ? 'page' : undefined}
             >
-                {/* Active Indicator: Subtle Glow Background */}
-                <span className={`absolute inset-0 bg-yellow-400/10 dark:bg-yellow-400/5 rounded-2xl transition-all duration-500 ${isActive ? 'opacity-100 scale-100 shadow-[0_0_20px_rgba(250,204,21,0.15)]' : 'opacity-0 scale-75'}`}></span>
+                {/* Premium Active Indicator with iOS-style Pill */}
+                {isActive && (
+                    <span className="absolute inset-0 bg-gradient-to-b from-yellow-400/15 to-yellow-500/10 dark:from-yellow-400/10 dark:to-yellow-500/5 rounded-xl transition-all duration-500 shadow-[0_2px_12px_rgba(250,204,21,0.2)] dark:shadow-[0_2px_16px_rgba(250,204,21,0.15)] animate-in fade-in zoom-in-95"></span>
+                )}
 
-                <span className={`text-xl mb-1 z-10 transition-transform duration-300 ease-out ${isActive ? 'scale-110 -translate-y-0.5' : 'group-hover:scale-110'}`}>
+                {/* Icon with smooth animations */}
+                <span className={`text-[18px] mb-0.5 z-10 transition-all duration-300 ease-out ${
+                    isActive 
+                        ? 'scale-110 -translate-y-0.5' 
+                        : 'group-hover:scale-105 group-active:scale-95'
+                }`}>
                     {page.icon}
                 </span>
                 
-                {/* Label */}
-                <span className={`text-[10px] font-bold uppercase tracking-wider z-10 transition-all duration-300 whitespace-nowrap ${isActive ? 'opacity-100 translate-y-0 font-extrabold' : 'opacity-70'}`}>
+                {/* Label with improved typography */}
+                <span className={`text-[9px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap ${
+                    isActive 
+                        ? 'opacity-100 font-bold' 
+                        : 'opacity-60 group-hover:opacity-80'
+                }`}>
                     {page.label}
                 </span>
             </button>
@@ -46,24 +61,12 @@ const NavButton: React.FC<{
 
 const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onOpenCommandPalette }) => {
     return (
-        <nav className="fixed bottom-6 left-0 right-0 z-50 px-4 flex justify-center pointer-events-none pb-[env(safe-area-inset-bottom)]">
-            {/* Premium Glass Dock */}
-            <div className="pointer-events-auto w-full max-w-[480px] flex gap-2">
-                {/* Command Palette Button */}
-                {onOpenCommandPalette && (
-                    <button
-                        onClick={onOpenCommandPalette}
-                        className="flex-shrink-0 bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-cyan-400 dark:to-blue-500 text-white rounded-2xl px-4 py-3 shadow-[0_10px_40px_-10px_rgba(234,179,8,0.6)] dark:shadow-[0_10px_40px_-10px_rgba(6,182,212,0.6)] hover:shadow-[0_15px_50px_-10px_rgba(234,179,8,0.8)] dark:hover:shadow-[0_15px_50px_-10px_rgba(6,182,212,0.8)] transition-all duration-300 hover:scale-105 active:scale-95 animate-fade-in-up ring-1 ring-black/10 dark:ring-white/20"
-                        aria-label="Open command palette"
-                        title="Search (⌘K)"
-                    >
-                        <i className="fas fa-search text-lg" />
-                    </button>
-                )}
-                
-                {/* Navigation Dock */}
-                <div className="flex-1 bg-white/80 dark:bg-[#121212]/80 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.7)] border border-white/50 dark:border-white/10 rounded-[2rem] p-1.5 animate-fade-in-up ring-1 ring-black/5 dark:ring-white/5 transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(0,0,0,0.25)]">
-                    <ul className="flex justify-between items-center px-1">
+        <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none pb-[env(safe-area-inset-bottom)]">
+            {/* Single unified navbar container - flush with device navigation */}
+            <div className="pointer-events-auto w-full bg-white/95 dark:bg-[#1c1c1e]/95 backdrop-blur-2xl border-t border-gray-200/80 dark:border-white/[0.08] shadow-[0_-2px_10px_rgba(0,0,0,0.08)] dark:shadow-[0_-2px_16px_rgba(0,0,0,0.4)]">
+                <div className="max-w-[520px] mx-auto px-4 py-1.5">
+                    <ul className="flex justify-between items-center gap-0.5">
+                        {/* Navigation buttons */}
                         {pages.map((page) => (
                             <NavButton
                                 key={page.label}
@@ -72,6 +75,25 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onOpenCommandPa
                                 onNavigate={onNavigate}
                             />
                         ))}
+                        
+                        {/* Command Palette Button integrated as nav item */}
+                        {onOpenCommandPalette && (
+                            <li className="flex-1 flex justify-center">
+                                <button
+                                    onClick={onOpenCommandPalette}
+                                    className="relative flex flex-col items-center justify-center w-full min-w-[60px] py-1.5 rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                                    aria-label="Open command palette"
+                                    title="Search (⌘K)"
+                                >
+                                    <span className="text-[18px] mb-0.5 z-10 transition-all duration-300 ease-out group-hover:scale-105 group-active:scale-95">
+                                        <i className="fas fa-search" />
+                                    </span>
+                                    <span className="text-[9px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap opacity-60 group-hover:opacity-80">
+                                        Search
+                                    </span>
+                                </button>
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>

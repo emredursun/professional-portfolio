@@ -32,6 +32,9 @@ const App: React.FC = () => {
     }
     return 'light';
   });
+  const [userHasManuallyToggledTheme, setUserHasManuallyToggledTheme] = useState(() => {
+    return localStorage.getItem('userToggledTheme') === 'true';
+  });
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 1024);
   const [isScrollButtonVisible, setIsScrollButtonVisible] = useState(false);
   const [readingProgress, setReadingProgress] = useState(0);
@@ -60,6 +63,31 @@ const App: React.FC = () => {
     }
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  // Listen for system dark mode preference changes
+  useEffect(() => {
+    // Only auto-switch if user hasn't manually toggled theme
+    if (userHasManuallyToggledTheme) {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      const newTheme = e.matches ? 'dark' : 'light';
+      setTheme(newTheme);
+    };
+
+    // Initial check
+    handleChange(mediaQuery);
+
+    // Listen for changes
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+    };
+  }, [userHasManuallyToggledTheme]);
 
   // Track page changes with favicon controller
   useEffect(() => {
@@ -303,6 +331,9 @@ const App: React.FC = () => {
 
   const toggleTheme = useCallback(() => {
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+    // Mark that user has manually toggled theme (disable auto-switching)
+    setUserHasManuallyToggledTheme(true);
+    localStorage.setItem('userToggledTheme', 'true');
   }, []);
 
   // Command Palette keyboard shortcut (Cmd+K / Ctrl+K)
