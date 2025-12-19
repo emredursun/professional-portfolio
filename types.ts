@@ -30,6 +30,25 @@ export interface Language {
   greeting: string;
 }
 
+export interface Feature {
+  title: string;
+  description: string;
+  icon?: React.ReactNode;
+}
+
+export interface Result {
+  metric: string;
+  value: string;
+  description: string;
+}
+
+export interface Testimonial {
+  text: string;
+  author: string;
+  role: string;
+  avatar?: string;
+}
+
 export interface Project {
   title: string;
   category: string;
@@ -41,6 +60,19 @@ export interface Project {
   slug: string;
   detailedDescription?: string;
   metrics?: string[];
+  
+  // Enhanced fields for immersive view
+  gallery?: string[];       // Additional images for carousel
+  duration?: string;        // Project timeline (e.g., "3 months")
+  role?: string;            // Your role in the project
+  team?: string;            // Team size (e.g., "5 developers")
+  challenge?: string;       // Problem/challenge statement
+  solution?: string;        // How you solved it
+  features?: Feature[];     // Key features with descriptions
+  results?: Result[];       // Measurable outcomes
+  testimonial?: Testimonial; // Client/stakeholder feedback
+  tags?: string[];          // Additional categorization
+  year?: number;            // Project year
 }
 
 export interface Technology {

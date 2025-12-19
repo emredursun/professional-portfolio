@@ -97,11 +97,21 @@ const App: React.FC = () => {
       let scrollHeight = 0;
       let clientHeight = 0;
 
-      if (isMobileView) {
+      // Check if a modal is open (ProjectModal has data-modal-content attribute)
+      const modalContent = document.querySelector('[data-modal-content]') as HTMLElement;
+      
+      if (modalContent) {
+        // Modal is open - track modal scroll
+        scrollTop = modalContent.scrollTop;
+        scrollHeight = modalContent.scrollHeight;
+        clientHeight = modalContent.clientHeight;
+      } else if (isMobileView) {
+        // Normal page scroll on mobile
         scrollTop = window.scrollY;
         scrollHeight = document.documentElement.scrollHeight;
         clientHeight = window.innerHeight;
       } else if (contentRef.current) {
+        // Normal page scroll on desktop
         scrollTop = contentRef.current.scrollTop;
         scrollHeight = contentRef.current.scrollHeight;
         clientHeight = contentRef.current.clientHeight;
@@ -116,7 +126,10 @@ const App: React.FC = () => {
       // Scroll Button Logic
       let shouldShowButton = false;
 
-      if (isMobileView) {
+      if (modalContent) {
+        // Modal is open - show button after scrolling 10% down
+        shouldShowButton = scrolled > 10;
+      } else if (isMobileView) {
         if (activePage === 'About') {
           // On About page, show button when user has scrolled down into content
           // This happens when they've scrolled past the profile section (~850px)
@@ -138,10 +151,33 @@ const App: React.FC = () => {
       scrollableElement.addEventListener('scroll', handleScroll, { passive: true });
     }
     
+    // Also listen to modal scroll if it exists
+    const modalContent = document.querySelector('[data-modal-content]') as HTMLElement;
+    if (modalContent) {
+      modalContent.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    
+    // Set up a MutationObserver to detect when modal is added/removed from DOM
+    const observer = new MutationObserver(() => {
+      const modal = document.querySelector('[data-modal-content]') as HTMLElement;
+      if (modal) {
+        modal.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // Trigger initial check
+      } else {
+        handleScroll(); // Trigger check when modal closes
+      }
+    });
+    
+    observer.observe(document.body, { childList: true, subtree: true });
+    
     return () => {
       if (scrollableElement) {
         scrollableElement.removeEventListener('scroll', handleScroll);
       }
+      if (modalContent) {
+        modalContent.removeEventListener('scroll', handleScroll);
+      }
+      observer.disconnect();
     };
   }, [isMobileView, activePage]);
 
@@ -200,6 +236,18 @@ const App: React.FC = () => {
 
 
   const scrollToContentTop = useCallback(() => {
+    // Check if modal is open first
+    const modalContent = document.querySelector('[data-modal-content]') as HTMLElement;
+    if (modalContent) {
+      // Scroll modal to top
+      modalContent.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      return;
+    }
+    
+    // Otherwise scroll main content
     if (contentRef.current) {
       if (isMobileView) {
         // On mobile, we need to scroll the window to the top of the content container
@@ -224,6 +272,18 @@ const App: React.FC = () => {
   }, [isMobileView]);
   
   const scrollToWindowTop = useCallback(() => {
+    // Check if modal is open first
+    const modalContent = document.querySelector('[data-modal-content]') as HTMLElement;
+    if (modalContent) {
+      // Scroll modal to top
+      modalContent.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      return;
+    }
+    
+    // Otherwise scroll window to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 

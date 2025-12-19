@@ -106,6 +106,24 @@ const Projects: React.FC = () => {
     history.pushState("", document.title, window.location.pathname + window.location.search);
   };
 
+  // Navigate to previous or next project
+  const handleNavigateProject = (direction: 'prev' | 'next') => {
+    if (!selectedProject) return;
+    
+    const currentIndex = PROJECTS.findIndex(p => p.slug === selectedProject.slug);
+    let newIndex;
+    
+    if (direction === 'prev') {
+      newIndex = currentIndex - 1 < 0 ? PROJECTS.length - 1 : currentIndex - 1;
+    } else {
+      newIndex = currentIndex + 1 >= PROJECTS.length ? 0 : currentIndex + 1;
+    }
+    
+    const newProject = PROJECTS[newIndex];
+    setSelectedProject(newProject);
+    window.location.hash = `project-${newProject.slug}`;
+  };
+
   // Extract unique categories and technologies
   const categories = useMemo(
     () => [...new Set(PROJECTS.map((p) => p.category))].sort(),
@@ -393,6 +411,7 @@ const Projects: React.FC = () => {
         <ProjectModal
           project={selectedProject}
           onClose={handleCloseModal}
+          onNavigate={handleNavigateProject}
         />
       )}
     </section>
