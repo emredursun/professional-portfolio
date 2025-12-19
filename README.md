@@ -32,7 +32,8 @@ A meticulously crafted, **production-ready portfolio** designed to showcase prof
 ### 🎨 **Design Excellence**
 
 - **Dual Theme System** — Elegant light & dark modes with smooth transitions
-- **Premium Animations** — Micro-interactions and fluid motion design
+- **GSAP Animations** — Professional parallax effects and smooth scrolling with Lenis
+- **Cinematic Preloader** — Premium typographic loading experience with GSAP
 - **Glassmorphism UI** — Modern, depth-rich interface elements
 - **Responsive Layout** — Flawless across all devices and screen sizes
 
@@ -50,7 +51,7 @@ A meticulously crafted, **production-ready portfolio** designed to showcase prof
 </tr>
 </table>
 
-### 🔥 **Interactive Sections**
+### 🔥 **Interactive Features**
 
 ```mermaid
 graph LR
@@ -58,18 +59,37 @@ graph LR
     B --> C[💼 Resume]
     C --> D[🎨 Projects]
     D --> E[📬 Contact]
+    F[⌘K Command Palette] -.->|Quick Access| A
+    F -.-> B
+    F -.-> C
+    F -.-> D
+    F -.-> E
 
     style A fill:#facc15,stroke:#f59e0b,stroke-width:2px,color:#000
     style B fill:#facc15,stroke:#f59e0b,stroke-width:2px,color:#000
     style C fill:#facc15,stroke:#f59e0b,stroke-width:2px,color:#000
     style D fill:#facc15,stroke:#f59e0b,stroke-width:2px,color:#000
     style E fill:#facc15,stroke:#f59e0b,stroke-width:2px,color:#000
+    style F fill:#06b6d4,stroke:#0891b2,stroke-width:2px,color:#000
 ```
 
-- **Dynamic Project Filtering** — Real-time category-based filtering with smooth animations
+#### 🎯 **Core Features**
+
+- **Command Palette (Cmd/Ctrl+K)** — Fuzzy search navigation with recent commands tracking
+- **Enhanced Project Modal** — Full-featured project showcase with gallery, sections, and navigation
+- **Smart Scroll-to-Top** — Intelligent button that works in both main page and modals
+- **Dynamic Project Filtering** — Real-time category and technology filtering with animations
 - **Interactive Resume Timeline** — Visually engaging experience and education showcase
-- **Smart Contact Form** — Integrated with modern validation and feedback
+- **Smart Contact Form** — Integrated email service with validation and feedback
 - **Theme Persistence** — Remembers user preferences across sessions
+
+#### 🎭 **Advanced Interactions**
+
+- **Multi-layer Parallax** — Depth-rich scrolling with background and floating elements
+- **Progress Tracking** — Visual scroll progress ring on scroll-to-top button
+- **Keyboard Navigation** — Full keyboard shortcuts support (Cmd+K, Esc, Arrow keys)
+- **Hash-based Routing** — Direct links to specific projects via URL
+- **Staggered Animations** — Smooth fade-in animations with delay for visual hierarchy
 
 <br/>
 
@@ -81,7 +101,9 @@ graph LR
 | :------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |  **Frontend**  | ![React](https://img.shields.io/badge/React-19.2+-61DAFB?style=flat-square&logo=react&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-3178C6?style=flat-square&logo=typescript&logoColor=white)    |
 |  **Styling**   | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4+-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-Custom-1572B6?style=flat-square&logo=css3&logoColor=white) |
+| **Animation**  | ![GSAP](https://img.shields.io/badge/GSAP-3.12+-88CE02?style=flat-square&logo=greensock&logoColor=white) ![Lenis](https://img.shields.io/badge/Lenis-Smooth_Scroll-000000?style=flat-square)                                   |
 | **Build Tool** | ![Vite](https://img.shields.io/badge/Vite-6.2+-646CFF?style=flat-square&logo=vite&logoColor=white)                                                                                                                             |
+|   **Search**   | ![Fuse.js](https://img.shields.io/badge/Fuse.js-Fuzzy_Search-FF6B6B?style=flat-square)                                                                                                                                         |
 |   **Icons**    | ![Font Awesome](https://img.shields.io/badge/Font_Awesome-6.5-339AF0?style=flat-square&logo=fontawesome&logoColor=white)                                                                                                       |
 |   **Fonts**    | ![Google Fonts](https://img.shields.io/badge/Plus_Jakarta_Sans-Google_Fonts-4285F4?style=flat-square&logo=google&logoColor=white)                                                                                              |
 
@@ -93,6 +115,9 @@ graph LR
 - **Type-Safe Development** — Full TypeScript coverage for reliability
 - **Modern React Patterns** — Hooks, Context API, and functional components
 - **Optimized Asset Loading** — Lazy loading and code splitting strategies
+- **GSAP Animations** — Professional-grade animations with ScrollTrigger
+- **Smooth Scrolling** — Lenis for buttery-smooth scroll experience
+- **Fuzzy Search** — Fuse.js powered command palette for instant navigation
 
 <br/>
 
@@ -167,20 +192,51 @@ npm run dev
 ```
 professional-portfolio/
 ├── 📄 index.html          # Entry HTML with SEO meta tags
-├── 📄 App.tsx             # Main application component
+├── 📄 App.tsx             # Main application with GSAP animations
 ├── 📄 constants.tsx       # Portfolio data and configuration
+├── 📄 types.ts            # TypeScript type definitions
 ├── 📁 components/         # Reusable React components
-│   ├── Sidebar.tsx
-│   ├── About.tsx
-│   ├── Resume.tsx
-│   ├── Projects.tsx
-│   └── ...
+│   ├── Sidebar.tsx        # Navigation and profile
+│   ├── About.tsx          # About section with parallax
+│   ├── Resume.tsx         # Experience timeline
+│   ├── Projects.tsx       # Project grid with filtering
+│   ├── Contact.tsx        # Contact form
+│   ├── Navbar.tsx         # Mobile navigation
+│   ├── Preloader.tsx      # Cinematic loading screen
+│   ├── CommandPalette.tsx # Fuzzy search command palette
+│   ├── ProjectModal.tsx   # Full-screen project details
+│   ├── ProjectGallery.tsx # Image gallery component
+│   ├── ProjectModalHeader.tsx # Modal header with gradient
+│   ├── ProjectSectionNav.tsx  # Section navigation tabs
+│   ├── ScrollToTopButton.tsx  # Smart scroll-to-top button
+│   ├── SmoothScroll.tsx   # Lenis smooth scroll wrapper
+│   └── hooks/
+│       ├── useGSAP.tsx    # GSAP animation hook
+│       └── useCommandPalette.tsx # Command palette logic
 ├── 📁 public/             # Static assets
 │   ├── favicon.ico
 │   ├── site.webmanifest
-│   └── robots.txt
+│   ├── robots.txt
+│   └── sitemap.xml
 └── 📄 vite.config.ts      # Vite configuration
 ```
+
+<br/>
+
+## ⌨️ Keyboard Shortcuts
+
+Enhance your browsing experience with these keyboard shortcuts:
+
+| Shortcut             | Action                          |
+| -------------------- | ------------------------------- |
+| `Cmd/Ctrl + K`       | Open Command Palette            |
+| `Esc`                | Close modals or Command Palette |
+| `←` `→` (in modal)   | Navigate between projects       |
+| `↑` `↓` (in palette) | Navigate through search results |
+| `Enter` (in palette) | Execute selected command        |
+
+> [!TIP]
+> Use the **Command Palette** for lightning-fast navigation! Press `Cmd/Ctrl + K` and start typing to jump to any page, switch themes, or filter projects.
 
 <br/>
 

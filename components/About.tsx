@@ -207,19 +207,23 @@ const About: React.FC = () => {
   const [statsCount, setStatsCount] = useState(0);
 
   useGSAP((context) => {
-    // 1. Service Cards Stagger
+    // 1. Service Cards Stagger - start from visible state
     if (servicesRef.current) {
+        // First set them visible
+        gsap.set(servicesRef.current.children, { opacity: 1, y: 0 });
+        
+        // Then add subtle animation on scroll
         gsap.fromTo(servicesRef.current.children, 
-            { y: 50, opacity: 0 },
+            { y: 30, opacity: 0.5 },
             {
                 y: 0,
                 opacity: 1,
-                duration: 0.8,
-                stagger: 0.15,
+                duration: 0.6,
+                stagger: 0.1,
                 ease: "power3.out",
                 scrollTrigger: {
                     trigger: servicesRef.current,
-                    start: "top 80%",
+                    start: "top 85%",
                 }
             }
         );
