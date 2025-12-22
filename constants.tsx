@@ -41,10 +41,16 @@ export const SERVICES: Service[] = [
     },
     {
         icon: <i className="fas fa-laptop-code"></i>,
-        title: 'Full-Stack Web Development',
-        description: 'Developing responsive, high-performance web applications with modern frontend and backend technologies.',
-        tags: ['React', 'TypeScript', 'HTML/CSS', 'Node.js', 'Tailwind']
+        title: 'AI-Powered Web Development',
+        description: 'Leveraging advanced AI coding agents and modern architectural patterns to build professional, high-performance web applications with speed and precision.',
+        tags: ['React', 'TypeScript', 'AI Engineering', 'Rapid Prototyping', 'Tailwind']
     },
+    {
+        icon: <i className="fas fa-chart-line"></i>,
+        title: 'E-commerce Sales Optimization',
+        description: 'Implementing data-driven sales strategies and SEO techniques to maximize product visibility and revenue across major e-commerce platforms like Amazon and eBay.',
+        tags: ['E-commerce', 'SEO', 'Analytics', 'Strategy', 'Management']
+    }
 ];
 
 export const ABOUT_INTRO = "Driven by precision, powered by curiosity. I transform manual testing corridors into automated, repeatable systems so teams have clear feedback and confidence to ship.";
@@ -101,7 +107,7 @@ export const EXPERIENCE: TimelineItem[] = [
     },
     {
         date: 'Mar 2019 - Sep 2020',
-        title: 'Student Affairs Coordinator',
+        title: 'Student Affairs & Content Coordinator',
         company: 'LiveCoding | Online Web Development Bootcamp - Netherlands · Remote',
         description: 'Played a key role in enhancing the student experience at LiveCoding through comprehensive support and engagement initiatives. Delivered tailored counseling to online students, helping them overcome various challenges. Organized and executed virtual activities to strengthen community ties among students. Maintained accurate student records, ensuring compliance with program policies and tracking progress effectively.',
     },
@@ -189,7 +195,7 @@ export const PROJECTS: Project[] = [
     {
         title: 'QASmartTestLab',
         slug: 'qa-smart-test-lab',
-        category: 'Open Source',
+        category: 'Test Automation',
         image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
         description: 'A comprehensive test automation framework built with Java 17+, Selenium 4, and Cucumber for UI, API, and database testing with clean architecture and runtime configuration.',
         detailedDescription: 'QASmartTestLab is a production-ready test automation framework demonstrating best practices in test automation. Built with Java 17+, Selenium 4, and Cucumber (JVM), it provides a clean, maintainable structure for UI, API, and database testing. The framework features runtime configuration for browsers (Chrome, Firefox, Edge), headless execution, remote Grid/Selenoid support, and comprehensive reporting. Following the Page Object Model pattern with clear separation of concerns, it includes configurable timeouts, parallel execution capabilities, and tag-based test filtering for flexible test management.',
@@ -259,7 +265,7 @@ export const PROJECTS: Project[] = [
     {
         title: 'Playwright Testing Suite',
         slug: 'playwright-testing-project',
-        category: 'Open Source',
+        category: 'Test Automation',
         image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
         description: 'Comprehensive Playwright test automation suite demonstrating UI, API, and visual testing capabilities with Page Object Model, cross-browser testing, and advanced debugging.',
         detailedDescription: 'A production-ready Playwright test automation suite developed as part of mastering modern test automation practices. Features comprehensive test coverage including UI end-to-end tests, RESTful API integration testing, and visual regression testing. Built with TypeScript, it implements the Page Object Model pattern for maintainable test code, supports cross-browser testing (Chromium, Firefox, WebKit), and includes advanced features like trace viewer debugging, parallel test execution, screenshot/video recording, and cookie-based authentication handling. The project demonstrates modern testing best practices with multiple reporters and environment-based configuration.',
@@ -292,11 +298,11 @@ export const PROJECTS: Project[] = [
     {
         title: 'ING TIP Test Center (Dovetail)',
         slug: 'banking-payment-automation',
-        category: 'Automation',
+        category: 'Test Automation',
         image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
         description: 'Automated end-to-end testing for the TIP Test Center (True International Payments) within ING Bank\'s PSS department, using the Dovetail platform—a Fiserv payment system handling real-time international transactions.',
         detailedDescription: 'Architected and maintained a robust test automation framework for the Dovetail payment processing system at ING Bank. The solution covered complex cross-border payment flows (SEPA, SWIFT, TIP), real-time transaction validations, and integration with core banking ledgers. It significantly reduced regression testing time and ensured compliance with strict financial regulations.',
-        technologies: ['Java', 'Selenium', 'Cucumber', 'Jenkins', 'SQL', 'Maven'],
+        technologies: ['Java', 'Selenium', 'Cucumber', 'Azure DevOps', 'SQL', 'Maven'],
         url: '#',
         metrics: [
             'Reduced Regression Time by 70%',
@@ -308,7 +314,7 @@ export const PROJECTS: Project[] = [
     {
         title: 'Hospital Portal Testing',
         slug: 'hospital-portal-testing',
-        category: 'QA Testing',
+        category: 'Test Automation',
         image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
         description: 'Executed UI, backend, and database tests for a hospital portal, covering patient management and appointments.',
         detailedDescription: 'Led the quality assurance strategy for a comprehensive hospital management portal. Implemented a hybrid automation framework using Cucumber BDD for readable test scenarios. Validated critical healthcare workflows including patient registration, appointment scheduling, and medical record management, ensuring data privacy and system reliability.',
