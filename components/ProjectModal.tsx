@@ -170,7 +170,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
           {sections.length > 1 && <ProjectSectionNav sections={sections} />}
 
           {/* Main Content */}
-          <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12 pb-24 md:pb-12">
             {/* Overview Section */}
             <section id="overview" className="mb-16 scroll-mt-24">
               <div className="grid md:grid-cols-2 gap-8 mb-8">
@@ -377,14 +377,14 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             )}
 
             {/* Action Buttons */}
-            <section className="mb-8">
-              <div className="flex flex-wrap gap-4 justify-center">
+            <section className="mb-20 md:mb-16">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center">
                 {project.url && project.url !== "#" && (
                   <a
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 bg-yellow-400 text-black font-bold py-4 px-8 rounded-xl hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                    className="w-full sm:w-auto inline-flex items-center gap-3 bg-yellow-400 text-black font-bold py-4 px-8 rounded-xl hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-center"
                   >
                     <i className="fas fa-external-link-alt text-lg"></i>
                     <span>View Live Demo</span>
@@ -395,7 +395,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-4 px-8 rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                    className="w-full sm:w-auto inline-flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-4 px-8 rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-center"
                   >
                     <i className="fab fa-github text-lg"></i>
                     <span>View on GitHub</span>

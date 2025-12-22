@@ -62,7 +62,7 @@ const ProjectSectionNav: React.FC<ProjectSectionNavProps> = ({ sections }) => {
 
   return (
     <nav
-      className={`sticky top-0 z-40 bg-white/80 dark:bg-[#2a2a2a]/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-700 transition-all duration-300 ${
+      className={`sticky top-[57px] md:top-[65px] z-40 bg-white/80 dark:bg-[#2a2a2a]/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-700 transition-all duration-300 ${
         isSticky ? 'shadow-lg' : ''
       }`}
     >

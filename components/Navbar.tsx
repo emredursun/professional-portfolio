@@ -25,7 +25,7 @@ const NavButton: React.FC<{
         <Magnetic>
             <button
                 onClick={() => onNavigate(page.label)}
-                className={`relative flex flex-col items-center justify-center w-full min-w-[60px] py-1.5 rounded-xl transition-all duration-300 group touch-manipulation ${
+                className={`relative flex flex-col items-center justify-center w-full min-w-[54px] py-[5px] rounded-xl transition-all duration-300 group touch-manipulation ${
                     isActive 
                         ? 'text-yellow-600 dark:text-yellow-400' 
                         : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
@@ -38,7 +38,7 @@ const NavButton: React.FC<{
                 )}
 
                 {/* Icon with smooth animations */}
-                <span className={`text-[18px] mb-0.5 z-10 transition-all duration-300 ease-out ${
+                <span className={`text-[16px] mb-[2px] z-10 transition-all duration-300 ease-out ${
                     isActive 
                         ? 'scale-110 -translate-y-0.5' 
                         : 'group-hover:scale-105 group-active:scale-95'
@@ -47,7 +47,7 @@ const NavButton: React.FC<{
                 </span>
                 
                 {/* Label with improved typography */}
-                <span className={`text-[9px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap ${
+                <span className={`text-[8px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap ${
                     isActive 
                         ? 'opacity-100 font-bold' 
                         : 'opacity-60 group-hover:opacity-80'
@@ -64,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onOpenCommandPa
         <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none pb-[env(safe-area-inset-bottom)]">
             {/* Single unified navbar container - flush with device navigation */}
             <div className="pointer-events-auto w-full bg-white/95 dark:bg-[#1c1c1e]/95 backdrop-blur-2xl border-t border-gray-200/80 dark:border-white/[0.08] shadow-[0_-2px_10px_rgba(0,0,0,0.08)] dark:shadow-[0_-2px_16px_rgba(0,0,0,0.4)]">
-                <div className="max-w-[520px] mx-auto px-4 py-1.5">
+                <div className="max-w-[520px] mx-auto px-[14px] py-[5px]">
                     <ul className="flex justify-between items-center gap-0.5">
                         {/* Navigation buttons */}
                         {pages.map((page) => (
@@ -81,14 +81,14 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onOpenCommandPa
                             <li className="flex-1 flex justify-center">
                                 <button
                                     onClick={onOpenCommandPalette}
-                                    className="relative flex flex-col items-center justify-center w-full min-w-[60px] py-1.5 rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                                    className="relative flex flex-col items-center justify-center w-full min-w-[54px] py-[5px] rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                                     aria-label="Open command palette"
                                     title="Search (⌘K)"
                                 >
-                                    <span className="text-[18px] mb-0.5 z-10 transition-all duration-300 ease-out group-hover:scale-105 group-active:scale-95">
+                                    <span className="text-[16px] mb-[2px] z-10 transition-all duration-300 ease-out group-hover:scale-105 group-active:scale-95">
                                         <i className="fas fa-search" />
                                     </span>
-                                    <span className="text-[9px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap opacity-60 group-hover:opacity-80">
+                                    <span className="text-[8px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap opacity-60 group-hover:opacity-80">
                                         Search
                                     </span>
                                 </button>
