@@ -5,12 +5,14 @@ interface ProjectModalHeaderProps {
   project: Project;
   onClose: () => void;
   onShare?: () => void;
+  onNavigate?: (direction: "prev" | "next") => void;
 }
 
 const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({ 
   project, 
   onClose,
-  onShare 
+  onShare,
+  onNavigate
 }) => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -99,6 +101,34 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
         
         {/* Top Controls */}
         <div className="absolute top-4 right-4 flex gap-2 z-10">
+          {/* Previous Project Button */}
+          {onNavigate && (
+            <button
+              onClick={() => onNavigate("prev")}
+              className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md 
+                         rounded-full text-white hover:bg-white/20 
+                         transition-all duration-300 flex items-center justify-center
+                         hover:scale-110 group"
+              aria-label="Previous Project"
+            >
+              <i className="fas fa-chevron-left group-hover:scale-125 transition-transform"></i>
+            </button>
+          )}
+
+          {/* Next Project Button */}
+          {onNavigate && (
+            <button
+              onClick={() => onNavigate("next")}
+              className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md 
+                         rounded-full text-white hover:bg-white/20 
+                         transition-all duration-300 flex items-center justify-center
+                         hover:scale-110 group"
+              aria-label="Next Project"
+            >
+              <i className="fas fa-chevron-right group-hover:scale-125 transition-transform"></i>
+            </button>
+          )}
+
           {/* Share Button */}
           <button
             onClick={handleShareClick}
@@ -125,17 +155,67 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
           scrolled ? 'opacity-100 translate-y-0 shadow-lg' : 'opacity-0 -translate-y-full pointer-events-none'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
-          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white truncate">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4">
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white truncate flex-1">
             {project.title}
           </h2>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 flex items-center justify-center"
-            aria-label="Close"
-          >
-            <i className="fas fa-times"></i>
-          </button>
+          
+          {/* Navigation Controls Group */}
+          <div className="flex items-center gap-2">
+            {/* Previous Project Button */}
+            {onNavigate && (
+              <button
+                onClick={() => onNavigate("prev")}
+                className="w-8 h-8 md:w-10 md:h-10 bg-gray-100 dark:bg-gray-700 
+                           rounded-full text-gray-900 dark:text-white 
+                           hover:bg-yellow-400 hover:text-black dark:hover:bg-yellow-400
+                           transition-all duration-300 flex items-center justify-center
+                           hover:scale-110 group"
+                aria-label="Previous Project"
+              >
+                <i className="fas fa-chevron-left text-sm md:text-base 
+                              group-hover:scale-125 transition-transform"></i>
+              </button>
+            )}
+
+            {/* Next Project Button */}
+            {onNavigate && (
+              <button
+                onClick={() => onNavigate("next")}
+                className="w-8 h-8 md:w-10 md:h-10 bg-gray-100 dark:bg-gray-700 
+                           rounded-full text-gray-900 dark:text-white 
+                           hover:bg-yellow-400 hover:text-black dark:hover:bg-yellow-400
+                           transition-all duration-300 flex items-center justify-center
+                           hover:scale-110 group"
+                aria-label="Next Project"
+              >
+                <i className="fas fa-chevron-right text-sm md:text-base 
+                              group-hover:scale-125 transition-transform"></i>
+              </button>
+            )}
+
+            {/* Share Button */}
+            <button
+              onClick={handleShareClick}
+              className="w-8 h-8 md:w-10 md:h-10 bg-gray-100 dark:bg-gray-700 
+                         rounded-full text-gray-900 dark:text-white 
+                         hover:bg-yellow-400 hover:text-black dark:hover:bg-yellow-400
+                         transition-all duration-300 flex items-center justify-center
+                         hover:scale-110"
+              aria-label="Share project"
+            >
+              <i className="fas fa-share-alt text-sm md:text-base"></i>
+            </button>
+
+            {/* Close Button */}
+            <button
+              onClick={onClose}
+              className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 flex items-center justify-center"
+              aria-label="Close"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          </div>
         </div>
       </div>
     </>

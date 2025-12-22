@@ -1,98 +1,147 @@
-import React, { useEffect, useRef } from 'react';
-import { Project } from '../types.ts';
-import ProjectModalHeader from './ProjectModalHeader.tsx';
-import ProjectGallery from './ProjectGallery.tsx';
-import ProjectSectionNav from './ProjectSectionNav.tsx';
+import React, { useEffect, useRef } from "react";
+import { Project } from "../types.ts";
+import ProjectModalHeader from "./ProjectModalHeader.tsx";
+import ProjectGallery from "./ProjectGallery.tsx";
+import ProjectSectionNav from "./ProjectSectionNav.tsx";
 
 interface ProjectModalProps {
   project: Project;
   onClose: () => void;
-  onNavigate?: (direction: 'prev' | 'next') => void;
+  onNavigate?: (direction: "prev" | "next") => void;
 }
 
-const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigate }) => {
+const ProjectModal: React.FC<ProjectModalProps> = ({
+  project,
+  onClose,
+  onNavigate,
+}) => {
   const modalContentRef = useRef<HTMLDivElement>(null);
 
   // Update document title and meta tags for SEO when project modal opens
   useEffect(() => {
     const originalTitle = document.title;
-    const originalDescription = document.querySelector('meta[name="description"]')?.getAttribute('content');
-    const originalOgTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content');
-    const originalOgDescription = document.querySelector('meta[property="og:description"]')?.getAttribute('content');
-    const originalOgImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content');
-    
+    const originalDescription = document
+      .querySelector('meta[name="description"]')
+      ?.getAttribute("content");
+    const originalOgTitle = document
+      .querySelector('meta[property="og:title"]')
+      ?.getAttribute("content");
+    const originalOgDescription = document
+      .querySelector('meta[property="og:description"]')
+      ?.getAttribute("content");
+    const originalOgImage = document
+      .querySelector('meta[property="og:image"]')
+      ?.getAttribute("content");
+
     // Update title
     document.title = `${project.title} - Emre Dursun Portfolio`;
-    
+
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', project.detailedDescription || project.description);
+      metaDescription.setAttribute(
+        "content",
+        project.detailedDescription || project.description
+      );
     }
-    
+
     // Update Open Graph tags
     const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) ogTitle.setAttribute('content', `${project.title} - Project by Emre Dursun`);
-    
-    const ogDescription = document.querySelector('meta[property="og:description"]');
-    if (ogDescription) ogDescription.setAttribute('content', project.description);
-    
+    if (ogTitle)
+      ogTitle.setAttribute(
+        "content",
+        `${project.title} - Project by Emre Dursun`
+      );
+
+    const ogDescription = document.querySelector(
+      'meta[property="og:description"]'
+    );
+    if (ogDescription)
+      ogDescription.setAttribute("content", project.description);
+
     const ogImage = document.querySelector('meta[property="og:image"]');
-    if (ogImage && project.image) ogImage.setAttribute('content', `https://emredursun.nl${project.image}`);
-    
+    if (ogImage && project.image)
+      ogImage.setAttribute("content", `https://emredursun.nl${project.image}`);
+
     // Update Twitter Card tags
     const twitterTitle = document.querySelector('meta[name="twitter:title"]');
-    if (twitterTitle) twitterTitle.setAttribute('content', `${project.title} - Project by Emre Dursun`);
-    
-    const twitterDescription = document.querySelector('meta[name="twitter:description"]');
-    if (twitterDescription) twitterDescription.setAttribute('content', project.description);
-    
+    if (twitterTitle)
+      twitterTitle.setAttribute(
+        "content",
+        `${project.title} - Project by Emre Dursun`
+      );
+
+    const twitterDescription = document.querySelector(
+      'meta[name="twitter:description"]'
+    );
+    if (twitterDescription)
+      twitterDescription.setAttribute("content", project.description);
+
     const twitterImage = document.querySelector('meta[name="twitter:image"]');
-    if (twitterImage && project.image) twitterImage.setAttribute('content', `https://emredursun.nl${project.image}`);
-    
+    if (twitterImage && project.image)
+      twitterImage.setAttribute(
+        "content",
+        `https://emredursun.nl${project.image}`
+      );
+
     // Restore original meta tags when modal closes
     return () => {
       document.title = originalTitle;
-      if (metaDescription && originalDescription) metaDescription.setAttribute('content', originalDescription);
-      if (ogTitle && originalOgTitle) ogTitle.setAttribute('content', originalOgTitle);
-      if (ogDescription && originalOgDescription) ogDescription.setAttribute('content', originalOgDescription);
-      if (ogImage && originalOgImage) ogImage.setAttribute('content', originalOgImage);
-      if (twitterTitle && originalOgTitle) twitterTitle.setAttribute('content', originalOgTitle);
-      if (twitterDescription && originalOgDescription) twitterDescription.setAttribute('content', originalOgDescription);
-      if (twitterImage && originalOgImage) twitterImage.setAttribute('content', originalOgImage);
+      if (metaDescription && originalDescription)
+        metaDescription.setAttribute("content", originalDescription);
+      if (ogTitle && originalOgTitle)
+        ogTitle.setAttribute("content", originalOgTitle);
+      if (ogDescription && originalOgDescription)
+        ogDescription.setAttribute("content", originalOgDescription);
+      if (ogImage && originalOgImage)
+        ogImage.setAttribute("content", originalOgImage);
+      if (twitterTitle && originalOgTitle)
+        twitterTitle.setAttribute("content", originalOgTitle);
+      if (twitterDescription && originalOgDescription)
+        twitterDescription.setAttribute("content", originalOgDescription);
+      if (twitterImage && originalOgImage)
+        twitterImage.setAttribute("content", originalOgImage);
     };
   }, [project]);
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         onClose();
       }
-      if (event.key === 'ArrowLeft' && onNavigate) {
-        onNavigate('prev');
+      if (event.key === "ArrowLeft" && onNavigate) {
+        onNavigate("prev");
       }
-      if (event.key === 'ArrowRight' && onNavigate) {
-        onNavigate('next');
+      if (event.key === "ArrowRight" && onNavigate) {
+        onNavigate("next");
       }
     };
-    
-    window.addEventListener('keydown', handleEsc);
-    document.body.style.overflow = 'hidden';
+
+    window.addEventListener("keydown", handleEsc);
+    document.body.style.overflow = "hidden";
 
     return () => {
-      window.removeEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'auto';
+      window.removeEventListener("keydown", handleEsc);
+      document.body.style.overflow = "auto";
     };
   }, [onClose, onNavigate]);
 
   // Define sections for navigation
   const sections = [
-    { id: 'overview', label: 'Overview', icon: 'fas fa-info-circle' },
-    ...(project.challenge ? [{ id: 'challenge', label: 'Challenge', icon: 'fas fa-lightbulb' }] : []),
-    ...(project.features && project.features.length > 0 ? [{ id: 'features', label: 'Features', icon: 'fas fa-star' }] : []),
-    ...(project.gallery && project.gallery.length > 0 ? [{ id: 'gallery', label: 'Gallery', icon: 'fas fa-images' }] : []),
-    { id: 'technologies', label: 'Tech Stack', icon: 'fas fa-code' },
-    ...(project.results && project.results.length > 0 ? [{ id: 'results', label: 'Results', icon: 'fas fa-chart-line' }] : []),
+    { id: "overview", label: "Overview", icon: "fas fa-info-circle" },
+    ...(project.challenge
+      ? [{ id: "challenge", label: "Challenge", icon: "fas fa-lightbulb" }]
+      : []),
+    ...(project.features && project.features.length > 0
+      ? [{ id: "features", label: "Features", icon: "fas fa-star" }]
+      : []),
+    ...(project.gallery && project.gallery.length > 0
+      ? [{ id: "gallery", label: "Gallery", icon: "fas fa-images" }]
+      : []),
+    { id: "technologies", label: "Tech Stack", icon: "fas fa-code" },
+    ...(project.results && project.results.length > 0
+      ? [{ id: "results", label: "Results", icon: "fas fa-chart-line" }]
+      : []),
   ];
 
   return (
@@ -108,21 +157,20 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigat
         onClick={(e) => e.stopPropagation()}
       >
         {/* Scrollable Content */}
-        <div 
+        <div
           ref={modalContentRef}
           className="flex-1 overflow-y-auto relative"
           data-modal-content
           data-lenis-prevent
         >
           {/* Hero Header */}
-          <ProjectModalHeader project={project} onClose={onClose} />
+          <ProjectModalHeader project={project} onClose={onClose} onNavigate={onNavigate} />
 
           {/* Section Navigation */}
           {sections.length > 1 && <ProjectSectionNav sections={sections} />}
 
           {/* Main Content */}
           <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
-            
             {/* Overview Section */}
             <section id="overview" className="mb-16 scroll-mt-24">
               <div className="grid md:grid-cols-2 gap-8 mb-8">
@@ -134,7 +182,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigat
                     {project.detailedDescription || project.description}
                   </p>
                 </div>
-                
+
                 {/* Quick Stats */}
                 <div className="grid grid-cols-2 gap-4">
                   {project.metrics?.map((metric, index) => (
@@ -231,7 +279,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigat
                 <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
                   Gallery
                 </h2>
-                <ProjectGallery images={project.gallery} projectTitle={project.title} />
+                <ProjectGallery
+                  images={project.gallery}
+                  projectTitle={project.title}
+                />
               </section>
             )}
 
@@ -250,7 +301,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigat
                   </span>
                 ))}
               </div>
-              
+
               {project.tags && project.tags.length > 0 && (
                 <div className="mt-6">
                   <h3 className="text-sm font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
@@ -328,7 +379,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigat
             {/* Action Buttons */}
             <section className="mb-8">
               <div className="flex flex-wrap gap-4 justify-center">
-                {project.url && project.url !== '#' && (
+                {project.url && project.url !== "#" && (
                   <a
                     href={project.url}
                     target="_blank"
@@ -352,31 +403,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigat
                 )}
               </div>
             </section>
-
-            {/* Navigation to Other Projects */}
-            {onNavigate && (
-              <section className="border-t border-gray-200 dark:border-gray-700 pt-8">
-                <div className="flex justify-between items-center">
-                  <button
-                    onClick={() => onNavigate('prev')}
-                    className="flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 font-semibold text-gray-700 dark:text-gray-300"
-                  >
-                    <i className="fas fa-chevron-left"></i>
-                    <span>Previous Project</span>
-                  </button>
-                  <button
-                    onClick={() => onNavigate('next')}
-                    className="flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 font-semibold text-gray-700 dark:text-gray-300"
-                  >
-                    <span>Next Project</span>
-                    <i className="fas fa-chevron-right"></i>
-                  </button>
-                </div>
-              </section>
-            )}
           </div>
-
-
         </div>
       </div>
     </div>
