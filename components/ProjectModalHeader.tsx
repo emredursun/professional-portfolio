@@ -155,7 +155,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
           scrolled ? 'opacity-100 translate-y-0 shadow-lg' : 'opacity-0 -translate-y-full pointer-events-none'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-2 md:py-3 flex items-center justify-between gap-4">
           <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white truncate flex-1">
             {project.title}
           </h2>
@@ -210,10 +210,14 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 flex items-center justify-center"
+              className="w-8 h-8 md:w-10 md:h-10 bg-gray-100 dark:bg-gray-700 
+                         rounded-full text-gray-900 dark:text-white 
+                         hover:bg-yellow-400 hover:text-black dark:hover:bg-yellow-400
+                         transition-all duration-300 flex items-center justify-center
+                         hover:scale-110 group"
               aria-label="Close"
             >
-              <i className="fas fa-times"></i>
+              <i className="fas fa-times text-sm md:text-base group-hover:rotate-90 transition-transform duration-300"></i>
             </button>
           </div>
         </div>
