@@ -46,7 +46,7 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
 
         {/* Tags - Pushed to Bottom */}
         <div className="mt-auto flex flex-wrap gap-2">
-          {project.technologies.map((tech) => (
+          {project.technologies.slice(0, 5).map((tech) => (
             <span
               key={tech}
               className="text-[10px] font-bold uppercase tracking-wide text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-white/5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/5 hover:border-yellow-400 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 hover:text-gray-900 dark:hover:text-neon-cyan hover:scale-105 transition-all duration-300"
@@ -54,6 +54,11 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
               {tech}
             </span>
           ))}
+          {project.technologies.length > 5 && (
+            <span className="text-[10px] font-bold uppercase tracking-wide text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-white/5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/5">
+              +{project.technologies.length - 5}
+            </span>
+          )}
         </div>
       </div>
     </div>
