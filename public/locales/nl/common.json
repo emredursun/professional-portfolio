@@ -1,0 +1,35 @@
+{
+  "nav": {
+    "about": "Over",
+    "resume": "CV",
+    "projects": "Projecten",
+    "contact": "Contact",
+    "search": "Zoeken"
+  },
+  "buttons": {
+    "downloadCV": "CV Downloaden",
+    "sendMessage": "Bericht Versturen",
+    "sending": "Verzenden...",
+    "tryAgain": "Opnieuw Proberen",
+    "close": "Sluiten"
+  },
+  "statusBadge": {
+    "openToWork": "#OPENTOWORK",
+    "available": "Beschikbaar",
+    "freelance": "Freelancer",
+    "hiring": "Wij Zoeken Talent",
+    "busy": "Momenteel Bezet"
+  },
+  "time": {
+    "goodNight": "Goedenacht",
+    "goodMorning": "Goedemorgen",
+    "goodAfternoon": "Goedemiddag",
+    "goodEvening": "Goedenavond"
+  },
+  "labels": {
+    "email": "E-mail",
+    "phone": "Telefoon",
+    "location": "Locatie",
+    "locationValue": "Amsterdam, Nederland"
+  }
+}

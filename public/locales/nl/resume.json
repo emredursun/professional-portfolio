@@ -1,0 +1,103 @@
+{
+  "title": "CV",
+  "titleHighlight": "Mijn",
+  "sections": {
+    "education": "Opleiding",
+    "experience": "Ervaring",
+    "skills": "Vaardigheden",
+    "techStack": "Tech Stack",
+    "languages": "Talen"
+  },
+  "education": [
+    {
+      "date": "Juni 2022 - Juni 2023",
+      "title": "Bachelor of Engineering - Full-Stack Automation Engineering",
+      "company": "TechPro Education - Online/Remote",
+      "description": "Ontwikkelde Vaardigheden: Test Automation (Selenium WebDriver, Cypress, Postman API, REST API's, RESTful WebServices), CI/CD (Jenkins), Frameworks (Hybrid Framework, Cucumber/BDD), Talen/Tools (Java, Gherkin, SQL, Maven, TestNG, JUnit), Methodologieën (Agile, Scrum, SDLC, QA Engineering, Test Planning), en meer."
+    },
+    {
+      "date": "September 2019 - April 2020",
+      "title": "Software Developer",
+      "company": "ROC van Twente - Enschede, Nederland",
+      "description": "Ontwikkelde Vaardigheden: Programmeren (C#, JavaScript), Database Management (SQL, T-SQL, MongoDB), Versiebeheer (Git, GitHub), Web Fundamentals (HTML, CSS) en Object-Oriented Programming (OOP)."
+    },
+    {
+      "date": "Oktober 2017 - Maart 2018",
+      "title": "Full-Stack Web Development",
+      "company": "HackYourFuture - Amsterdam, Nederland",
+      "description": "Ontwikkelde Vaardigheden: Web Technologies (HTML, CSS, JavaScript), API Testing, Versiebeheer (Git, GitHub), C#, SQL en Object-Oriented Programming (OOP)."
+    },
+    {
+      "date": "September 2007 - Juli 2013",
+      "title": "Bachelor of Applied Science - Wiskunde",
+      "company": "Universiteit van Istanbul - Istanbul, Turkije",
+      "description": "Relevante Vakken: Differentiaalvergelijkingen, Complexe Analyse, Kansrekening & Statistiek, Gevorderde Calculus, Algemene Natuurkunde. Vaardigheden: Abstract Redeneren, Systematisch Probleemoplossen, Data-analyse."
+    }
+  ],
+  "experience": [
+    {
+      "date": "Jun 2023 - Sep 2025",
+      "title": "Automation Engineer (PSS/True International Payments/Ch Dovetail)",
+      "company": "ING Bank - Amsterdam, Nederland · Hybrid",
+      "description": "Als Automation Test Engineer bij het TIP Test Center (TTC) van ING ontwierp en onderhield ik geautomatiseerde end-to-end tests voor real-time betalingsverwerking binnen het Dovetail-systeem, een Fiserv-betalingsplatform, waarbij ik de transactienauwkeurigheid over internationale vestigingen waarborgde. Mijn verantwoordelijkheden omvatten het ontwerpen van testvalidaties voor verschillende betalingsstromen, het beheren en optimaliseren van testdata om de implementatie te versnellen, en het nauw samenwerken met ontwikkelteams en stakeholders om een naadloze integratie met het automatiseringsframework te garanderen."
+    },
+    {
+      "date": "Jun 2022 - Jun 2023",
+      "title": "Full-Stack Automation Engineer (SDET)",
+      "company": "TechPro Education EU - Nederland · Remote",
+      "description": "Ontwikkelde en beheerde een uitgebreid Automation Framework op basis van acceptatiecriteria met behulp van Selenium WebDriver, Java, JUnit en Cucumber. Voerde UI-, backend- en databasetests uit voor een ziekenhuisportaal, waarbij functionaliteiten zoals patiëntenbeheer en het plannen van afspraken werden gedekt. Voerde API-tests uit met Postman en Rest Assured, beheerde dependencies via Maven en integreerde CI/CD-pipelines met Jenkins in een Agile-omgeving."
+    },
+    {
+      "date": "Mei 2021 - Jan 2023",
+      "title": "Manual Tester & E-commerce Specialist",
+      "company": "BSG Auto Parts & Nerex Motors - Amsterdam, Nederland · On-site",
+      "description": "Speelde een cruciale rol bij Nerex Motors door e-commerce strategieën en productkwaliteit te verbeteren. Voerde handmatige tests uit op ERP-systemen om hoge functionaliteitsnormen te handhaven, verbeterde de productzoekzichtbaarheid op Amazon en eBay, en implementeerde strategische advertentiecampagnes die de online verkoop stimuleerden. Beheerde met succes het verkoopproces van het Online Kanaal (AutoDoc) voor BSG Auto Parts, bevorderde B2B-groei door verkoopstrategieën op maat te ontwikkelen, sterke relaties op te bouwen met belangrijke accounts en concurrerende commerciële voorwaarden te onderhandelen."
+    },
+    {
+      "date": "Mrt 2019 - Sep 2020",
+      "title": "Studentenzaken & Content Coördinator",
+      "company": "LiveCoding | Online Web Development Bootcamp - Nederland · Remote",
+      "description": "Speelde een sleutelrol bij het verbeteren van de studentervaring bij LiveCoding door middel van uitgebreide ondersteunings- en betrokkenheidsinitiatieven. Leverde begeleiding op maat aan online studenten om hen te helpen bij het overwinnen van verschillende uitdagingen. Organiseerde en voerde virtuele activiteiten uit om de gemeenschapsbanden tussen studenten te versterken. Hield nauwkeurige studentendossiers bij, zorgde voor naleving van programmabeleid en volgde de voortgang effectief op."
+    },
+    {
+      "date": "Jul 2017 - Sep 2020",
+      "title": "Mede-oprichter & Web Development Consultant",
+      "company": "FerriStar - eBay - Nederland · Freelance",
+      "description": "Succesvol bijgedragen aan de missie van FerriStar om samengestelde bestsellers en tijdloze benodigdheden te leveren. Sterke relaties opgebouwd met leveranciers om een consistente levering van hoogwaardige producten te garanderen. Gericht op het verbeteren van de klantervaring door doordachte productselectie in verschillende categorieën. Expertise opgedaan in e-commerce en productcuratie, waardoor de reputatie van FerriStar in de markt werd versterkt."
+    },
+    {
+      "date": "Sep 2016 - Mrt 2017",
+      "title": "Wiskundedocent",
+      "company": "Mohammed Al Fatih Schools - El Jadida, Marokko · On-site",
+      "description": "Aanzienlijk bijgedragen aan wiskundeonderwijs met een focus op holistische studentontwikkeling. Interdisciplinaire verbindingen toegepast om de relevantie van lessen en de betrokkenheid van studenten te vergroten. Samengewerkt met collega's om buitenschoolse activiteiten en initiatieven voor pastorale zorg te ondersteunen."
+    },
+    {
+      "date": "Sep 2014 - Sep 2016",
+      "title": "Wiskundedocent",
+      "company": "LUMINA Educational Institutions - Boekarest, Roemenië · On-site",
+      "description": "Ik had het voorrecht om gevorderde wiskunde te onderwijzen aan LUMINA Educational Institutions, waar ik me richtte op het bevorderen van studentensucces in een diverse leeromgeving. Ontwierp en beoordeelde interne toetsen, en leverde gedetailleerde rapporten over de voortgang van studenten en voorspelde cijfers. Differentieerde instructie om studenten met verschillende onderwijsachtergronden te ondersteunen, waarbij hoge internationale standaarden werden gehandhaafd. Mentor voor studenten op hun academische pad, hen begeleidend naar STEM-gerelateerde universitaire doelen."
+    },
+    {
+      "date": "Mrt 2012 - Sep 2014",
+      "title": "Vrijwilliger Assistent",
+      "company": "Fiader - Istanbul, Turkije · Part-time",
+      "description": "Speelde een sleutelrol bij het ondersteunen van de missie van Fiader door effectieve coördinatie van vrijwilligers en administratieve taken. Beheerde vrijwilligersdossiers en plande diensten om de middelenallocatie te optimaliseren. Assisteerde bij het organiseren van evenementen en trainingssessies, waarbij alle logistiek werd geregeld. Trad op als primair aanspreekpunt, waardoor de communicatie en betrokkenheid van vrijwilligers werd verbeterd."
+    }
+  ],
+  "skills": {
+    "testAutomation": "Test Automation",
+    "javaEcosystem": "Java & Ecosysteem",
+    "seleniumCucumber": "Selenium & Cucumber",
+    "playwrightCypress": "Playwright & Cypress (TS)",
+    "apiTesting": "API Testing (Rest Assured)",
+    "cicd": "CI/CD (Jenkins & Azure)",
+    "docker": "Docker & Containerisatie",
+    "sql": "SQL & Databases"
+  },
+  "languageLevels": {
+    "native": "Moedertaal",
+    "professional": "Professioneel (C1)",
+    "intermediate": "Gemiddeld (B2)",
+    "beginner": "Beginner (A1)"
+  }
+}

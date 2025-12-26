@@ -18,6 +18,51 @@ export const PERSONAL_INFO = {
   resumeUrl: "#",
 };
 
+// Status Badge Configuration
+// Available types: 'openToWork' | 'available' | 'freelance' | 'hiring' | 'busy' | 'none'
+export const STATUS_BADGE = {
+  enabled: true,           // Set to false to hide the badge completely
+  type: 'openToWork',      // Change this to switch badge type
+  // Badge styles for each type (colors are Tailwind classes)
+  styles: {
+    openToWork: {
+      bg: 'bg-gradient-to-r from-green-500 to-emerald-600',
+      text: 'text-white',
+      glow: 'shadow-[0_0_15px_rgba(34,197,94,0.5)]',
+      icon: 'ring',
+      pulse: true,
+    },
+    available: {
+      bg: 'bg-white dark:bg-[#1f1f1f]',
+      text: 'text-gray-700 dark:text-gray-200',
+      glow: 'shadow-[0_4px_20px_rgba(0,0,0,0.15)]',
+      icon: 'dot',
+      pulse: true,
+    },
+    freelance: {
+      bg: 'bg-gradient-to-r from-purple-500 to-indigo-600',
+      text: 'text-white',
+      glow: 'shadow-[0_0_15px_rgba(139,92,246,0.5)]',
+      icon: 'briefcase',
+      pulse: true,
+    },
+    hiring: {
+      bg: 'bg-gradient-to-r from-blue-500 to-cyan-600',
+      text: 'text-white',
+      glow: 'shadow-[0_0_15px_rgba(59,130,246,0.5)]',
+      icon: 'users',
+      pulse: true,
+    },
+    busy: {
+      bg: 'bg-gray-100 dark:bg-gray-800',
+      text: 'text-gray-500 dark:text-gray-400',
+      glow: 'shadow-md',
+      icon: 'clock',
+      pulse: false,
+    },
+  },
+} as const;
+
 export const SOCIAL_LINKS = [
   {
     name: "github",

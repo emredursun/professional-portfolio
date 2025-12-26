@@ -1,0 +1,41 @@
+{
+  "title": "Over",
+  "titleHighlight": "Mij",
+  "introText": "ISTQB® Gecertificeerd Full-Stack Automation Engineer met uitgebreide ervaring in UI-, API- en database-testing met Java, Selenium, Cucumber, Postman en Rest Assured. Gespecialiseerd in het ontwerpen van schaalbare automatiseringsframeworks en de integratie daarvan in CI/CD-pijplijnen. Bewezen staat van dienst in het bijdragen aan hoogwaardige softwarereleases binnen Agile-teams in de bankensector, gezondheidszorg en e-commerce. Vloeiend in Nederlands, Engels en Turks (moedertaal).",
+  "introQuote": "Gedreven door precisie, gevoed door nieuwsgierigheid. Ik transformeer handmatige testprocessen naar geautomatiseerde, herhaalbare systemen, zodat teams met vertrouwen software kunnen opleveren.",
+  "story": "Binnen de bankensector en e-commerce heb ik API- en UI-automatisering, robuuste testpijplijnen en observability-oplossingen gebouwd. Hiermee help ik teams hun testcapaciteit te schalen zonder in te boeten op leversnelheid. Ik haal energie uit het opbreken van complexe workflows in eenvoudige, testbare componenten en werk graag cross-functioneel samen om risico's te minimaliseren.",
+  "yearsExperience": "Jaar Ervaring",
+  "myJourney": "Mijn Carrière",
+  "whatIDo": "Mijn Expertise",
+  "basedIn": "Gevestigd in",
+  "netherlands": "Nederland",
+  "languages": "Talen",
+  "languageList": "Engels, Nederlands, Turks",
+  "badges": {
+    "istqbCertified": "ISTQB® Gecertificeerd",
+    "agileScrum": "Agile & Scrum",
+    "fullStackQA": "Full-Stack QA"
+  },
+  "services": {
+    "testAutomation": {
+      "title": "Test Automation Architecture",
+      "description": "Ontwikkelen van robuuste, schaalbare end-to-end automatiseringsframeworks die softwarekwaliteit en betrouwbaarheid waarborgen."
+    },
+    "cicd": {
+      "title": "CI/CD & DevOps Integratie",
+      "description": "Ontwerpen en beheren van continuous integration-pijplijnen om deployment te versnellen en risico's te beperken."
+    },
+    "apiBackend": {
+      "title": "API & Backend Validatie",
+      "description": "Implementeren van uitgebreide API-teststrategieën en databasevalidaties voor backend-integriteit."
+    },
+    "webDev": {
+      "title": "AI-Powered Web Development",
+      "description": "Gebruikmaken van geavanceerde AI-coding tools en moderne architectuurpatronen om met snelheid en precisie professionele, high-performance webapplicaties te bouwen."
+    },
+    "ecommerce": {
+      "title": "E-commerce Sales Optimalisatie",
+      "description": "Implementeren van datagestuurde verkoopstrategieën en SEO-technieken om de productzichtbaarheid en omzet te maximaliseren op grote e-commerceplatforms zoals Amazon en eBay."
+    }
+  }
+}

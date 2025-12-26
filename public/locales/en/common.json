@@ -1,0 +1,35 @@
+{
+  "nav": {
+    "about": "About",
+    "resume": "Resume",
+    "projects": "Projects",
+    "contact": "Contact",
+    "search": "Search"
+  },
+  "buttons": {
+    "downloadCV": "Download CV",
+    "sendMessage": "Send Message",
+    "sending": "Sending...",
+    "tryAgain": "Try Again",
+    "close": "Close"
+  },
+  "statusBadge": {
+    "openToWork": "#OPENTOWORK",
+    "available": "Available",
+    "freelance": "Freelancer",
+    "hiring": "We're Hiring",
+    "busy": "Currently Busy"
+  },
+  "time": {
+    "goodNight": "Good Night",
+    "goodMorning": "Good Morning",
+    "goodAfternoon": "Good Afternoon",
+    "goodEvening": "Good Evening"
+  },
+  "labels": {
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "locationValue": "Amsterdam, Netherlands"
+  }
+}

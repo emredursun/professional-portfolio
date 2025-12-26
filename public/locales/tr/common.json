@@ -1,0 +1,35 @@
+{
+  "nav": {
+    "about": "Hakkında",
+    "resume": "Özgeçmiş",
+    "projects": "Projeler",
+    "contact": "İletişim",
+    "search": "Ara"
+  },
+  "buttons": {
+    "downloadCV": "CV İndir",
+    "sendMessage": "Mesaj Gönder",
+    "sending": "Gönderiliyor...",
+    "tryAgain": "Tekrar Dene",
+    "close": "Kapat"
+  },
+  "statusBadge": {
+    "openToWork": "#OPENTOWORK",
+    "available": "Available",
+    "freelance": "Freelancer",
+    "hiring": "İşe Alıyoruz",
+    "busy": "Şu An Meşgul"
+  },
+  "time": {
+    "goodNight": "İyi Geceler",
+    "goodMorning": "Günaydın",
+    "goodAfternoon": "Tünaydın",
+    "goodEvening": "İyi Akşamlar"
+  },
+  "labels": {
+    "email": "E-posta",
+    "phone": "Telefon",
+    "location": "Konum",
+    "locationValue": "Amsterdam, Hollanda"
+  }
+}

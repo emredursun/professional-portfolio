@@ -1,14 +1,10 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 import gsap from "gsap";
 import { useGSAP } from "./hooks/useGSAP.tsx";
 import { Service } from "../types.ts";
-import {
-  ABOUT_TEXT,
-  SERVICES,
-  ABOUT_INTRO,
-  ABOUT_STORY,
-} from "../constants.tsx";
+import { SERVICES } from "../constants.tsx";
 import Tilt3D from "./Tilt3D.tsx";
 import { useScrollReveal } from "./hooks/useScrollReveal.tsx";
 
@@ -198,6 +194,7 @@ const ServiceItem: React.FC<{ service: Service }> = ({ service }) => {
 };
 
 const About: React.FC = () => {
+  const { t } = useTranslation('about');
   const headerRef = useRef<HTMLElement>(null);
   const isHeaderVisible = useScrollReveal(headerRef, { threshold: 0.2 });
   
@@ -205,6 +202,16 @@ const About: React.FC = () => {
   const servicesRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
   const [statsCount, setStatsCount] = useState(0);
+
+  // Get translated services
+  const translatedServices = useMemo(() => {
+    const serviceKeys = ['testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce'] as const;
+    return SERVICES.map((service, index) => ({
+      ...service,
+      title: t(`services.${serviceKeys[index]}.title`),
+      description: t(`services.${serviceKeys[index]}.description`)
+    }));
+  }, [t]);
 
   useGSAP((context) => {
     // 1. Service Cards Stagger - start from visible state
@@ -262,11 +269,11 @@ const About: React.FC = () => {
       >
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">
-            About{" "}
+            {t('title')}{" "}
           </span>
           <span className="relative inline-block">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark animate-gradient bg-[length:200%_auto]">
-              Me
+              {t('titleHighlight')}
             </span>
             {/* Glow effect */}
             <span className="absolute inset-0 blur-lg bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark opacity-50 animate-pulse-slow"></span>
@@ -303,11 +310,11 @@ const About: React.FC = () => {
           <BentoCard className="bg-white dark:bg-neon-bg border-gray-100 dark:border-neon-border">
             <i className="fas fa-quote-left text-5xl text-gray-100 dark:text-neon-border absolute top-6 right-8 transition-colors duration-500 group-hover:text-accent-yellow/10"></i>
             <p className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-neon-text-primary leading-tight mb-8 relative z-10">
-              "{ABOUT_INTRO}"
+              "{t('introQuote')}"
             </p>
             <div className="mt-auto relative z-10">
               <p className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-base font-medium">
-                {ABOUT_TEXT}
+                {t('introText')}
               </p>
             </div>
           </BentoCard>
@@ -341,7 +348,7 @@ const About: React.FC = () => {
                   </span>
                 </motion.div>
                 <div className="text-sm font-extrabold uppercase tracking-widest text-gray-500 dark:text-neon-text-secondary mb-8">
-                  Years Experience
+                  {t('yearsExperience')}
                 </div>
 
                 <motion.div
@@ -360,9 +367,9 @@ const About: React.FC = () => {
                   }}
                 >
                   {[
-                    { icon: "fa-certificate", text: "ISTQB® Certified" },
-                    { icon: "fa-sync", text: "Agile & Scrum" },
-                    { icon: "fa-layer-group", text: "Full-Stack QA" },
+                    { icon: "fa-certificate", text: t('badges.istqbCertified') },
+                    { icon: "fa-sync", text: t('badges.agileScrum') },
+                    { icon: "fa-layer-group", text: t('badges.fullStackQA') },
                   ].map((badge, idx) => (
                     <motion.div
                       key={idx}
@@ -395,10 +402,10 @@ const About: React.FC = () => {
               <div className="flex-1">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-neon-text-primary mb-4 flex items-center gap-3">
                   <span className="w-2.5 h-2.5 bg-accent-yellow dark:bg-neon-cyan rounded-full shadow-[0_0_10px_rgba(251,191,36,0.5)] dark:shadow-neon-cyan animate-pulse"></span>
-                  My Journey
+                  {t('myJourney')}
                 </h3>
                 <p className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium">
-                  {ABOUT_STORY}
+                  {t('story')}
                 </p>
               </div>
               <div className="hidden lg:block w-px h-32 bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent"></div>
@@ -416,10 +423,10 @@ const About: React.FC = () => {
                   </div>
                   <div>
                     <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
-                      Based in
+                      {t('basedIn')}
                     </div>
                     <div className="font-bold text-gray-900 dark:text-white text-lg">
-                      Netherlands
+                      {t('netherlands')}
                     </div>
                   </div>
                 </motion.div>
@@ -436,10 +443,10 @@ const About: React.FC = () => {
                   </div>
                   <div>
                     <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
-                      Languages
+                      {t('languages')}
                     </div>
                     <div className="font-bold text-gray-900 dark:text-white text-sm">
-                      English, Dutch, Turkish
+                      {t('languageList')}
                     </div>
                   </div>
                 </motion.div>
@@ -456,13 +463,13 @@ const About: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.8 }}
           >
-            What I Do
+            {t('whatIDo')}
           </motion.h3>
           <div
             ref={servicesRef}
             className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
           >
-            {SERVICES.map((service, i) => (
+            {translatedServices.map((service, i) => (
               <div
                 key={i}
               >

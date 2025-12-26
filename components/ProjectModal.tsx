@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { useTranslation } from 'react-i18next';
 import { Project } from "../types.ts";
 import ProjectModalHeader from "./ProjectModalHeader.tsx";
 import ProjectGallery from "./ProjectGallery.tsx";
@@ -15,6 +16,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   onClose,
   onNavigate,
 }) => {
+  const { t } = useTranslation('projects');
   const modalContentRef = useRef<HTMLDivElement>(null);
 
   // Update document title and meta tags for SEO when project modal opens
@@ -128,19 +130,19 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
   // Define sections for navigation
   const sections = [
-    { id: "overview", label: "Overview", icon: "fas fa-info-circle" },
+    { id: "overview", label: t('sections.overview'), icon: "fas fa-info-circle" },
     ...(project.challenge
-      ? [{ id: "challenge", label: "Challenge", icon: "fas fa-lightbulb" }]
+      ? [{ id: "challenge", label: t('sections.challenge'), icon: "fas fa-lightbulb" }]
       : []),
     ...(project.features && project.features.length > 0
-      ? [{ id: "features", label: "Features", icon: "fas fa-star" }]
+      ? [{ id: "features", label: t('sections.features'), icon: "fas fa-star" }]
       : []),
     ...(project.gallery && project.gallery.length > 0
-      ? [{ id: "gallery", label: "Gallery", icon: "fas fa-images" }]
+      ? [{ id: "gallery", label: t('sections.gallery'), icon: "fas fa-images" }]
       : []),
-    { id: "technologies", label: "Tech Stack", icon: "fas fa-code" },
+    { id: "technologies", label: t('sections.technologies'), icon: "fas fa-code" },
     ...(project.results && project.results.length > 0
-      ? [{ id: "results", label: "Results", icon: "fas fa-chart-line" }]
+      ? [{ id: "results", label: t('sections.results'), icon: "fas fa-chart-line" }]
       : []),
   ];
 
@@ -176,7 +178,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
               <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <div>
                   <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-                    Overview
+                    {t('projectDetails.overview')}
                   </h2>
                   <p className="text-gray-700 dark:text-gray-300 text-base md:text-lg leading-relaxed">
                     {project.detailedDescription || project.description}
@@ -206,7 +208,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             {project.challenge && project.solution && (
               <section id="challenge" className="mb-16 scroll-mt-24">
                 <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
-                  Challenge & Solution
+                  {t('projectDetails.challengeAndSolution')}
                 </h2>
                 <div className="grid md:grid-cols-2 gap-8">
                   {/* Challenge */}
@@ -216,7 +218,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                         <i className="fas fa-exclamation-triangle text-white"></i>
                       </div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                        The Challenge
+                        {t('projectDetails.theChallenge')}
                       </h3>
                     </div>
                     <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -231,7 +233,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                         <i className="fas fa-lightbulb text-white"></i>
                       </div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                        The Solution
+                        {t('projectDetails.theSolution')}
                       </h3>
                     </div>
                     <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -246,7 +248,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             {project.features && project.features.length > 0 && (
               <section id="features" className="mb-16 scroll-mt-24">
                 <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
-                  Key Features
+                  {t('projectDetails.keyFeatures')}
                 </h2>
                 <div className="grid md:grid-cols-2 gap-6">
                   {project.features.map((feature, index) => (
@@ -277,7 +279,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             {project.gallery && project.gallery.length > 0 && (
               <section id="gallery" className="mb-16 scroll-mt-24">
                 <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
-                  Gallery
+                  {t('projectDetails.gallery')}
                 </h2>
                 <ProjectGallery
                   images={project.gallery}
@@ -289,7 +291,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             {/* Technologies Section */}
             <section id="technologies" className="mb-16 scroll-mt-24">
               <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
-                Technologies Used
+                {t('projectDetails.technologiesUsed')}
               </h2>
               <div className="flex flex-wrap gap-3">
                 {project.technologies.map((tech) => (
@@ -305,7 +307,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
               {project.tags && project.tags.length > 0 && (
                 <div className="mt-6">
                   <h3 className="text-sm font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
-                    Tags
+                    {t('projectDetails.tags')}
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
@@ -325,7 +327,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             {project.results && project.results.length > 0 && (
               <section id="results" className="mb-16 scroll-mt-24">
                 <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
-                  Results & Impact
+                  {t('projectDetails.resultsAndImpact')}
                 </h2>
                 <div className="grid md:grid-cols-3 gap-6">
                   {project.results.map((result, index) => (
@@ -387,7 +389,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                     className="w-full sm:w-auto inline-flex items-center gap-3 bg-yellow-400 text-black font-bold py-4 px-8 rounded-xl hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-center"
                   >
                     <i className="fas fa-external-link-alt text-lg"></i>
-                    <span>View Live Demo</span>
+                    <span>{t('projectDetails.viewLiveDemo')}</span>
                   </a>
                 )}
                 {project.github && (
@@ -398,7 +400,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                     className="w-full sm:w-auto inline-flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-4 px-8 rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-center"
                   >
                     <i className="fab fa-github text-lg"></i>
-                    <span>View on GitHub</span>
+                    <span>{t('projectDetails.viewOnGitHub')}</span>
                   </a>
                 )}
               </div>

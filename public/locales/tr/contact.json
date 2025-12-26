@@ -1,0 +1,34 @@
+{
+  "title": "İletişim",
+  "titleHighlight": "",
+  "sections": {
+    "form": "İletişim Formu",
+    "findMe": "Beni Burada Bulun",
+    "followMe": "Beni Takip Edin"
+  },
+  "form": {
+    "name": {
+      "label": "Ad Soyad",
+      "placeholder": "Adınız ve Soyadınız"
+    },
+    "email": {
+      "label": "E-posta Adresi",
+      "placeholder": "ornek@email.com"
+    },
+    "message": {
+      "label": "Mesajınız",
+      "placeholder": "Mesajınızı buraya yazın (en az 20 karakter)..."
+    }
+  },
+  "messages": {
+    "success": {
+      "title": "Gönderim Başarılı!",
+      "description": "Mesajınız başarıyla iletildi.",
+      "followUp": "En kısa sürede size geri dönüş yapacağım."
+    },
+    "error": {
+      "title": "Gönderim Başarısız",
+      "description": "Bir hata oluştu. Lütfen tekrar deneyiniz."
+    }
+  }
+}

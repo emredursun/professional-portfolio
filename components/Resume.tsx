@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TimelineItem, Skill, Language } from '../types.ts';
-import { EDUCATION, EXPERIENCE, SKILLS, TECH_STACK, LANGUAGES } from '../constants.tsx';
+import { SKILLS, TECH_STACK, LANGUAGES } from '../constants.tsx';
 
 
 const TimelineCard: React.FC<{ item: TimelineItem; isFirst?: boolean; isLast?: boolean }> = ({ item, isFirst, isLast }) => {
@@ -64,14 +65,39 @@ const SkillBar: React.FC<{ skill: Skill }> = ({ skill }) => (
 );
 
 const Resume: React.FC = () => {
+    const { t } = useTranslation('resume');
+    
+    // Get translated education and experience data
+    const education = useMemo(() => {
+        const eduData = t('education', { returnObjects: true });
+        return Array.isArray(eduData) ? eduData as TimelineItem[] : [];
+    }, [t]);
+    
+    const experience = useMemo(() => {
+        const expData = t('experience', { returnObjects: true });
+        return Array.isArray(expData) ? expData as TimelineItem[] : [];
+    }, [t]);
+
+    // Get translated language levels for display
+    const getTranslatedLanguages = useMemo(() => {
+        const languageLevels = t('languageLevels', { returnObjects: true }) as Record<string, string>;
+        return LANGUAGES.map(lang => ({
+            ...lang,
+            level: lang.level === 'Native' ? languageLevels.native :
+                   lang.level.includes('C1') ? languageLevels.professional :
+                   lang.level.includes('B2') ? languageLevels.intermediate :
+                   languageLevels.beginner
+        }));
+    }, [t]);
+
     return (
         <section className="animate-fade-in">
             <header className="mb-12">
                 <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">My </span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">{t('titleHighlight')} </span>
                     <span className="relative inline-block">
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark animate-gradient bg-[length:200%_auto]">
-                            Resume
+                            {t('title')}
                         </span>
                         <span className="absolute inset-0 blur-lg bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark opacity-50 animate-pulse-slow"></span>
                         {/* Animated Underline */}
@@ -89,11 +115,11 @@ const Resume: React.FC = () => {
                              <div className="w-14 h-14 rounded-2xl bg-dark-card dark:bg-dark-card flex items-center justify-center text-accent-yellow dark:text-accent-yellow text-xl shadow-neu-md dark:shadow-neu-md">
                                 <i className="fas fa-briefcase"></i>
                             </div>
-                            <h3 className="text-2xl font-semibold text-gray-900 dark:text-dark-text-primary">Experience</h3>
+                            <h3 className="text-2xl font-semibold text-gray-900 dark:text-dark-text-primary">{t('sections.experience')}</h3>
                         </div>
                         <ul className="ml-2">
-                            {EXPERIENCE.map((item, index) => (
-                                <TimelineCard key={index} item={item} isFirst={index === 0} isLast={index === EXPERIENCE.length - 1} />
+                            {experience.map((item, index) => (
+                                <TimelineCard key={index} item={item} isFirst={index === 0} isLast={index === experience.length - 1} />
                             ))}
                         </ul>
                     </div>
@@ -103,11 +129,11 @@ const Resume: React.FC = () => {
                              <div className="w-14 h-14 rounded-2xl bg-dark-card dark:bg-dark-card flex items-center justify-center text-accent-yellow dark:text-accent-yellow text-xl shadow-neu-md dark:shadow-neu-md">
                                 <i className="fas fa-graduation-cap"></i>
                             </div>
-                            <h3 className="text-2xl font-semibold text-gray-900 dark:text-dark-text-primary">Education</h3>
+                            <h3 className="text-2xl font-semibold text-gray-900 dark:text-dark-text-primary">{t('sections.education')}</h3>
                         </div>
                         <ul className="ml-2">
-                            {EDUCATION.map((item, index) => (
-                                <TimelineCard key={index} item={item} isLast={index === EDUCATION.length - 1} />
+                            {education.map((item, index) => (
+                                <TimelineCard key={index} item={item} isLast={index === education.length - 1} />
                             ))}
                         </ul>
                     </div>
@@ -118,7 +144,7 @@ const Resume: React.FC = () => {
                     <div className="sticky top-8 space-y-8">
                         {/* Tech Stack Cloud */}
                         <div className="p-8 rounded-[2rem] bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border shadow-xl dark:shadow-none transition-all duration-500 hover:-translate-y-1 hover:border-yellow-600 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.8)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
-                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-white/10">Tech Stack</h3>
+                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-white/10">{t('sections.techStack')}</h3>
                             <div className="flex flex-wrap gap-3">
                                 {TECH_STACK.flatMap(c => c.technologies).map(tech => (
                                     <div key={tech.name} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 hover:border-yellow-600 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 transition-all duration-300 cursor-default group/tech">
@@ -131,7 +157,7 @@ const Resume: React.FC = () => {
 
                         {/* Skills Bars */}
                         <div className="p-8 rounded-[2rem] bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border shadow-xl dark:shadow-none transition-all duration-500 hover:-translate-y-1 hover:border-yellow-600 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.8)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
-                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-white/10">Professional Skills</h3>
+                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-white/10">{t('sections.skills')}</h3>
                             <div className="space-y-6">
                                 {SKILLS.map((skill, index) => (
                                     <SkillBar key={index} skill={skill} />
@@ -141,9 +167,9 @@ const Resume: React.FC = () => {
 
                          {/* Languages */}
                          <div className="p-8 rounded-[2rem] bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border shadow-xl dark:shadow-none transition-all duration-500 hover:-translate-y-1 hover:border-yellow-600 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.8)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
-                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-white/10">Languages</h3>
+                            <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-white pb-2 border-b border-gray-200 dark:border-white/10">{t('sections.languages')}</h3>
                             <div className="grid grid-cols-2 gap-4">
-                                {LANGUAGES.map((lang, index) => (
+                                {getTranslatedLanguages.map((lang, index) => (
                                     <div key={index} className="p-4 rounded-xl text-center transition-all duration-300 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 hover:border-yellow-600 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 hover:-translate-y-1">
                                         <div className="text-sm font-bold text-gray-900 dark:text-white mb-1">{lang.name}</div>
                                         <div className="text-xs text-gray-600 dark:text-gray-400 font-semibold">{lang.level}</div>

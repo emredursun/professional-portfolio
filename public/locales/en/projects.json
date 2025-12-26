@@ -1,0 +1,266 @@
+{
+  "title": "Projects",
+  "titleHighlight": "Featured",
+  "filters": {
+    "category": "Category",
+    "technologies": "Technologies",
+    "clearFilters": "Clear Filters",
+    "activeFilters": "Active filters:",
+    "selected": "{{count}} selected",
+    "showingResults": "Showing {{count}} project",
+    "showingResults_plural": "Showing {{count}} projects",
+    "noResults": "No projects found matching your filters"
+  },
+  "categories": {
+    "all": "All",
+    "testAutomation": "Test Automation",
+    "openSource": "Open Source",
+    "ecommerce": "E-commerce"
+  },
+  "projectLabels": {
+    "role": "Role",
+    "duration": "Duration",
+    "team": "Team",
+    "soloProject": "Solo Project",
+    "months": "months",
+    "year": "Year"
+  },
+  "projectDetails": {
+    "overview": "Overview",
+    "challengeAndSolution": "Challenge & Solution",
+    "theChallenge": "The Challenge",
+    "theSolution": "The Solution",
+    "keyFeatures": "Key Features",
+    "gallery": "Gallery",
+    "technologiesUsed": "Technologies Used",
+    "techStack": "Tech Stack",
+    "tags": "Tags",
+    "resultsAndImpact": "Results & Impact",
+    "viewLiveDemo": "View Live Demo",
+    "viewOnGitHub": "View on GitHub",
+    "previous": "Previous",
+    "next": "Next",
+    "close": "Close"
+  },
+  "sections": {
+    "overview": "Overview",
+    "challenge": "Challenge",
+    "features": "Features",
+    "gallery": "Gallery",
+    "technologies": "Tech Stack",
+    "results": "Results"
+  },
+  "projects": {
+    "qa-smart-test-lab": {
+      "title": "QASmartTestLab",
+      "role": "Lead Automation Engineer",
+      "team": "Solo Project",
+      "duration": "4 months",
+      "description": "A comprehensive test automation framework built with Java 17+, Selenium 4, and Cucumber for UI, API, and database testing with clean architecture and runtime configuration.",
+      "detailedDescription": "QASmartTestLab is a production-ready test automation framework demonstrating best practices in test automation. Built with Java 17+, Selenium 4, and Cucumber (JVM), it provides a clean, maintainable structure for UI, API, and database testing. The framework features runtime configuration for browsers (Chrome, Firefox, Edge), headless execution, remote Grid/Selenoid support, and comprehensive reporting. Following the Page Object Model pattern with clear separation of concerns, it includes configurable timeouts, parallel execution capabilities, and tag-based test filtering for flexible test management.",
+      "challenge": "Test automation teams often struggle with framework complexity, poor maintainability, and lack of standardization across projects. Many frameworks become technical debt, difficult to understand for new team members, and hard to scale as the application grows.",
+      "solution": "Designed and built QASmartTestLab from the ground up with clean architecture principles, emphasizing separation of concerns, clear naming conventions, and comprehensive documentation. Implemented flexible runtime configuration allowing teams to switch browsers, environments, and execution modes without code changes. The Page Object Model pattern ensures easy maintenance, while tag-based filtering enables precise test execution control.",
+      "metrics": [
+        "Multi-Layer Testing (UI, API, DB)",
+        "Parallel Execution Support",
+        "Remote Grid Integration",
+        "Clean Architecture & POM Pattern"
+      ],
+      "features": {
+        "multiLayer": {
+          "title": "Multi-Layer Testing",
+          "description": "Comprehensive coverage across UI (Selenium), API (REST Assured), and database (JDBC) layers within a single unified framework."
+        },
+        "runtimeConfig": {
+          "title": "Runtime Configuration",
+          "description": "Dynamic browser selection, headless mode, and remote Grid/Selenoid integration—all configurable at runtime without touching code."
+        },
+        "cleanArch": {
+          "title": "Clean Architecture",
+          "description": "Page Object Model with clear separation: pages, steps, runners, utilities. Every component has a single responsibility."
+        },
+        "parallel": {
+          "title": "Parallel Execution",
+          "description": "Tag-based filtering and parallel thread support for faster feedback cycles. Run smoke tests in minutes, full regression overnight."
+        }
+      },
+      "results": {
+        "speed": {
+          "metric": "Test Execution Speed",
+          "value": "60% faster",
+          "description": "Parallel execution reduced full regression time from 2 hours to 48 minutes"
+        },
+        "maintainability": {
+          "metric": "Code Maintainability",
+          "value": "85% reduction",
+          "description": "POM pattern reduced test maintenance effort and increased team velocity"
+        },
+        "adoption": {
+          "metric": "Framework Adoption",
+          "value": "100+ stars",
+          "description": "GitHub repository gained traction in the QA automation community"
+        }
+      }
+    },
+    "playwright-testing-project": {
+      "title": "Playwright Testing Suite",
+      "role": "Automation Engineer",
+      "team": "Solo Project",
+      "duration": "3 months",
+      "description": "Comprehensive Playwright test automation suite demonstrating UI, API, and visual testing capabilities with Page Object Model, cross-browser testing, and advanced debugging.",
+      "detailedDescription": "A comprehensive Playwright test automation suite developed to master modern testing practices. It features 3-layer test coverage including End-to-End UI testing, RESTful API validation, and Visual Regression testing. Built with TypeScript, the framework implements the Page Object Model (POM) pattern for maintainability and includes advanced capabilities like cookie-based authentication handling, dynamic configuration via environment variables, and parallel test execution.",
+      "metrics": [
+        "3-Layer Coverage (UI, API, Visual)",
+        "Cross-Browser (Chromium, Firefox, WebKit)",
+        "Parallel Execution Support",
+        "Advanced Debugging (Trace Viewer)"
+      ],
+      "features": {
+        "coverage": {
+          "title": "Comprehensive Coverage",
+          "description": "Implements UI End-to-End tests, RESTful API integration, and Pixel-perfect Visual Regression testing."
+        },
+        "framework": {
+          "title": "Modern Framework Design",
+          "description": "Built on the Page Object Model (POM) pattern with flexible environment configuration and locator strategies."
+        },
+        "capabilities": {
+          "title": "Advanced Capabilities",
+          "description": "Features cookie-based authentication, screenshot/video recording, and global parallel test execution."
+        },
+        "debugging": {
+          "title": "Cross-Browser & Debugging",
+          "description": "Validates across Chromium, Firefox, and WebKit with integrated Trace Viewer for deep failure analysis."
+        }
+      }
+    },
+    "social-share-image-generator": {
+      "title": "Social Share Image Generator",
+      "role": "Full-Stack Developer",
+      "team": "Solo Project",
+      "duration": "2 months",
+      "description": "Professional social media image generator with intelligent adaptive layouts. Features 5 premium templates, 6 visual effects, and instant presets for LinkedIn, Twitter, Instagram, YouTube & Stories.",
+      "detailedDescription": "A professional social media image generator featuring an Intelligent Adaptive Layout System that automatically adjusts designs to any dimension (Portrait, Landscape, Square). The core 'LayoutCalculator' engine dynamically positions elements, scales typography, and optimizes spacing based on canvas size.",
+      "metrics": [
+        "6 Adaptive Layouts",
+        "6 Visual Background Effects",
+        "Smart Text Scaling Logic",
+        "Zero Dependencies (Vanilla JS)"
+      ],
+      "features": {
+        "layout": {
+          "title": "Intelligent Layout Engine",
+          "description": "Auto-adjusts content layout based on dimensions (Landscape, Portrait, Square) with smart element positioning."
+        },
+        "presets": {
+          "title": "Multi-Platform Presets",
+          "description": "One-click presets for LinkedIn, Twitter/X, Instagram, YouTube, and Stories, plus custom dimensions (100px-5000px)."
+        },
+        "customization": {
+          "title": "Visual Customization",
+          "description": "6 professional templates and 6 dynamic background effects (Pattern, Circles, Grid, Waves, Dots) with custom color control."
+        },
+        "export": {
+          "title": "High-Performance Export",
+          "description": "Instant client-side generation using Canvas API with options for High/Ultra quality PNG export and clipboard copy."
+        }
+      }
+    },
+    "banking-payment-automation": {
+      "title": "TIP Test Center (Dovetail - ING)",
+      "role": "Automation Test Engineer",
+      "team": "Agile Team",
+      "duration": "2+ years",
+      "description": "TTC is a specialized framework that automates transactional testing in the Dovetail system, a Fiserv payment platform that handles real-time payment processing.",
+      "detailedDescription": "TTC is a specialized framework that automates transactional testing in the Dovetail system, a Fiserv payment platform that handles real-time payment processing. The framework manages end-to-end transactional test automation for Dovetail payments and integrates with the ING Test Center (ITC) execution engine.",
+      "metrics": [
+        "End-to-End Transactional Automation",
+        "Daily Regression in DEV5 Env",
+        "Multi-Country: BE, IT, HU, SK",
+        "Integrated with ING Test Center (ITC)"
+      ],
+      "features": {
+        "validation": {
+          "title": "Test Validation Development",
+          "description": "Implementing and maintaining FFV test validations for EPP and non-EPP payment flows, including country-specific implementations."
+        },
+        "management": {
+          "title": "Test Case Management",
+          "description": "Onboarding new test cases and adapting test coverage for implementations in different countries (BE, IT, HU, SK)."
+        },
+        "regression": {
+          "title": "Regression Testing",
+          "description": "Executing and verifying daily end-to-end test streams and supporting test execution for new Dovetail releases."
+        },
+        "stakeholder": {
+          "title": "Stakeholder Support",
+          "description": "Providing technical guidance to development teams, feature squads, and other stakeholders during the onboarding process."
+        }
+      }
+    },
+    "hospital-portal-testing": {
+      "title": "Hospital Portal Testing - Medunna",
+      "role": "QA Automation Engineer",
+      "team": "5 Devs, 3 Testers",
+      "duration": "6 months",
+      "description": "Led the quality assurance strategy for a comprehensive hospital management portal, ensuring data privacy and system reliability across UI, API, and DB layers.",
+      "detailedDescription": "This project was the final capstone of a 1-year Full Stack Automation Engineering course, completed over 6 months with a team of 5 developers and 3 testers. We developed a comprehensive hospital portal handling 30+ user stories and 103+ test cases.",
+      "metrics": [
+        "Duration: 6 Months",
+        "Team: 5 Devs, 3 Testers",
+        "30 Stories, 100+ Test Cases",
+        "UI, API & DB Validation"
+      ],
+      "features": {
+        "automation": {
+          "title": "Test Automation",
+          "description": "Implemented a hybrid framework using Selenium WebDriver, Java, JUnit, and Cucumber BDD for readable and reusable test scenarios."
+        },
+        "api": {
+          "title": "API Testing",
+          "description": "Performed comprehensive API validation using Postman and Rest Assured Library to ensure backend reliability."
+        },
+        "data": {
+          "title": "Data Management",
+          "description": "Utilized Apache POI and Scenario Outlines to handle multiple test data sets efficiently."
+        },
+        "cicd": {
+          "title": "CI/CD Integration",
+          "description": "Integrated the automation framework with Jenkins and Maven for continuous integration and deployment."
+        }
+      }
+    },
+    "ecommerce-sales-optimization": {
+      "title": "E-commerce Sales Optimization",
+      "role": "E-commerce Specialist",
+      "team": "Cross-functional Team",
+      "duration": "2 years",
+      "description": "Spearheaded B2C marketing and operational excellence on European marketplaces, optimizing 10k+ SKUs for visibility and revenue growth.",
+      "detailedDescription": "In my role as an E-commerce Specialist for a global automotive parts distributor serving customers in 94 countries, I drove B2B and B2C marketing to expand market share on European platforms (Amazon, eBay, AutoDoc SE).",
+      "metrics": [
+        "Global Reach: 94 Countries",
+        "Optimized 10k+ SKUs",
+        "Boosted EU Market Reach",
+        "High-ROI Ad Campaigns"
+      ],
+      "features": {
+        "marketing": {
+          "title": "B2C Marketing Strategy",
+          "description": "Created and executed targeted marketing strategies to drive revenue growth on major European e-commerce marketplaces."
+        },
+        "seo": {
+          "title": "Advanced SEO Optimization",
+          "description": "Enriched product search terms including 'Generic Search Keywords' and 'OEM Numbers' to maximize organic visibility against competitors."
+        },
+        "inventory": {
+          "title": "SKU & Inventory Operations",
+          "description": "Managed seamless synchronization of inventory, pricing, and content for thousands of SKUs across retail and digital channels."
+        },
+        "ads": {
+          "title": "PPC & Sponsored Ads",
+          "description": "Leveraged sponsored advertising campaigns on Amazon and eBay to increase product exposure and accelerate sales velocity."
+        }
+      }
+    }
+  }
+}

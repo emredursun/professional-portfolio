@@ -1,0 +1,266 @@
+{
+  "title": "Projeler",
+  "titleHighlight": "Öne Çıkan",
+  "filters": {
+    "category": "Kategori",
+    "technologies": "Teknolojiler",
+    "clearFilters": "Filtreleri Temizle",
+    "activeFilters": "Aktif filtreler:",
+    "selected": "{{count}} seçili",
+    "showingResults": "{{count}} proje gösteriliyor",
+    "showingResults_plural": "{{count}} proje gösteriliyor",
+    "noResults": "Filtrelerinize uygun proje bulunamadı"
+  },
+  "categories": {
+    "all": "Tümü",
+    "testAutomation": "Test Otomasyonu",
+    "openSource": "Açık Kaynak",
+    "ecommerce": "E-Ticaret"
+  },
+  "projectLabels": {
+    "role": "Rol",
+    "duration": "Süre",
+    "team": "Ekip",
+    "soloProject": "Bireysel Proje",
+    "months": "ay",
+    "year": "Yıl"
+  },
+  "projectDetails": {
+    "overview": "Genel Bakış",
+    "challengeAndSolution": "Zorluk & Çözüm",
+    "theChallenge": "Zorluk",
+    "theSolution": "Çözüm",
+    "keyFeatures": "Temel Özellikler",
+    "gallery": "Galeri",
+    "technologiesUsed": "Kullanılan Teknolojiler",
+    "techStack": "Teknoloji Yığını",
+    "tags": "Etiketler",
+    "resultsAndImpact": "Sonuçlar & Etki",
+    "viewLiveDemo": "Canlı Demo",
+    "viewOnGitHub": "GitHub'da Görüntüle",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "close": "Kapat"
+  },
+  "sections": {
+    "overview": "Genel Bakış",
+    "challenge": "Zorluk",
+    "features": "Özellikler",
+    "gallery": "Galeri",
+    "technologies": "Teknoloji Yığını",
+    "results": "Sonuçlar"
+  },
+  "projects": {
+    "qa-smart-test-lab": {
+      "title": "QASmartTestLab",
+      "role": "Lead Otomasyon Mühendisi",
+      "team": "Bireysel Proje",
+      "duration": "4 ay",
+      "description": "Java 17+, Selenium 4 ve Cucumber ile geliştirilmiş, Clean Architecture (Temiz Mimari) ve çalışma zamanı konfigürasyon desteğiyle UI, API ve veritabanı testi için kapsamlı bir test otomasyon framework'ü.",
+      "detailedDescription": "QASmartTestLab, test otomasyonunda en iyi uygulamaları sergileyen, üretime hazır bir test otomasyon framework'üdür. Java 17+, Selenium 4 ve Cucumber (JVM) ile geliştirilmiş olup UI, API ve veritabanı testi için temiz, bakımı kolay bir yapı sunar. Framework; tarayıcılar (Chrome, Firefox, Edge), headless çalıştırma, remote Grid/Selenoid desteği ve kapsamlı raporlama için çalışma zamanı (runtime) konfigürasyon özelliği içerir. Açık sorumluluk ayrımı (separation of concerns) ile Page Object Model desenini takip ederek, konfigüre edilebilir zaman aşımları, paralel çalıştırma ve esnek test yönetimi için etiket tabanlı test filtreleme sunar.",
+      "challenge": "Test otomasyon ekipleri genellikle framework karmaşıklığı, zayıf bakım kolaylığı ve projeler arasında standardizasyon eksikliği ile mücadele eder. Birçok framework teknik borca dönüşür, yeni ekip üyeleri için anlaşılması zorlaşır ve uygulama büyüdükçe ölçeklenmesi güçleşir.",
+      "solution": "QASmartTestLab'ı sıfırdan Clean Architecture prensipleri ile tasarlayıp geliştirdim; sorumlulukların ayrılması, açık isimlendirme standartları ve kapsamlı dokümantasyon üzerine yoğunlaştım. Ekiplerin kod değişikliği yapmadan tarayıcıları, ortamları ve çalıştırma modlarını değiştirmesine olanak tanıyan esnek çalışma zamanı konfigürasyonu uyguladım. Page Object Model deseni kolay bakım sağlarken, etiket tabanlı filtreleme hassas test çalıştırma kontrolü sunar.",
+      "metrics": [
+        "Çok Katmanlı Test (UI, API, DB)",
+        "Paralel Çalıştırma Desteği",
+        "Remote Grid Entegrasyonu",
+        "Clean Architecture & POM Deseni"
+      ],
+      "features": {
+        "multiLayer": {
+          "title": "Çok Katmanlı Test",
+          "description": "Tek bir birleşik framework içinde UI (Selenium), API (REST Assured) ve veritabanı (JDBC) katmanlarında kapsamlı kapsama."
+        },
+        "runtimeConfig": {
+          "title": "Çalışma Zamanı Konfigürasyonu",
+          "description": "Dinamik tarayıcı seçimi, headless mod ve remote Grid/Selenoid entegrasyonu—tümü koda dokunmadan çalışma zamanında yapılandırılabilir."
+        },
+        "cleanArch": {
+          "title": "Temiz Mimari (Clean Architecture)",
+          "description": "Açık ayrım ile Page Object Model: sayfalar, adımlar, çalıştırıcılar, yardımcı araçlar. Her bileşen tek bir sorumluluk taşır."
+        },
+        "parallel": {
+          "title": "Paralel Çalıştırma",
+          "description": "Daha hızlı geri bildirim döngüleri için etiket tabanlı filtreleme ve paralel iş parçacığı desteği. Smoke testlerini dakikalar içinde, tam regresyonu gece boyunca çalıştırın."
+        }
+      },
+      "results": {
+        "speed": {
+          "metric": "Test Çalıştırma Hızı",
+          "value": "%60 daha hızlı",
+          "description": "Paralel çalıştırma, tam regresyon süresini 2 saatten 48 dakikaya düşürdü"
+        },
+        "maintainability": {
+          "metric": "Kod Bakım Kolaylığı",
+          "value": "%85 azalma",
+          "description": "POM deseni test bakım eforunu azalttı ve ekip hızını artırdı"
+        },
+        "adoption": {
+          "metric": "Framework Benimsenmesi",
+          "value": "100+ yıldız",
+          "description": "GitHub reposu QA otomasyon topluluğunda ilgi gördü"
+        }
+      }
+    },
+    "playwright-testing-project": {
+      "title": "Playwright Test Suite",
+      "role": "Otomasyon Mühendisi",
+      "team": "Bireysel Proje",
+      "duration": "3 ay",
+      "description": "Page Object Model, çapraz tarayıcı testi ve gelişmiş hata ayıklama ile UI, API ve görsel test yeteneklerini sergileyen kapsamlı Playwright test otomasyon paketi.",
+      "detailedDescription": "Modern test uygulamalarında uzmanlaşmak için geliştirilen kapsamlı bir Playwright test otomasyon paketi. Uçtan Uca UI testi, RESTful API doğrulaması ve Görsel Regresyon testi dahil 3 katmanlı test kapsamı sunar. TypeScript ile geliştirilmiş framework, bakım kolaylığı için Page Object Model (POM) desenini uygular ve çerez tabanlı kimlik doğrulama, ortam değişkenleri aracılığıyla dinamik konfigürasyon ve paralel test çalıştırma gibi gelişmiş özellikler içerir.",
+      "metrics": [
+        "3 Katmanlı Kapsama (UI, API, Görsel)",
+        "Çapraz Tarayıcı (Chromium, Firefox, WebKit)",
+        "Paralel Çalıştırma Desteği",
+        "Gelişmiş Hata Ayıklama (Trace Viewer)"
+      ],
+      "features": {
+        "coverage": {
+          "title": "Kapsamlı Test Kapsamı",
+          "description": "UI Uçtan Uca testleri, RESTful API entegrasyonu ve Piksel Mükemmelliğinde Görsel Regresyon testi uygular."
+        },
+        "framework": {
+          "title": "Modern Framework Tasarımı",
+          "description": "Esnek ortam konfigürasyonu ve bulucu (locator) stratejileri ile Page Object Model (POM) deseni üzerine inşa edilmiştir."
+        },
+        "capabilities": {
+          "title": "Gelişmiş Yetenekler",
+          "description": "Çerez tabanlı kimlik doğrulama, ekran görüntüsü/video kaydı ve global paralel test çalıştırma özellikleri."
+        },
+        "debugging": {
+          "title": "Çapraz Tarayıcı & Hata Ayıklama",
+          "description": "Chromium, Firefox ve WebKit'te doğrulama yapar, derin hata analizi için entegre Trace Viewer ile."
+        }
+      }
+    },
+    "social-share-image-generator": {
+      "title": "Sosyal Medya Görsel Oluşturucu",
+      "role": "Full-Stack Geliştirici",
+      "team": "Bireysel Proje",
+      "duration": "2 ay",
+      "description": "Akıllı uyarlanabilir düzenler içeren profesyonel sosyal medya görsel oluşturucu. 5 premium şablon, 6 görsel efekt ve LinkedIn, Twitter, Instagram, YouTube & Hikayeler için anında hazır ayarlar sunar.",
+      "detailedDescription": "Herhangi bir boyuta (Dikey, Yatay, Kare) otomatik olarak tasarımları ayarlayan Akıllı Uyarlanabilir Düzen Sistemi içeren profesyonel bir sosyal medya görsel oluşturucu. Çekirdek 'LayoutCalculator' motoru, elementleri dinamik olarak konumlandırır, tipografiyi ölçeklendirir ve tuval boyutuna göre boşlukları optimize eder.",
+      "metrics": [
+        "6 Uyarlanabilir Düzen",
+        "6 Görsel Arka Plan Efekti",
+        "Akıllı Metin Ölçekleme",
+        "Sıfır Bağımlılık (Saf JS)"
+      ],
+      "features": {
+        "layout": {
+          "title": "Akıllı Düzen Motoru",
+          "description": "Boyutlara (Yatay, Dikey, Kare) göre içerik düzenini akıllı element konumlandırma ile otomatik ayarlar."
+        },
+        "presets": {
+          "title": "Çoklu Platform Hazır Ayarları",
+          "description": "LinkedIn, Twitter/X, Instagram, YouTube ve Hikayeler için tek tıkla hazır ayarlar, artı özel boyutlar (100px-5000px)."
+        },
+        "customization": {
+          "title": "Görsel Özelleştirme",
+          "description": "6 profesyonel şablon ve özel renk kontrolü ile 6 dinamik arka plan efekti (Desen, Daireler, Izgara, Dalgalar, Noktalar)."
+        },
+        "export": {
+          "title": "Yüksek Performanslı Dışa Aktarma",
+          "description": "Canvas API kullanarak anında istemci tarafı oluşturma, Yüksek/Ultra kaliteli PNG dışa aktarma ve panoya kopyalama seçenekleri."
+        }
+      }
+    },
+    "banking-payment-automation": {
+      "title": "TIP Test Merkezi (Dovetail - ING)",
+      "role": "Otomasyon Test Mühendisi",
+      "team": "Agile Ekip",
+      "duration": "2+ yıl",
+      "description": "TTC, gerçek zamanlı ödeme işlemlerini yürüten Fiserv ödeme platformu Dovetail sistemi için işlemsel testleri otomatize eden özelleşmiş bir framework'tür.",
+      "detailedDescription": "TTC, gerçek zamanlı ödeme işlemlerini yürüten Fiserv ödeme platformu Dovetail sistemi için işlemsel testleri otomatize eden özelleşmiş bir framework'tür. Framework, Dovetail ödemeleri için uçtan uca işlemsel test otomasyonunu yönetir ve ING Test Merkezi (ITC) çalıştırma motoru ile entegre olur.",
+      "metrics": [
+        "Uçtan Uca İşlemsel Otomasyon",
+        "DEV5 Ortamında Günlük Regresyon",
+        "Çok Ülkeli: BE, IT, HU, SK",
+        "ING Test Merkezi (ITC) Entegrasyonu"
+      ],
+      "features": {
+        "validation": {
+          "title": "Test Doğrulama Geliştirme",
+          "description": "Ülkeye özgü uygulamalar dahil EPP ve EPP olmayan ödeme akışları için FFV test doğrulamalarını uygulama ve sürdürme."
+        },
+        "management": {
+          "title": "Test Senaryosu Yönetimi",
+          "description": "Yeni test senaryolarını sisteme dahil etme ve farklı ülkelerdeki (BE, IT, HU, SK) uygulamalar için test kapsamını adapte etme."
+        },
+        "regression": {
+          "title": "Regresyon Testi",
+          "description": "Günlük uçtan uca test akışlarını çalıştırma ve doğrulama, yeni Dovetail sürümleri için test çalıştırmayı destekleme."
+        },
+        "stakeholder": {
+          "title": "Paydaş Desteği",
+          "description": "Sisteme dahil olma sürecinde geliştirme ekiplerine, özellik ekiplerine ve diğer paydaşlara teknik rehberlik sağlama."
+        }
+      }
+    },
+    "hospital-portal-testing": {
+      "title": "Hastane Portal Testi - Medunna",
+      "role": "QA Otomasyon Mühendisi",
+      "team": "5 Geliştirici, 3 Test Uzmanı",
+      "duration": "6 ay",
+      "description": "Kapsamlı bir hastane yönetim portalı için kalite güvence stratejisine liderlik ettim; UI, API ve DB katmanlarında veri gizliliği ve sistem güvenilirliğini sağladım.",
+      "detailedDescription": "Bu proje, 1 yıllık Full Stack Otomasyon Mühendisliği kursunun final bitirme projesiydi, 5 geliştirici ve 3 test uzmanından oluşan bir ekiple 6 ay boyunca tamamlandı. 30'dan fazla kullanıcı hikayesi ve 103'ten fazla test senaryosunu kapsayan kapsamlı bir hastane portalı geliştirdik.",
+      "metrics": [
+        "Süre: 6 Ay",
+        "Ekip: 5 Geliştirici, 3 Test Uzmanı",
+        "30 Hikaye, 100+ Test Senaryosu",
+        "UI, API & DB Doğrulama"
+      ],
+      "features": {
+        "automation": {
+          "title": "Test Otomasyonu",
+          "description": "Okunabilir ve yeniden kullanılabilir test senaryoları için Selenium WebDriver, Java, JUnit ve Cucumber BDD kullanan hibrit bir framework uyguladım."
+        },
+        "api": {
+          "title": "API Testi",
+          "description": "Backend güvenilirliğini sağlamak için Postman ve Rest Assured Kütüphanesi kullanarak kapsamlı API doğrulaması gerçekleştirdim."
+        },
+        "data": {
+          "title": "Veri Yönetimi",
+          "description": "Çoklu test verisi setlerini verimli bir şekilde yönetmek için Apache POI ve Senaryo Taslakları (Scenario Outlines) kullandım."
+        },
+        "cicd": {
+          "title": "CI/CD Entegrasyonu",
+          "description": "Sürekli entegrasyon ve dağıtım için otomasyon framework'ünü Jenkins ve Maven ile entegre ettim."
+        }
+      }
+    },
+    "ecommerce-sales-optimization": {
+      "title": "E-Ticaret Satış Optimizasyonu",
+      "role": "E-Ticaret Uzmanı",
+      "team": "Çapraz Fonksiyonlu Ekip",
+      "duration": "2 yıl",
+      "description": "Avrupa pazar yerlerinde B2C pazarlama ve operasyonel mükemmelliğe liderlik ettim, görünürlük ve gelir artışı için 10.000'den fazla stok kalemini (SKU) optimize ettim.",
+      "detailedDescription": "94 ülkede müşterilere hizmet veren global bir otomotiv yedek parça distribütörü için E-Ticaret Uzmanı olarak, Avrupa platformlarında (Amazon, eBay, AutoDoc SE) pazar payını genişletmek için B2B ve B2C pazarlamayı yönettim.",
+      "metrics": [
+        "Küresel Erişim: 94 Ülke",
+        "10.000+ SKU Optimize Edildi",
+        "AB Pazar Erişimi Artırıldı",
+        "Yüksek Yatırım Getirili Reklam Kampanyaları"
+      ],
+      "features": {
+        "marketing": {
+          "title": "B2C Pazarlama Stratejisi",
+          "description": "Büyük Avrupa e-ticaret pazar yerlerinde gelir artışını sağlamak için hedefli pazarlama stratejileri oluşturdum ve yürüttüm."
+        },
+        "seo": {
+          "title": "Gelişmiş SEO Optimizasyonu",
+          "description": "Rakiplere karşı organik görünürlüğü maksimize etmek için 'Genel Arama Anahtar Kelimeleri' ve 'OEM Numaraları' dahil ürün arama terimlerini zenginleştirdim."
+        },
+        "inventory": {
+          "title": "SKU & Envanter Operasyonları",
+          "description": "Perakende ve dijital kanallarda binlerce SKU için envanter, fiyatlandırma ve içeriğin sorunsuz senkronizasyonunu yönettim."
+        },
+        "ads": {
+          "title": "PPC & Sponsorlu Reklamlar",
+          "description": "Ürün görünürlüğünü artırmak ve satış hızını ivmelendirmek için Amazon ve eBay'de sponsorlu reklam kampanyalarından yararlandım."
+        }
+      }
+    }
+  }
+}

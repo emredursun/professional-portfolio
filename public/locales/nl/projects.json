@@ -1,0 +1,266 @@
+{
+  "title": "Projecten",
+  "titleHighlight": "Uitgelichte",
+  "filters": {
+    "category": "Categorie",
+    "technologies": "Technologieën",
+    "clearFilters": "Filters Wissen",
+    "activeFilters": "Actieve filters:",
+    "selected": "{{count}} geselecteerd",
+    "showingResults": "{{count}} project weergegeven",
+    "showingResults_plural": "{{count}} projecten weergegeven",
+    "noResults": "Geen projecten gevonden die overeenkomen met uw filters"
+  },
+  "categories": {
+    "all": "Alle",
+    "testAutomation": "Test Automation",
+    "openSource": "Open Source",
+    "ecommerce": "E-commerce"
+  },
+  "projectLabels": {
+    "role": "Rol",
+    "duration": "Duur",
+    "team": "Team",
+    "soloProject": "Solo Project",
+    "months": "maanden",
+    "year": "Jaar"
+  },
+  "projectDetails": {
+    "overview": "Overzicht",
+    "challengeAndSolution": "Uitdaging & Oplossing",
+    "theChallenge": "De Uitdaging",
+    "theSolution": "De Oplossing",
+    "keyFeatures": "Kernfunctionaliteiten",
+    "gallery": "Galerij",
+    "technologiesUsed": "Gebruikte Technologieën",
+    "techStack": "Tech Stack",
+    "tags": "Tags",
+    "resultsAndImpact": "Resultaten & Impact",
+    "viewLiveDemo": "Live Demo Bekijken",
+    "viewOnGitHub": "Bekijk op GitHub",
+    "previous": "Vorige",
+    "next": "Volgende",
+    "close": "Sluiten"
+  },
+  "sections": {
+    "overview": "Overzicht",
+    "challenge": "Uitdaging",
+    "features": "Functionaliteiten",
+    "gallery": "Galerij",
+    "technologies": "Tech Stack",
+    "results": "Resultaten"
+  },
+  "projects": {
+    "qa-smart-test-lab": {
+      "title": "QASmartTestLab",
+      "role": "Lead Automation Engineer",
+      "team": "Solo Project",
+      "duration": "4 maanden",
+      "description": "Een uitgebreid test automation framework gebouwd met Java 17+, Selenium 4 en Cucumber voor UI, API en database testing met Clean Architecture en runtime configuratie.",
+      "detailedDescription": "QASmartTestLab is een productie-klaar test automation framework dat best practices in testautomatisering demonstreert. Gebouwd met Java 17+, Selenium 4 en Cucumber (JVM), biedt het een schone, onderhoudbare structuur voor UI, API en database testing. Het framework omvat runtime configuratie voor browsers (Chrome, Firefox, Edge), headless uitvoering, remote Grid/Selenoid ondersteuning en uitgebreide rapportage. Het volgt het Page Object Model patroon met duidelijke scheiding van verantwoordelijkheden, inclusief configureerbare time-outs, parallelle uitvoering en op tags gebaseerde testfiltering.",
+      "challenge": "Test automation teams worstelen vaak met framework complexiteit, slechte onderhoudbaarheid en gebrek aan standaardisatie tussen projecten. Veel frameworks veranderen in technische schuld, zijn moeilijk te begrijpen voor nieuwe teamleden en lastig op te schalen naarmate de applicatie groeit.",
+      "solution": "Ik heb QASmartTestLab vanaf de grond opgebouwd met Clean Architecture principes, met de nadruk op scheiding van verantwoordelijkheden, duidelijke naamgevingsconventies en uitgebreide documentatie. Ik implementeerde flexibele runtime configuratie waarmee teams browsers, omgevingen en uitvoeringsmodi kunnen wisselen zonder codewijzigingen. Het Page Object Model patroon zorgt voor eenvoudig onderhoud, terwijl tag-based filtering precieze controle over de testuitvoering biedt.",
+      "metrics": [
+        "Multi-Layer Testing (UI, API, DB)",
+        "Ondersteuning voor Parallelle Uitvoering",
+        "Remote Grid Integratie",
+        "Clean Architecture & POM Patroon"
+      ],
+      "features": {
+        "multiLayer": {
+          "title": "Multi-Layer Testing",
+          "description": "Uitgebreide dekking over UI (Selenium), API (REST Assured) en database (JDBC) lagen binnen één verenigd framework."
+        },
+        "runtimeConfig": {
+          "title": "Runtime Configuratie",
+          "description": "Dynamische browserselectie, headless modus en remote Grid/Selenoid integratie—allemaal configureerbaar tijdens runtime zonder code aan te passen."
+        },
+        "cleanArch": {
+          "title": "Clean Architecture",
+          "description": "Page Object Model met duidelijke scheiding: pagina's, stappen, runners, hulpprogramma's. Elk onderdeel heeft één verantwoordelijkheid."
+        },
+        "parallel": {
+          "title": "Paralelle Uitvoering",
+          "description": "Tag-based filtering en parallel thread support voor snellere feedback cycli. Voer smoke tests uit in minuten, volledige regressie 's nachts."
+        }
+      },
+      "results": {
+        "speed": {
+          "metric": "Testuitvoeringssnelheid",
+          "value": "60% sneller",
+          "description": "Parallelle uitvoering verminderde de volledige regressietijd van 2 uur naar 48 minuten"
+        },
+        "maintainability": {
+          "metric": "Onderhoudbaarheid Code",
+          "value": "85% reductie",
+          "description": "POM patroon verminderde de onderhoudsinspanning voor tests en verhoogde de teamsnelheid"
+        },
+        "adoption": {
+          "metric": "Framework Adoptie",
+          "value": "100+ sterren",
+          "description": "GitHub repository kreeg tractie in de QA automation community"
+        }
+      }
+    },
+    "playwright-testing-project": {
+      "title": "Playwright Testing Suite",
+      "role": "Automation Engineer",
+      "team": "Solo Project",
+      "duration": "3 maanden",
+      "description": "Uitgebreide Playwright test automation suite die UI, API en visual testing capaciteiten demonstreert met Page Object Model, cross-browser testing en geavanceerde debugging.",
+      "detailedDescription": "Een uitgebreide Playwright test automation suite ontwikkeld om moderne testpraktijken te beheersen. Het bevat 3-laags testdekking inclusief End-to-End UI testing, RESTful API validatie en Visual Regression testing. Gebouwd met TypeScript, implementeert het framework het Page Object Model (POM) patroon voor onderhoudbaarheid en bevat geavanceerde mogelijkheden zoals cookie-based authenticatie, dynamische configuratie via omgevingsvariabelen en parallelle testuitvoering.",
+      "metrics": [
+        "3-Laags Dekking (UI, API, Visueel)",
+        "Cross-Browser (Chromium, Firefox, WebKit)",
+        "Ondersteuning voor Parallelle Uitvoering",
+        "Geavanceerde Debugging (Trace Viewer)"
+      ],
+      "features": {
+        "coverage": {
+          "title": "Uitgebreide Dekking",
+          "description": "Implementeert UI End-to-End tests, RESTful API integratie en Pixel-perfect Visual Regression testing."
+        },
+        "framework": {
+          "title": "Modern Framework Design",
+          "description": "Gebouwd op het Page Object Model (POM) patroon met flexibele omgevingsconfiguratie en locator strategieën."
+        },
+        "capabilities": {
+          "title": "Geavanceerde Mogelijkheden",
+          "description": "Bevat cookie-based authenticatie, screenshot/video opname en globale parallelle testuitvoering."
+        },
+        "debugging": {
+          "title": "Cross-Browser & Debugging",
+          "description": "Valideert over Chromium, Firefox en WebKit met geïntegreerde Trace Viewer voor diepgaande foutanalyse."
+        }
+      }
+    },
+    "social-share-image-generator": {
+      "title": "Social Media Image Generator",
+      "role": "Full-Stack Developer",
+      "team": "Solo Project",
+      "duration": "2 maanden",
+      "description": "Professionele social media image generator met intelligente adaptieve lay-outs. Bevat 5 premium sjablonen, 6 visuele effecten en directe voorinstellingen voor LinkedIn, Twitter, Instagram, YouTube & Stories.",
+      "detailedDescription": "Een professionele social media image generator met een Intelligent Adaptive Layout System dat automatisch designs aanpast aan elke dimensie (Portret, Landschap, Vierkant). De kern 'LayoutCalculator' engine positioneert elementen dynamisch, schaalt typografie en optimaliseert spatiëring op basis van canvasgrootte.",
+      "metrics": [
+        "6 Adaptieve Lay-outs",
+        "6 Visuele Achtergrondeffecten",
+        "Slimme Tekstschaling",
+        "Geen Afhankelijkheden (Vanilla JS)"
+      ],
+      "features": {
+        "layout": {
+          "title": "Intelligent Layout Engine",
+          "description": "Past content lay-out automatisch aan op basis van dimensies (Landschap, Portret, Vierkant) met slimme elementpositionering."
+        },
+        "presets": {
+          "title": "Multi-Platform Voorinstellingen",
+          "description": "Eén-klik voorinstellingen voor LinkedIn, Twitter/X, Instagram, YouTube en Stories, plus aangepaste afmetingen (100px-5000px)."
+        },
+        "customization": {
+          "title": "Visuele Aanpassing",
+          "description": "6 professionele sjablonen en 6 dynamische achtergrondeffecten (Patroon, Cirkels, Raster, Golven, Stippen) met aangepaste kleurcontrole."
+        },
+        "export": {
+          "title": "High-Performance Export",
+          "description": "Directe client-side generatie met Canvas API met opties voor Hoge/Ultra kwaliteit PNG export en klembord kopie."
+        }
+      }
+    },
+    "banking-payment-automation": {
+      "title": "TIP Test Center (Dovetail - ING)",
+      "role": "Automation Test Engineer",
+      "team": "Agile Team",
+      "duration": "2+ jaar",
+      "description": "TTC is een gespecialiseerd framework dat transactionele testing automatiseert in het Dovetail systeem, een Fiserv payment platform dat real-time betalingsverwerking afhandelt.",
+      "detailedDescription": "TTC is een gespecialiseerd framework dat transactionele testing automatiseert in het Dovetail systeem, een Fiserv payment platform dat real-time betalingsverwerking afhandelt. Het framework beheert end-to-end transactionele testautomatisering voor Dovetail betalingen en integreert met de ING Test Center (ITC) execution engine.",
+      "metrics": [
+        "End-to-End Transactionele Automatisering",
+        "Dagelijkse Regressie in DEV5 Omgeving",
+        "Multi-Country: BE, IT, HU, SK",
+        "Geïntegreerd met ING Test Center (ITC)"
+      ],
+      "features": {
+        "validation": {
+          "title": "Test Validatie Ontwikkeling",
+          "description": "Implementeren en onderhouden van FFV testvalidaties voor EPP en niet-EPP betalingsstromen, inclusief landspecifieke implementaties."
+        },
+        "management": {
+          "title": "Test Case Management",
+          "description": "Toevoegen van nieuwe testgevallen en aanpassen van testdekking voor implementaties in verschillende landen (BE, IT, HU, SK)."
+        },
+        "regression": {
+          "title": "Regressietesten",
+          "description": "Uitvoeren en verifiëren van dagelijkse end-to-end teststromen en ondersteunen van testuitvoering voor nieuwe Dovetail releases."
+        },
+        "stakeholder": {
+          "title": "Stakeholder Support",
+          "description": "Technische begeleiding bieden aan ontwikkelteams, feature squads en andere belanghebbenden tijdens het onboardingproces."
+        }
+      }
+    },
+    "hospital-portal-testing": {
+      "title": "Hospital Portal Testing - Medunna",
+      "role": "QA Automation Engineer",
+      "team": "5 Devs, 3 Testers",
+      "duration": "6 maanden",
+      "description": "Leidde de kwaliteitsborgingsstrategie voor een uitgebreid ziekenhuisbeheerportaal, waarbij gegevensprivacy en systeembetrouwbaarheid werden gewaarborgd over UI, API en DB lagen.",
+      "detailedDescription": "Dit project was het eindproject van een 1-jarige Full Stack Automation Engineering cursus, voltooid over 6 maanden met een team van 5 ontwikkelaars en 3 testers. We ontwikkelden een uitgebreid ziekenhuisportaal met 30+ user stories en 103+ testgevallen.",
+      "metrics": [
+        "Duur: 6 Maanden",
+        "Team: 5 Devs, 3 Testers",
+        "30 Stories, 100+ Testgevallen",
+        "UI, API & DB Validatie"
+      ],
+      "features": {
+        "automation": {
+          "title": "Test Automation",
+          "description": "Implementeerde een hybride framework met Selenium WebDriver, Java, JUnit en Cucumber BDD voor leesbare en herbruikbare testscenario's."
+        },
+        "api": {
+          "title": "API Testing",
+          "description": "Uitgebreide API validatie uitgevoerd met Postman en Rest Assured Library om backend betrouwbaarheid te waarborgen."
+        },
+        "data": {
+          "title": "Data Management",
+          "description": "Apache POI en Scenario Outlines gebruikt om meerdere testdatasets efficiënt te beheren."
+        },
+        "cicd": {
+          "title": "CI/CD Integratie",
+          "description": "Het automation framework geïntegreerd met Jenkins en Maven voor continue integratie en implementatie."
+        }
+      }
+    },
+    "ecommerce-sales-optimization": {
+      "title": "E-commerce Sales Optimalisatie",
+      "role": "E-commerce Specialist",
+      "team": "Cross-functioneel Team",
+      "duration": "2 jaar",
+      "description": "Leidde B2C marketing en operationele excellentie op Europese marketplaces, optimaliseerde 10k+ SKUs voor zichtbaarheid en omzetgroei.",
+      "detailedDescription": "In mijn rol als E-commerce Specialist voor een wereldwijde distributeur van auto-onderdelen die klanten in 94 landen bedient, stuurde ik B2B en B2C marketing aan om marktaandeel uit te breiden op Europese platforms (Amazon, eBay, AutoDoc SE).",
+      "metrics": [
+        "Wereldwijd Bereik: 94 Landen",
+        "10k+ SKUs Geoptimaliseerd",
+        "EU Marktbereik Verhoogd",
+        "Hoge ROI Advertentiecampagnes"
+      ],
+      "features": {
+        "marketing": {
+          "title": "B2C Marketing Strategie",
+          "description": "Gerichte marketingstrategieën gecreëerd en uitgevoerd om omzetgroei te stimuleren op grote Europese e-commerce marketplaces."
+        },
+        "seo": {
+          "title": "Gelişmiş SEO Optimalisatie",
+          "description": "Productzoektermen verrijkt inclusief 'Algemene Zoekwoorden' en 'OEM-nummers' om organische zichtbaarheid te maximaliseren tegen concurrenten."
+        },
+        "inventory": {
+          "title": "SKU & Voorraad Operaties",
+          "description": "Naadloze synchronisatie van voorraad, prijzen en content beheerd voor duizenden SKUs over retail en digitale kanalen."
+        },
+        "ads": {
+          "title": "PPC & Gesponsorde Advertenties",
+          "description": "Gesponsorde advertentiecampagnes op Amazon en eBay ingezet om productexposure te verhogen en verkoopsnelheid te versnellen."
+        }
+      }
+    }
+  }
+}

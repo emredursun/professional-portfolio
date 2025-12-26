@@ -1,7 +1,9 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import { Project } from "../types.ts";
 import { PROJECTS } from "../constants.tsx";
 import ProjectModal from "./ProjectModal.tsx";
+import { useTranslatedProjects, useTranslatedProject } from "./hooks/useTranslatedProject.tsx";
 
 const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
   project,
@@ -66,11 +68,16 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
 };
 
 const Projects: React.FC = () => {
+  const { t } = useTranslation('projects');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isTechnologyOpen, setIsTechnologyOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  // Get translated projects
+  const translatedProjects = useTranslatedProjects(PROJECTS);
+  const translatedSelectedProject = useTranslatedProject(selectedProject || PROJECTS[0]);
 
   const categoryRef = useRef<HTMLDivElement>(null);
   const technologyRef = useRef<HTMLDivElement>(null);
@@ -142,9 +149,9 @@ const Projects: React.FC = () => {
     return Array.from(techs).sort();
   }, []);
 
-  // Filter projects based on categories and technologies
+  // Filter projects based on categories and technologies (use translated for display)
   const filteredProjects = useMemo(() => {
-    return PROJECTS.filter((project) => {
+    return translatedProjects.filter((project) => {
       const categoryMatch =
         selectedCategories.length === 0 ||
         selectedCategories.includes(project.category);
@@ -155,7 +162,7 @@ const Projects: React.FC = () => {
         );
       return categoryMatch && techMatch;
     });
-  }, [selectedCategories, selectedTechnologies]);
+  }, [selectedCategories, selectedTechnologies, translatedProjects]);
 
   // Handle category toggle
   const toggleCategory = (category: string) => {
@@ -204,10 +211,10 @@ const Projects: React.FC = () => {
     <section className="animate-fade-in h-full flex flex-col">
       <header className="mb-10">
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-8">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">Featured </span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">{t('titleHighlight')} </span>
           <span className="relative inline-block">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark animate-gradient bg-[length:200%_auto]">
-              Projects
+              {t('title')}
             </span>
             <span className="absolute inset-0 blur-lg bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark opacity-50 animate-pulse-slow"></span>
             {/* Animated Underline */}
@@ -220,7 +227,7 @@ const Projects: React.FC = () => {
           {/* Category Dropdown */}
           <div ref={categoryRef} className="relative flex-1">
             <label className="block text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
-              Category
+              {t('filters.category')}
               {selectedCategories.length > 0 && (
                 <span className="ml-2 inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold bg-yellow-400 text-black rounded-full">
                   {selectedCategories.length}
@@ -240,8 +247,8 @@ const Projects: React.FC = () => {
             >
               <span>
                 {selectedCategories.length === 0
-                  ? "All Categories"
-                  : `${selectedCategories.length} selected`}
+                  ? t('categories.all')
+                  : t('filters.selected', { count: selectedCategories.length })}
               </span>
               <i
                 className={`fas fa-chevron-down transition-transform duration-300 ${isCategoryOpen ? "rotate-180" : ""
@@ -277,7 +284,7 @@ const Projects: React.FC = () => {
           {/* Technology Dropdown */}
           <div ref={technologyRef} className="relative flex-1">
             <label className="block text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
-              Technology
+              {t('filters.technologies')}
               {selectedTechnologies.length > 0 && (
                 <span className="ml-2 inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold bg-yellow-400 text-black rounded-full">
                   {selectedTechnologies.length}
@@ -297,8 +304,8 @@ const Projects: React.FC = () => {
             >
               <span>
                 {selectedTechnologies.length === 0
-                  ? "All Technologies"
-                  : `${selectedTechnologies.length} selected`}
+                  ? t('categories.all')
+                  : t('filters.selected', { count: selectedTechnologies.length })}
               </span>
               <i
                 className={`fas fa-chevron-down transition-transform duration-300 ${isTechnologyOpen ? "rotate-180" : ""
@@ -337,7 +344,7 @@ const Projects: React.FC = () => {
           selectedTechnologies.length > 0) && (
             <div className="flex items-center gap-3 flex-wrap">
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                Active filters:
+                {t('filters.activeFilters')}
               </span>
               {selectedCategories.map((cat) => (
                 <span
@@ -371,7 +378,7 @@ const Projects: React.FC = () => {
                 onClick={clearFilters}
                 className="text-xs font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline hover:scale-110 transition-all duration-300"
               >
-                Clear all
+                {t('filters.clearFilters')}
               </button>
             </div>
           )}
@@ -398,23 +405,23 @@ const Projects: React.FC = () => {
             <i className="fas fa-folder-open text-4xl text-gray-300 dark:text-gray-600"></i>
           </div>
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-            No Projects Found
+            {t('filters.noResults')}
           </h3>
           <p className="text-gray-500 dark:text-gray-400 mb-4">
-            No projects match your current filters.
+            {t('filters.noResults')}
           </p>
           <button
             onClick={clearFilters}
             className="px-6 py-2 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-500 hover:scale-105 hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
           >
-            Clear Filters
+            {t('filters.clearFilters')}
           </button>
         </div>
       )}
 
       {selectedProject && (
         <ProjectModal
-          project={selectedProject}
+          project={translatedSelectedProject}
           onClose={handleCloseModal}
           onNavigate={handleNavigateProject}
         />

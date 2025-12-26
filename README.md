@@ -7,7 +7,7 @@
 [![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_Site-yellow?style=for-the-badge&logoColor=white)](https://emredursun.nl)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
-**Built with React · TypeScript · Tailwind CSS**
+**Built with React · TypeScript · Tailwind CSS · React-i18next**
 
 [Features](#-features) • [Tech Stack](#-tech-stack) • [Quick Start](#-quick-start) • [Performance](#-performance) • [License](#-license)
 
@@ -46,6 +46,7 @@ A meticulously crafted, **production-ready portfolio** designed to showcase prof
 - **SEO Ready** — Structured data, meta tags, and sitemap
 - **Accessibility** — WCAG compliant with semantic HTML
 - **PWA Support** — Installable with offline capabilities
+- **Multi-Language** — Native support for English, Turkish, and Dutch
 
 </td>
 </tr>
@@ -75,21 +76,21 @@ graph LR
 
 #### 🎯 **Core Features**
 
-- **Command Palette (Cmd/Ctrl+K)** — Fuzzy search navigation with recent commands tracking
-- **Enhanced Project Modal** — Full-featured project showcase with gallery, sections, and navigation
-- **Smart Scroll-to-Top** — Intelligent button that works in both main page and modals
-- **Dynamic Project Filtering** — Real-time category and technology filtering with animations
-- **Interactive Resume Timeline** — Visually engaging experience and education showcase
-- **Smart Contact Form** — Integrated email service with validation and feedback
-- **Theme Persistence** — Remembers user preferences across sessions
+- **Multi-Language Support** — Seamless switching between English, Turkish (Native), and Dutch (Intermediate), with automatic language detection and specialized tech terminology.
+- **Configurable Status Badge** — Easily toggle between 'Open to Work', 'Freelance', 'Hiring', etc., via `constants.tsx`.
+- **Command Palette (Cmd/Ctrl+K)** — Fuzzy search navigation with recent commands tracking.
+- **Enhanced Project Modal** — Full-featured project showcase with gallery, sections, and navigation.
+- **Smart Scroll-to-Top** — Intelligent button that works in both main page and modals.
+- **Dynamic Project Filtering** — Real-time category and technology filtering with animations.
+- **Interactive Resume Timeline** — Visually engaging experience and education showcase.
+- **Smart Contact Form** — Integrated email service with validation and feedback.
 
 #### 🎭 **Advanced Interactions**
 
-- **Multi-layer Parallax** — Depth-rich scrolling with background and floating elements
-- **Progress Tracking** — Visual scroll progress ring on scroll-to-top button
-- **Keyboard Navigation** — Full keyboard shortcuts support (Cmd+K, Esc, Arrow keys)
-- **Hash-based Routing** — Direct links to specific projects via URL
-- **Staggered Animations** — Smooth fade-in animations with delay for visual hierarchy
+- **Multi-layer Parallax** — Depth-rich scrolling with background and floating elements.
+- **Progress Tracking** — Visual scroll progress ring on scroll-to-top button.
+- **Keyboard Navigation** — Full keyboard shortcuts support (Cmd+K, Esc, Arrow keys).
+- **Staggered Animations** — Smooth fade-in animations with delay for visual hierarchy.
 
 <br/>
 
@@ -102,6 +103,7 @@ graph LR
 |  **Frontend**  | ![React](https://img.shields.io/badge/React-19.2+-61DAFB?style=flat-square&logo=react&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-3178C6?style=flat-square&logo=typescript&logoColor=white)    |
 |  **Styling**   | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4+-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-Custom-1572B6?style=flat-square&logo=css3&logoColor=white) |
 | **Animation**  | ![GSAP](https://img.shields.io/badge/GSAP-3.12+-88CE02?style=flat-square&logo=greensock&logoColor=white) ![Lenis](https://img.shields.io/badge/Lenis-Smooth_Scroll-000000?style=flat-square)                                   |
+|  **Localize**  | ![i18next](https://img.shields.io/badge/i18next-23.7+-26A69A?style=flat-square&logo=i18next&logoColor=white)                                                                                                                   |
 | **Build Tool** | ![Vite](https://img.shields.io/badge/Vite-6.2+-646CFF?style=flat-square&logo=vite&logoColor=white)                                                                                                                             |
 |   **Search**   | ![Fuse.js](https://img.shields.io/badge/Fuse.js-Fuzzy_Search-FF6B6B?style=flat-square)                                                                                                                                         |
 |   **Icons**    | ![Font Awesome](https://img.shields.io/badge/Font_Awesome-6.5-339AF0?style=flat-square&logo=fontawesome&logoColor=white)                                                                                                       |
@@ -113,11 +115,10 @@ graph LR
 
 - **Component-Based Architecture** — Modular, reusable, and maintainable
 - **Type-Safe Development** — Full TypeScript coverage for reliability
+- **Internationalization (i18n)** — Scalable translation infrastructure with namespace support
 - **Modern React Patterns** — Hooks, Context API, and functional components
 - **Optimized Asset Loading** — Lazy loading and code splitting strategies
 - **GSAP Animations** — Professional-grade animations with ScrollTrigger
-- **Smooth Scrolling** — Lenis for buttery-smooth scroll experience
-- **Fuzzy Search** — Fuse.js powered command palette for instant navigation
 
 <br/>
 
@@ -194,9 +195,11 @@ professional-portfolio/
 ├── 📄 index.html          # Entry HTML with SEO meta tags
 ├── 📄 App.tsx             # Main application with GSAP animations
 ├── 📄 constants.tsx       # Portfolio data and configuration
+├── 📄 i18n.ts             # Internationalization config
 ├── 📄 types.ts            # TypeScript type definitions
 ├── 📁 components/         # Reusable React components
 │   ├── Sidebar.tsx        # Navigation and profile
+│   ├── LanguageSwitcher.tsx # i18n language toggle
 │   ├── About.tsx          # About section with parallax
 │   ├── Resume.tsx         # Experience timeline
 │   ├── Projects.tsx       # Project grid with filtering
@@ -214,6 +217,7 @@ professional-portfolio/
 │       ├── useGSAP.tsx    # GSAP animation hook
 │       └── useCommandPalette.tsx # Command palette logic
 ├── 📁 public/             # Static assets
+│   ├── locales/           # Translation files (en, tr, nl)
 │   ├── favicon.ico
 │   ├── site.webmanifest
 │   ├── robots.txt
@@ -236,7 +240,7 @@ Enhance your browsing experience with these keyboard shortcuts:
 | `Enter` (in palette) | Execute selected command        |
 
 > [!TIP]
-> Use the **Command Palette** for lightning-fast navigation! Press `Cmd/Ctrl + K` and start typing to jump to any page, switch themes, or filter projects.
+> Use the **Command Palette** for lightning-fast navigation! Press `Cmd/Ctrl + K` and start typing to jump to any page, switch themes, language, or filter projects.
 
 <br/>
 
@@ -254,14 +258,12 @@ export const PERSONAL_INFO = {
   // ... more fields
 };
 
-// Add your projects
-export const PROJECTS = [
-  {
-    title: "Project Name",
-    category: "Web Development",
-    // ... project details
-  },
-];
+// Configure Status Badge
+export const STATUS_BADGE = {
+  enabled: true,
+  type: "openToWork", // or 'freelance', 'hiring', 'busy'
+  // ...
+};
 ```
 
 ### **Modify Theme Colors**
@@ -279,6 +281,10 @@ tailwind.config = {
   },
 };
 ```
+
+### **Add Translations**
+
+Add new languages or update existing ones in `public/locales/{lang}/{namespace}.json`.
 
 <br/>
 
@@ -312,6 +318,7 @@ firebase deploy
 - ✅ **Google Analytics** — Integrated tracking
 - ✅ **SPA Routing** — All routes handled correctly
 - ✅ **Optimized Caching** — Static assets cached for 1 year
+- ✅ **i18n Routing** — URL-based language routing (e.g., /tr, /nl)
 
 > [!TIP]
 > Configuration files included: `firebase.json`, `.firebaserc`, `robots.txt`, `sitemap.xml`, and `site.webmanifest`

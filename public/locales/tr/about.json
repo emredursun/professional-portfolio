@@ -1,0 +1,41 @@
+{
+  "title": "Hakkımda",
+  "titleHighlight": "",
+  "introText": "Java, Selenium, Cucumber, Postman ve Rest Assured teknolojileriyle UI, API ve veritabanı testleri konusunda uzmanlaşmış, ISTQB® Sertifikalı Full-Stack Otomasyon Mühendisiyim. Ölçeklenebilir otomasyon kurguları (framework) tasarlama ve bunları CI/CD süreçlerine entegre etme konusunda deneyimliyim. Bankacılık, sağlık ve e-ticaret sektörlerinde Agile ekiplerle çalışarak yüksek kaliteli yazılım sürümlerine katkıda bulundum. Hollandaca, İngilizce ve Türkçe (anadil) dillerini akıcı konuşabiliyorum.",
+  "introQuote": "Hassasiyet ve merak benim itici gücüm. Manuel test süreçlerini, ekiplerin güvenle ürün teslim etmesini (ship) sağlayan otomatik ve tekrarlanabilir sistemlere dönüştürüyorum.",
+  "story": "Bankacılık ve e-ticaret alanlarında API ve UI otomasyonları, dayanıklı test süreçleri ve gözlemlenebilirlik (observability) çözümleri geliştirerek, ekiplerin teslimat hızından ödün vermeden test kapasitelerini artırmalarına yardımcı oldum. Karmaşık iş akışlarını basit, test edilebilir bileşenlere ayırmayı ve riskleri en aza indirmek için disiplinler arası işbirliği yapmayı seviyorum.",
+  "yearsExperience": "Yıllık Deneyim",
+  "myJourney": "Kariyer Yolculuğum",
+  "whatIDo": "Uzmanlık Alanlarım",
+  "basedIn": "Lokasyon",
+  "netherlands": "Hollanda",
+  "languages": "Diller",
+  "languageList": "İngilizce, Hollandaca, Türkçe",
+  "badges": {
+    "istqbCertified": "ISTQB® Sertifikalı",
+    "agileScrum": "Agile & Scrum",
+    "fullStackQA": "Full-Stack QA"
+  },
+  "services": {
+    "testAutomation": {
+      "title": "Test Otomasyon Mimarisi",
+      "description": "Yazılım kalitesini ve güvenilirliğini garanti eden, sağlam, ölçeklenebilir uçtan uca otomasyon yapıları geliştiriyorum."
+    },
+    "cicd": {
+      "title": "CI/CD & DevOps Entegrasyonu",
+      "description": "Dağıtımı (deployment) hızlandıran ve riskleri en aza indiren sürekli entegrasyon (CI) süreçlerini tasarlıyor ve yönetiyorum."
+    },
+    "apiBackend": {
+      "title": "API & Backend Doğrulama",
+      "description": "Arka uç bütünlüğü için kapsamlı API test stratejileri ve veritabanı doğrulamaları uyguluyorum."
+    },
+    "webDev": {
+      "title": "Yapay Zeka Destekli Web Geliştirme",
+      "description": "Profesyonel, yüksek performanslı web uygulamalarını hız ve hassasiyetle geliştirmek için gelişmiş yapay zeka kodlama araçlarından ve modern mimari desenlerinden yararlanıyorum."
+    },
+    "ecommerce": {
+      "title": "E-Ticaret Satış Optimizasyonu",
+      "description": "Amazon ve eBay gibi büyük e-ticaret platformlarında ürün görünürlüğünü ve geliri artırmak için veri odaklı satış stratejileri ve SEO teknikleri uyguluyorum."
+    }
+  }
+}

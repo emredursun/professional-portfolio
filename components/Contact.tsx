@@ -1,5 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SOCIAL_LINKS } from '../constants.tsx';
 
 
@@ -66,6 +67,7 @@ const ConfettiCanvas: React.FC = () => {
 };
 
 const Contact: React.FC = () => {
+    const { t } = useTranslation('contact');
     const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
     const [formStartTime, setFormStartTime] = useState<number>(0);
 
@@ -157,8 +159,8 @@ const Contact: React.FC = () => {
                         <div className="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-6 animate-icon-pop-in z-10 border border-green-300 dark:border-green-500/30">
                             <i className="fas fa-check text-4xl text-green-500"></i>
                         </div>
-                        <h4 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 z-10">Thank You!</h4>
-                        <p className="text-gray-700 dark:text-gray-300 text-lg z-10">Your message has been sent successfully.<br />I will get back to you soon.</p>
+                        <h4 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 z-10">{t('messages.success.title')}</h4>
+                        <p className="text-gray-700 dark:text-gray-300 text-lg z-10">{t('messages.success.description')}<br />{t('messages.success.followUp')}</p>
                     </div>
                 );
             case 'error':
@@ -167,14 +169,14 @@ const Contact: React.FC = () => {
                         <div className="w-20 h-20 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mb-6">
                             <i className="fas fa-exclamation-triangle text-4xl text-red-500"></i>
                         </div>
-                        <h4 className="text-2xl font-bold text-red-800 dark:text-red-300 mb-2">Submission Failed</h4>
-                        <p className="text-red-600 dark:text-red-400 mb-8">Something went wrong. Please try again.</p>
+                        <h4 className="text-2xl font-bold text-red-800 dark:text-red-300 mb-2">{t('messages.error.title')}</h4>
+                        <p className="text-red-600 dark:text-red-400 mb-8">{t('messages.error.description')}</p>
                         <button
                             onClick={() => setSubmissionStatus('idle')}
                             className="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-xl flex items-center justify-center gap-2 hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                         >
                             <i className="fas fa-redo"></i>
-                            Try Again
+                            {t('buttons.tryAgain', { ns: 'common' })}
                         </button>
                     </div>
                 );
@@ -188,7 +190,7 @@ const Contact: React.FC = () => {
                                 <input
                                     type="text"
                                     name="name"
-                                    placeholder="Full Name"
+                                    placeholder={t('form.name.placeholder')}
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                                     required
                                     disabled={submissionStatus === 'submitting'}
@@ -199,7 +201,7 @@ const Contact: React.FC = () => {
                                 <input
                                     type="email"
                                     name="email"
-                                    placeholder="Email Address"
+                                    placeholder={t('form.email.placeholder')}
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                                     required
                                     disabled={submissionStatus === 'submitting'}
@@ -209,7 +211,7 @@ const Contact: React.FC = () => {
                             <div className="group">
                                 <textarea
                                     name="message"
-                                    placeholder="Your Message (minimum 20 characters)"
+                                    placeholder={t('form.message.placeholder')}
                                     rows={5}
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)] resize-none"
                                     required
@@ -227,12 +229,12 @@ const Contact: React.FC = () => {
                                 {submissionStatus === 'submitting' ? (
                                     <>
                                         <i className="fas fa-spinner fa-spin"></i>
-                                        Sending...
+                                        {t('buttons.sending', { ns: 'common' })}
                                     </>
                                 ) : (
                                     <>
                                         <i className="fas fa-paper-plane"></i>
-                                        Send Message
+                                        {t('buttons.sendMessage', { ns: 'common' })}
                                     </>
                                 )}
                             </button>
@@ -246,10 +248,10 @@ const Contact: React.FC = () => {
         <section>
             <header className="mb-12">
                 <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">Contact </span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">{t('title')} </span>
                     <span className="relative inline-block">
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark animate-gradient bg-[length:200%_auto]">
-                            Me
+                            {t('titleHighlight')}
                         </span>
                         <span className="absolute inset-0 blur-lg bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark opacity-50 animate-pulse-slow"></span>
                         {/* Animated Underline */}
@@ -263,7 +265,7 @@ const Contact: React.FC = () => {
                         <div className="w-10 h-10 rounded-lg bg-yellow-400/10 flex items-center justify-center text-yellow-400">
                             <i className="fas fa-envelope-open-text"></i>
                         </div>
-                        Contact Form
+                        {t('sections.form')}
                     </h3>
                     {renderFormContent()}
                 </div>
@@ -272,7 +274,7 @@ const Contact: React.FC = () => {
                         <div className="w-10 h-10 rounded-lg bg-yellow-400/10 flex items-center justify-center text-yellow-400">
                             <i className="fas fa-map-marked-alt"></i>
                         </div>
-                        Find Me Here
+                        {t('sections.findMe')}
                     </h3>
                     <div className="h-[300px] rounded-[2rem] overflow-hidden border border-gray-200 dark:border-neon-border shadow-2xl dark:shadow-none group relative transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
                         <div className="absolute inset-0 border-4 border-transparent group-hover:border-yellow-400/30 dark:group-hover:border-neon-cyan/30 transition-colors duration-300 pointer-events-none z-10 rounded-[2rem]"></div>
@@ -289,7 +291,7 @@ const Contact: React.FC = () => {
                         ></iframe>
                     </div>
                     <div className="mt-12">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Follow Me</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{t('sections.followMe')}</h3>
                         <div className="flex gap-4">
                             {SOCIAL_LINKS.map(link => (
                                 <a

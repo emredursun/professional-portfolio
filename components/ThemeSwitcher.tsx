@@ -24,7 +24,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = React.memo(({ theme, toggleT
   return (
     <button
       onClick={handleToggle}
-      className={`absolute top-6 right-6 z-50 w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-lg border transition-all duration-[700ms] ease-[cubic-bezier(0.68,-0.55,0.27,1.55)]
+      className={`absolute top-6 left-6 z-50 w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-lg border transition-all duration-[700ms] ease-[cubic-bezier(0.68,-0.55,0.27,1.55)]
         ${theme === 'light' 
           ? 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' 
           : 'bg-[#1e1e1e] text-yellow-400 border-gray-700 hover:bg-gray-800'}

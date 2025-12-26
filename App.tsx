@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { getLanguageFromUrl } from './i18n.ts';
 import { useGSAP } from "./components/hooks/useGSAP.tsx";
 import gsap from "gsap"; 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -20,6 +22,7 @@ import { faviconController } from './src/utils/faviconController';
 import Preloader from './components/Preloader.tsx';
 
 const App: React.FC = () => {
+  const { i18n } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [activePage, setActivePage] = useState<Page>('About');
   const [theme, setTheme] = useState(() => {
@@ -40,6 +43,29 @@ const App: React.FC = () => {
   const [readingProgress, setReadingProgress] = useState(0);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  // Detect and set language from URL on mount
+  useEffect(() => {
+    const urlLanguage = getLanguageFromUrl();
+    if (urlLanguage !== i18n.language) {
+      i18n.changeLanguage(urlLanguage);
+    }
+    // Update document language attribute
+    document.documentElement.lang = i18n.language;
+  }, [i18n]);
+
+  // Listen for language changes and update document lang
+  useEffect(() => {
+    const handleLanguageChanged = (lng: string) => {
+      document.documentElement.lang = lng;
+    };
+    
+    i18n.on('languageChanged', handleLanguageChanged);
+    
+    return () => {
+      i18n.off('languageChanged', handleLanguageChanged);
+    };
+  }, [i18n]);
 
   // Lock scroll while loading
   useEffect(() => {

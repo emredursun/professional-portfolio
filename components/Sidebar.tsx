@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { PERSONAL_INFO, SOCIAL_LINKS } from '../constants.tsx';
+import { useTranslation } from 'react-i18next';
+import { PERSONAL_INFO, SOCIAL_LINKS, STATUS_BADGE } from '../constants.tsx';
 import ThemeSwitcher from './ThemeSwitcher.tsx';
 import Magnetic from './Magnetic.tsx';
 import Tilt3D from './Tilt3D.tsx';
 import Particles from './Particles.tsx';
 import WordByWordAnimation from './WordByWordAnimation.tsx';
 import AnimatedName from './AnimatedName.tsx';
+import LanguageSwitcher from './LanguageSwitcher.tsx';
 import { Page } from '../types.ts';
 
 interface SidebarProps {
@@ -28,7 +30,10 @@ const NavButton: React.FC<{
     page: { label: Page; icon: React.ReactNode };
     isActive: boolean;
     onNavigate: (page: Page) => void;
-}> = React.memo(({ page, isActive, onNavigate }) => (
+}> = React.memo(({ page, isActive, onNavigate }) => {
+    const { t } = useTranslation('common');
+    
+    return (
     <li>
         <Magnetic>
             <button
@@ -43,30 +48,31 @@ const NavButton: React.FC<{
                 <span className={`text-xl w-6 flex justify-center transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
                     {page.icon}
                 </span>
-                <span className="relative z-10 tracking-wide text-sm">{page.label}</span>
+                <span className="relative z-10 tracking-wide text-sm">{t(`nav.${page.label.toLowerCase()}`)}</span>
             </button>
         </Magnetic>
     </li>
-));
+);});
 
 // Dynamic greeting based on time of day
-const getGreeting = (): string => {
+const getGreetingKey = (): string => {
     const hour = new Date().getHours();
-    if (hour >= 0 && hour < 6) return "Good Night";
-    if (hour >= 6 && hour < 12) return "Good Morning";
-    if (hour >= 12 && hour < 18) return "Good Afternoon";
-    return "Good Evening"; // 18:00 - 24:00
+    if (hour >= 0 && hour < 6) return "time.goodNight";
+    if (hour >= 6 && hour < 12) return "time.goodMorning";
+    if (hour >= 12 && hour < 18) return "time.goodAfternoon";
+    return "time.goodEvening"; // 18:00 - 24:00
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNavigate, isMobileView }) => {
+    const { t } = useTranslation(['common', 'sidebar']);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const [greeting, setGreeting] = useState(getGreeting());
+    const [greetingKey, setGreetingKey] = useState(getGreetingKey());
     const sidebarRef = useRef<HTMLElement>(null);
 
     // Update greeting every minute
     useEffect(() => {
         const interval = setInterval(() => {
-            setGreeting(getGreeting());
+            setGreetingKey(getGreetingKey());
         }, 60000);
         return () => clearInterval(interval);
     }, []);
@@ -108,7 +114,13 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                 }}
             />
 
+            {/* Theme Switcher - Left side */}
             <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} />
+            
+            {/* Language Switcher - Right side */}
+            <div className="absolute top-6 right-6 z-50">
+                <LanguageSwitcher isMobileView={isMobileView} theme={theme} />
+            </div>
 
             {/* Profile Header */}
             <motion.div
@@ -155,24 +167,55 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                             </div>
                         </div>
 
-                        {/* Ultra-Sharp Status Badge with solid background */}
-                        <motion.div
-                            className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white dark:bg-[#1f1f1f] py-2 px-5 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)] border-[1.5px] border-gray-200 dark:border-gray-700 flex items-center gap-2.5 z-40 whitespace-nowrap isolate"
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.3, duration: 0.4, type: 'spring' }}
-                            style={{
-                                WebkitFontSmoothing: 'antialiased',
-                                backfaceVisibility: 'hidden',
-                                transform: 'translateZ(0)'
-                            }}
-                        >
-                            <span className="relative flex h-2.5 w-2.5">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)] ring-2 ring-green-400/30"></span>
-                            </span>
-                            <span className="text-[11px] font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-200" style={{ letterSpacing: '0.08em' }}>Available</span>
-                        </motion.div>
+                        {/* Configurable Status Badge */}
+                        {STATUS_BADGE.enabled && (
+                            <motion.div
+                                className={`absolute -bottom-6 left-1/2 -translate-x-1/2 py-2 px-4 rounded-full border-[1.5px] flex items-center gap-2 z-40 whitespace-nowrap isolate
+                                    ${STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.bg || 'bg-white dark:bg-[#1f1f1f]'}
+                                    ${STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.text || 'text-gray-700 dark:text-gray-200'}
+                                    ${STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.glow || 'shadow-lg'}
+                                    ${STATUS_BADGE.type === 'openToWork' ? 'border-green-400' : STATUS_BADGE.type === 'freelance' ? 'border-purple-400' : STATUS_BADGE.type === 'hiring' ? 'border-blue-400' : 'border-gray-200 dark:border-gray-700'}
+                                `}
+                                initial={{ scale: 0, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: 0.3, duration: 0.4, type: 'spring' }}
+                                style={{
+                                    WebkitFontSmoothing: 'antialiased',
+                                    backfaceVisibility: 'hidden',
+                                    transform: 'translateZ(0)'
+                                }}
+                            >
+                                {/* Badge Icon based on type */}
+                                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'ring' && (
+                                    <span className="relative flex h-3 w-3">
+                                        {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.pulse && (
+                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/70 opacity-75"></span>
+                                        )}
+                                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)]"></span>
+                                    </span>
+                                )}
+                                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'dot' && (
+                                    <span className="relative flex h-2.5 w-2.5">
+                                        {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.pulse && (
+                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                        )}
+                                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)] ring-2 ring-green-400/30"></span>
+                                    </span>
+                                )}
+                                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'briefcase' && (
+                                    <i className="fas fa-briefcase text-xs"></i>
+                                )}
+                                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'users' && (
+                                    <i className="fas fa-users text-xs"></i>
+                                )}
+                                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'clock' && (
+                                    <i className="fas fa-clock text-xs"></i>
+                                )}
+                                <span className="text-[11px] font-extrabold uppercase tracking-wider" style={{ letterSpacing: '0.08em' }}>
+                                    {t(`statusBadge.${STATUS_BADGE.type}`)}
+                                </span>
+                            </motion.div>
+                        )}
                     </motion.div>
                 </Tilt3D>
 
@@ -180,7 +223,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                 <div className="text-center mb-2 mt-2 overflow-visible py-2">
                     <p className="text-lg font-semibold flex flex-wrap items-center justify-center gap-x-2">
                         <WordByWordAnimation
-                            text={`${greeting},`}
+                            text={`${t(greetingKey)},`}
                             className="bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 dark:from-cyan-400 dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent font-bold"
                             staggerDelay={0.35}
                             initialDelay={0.5}
@@ -190,7 +233,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                             repeatDelay={3.5}
                         />
                         <WordByWordAnimation
-                            text="I'm"
+                            text={t('sidebar:greeting')}
                             className="bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-400 dark:to-orange-400 bg-clip-text text-transparent font-bold"
                             staggerDelay={0.35}
                             initialDelay={1.85}
@@ -247,7 +290,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                         <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-yellow-400/20 via-amber-400/30 to-yellow-400/20 dark:from-cyan-400/20 dark:via-blue-400/30 dark:to-cyan-400/20 blur-sm -z-10"></div>
 
                         <i className="fas fa-certificate text-base relative z-10"></i>
-                        <span className="relative z-10" style={{ wordSpacing: '0.15em' }}>{PERSONAL_INFO.title}</span>
+                            <span className="relative z-10" style={{ wordSpacing: '0.15em' }}>{t('sidebar:personalInfo.title')}</span>
                     </motion.div>
                 </motion.div>
             </motion.div>
@@ -272,9 +315,9 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                         },
                     }}
                 >
-                    <InfoRow icon="fa-envelope" value={PERSONAL_INFO.email} label="Email" isLink href={`mailto:${PERSONAL_INFO.email}`} />
-                    <InfoRow icon="fa-phone" value={PERSONAL_INFO.phone} label="Phone" isLink href={`tel:${PERSONAL_INFO.phone}`} />
-                    <InfoRow icon="fa-map-marker-alt" value={PERSONAL_INFO.location} label="Location" />
+                    <InfoRow icon="fa-envelope" value={PERSONAL_INFO.email} label={t('labels.email')} isLink href={`mailto:${PERSONAL_INFO.email}`} />
+                    <InfoRow icon="fa-phone" value={PERSONAL_INFO.phone} label={t('labels.phone')} isLink href={`tel:${PERSONAL_INFO.phone}`} />
+                    <InfoRow icon="fa-map-marker-alt" value={t('labels.locationValue')} label={t('labels.location')} />
                 </motion.div>
 
                 {/* Socials with Enhanced Animations */}
@@ -363,7 +406,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                         >
                             {/* Shine Effect */}
                             <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent z-10"></div>
-                            <span className="text-sm uppercase tracking-wider font-extrabold z-20">Download CV</span>
+                            <span className="text-sm uppercase tracking-wider font-extrabold z-20">{t('buttons.downloadCV')}</span>
                             <i className="fas fa-download z-20"></i>
                         </a>
                     </Magnetic>

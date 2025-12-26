@@ -1,0 +1,34 @@
+{
+  "title": "Contact",
+  "titleHighlight": "Opnemen",
+  "sections": {
+    "form": "Contactformulier",
+    "findMe": "Vind Mij Hier",
+    "followMe": "Volg Mij"
+  },
+  "form": {
+    "name": {
+      "label": "Volledige Naam",
+      "placeholder": "Uw voor- en achternaam"
+    },
+    "email": {
+      "label": "E-mailadres",
+      "placeholder": "voorbeeld@email.nl"
+    },
+    "message": {
+      "label": "Uw Bericht",
+      "placeholder": "Schrijf hier uw bericht (minimaal 20 tekens)..."
+    }
+  },
+  "messages": {
+    "success": {
+      "title": "Verzonden!",
+      "description": "Uw bericht is succesvol verzonden.",
+      "followUp": "Ik neem zo spoedig mogelijk contact met u op."
+    },
+    "error": {
+      "title": "Verzending Mislukt",
+      "description": "Er is iets misgegaan. Probeer het opnieuw."
+    }
+  }
+}

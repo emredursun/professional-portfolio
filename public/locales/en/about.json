@@ -1,0 +1,41 @@
+{
+  "title": "About",
+  "titleHighlight": "Me",
+  "introText": "ISTQB® Certified Full-Stack Automation Engineer with experience in UI, API, and database testing using Java, Selenium, Cucumber, Postman, and Rest Assured. Skilled in designing scalable automation frameworks and integrating them with CI/CD pipelines. Proven track record of contributing to high-quality releases in Agile teams across banking, healthcare, and e-commerce domains. Fluent in Dutch, English, and Turkish (native).",
+  "introQuote": "Driven by precision, powered by curiosity. I transform manual testing corridors into automated, repeatable systems so teams have clear feedback and confidence to ship.",
+  "story": "I've worked across banking and e-commerce domains building API & UI automation, resilient test pipelines, and observability to help teams scale testing without slowing delivery. I enjoy breaking complex flows into simple, testable parts and collaborating cross-functionally to reduce risk.",
+  "yearsExperience": "Years Experience",
+  "myJourney": "My Journey",
+  "whatIDo": "What I Do",
+  "basedIn": "Based in",
+  "netherlands": "Netherlands",
+  "languages": "Languages",
+  "languageList": "English, Dutch, Turkish",
+  "badges": {
+    "istqbCertified": "ISTQB® Certified",
+    "agileScrum": "Agile & Scrum",
+    "fullStackQA": "Full-Stack QA"
+  },
+  "services": {
+    "testAutomation": {
+      "title": "Test Automation Architecture",
+      "description": "Building robust, scalable end-to-end automation frameworks to ensure software quality and reliability."
+    },
+    "cicd": {
+      "title": "CI/CD & DevOps Integration",
+      "description": "Designing and maintaining continuous integration pipelines to accelerate deployment and reduce risk."
+    },
+    "apiBackend": {
+      "title": "API & Backend Validation",
+      "description": "Implementing comprehensive API testing strategies and database validations for backend integrity."
+    },
+    "webDev": {
+      "title": "AI-Powered Web Development",
+      "description": "Leveraging advanced AI coding agents and modern architectural patterns to build professional, high-performance web applications with speed and precision."
+    },
+    "ecommerce": {
+      "title": "E-commerce Sales Optimization",
+      "description": "Implementing data-driven sales strategies and SEO techniques to maximize product visibility and revenue across major e-commerce platforms like Amazon and eBay."
+    }
+  }
+}

@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Magnetic from './Magnetic.tsx';
 import { Page } from '../types.ts';
 
@@ -9,22 +10,29 @@ interface NavbarProps {
     onOpenCommandPalette?: () => void;
 }
 
-const pages: { label: Page; icon: React.ReactNode }[] = [
-    { label: 'About', icon: <i className="far fa-user"></i> },
-    { label: 'Resume', icon: <i className="far fa-file-alt"></i> },
-    { label: 'Projects', icon: <i className="far fa-folder-open"></i> },
-    { label: 'Contact', icon: <i className="far fa-envelope"></i> },
+interface NavPage {
+    id: Page;
+    translationKey: string;
+    icon: React.ReactNode;
+}
+
+const pages: NavPage[] = [
+    { id: 'About', translationKey: 'nav.about', icon: <i className="far fa-user"></i> },
+    { id: 'Resume', translationKey: 'nav.resume', icon: <i className="far fa-file-alt"></i> },
+    { id: 'Projects', translationKey: 'nav.projects', icon: <i className="far fa-folder-open"></i> },
+    { id: 'Contact', translationKey: 'nav.contact', icon: <i className="far fa-envelope"></i> },
 ];
 
 const NavButton: React.FC<{
-  page: { label: Page; icon: React.ReactNode };
+  page: NavPage;
+  translatedLabel: string;
   isActive: boolean;
   onNavigate: (page: Page) => void;
-}> = React.memo(({ page, isActive, onNavigate }) => (
+}> = React.memo(({ page, translatedLabel, isActive, onNavigate }) => (
     <li className="flex-1 flex justify-center">
         <Magnetic>
             <button
-                onClick={() => onNavigate(page.label)}
+                onClick={() => onNavigate(page.id)}
                 className={`relative flex flex-col items-center justify-center w-full min-w-[54px] py-[5px] rounded-xl transition-all duration-300 group touch-manipulation ${
                     isActive 
                         ? 'text-yellow-600 dark:text-yellow-400' 
@@ -52,7 +60,7 @@ const NavButton: React.FC<{
                         ? 'opacity-100 font-bold' 
                         : 'opacity-60 group-hover:opacity-80'
                 }`}>
-                    {page.label}
+                    {translatedLabel}
                 </span>
             </button>
         </Magnetic>
@@ -60,6 +68,8 @@ const NavButton: React.FC<{
 ));
 
 const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onOpenCommandPalette }) => {
+    const { t } = useTranslation('common');
+    
     return (
         <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none pb-[env(safe-area-inset-bottom)]">
             {/* Single unified navbar container - flush with device navigation */}
@@ -69,9 +79,10 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onOpenCommandPa
                         {/* Navigation buttons */}
                         {pages.map((page) => (
                             <NavButton
-                                key={page.label}
+                                key={page.id}
                                 page={page}
-                                isActive={activePage === page.label}
+                                translatedLabel={t(page.translationKey)}
+                                isActive={activePage === page.id}
                                 onNavigate={onNavigate}
                             />
                         ))}
@@ -82,14 +93,14 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onOpenCommandPa
                                 <button
                                     onClick={onOpenCommandPalette}
                                     className="relative flex flex-col items-center justify-center w-full min-w-[54px] py-[5px] rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
-                                    aria-label="Open command palette"
+                                    aria-label={t('nav.search')}
                                     title="Search (⌘K)"
                                 >
                                     <span className="text-[16px] mb-[2px] z-10 transition-all duration-300 ease-out group-hover:scale-105 group-active:scale-95">
                                         <i className="fas fa-search" />
                                     </span>
                                     <span className="text-[8px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap opacity-60 group-hover:opacity-80">
-                                        Search
+                                        {t('nav.search')}
                                     </span>
                                 </button>
                             </li>
@@ -102,3 +113,4 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, onNavigate, onOpenCommandPa
 };
 
 export default Navbar;
+
