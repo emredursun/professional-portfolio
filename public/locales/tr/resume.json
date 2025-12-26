@@ -5,7 +5,7 @@
     "education": "Eğitim",
     "experience": "Deneyim",
     "skills": "Yetkinlikler",
-    "techStack": "Teknoloji Yığını",
+    "techStack": "Tech Stack",
     "languages": "Diller"
   },
   "education": [
@@ -13,86 +13,86 @@
       "date": "Haziran 2022 - Haziran 2023",
       "title": "Yazılım Mühendisliği - Full-Stack Test Otomasyon Mühendisliği",
       "company": "TechPro Education - Online/Remote",
-      "description": "Kazanılan Yetkinlikler: Test Otomasyonu (Selenium WebDriver, Cypress, Postman API, REST API'leri, RESTful Web Servisleri), CI/CD (Jenkins), Framework'ler (Hibrit Framework, Cucumber/BDD), Diller/Araçlar (Java, Gherkin, SQL, Maven, TestNG, JUnit), Metodolojiler (Agile, Scrum, SDLC, QA Mühendisliği, Test Planlama) ve daha fazlası."
+      "description": "Edinilen Yetkinlikler: Test Automation (Selenium WebDriver, Cypress, Postman API, REST API'ler, RESTful Web Services), CI/CD (Jenkins), Framework'ler (Hybrid Framework, Cucumber/BDD), Diller/Araçlar (Java, Gherkin, SQL, Maven, TestNG, JUnit), Metodolojiler (Agile, Scrum, SDLC, QA Engineering, Test Planning) ve daha fazlası."
     },
     {
       "date": "Eylül 2019 - Nisan 2020",
-      "title": "Yazılım Geliştirici",
+      "title": "Software Developer",
       "company": "ROC van Twente - Enschede, Hollanda",
-      "description": "Kazanılan Yetkinlikler: Temel Programlama (C#, JavaScript), Veritabanı Yönetimi (SQL, T-SQL, MongoDB), Sürüm Kontrol (Git, GitHub), Web Temelleri (HTML, CSS) ve Nesne Yönelimli Programlama (OOP)."
+      "description": "Edinilen Yetkinlikler: Temel Programlama (C#, JavaScript), Database Yönetimi (SQL, T-SQL, MongoDB), Version Control (Git, GitHub), Web Temelleri (HTML, CSS) ve Object-Oriented Programming (OOP)."
     },
     {
       "date": "Ekim 2017 - Mart 2018",
-      "title": "Full-Stack Web Geliştirme",
+      "title": "Full-Stack Web Development",
       "company": "HackYourFuture - Amsterdam, Hollanda",
-      "description": "Kazanılan Yetkinlikler: Web Teknolojileri (HTML, CSS, JavaScript), API Testi, Sürüm Kontrol (Git, GitHub), C#, SQL ve Nesne Yönelimli Programlama (OOP)."
+      "description": "Edinilen Yetkinlikler: Web Technologies (HTML, CSS, JavaScript), API Testing, Version Control (Git, GitHub), C#, SQL ve Object-Oriented Programming (OOP)."
     },
     {
       "date": "Eylül 2007 - Temmuz 2013",
       "title": "Uygulamalı Bilimler Lisansı - Matematik",
       "company": "İstanbul Üniversitesi - İstanbul, Türkiye",
-      "description": "İlgili Dersler: Diferansiyel Denklemler, Kompleks Analiz, Olasılık ve İstatistik, İleri Kalkülüs, Genel Fizik. Yetkinlikler: Soyut Muhakeme, Sistematik Problem Çözme, Veri Analizi."
+      "description": "İlgili Dersler: Diferansiyel Denklemler, Kompleks Analiz, Olasılık ve İstatistik, İleri Kalkülüs, Genel Fizik. Yetkinlikler: Soyut Muhakeme, Sistematik Problem Çözme, Data Analizi."
     }
   ],
   "experience": [
     {
       "date": "Haz 2023 - Eyl 2025",
-      "title": "Otomasyon Mühendisi (PSS/True International Payments/Ch Dovetail)",
+      "title": "Automation Engineer (PSS/True International Payments/Ch Dovetail)",
       "company": "ING Bank - Amsterdam, Hollanda · Hybrid",
-      "description": "ING'nin TIP Test Merkezi'nde (TTC) Otomasyon Test Mühendisi olarak, Fiserv ödeme platformu olan Dovetail sistemi içindeki gerçek zamanlı ödeme işlemleri için otomatik uçtan uca testler tasarladım ve bakımını sağladım. Uluslararası şubeler arasında işlem doğruluğunu garanti altına aldım. Sorumluluklarım arasında çeşitli ödeme akışları için test doğrulamaları tasarlamak, dağıtımı hızlandırmak için test verilerini yönetmek ve optimize etmek, otomasyon çerçevesi ile sorunsuz entegrasyon sağlamak için geliştirme ekipleri ve paydaşlarla yakın işbirliği yapmak yer aldı."
+      "description": "ING'nin TIP Test Center'da (TTC) Automation Test Engineer olarak, Fiserv payment platformu Dovetail sistemi içindeki real-time ödeme işlemleri için otomatik end-to-end testler tasarladım ve maintain ettim. Uluslararası branch'lar arasında transaction doğruluğunu garanti altına aldım. Sorumluluklarım arasında çeşitli payment flow'ları için test validation'ları tasarlamak, deployment'ı hızlandırmak için test data'sını yönetmek ve optimize etmek, automation framework ile seamless integration sağlamak için development team'leri ve stakeholder'larla yakın işbirliği yapmak yer aldı."
     },
     {
       "date": "Haz 2022 - Haz 2023",
-      "title": "Full-Stack Otomasyon Mühendisi (SDET)",
+      "title": "Full-Stack Automation Engineer (SDET)",
       "company": "TechPro Education EU - Hollanda · Remote",
-      "description": "Selenium WebDriver, Java, JUnit ve Cucumber kullanarak kabul kriterlerine dayalı kapsamlı bir Otomasyon Framework'ü geliştirdim ve yönettim. Bir hastane portalı için hasta yönetimi ve randevu planlama gibi işlevleri kapsayan UI, backend ve veritabanı testlerini yürüttüm. Postman ve Rest Assured ile API testleri gerçekleştirdim, Maven ile bağımlılıkları yönettim ve Agile ortamında Jenkins ile CI/CD süreçlerini entegre ettim."
+      "description": "Selenium WebDriver, Java, JUnit ve Cucumber kullanarak acceptance criteria'ya dayalı kapsamlı bir Automation Framework geliştirdim ve yönettim. Bir hastane portalı için hasta yönetimi ve randevu scheduling gibi fonksiyonları kapsayan UI, backend ve database testlerini yürüttüm. Postman ve Rest Assured ile API testing gerçekleştirdim, Maven ile dependency'leri yönettim ve Agile ortamda Jenkins ile CI/CD pipeline'ları entegre ettim."
     },
     {
       "date": "May 2021 - Oca 2023",
-      "title": "Manuel Test Uzmanı & E-Ticaret Uzmanı",
+      "title": "Manual Tester & E-Commerce Specialist",
       "company": "BSG Auto Parts & Nerex Motors - Amsterdam, Hollanda · On-site",
-      "description": "Nerex Motors'da e-ticaret stratejilerini ve ürün kalitesini artırmada kritik bir rol oynadım. Yüksek işlevsellik standartlarını korumak için ERP sistemlerinde manuel testler yürüttüm, Amazon ve eBay'de ürün arama görünürlüğünü iyileştirdim ve çevrimiçi satışları artıran stratejik reklam kampanyaları uyguladım. BSG Auto Parts için B2B büyümesini teşvik eden, özel satış stratejileri geliştiren, kilit müşterilerle güçlü ilişkiler kuran ve rekabetçi ticari şartları müzakere eden Çevrimiçi Kanal (AutoDoc) satış sürecini başarıyla yönettim."
+      "description": "Nerex Motors'da e-commerce stratejilerini ve ürün kalitesini artırmada kritik bir rol oynadım. Yüksek functionality standartlarını korumak için ERP sistemlerinde manuel testler yürüttüm, Amazon ve eBay'de product search visibility'yi iyileştirdim ve online satışları artıran stratejik ad campaign'leri uyguladım. BSG Auto Parts için B2B growth'u teşvik eden, custom sales stratejileri geliştiren, key account'larla güçlü ilişkiler kuran ve competitive commercial term'leri negotiate eden Online Channel (AutoDoc) sales sürecini başarıyla yönettim."
     },
     {
       "date": "Mar 2019 - Eyl 2020",
-      "title": "Öğrenci İşleri & İçerik Koordinatörü",
-      "company": "LiveCoding | Online Web Geliştirme Bootcamp - Hollanda · Remote",
-      "description": "Kapsamlı destek ve katılım girişimleri yoluyla LiveCoding'de öğrenci deneyimini geliştirmede kilit bir rol oynadım. Online öğrencilere, çeşitli zorlukların üstesinden gelmelerine yardımcı olacak kişiye özel danışmanlık sağladım. Öğrenciler arasındaki topluluk bağlarını güçlendirmek için sanal etkinlikler düzenledim ve yürüttüm. Program politikalarına uyumu sağlamak ve ilerlemeyi etkili bir şekilde takip etmek için doğru öğrenci kayıtlarını tuttum."
+      "title": "Öğrenci İşleri & Content Coordinator",
+      "company": "LiveCoding | Online Web Development Bootcamp - Hollanda · Remote",
+      "description": "Kapsamlı support ve engagement initiative'leri yoluyla LiveCoding'de öğrenci deneyimini geliştirmede kilit bir rol oynadım. Online öğrencilere, çeşitli challenge'ların üstesinden gelmelerine yardımcı olacak kişiye özel danışmanlık sağladım. Öğrenciler arasındaki community bond'larını güçlendirmek için virtual event'ler düzenledim ve yürüttüm. Program policy'lerine uyumu sağlamak ve progress'i etkili bir şekilde track etmek için doğru öğrenci kayıtlarını tuttum."
     },
     {
       "date": "Tem 2017 - Eyl 2020",
-      "title": "Kurucu Ortak & Web Geliştirme Danışmanı",
+      "title": "Co-Founder & Web Development Consultant",
       "company": "FerriStar - eBay - Hollanda · Freelance",
-      "description": "FerriStar'ın seçkin, çok satan ürünler ve her zaman talep gören temel ihtiyaçları sunma misyonuna başarıyla katkıda bulundum. Yüksek kaliteli ürünlerin tutarlı tedarikini sağlamak için tedarikçilerle güçlü ilişkiler geliştirdim. Çeşitli kategorilerde özenli ürün seçimi yoluyla müşteri deneyimini geliştirmeye odaklandım. E-ticaret ve ürün kürasyonu konularında uzmanlık kazanarak FerriStar'ın pazardaki itibarını güçlendirdim."
+      "description": "FerriStar'ın curated best-seller'lar ve evergreen essential'lar sunma misyonuna başarıyla katkıda bulundum. High-quality ürünlerin consistent supply'ını sağlamak için supplier'larla güçlü ilişkiler geliştirdim. Çeşitli kategorilerde özenli product selection yoluyla customer experience'ı geliştirmeye odaklandım. E-commerce ve product curation konularında expertise kazanarak FerriStar'ın market reputation'ını güçlendirdim."
     },
     {
       "date": "Eyl 2016 - Mar 2017",
       "title": "Matematik Eğitmeni",
-      "company": "Mohammed Al Fatih Okulları - El Jadida, Fas · On-site",
-      "description": "Bütünsel öğrenci gelişimine odaklanarak matematik eğitimine önemli katkılarda bulundum. Dersin ilgisini ve öğrenci katılımını artırmak için disiplinler arası bağlantılar kullandım. Müfredat dışı etkinlikleri ve rehberlik girişimlerini desteklemek için meslektaşlarımla işbirliği yaptım."
+      "company": "Mohammed Al Fatih Schools - El Jadida, Fas · On-site",
+      "description": "Holistic öğrenci gelişimine odaklanarak matematik eğitimine önemli katkılarda bulundum. Dersin relevance'ını ve öğrenci engagement'ını artırmak için interdisciplinary bağlantılar kullandım. Extracurricular aktiviteleri ve pastoral care initiative'lerini desteklemek için meslektaşlarımla işbirliği yaptım."
     },
     {
       "date": "Eyl 2014 - Eyl 2016",
       "title": "Matematik Eğitmeni",
-      "company": "LUMINA Eğitim Kurumları - Bükreş, Romanya · On-site",
-      "description": "Çeşitli bir öğrenme ortamında öğrenci başarısını teşvik etmeye odaklandığım LUMINA Eğitim Kurumları'nda ileri matematik öğretme ayrıcalığına sahip oldum. Öğrenci gelişimi ve öngörülen notlar hakkında ayrıntılı raporlar sunarak iç değerlendirmeler tasarladım ve notlandırdım. Yüksek uluslararası standartları koruyarak çeşitli eğitim geçmişlerinden gelen öğrencileri desteklemek için öğretimi farklılaştırdım. Öğrencilere akademik yollarında rehberlik ederek onları STEM ile ilgili üniversite hedeflerine yönlendirdim."
+      "company": "LUMINA Educational Institutions - Bükreş, Romanya · On-site",
+      "description": "Diverse bir öğrenme ortamında öğrenci başarısını teşvik etmeye odaklandığım LUMINA Eğitim Kurumları'nda ileri matematik öğretme ayrıcalığına sahip oldum. Öğrenci progress'i ve predicted grade'ler hakkında detailed report'lar sunarak internal assessment'lar tasarladım ve notlandırdım. Yüksek international standartları koruyarak çeşitli eğitim background'larından gelen öğrencileri desteklemek için instruction'ı differentiate ettim. Öğrencilere academic pathway'lerinde rehberlik ederek onları STEM-related university goal'larına yönlendirdim."
     },
     {
       "date": "Mar 2012 - Eyl 2014",
-      "title": "Gönüllü Asistan",
+      "title": "Volunteer Assistant",
       "company": "Fiader - İstanbul, Türkiye · Part-time",
-      "description": "Etkili gönüllü koordinasyonu ve idari görevler yoluyla Fiader'in misyonunu desteklemede önemli bir rol oynadım. Kaynak tahsisini optimize etmek için gönüllü kayıtlarını yönettim ve vardiyaları planladım. Tüm lojistiğin yerinde olmasını sağlayarak etkinliklerin ve eğitim oturumlarının düzenlenmesine yardımcı oldum. İletişimi ve gönüllü katılımını artıran birincil temas noktası olarak hareket ettim."
+      "description": "Effective volunteer coordination ve administrative task'lar yoluyla Fiader'in misyonunu desteklemede önemli bir rol oynadım. Resource allocation'ı optimize etmek için volunteer record'larını yönettim ve shift'leri planladım. Tüm logistics'in yerinde olmasını sağlayarak event'lerin ve training session'larının düzenlenmesine yardımcı oldum. Communication'ı ve volunteer engagement'ı artıran primary contact point olarak hareket ettim."
     }
   ],
   "skills": {
-    "testAutomation": "Test Otomasyonu",
-    "javaEcosystem": "Java & Ekosistemi",
+    "testAutomation": "Test Automation",
+    "javaEcosystem": "Java & Ecosystem",
     "seleniumCucumber": "Selenium & Cucumber",
     "playwrightCypress": "Playwright & Cypress (TS)",
-    "apiTesting": "API Testi (Rest Assured)",
+    "apiTesting": "API Testing (Rest Assured)",
     "cicd": "CI/CD (Jenkins & Azure)",
-    "docker": "Docker & Konteynerizasyon",
-    "sql": "SQL & Veritabanları"
+    "docker": "Docker & Containerization",
+    "sql": "SQL & Databases"
   },
   "languageLevels": {
     "native": "Anadil",
