@@ -108,7 +108,7 @@
       "team": "Solo Project",
       "duration": "3 months",
       "description": "Comprehensive Playwright test automation suite demonstrating UI, API, and visual testing capabilities with Page Object Model, cross-browser testing, and advanced debugging.",
-      "detailedDescription": "A comprehensive Playwright test automation suite developed to master modern testing practices. It features 3-layer test coverage including End-to-End UI testing, RESTful API validation, and Visual Regression testing. Built with TypeScript, the framework implements the Page Object Model (POM) pattern for maintainability and includes advanced capabilities like cookie-based authentication handling, dynamic configuration via environment variables, and parallel test execution.",
+      "detailedDescription": "A comprehensive Playwright test automation suite developed to master modern testing practices. It features 3-layer test coverage including End-to-End UI testing, RESTful API validation, and Visual Regression testing. Built with TypeScript, the framework implements the Page Object Model (POM) pattern for maintainability and includes advanced capabilities like cookie-based authentication handling, dynamic configuration via environment variables, and parallel test execution. It leverages Playwright's distinct features such as the Trace Viewer for debugging, multi-browser support (Chromium, Firefox, WebKit), and multiple reporting options.",
       "metrics": [
         "3-Layer Coverage (UI, API, Visual)",
         "Cross-Browser (Chromium, Firefox, WebKit)",
@@ -140,7 +140,7 @@
       "team": "Solo Project",
       "duration": "2 months",
       "description": "Professional social media image generator with intelligent adaptive layouts. Features 5 premium templates, 6 visual effects, and instant presets for LinkedIn, Twitter, Instagram, YouTube & Stories.",
-      "detailedDescription": "A professional social media image generator featuring an Intelligent Adaptive Layout System that automatically adjusts designs to any dimension (Portrait, Landscape, Square). The core 'LayoutCalculator' engine dynamically positions elements, scales typography, and optimizes spacing based on canvas size.",
+      "detailedDescription": "A professional social media image generator featuring an Intelligent Adaptive Layout System that automatically adjusts designs to any dimension (Portrait, Landscape, Square). The core 'LayoutCalculator' engine dynamically positions elements, scales typography, and optimizes spacing based on canvas size. It offers 6 professional layout styles (Auto, Centered, Split, Minimal, Bold, Elegant) and 6 visual background effects. Built entirely with Vanilla JavaScript and the HTML5 Canvas API, it requires no external frameworks or dependencies, ensuring high performance and instant client-side rendering. Users can export high-quality PNGs or copy directly to the clipboard for immediate use on platforms like LinkedIn, Twitter, Instagram, and YouTube.",
       "metrics": [
         "6 Adaptive Layouts",
         "6 Visual Background Effects",
@@ -172,7 +172,7 @@
       "team": "Agile Team",
       "duration": "2+ years",
       "description": "TTC is a specialized framework that automates transactional testing in the Dovetail system, a Fiserv payment platform that handles real-time payment processing.",
-      "detailedDescription": "TTC is a specialized framework that automates transactional testing in the Dovetail system, a Fiserv payment platform that handles real-time payment processing. The framework manages end-to-end transactional test automation for Dovetail payments and integrates with the ING Test Center (ITC) execution engine.",
+      "detailedDescription": "TTC is a specialized framework that automates transactional testing in the Dovetail system, a Fiserv payment platform that handles real-time payment processing. The framework manages end-to-end transactional test automation for Dovetail payments and integrates with the ING Test Center (ITC) execution engine—a web application with a GUI for visualizing, executing, and managing test cases. It functions as a library using Selenium/Cucumber with regression test scenarios that run daily in the DEV5 test environment, verifying transaction accuracy across both incoming and outgoing processes. As an Automation Test Engineer, I designed and maintained these automated end-to-end regression tests, ensuring transaction accuracy across international branches.",
       "metrics": [
         "End-to-End Transactional Automation",
         "Daily Regression in DEV5 Env",
@@ -204,7 +204,7 @@
       "team": "5 Devs, 3 Testers",
       "duration": "6 months",
       "description": "Led the quality assurance strategy for a comprehensive hospital management portal, ensuring data privacy and system reliability across UI, API, and DB layers.",
-      "detailedDescription": "This project was the final capstone of a 1-year Full Stack Automation Engineering course, completed over 6 months with a team of 5 developers and 3 testers. We developed a comprehensive hospital portal handling 30+ user stories and 103+ test cases.",
+      "detailedDescription": "This project was the final capstone of a 1-year Full Stack Automation Engineering course, completed over 6 months with a team of 5 developers and 3 testers. We developed a comprehensive hospital portal handling 30+ user stories and 103+ test cases covering login, authorization, registration, appointments, and patient/staff management. My role involved developing automated scripts (Selenium/Java/Cucumber), executing test cases, reporting defects, and collaborating with developers in an Agile environment. We ensured full functional and regression testing for every sprint, validating APIs with Postman/Rest Assured and managing data with Apache POI.",
       "metrics": [
         "Duration: 6 Months",
         "Team: 5 Devs, 3 Testers",
@@ -236,7 +236,7 @@
       "team": "Cross-functional Team",
       "duration": "2 years",
       "description": "Spearheaded B2C marketing and operational excellence on European marketplaces, optimizing 10k+ SKUs for visibility and revenue growth.",
-      "detailedDescription": "In my role as an E-commerce Specialist for a global automotive parts distributor serving customers in 94 countries, I drove B2B and B2C marketing to expand market share on European platforms (Amazon, eBay, AutoDoc SE).",
+      "detailedDescription": "In my role as an E-commerce Specialist for a global automotive parts distributor serving customers in 94 countries, I drove B2B and B2C marketing to expand market share on European platforms (Amazon, eBay, AutoDoc SE). I spearheaded data-driven sales strategies and utilized advanced SEO techniques to improve product ranking and visibility, specifically optimizing 'Generic Search Keywords' and 'OEM Numbers' to ensure the product catalog outperformed competitors. My responsibilities spanned the entire online sales lifecycle, from inventory listing and real-time synchronization to order fulfillment. I also analyzed sales data to optimize pricing and managed high-ROI sponsored ad campaigns to accelerate sales growth across key markets.",
       "metrics": [
         "Global Reach: 94 Countries",
         "Optimized 10k+ SKUs",

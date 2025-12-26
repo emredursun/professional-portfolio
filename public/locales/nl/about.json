@@ -1,12 +1,12 @@
 {
   "title": "Over",
   "titleHighlight": "Mij",
-  "introText": "ISTQB® Gecertificeerd Full-Stack Automation Engineer met uitgebreide ervaring in UI-, API- en database-testing met Java, Selenium, Cucumber, Postman en Rest Assured. Gespecialiseerd in het ontwerpen van schaalbare automatiseringsframeworks en de integratie daarvan in CI/CD-pijplijnen. Bewezen staat van dienst in het bijdragen aan hoogwaardige softwarereleases binnen Agile-teams in de bankensector, gezondheidszorg en e-commerce. Vloeiend in Nederlands, Engels en Turks (moedertaal).",
-  "introQuote": "Gedreven door precisie, gevoed door nieuwsgierigheid. Ik transformeer handmatige testprocessen naar geautomatiseerde, herhaalbare systemen, zodat teams met vertrouwen software kunnen opleveren.",
-  "story": "Binnen de bankensector en e-commerce heb ik API- en UI-automatisering, robuuste testpijplijnen en observability-oplossingen gebouwd. Hiermee help ik teams hun testcapaciteit te schalen zonder in te boeten op leversnelheid. Ik haal energie uit het opbreken van complexe workflows in eenvoudige, testbare componenten en werk graag cross-functioneel samen om risico's te minimaliseren.",
+  "introText": "ISTQB® Gecertificeerde Full-Stack Automation Engineer met ervaring in UI-, API- en databasetesten met gebruik van Java, Selenium, Cucumber, Postman en Rest Assured. Vaardig in het ontwerpen van schaalbare automatiseringsframeworks en het integreren ervan met CI/CD-pipelines. Bewezen staat van dienst in het bijdragen aan hoogwaardige releases in Agile-teams binnen de bank-, gezondheidszorg- en e-commercesectoren. Vloeiend in Nederlands, Engels en Turks (moedertaal).",
+  "introQuote": "Gedreven door precisie, gevoed door nieuwsgierigheid. Ik transformeer handmatige testgangen in geautomatiseerde, herhaalbare systemen zodat teams duidelijke feedback krijgen en met vertrouwen kunnen leveren.",
+  "story": "Mijn reis begon met een achtergrond in Wiskunde, wat de basis legde voor een gedisciplineerde en systematische aanpak van probleemoplossing. Deze analytische mindset dreef mijn vroege successen in e-commerce, waar ik wereldwijde verkoopstrategieën optimaliseerde, voordat ik mijn ware passie vond: Software Quality Engineering. In de loop der jaren ben ik gegroeid van handmatig tester naar Full-Stack Automation Engineer. Ik heb veerkrachtige testframeworks ontworpen voor complexe banksystemen bij ING en verken voortdurend de mogelijkheden van AI-gestuurde ontwikkeling. Voor mij draait coderen niet alleen om functionaliteit, maar om het bouwen van betrouwbare, schaalbare ecosystemen die teams in staat stellen om met vertrouwen te innoveren.",
   "yearsExperience": "Jaar Ervaring",
-  "myJourney": "Mijn Carrière",
-  "whatIDo": "Mijn Expertise",
+  "myJourney": "Mijn Reis",
+  "whatIDo": "Wat Ik Doe",
   "basedIn": "Gevestigd in",
   "netherlands": "Nederland",
   "languages": "Talen",
@@ -18,23 +18,23 @@
   },
   "services": {
     "testAutomation": {
-      "title": "Test Automation Architecture",
-      "description": "Ontwikkelen van robuuste, schaalbare end-to-end automatiseringsframeworks die softwarekwaliteit en betrouwbaarheid waarborgen."
+      "title": "Test Automation Architectuur",
+      "description": "Het bouwen van robuuste, schaalbare end-to-end automatiseringsframeworks om softwarekwaliteit en betrouwbaarheid te waarborgen."
     },
     "cicd": {
       "title": "CI/CD & DevOps Integratie",
-      "description": "Ontwerpen en beheren van continuous integration-pijplijnen om deployment te versnellen en risico's te beperken."
+      "description": "Ontwerpen en onderhouden van pipelines voor continue integratie om deployment te versnellen en risico's te verminderen."
     },
     "apiBackend": {
       "title": "API & Backend Validatie",
       "description": "Implementeren van uitgebreide API-teststrategieën en databasevalidaties voor backend-integriteit."
     },
     "webDev": {
-      "title": "AI-Powered Web Development",
-      "description": "Gebruikmaken van geavanceerde AI-coding tools en moderne architectuurpatronen om met snelheid en precisie professionele, high-performance webapplicaties te bouwen."
+      "title": "AI-Aangedreven Web Development",
+      "description": "Gebruikmaken van geavanceerde AI-coding agents en moderne architectuurpatronen om met snelheid en precisie professionele, krachtige webapplicaties te bouwen."
     },
     "ecommerce": {
-      "title": "E-commerce Sales Optimalisatie",
+      "title": "E-commerce Verkoopoptimalisatie",
       "description": "Implementeren van datagestuurde verkoopstrategieën en SEO-technieken om de productzichtbaarheid en omzet te maximaliseren op grote e-commerceplatforms zoals Amazon en eBay."
     }
   }
