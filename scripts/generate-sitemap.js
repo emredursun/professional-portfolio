@@ -3,7 +3,10 @@
 /**
  * Sitemap Generator for Professional Portfolio
  * 
- * This script automatically generates a sitemap.xml file with the current timestamp.
+ * This script automatically generates a sitemap.xml file with:
+ * - Multi-language support (EN, TR, NL) with hreflang alternates
+ * - Current timestamp for lastmod
+ * 
  * Run this script whenever you update your portfolio content.
  * 
  * Usage:
@@ -22,60 +25,55 @@ const __dirname = path.dirname(__filename);
 const SITE_URL = 'https://emredursun.nl';
 const OUTPUT_PATH = path.join(__dirname, '../public/sitemap.xml');
 
+// Supported languages
+const LANGUAGES = ['en', 'tr', 'nl'];
+
 /**
- * Pages to include in the sitemap
- * Add more pages here as your portfolio grows
+ * Generate hreflang links for a given path
  */
-const pages = [
-    {
-        loc: '/',
-        changefreq: 'weekly',
-        priority: '1.0'
-    }
-];
+function generateHreflangLinks(basePath = '') {
+    const links = LANGUAGES.map(lang => {
+        const href = lang === 'en' ? `${SITE_URL}${basePath || '/'}` : `${SITE_URL}/${lang}${basePath}`;
+        return `        <xhtml:link rel="alternate" hreflang="${lang}" href="${href}" />`;
+    });
+    // Add x-default pointing to English
+    links.push(`        <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${basePath || '/'}" />`);
+    return links.join('\n');
+}
 
-// Extract project slugs from constants.tsx
-try {
-    const constantsPath = path.join(__dirname, '../constants.tsx');
-    const constantsContent = fs.readFileSync(constantsPath, 'utf8');
-
-    // Regex to find slugs in the projects array
-    // Matches: slug: 'some-slug-value'
-    const slugRegex = /slug:\s*'([^']+)'/g;
-    let match;
-
-    while ((match = slugRegex.exec(constantsContent)) !== null) {
-        pages.push({
-            loc: `/#project-${match[1]}`, // Hash-based URL
-            changefreq: 'monthly',
-            priority: '0.8'
-        });
-    }
-
-    console.log(`Found ${pages.length - 1} projects to link.`);
-
-} catch (error) {
-    console.warn('⚠️ Could not read constants.tsx to extract projects:', error.message);
+/**
+ * Generate URL entry with hreflang links
+ */
+function generateUrlEntry(loc, priority, changefreq, basePath = '') {
+    const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+    return `    <url>
+        <loc>${loc}</loc>
+${generateHreflangLinks(basePath)}
+        <lastmod>${currentDate}</lastmod>
+        <changefreq>${changefreq}</changefreq>
+        <priority>${priority}</priority>
+    </url>`;
 }
 
 /**
  * Generate sitemap XML content
  */
 function generateSitemap() {
-    const currentDate = new Date().toISOString();
+    const urls = [];
 
-    const urls = pages.map(page => {
-        return `    <url>
-        <loc>${SITE_URL}${page.loc}</loc>
-        <lastmod>${currentDate}</lastmod>
-        <changefreq>${page.changefreq}</changefreq>
-        <priority>${page.priority}</priority>
-    </url>`;
-    }).join('\n');
+    // Main page (English - default)
+    urls.push(generateUrlEntry(`${SITE_URL}/`, '1.0', 'weekly', ''));
+
+    // Turkish version
+    urls.push(generateUrlEntry(`${SITE_URL}/tr`, '0.9', 'weekly', ''));
+
+    // Dutch version
+    urls.push(generateUrlEntry(`${SITE_URL}/nl`, '0.9', 'weekly', ''));
 
     return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${urls.join('\n')}
 </urlset>`;
 }
 
@@ -98,8 +96,9 @@ function writeSitemap() {
         console.log('✅ Sitemap generated successfully!');
         console.log(`📍 Location: ${OUTPUT_PATH}`);
         console.log(`🔗 URL: ${SITE_URL}/sitemap.xml`);
-        console.log(`📅 Last Modified: ${new Date().toISOString()}`);
-        console.log(`📄 Total URLs: ${pages.length}`);
+        console.log(`📅 Last Modified: ${new Date().toISOString().split('T')[0]}`);
+        console.log(`📄 Total URLs: 3 (EN, TR, NL)`);
+        console.log(`🌍 Languages: English (default), Turkish, Dutch`);
 
     } catch (error) {
         console.error('❌ Error generating sitemap:', error.message);
