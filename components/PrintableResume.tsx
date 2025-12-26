@@ -1,8 +1,73 @@
 
-import React from 'react';
-import { PERSONAL_INFO, ABOUT_TEXT, EXPERIENCE, EDUCATION, SKILLS, LANGUAGES, TECH_STACK } from '../constants.tsx';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { PERSONAL_INFO, SKILLS, LANGUAGES, TECH_STACK } from '../constants.tsx';
+import { TimelineItem } from '../types.ts';
 
 const PrintableResume: React.FC = () => {
+  const { t, i18n } = useTranslation(['resume', 'common', 'about']);
+  
+  // Get translated data from locale files
+  const education = useMemo(() => {
+    const eduData = t('resume:education', { returnObjects: true });
+    return Array.isArray(eduData) ? eduData as TimelineItem[] : [];
+  }, [t]);
+
+  const experience = useMemo(() => {
+    const expData = t('resume:experience', { returnObjects: true });
+    return Array.isArray(expData) ? expData as TimelineItem[] : [];
+  }, [t]);
+
+  // Get translated language levels
+  const languageLevels = useMemo(() => {
+    return t('resume:languageLevels', { returnObjects: true }) as Record<string, string>;
+  }, [t]);
+
+  const translatedLanguages = useMemo(() => {
+    return LANGUAGES.map(lang => ({
+      ...lang,
+      level: lang.level === 'Native' ? languageLevels.native :
+             lang.level.includes('C1') ? languageLevels.professional :
+             lang.level.includes('B2') ? languageLevels.intermediate :
+             languageLevels.beginner
+    }));
+  }, [languageLevels]);
+
+  // Get translated About text
+  const aboutText = useMemo(() => {
+    return t('about:introText', { defaultValue: '' });
+  }, [t]);
+
+  // Get My Journey text
+  const journeyText = useMemo(() => {
+    return t('about:story', { defaultValue: '' });
+  }, [t]);
+
+  // Get current language for section titles
+  const currentLang = i18n.language;
+  
+  // Localized section titles
+  const sectionTitles = {
+    profile: currentLang === 'nl' ? 'Professioneel Profiel' : 
+             currentLang === 'tr' ? 'Profesyonel Profil' : 
+             'Professional Profile',
+    journey: t('about:myJourney'),
+    skills: currentLang === 'nl' ? 'Vaardigheden & Expertise' : 
+            currentLang === 'tr' ? 'Beceriler & Uzmanlık' : 
+            'Skills & Expertise',
+    technologies: currentLang === 'nl' ? 'Technologieën' : 
+                  currentLang === 'tr' ? 'Teknolojiler' : 
+                  'Technologies',
+    languages: t('resume:sections.languages'),
+    competencies: currentLang === 'nl' ? 'Kerncompetenties' : 
+                  currentLang === 'tr' ? 'Temel Yetkinlikler' : 
+                  'Key Competencies',
+    experience: currentLang === 'nl' ? 'Werkervaring' : 
+                currentLang === 'tr' ? 'Mesleki Deneyim' : 
+                'Professional Experience',
+    education: t('resume:sections.education')
+  };
+
   return (
     <div className="hidden print:block font-sans text-gray-900 bg-white w-full h-full absolute top-0 left-0 z-[9999]">
       <style>{`
@@ -103,24 +168,30 @@ const PrintableResume: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-3">
                         <span className="w-5 flex justify-center text-gray-900"><i className="fas fa-map-marker-alt"></i></span> 
-                        {PERSONAL_INFO.location}
+                        {t('common:labels.locationValue')}
                     </div>
                 </div>
               </header>
 
               {/* 2. SUMMARY */}
               <section className="mb-8 no-break">
-                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-3 pb-1 text-black">Professional Profile</h3>
-                <p className="text-sm leading-relaxed text-justify text-gray-800">{ABOUT_TEXT}</p>
+                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-3 pb-1 text-black">{sectionTitles.profile}</h3>
+                <p className="text-sm leading-relaxed text-justify text-gray-800">{aboutText}</p>
+              </section>
+
+              {/* 2.5. MY JOURNEY */}
+              <section className="mb-8 no-break">
+                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-3 pb-1 text-black">{sectionTitles.journey}</h3>
+                <p className="text-sm leading-relaxed text-justify text-gray-800">{journeyText}</p>
               </section>
 
               {/* 3. SKILLS (3 Column Grid) */}
               <section className="mb-8 no-break">
-                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-4 pb-1 text-black">Skills & Expertise</h3>
+                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-4 pb-1 text-black">{sectionTitles.skills}</h3>
                 <div className="grid grid-cols-3 gap-8">
                     {/* Technical Skills */}
                     <div className="col-span-2">
-                        <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">Technologies</h4>
+                        <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">{sectionTitles.technologies}</h4>
                         <div className="flex flex-wrap gap-2">
                             {TECH_STACK.flatMap(cat => cat.technologies).map(tech => (
                                 <span key={tech.name} className="text-[11px] font-medium border border-gray-300 rounded px-1.5 py-0.5 bg-gray-50 text-black">
@@ -131,9 +202,9 @@ const PrintableResume: React.FC = () => {
                     </div>
                     {/* Languages */}
                     <div>
-                         <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">Languages</h4>
+                         <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">{sectionTitles.languages}</h4>
                          <ul className="text-xs space-y-1.5">
-                            {LANGUAGES.map(lang => (
+                            {translatedLanguages.map(lang => (
                                 <li key={lang.name} className="flex justify-between border-b border-dotted border-gray-300 pb-0.5 last:border-0">
                                     <span className="font-semibold">{lang.name}</span>
                                     <span className="text-gray-600">{lang.level}</span>
@@ -143,7 +214,7 @@ const PrintableResume: React.FC = () => {
                     </div>
                 </div>
                 <div className="mt-4">
-                    <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">Key Competencies</h4>
+                    <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">{sectionTitles.competencies}</h4>
                     <div className="flex flex-wrap gap-x-6 gap-y-1">
                          {SKILLS.map(skill => (
                             <div key={skill.name} className="flex items-center gap-2 text-xs w-[45%]">
@@ -159,9 +230,9 @@ const PrintableResume: React.FC = () => {
 
               {/* 4. EXPERIENCE */}
               <section className="mb-8">
-                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-5 pb-1 text-black">Professional Experience</h3>
+                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-5 pb-1 text-black">{sectionTitles.experience}</h3>
                 <div className="space-y-6">
-                    {EXPERIENCE.map((job, index) => (
+                    {experience.map((job, index) => (
                         <div key={index} className="no-break relative pl-4 border-l-2 border-gray-200">
                             <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-gray-400"></div>
                             <div className="flex justify-between items-baseline mb-1">
@@ -177,9 +248,9 @@ const PrintableResume: React.FC = () => {
 
               {/* 5. EDUCATION */}
               <section className="mb-4">
-                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-5 pb-1 text-black">Education</h3>
+                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-5 pb-1 text-black">{sectionTitles.education}</h3>
                 <div className="space-y-5">
-                    {EDUCATION.map((edu, index) => (
+                    {education.map((edu, index) => (
                         <div key={index} className="no-break">
                              <div className="flex justify-between items-baseline">
                                 <h4 className="text-sm font-bold text-black">{edu.title}</h4>

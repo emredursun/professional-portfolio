@@ -125,10 +125,8 @@ export const useCommandPalette = ({
         category: 'Actions',
         keywords: ['download', 'resume', 'cv', 'pdf'],
         action: () => {
-          const link = document.createElement('a');
-          link.href = '/Emre_Dursun_Resume.pdf';
-          link.download = 'Emre_Dursun_Resume.pdf';
-          link.click();
+          // Trigger print dialog which will show PrintableResume component
+          window.print();
           onClose();
         },
       },
