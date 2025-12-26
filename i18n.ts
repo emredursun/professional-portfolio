@@ -5,7 +5,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 //Supported languages
 export const LANGUAGES = {
-  en: { nativeName: 'English', flag: '🇬🇧' },
+  en: { nativeName: 'English', flag: '🇺🇸' },
   nl: { nativeName: 'Nederlands', flag: '🇳🇱' },
   tr: { nativeName: 'Türkçe', flag: '🇹🇷' }
 };
