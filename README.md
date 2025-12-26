@@ -319,6 +319,7 @@ firebase deploy
 - ✅ **SPA Routing** — All routes handled correctly
 - ✅ **Optimized Caching** — Static assets cached for 1 year
 - ✅ **i18n Routing** — URL-based language routing (e.g., /tr, /nl)
+- ✅ **Hreflang SEO** — Proper `hreflang` tags for international search visibility
 
 > [!TIP]
 > Configuration files included: `firebase.json`, `.firebaserc`, `robots.txt`, `sitemap.xml`, and `site.webmanifest`
