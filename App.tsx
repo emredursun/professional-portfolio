@@ -24,7 +24,15 @@ import Preloader from './components/Preloader.tsx';
 const App: React.FC = () => {
   const { i18n } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
-  const [activePage, setActivePage] = useState<Page>('About');
+  const [activePage, setActivePage] = useState<Page>(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash;
+      if (hash.startsWith('#project-')) {
+        return 'Projects';
+      }
+    }
+    return 'About';
+  });
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
