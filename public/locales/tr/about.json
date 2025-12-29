@@ -19,23 +19,77 @@
   "services": {
     "testAutomation": {
       "title": "Test Otomasyon Mimarisi",
-      "description": "Yazılım kalitesini ve güvenilirliğini sağlamak için sağlam, ölçeklenebilir end-to-end otomasyon framework'leri geliştirme."
+      "description": "Yazılım kalitesini ve güvenilirliğini sağlamak için sağlam, ölçeklenebilir uçtan uca (end-to-end) otomasyon framework'leri oluşturma.",
+      "badge": "Ana Uzmanlık",
+      "fullDescription": "İşinizle birlikte ölçeklenebilen kurumsal seviyede test otomasyon framework'leri tasarlama ve uygulama konusunda uzmanım. Selenium ve Playwright ile UI testlerinden, REST Assured ile API doğrulamasına kadar, bug'ları canlı ortama (production) ulaşmadan yakalayan kapsamlı çözümler geliştiriyorum. Framework'lerim, Page Object Model (POM) ile Clean Architecture prensiplerini takip ederek bakımı kolay ve ekiplerin hızlıca adapte olabileceği bir yapı sunar.",
+      "keyBenefits": [
+        "Paralel çalıştırma (parallel execution) ile regresyon test süresini %60+ azaltın",
+        "Otomatik smoke ve sanity testleri ile kritik hataları erkenden yakalayın",
+        "Ekip büyüklüğünü artırmadan QA kapsamını ölçeklendirin",
+        "Sürekli geri bildirim için CI/CD pipeline'ları ile sorunsuz entegrasyon",
+        "Endüstri standartlarına uygun, sürdürülebilir framework yapısı"
+      ]
     },
     "cicd": {
       "title": "CI/CD & DevOps Entegrasyonu",
-      "description": "Deployment sürecini hızlandırmak ve riskleri azaltmak için sürekli entegrasyon pipeline'ları tasarlama ve sürdürme."
+      "description": "Dağıtımı hızlandırmak ve riski azaltmak için sürekli entegrasyon boru hatları tasarlama ve sürdürme.",
+      "badge": "Sertifikalı",
+      "fullDescription": "Yavaş ve manuel deployment süreçlerini hızlı, güvenilir ve otomatik iş akışlarına dönüştüren CI/CD pipeline'ları kuruyor ve optimize ediyorum. Jenkins'ten Azure DevOps'a kadar, her commit'te otomatik testleri çalıştıran, geliştiricilere anlık geri bildirim sağlayan ve production ortamına güvenle deployment yapan pipeline'lar yapılandırıyorum. Yaklaşımım Docker ile containerization, otomatik test çalıştırma ve kapsamlı raporlamayı içerir.",
+      "keyBenefits": [
+        "Deployment döngülerini haftalardan saatlere indirin",
+        "Anlık geri bildirim için her kod commit'inde otomatik testler",
+        "Kapsamlı doğrulama ile deployment hatalarını azaltın",
+        "Tutarlı ortamlar için Docker containerization",
+        "Ekip görünürlüğü için detaylı raporlar ve bildirimler"
+      ]
     },
     "apiBackend": {
       "title": "API & Backend Doğrulama",
-      "description": "Backend bütünlüğü için kapsamlı API test stratejileri ve veritabanı validasyonları uygulama."
+      "description": "Backend bütünlüğü için kapsamlı API test stratejileri ve veritabanı doğrulamaları uygulama.",
+      "badge": "Ana Uzmanlık",
+      "fullDescription": "Backend kalitesi, uygulama kararlılığı için kritiktir. REST Assured ve Postman kullanarak request, response, kimlik doğrulama (auth), hata yönetimi ve veri bütünlüğünü doğrulayan kapsamlı API test stratejileri tasarlıyorum. Yaklaşımım, veri tutarlılığını sağlamak için SQL ile veritabanı doğrulamasını, darboğazları (bottlenecks) belirlemek için performans testlerini ve hassas verileri korumak için güvenlik testlerini içerir.",
+      "keyBenefits": [
+        "Kapsamlı API test kapsamı (CRUD, auth, error handling)",
+        "Katmanlar arası veri bütünlüğü için veritabanı doğrulaması",
+        "Darboğazları belirlemek için performans ve yük testi",
+        "Kimlik doğrulama ve yetkilendirme için güvenlik testi",
+        "Servisler arasında otomatik contract testing"
+      ]
     },
     "webDev": {
       "title": "AI Destekli Web Geliştirme",
-      "description": "Hız ve hassasiyetle profesyonel, yüksek performanslı web uygulamaları oluşturmak için gelişmiş AI coding agent'ları ve modern mimari pattern'ları kullanma."
+      "description": "Hız ve hassasiyetle profesyonel, yüksek performanslı web uygulamaları oluşturmak için gelişmiş yapay zeka kodlama ajanlarından ve modern mimari desenlerden yararlanma.",
+      "badge": "İnovasyon",
+      "fullDescription": "Modern web geliştirme, kaliteden ödün vermeden hız gerektirir. Profesyonel web uygulamalarını hızla teslim etmek için AI destekli geliştirme araçlarını kanıtlanmış mimari desenlerle birleştiriyorum. React, TypeScript ve modern toollar kullanarak, olağanüstü kullanıcı deneyimleri sunan responsive ve performanslı uygulamalar geliştiriyorum. Yaklaşımım ilk günden itibaren temiz kod (clean code), erişilebilirlik ve SEO optimizasyonunu vurgular.",
+      "keyBenefits": [
+        "Haftalar yerine günlerde hızlı prototipleme ve MVP geliştirme",
+        "Modern teknoloji yığını (React, TypeScript, Tailwind CSS)",
+        "Başlangıçtan itibaren SEO uyumlu ve erişilebilir",
+        "Tüm cihazlar ve ekran boyutları için responsive tasarım",
+        "Best practice'lere uygun production-ready kod"
+      ]
     },
     "ecommerce": {
-      "title": "E-Ticaret Satış Optimizasyonu",
-      "description": "Amazon ve eBay gibi büyük e-ticaret platformlarında ürün görünürlüğünü ve geliri maksimize etmek için data-driven satış stratejileri ve SEO teknikleri uygulama."
+      "title": "E-ticaret Satış Optimizasyonu",
+      "description": "Amazon ve eBay gibi büyük e-ticaret platformlarında ürün görünürlüğünü ve geliri en üst düzeye çıkarmak için veri odaklı satış stratejileri ve SEO teknikleri uygulama.",
+      "badge": "Stratejik Büyüme",
+      "fullDescription": "E-ticaret başarısı sadece ürün listelemekten fazlasını gerektirir; stratejik optimizasyon ve sürekli iyileştirme şarttır. Amazon, eBay ve AutoDoc gibi büyük platformlarda ürün görünürlüğünü ve dönüşüm oranlarını (conversion rates) maksimize etmek için gelişmiş SEO teknikleri, rekabet analizi ve veri odaklı stratejiler kullanıyorum. Yaklaşımım anahtar kelime optimizasyonu, sponsorlu reklam kampanyaları, envanter yönetimi ve gelir artışı sağlayan fiyatlandırma stratejilerini içerir.",
+      "keyBenefits": [
+        "Stratejik SEO optimizasyonu ile organik görünürlüğü artırın",
+        "Veri odaklı fiyatlandırma ve envanter stratejileri",
+        "Yüksek ROI sağlayan sponsorlu reklam kampanyaları",
+        "Çoklu platform yönetimi (Amazon, eBay, AutoDoc)",
+        "Bilinçli karar verme için analiz ve raporlama"
+      ]
+    },
+    "details": {
+      "overview": "Genel Bakış",
+      "keyBenefits": "Temel Avantajlar",
+      "technologies": "Teknolojiler & Araçlar",
+      "relatedProjects": "İlgili Projeler",
+      "getInTouch": "İletişime Geç",
+      "yearsOfExperience": "Yıl Deneyim",
+      "provenExpertise": "Prodüksiyon ortamlarında kanıtlanmış uzmanlık"
     }
   }
 }

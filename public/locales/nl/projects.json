@@ -115,6 +115,8 @@
         "Ondersteuning voor Parallelle Uitvoering",
         "Geavanceerde Debugging (Trace Viewer)"
       ],
+      "challenge": "Moderne webapplicaties vereisen testen op meerdere browsers en apparaten, met complexe gebruikersflows en visuele consistentie. Traditionele testbenaderingen zijn traag, onbetrouwbaar en missen adequate debugging-mogelijkheden.",
+      "solution": "Een uitgebreide Playwright test automation suite gebouwd met 3-laags dekking inclusief UI, API en Visuele testing. Cross-browser testen, parallelle uitvoering geïmplementeerd en Playwright's Trace Viewer ingezet voor diepgaande foutanalyse.",
       "features": {
         "coverage": {
           "title": "Uitgebreide Dekking",
@@ -147,6 +149,8 @@
         "Slimme Tekstschaling",
         "Geen Afhankelijkheden (Vanilla JS)"
       ],
+      "challenge": "Content creators hebben professioneel ogende social media afbeeldingen nodig maar missen ontwerpvaardigheden of dure software. Bestaande tools zijn vaak traag, op abonnementsbasis of passen zich niet goed aan verschillende platformafmetingen aan.",
+      "solution": "Een browser-gebaseerde image generator gemaakt met een intelligente layout-engine die automatisch aanpast aan elke dimensie. Volledig gebouwd met vanilla JavaScript en Canvas API voor directe prestaties zonder afhankelijkheden.",
       "features": {
         "layout": {
           "title": "Intelligent Layout Engine",
@@ -179,6 +183,8 @@
         "Multi-Country: BE, IT, HU, SK",
         "Geïntegreerd met ING Test Center (ITC)"
       ],
+      "challenge": "Internationale bankbetalingssystemen vereisen rigoureus testen over meerdere landen met verschillende regelgevingen. Handmatig testen is tijdrovend en gevoelig voor menselijke fouten in complexe transactiestromen.",
+      "solution": "Ontworpen en geïmplementeerd geautomatiseerde end-to-end regressietests voor het Dovetail betalingsplatform, geïntegreerd met ING Test Center voor dagelijkse uitvoering. Landspecifieke testvalidaties gecreëerd voor EPP en niet-EPP betalingsstromen.",
       "features": {
         "validation": {
           "title": "Test Validatie Ontwikkeling",
@@ -211,6 +217,8 @@
         "30 Stories, 100+ Testgevallen",
         "UI, API & DB Validatie"
       ],
+      "challenge": "Gezondheidszorgsystemen eisen hoge betrouwbaarheid en naleving van gegevensprivacy. Het ziekenhuisportaal had uitgebreide tests nodig over UI, API en databaselagen om patiëntgegevensbeveiliging en systeemstabiliteit te waarborgen.",
+      "solution": "Leidde de QA-strategie met implementatie van een hybride automation framework met Selenium, Java en Cucumber BDD. 100+ testgevallen ontwikkeld die 30 user stories dekken met volledige API-validatie via Postman en Rest Assured.",
       "features": {
         "automation": {
           "title": "Test Automation",
@@ -243,6 +251,8 @@
         "EU Marktbereik Verhoogd",
         "Hoge ROI Advertentiecampagnes"
       ],
+      "challenge": "Het beheren van een uitgebreide productcatalogus over meerdere Europese marktplaatsen vereiste het optimaliseren van duizenden SKU's voor zichtbaarheid met behoud van concurrerende prijzen en voorraadsynchronisatie.",
+      "solution": "Geavanceerde SEO-strategieën geïmplementeerd inclusief Algemene Zoekwoorden en OEM-nummers optimalisatie. Data-gedreven verkoopstrategieën gecreëerd en hoge ROI gesponsorde advertentiecampagnes beheerd op Amazon, eBay en AutoDoc.",
       "features": {
         "marketing": {
           "title": "B2C Marketing Strategie",

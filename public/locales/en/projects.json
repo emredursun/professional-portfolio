@@ -115,6 +115,8 @@
         "Parallel Execution Support",
         "Advanced Debugging (Trace Viewer)"
       ],
+      "challenge": "Modern web applications require testing across multiple browsers and devices, with complex user flows and visual consistency. Traditional testing approaches are slow, flaky, and lack proper debugging capabilities.",
+      "solution": "Built a comprehensive Playwright test automation suite with 3-layer coverage including UI, API, and Visual testing. Implemented cross-browser testing, parallel execution, and leveraged Playwright's Trace Viewer for deep debugging of failures.",
       "features": {
         "coverage": {
           "title": "Comprehensive Coverage",
@@ -147,6 +149,8 @@
         "Smart Text Scaling Logic",
         "Zero Dependencies (Vanilla JS)"
       ],
+      "challenge": "Content creators need professional-looking social media images but lack design skills or expensive software. Existing tools are often slow, subscription-based, or don't adapt well to different platform dimensions.",
+      "solution": "Created a browser-based image generator with an intelligent layout engine that automatically adapts to any dimension. Built entirely with vanilla JavaScript and Canvas API for instant performance with zero dependencies.",
       "features": {
         "layout": {
           "title": "Intelligent Layout Engine",
@@ -179,6 +183,8 @@
         "Multi-Country: BE, IT, HU, SK",
         "Integrated with ING Test Center (ITC)"
       ],
+      "challenge": "International banking payment systems require rigorous testing across multiple countries with different regulations. Manual testing is time-consuming and prone to human error in complex transaction flows.",
+      "solution": "Designed and implemented automated end-to-end regression tests for the Dovetail payment platform, integrating with ING Test Center for daily execution. Created country-specific test validations for EPP and non-EPP payment flows.",
       "features": {
         "validation": {
           "title": "Test Validation Development",
@@ -211,6 +217,8 @@
         "30 Stories, 100+ Test Cases",
         "UI, API & DB Validation"
       ],
+      "challenge": "Healthcare systems demand high reliability and data privacy compliance. The hospital portal needed comprehensive testing across UI, API, and database layers to ensure patient data security and system stability.",
+      "solution": "Led the QA strategy implementing a hybrid automation framework using Selenium, Java, and Cucumber BDD. Developed 100+ test cases covering 30 user stories with full API validation using Postman and Rest Assured.",
       "features": {
         "automation": {
           "title": "Test Automation",
@@ -243,6 +251,8 @@
         "Boosted EU Market Reach",
         "High-ROI Ad Campaigns"
       ],
+      "challenge": "Managing a vast product catalog across multiple European marketplaces required optimizing thousands of SKUs for visibility while maintaining competitive pricing and inventory synchronization.",
+      "solution": "Implemented advanced SEO strategies including Generic Search Keywords and OEM Numbers optimization. Created data-driven sales strategies and managed high-ROI sponsored ad campaigns across Amazon, eBay, and AutoDoc.",
       "features": {
         "marketing": {
           "title": "B2C Marketing Strategy",

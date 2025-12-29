@@ -115,6 +115,8 @@
         "Paralel Çalıştırma Desteği",
         "Gelişmiş Hata Ayıklama (Trace Viewer)"
       ],
+      "challenge": "Modern web uygulamaları, karmaşık kullanıcı akışları ve görsel tutarlılıkla birlikte birden fazla tarayıcı ve cihazda test gerektirir. Geleneksel test yaklaşımları yavaş, güvenilmez ve uygun hata ayıklama yeteneklerinden yoksundur.",
+      "solution": "UI, API ve Görsel test dahil 3 katmanlı kapsama ile kapsamlı bir Playwright test otomasyon paketi oluşturdum. Çapraz tarayıcı testi, paralel çalıştırma uyguladım ve hataların derinlemesine analizi için Playwright'ın Trace Viewer'ından yararlandım.",
       "features": {
         "coverage": {
           "title": "Kapsamlı Test Kapsamı",
@@ -147,6 +149,8 @@
         "Akıllı Metin Ölçekleme",
         "Sıfır Bağımlılık (Saf JS)"
       ],
+      "challenge": "İçerik oluşturucuların profesyonel görünümlü sosyal medya görselleri gereklidir ancak tasarım becerileri veya pahalı yazılımlardan yoksundurlar. Mevcut araçlar genellikle yavaş, abonelik tabanlı veya farklı platform boyutlarına iyi uyum sağlamamaktadır.",
+      "solution": "Herhangi bir boyuta otomatik olarak uyum sağlayan akıllı bir düzen motoruna sahip tarayıcı tabanlı bir görsel oluşturucu yarattım. Sıfır bağımlılıkla anında performans için tamamen vanilla JavaScript ve Canvas API ile geliştirildi.",
       "features": {
         "layout": {
           "title": "Akıllı Düzen Motoru",
@@ -179,6 +183,8 @@
         "Çok Ülkeli: BE, IT, HU, SK",
         "ING Test Merkezi (ITC) Entegrasyonu"
       ],
+      "challenge": "Uluslararası bankacılık ödeme sistemleri, farklı düzenlemelere sahip birden fazla ülkede titiz testler gerektirir. Manuel test, karmaşık işlem akışlarında zaman alıcı ve insan hatasına açıktır.",
+      "solution": "Dovetail ödeme platformu için otomatik uçtan uca regresyon testleri tasarladım ve uyguladım, günlük çalıştırma için ING Test Merkezi ile entegre ettim. EPP ve EPP olmayan ödeme akışları için ülkeye özgü test doğrulamaları oluşturdum.",
       "features": {
         "validation": {
           "title": "Test Doğrulama Geliştirme",
@@ -211,6 +217,8 @@
         "30 Hikaye, 100+ Test Senaryosu",
         "UI, API & DB Doğrulama"
       ],
+      "challenge": "Sağlık sistemleri yüksek güvenilirlik ve veri gizliliği uyumluluğu gerektirir. Hastane portalının hasta verilerinin güvenliğini ve sistem kararlılığını sağlamak için UI, API ve veritabanı katmanlarında kapsamlı testlere ihtiyacı vardı.",
+      "solution": "Selenium, Java ve Cucumber BDD kullanarak hibrit bir otomasyon framework'ü uygulayarak QA stratejisine liderlik ettim. Postman ve Rest Assured ile tam API doğrulaması dahil 30 kullanıcı hikayesini kapsayan 100+ test senaryosu geliştirdim.",
       "features": {
         "automation": {
           "title": "Test Otomasyonu",
@@ -243,6 +251,8 @@
         "AB Pazar Erişimi Artırıldı",
         "Yüksek Yatırım Getirili Reklam Kampanyaları"
       ],
+      "challenge": "Birden fazla Avrupa pazaryerinde geniş bir ürün kataloğunu yönetmek, rekabetçi fiyatlandırma ve envanter senkronizasyonunu korurken binlerce SKU'yu görünürlük için optimize etmeyi gerektirdi.",
+      "solution": "Genel Arama Anahtar Kelimeleri ve OEM Numarası optimizasyonu dahil gelişmiş SEO stratejileri uyguladım. Veri odaklı satış stratejileri oluşturdum ve Amazon, eBay ve AutoDoc'ta yüksek yatırım getirili sponsorlu reklam kampanyaları yönettim.",
       "features": {
         "marketing": {
           "title": "B2C Pazarlama Stratejisi",

@@ -277,7 +277,7 @@ const App: React.FC = () => {
     // Refresh ScrollTrigger when view changes
     ScrollTrigger.refresh();
 
-  }, { dependencies: [isMobileView], scope: document.body }); // Scope generally or just use dependencies
+  }, [isMobileView]); // Dependency array
 
 
   // Show scroll button immediately on content pages (Resume, Projects, Contact)
@@ -438,7 +438,7 @@ const App: React.FC = () => {
                 ref={contentRef} 
                 className={`w-full h-full scroll-smooth transition-all duration-500 ${!isMobileView ? 'overflow-y-auto no-scrollbar rounded-[2.5rem]' : ''}`}
               >
-                <MainContent activePage={activePage} isMobileView={isMobileView} />
+                <MainContent activePage={activePage} isMobileView={isMobileView} onNavigate={handleNavigation} />
               </div>
 
               {isScrollButtonVisible && (

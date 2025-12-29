@@ -3,10 +3,11 @@ import { motion } from "framer-motion";
 import { useTranslation } from 'react-i18next';
 import gsap from "gsap";
 import { useGSAP } from "./hooks/useGSAP.tsx";
-import { Service } from "../types.ts";
+import { Service, Page } from "../types.ts";
 import { SERVICES } from "../constants.tsx";
 import Tilt3D from "./Tilt3D.tsx";
 import { useScrollReveal } from "./hooks/useScrollReveal.tsx";
+import ServiceDetailPanel from "./ServiceDetailPanel.tsx";
 
 const BentoCard: React.FC<{
   children: React.ReactNode;
@@ -88,112 +89,84 @@ const BentoCard: React.FC<{
   );
 };
 
-const ServiceItem: React.FC<{ service: Service }> = ({ service }) => {
-  const [showFullDescription, setShowFullDescription] = useState(false);
-  const [tooltipPosition, setTooltipPosition] = useState<'top' | 'bottom'>('bottom');
-  const descriptionRef = useRef<HTMLDivElement>(null);
-
-  // Determine tooltip position based on available viewport space
-  useEffect(() => {
-    if (showFullDescription && descriptionRef.current) {
-      const rect = descriptionRef.current.getBoundingClientRect();
-      const spaceBelow = window.innerHeight - rect.bottom;
-      const spaceAbove = rect.top;
-      
-      // If less than 200px below and more space above, show tooltip on top
-      if (spaceBelow < 200 && spaceAbove > spaceBelow) {
-        setTooltipPosition('top');
-      } else {
-        setTooltipPosition('bottom');
-      }
-    }
-  }, [showFullDescription]);
-
-  const handleToggleDescription = () => {
-    setShowFullDescription(prev => !prev);
-  };
-
+const ServiceItem: React.FC<{ service: Service; onClick: () => void }> = ({ service, onClick }) => {
   return (
     <div className="flex flex-col h-full">
-      {/* Icon Container - Fixed */}
-      <div className="mb-4">
-        <div className="w-14 h-14 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-cyan flex items-center justify-center text-2xl text-accent-yellow dark:text-neon-cyan shadow-[0_8px_20px_rgba(251,191,36,0.15)] dark:shadow-neon-cyan group-hover:scale-110 group-hover:rotate-12 group-hover:bg-accent-yellow dark:group-hover:bg-neon-cyan group-hover:text-white dark:group-hover:text-black transition-all duration-500">
-          {service.icon}
+      {/* Enhanced Icon Container with Badge */}
+      <div className="mb-5 relative">
+        {/* Featured Star Badge */}
+        {service.featured && (
+          <motion.div
+            className="absolute -top-2 -right-2 w-7 h-7 bg-gradient-to-br from-yellow-400 to-orange-500 dark:from-yellow-400 dark:to-orange-600 rounded-full flex items-center justify-center shadow-lg z-10"
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+          >
+            <i className="fas fa-star text-xs text-white"></i>
+          </motion.div>
+        )}
+        
+        {/* Premium Icon - Yellow in Light, Cyan in Dark */}
+        <div className="w-[72px] h-[72px] rounded-3xl bg-accent-yellow/10 dark:bg-black border-2 border-accent-yellow dark:border-neon-cyan flex items-center justify-center text-3xl text-accent-yellow dark:text-neon-cyan shadow-[0_8px_20px_rgba(251,191,36,0.15)] dark:shadow-neon-cyan group-hover:bg-accent-yellow dark:group-hover:bg-neon-cyan group-hover:border-accent-yellow dark:group-hover:border-neon-cyan group-hover:text-white dark:group-hover:text-black group-hover:shadow-[0_0_40px_rgba(251,191,36,0.6)] dark:group-hover:shadow-[0_0_40px_rgba(6,182,212,0.8)] group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 relative overflow-hidden">
+          <span className="relative z-10">{service.icon}</span>
         </div>
       </div>
 
       {/* Title - Fixed Height: Exactly 2 Lines */}
-      <h4 className="h-[3rem] text-xl font-bold tracking-tight text-gray-900 dark:text-neon-text-primary mb-3 line-clamp-2 leading-6 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-accent-yellow group-hover:to-accent-yellow-dark dark:group-hover:from-neon-cyan dark:group-hover:to-neon-purple transition-all duration-300">
+      <h4 className="min-h-[3.5rem] text-xl font-bold tracking-tight text-gray-900 dark:text-neon-text-primary mb-3 line-clamp-2 leading-7 group-hover:text-accent-yellow dark:group-hover:text-neon-cyan transition-all duration-300">
         {service.title}
       </h4>
       
-      {/* Description - Fixed Height: Exactly 3 Lines */}
-      <div className="h-[4.5rem] mb-4 relative" ref={descriptionRef}>
-        <p 
-          className="text-gray-600 dark:text-neon-text-secondary text-sm leading-6 line-clamp-3 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-300 cursor-pointer"
-          onMouseEnter={() => setShowFullDescription(true)}
-          onMouseLeave={() => setShowFullDescription(false)}
-          onClick={handleToggleDescription}
-        >
+      {/* Expertise Badge */}
+      {service.badge && (
+        <div className="mb-3">
+          <span className="inline-block px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-yellow-400/10 to-orange-500/10 dark:from-neon-cyan/10 dark:to-neon-purple/10 text-yellow-700 dark:text-neon-cyan border border-yellow-500 dark:border-neon-cyan rounded-full">
+            {service.badge}
+          </span>
+        </div>
+      )}
+      
+      {/* Description - Fixed Height: 3 Lines */}
+      <div className="min-h-[4.5rem] mb-5">
+        <p className="text-gray-600 dark:text-neon-text-secondary text-sm leading-relaxed line-clamp-3 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
           {service.description}
         </p>
-        
-        {/* Tooltip with full description - smart positioning */}
-        {showFullDescription && (
-          <motion.div
-            initial={{ opacity: 0, y: tooltipPosition === 'bottom' ? -10 : 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: tooltipPosition === 'bottom' ? -10 : 10 }}
-            transition={{ duration: 0.2 }}
-            className={`absolute z-[60] left-0 right-0 p-4 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-2 border-accent-yellow dark:border-neon-cyan rounded-xl shadow-2xl dark:shadow-[0_0_30px_rgba(6,182,212,0.3)] ${
-              tooltipPosition === 'bottom' ? 'top-full mt-2' : 'bottom-full mb-2'
-            }`}
-            onMouseEnter={() => setShowFullDescription(true)}
-            onMouseLeave={() => setShowFullDescription(false)}
-          >
-            <p className="text-gray-900 dark:text-white text-sm leading-relaxed">
-              {service.description}
-            </p>
-            
-            {/* Close button for mobile */}
-            <button
-              onClick={handleToggleDescription}
-              className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors md:hidden"
-              aria-label="Close description"
-            >
-              <i className="fas fa-times text-xs"></i>
-            </button>
-            
-            {/* Arrow indicator */}
-            <div 
-              className={`absolute left-6 w-4 h-4 bg-white/95 dark:bg-black/95 border-accent-yellow dark:border-neon-cyan transform rotate-45 ${
-                tooltipPosition === 'bottom'
-                  ? '-top-2 border-l-2 border-t-2'
-                  : '-bottom-2 border-r-2 border-b-2'
-              }`}
-            ></div>
-          </motion.div>
-        )}
       </div>
 
-      {/* Tags - Fixed Max Height with Scroll if Needed */}
-      <div className="flex flex-wrap gap-2 mt-auto max-h-[120px] overflow-y-auto" data-lenis-prevent>
-        {service.tags?.map((tag, idx) => (
+      {/* Tags - Limited to 2 Lines (max 4 tags) */}
+      <div className="flex flex-wrap gap-2 mb-5 max-h-[72px] overflow-hidden">
+        {service.tags?.slice(0, 4).map((tag, idx) => (
           <motion.span
             key={idx}
-            className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-600 dark:text-neon-text-primary bg-gray-50 dark:bg-black border border-gray-200 dark:border-neon-border rounded-lg dark:rounded-none hover:border-accent-yellow dark:hover:border-neon-cyan hover:text-gray-900 dark:hover:text-neon-cyan hover:bg-white dark:hover:bg-black transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105"
+            className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-600 dark:text-neon-text-primary bg-gray-50 dark:bg-black border border-gray-200 dark:border-neon-border rounded-lg dark:rounded-none hover:border-accent-yellow dark:hover:border-neon-cyan hover:text-gray-900 dark:hover:text-neon-cyan hover:bg-white dark:hover:bg-black transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105"
             whileHover={{ y: -2 }}
             transition={{ duration: 0.2 }}
           >
             {tag}
           </motion.span>
         ))}
+        {service.tags && service.tags.length > 4 && (
+          <span className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/5">
+            +{service.tags.length - 4}
+          </span>
+        )}
       </div>
+      
+      {/* Learn More Button - Push to bottom */}
+      <motion.button
+        onClick={onClick}
+        className="mt-auto w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-neon-border bg-white dark:bg-black text-sm font-bold text-gray-700 dark:text-gray-300 hover:border-yellow-400 dark:hover:border-neon-cyan hover:text-gray-900 dark:hover:text-white hover:shadow-lg dark:hover:shadow-neon-cyan/20 transition-all duration-300 group/btn"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        <span>Learn More</span>
+        <i className="fas fa-arrow-right text-xs group-hover/btn:translate-x-1 transition-transform duration-300"></i>
+      </motion.button>
     </div>
   );
 };
 
-const About: React.FC = () => {
+const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) => {
   const { t } = useTranslation('about');
   const headerRef = useRef<HTMLElement>(null);
   const isHeaderVisible = useScrollReveal(headerRef, { threshold: 0.2 });
@@ -202,6 +175,8 @@ const About: React.FC = () => {
   const servicesRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
   const [statsCount, setStatsCount] = useState(0);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+
 
   // Get translated services
   const translatedServices = useMemo(() => {
@@ -209,7 +184,10 @@ const About: React.FC = () => {
     return SERVICES.map((service, index) => ({
       ...service,
       title: t(`services.${serviceKeys[index]}.title`),
-      description: t(`services.${serviceKeys[index]}.description`)
+      description: t(`services.${serviceKeys[index]}.description`),
+      badge: t(`services.${serviceKeys[index]}.badge`),
+      fullDescription: t(`services.${serviceKeys[index]}.fullDescription`),
+      keyBenefits: t(`services.${serviceKeys[index]}.keyBenefits`, { returnObjects: true }) as string[],
     }));
   }, [t]);
 
@@ -255,7 +233,7 @@ const About: React.FC = () => {
         });
     }
 
-  }, { scope: containerRef }); // Scope GSAP to this section
+  }, []); // Empty dependency array - run once on mount
 
 
   return (
@@ -329,7 +307,7 @@ const About: React.FC = () => {
           }}
         >
           <Tilt3D tiltMaxAngle={12} scale={1.02}>
-            <BentoCard className="flex flex-col justify-center items-center text-center bg-white dark:bg-black border-gray-100 dark:border-neon-cyan relative overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-neon-cyan group">
+            <BentoCard className="flex flex-col justify-center items-center text-center bg-white dark:bg-black border-yellow-600 dark:border-neon-cyan relative overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-neon-cyan group">
               {/* Decorative circles */}
               <div className="absolute top-[-20%] right-[-20%] w-32 h-32 bg-accent-yellow/10 dark:bg-neon-cyan/20 rounded-full blur-2xl transition-all duration-500 group-hover:bg-accent-yellow/20"></div>
               <div className="absolute bottom-[-10%] left-[-10%] w-24 h-24 bg-accent-yellow/10 dark:bg-neon-purple/20 rounded-full blur-xl transition-all duration-500 group-hover:bg-accent-yellow/20"></div>
@@ -475,15 +453,25 @@ const About: React.FC = () => {
               >
                 <BentoCard
                   noDefaultBg={true}
-                  className="h-[440px] bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border hover:border-yellow-600 dark:hover:border-neon-cyan group hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.8)] dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] transition-all duration-500 hover:-translate-y-1"
+                  className="h-[500px] bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border hover:border-yellow-600 dark:hover:border-neon-cyan group hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.8)] dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] transition-all duration-500 hover:-translate-y-1"
                 >
-                  <ServiceItem service={service} />
+                  <ServiceItem
+                    service={service}
+                    onClick={() => setSelectedService(service)}
+                  />
                 </BentoCard>
               </div>
             ))}
           </div>
         </div>
       </motion.div>
+      
+      {/* Service Detail Panel */}
+      <ServiceDetailPanel
+        service={selectedService}
+        onClose={() => setSelectedService(null)}
+        onNavigate={onNavigate}
+      />
     </section>
   );
 };

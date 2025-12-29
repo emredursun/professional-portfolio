@@ -50,7 +50,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
             ease: "power4.inOut"
         }, "-=0.2");
 
-    }, { scope: containerRef });
+    }, []); // Empty dependency array - run once
 
     return (
         <div 

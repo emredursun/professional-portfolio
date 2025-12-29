@@ -98,6 +98,19 @@ export const SERVICES: Service[] = [
     description:
       "Building robust, scalable end-to-end automation frameworks to ensure software quality and reliability.",
     tags: ["Java", "Selenium", "Playwright", "Cypress", "Cucumber"],
+    featured: true,
+    badge: "Core Expertise",
+    fullDescription:
+      "I specialize in designing and implementing enterprise-grade test automation frameworks that scale with your business. From UI testing with Selenium and Playwright to API validation with REST Assured, I build comprehensive solutions that catch bugs before they reach production. My frameworks follow clean architecture principles with Page Object Model, making them maintainable and easy for teams to adopt.",
+    keyBenefits: [
+      "Reduce regression testing time by 60%+ with parallel execution",
+      "Catch critical bugs early with automated smoke and sanity tests",
+      "Scale QA coverage without proportionally scaling team size",
+      "Integrate seamlessly with CI/CD pipelines for continuous feedback",
+      "Maintainable frameworks following industry best practices"
+    ],
+    relatedProjects: ["qa-smart-test-lab", "playwright-testing-project"],
+    yearsOfExperience: 5
   },
   {
     icon: <i className="fas fa-sync-alt"></i>,
@@ -105,6 +118,19 @@ export const SERVICES: Service[] = [
     description:
       "Designing and maintaining continuous integration pipelines to accelerate deployment and reduce risk.",
     tags: ["Jenkins", "Azure DevOps", "Docker", "Git", "Maven"],
+    featured: false,
+    badge: "Certified",
+    fullDescription:
+      "I build and optimize CI/CD pipelines that transform slow, manual deployment processes into fast, reliable automated workflows. From Jenkins to Azure DevOps, I configure pipelines that run automated tests on every commit, provide instant feedback to developers, and deploy to production with confidence. My approach includes containerization with Docker, automated test execution, and comprehensive reporting.",
+    keyBenefits: [
+      "Accelerate deployment cycles from weeks to hours",
+      "Automated testing on every code commit for instant feedback",
+      "Reduce deployment failures with comprehensive validation",
+      "Docker containerization for consistent environments",
+      "Detailed reports and notifications for team visibility"
+    ],
+    relatedProjects: ["banking-payment-automation", "qa-smart-test-lab"],
+    yearsOfExperience: 4
   },
   {
     icon: <i className="fas fa-server"></i>,
@@ -112,6 +138,19 @@ export const SERVICES: Service[] = [
     description:
       "Implementing comprehensive API testing strategies and database validations for backend integrity.",
     tags: ["Rest Assured", "Postman", "SQL", "JUnit", "TestNG"],
+    featured: false,
+    badge: "Core Expertise",
+    fullDescription:
+      "Backend quality is critical to application stability. I design comprehensive API testing strategies using REST Assured and Postman, validating requests, responses, authentication, error handling, and data integrity. My approach includes database validation with SQL to ensure data consistency, performance testing to identify bottlenecks, and security testing to protect sensitive information.",
+    keyBenefits: [
+      "Comprehensive API test coverage (CRUD, auth, error handling)",
+      "Database validation ensuring data integrity across layers",
+      "Performance and load testing to identify bottlenecks",
+      "Security testing for authentication and authorization",
+      "Automated contract testing between services"
+    ],
+    relatedProjects: ["hospital-portal-testing", "banking-payment-automation"],
+    yearsOfExperience: 5
   },
   {
     icon: <i className="fas fa-laptop-code"></i>,
@@ -125,6 +164,19 @@ export const SERVICES: Service[] = [
       "Rapid Prototyping",
       "Tailwind",
     ],
+    featured: true,
+    badge: "Innovation",
+    fullDescription:
+      "Modern web development requires speed without sacrificing quality. I combine AI-powered development tools with proven architectural patterns to deliver professional web applications rapidly. Using React, TypeScript, and modern tooling, I build responsive, performant applications that provide exceptional user experiences. My approach emphasizes clean code, accessibility, and SEO optimization from day one.",
+    keyBenefits: [
+      "Rapid prototyping and MVP development in days, not weeks",
+      "Modern tech stack (React, TypeScript, Tailwind CSS)",
+      "SEO-optimized and accessibility-compliant from the start",
+      "Responsive design for all devices and screen sizes",
+      "Production-ready code with best practices"
+    ],
+    relatedProjects: ["social-share-image-generator"],
+    yearsOfExperience: 2
   },
   {
     icon: <i className="fas fa-chart-line"></i>,
@@ -132,7 +184,20 @@ export const SERVICES: Service[] = [
     description:
       "Implementing data-driven sales strategies and SEO techniques to maximize product visibility and revenue across major e-commerce platforms like Amazon and eBay.",
     tags: ["E-commerce", "SEO", "Analytics", "Strategy", "Management"],
-  },
+    featured: false,
+    badge: "Strategic Growth",
+    fullDescription:
+      "E-commerce success requires more than just listing products—it demands strategic optimization and continuous improvement. I leverage advanced SEO techniques, competitive analysis, and data-driven strategies to maximize product visibility and conversion rates on major platforms like Amazon, eBay, and AutoDoc. My approach includes keyword optimization, sponsored advertising campaigns, inventory management, and pricing strategies that drive revenue growth.",
+    keyBenefits: [
+      "Increase organic visibility through strategic SEO optimization",
+      "Data-driven pricing and inventory strategies",
+      "High-ROI sponsored advertising campaigns",
+      "Multi-platform management (Amazon, eBay, AutoDoc)",
+      "Analytics and reporting for informed decision-making"
+    ],
+    relatedProjects: ["ecommerce-sales-optimization"],
+    yearsOfExperience: 4
+  }
 ];
 
 export const ABOUT_INTRO =

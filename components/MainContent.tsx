@@ -10,6 +10,7 @@ const Contact = lazy(() => import('./Contact.tsx'));
 interface MainContentProps {
   activePage: Page;
   isMobileView: boolean;
+  onNavigate: (page: Page) => void;
 }
 
 const LoadingSpinner: React.FC = () => (
@@ -18,11 +19,11 @@ const LoadingSpinner: React.FC = () => (
   </div>
 );
 
-const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView }) => {
+const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView, onNavigate }) => {
   const renderPage = () => {
     switch (activePage) {
       case 'About':
-        return <About />;
+        return <About onNavigate={onNavigate} />;
       case 'Resume':
         return <Resume />;
       case 'Projects':
@@ -30,7 +31,7 @@ const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView }) =
       case 'Contact':
         return <Contact />;
       default:
-        return <About />;
+        return <About onNavigate={onNavigate} />;
     }
   };
 

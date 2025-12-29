@@ -8,6 +8,14 @@ export interface Service {
   title: string;
   description: string;
   tags?: string[];
+  
+  // Premium enhancement fields
+  featured?: boolean;           // Highlight as featured service
+  badge?: string;              // Badge text (e.g., "Core Expertise", "Certified")
+  fullDescription?: string;    // Extended description for detail panel
+  keyBenefits?: string[];      // List of key benefits/features
+  relatedProjects?: string[];  // Related project slugs
+  yearsOfExperience?: number;  // Years of experience in this area
 }
 
 export interface TimelineItem {
@@ -55,6 +63,7 @@ export interface Project {
   image: string;
   url?: string;
   github?: string;
+  hackernoon_link?: string;     // External article/reference link
   description: string;
   technologies: string[];
   slug: string;

@@ -19,23 +19,77 @@
   "services": {
     "testAutomation": {
       "title": "Test Automation Architectuur",
-      "description": "Het bouwen van robuuste, schaalbare end-to-end automatiseringsframeworks om softwarekwaliteit en betrouwbaarheid te waarborgen."
+      "description": "Bouwen van robuuste, schaalbare end-to-end automatiseringsframeworks om softwarekwaliteit en betrouwbaarheid te waarborgen.",
+      "badge": "Kernexpertise",
+      "fullDescription": "Ik ben gespecialiseerd in het ontwerpen en implementeren van enterprise-grade test automation frameworks die meeschalen met uw bedrijf. Van UI-testing met Selenium en Playwright tot API-validatie met REST Assured; ik bouw uitgebreide oplossingen die bugs vangen voordat ze productie bereiken. Mijn frameworks volgen Clean Architecture principes met het Page Object Model, waardoor ze onderhoudbaar zijn en gemakkelijk te adopteren door teams.",
+      "keyBenefits": [
+        "Verkort regressietesttijd met >60% door parallelle uitvoering",
+        "Vang kritieke bugs vroegtijdig met geautomatiseerde smoke en sanity tests",
+        "Schaal QA-dekking op zonder het team evenredig te vergroten",
+        "Naadloze integratie met CI/CD pipelines voor continue feedback",
+        "Onderhoudbare frameworks die industriestandaarden volgen"
+      ]
     },
     "cicd": {
       "title": "CI/CD & DevOps Integratie",
-      "description": "Ontwerpen en onderhouden van pipelines voor continue integratie om deployment te versnellen en risico's te verminderen."
+      "description": "Ontwerpen en onderhouden van continuous integration pipelines om deployment te versnellen en risico's te verminderen.",
+      "badge": "Gecertificeerd",
+      "fullDescription": "Ik bouw en optimaliseer CI/CD pipelines die trage, handmatige deployment-processen transformeren in snelle, betrouwbare geautomatiseerde workflows. Van Jenkins tot Azure DevOps configureer ik pipelines die bij elke commit geautomatiseerde tests draaien, direct feedback geven aan developers en met vertrouwen naar productie deployen. Mijn aanpak omvat containerisatie met Docker, geautomatiseerde testuitvoering en uitgebreide rapportage.",
+      "keyBenefits": [
+        "Versnel deployment-cycli van weken naar uren",
+        "Geautomatiseerd testen bij elke code commit voor directe feedback",
+        "Verminder deployment-fouten met uitgebreide validatie",
+        "Docker containerisatie voor consistente omgevingen",
+        "Gedetailleerde rapporten en notificaties voor team-inzicht"
+      ]
     },
     "apiBackend": {
       "title": "API & Backend Validatie",
-      "description": "Implementeren van uitgebreide API-teststrategieën en databasevalidaties voor backend-integriteit."
+      "description": "Implementeren van uitgebreide API-teststrategieën en databasevalidaties voor backend-integriteit.",
+      "badge": "Kernexpertise",
+      "fullDescription": "Backend-kwaliteit is cruciaal voor applicatiestabiliteit. Ik ontwerp uitgebreide API-teststrategieën met REST Assured en Postman, waarbij requests, responses, authenticatie, foutherstel en data-integriteit worden gevalideerd. Mijn aanpak omvat databasevalidatie met SQL om dataconsistentie te garanderen, performance testen om knelpunten te identificeren en security testen om gevoelige informatie te beschermen.",
+      "keyBenefits": [
+        "Uitgebreide API testdekking (CRUD, auth, error handling)",
+        "Databasevalidatie voor data-integriteit over lagen heen",
+        "Performance en load testing om knelpunten te identificeren",
+        "Security testing voor authenticatie en autorisatie",
+        "Geautomatiseerde contract testing tussen services"
+      ]
     },
     "webDev": {
       "title": "AI-Aangedreven Web Development",
-      "description": "Gebruikmaken van geavanceerde AI-coding agents en moderne architectuurpatronen om met snelheid en precisie professionele, krachtige webapplicaties te bouwen."
+      "description": "Gebruikmaken van geavanceerde AI coding agents en moderne architectuurpatronen om professionele, high-performance webapplicaties te bouwen met snelheid en precisie.",
+      "badge": "Innovatie",
+      "fullDescription": "Modern web development vereist snelheid zonder in te boeten aan kwaliteit. Ik combineer AI-gedreven ontwikkeltools met bewezen architectuurpatronen om snel professionele webapplicaties te leveren. Met React, TypeScript en moderne tooling bouw ik responsieve, performante applicaties die een uitzonderlijke gebruikerservaring bieden. Mijn aanpak benadrukt clean code, toegankelijkheid en SEO-optimalisatie vanaf dag één.",
+      "keyBenefits": [
+        "Snelle prototyping en MVP-ontwikkeling in dagen, niet weken",
+        "Moderne tech stack (React, TypeScript, Tailwind CSS)",
+        "Vanaf de start SEO-geoptimaliseerd en toegankelijk",
+        "Responsive design voor alle apparaten en schermformaten",
+        "Productie-klare code volgens best practices"
+      ]
     },
     "ecommerce": {
       "title": "E-commerce Verkoopoptimalisatie",
-      "description": "Implementeren van datagestuurde verkoopstrategieën en SEO-technieken om de productzichtbaarheid en omzet te maximaliseren op grote e-commerceplatforms zoals Amazon en eBay."
+      "description": "Implementeren van datagedreven verkoopstrategieën en SEO-technieken om productzichtbaarheid en omzet te maximaliseren op grote e-commerce platforms zoals Amazon en eBay.",
+      "badge": "Strategische Groei",
+      "fullDescription": "Succes in e-commerce vergt meer dan alleen producten aanbieden; strategische optimalisatie en continue verbetering zijn vereist. Ik benut geavanceerde SEO-technieken, concurrentieanalyse en datagedreven strategieën om productzichtbaarheid en conversieratio's te maximaliseren op grote platforms zoals Amazon, eBay en AutoDoc. Mijn aanpak omvat zoekwoordoptimalisatie, gesponsorde advertentiecampagnes, voorraadbeheer en prijsstrategieën die omzetgroei stimuleren.",
+      "keyBenefits": [
+        "Verhoog organische zichtbaarheid door strategische SEO-optimalisatie",
+        "Datagedreven prijs- en voorraadstrategieën",
+        "Hoge ROI gesponsorde advertentiecampagnes",
+        "Multi-platform beheer (Amazon, eBay, AutoDoc)",
+        "Analytics en rapportage voor geïnformeerde besluitvorming"
+      ]
+    },
+    "details": {
+      "overview": "Overzicht",
+      "keyBenefits": "Belangrijkste Voordelen",
+      "technologies": "Technologieën & Tools",
+      "relatedProjects": "Gerelateerde Projecten",
+      "getInTouch": "Neem Contact Op",
+      "yearsOfExperience": "Jaar Ervaring",
+      "provenExpertise": "Bewezen expertise in productieomgevingen"
     }
   }
 }
