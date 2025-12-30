@@ -42,8 +42,8 @@ A meticulously crafted, **production-ready portfolio** designed to showcase prof
 
 ### ⚡ **Performance First**
 
-- **Optimized Bundle** — Fast load times with code splitting
-- **SEO Ready** — Structured data, meta tags, and sitemap
+- **Optimized Bundle** — Fast load times with code splitting and lazy loading
+- **SEO Ready** — Dynamic metadata, canonical tags, hrefLang support, and auto-generated XML sitemap
 - **Accessibility** — WCAG compliant with semantic HTML
 - **PWA Support** — Installable with offline capabilities
 - **Multi-Language** — Native support for English, Turkish, and Dutch
@@ -156,11 +156,13 @@ npm run dev
 
 ### Available Scripts
 
-| Command           | Description                       |
-| ----------------- | --------------------------------- |
-| `npm run dev`     | Start development server with HMR |
-| `npm run build`   | Create optimized production build |
-| `npm run preview` | Preview production build locally  |
+| Command                    | Description                          |
+| -------------------------- | ------------------------------------ |
+| `npm run dev`              | Start development server with HMR    |
+| `npm run build`            | Create optimized production build    |
+| `npm run preview`          | Preview production build locally     |
+| `npm run generate:sitemap` | Manually generate XML sitemap        |
+| `npm run optimize:images`  | Compress and resize localized assets |
 
 <br/>
 
@@ -199,6 +201,7 @@ professional-portfolio/
 ├── 📄 types.ts            # TypeScript type definitions
 ├── 📁 components/         # Reusable React components
 │   ├── Sidebar.tsx        # Navigation and profile
+│   ├── SEO.tsx            # Dynamic SEO & Metadata manager
 │   ├── LanguageSwitcher.tsx # i18n language toggle
 │   ├── About.tsx          # About section with parallax
 │   ├── Resume.tsx         # Experience timeline
@@ -222,6 +225,9 @@ professional-portfolio/
 │   ├── site.webmanifest
 │   ├── robots.txt
 │   └── sitemap.xml
+├── 📁 scripts/            # Build & Maintenance scripts
+│   ├── generate-sitemap.js # Sitemap generator with i18n support
+│   └── optimize-images.js  # Asset compression utility
 └── 📄 vite.config.ts      # Vite configuration
 ```
 

@@ -26,6 +26,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "generate:sitemap": "node scripts/generate-sitemap.js",
+    "optimize:images": "node scripts/optimize-images.js",
     "prebuild": "npm run generate:sitemap"
   },
   "dependencies": {
