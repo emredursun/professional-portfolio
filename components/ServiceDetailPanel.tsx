@@ -86,67 +86,64 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
             data-modal-content="true"
           >
             {/* Header */}
-            <div className="sticky top-0 z-10 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-b border-gray-200 dark:border-neon-border px-4 py-4 md:px-8 md:py-6">
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div className="flex items-center gap-3 md:gap-4 w-full md:w-auto">
-                  {/* Icon */}
-                  <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-black border-2 border-gray-200 dark:border-neon-cyan flex items-center justify-center text-2xl md:text-3xl text-accent-yellow dark:text-neon-cyan shadow-lg">
-                    {service.icon}
-                  </div>
-                  
-                  <div className="flex-1 min-w-0">
-                    <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1 truncate">
-                      {service.title}
-                    </h2>
-                    {service.badge && (
-                      <span className="inline-block px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple text-white rounded-full">
-                        {service.badge}
-                      </span>
-                    )}
-                  </div>
+            <div className="sticky top-0 z-10 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-b border-gray-200 dark:border-neon-border py-2 px-3 md:p-6">
+              <div className="flex items-center gap-4">
+                {/* Left: Icon - Fixed Size */}
+                <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-black border border-gray-800 dark:border-neon-cyan/30 flex items-center justify-center text-3xl text-accent-yellow dark:text-neon-cyan shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(6,182,212,0.15)]">
+                  {service.icon}
                 </div>
 
-                {/* Controls Group */}
-                <div className="flex items-center gap-2 self-end md:self-auto w-full md:w-auto justify-end">
-                  {/* Previous Button */}
-                  {onNavigate && (
-                    <button
-                      onClick={() => onNavigate("prev")}
-                      className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
-                      aria-label="Previous service"
-                    >
-                      <i className="fas fa-chevron-left text-base md:text-lg group-hover:-translate-x-0.5 transition-transform duration-300"></i>
-                    </button>
-                  )}
+                {/* Right: Content Column */}
+                <div className="flex-1 flex flex-col justify-center min-w-0 h-16">
+                  
+                  {/* Row 1: Badge & Controls */}
+                  <div className="flex items-center justify-between mb-1 gap-4">
+                    {/* Badge */}
+                    <div className="min-w-0">
+                      {service.badge && (
+                        <span className="inline-flex items-center justify-center px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-gray-900 to-black border border-gray-700 dark:border-neon-cyan/50 text-white dark:text-neon-cyan rounded-full whitespace-nowrap">
+                          {service.badge}
+                        </span>
+                      )}
+                    </div>
 
-                  {/* Next Button */}
-                  {onNavigate && (
-                    <button
-                      onClick={() => onNavigate("next")}
-                      className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
-                      aria-label="Next service"
-                    >
-                      <i className="fas fa-chevron-right text-base md:text-lg group-hover:translate-x-0.5 transition-transform duration-300"></i>
-                    </button>
-                  )}
+                    {/* Controls */}
+                    <div className="flex items-center gap-2">
+                      {onNavigate && (
+                        <>
+                          <button
+                            onClick={() => onNavigate("prev")}
+                            className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                          >
+                            <i className="fas fa-chevron-left text-sm group-hover:-translate-x-0.5 transition-transform duration-300"></i>
+                          </button>
+                          <button
+                            onClick={() => onNavigate("next")}
+                            className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                          >
+                            <i className="fas fa-chevron-right text-sm group-hover:translate-x-0.5 transition-transform duration-300"></i>
+                          </button>
+                        </>
+                      )}
+                      <button
+                        onClick={handleShareClick}
+                        className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                      >
+                        <i className="fas fa-share-alt text-sm group-hover:scale-110 transition-transform duration-300"></i>
+                      </button>
+                      <button
+                        onClick={onClose}
+                        className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                      >
+                        <i className="fas fa-times text-sm group-hover:rotate-90 transition-transform duration-300"></i>
+                      </button>
+                    </div>
+                  </div>
 
-                  {/* Share Button */}
-                  <button
-                    onClick={handleShareClick}
-                    className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
-                    aria-label="Share service"
-                  >
-                    <i className="fas fa-share-alt text-base md:text-lg group-hover:scale-110 transition-transform duration-300"></i>
-                  </button>
-
-                  {/* Close Button */}
-                  <button
-                    onClick={onClose}
-                    className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
-                    aria-label="Close panel"
-                  >
-                    <i className="fas fa-times text-base md:text-lg group-hover:rotate-90 transition-transform duration-300"></i>
-                  </button>
+                  {/* Row 2: Title */}
+                  <h2 className="text-lg font-bold text-gray-900 dark:text-white leading-tight truncate w-full">
+                    {service.title}
+                  </h2>
                 </div>
               </div>
             </div>
