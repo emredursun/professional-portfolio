@@ -16,6 +16,14 @@ export default defineConfig(({ mode }) => {
         rollupOptions: {
           input: {
             main: path.resolve(__dirname, 'index.html')
+          },
+          output: {
+            manualChunks: {
+              'vendor-react': ['react', 'react-dom', 'react-router-dom', 'react-helmet-async', 'react-i18next', 'i18next'],
+              'vendor-ui': ['framer-motion', 'lenis'],
+              'vendor-3d': ['three'],
+              'vendor-anim': ['gsap'],
+            }
           }
         }
       },

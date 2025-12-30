@@ -11,11 +11,8 @@ import Sidebar from './components/Sidebar.tsx';
 import MainContent from './components/MainContent.tsx';
 import Navbar from './components/Navbar.tsx';
 import ScrollToTopButton from './components/ScrollToTopButton.tsx';
-import CustomCursor from './components/CustomCursor.tsx';
 import PrintableResume from './components/PrintableResume.tsx';
 import SmoothScroll from './components/SmoothScroll.tsx';
-import ParticleBackground from './components/ParticleBackground.tsx';
-import FloatingElements from './components/FloatingElements.tsx';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
 import CommandPalette from './components/CommandPalette.tsx';
 import LanguageMeta from './components/LanguageMeta.tsx';
@@ -23,6 +20,11 @@ import { Page } from './types.ts';
 import { faviconController } from './src/utils/faviconController';
 
 import Preloader from './components/Preloader.tsx';
+
+// Lazy load decorative elements
+const ParticleBackground = React.lazy(() => import('./components/ParticleBackground.tsx'));
+const FloatingElements = React.lazy(() => import('./components/FloatingElements.tsx'));
+const CustomCursor = React.lazy(() => import('./components/CustomCursor.tsx'));
 
 // Scroll Handler Component to preserve exact scroll behaviors
 const ScrollHandler: React.FC<{
@@ -374,13 +376,15 @@ const AppContent: React.FC = () => {
             <main className={`print:hidden relative bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-gray-100 font-sans transition-colors duration-500 ${isMobileView ? 'min-h-screen p-4' : 'h-screen overflow-hidden p-6 lg:p-8'}`}>
           
           <div className="bg-noise"></div>
-          <ParticleBackground particleCount={150} connectionDistance={120} mouseInfluence={80} />
+          <React.Suspense fallback={null}>
+            <ParticleBackground particleCount={150} connectionDistance={120} mouseInfluence={80} />
 
-          <div ref={floatingRef} className="absolute inset-0 pointer-events-none z-[1]">
-              <FloatingElements />
-          </div>
+            <div ref={floatingRef} className="absolute inset-0 pointer-events-none z-[1]">
+                <FloatingElements />
+            </div>
 
-          <CustomCursor />
+            <CustomCursor />
+          </React.Suspense>
 
           <div ref={bgOrbsRef} className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
             <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-yellow-400/10 dark:bg-yellow-600/5 blur-[130px] animate-blob"></div>
