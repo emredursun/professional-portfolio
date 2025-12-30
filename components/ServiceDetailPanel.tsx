@@ -1,25 +1,46 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Service, Page } from "../types.ts";
 import { PROJECTS } from "../constants.tsx";
 
 interface ServiceDetailPanelProps {
   service: Service | null;
   onClose: () => void;
-  onNavigate?: (page: Page) => void;
+  onNavigate?: (direction: "prev" | "next") => void;
 }
 
 const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClose, onNavigate }) => {
   const { t } = useTranslation('about');
+  const navigate = useNavigate();
+
   // Close on Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft" && onNavigate) onNavigate("prev");
+      if (e.key === "ArrowRight" && onNavigate) onNavigate("next");
     };
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, [onClose]);
+  }, [onClose, onNavigate]);
+
+  const handleShareClick = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: service?.title || "Service Details",
+        text: service?.description,
+        url: window.location.href,
+      }).catch(() => {
+        // Silently fail if user cancels
+      });
+    } else {
+      // Fallback: copy URL to clipboard
+      navigator.clipboard.writeText(window.location.href);
+      // Optional: Show a toast notification here if we had one
+    }
+  };
 
   // Prevent body scroll when panel is open
   useEffect(() => {
@@ -65,34 +86,68 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
             data-modal-content="true"
           >
             {/* Header */}
-            <div className="sticky top-0 z-10 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-b border-gray-200 dark:border-neon-border px-8 py-6">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex items-center gap-4">
+            <div className="sticky top-0 z-10 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-b border-gray-200 dark:border-neon-border px-4 py-4 md:px-8 md:py-6">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="flex items-center gap-3 md:gap-4 w-full md:w-auto">
                   {/* Icon */}
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-black border-2 border-gray-200 dark:border-neon-cyan flex items-center justify-center text-3xl text-accent-yellow dark:text-neon-cyan shadow-lg">
+                  <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-black border-2 border-gray-200 dark:border-neon-cyan flex items-center justify-center text-2xl md:text-3xl text-accent-yellow dark:text-neon-cyan shadow-lg">
                     {service.icon}
                   </div>
                   
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1 truncate">
                       {service.title}
                     </h2>
                     {service.badge && (
-                      <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple text-white rounded-full">
+                      <span className="inline-block px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple text-white rounded-full">
                         {service.badge}
                       </span>
                     )}
                   </div>
                 </div>
 
-                {/* Close Button */}
-                <button
-                  onClick={onClose}
-                  className="flex-shrink-0 w-10 h-10 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-300 group"
-                  aria-label="Close panel"
-                >
-                  <i className="fas fa-times text-lg group-hover:rotate-90 transition-transform duration-300"></i>
-                </button>
+                {/* Controls Group */}
+                <div className="flex items-center gap-2 self-end md:self-auto w-full md:w-auto justify-end">
+                  {/* Previous Button */}
+                  {onNavigate && (
+                    <button
+                      onClick={() => onNavigate("prev")}
+                      className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                      aria-label="Previous service"
+                    >
+                      <i className="fas fa-chevron-left text-base md:text-lg group-hover:-translate-x-0.5 transition-transform duration-300"></i>
+                    </button>
+                  )}
+
+                  {/* Next Button */}
+                  {onNavigate && (
+                    <button
+                      onClick={() => onNavigate("next")}
+                      className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                      aria-label="Next service"
+                    >
+                      <i className="fas fa-chevron-right text-base md:text-lg group-hover:translate-x-0.5 transition-transform duration-300"></i>
+                    </button>
+                  )}
+
+                  {/* Share Button */}
+                  <button
+                    onClick={handleShareClick}
+                    className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                    aria-label="Share service"
+                  >
+                    <i className="fas fa-share-alt text-base md:text-lg group-hover:scale-110 transition-transform duration-300"></i>
+                  </button>
+
+                  {/* Close Button */}
+                  <button
+                    onClick={onClose}
+                    className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                    aria-label="Close panel"
+                  >
+                    <i className="fas fa-times text-base md:text-lg group-hover:rotate-90 transition-transform duration-300"></i>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -196,17 +251,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                         className="p-4 rounded-xl bg-white dark:bg-white/5 border-2 border-gray-200 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan transition-all duration-300 cursor-pointer group"
                         onClick={() => {
                           onClose();
-                          if (onNavigate) {
-                            onNavigate('Projects');
-                            // Small timeout to allow page transition
-                            setTimeout(() => {
-                              window.location.hash = `project-${project.slug}`;
-                            }, 100);
-                          } else {
-                            setTimeout(() => {
-                              window.location.hash = `project-${project.slug}`;
-                            }, 300);
-                          }
+                          navigate(`/projects/${project.slug}`);
                         }}
                       >
                         <div className="flex items-center gap-3">
@@ -240,14 +285,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                   whileTap={{ scale: 0.98 }}
                   onClick={() => {
                     onClose();
-                    if (onNavigate) {
-                      onNavigate('Contact');
-                    } else {
-                      setTimeout(() => {
-                        const contactSection = document.querySelector('[data-page="Contact"]');
-                        contactSection?.scrollIntoView({ behavior: 'smooth' });
-                      }, 300);
-                    }
+                    navigate('/contact');
                   }}
                   className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple text-white font-bold text-base shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group"
                 >

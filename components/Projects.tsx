@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Project } from "../types.ts";
 import { PROJECTS } from "../constants.tsx";
 import ProjectModal from "./ProjectModal.tsx";
@@ -75,6 +76,9 @@ const Projects: React.FC = () => {
   const [isTechnologyOpen, setIsTechnologyOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
+  const { slug } = useParams();
+  const navigate = useNavigate();
+
   // Get translated projects
   const translatedProjects = useTranslatedProjects(PROJECTS);
   const translatedSelectedProject = useTranslatedProject(selectedProject || PROJECTS[0]);
@@ -82,40 +86,29 @@ const Projects: React.FC = () => {
   const categoryRef = useRef<HTMLDivElement>(null);
   const technologyRef = useRef<HTMLDivElement>(null);
 
-  // Handle Hash Navigation
+  // Handle Project Selection via URL
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash;
-      if (hash.startsWith('#project-')) {
-        const slug = hash.replace('#project-', '');
-        const project = PROJECTS.find(p => p.slug === slug);
-        if (project) {
-          setSelectedProject(project);
-        }
-      } else if (!hash) {
+    if (slug) {
+      const project = PROJECTS.find(p => p.slug === slug);
+      if (project) {
+        setSelectedProject(project);
+      } else {
+        // Invalid slug, navigate back to projects list
+        navigate('/projects', { replace: true });
         setSelectedProject(null);
       }
-    };
-
-    // Check initial hash
-    handleHashChange();
-
-    // Listen for hash changes
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+    } else {
+      setSelectedProject(null);
+    }
+  }, [slug, navigate]);
 
   // Update URL on Project Selection
   const handleProjectClick = (project: Project) => {
-    setSelectedProject(project);
-    window.location.hash = `project-${project.slug}`;
+    navigate(`/projects/${project.slug}`);
   };
 
   const handleCloseModal = () => {
-    setSelectedProject(null);
-    // Reset hash without scrolling to top (history.pushState or replaceState would be cleaner but hash is simple)
-    // Using history.pushState to remove hash cleanly without jumping
-    history.pushState("", document.title, window.location.pathname + window.location.search);
+    navigate('/projects');
   };
 
   // Navigate to previous or next project
@@ -132,8 +125,7 @@ const Projects: React.FC = () => {
     }
     
     const newProject = PROJECTS[newIndex];
-    setSelectedProject(newProject);
-    window.location.hash = `project-${newProject.slug}`;
+    navigate(`/projects/${newProject.slug}`);
   };
 
   // Extract unique categories and technologies

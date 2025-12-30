@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { NavLink } from 'react-router-dom';
 import { PERSONAL_INFO, SOCIAL_LINKS, STATUS_BADGE } from '../constants.tsx';
 import ThemeSwitcher from './ThemeSwitcher.tsx';
 import Magnetic from './Magnetic.tsx';
@@ -14,42 +15,44 @@ import { Page } from '../types.ts';
 interface SidebarProps {
     theme: string;
     toggleTheme: () => void;
-    activePage: Page;
-    onNavigate: (page: Page) => void;
+    activePage: Page; // Kept for interface compatibility if needed, but unused for nav state
+    onNavigate: (page: Page) => void; // Kept for interface compatibility
     isMobileView: boolean;
 }
 
-const pages: { label: Page; icon: React.ReactNode }[] = [
-    { label: 'About', icon: <i className="far fa-user"></i> },
-    { label: 'Resume', icon: <i className="far fa-file-alt"></i> },
-    { label: 'Projects', icon: <i className="far fa-folder-open"></i> },
-    { label: 'Contact', icon: <i className="far fa-envelope"></i> },
+const pages: { label: Page; path: string; icon: React.ReactNode }[] = [
+    { label: 'About', path: '/about', icon: <i className="far fa-user"></i> },
+    { label: 'Resume', path: '/resume', icon: <i className="far fa-file-alt"></i> },
+    { label: 'Projects', path: '/projects', icon: <i className="far fa-folder-open"></i> },
+    { label: 'Contact', path: '/contact', icon: <i className="far fa-envelope"></i> },
 ];
 
 const NavButton: React.FC<{
-    page: { label: Page; icon: React.ReactNode };
-    isActive: boolean;
-    onNavigate: (page: Page) => void;
-}> = React.memo(({ page, isActive, onNavigate }) => {
+    page: { label: Page; path: string; icon: React.ReactNode };
+}> = React.memo(({ page }) => {
     const { t } = useTranslation('common');
     
     return (
     <li>
         <Magnetic>
-            <button
-                onClick={() => onNavigate(page.label)}
-                className={`w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all duration-300 font-semibold group relative overflow-hidden
+            <NavLink
+                to={page.path}
+                className={({ isActive }) => `w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all duration-300 font-semibold group relative overflow-hidden
                     ${isActive
                         ? 'bg-yellow-400 text-black shadow-[0_0_20px_rgba(250,204,21,0.4)]'
                         : 'text-gray-500 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] dark:hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] border border-transparent hover:border-yellow-400/50 dark:hover:border-neon-cyan/50'
                     }`
                 }
             >
-                <span className={`text-xl w-6 flex justify-center transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
-                    {page.icon}
-                </span>
-                <span className="relative z-10 tracking-wide text-sm">{t(`nav.${page.label.toLowerCase()}`)}</span>
-            </button>
+                {({ isActive }) => (
+                    <>
+                        <span className={`text-xl w-6 flex justify-center transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
+                            {page.icon}
+                        </span>
+                        <span className="relative z-10 tracking-wide text-sm">{t(`nav.${page.label.toLowerCase()}`)}</span>
+                    </>
+                )}
+            </NavLink>
         </Magnetic>
     </li>
 );});
@@ -63,7 +66,7 @@ const getGreetingKey = (): string => {
     return "time.goodEvening"; // 18:00 - 24:00
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNavigate, isMobileView }) => {
+const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) => {
     const { t } = useTranslation(['common', 'sidebar']);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [greetingKey, setGreetingKey] = useState(getGreetingKey());
@@ -388,8 +391,6 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, activePage, onNav
                                 <NavButton
                                     key={page.label}
                                     page={page}
-                                    isActive={activePage === page.label}
-                                    onNavigate={onNavigate}
                                 />
                             ))}
                         </ul>

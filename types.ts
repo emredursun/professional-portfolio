@@ -6,6 +6,7 @@ export interface Service {
   // Fix for: Cannot find namespace 'JSX'.
   icon: React.ReactNode;
   title: string;
+  slug: string;                // URL-friendly identifier for deep linking
   description: string;
   tags?: string[];
   

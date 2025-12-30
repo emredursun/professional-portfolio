@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from 'react-i18next';
+import { useParams, useNavigate } from 'react-router-dom';
 import gsap from "gsap";
 import { useGSAP } from "./hooks/useGSAP.tsx";
 import { Service, Page } from "../types.ts";
@@ -127,15 +128,15 @@ const ServiceItem: React.FC<{ service: Service; onClick: () => void }> = ({ serv
       )}
       
       {/* Description - Fixed Height: 3 Lines */}
-      <div className="min-h-[4.5rem] mb-5">
+      <div className="min-h-[4.5rem] mb-7">
         <p className="text-gray-600 dark:text-neon-text-secondary text-sm leading-relaxed line-clamp-3 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
           {service.description}
         </p>
       </div>
 
-      {/* Tags - Limited to 2 Lines (max 4 tags) */}
+      {/* Tags - Limited to 2 Lines (max 3 tags visible) */}
       <div className="flex flex-wrap gap-2 mb-5 max-h-[72px] overflow-hidden">
-        {service.tags?.slice(0, 4).map((tag, idx) => (
+        {service.tags?.slice(0, 3).map((tag, idx) => (
           <motion.span
             key={idx}
             className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-600 dark:text-neon-text-primary bg-gray-50 dark:bg-black border border-gray-200 dark:border-neon-border rounded-lg dark:rounded-none hover:border-accent-yellow dark:hover:border-neon-cyan hover:text-gray-900 dark:hover:text-neon-cyan hover:bg-white dark:hover:bg-black transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105"
@@ -145,9 +146,9 @@ const ServiceItem: React.FC<{ service: Service; onClick: () => void }> = ({ serv
             {tag}
           </motion.span>
         ))}
-        {service.tags && service.tags.length > 4 && (
+        {service.tags && service.tags.length > 3 && (
           <span className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/5">
-            +{service.tags.length - 4}
+            +{service.tags.length - 3}
           </span>
         )}
       </div>
@@ -167,7 +168,9 @@ const ServiceItem: React.FC<{ service: Service; onClick: () => void }> = ({ serv
 };
 
 const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) => {
-  const { t } = useTranslation('about');
+  const { t, i18n } = useTranslation('about');
+  const { serviceSlug } = useParams<{ serviceSlug?: string }>();
+  const navigate = useNavigate();
   const headerRef = useRef<HTMLElement>(null);
   const isHeaderVisible = useScrollReveal(headerRef, { threshold: 0.2 });
   
@@ -176,6 +179,11 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
   const counterRef = useRef<HTMLDivElement>(null);
   const [statsCount, setStatsCount] = useState(0);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const storyRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement[]>([]);
+  const currentLanguage = i18n.language;
 
 
   // Get translated services
@@ -190,6 +198,15 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
       keyBenefits: t(`services.${serviceKeys[index]}.keyBenefits`, { returnObjects: true }) as string[],
     }));
   }, [t]);
+
+  useEffect(() => {
+    if (serviceSlug && translatedServices.length > 0) {
+      const service = translatedServices.find(s => s.slug === serviceSlug);
+      setSelectedService(service || null);
+    } else if (!serviceSlug) {
+      setSelectedService(null);
+    }
+  }, [serviceSlug, translatedServices]);
 
   useGSAP((context) => {
     // 1. Service Cards Stagger - start from visible state
@@ -447,9 +464,9 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
             ref={servicesRef}
             className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
           >
-            {translatedServices.map((service, i) => (
+            {translatedServices.map((service, index) => (
               <div
-                key={i}
+                key={index}
               >
                 <BentoCard
                   noDefaultBg={true}
@@ -457,7 +474,10 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
                 >
                   <ServiceItem
                     service={service}
-                    onClick={() => setSelectedService(service)}
+                    onClick={() => {
+                      setSelectedService(service);
+                      navigate(`/about/${service.slug}`);
+                    }}
                   />
                 </BentoCard>
               </div>
@@ -469,8 +489,27 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
       {/* Service Detail Panel */}
       <ServiceDetailPanel
         service={selectedService}
-        onClose={() => setSelectedService(null)}
-        onNavigate={onNavigate}
+        onClose={() => {
+          setSelectedService(null);
+          navigate('/about');
+        }}
+        onNavigate={(direction) => {
+          if (!selectedService) return;
+          const currentIndex = translatedServices.findIndex(s => s.slug === selectedService.slug);
+          if (currentIndex === -1) return;
+          
+          let nextIndex;
+          if (direction === 'next') {
+            nextIndex = (currentIndex + 1) % translatedServices.length;
+          } else {
+            nextIndex = (currentIndex - 1 + translatedServices.length) % translatedServices.length;
+          }
+          
+          // Use the index to find the service in the translatedServices array since we need the translated content
+          const nextService = translatedServices[nextIndex];
+          setSelectedService(nextService);
+          navigate(`/about/${nextService.slug}`);
+        }}
       />
     </section>
   );

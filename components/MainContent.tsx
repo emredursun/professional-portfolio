@@ -1,5 +1,5 @@
-
 import React, { Suspense, lazy } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Page } from '../types.ts';
 
 const About = lazy(() => import('./About.tsx'));
@@ -20,25 +20,18 @@ const LoadingSpinner: React.FC = () => (
 );
 
 const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView, onNavigate }) => {
-  const renderPage = () => {
-    switch (activePage) {
-      case 'About':
-        return <About onNavigate={onNavigate} />;
-      case 'Resume':
-        return <Resume />;
-      case 'Projects':
-        return <Projects />;
-      case 'Contact':
-        return <Contact />;
-      default:
-        return <About onNavigate={onNavigate} />;
-    }
-  };
-
   return (
     <div className={`${isMobileView ? 'pb-32' : 'p-8 md:p-12'}`}>
       <Suspense fallback={<LoadingSpinner />}>
-        {renderPage()}
+        <Routes>
+          <Route path="/" element={<Navigate to="/about" replace />} />
+          <Route path="/about/:serviceSlug?" element={<About />} />
+          <Route path="/resume" element={<Resume />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:slug" element={<Projects />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<Navigate to="/about" replace />} />
+        </Routes>
       </Suspense>
     </div>
   );

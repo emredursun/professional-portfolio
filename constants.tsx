@@ -95,6 +95,7 @@ export const SERVICES: Service[] = [
   {
     icon: <i className="fas fa-robot"></i>,
     title: "Test Automation Architecture",
+    slug: "test-automation-architecture",
     description:
       "Building robust, scalable end-to-end automation frameworks to ensure software quality and reliability.",
     tags: ["Java", "Selenium", "Playwright", "Cypress", "Cucumber"],
@@ -115,6 +116,7 @@ export const SERVICES: Service[] = [
   {
     icon: <i className="fas fa-sync-alt"></i>,
     title: "CI/CD & DevOps Integration",
+    slug: "cicd-devops-integration",
     description:
       "Designing and maintaining continuous integration pipelines to accelerate deployment and reduce risk.",
     tags: ["Jenkins", "Azure DevOps", "Docker", "Git", "Maven"],
@@ -135,6 +137,7 @@ export const SERVICES: Service[] = [
   {
     icon: <i className="fas fa-server"></i>,
     title: "API & Backend Validation",
+    slug: "api-backend-validation",
     description:
       "Implementing comprehensive API testing strategies and database validations for backend integrity.",
     tags: ["Rest Assured", "Postman", "SQL", "JUnit", "TestNG"],
@@ -155,6 +158,7 @@ export const SERVICES: Service[] = [
   {
     icon: <i className="fas fa-laptop-code"></i>,
     title: "AI-Powered Web Development",
+    slug: "ai-powered-web-development",
     description:
       "Leveraging advanced AI coding agents and modern architectural patterns to build professional, high-performance web applications with speed and precision.",
     tags: [
@@ -181,6 +185,7 @@ export const SERVICES: Service[] = [
   {
     icon: <i className="fas fa-chart-line"></i>,
     title: "E-commerce Sales Optimization",
+    slug: "ecommerce-sales-optimization",
     description:
       "Implementing data-driven sales strategies and SEO techniques to maximize product visibility and revenue across major e-commerce platforms like Amazon and eBay.",
     tags: ["E-commerce", "SEO", "Analytics", "Strategy", "Management"],
