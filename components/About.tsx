@@ -93,7 +93,7 @@ const BentoCard: React.FC<{
 
 const ServiceItem: React.FC<{ service: Service; onClick: () => void }> = ({ service, onClick }) => {
   return (
-    <div className="flex flex-col h-full">
+    <div onClick={onClick} className="flex flex-col h-full cursor-pointer">
       {/* Enhanced Icon Container with Badge */}
       <div className="mb-5 relative">
         {/* Featured Star Badge */}
@@ -154,16 +154,11 @@ const ServiceItem: React.FC<{ service: Service; onClick: () => void }> = ({ serv
         )}
       </div>
       
-      {/* Learn More Button - Push to bottom */}
-      <motion.button
-        onClick={onClick}
-        className="mt-auto w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-neon-border bg-white dark:bg-black text-sm font-bold text-gray-700 dark:text-gray-300 hover:border-yellow-400 dark:hover:border-neon-cyan hover:text-gray-900 dark:hover:text-white hover:shadow-lg dark:hover:shadow-neon-cyan/20 transition-all duration-300 group/btn"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
+      {/* Learn More Button - Enhanced hover animation */}
+      <div className="mt-auto w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-neon-border bg-white dark:bg-black text-sm font-bold text-gray-700 dark:text-gray-300 group-hover:border-yellow-400 dark:group-hover:border-neon-cyan group-hover:bg-gradient-to-r group-hover:from-accent-yellow group-hover:to-orange-500 dark:group-hover:from-neon-cyan dark:group-hover:to-blue-500 group-hover:text-black dark:group-hover:text-black group-hover:shadow-lg dark:group-hover:shadow-neon-cyan/20 transition-all duration-300">
         <span>Learn More</span>
-        <i className="fas fa-arrow-right text-xs group-hover/btn:translate-x-1 transition-transform duration-300"></i>
-      </motion.button>
+        <i className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform duration-300"></i>
+      </div>
     </div>
   );
 };
@@ -210,24 +205,17 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
   }, [serviceSlug, translatedServices]);
 
   useGSAP((context) => {
-    // 1. Service Cards Stagger - start from visible state
+    // 1. Service Cards Stagger - animate immediately without scroll trigger
     if (servicesRef.current) {
-        // First set them visible
-        gsap.set(servicesRef.current.children, { opacity: 1, y: 0 });
-        
-        // Then add subtle animation on scroll
         gsap.fromTo(servicesRef.current.children, 
-            { y: 30, opacity: 0.5 },
+            { y: 20, opacity: 0 },
             {
                 y: 0,
                 opacity: 1,
-                duration: 0.6,
-                stagger: 0.1,
+                duration: 0.8,
+                stagger: 0.15,
                 ease: "power3.out",
-                scrollTrigger: {
-                    trigger: servicesRef.current,
-                    start: "top 85%",
-                }
+                delay: 0.2
             }
         );
     }
