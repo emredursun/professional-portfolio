@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from 'react-i18next';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
 import gsap from "gsap";
 import { useGSAP } from "./hooks/useGSAP.tsx";
 import { Service, Page } from "../types.ts";
@@ -170,7 +171,7 @@ const ServiceItem: React.FC<{ service: Service; onClick: () => void }> = ({ serv
 const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) => {
   const { t, i18n } = useTranslation('about');
   const { serviceSlug } = useParams<{ serviceSlug?: string }>();
-  const navigate = useNavigate();
+  const navigate = useLanguageNavigate();
   const headerRef = useRef<HTMLElement>(null);
   const isHeaderVisible = useScrollReveal(headerRef, { threshold: 0.2 });
   

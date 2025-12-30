@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { getLanguageFromUrl } from './i18n.ts';
 import { useGSAP } from "./components/hooks/useGSAP.tsx";
@@ -17,6 +18,7 @@ import ParticleBackground from './components/ParticleBackground.tsx';
 import FloatingElements from './components/FloatingElements.tsx';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
 import CommandPalette from './components/CommandPalette.tsx';
+import LanguageMeta from './components/LanguageMeta.tsx';
 import { Page } from './types.ts';
 import { faviconController } from './src/utils/faviconController';
 
@@ -445,9 +447,12 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
     return (
-        <Router>
-            <AppContent />
-        </Router>
+        <HelmetProvider>
+            <Router>
+                <LanguageMeta />
+                <AppContent />
+            </Router>
+        </HelmetProvider>
     );
 };
 

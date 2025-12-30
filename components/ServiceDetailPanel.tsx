@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
 import { Service, Page } from "../types.ts";
 import { PROJECTS } from "../constants.tsx";
 
@@ -13,7 +13,7 @@ interface ServiceDetailPanelProps {
 
 const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClose, onNavigate }) => {
   const { t } = useTranslation('about');
-  const navigate = useNavigate();
+  const navigate = useLanguageNavigate();
 
   // Close on Escape key
   useEffect(() => {

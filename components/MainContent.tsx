@@ -24,12 +24,27 @@ const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView, onN
     <div className={`${isMobileView ? 'pb-32' : 'p-8 md:p-12'}`}>
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
+          {/* Root redirects */}
           <Route path="/" element={<Navigate to="/about" replace />} />
+          <Route path="/:lang" element={<Navigate to="about" replace />} />
+          
+          {/* Language-aware routes */}
           <Route path="/about/:serviceSlug?" element={<About />} />
+          <Route path="/:lang/about/:serviceSlug?" element={<About />} />
+          
           <Route path="/resume" element={<Resume />} />
+          <Route path="/:lang/resume" element={<Resume />} />
+          
           <Route path="/projects" element={<Projects />} />
+          <Route path="/:lang/projects" element={<Projects />} />
+          
           <Route path="/projects/:slug" element={<Projects />} />
+          <Route path="/:lang/projects/:slug" element={<Projects />} />
+          
           <Route path="/contact" element={<Contact />} />
+          <Route path="/:lang/contact" element={<Contact />} />
+          
+          {/* Fallback */}
           <Route path="*" element={<Navigate to="/about" replace />} />
         </Routes>
       </Suspense>

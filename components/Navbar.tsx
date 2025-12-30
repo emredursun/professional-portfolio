@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import Magnetic from './Magnetic.tsx';
 import { Page } from '../types.ts';
 
@@ -91,7 +91,21 @@ const NavButton: React.FC<{
 ));
 
 const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent }) => {
-    const { t } = useTranslation('common');
+    const { t, i18n } = useTranslation('common');
+    const location = useLocation();
+    
+    // Get current language from i18n (which syncs with URL and localStorage)
+    const currentLang = i18n.language || 'en';
+    
+    // Compute language-aware paths
+    const languagePrefix = currentLang !== 'en' ? `/${currentLang}` : '';
+    const languageAwarePages = useMemo(() => 
+        pages.map(page => ({
+            ...page,
+            path: languagePrefix + page.path
+        })),
+        [languagePrefix]
+    );
     
     return (
         <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none pb-[env(safe-area-inset-bottom)]">
@@ -100,7 +114,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent
                 <div className="max-w-[520px] mx-auto px-[14px] py-[5px]">
                     <ul className="flex justify-between items-center gap-0.5">
                         {/* Navigation buttons */}
-                        {pages.map((page) => (
+                        {languageAwarePages.map((page) => (
                             <NavButton
                                 key={page.id}
                                 page={page}

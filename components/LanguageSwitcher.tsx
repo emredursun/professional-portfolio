@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LANGUAGES, updateLanguageUrl } from '../i18n.ts';
+import { LANGUAGES } from '../i18n.ts';
 
 interface LanguageSwitcherProps {
   isMobileView?: boolean;
@@ -10,6 +11,8 @@ interface LanguageSwitcherProps {
 
 const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ isMobileView = false, theme = 'light' }) => {
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -19,15 +22,24 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ isMobileView = fals
     // 1. Close dropdown immediately
     setIsOpen(false);
 
-    // 2. Update URL and document lang IMMEDIATELY to prevent App.tsx from reverting
-    updateLanguageUrl(lang);
-    document.documentElement.lang = lang;
+    // 2. Calculate new path with language prefix
+    const { pathname } = location;
+    
+    // Remove current language prefix if exists
+    let pathWithoutLang = pathname.replace(/^\/(nl|tr)/, '');
+    
+    // Add new language prefix (unless English)
+    const newPath = lang === 'en' 
+      ? pathWithoutLang || '/about'
+      : `/${lang}${pathWithoutLang || '/about'}`;
 
     // 3. Change language in i18n
     i18n.changeLanguage(lang).catch(err => {
         console.error('Failed to load language:', err);
-        // Optional: Revert URL if failed, but unlikely
     });
+
+    // 4. Navigate to new path with React Router
+    navigate(newPath, { replace: true });
   };
 
   // Close dropdown when clicking outside

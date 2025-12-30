@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
@@ -67,10 +67,23 @@ const getGreetingKey = (): string => {
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) => {
-    const { t } = useTranslation(['common', 'sidebar']);
+    const { t, i18n } = useTranslation(['common', 'sidebar']);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [greetingKey, setGreetingKey] = useState(getGreetingKey());
     const sidebarRef = useRef<HTMLElement>(null);
+
+    // Get current language from i18n (which syncs with URL and localStorage)
+    const currentLang = i18n.language || 'en';
+    
+    // Compute language-aware paths
+    const languagePrefix = currentLang !== 'en' ? `/${currentLang}` : '';
+    const languageAwarePages = useMemo(() => 
+        pages.map(page => ({
+            ...page,
+            path: languagePrefix + page.path
+        })),
+        [languagePrefix]
+    );
 
     // Update greeting every minute
     useEffect(() => {
@@ -387,7 +400,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
                 {!isMobileView && (
                     <nav className="flex-1 mb-8">
                         <ul className="space-y-2">
-                            {pages.map((page) => (
+                            {languageAwarePages.map((page) => (
                                 <NavButton
                                     key={page.label}
                                     page={page}
