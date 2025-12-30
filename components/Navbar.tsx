@@ -53,7 +53,7 @@ const NavButton: React.FC<{
                        }
                     }
                 }}
-                className={({ isActive }) => `relative flex flex-col items-center justify-center w-full min-w-[54px] py-[5px] rounded-xl transition-all duration-300 group touch-manipulation ${
+                className={({ isActive }) => `relative flex flex-col items-center justify-center w-full min-w-[54px] py-[3px] rounded-xl transition-all duration-300 group touch-manipulation ${
                     isActive 
                         ? 'text-yellow-600 dark:text-yellow-400' 
                         : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
@@ -111,7 +111,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent
         <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none pb-[env(safe-area-inset-bottom)]">
             {/* Single unified navbar container - flush with device navigation */}
             <div className="pointer-events-auto w-full bg-white/95 dark:bg-[#1c1c1e]/95 backdrop-blur-2xl border-t border-gray-200/80 dark:border-white/[0.08] shadow-[0_-2px_10px_rgba(0,0,0,0.08)] dark:shadow-[0_-2px_16px_rgba(0,0,0,0.4)]">
-                <div className="max-w-[520px] mx-auto px-[14px] py-[5px]">
+                <div className="max-w-[520px] mx-auto px-[14px] py-[3px]">
                     <ul className="flex justify-between items-center gap-0.5">
                         {/* Navigation buttons */}
                         {languageAwarePages.map((page) => (

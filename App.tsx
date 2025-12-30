@@ -42,7 +42,7 @@ const ScrollHandler: React.FC<{
        return;
      }
 
-    const isAboutMobile = isMobileView && (location.pathname === '/about' || location.pathname === '/');
+    const isAboutMobile = isMobileView && (location.pathname === '/about' || location.pathname === '/' || location.pathname.endsWith('/about'));
     
     if (isAboutMobile) {
       // Scroll window
@@ -101,7 +101,7 @@ const ScrollHandler: React.FC<{
         
         // Scroll Button Logic
         let shouldShowButton = false;
-        const isAbout = location.pathname === '/about' || location.pathname === '/';
+        const isAbout = location.pathname === '/about' || location.pathname === '/' || location.pathname.endsWith('/about');
   
         if (modalContent) {
           shouldShowButton = scrolled > 10;
@@ -308,7 +308,7 @@ const AppContent: React.FC = () => {
        return;
      }
 
-     const isAboutMobile = isMobileView && (location.pathname === '/about' || location.pathname === '/');
+     const isAboutMobile = isMobileView && (location.pathname === '/about' || location.pathname === '/' || location.pathname.endsWith('/about'));
      if (isAboutMobile) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
      } else {
