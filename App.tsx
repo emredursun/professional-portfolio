@@ -35,6 +35,11 @@ const ScrollHandler: React.FC<{
 
   // Handle Scroll behaviors based on route
   const scrollToTop = useCallback(() => {
+     // Check if we should preserve scroll
+     if (location.state && (location.state as any).preserveScroll) {
+       return;
+     }
+
      // Check if modal is open first
      const modalContent = document.querySelector('[data-modal-content]') as HTMLElement;
      if (modalContent) {

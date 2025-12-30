@@ -480,7 +480,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
         service={selectedService}
         onClose={() => {
           setSelectedService(null);
-          navigate('/about');
+          navigate('/about', { state: { preserveScroll: true } });
         }}
         onNavigate={(direction) => {
           if (!selectedService) return;
