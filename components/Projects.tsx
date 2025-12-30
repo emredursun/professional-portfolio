@@ -5,6 +5,7 @@ import { Project } from "../types.ts";
 import { PROJECTS } from "../constants.tsx";
 import ProjectModal from "./ProjectModal.tsx";
 import { useTranslatedProjects, useTranslatedProject } from "./hooks/useTranslatedProject.tsx";
+import SEO from "./SEO.tsx";
 
 const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
   project,
@@ -201,6 +202,10 @@ const Projects: React.FC = () => {
 
   return (
     <section className="animate-fade-in h-full flex flex-col">
+      <SEO 
+        title={t('title')} 
+        description={t('meta.description', "Explore my portfolio of automation projects, including test frameworks, CI/CD pipelines, and full-stack applications.")}
+      />
       <header className="mb-10">
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-8">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">{t('titleHighlight')} </span>

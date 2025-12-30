@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TimelineItem, Skill, Language } from '../types.ts';
 import { SKILLS, TECH_STACK, LANGUAGES } from '../constants.tsx';
+import SEO from "./SEO.tsx";
 
 
 const TimelineCard: React.FC<{ item: TimelineItem; isFirst?: boolean; isLast?: boolean }> = ({ item, isFirst, isLast }) => {
@@ -92,6 +93,10 @@ const Resume: React.FC = () => {
 
     return (
         <section className="animate-fade-in">
+            <SEO 
+                title={t('title')} 
+                description={t('meta.description', "View my resume, skills, and professional experience as a Test Automation Engineer.")}
+            />
             <header className="mb-12">
                 <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">{t('titleHighlight')} </span>

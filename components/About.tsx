@@ -10,6 +10,7 @@ import { SERVICES } from "../constants.tsx";
 import Tilt3D from "./Tilt3D.tsx";
 import { useScrollReveal } from "./hooks/useScrollReveal.tsx";
 import ServiceDetailPanel from "./ServiceDetailPanel.tsx";
+import SEO from "./SEO.tsx";
 
 const BentoCard: React.FC<{
   children: React.ReactNode;
@@ -244,6 +245,11 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
 
   return (
     <section ref={containerRef} className="animate-fade-in">
+      <SEO 
+        title={t('title')} 
+        description={t('introText', "Emre Dursun — ISTQB® Certified Full-Stack Automation Engineer based in the Netherlands.")}
+        overrideTitle={true}
+      />
       <motion.header
         ref={headerRef}
         className="mb-12"

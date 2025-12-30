@@ -15,7 +15,7 @@ import PrintableResume from './components/PrintableResume.tsx';
 import SmoothScroll from './components/SmoothScroll.tsx';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
 import CommandPalette from './components/CommandPalette.tsx';
-import LanguageMeta from './components/LanguageMeta.tsx';
+import SEO from './components/SEO.tsx';
 import { Page } from './types.ts';
 import { faviconController } from './src/utils/faviconController';
 
@@ -297,10 +297,10 @@ const AppContent: React.FC = () => {
             ease: "none",
             scrollTrigger: {
                  trigger: document.body,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1.5,
-                scroller: scroller
+                 start: "top top",
+                 end: "bottom bottom",
+                 scrub: 1.5,
+                 scroller: scroller
             }
         });
     }
@@ -458,7 +458,7 @@ const App: React.FC = () => {
     return (
         <HelmetProvider>
             <Router>
-                <LanguageMeta />
+                <SEO />
                 <AppContent />
             </Router>
         </HelmetProvider>

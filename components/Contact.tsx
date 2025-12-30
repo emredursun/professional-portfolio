@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SOCIAL_LINKS } from '../constants.tsx';
+import SEO from "./SEO.tsx";
 
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -246,6 +247,10 @@ const Contact: React.FC = () => {
 
     return (
         <section>
+            <SEO 
+                title={t('title')} 
+                description={t('meta.description', "Get in touch with me for automation engineering opportunities or collaboration.")}
+            />
             <header className="mb-12">
                 <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">{t('title')} </span>

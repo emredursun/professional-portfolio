@@ -44,14 +44,13 @@ function generateHreflangLinks(basePath = '') {
 /**
  * Generate URL entry with hreflang links
  */
-function generateUrlEntry(loc, priority, changefreq, basePath = '') {
-    const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-    return `    <url>
-        <loc>${loc}</loc>
-${generateHreflangLinks(basePath)}
-        <lastmod>${currentDate}</lastmod>
-        <changefreq>${changefreq}</changefreq>
-        <priority>${priority}</priority>
+function generateUrlEntry(url, priority, changefreq, lastmod) {
+    return `
+  <url>
+    <loc>${url}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
     </url>`;
 }
 
@@ -62,15 +61,25 @@ function generateSitemap() {
     const urls = [];
 
     // Main page (English - default)
-    urls.push(generateUrlEntry(`${SITE_URL}/`, '1.0', 'weekly', ''));
+    // Define all routes
+    const routes = ['', '/about', '/resume', '/projects', '/contact'];
 
-    // Turkish version
-    urls.push(generateUrlEntry(`${SITE_URL}/tr`, '0.9', 'weekly', ''));
+    // Generate URLs for each language and route
+    routes.forEach(route => {
+        const lastMod = new Date().toISOString();
 
-    // Dutch version
-    urls.push(generateUrlEntry(`${SITE_URL}/nl`, '0.9', 'weekly', ''));
+        // English (Default)
+        urls.push(generateUrlEntry(`${SITE_URL}${route}`, '0.9', 'weekly', lastMod));
+        
+        // Other languages
+        ['tr', 'nl'].forEach(lang => {
+             // Avoid double slash for root path if route is empty
+            const langPath = route ? `/${lang}${route}` : `/${lang}`;
+            urls.push(generateUrlEntry(`${SITE_URL}${langPath}`, '0.9', 'weekly', lastMod));
+        });
+    });
 
-    return `<?xml version="1.0" encoding="UTF-8"?>
+    return `<?xml="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls.join('\n')}
