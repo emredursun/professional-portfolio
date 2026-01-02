@@ -359,6 +359,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                       <img
                         src={project.testimonial.avatar}
                         alt={project.testimonial.author}
+                        loading="lazy"
+                        decoding="async"
                         className="w-16 h-16 rounded-full object-cover"
                       />
                     )}

@@ -50,7 +50,7 @@ i18n
     },
 
     // Show missing keys in development
-    saveMissing: true,
+    saveMissing: false,
     missingKeyHandler: (lng, ns, key) => {
       // Only log in development (check for localhost or development mode)
       if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {

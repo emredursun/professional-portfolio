@@ -169,6 +169,8 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
                                     <img
                                         src={PERSONAL_INFO.avatar}
                                         alt={PERSONAL_INFO.name}
+                                        loading="lazy"
+                                        decoding="async"
                                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 select-none"
                                         style={{
                                             imageRendering: 'auto',

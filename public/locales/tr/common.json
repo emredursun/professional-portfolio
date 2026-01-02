@@ -31,5 +31,8 @@
     "phone": "Telefon",
     "location": "Konum",
     "locationValue": "Amsterdam, Hollanda"
+  },
+  "meta": {
+    "description": "ISTQB® Sertifikalı Full-Stack Otomasyon Mühendisi. Otomasyon çerçeveleri, CI/CD, API, UI ve veritabanı testleri konusunda uzman. Hollanda'da yerleşik."
   }
 }

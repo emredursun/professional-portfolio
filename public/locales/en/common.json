@@ -31,5 +31,8 @@
     "phone": "Phone",
     "location": "Location",
     "locationValue": "Amsterdam, Netherlands"
+  },
+  "meta": {
+    "description": "ISTQB® Certified Full-Stack Automation Engineer specializing in automation frameworks, CI/CD, API, UI & DB testing. Based in the Netherlands."
   }
 }
