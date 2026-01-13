@@ -3,7 +3,7 @@
   "titleHighlight": "Ben",
   "introText": "Java, Selenium, Cucumber, Postman ve Rest Assured kullanarak UI, API ve veritabanı testlerinde deneyimli ISTQB® Sertifikalı Full-Stack Otomasyon Mühendisi. Ölçeklenebilir otomasyon framework'leri tasarlayıp CI/CD pipeline'larına entegre etme konusunda uzman. Bankacılık, sağlık ve e-ticaret sektörlerindeki Agile ekiplerde kaliteli release'lere katkı sağlama konusunda kanıtlanmış bir deneyime sahip. Felemenkçe, İngilizce ve Türkçe (anadil) dillerinde akıcı.",
   "introQuote": "Hassasiyetle yönlendirilen, merakla beslenen. Manuel test süreçlerini otomatik, tekrarlanabilir sistemlere dönüştürerek ekiplerin net geri bildirim almasını ve güvenle teslim etmesini sağlıyorum.",
-  "story": "Yolculuğum, sistematik problem çözme konusunda disiplinli bir yaklaşım kazandıran Matematik altyapısıyla başladı. Bu analitik bakış açısı, e-ticaret alanındaki ilk başarılarımı mümkün kıldı; burada global satış stratejilerini optimize ettim. Ardından asıl tutkum olan Yazılım Kalite Mühendisliğine yöneldim. Yıllar içinde manuel test uzmanlığından Full-Stack Otomasyon Mühendisliğine evrilirken, ING'deki kompleks bankacılık sistemleri için dayanıklı test framework'leri tasarladım ve AI destekli geliştirmenin sınırlarını keşfetmeye devam ediyorum. Benim için kodlama sadece işlevsellikten ibaret değil—ekiplerin güvenle inovasyon yapmasını sağlayan güvenilir ve ölçeklenebilir ekosistemler inşa etmektir.",
+  "story": "Yolculuğum, sistematik problem çözme konusunda disiplinli bir yaklaşım kazandıran Matematik altyapısıyla başladı. Bu analitik bakış açısı, e-ticaret alanındaki ilk başarılarımı mümkün kıldı; burada global satış stratejilerini optimize ettim. Ardından asıl tutkum olan Yazılım Kalite Mühendisliğine yöneldim. Yıllar içinde manuel test uzmanlığından Full-Stack Otomasyon Mühendisliğine evrilirken, ING'deki kompleks bankacılık sistemleri için dayanıklı test framework'leri tasarladım ve AI destekli geliştirmenin sınırlarını keşfetmeye devam ediyorum. Benim için kodlama sadece işlevsellikten ibaret değil—ekiplerin güvenle inovasyon yapmasını sağlayan güvenilir ve ölçeklenebilir ekosistemler inşa etmektir. Son dönemde uzmanlığımı AI Governance Architecture alanında derinleştiriyor; regülasyon uyumluluğu (regulatory compliance) ile gelişmiş multi-agent sistemleri birleştiren Trust-Grade platform mimarileri üzerine çalışıyorum.",
   "yearsExperience": "Yıllık Deneyim",
   "myJourney": "Yolculuğum",
   "whatIDo": "Neler Yapıyorum",
@@ -20,7 +20,8 @@
     "testAutomation": {
       "title": "Test Otomasyon Mimarisi",
       "description": "Yazılım kalitesini ve güvenilirliğini sağlamak için sağlam, ölçeklenebilir uçtan uca (end-to-end) otomasyon framework'leri oluşturma.",
-      "badge": "Ana Uzmanlık",
+      "badge": "Sertifikalı",
+      "expertiseLabel": "Ana Uzmanlık",
       "fullDescription": "İşinizle birlikte ölçeklenebilen kurumsal seviyede test otomasyon framework'leri tasarlama ve uygulama konusunda uzmanım. Selenium ve Playwright ile UI testlerinden, REST Assured ile API doğrulamasına kadar, bug'ları canlı ortama (production) ulaşmadan yakalayan kapsamlı çözümler geliştiriyorum. Framework'lerim, Page Object Model (POM) ile Clean Architecture prensiplerini takip ederek bakımı kolay ve ekiplerin hızlıca adapte olabileceği bir yapı sunar.",
       "keyBenefits": [
         "Paralel çalıştırma (parallel execution) ile regresyon test süresini %60+ azaltın",
@@ -34,6 +35,7 @@
       "title": "CI/CD & DevOps Entegrasyonu",
       "description": "Dağıtımı hızlandırmak ve riski azaltmak için sürekli entegrasyon boru hatları tasarlama ve sürdürme.",
       "badge": "Sertifikalı",
+      "expertiseLabel": "Ana Uzmanlık",
       "fullDescription": "Yavaş ve manuel deployment süreçlerini hızlı, güvenilir ve otomatik iş akışlarına dönüştüren CI/CD pipeline'ları kuruyor ve optimize ediyorum. Jenkins'ten Azure DevOps'a kadar, her commit'te otomatik testleri çalıştıran, geliştiricilere anlık geri bildirim sağlayan ve production ortamına güvenle deployment yapan pipeline'lar yapılandırıyorum. Yaklaşımım Docker ile containerization, otomatik test çalıştırma ve kapsamlı raporlamayı içerir.",
       "keyBenefits": [
         "Deployment döngülerini haftalardan saatlere indirin",
@@ -80,6 +82,22 @@
         "Yüksek ROI sağlayan sponsorlu reklam kampanyaları",
         "Çoklu platform yönetimi (Amazon, eBay, AutoDoc)",
         "Bilinçli karar verme için analiz ve raporlama"
+      ]
+    },
+    "aiGovernance": {
+      "title": "AI Yönetişim Mimarisi",
+      "description": "Çok ajanlı orkestrasyon, bilişsel zeka katmanları ve Anti-Dopamin Mühendisliği ile Trust-Grade AI platformları tasarlama. Şu anda BeSync — bir Sosyal Senkronizasyon Protokolü geliştiriyorum.",
+      "badge": "Sertifikalı",
+      "expertiseLabel": "Trust-Grade AI",
+      "fullDescription": "Çok ajanlı orkestrasyon, bilişsel zeka katmanları ve düzenleyici uyumluluk çerçeveleri (EU AI Act, IEEE EAD, ISO 42001) ile Trust-Grade AI platformları tasarlıyorum. Yaklaşımım, kullanıcı güvenini ve güvenliğini optimizasyon metriklerinin önünde tutar. Amiral gemim BeSync, The Focus Pulse (biyolüminesan dikkat görselleştirmesi), Anti-Dopamin Mühendisliği ve Privacy-First tasarımı içeren bir Sosyal Senkronizasyon Protokolüdür. Platform, 5 özelleşmiş ajan (Persona, Matchmaking, Safety, UX, Growth + Alignment Engine), 3 bilişsel katman (Intelligence, Audit, Emotion) ve EU AI Act, GDPR, OECD, IEEE EAD ve ISO/IEC 42001 ile tam uyumluluk tarafından desteklenmektedir.",
+      "keyBenefits": [
+        "5 Özelleşmiş Ajan (Persona, Matchmaking, Safety, UX, Growth + Alignment Engine)",
+        "3 Bilişsel Katman (Intelligence, Audit, Emotion)",
+        "5 Düzenleyici Standart (EU AI Act, GDPR, OECD, IEEE EAD, ISO/IEC 42001)",
+        "Operating Constraints: Trust > Optimization, Safety > Growth, Explainability > Performance",
+        "9 Hata Modu + 5 Kurtarma Prosedürü",
+        "L1-L5 Etik Eskalasyon Yolu",
+        "✓ Sertifika ID: BESYNC-TGAI-20260112-001"
       ]
     },
     "details": {

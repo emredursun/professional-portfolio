@@ -100,7 +100,8 @@ export const SERVICES: Service[] = [
       "Building robust, scalable end-to-end automation frameworks to ensure software quality and reliability.",
     tags: ["Java", "Selenium", "Playwright", "Cypress", "Cucumber"],
     featured: true,
-    badge: "Core Expertise",
+    badge: "Certified",
+    expertiseLabel: "Core Expertise",
     fullDescription:
       "I specialize in designing and implementing enterprise-grade test automation frameworks that scale with your business. From UI testing with Selenium and Playwright to API validation with REST Assured, I build comprehensive solutions that catch bugs before they reach production. My frameworks follow clean architecture principles with Page Object Model, making them maintainable and easy for teams to adopt.",
     keyBenefits: [
@@ -122,6 +123,7 @@ export const SERVICES: Service[] = [
     tags: ["Jenkins", "Azure DevOps", "Docker", "Git", "Maven"],
     featured: false,
     badge: "Certified",
+    expertiseLabel: "Core Expertise",
     fullDescription:
       "I build and optimize CI/CD pipelines that transform slow, manual deployment processes into fast, reliable automated workflows. From Jenkins to Azure DevOps, I configure pipelines that run automated tests on every commit, provide instant feedback to developers, and deploy to production with confidence. My approach includes containerization with Docker, automated test execution, and comprehensive reporting.",
     keyBenefits: [
@@ -202,6 +204,33 @@ export const SERVICES: Service[] = [
     ],
     relatedProjects: ["ecommerce-sales-optimization"],
     yearsOfExperience: 4
+  },
+  {
+    icon: <i className="fas fa-brain"></i>,
+    title: "AI Governance Architecture",
+    slug: "ai-governance-architecture",
+    description:
+      "Architecting Trust-Grade AI platforms with multi-agent orchestration, cognitive intelligence layers, and Anti-Dopamine Engineering. Currently developing BeSync — a Social Synchronization Protocol.",
+    tags: ["AI GOVERNANCE", "Python", "Antigravity-IDE", "SOTA Agent Architecture", "Core Intelligence System", "Cognitive Intelligence", "Trust-Grade AI Architecture", "Multi-Agent Orchestration"],
+    featured: true,
+    badge: "Certified",
+    expertiseLabel: "Trust-Grade AI",
+    fullDescription:
+      "I design Trust-Grade AI platforms with multi-agent orchestration, cognitive intelligence layers, and regulatory compliance frameworks (EU AI Act, IEEE EAD, ISO 42001). My approach prioritizes user trust and safety over optimization metrics. My flagship project BeSync is a Social Synchronization Protocol featuring The Focus Pulse (bioluminescent attention visualization), Anti-Dopamine Engineering, and Privacy-First design. The platform is powered by 5 specialized agents (Persona, Matchmaking, Safety, UX, Growth + Alignment Engine), 3 cognitive layers (Intelligence, Audit, Emotion), and full compliance with EU AI Act, GDPR, OECD, IEEE EAD, and ISO/IEC 42001.",
+    keyBenefits: [
+      "5 Specialized Agents (Persona, Matchmaking, Safety, UX, Growth + Alignment Engine)",
+      "3 Cognitive Layers (Intelligence, Audit, Emotion)",
+      "5 Regulatory Standards (EU AI Act, GDPR, OECD, IEEE EAD, ISO/IEC 42001)",
+      "Operating Constraints: Trust > Optimization, Safety > Growth, Explainability > Performance",
+      "9 Failure Modes + 5 Recovery Procedures",
+      "L1-L5 Ethics Escalation Path",
+      "✓ Certificate ID: BESYNC-TGAI-20260112-001"
+    ],
+    relatedProjects: ["besync-trust-grade-ai"],
+    yearsOfExperience: 1,
+    certificateId: "BESYNC-TGAI-20260112-001",
+    certificationDate: "January 2026",
+    certificateImage: "/images/trust-grade-certificate.png"
   }
 ];
 
@@ -307,6 +336,7 @@ export const EXPERIENCE: TimelineItem[] = [
 
 export const SKILLS: Skill[] = [
   { name: "Test Automation", level: 95 },
+  { name: "AI Governance", level: 90 },
   { name: "Java & Ecosystem", level: 90 },
   { name: "Selenium & Cucumber", level: 90 },
   { name: "Playwright & Cypress (TS)", level: 85 },
@@ -754,5 +784,85 @@ export const PROJECTS: Project[] = [
           icon: <i className="fas fa-ad text-green-500"></i>
       }
     ]
+  },
+  {
+    title: "BeSync — Social Synchronization Protocol",
+    slug: "besync-trust-grade-ai",
+    category: "AI Architecture",
+    image: "/images/trust-grade-certificate.png",
+    description:
+      "A Social Synchronization Protocol creating meaningful connections through The Focus Pulse, Anti-Dopamine Engineering, and Privacy-First design. Powered by a Trust-Grade AI Platform with multi-agent cognitive architecture.",
+    detailedDescription:
+      "BeSync is a Social Synchronization Protocol that creates meaningful connections through innovative features: The Focus Pulse (bioluminescent attention visualization), Anti-Dopamine Engineering (no infinite scroll, no addiction loops), and Privacy is Luxury (GDPR+ compliance, Zero-Knowledge Proofs on roadmap). Core Promises include Opt-In Auto-Renewal (default OFF), No Ads Ever, and Flex Premium (pause anytime). The platform is powered by a Trust-Grade AI system I architected, featuring 5 specialized agents (Persona, Matchmaking, Safety, UX, Growth + Alignment Engine), 3 cognitive layers (Intelligence, Audit, Emotion), and full compliance with EU AI Act, GDPR, OECD AI Principles, IEEE EAD, and ISO/IEC 42001.",
+    technologies: [
+      "React 19",
+      "TypeScript",
+      "NestJS",
+      "PostgreSQL",
+      "Python",
+      "FastAPI",
+      "TensorFlow",
+      "Google Cloud",
+      "Docker"
+    ],
+    url: "#",
+    github: "https://github.com/emredursun/besync",
+    hackernoon_link: "https://github.com/emredursun/besync/blob/develop/.agent/trust-grade-alignment-report.md",
+    metrics: [
+      "The Focus Pulse — Killer Feature",
+      "5 Specialized AI Agents",
+      "3 Cognitive Intelligence Layers",
+      "5 Regulatory Standards Compliance"
+    ],
+    features: [
+      {
+        title: "The Focus Pulse",
+        description:
+          "Bioluminescent attention visualization — our killer feature that shows genuine engagement without compromising privacy.",
+        icon: <i className="fas fa-heart-pulse text-pink-500"></i>
+      },
+      {
+        title: "Anti-Dopamine Engineering",
+        description:
+          "No infinite scroll, no addiction loops. Designed to respect users' time and mental health.",
+        icon: <i className="fas fa-brain text-purple-500"></i>
+      },
+      {
+        title: "Privacy is Luxury",
+        description:
+          "GDPR+ compliance, Zero-Knowledge Proofs on roadmap. No ads ever, no data selling.",
+        icon: <i className="fas fa-lock text-cyan-500"></i>
+      },
+      {
+        title: "Trust-Grade AI Architecture",
+        description:
+          "5 specialized agents, 3 cognitive layers, L1-L5 ethics escalation. Trust > Optimization, Safety > Growth.",
+        icon: <i className="fas fa-shield-alt text-green-500"></i>
+      }
+    ],
+    results: [
+      {
+        metric: "Core Promises",
+        value: "3 Immutable",
+        description: "Opt-In Auto-Renewal (OFF by default), No Ads Ever, Flex Premium"
+      },
+      {
+        metric: "AI Agents",
+        value: "5 Specialized",
+        description: "Persona, Matchmaking, Safety, UX, Growth + Alignment Engine"
+      },
+      {
+        metric: "Compliance",
+        value: "5 Standards",
+        description: "EU AI Act, GDPR, OECD, IEEE EAD, ISO/IEC 42001"
+      },
+      {
+        metric: "Official Certification",
+        value: "Trust-Grade",
+        description: "Certificate ID: BESYNC-TGAI-20260112-001"
+      }
+    ],
+    tags: ["Social Protocol", "Trust-Grade AI", "Anti-Dopamine", "Privacy-First", "Focus Pulse"],
+    year: 2026
   },
 ];

@@ -92,13 +92,34 @@ const BentoCard: React.FC<{
   );
 };
 
-const ServiceItem: React.FC<{ service: Service; onClick: () => void }> = ({ service, onClick }) => {
+// Extended service type with originalBadge for i18n support
+type ExtendedService = Service & { originalBadge?: string };
+
+const ServiceItem: React.FC<{ service: ExtendedService; onClick: () => void }> = ({ service, onClick }) => {
+  // Use originalBadge for logic, badge for display
+  const isCertified = service.originalBadge === "Certified" || service.badge === "Certified";
+  
   return (
     <div onClick={onClick} className="flex flex-col h-full cursor-pointer">
       {/* Enhanced Icon Container with Badge */}
       <div className="mb-5 relative">
-        {/* Featured Star Badge */}
-        {service.featured && (
+        {/* Certified Badge - Shows for services with badge="Certified" */}
+        {isCertified && (
+          <motion.div
+            className="absolute -top-3 -right-3 z-10"
+            initial={{ scale: 0, rotate: -15 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+          >
+            <div className="flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 rounded-full shadow-[0_2px_10px_rgba(251,191,36,0.5)] border border-amber-300">
+              <i className="fas fa-check-circle text-[10px] text-amber-800"></i>
+              <span className="text-[9px] font-black uppercase tracking-wider text-amber-900">{service.badge}</span>
+            </div>
+          </motion.div>
+        )}
+        
+        {/* Featured Star Badge - Shows for other featured services */}
+        {service.featured && !isCertified && (
           <motion.div
             className="absolute -top-2 -right-2 w-7 h-7 bg-gradient-to-br from-yellow-400 to-orange-500 dark:from-yellow-400 dark:to-orange-600 rounded-full flex items-center justify-center shadow-lg z-10"
             initial={{ scale: 0, rotate: -180 }}
@@ -120,11 +141,11 @@ const ServiceItem: React.FC<{ service: Service; onClick: () => void }> = ({ serv
         {service.title}
       </h4>
       
-      {/* Expertise Badge */}
-      {service.badge && (
+      {/* Expertise Badge - Uses expertiseLabel if available, fallback to badge */}
+      {(service.expertiseLabel || service.badge) && (
         <div className="mb-3">
           <span className="inline-block px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-yellow-400/10 to-orange-500/10 dark:from-neon-cyan/10 dark:to-neon-purple/10 text-yellow-700 dark:text-neon-cyan border border-yellow-500 dark:border-neon-cyan rounded-full">
-            {service.badge}
+            {service.expertiseLabel || service.badge}
           </span>
         </div>
       )}
@@ -185,12 +206,14 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
 
   // Get translated services
   const translatedServices = useMemo(() => {
-    const serviceKeys = ['testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce'] as const;
+    const serviceKeys = ['testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce', 'aiGovernance'] as const;
     return SERVICES.map((service, index) => ({
       ...service,
       title: t(`services.${serviceKeys[index]}.title`),
       description: t(`services.${serviceKeys[index]}.description`),
       badge: t(`services.${serviceKeys[index]}.badge`),
+      expertiseLabel: t(`services.${serviceKeys[index]}.expertiseLabel`, { defaultValue: service.expertiseLabel || '' }),
+      originalBadge: service.badge, // Preserve original badge for conditional logic
       fullDescription: t(`services.${serviceKeys[index]}.fullDescription`),
       keyBenefits: t(`services.${serviceKeys[index]}.keyBenefits`, { returnObjects: true }) as string[],
     }));

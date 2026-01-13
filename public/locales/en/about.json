@@ -3,7 +3,7 @@
   "titleHighlight": "Me",
   "introText": "ISTQB® Certified Full-Stack Automation Engineer with experience in UI, API, and database testing using Java, Selenium, Cucumber, Postman, and Rest Assured. Skilled in designing scalable automation frameworks and integrating them with CI/CD pipelines. Proven track record of contributing to high-quality releases in Agile teams across banking, healthcare, and e-commerce domains. Fluent in Dutch, English, and Turkish (native).",
   "introQuote": "Driven by precision, powered by curiosity. I transform manual testing corridors into automated, repeatable systems so teams have clear feedback and confidence to ship.",
-  "story": "My journey began with a foundation in Mathematics, cultivating a disciplined approach to systematic problem-solving. This analytical mindset drove my initial success in e-commerce, where I optimized global sales strategies, before transitioning into my true passion: Software Quality Engineering. Over the years, I have evolved from a manual tester to a Full-Stack Automation Engineer, architecting resilient testing frameworks for complex banking systems at ING and continuously exploring the frontiers of AI-driven development. For me, coding is not just about functional correctness—it's about crafting reliable, scalable ecosystems that empower teams to innovate with confidence.",
+  "story": "My journey began with a foundation in Mathematics, cultivating a disciplined approach to systematic problem-solving. This analytical mindset drove my initial success in e-commerce, where I optimized global sales strategies, before transitioning into my true passion: Software Quality Engineering. Over the years, I have evolved from a manual tester to a Full-Stack Automation Engineer, architecting resilient testing frameworks for complex banking systems at ING and continuously exploring the frontiers of AI-driven development. For me, coding is not just about functional correctness—it's about crafting reliable, scalable ecosystems that empower teams to innovate with confidence. Recently, I have deepened my expertise in AI Governance Architecture, passionately designing Trust-Grade platforms that harmonize regulatory compliance with advanced multi-agent intelligence.",
   "yearsExperience": "Years Experience",
   "myJourney": "My Journey",
   "whatIDo": "What I Do",
@@ -20,7 +20,8 @@
     "testAutomation": {
       "title": "Test Automation Architecture",
       "description": "Building robust, scalable end-to-end automation frameworks to ensure software quality and reliability.",
-      "badge": "Core Expertise",
+      "badge": "Certified",
+      "expertiseLabel": "Core Expertise",
       "fullDescription": "I specialize in designing and implementing enterprise-grade test automation frameworks that scale with your business. From UI testing with Selenium and Playwright to API validation with REST Assured, I build comprehensive solutions that catch bugs before they reach production. My frameworks follow clean architecture principles with Page Object Model, making them maintainable and easy for teams to adopt.",
       "keyBenefits": [
         "Reduce regression testing time by 60%+ with parallel execution",
@@ -34,6 +35,7 @@
       "title": "CI/CD & DevOps Integration",
       "description": "Designing and maintaining continuous integration pipelines to accelerate deployment and reduce risk.",
       "badge": "Certified",
+      "expertiseLabel": "Core Expertise",
       "fullDescription": "I build and optimize CI/CD pipelines that transform slow, manual deployment processes into fast, reliable automated workflows. From Jenkins to Azure DevOps, I configure pipelines that run automated tests on every commit, provide instant feedback to developers, and deploy to production with confidence. My approach includes containerization with Docker, automated test execution, and comprehensive reporting.",
       "keyBenefits": [
         "Accelerate deployment cycles from weeks to hours",
@@ -80,6 +82,22 @@
         "High-ROI sponsored advertising campaigns",
         "Multi-platform management (Amazon, eBay, AutoDoc)",
         "Analytics and reporting for informed decision-making"
+      ]
+    },
+    "aiGovernance": {
+      "title": "AI Governance Architecture",
+      "description": "Architecting Trust-Grade AI platforms with multi-agent orchestration, cognitive intelligence layers, and Anti-Dopamine Engineering. Currently developing BeSync — a Social Synchronization Protocol.",
+      "badge": "Certified",
+      "expertiseLabel": "Trust-Grade AI",
+      "fullDescription": "I design Trust-Grade AI platforms with multi-agent orchestration, cognitive intelligence layers, and regulatory compliance frameworks (EU AI Act, IEEE EAD, ISO 42001). My approach prioritizes user trust and safety over optimization metrics. My flagship project BeSync is a Social Synchronization Protocol featuring The Focus Pulse (bioluminescent attention visualization), Anti-Dopamine Engineering, and Privacy-First design. The platform is powered by 5 specialized agents (Persona, Matchmaking, Safety, UX, Growth + Alignment Engine), 3 cognitive layers (Intelligence, Audit, Emotion), and full compliance with EU AI Act, GDPR, OECD, IEEE EAD, and ISO/IEC 42001.",
+      "keyBenefits": [
+        "5 Specialized Agents (Persona, Matchmaking, Safety, UX, Growth + Alignment Engine)",
+        "3 Cognitive Layers (Intelligence, Audit, Emotion)",
+        "5 Regulatory Standards (EU AI Act, GDPR, OECD, IEEE EAD, ISO/IEC 42001)",
+        "Operating Constraints: Trust > Optimization, Safety > Growth, Explainability > Performance",
+        "9 Failure Modes + 5 Recovery Procedures",
+        "L1-L5 Ethics Escalation Path",
+        "✓ Certificate ID: BESYNC-TGAI-20260112-001"
       ]
     },
     "details": {

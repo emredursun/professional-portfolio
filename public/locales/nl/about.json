@@ -3,7 +3,7 @@
   "titleHighlight": "Mij",
   "introText": "ISTQB® Gecertificeerde Full-Stack Automation Engineer met ervaring in UI-, API- en databasetesten met gebruik van Java, Selenium, Cucumber, Postman en Rest Assured. Vaardig in het ontwerpen van schaalbare automatiseringsframeworks en het integreren ervan met CI/CD-pipelines. Bewezen staat van dienst in het bijdragen aan hoogwaardige releases in Agile-teams binnen de bank-, gezondheidszorg- en e-commercesectoren. Vloeiend in Nederlands, Engels en Turks (moedertaal).",
   "introQuote": "Gedreven door precisie, gevoed door nieuwsgierigheid. Ik transformeer handmatige testgangen in geautomatiseerde, herhaalbare systemen zodat teams duidelijke feedback krijgen en met vertrouwen kunnen leveren.",
-  "story": "Mijn reis begon met een achtergrond in Wiskunde, wat de basis legde voor een gedisciplineerde en systematische aanpak van probleemoplossing. Deze analytische mindset dreef mijn vroege successen in e-commerce, waar ik wereldwijde verkoopstrategieën optimaliseerde, voordat ik mijn ware passie vond: Software Quality Engineering. In de loop der jaren ben ik gegroeid van handmatig tester naar Full-Stack Automation Engineer. Ik heb veerkrachtige testframeworks ontworpen voor complexe banksystemen bij ING en verken voortdurend de mogelijkheden van AI-gestuurde ontwikkeling. Voor mij draait coderen niet alleen om functionaliteit, maar om het bouwen van betrouwbare, schaalbare ecosystemen die teams in staat stellen om met vertrouwen te innoveren.",
+  "story": "Mijn reis begon met een achtergrond in Wiskunde, wat de basis legde voor een gedisciplineerde en systematische aanpak van probleemoplossing. Deze analytische mindset dreef mijn vroege successen in e-commerce, waar ik wereldwijde verkoopstrategieën optimaliseerde, voordat ik mijn ware passie vond: Software Quality Engineering. In de loop der jaren ben ik gegroeid van handmatig tester naar Full-Stack Automation Engineer. Ik heb veerkrachtige testframeworks ontworpen voor complexe banksystemen bij ING en verken voortdurend de mogelijkheden van AI-gestuurde ontwikkeling. Voor mij draait coderen niet alleen om functionaliteit, maar om het bouwen van betrouwbare, schaalbare ecosystemen die teams in staat stellen om met vertrouwen te innoveren. Recentelijk heb ik mijn expertise verdiept in AI Governance Architectuur, waarbij ik gepassioneerd Trust-Grade platforms ontwerp die regulatory compliance harmoniseren met geavanceerde multi-agent intelligentie.",
   "yearsExperience": "Jaar Ervaring",
   "myJourney": "Mijn Reis",
   "whatIDo": "Wat Ik Doe",
@@ -20,7 +20,8 @@
     "testAutomation": {
       "title": "Test Automation Architectuur",
       "description": "Bouwen van robuuste, schaalbare end-to-end automatiseringsframeworks om softwarekwaliteit en betrouwbaarheid te waarborgen.",
-      "badge": "Kernexpertise",
+      "badge": "Gecertificeerd",
+      "expertiseLabel": "Kernexpertise",
       "fullDescription": "Ik ben gespecialiseerd in het ontwerpen en implementeren van enterprise-grade test automation frameworks die meeschalen met uw bedrijf. Van UI-testing met Selenium en Playwright tot API-validatie met REST Assured; ik bouw uitgebreide oplossingen die bugs vangen voordat ze productie bereiken. Mijn frameworks volgen Clean Architecture principes met het Page Object Model, waardoor ze onderhoudbaar zijn en gemakkelijk te adopteren door teams.",
       "keyBenefits": [
         "Verkort regressietesttijd met >60% door parallelle uitvoering",
@@ -34,6 +35,7 @@
       "title": "CI/CD & DevOps Integratie",
       "description": "Ontwerpen en onderhouden van continuous integration pipelines om deployment te versnellen en risico's te verminderen.",
       "badge": "Gecertificeerd",
+      "expertiseLabel": "Kernexpertise",
       "fullDescription": "Ik bouw en optimaliseer CI/CD pipelines die trage, handmatige deployment-processen transformeren in snelle, betrouwbare geautomatiseerde workflows. Van Jenkins tot Azure DevOps configureer ik pipelines die bij elke commit geautomatiseerde tests draaien, direct feedback geven aan developers en met vertrouwen naar productie deployen. Mijn aanpak omvat containerisatie met Docker, geautomatiseerde testuitvoering en uitgebreide rapportage.",
       "keyBenefits": [
         "Versnel deployment-cycli van weken naar uren",
@@ -80,6 +82,22 @@
         "Hoge ROI gesponsorde advertentiecampagnes",
         "Multi-platform beheer (Amazon, eBay, AutoDoc)",
         "Analytics en rapportage voor geïnformeerde besluitvorming"
+      ]
+    },
+    "aiGovernance": {
+      "title": "AI Governance Architectuur",
+      "description": "Ontwerpen van Trust-Grade AI-platforms met multi-agent orkestratie, cognitieve intelligentielagen en Anti-Dopamine Engineering. Momenteel BeSync aan het ontwikkelen — een Social Synchronization Protocol.",
+      "badge": "Gecertificeerd",
+      "expertiseLabel": "Trust-Grade AI",
+      "fullDescription": "Ik ontwerp Trust-Grade AI-platforms met multi-agent orkestratie, cognitieve intelligentielagen en regelgevende compliance frameworks (EU AI Act, IEEE EAD, ISO 42001). Mijn aanpak geeft prioriteit aan gebruikersvertrouwen en veiligheid boven optimalisatiemetrieken. Mijn vlaggenschipproject BeSync is een Social Synchronization Protocol met The Focus Pulse (bioluminescente aandachtsvisualisatie), Anti-Dopamine Engineering en Privacy-First design. Het platform wordt aangedreven door 5 gespecialiseerde agents (Persona, Matchmaking, Safety, UX, Growth + Alignment Engine), 3 cognitieve lagen (Intelligence, Audit, Emotion) en volledige compliance met EU AI Act, GDPR, OECD, IEEE EAD en ISO/IEC 42001.",
+      "keyBenefits": [
+        "5 Gespecialiseerde Agents (Persona, Matchmaking, Safety, UX, Growth + Alignment Engine)",
+        "3 Cognitieve Lagen (Intelligence, Audit, Emotion)",
+        "5 Regelgevende Standaarden (EU AI Act, GDPR, OECD, IEEE EAD, ISO/IEC 42001)",
+        "Operating Constraints: Trust > Optimization, Safety > Growth, Explainability > Performance",
+        "9 Faalmodi + 5 Herstelprocedures",
+        "L1-L5 Ethisch Escalatiepad",
+        "✓ Certificaat ID: BESYNC-TGAI-20260112-001"
       ]
     },
     "details": {

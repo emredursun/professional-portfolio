@@ -223,7 +223,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                     </div>
                     <div>
                       <p className="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wide">
-                        {t('services.details.yearsOfExperience')}
+                        {service.certificationDate ? `Certified ${service.certificationDate}` : t('services.details.yearsOfExperience')}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
                         {t('services.details.provenExpertise')}
@@ -231,6 +231,69 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                     </div>
                   </div>
                 </div>
+              )}
+
+              {/* Certificate Section */}
+              {(service.certificateId || service.certificateImage) && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="p-6 rounded-2xl bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 dark:from-amber-900/10 dark:via-yellow-900/10 dark:to-orange-900/10 border-2 border-amber-300 dark:border-amber-700/50 shadow-[0_0_20px_rgba(251,191,36,0.15)] dark:shadow-[0_0_25px_rgba(251,191,36,0.1)]"
+                >
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                    <i className="fas fa-certificate text-amber-500"></i>
+                    Official Certification
+                  </h3>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 items-start">
+                    {/* Certificate Thumbnail */}
+                    {service.certificateImage && (
+                      <div className="flex-shrink-0 w-32 h-24 rounded-lg overflow-hidden border-2 border-amber-400 dark:border-amber-600 shadow-[0_0_15px_rgba(251,191,36,0.3)] dark:shadow-[0_0_20px_rgba(251,191,36,0.2)] hover:shadow-[0_0_25px_rgba(251,191,36,0.5)] transition-shadow duration-300">
+                        <img
+                          src={service.certificateImage}
+                          alt="Trust-Grade AI Certificate"
+                          loading="lazy"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    
+                    {/* Certificate Details */}
+                    <div className="flex-1 space-y-2">
+                      {service.certificateId && (
+                        <div className="flex items-center gap-2">
+                          <i className="fas fa-check-circle text-green-500"></i>
+                          <span className="text-sm font-mono text-gray-700 dark:text-gray-300">
+                            {service.certificateId}
+                          </span>
+                        </div>
+                      )}
+                      
+                      {service.certificationDate && (
+                        <div className="flex items-center gap-2">
+                          <i className="fas fa-calendar-check text-amber-500"></i>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                            Certified: {service.certificationDate}
+                          </span>
+                        </div>
+                      )}
+                      
+                      {/* View Certificate Button */}
+                      {service.certificateImage && (
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => window.open(service.certificateImage, '_blank')}
+                          className="mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 group"
+                        >
+                          <i className="fas fa-external-link-alt text-xs"></i>
+                          <span>View Certificate</span>
+                        </motion.button>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
               )}
 
               {/* Related Projects */}
