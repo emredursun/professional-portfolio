@@ -112,7 +112,10 @@ export const SERVICES: Service[] = [
       "Maintainable frameworks following industry best practices"
     ],
     relatedProjects: ["qa-smart-test-lab", "playwright-testing-project"],
-    yearsOfExperience: 5
+    yearsOfExperience: 5,
+    certificateId: "ISTQB-CTFL-CERTIFIED",
+    certificationDate: "June 2023",
+    certificateImage: "/images/istqb-foundation-level-certificate.png"
   },
   {
     icon: <i className="fas fa-sync-alt"></i>,
@@ -134,7 +137,10 @@ export const SERVICES: Service[] = [
       "Detailed reports and notifications for team visibility"
     ],
     relatedProjects: ["banking-payment-automation", "qa-smart-test-lab"],
-    yearsOfExperience: 4
+    yearsOfExperience: 4,
+    certificateId: "DOCKER-FND-CERTIFIED",
+    certificationDate: "2024",
+    certificateImage: "/images/docker-foundations-professional-certificate.png"
   },
   {
     icon: <i className="fas fa-server"></i>,
