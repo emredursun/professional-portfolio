@@ -1,7 +1,7 @@
 // Service Worker for Emre Dursun Portfolio
 // Version: 1.0.0
 
-const CACHE_NAME = 'ed-portfolio-v1';
+const CACHE_NAME = 'ed-portfolio-v2';
 const OFFLINE_URL = '/';
 
 // Assets to cache immediately on install

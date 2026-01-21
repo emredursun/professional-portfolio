@@ -111,7 +111,7 @@ export const SERVICES: Service[] = [
       "Integrate seamlessly with CI/CD pipelines for continuous feedback",
       "Maintainable frameworks following industry best practices"
     ],
-    relatedProjects: ["qa-smart-test-lab", "playwright-testing-project"],
+    relatedProjects: ["aegisqa", "qa-smart-test-lab", "playwright-testing-project"],
     yearsOfExperience: 5,
     certificateId: "ISTQB-CTFL-CERTIFIED",
     certificationDate: "June 2023",
@@ -160,7 +160,7 @@ export const SERVICES: Service[] = [
       "Security testing for authentication and authorization",
       "Automated contract testing between services"
     ],
-    relatedProjects: ["hospital-portal-testing", "banking-payment-automation"],
+    relatedProjects: ["aegisqa", "hospital-portal-testing", "banking-payment-automation"],
     yearsOfExperience: 5
   },
   {
@@ -870,5 +870,93 @@ export const PROJECTS: Project[] = [
     ],
     tags: ["Social Protocol", "Trust-Grade AI", "Anti-Dopamine", "Privacy-First", "Focus Pulse"],
     year: 2026
+  },
+  {
+    title: "AegisQA — AI-Driven Full Stack Test Automation",
+    slug: "aegisqa",
+    category: "Test Automation",
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+    description:
+      "A production-grade, AI-assisted full stack test automation platform combining UI, API, database, and performance validation into a single, scalable quality system.",
+    detailedDescription:
+      "AegisQA is a portfolio-grade test automation platform showcasing senior/architect-level automation expertise. It demonstrates Full Stack Testing (UI + API + Database integration), Clean Architecture (Page Object Model, modular design), AI-Powered test generation with Google Gemini, and enterprise-level best practices. The platform combines Playwright (TypeScript) for UI automation, REST Assured (Java) for API automation, PostgreSQL for database validation, k6 for performance testing, and Allure for reporting. All tests are integrated into GitHub Actions pipelines with automated execution, reporting, and quality gates.",
+    technologies: [
+      "Playwright",
+      "TypeScript",
+      "REST Assured",
+      "Java",
+      "PostgreSQL",
+      "k6",
+      "Google Gemini",
+      "Allure",
+      "GitHub Actions",
+      "Docker"
+    ],
+    url: "#",
+    github: "https://github.com/emredursun/aegisqa",
+    metrics: [
+      "Full Stack Testing (UI + API + DB)",
+      "AI-Powered Test Generation",
+      "Clean Architecture & POM Pattern",
+      "CI/CD with GitHub Actions"
+    ],
+    gallery: [
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+    ],
+    duration: "Ongoing",
+    role: "Lead Automation Architect",
+    team: "Solo Project",
+    year: 2025,
+    challenge:
+      "Modern applications require comprehensive quality assurance across multiple layers—UI, API, and database—but most teams struggle with fragmented testing tools, manual test creation, and lack of AI-assisted intelligence to scale their coverage efficiently.",
+    solution:
+      "Designed and built AegisQA as a unified full-stack test automation platform that integrates Playwright for UI testing, REST Assured for API validation, and PostgreSQL for database checks. Implemented an AI-assisted module powered by Google Gemini that analyzes existing test coverage, generates meaningful new test scenarios, and refactors existing tests for optimal maintainability.",
+    features: [
+      {
+        title: "Full Stack Testing",
+        description:
+          "Unified platform covering UI (Playwright), API (REST Assured), and Database (PostgreSQL) testing with seamless cross-layer validation.",
+        icon: <i className="fas fa-layer-group text-blue-400"></i>
+      },
+      {
+        title: "AI-Powered Test Generation",
+        description:
+          "Intelligent test generation with Google Gemini that analyzes coverage, creates new scenarios, and optimizes existing tests automatically.",
+        icon: <i className="fas fa-brain text-purple-400"></i>
+      },
+      {
+        title: "Clean Architecture",
+        description:
+          "Page Object Model with clear separation between UI tests, API tests, database validation, shared utilities, and AI-assisted generation.",
+        icon: <i className="fas fa-sitemap text-green-400"></i>
+      },
+      {
+        title: "CI/CD Integration",
+        description:
+          "Fully integrated with GitHub Actions pipelines featuring automated execution, Allure reporting, and configurable quality gates.",
+        icon: <i className="fas fa-rocket text-orange-400"></i>
+      }
+    ],
+    results: [
+      {
+        metric: "Test Layers",
+        value: "4 Integrated",
+        description: "UI, API, Database, and Performance testing in a single platform"
+      },
+      {
+        metric: "AI Capabilities",
+        value: "Google Gemini",
+        description: "Intelligent test generation, coverage analysis, and optimization"
+      },
+      {
+        metric: "Architecture",
+        value: "Production-Grade",
+        description: "Clean architecture principles with enterprise-level best practices"
+      }
+    ],
+    tags: ["Full Stack Testing", "AI-Powered", "Playwright", "REST Assured", "Clean Architecture"],
   },
 ];
