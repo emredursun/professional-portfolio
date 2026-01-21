@@ -420,8 +420,12 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
                   {t('myJourney')}
                 </h3>
                 <p 
+                  className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
+                  dangerouslySetInnerHTML={{ __html: t('storyPart1') }}
+                />
+                <p 
                   className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
-                  dangerouslySetInnerHTML={{ __html: t('story') }}
+                  dangerouslySetInnerHTML={{ __html: t('storyPart2') }}
                 />
               </div>
               <div className="hidden lg:block w-px h-32 bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent"></div>
