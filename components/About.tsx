@@ -322,13 +322,15 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
         >
           <BentoCard className="bg-white dark:bg-neon-bg border-gray-100 dark:border-neon-border">
             <i className="fas fa-quote-left text-5xl text-gray-100 dark:text-neon-border absolute top-6 right-8 transition-colors duration-500 group-hover:text-accent-yellow/10"></i>
-            <p className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-neon-text-primary leading-tight mb-8 relative z-10">
-              "{t('introQuote')}"
-            </p>
+            <p 
+              className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-neon-text-primary leading-tight mb-8 relative z-10 [&_strong]:text-accent-yellow dark:[&_strong]:text-neon-cyan [&_strong]:font-extrabold"
+              dangerouslySetInnerHTML={{ __html: `"${t('introQuote')}"` }}
+            />
             <div className="mt-auto relative z-10">
-              <p className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-base font-medium">
-                {t('introText')}
-              </p>
+              <p 
+                className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-base font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
+                dangerouslySetInnerHTML={{ __html: t('introText') }}
+              />
             </div>
           </BentoCard>
         </motion.div>
@@ -417,9 +419,10 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
                   <span className="w-2.5 h-2.5 bg-accent-yellow dark:bg-neon-cyan rounded-full shadow-[0_0_10px_rgba(251,191,36,0.5)] dark:shadow-neon-cyan animate-pulse"></span>
                   {t('myJourney')}
                 </h3>
-                <p className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium">
-                  {t('story')}
-                </p>
+                <p 
+                  className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
+                  dangerouslySetInnerHTML={{ __html: t('story') }}
+                />
               </div>
               <div className="hidden lg:block w-px h-32 bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent"></div>
               <div className="w-full lg:w-1/3 flex flex-col sm:flex-row lg:flex-col gap-4">
