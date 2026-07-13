@@ -477,6 +477,68 @@ export const TECH_STACK: TechCategory[] = [
 
 export const PROJECTS: Project[] = [
   {
+    title: "Quilyn — Certification Exam Prep",
+    slug: "quilyn-exam-prep",
+    category: "Open Source",
+    image: "/images/quilyn-thumbnail.png",
+    description:
+      "A free, offline-capable study app for IT certification exams — Pega (PCBA, PCSA) and Tricentis Tosca (AS1, AS2, API). Structured study guides, practice quizzes, timed mock exams, and spaced-repetition review. Built with zero dependencies and installable as a PWA.",
+    detailedDescription:
+      "Quilyn is a dependency-free study platform I built to prepare for Pega and Tricentis Tosca certifications, then open-sourced so other learners revising the same exams can benefit. It spans 5 learning tracks and 100+ modules, each with concept cards, worked examples, exam-pitfall warnings, and a practice quiz. The app is written in vanilla JavaScript with a reactive ES6 Proxy state store, a hash-based SPA router, and content authored entirely as JSON — new modules render automatically with no code changes. It ships as an installable PWA with a service worker for full offline use, a Leitner 5-box spaced-repetition (SRS) engine for flashcard review, full timed mock exams with per-domain breakdowns, global search across every module, keyboard-driven quizzes, a study-activity heatmap, and JSON progress backup/restore across devices. No account, no tracking — all progress stays in the browser.",
+    technologies: [
+      "Vanilla JavaScript",
+      "ES6 Proxy State",
+      "PWA / Service Worker",
+      "HTML5",
+      "CSS3",
+      "JSON Content Model",
+      "No External Dependencies",
+    ],
+    url: "https://emredursun.github.io/quilyn/",
+    github: "https://github.com/emredursun/quilyn",
+    hackernoon_link: "https://github.com/emredursun/quilyn",
+    year: 2026,
+    role: "Creator & Sole Developer",
+    team: "Solo Project",
+    metrics: [
+      "5 Tracks · 100+ Modules",
+      "Spaced-Repetition (Leitner 5-Box) Review",
+      "Timed Mock Exams with Domain Breakdown",
+      "Offline-First PWA · Zero Dependencies",
+    ],
+    challenge:
+      "Certification candidates juggle scattered PDFs, videos, and quizzes with no unified, offline way to study, self-test, and track retention — and most exam-prep tools sit behind paywalls or accounts.",
+    solution:
+      "Designed a single offline-first app that unifies structured study guides, practice quizzes, full mock exams, and spaced-repetition review behind one clean interface. Content lives in plain JSON so the material scales without touching code, and a service worker makes the entire app usable offline after the first visit — free, account-free, and privacy-preserving.",
+    features: [
+      {
+        title: "Study Guides & Practice Quizzes",
+        description:
+          "Concept cards, analogies, worked examples, and exam-pitfall warnings per module, plus single/multi-select quizzes with instant feedback, hints, rationales, and keyboard shortcuts.",
+        icon: <i className="fas fa-book-open text-blue-400"></i>,
+      },
+      {
+        title: "Timed Mock Exams",
+        description:
+          "Full 90-minute exams at the real 65% pass mark with a live timer and per-domain score breakdown to pinpoint weak areas.",
+        icon: <i className="fas fa-stopwatch text-purple-400"></i>,
+      },
+      {
+        title: "Spaced-Repetition Review",
+        description:
+          "A Leitner 5-box SRS engine with confidence calibration surfaces the cards you're most likely to forget, so revision time compounds.",
+        icon: <i className="fas fa-brain text-pink-400"></i>,
+      },
+      {
+        title: "Offline-First PWA",
+        description:
+          "Installable app with a service worker for full offline use, global Ctrl/⌘K search, dark/light themes, a study heatmap, and JSON progress backup/restore across devices.",
+        icon: <i className="fas fa-wifi text-green-400"></i>,
+      },
+    ],
+    tags: ["Open Source", "PWA", "EdTech", "Vanilla JS", "Live"],
+  },
+  {
     title: "QASmartTestLab",
     slug: "qa-smart-test-lab",
     category: "Test Automation",
