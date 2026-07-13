@@ -539,6 +539,190 @@ export const PROJECTS: Project[] = [
     tags: ["Open Source", "PWA", "EdTech", "Vanilla JS", "Live"],
   },
   {
+    title: "PathForge — Career Intelligence Platform",
+    slug: "pathforge-career-intelligence",
+    category: "AI Architecture",
+    image: "/images/pathforge-thumbnail.png",
+    description:
+      "An AI-powered career intelligence platform that decodes a professional's “Career DNA” — matching skills, trajectory, and ambitions to real opportunities. Built with Next.js 15, FastAPI, and a pgvector semantic engine powered by Claude and Voyage AI.",
+    detailedDescription:
+      "PathForge democratizes enterprise-grade career intelligence — Skills Graphs, Market Signals, and Predictive Analytics — for every professional, not just those inside large corporations. It is a full-stack, AI-native product: a Next.js 15 + TailwindCSS v4 web experience backed by a FastAPI (Python 3.12) service that orchestrates LLM pipelines over Claude Sonnet 4 and Gemini Flash, with Voyage AI v3 embeddings stored in PostgreSQL 16 + pgvector for semantic matching. Redis handles JWT blacklisting and an ARQ task queue, authentication is stateless via access/refresh JWTs, and the whole system ships through GitHub Actions quality gates to Vercel (web) and Railway (API). The result is a career platform where opportunities are built around the person — 'not just another job board.'",
+    technologies: [
+      "Next.js 15",
+      "FastAPI (Python 3.12)",
+      "PostgreSQL + pgvector",
+      "Claude Sonnet 4",
+      "Voyage AI Embeddings",
+      "Redis",
+      "TailwindCSS v4",
+      "Docker",
+    ],
+    url: "https://pathforge.eu",
+    github: "https://github.com/pathforge-labs/PathForge",
+    hackernoon_link: "https://pathforge.eu",
+    year: 2026,
+    role: "Founder & Full-Stack AI Engineer",
+    team: "Solo Project",
+    metrics: [
+      "Semantic Matching (pgvector + Voyage AI)",
+      "LLM Pipelines (Claude Sonnet 4 · Gemini Flash)",
+      "Next.js 15 + FastAPI Full-Stack",
+      "CI/CD to Vercel + Railway",
+    ],
+    challenge:
+      "Enterprise career intelligence — skills graphs, market signals, predictive analytics — has always been locked inside large organizations, while everyone else is left with keyword-matching job boards that ignore trajectory and ambition.",
+    solution:
+      "Built an AI-native platform that models each professional's 'Career DNA' and matches it against live market signals using vector search. A FastAPI backend orchestrates multi-model LLM pipelines and Voyage AI embeddings over pgvector, while a Next.js 15 frontend delivers the experience — all deployed through automated CI/CD quality gates.",
+    features: [
+      {
+        title: "Career DNA™ Engine",
+        description:
+          "Models skills, trajectory, and ambitions as a semantic profile, then matches it to opportunities via pgvector similarity search.",
+        icon: <i className="fas fa-dna text-cyan-400"></i>,
+      },
+      {
+        title: "Multi-Model AI Pipelines",
+        description:
+          "FastAPI orchestrates Claude Sonnet 4 and Gemini Flash with Voyage AI v3 embeddings for analysis, matching, and personalized strategy.",
+        icon: <i className="fas fa-brain text-purple-400"></i>,
+      },
+      {
+        title: "Production Architecture",
+        description:
+          "Next.js 15 + TailwindCSS v4 frontend, PostgreSQL 16 + pgvector, Redis queue/cache, and stateless JWT auth.",
+        icon: <i className="fas fa-server text-blue-400"></i>,
+      },
+      {
+        title: "Automated Delivery",
+        description:
+          "GitHub Actions quality gates ship the web app to Vercel and the API to Railway on every merge.",
+        icon: <i className="fas fa-rocket text-green-400"></i>,
+      },
+    ],
+    tags: ["AI", "Full-Stack", "Vector Search", "SaaS", "Live"],
+  },
+  {
+    title: "Devran AI Kit — Trust-Grade AI Framework",
+    slug: "devran-ai-kit",
+    category: "Open Source",
+    image: "/images/devran-kit-thumbnail.png",
+    description:
+      "An open-source, zero-dependency Trust-Grade AI development framework that turns any AI-powered IDE into a virtual engineering team — 26 agents, 39 skills, 25 workflows, and 15 governance rules behind one command.",
+    detailedDescription:
+      "Devran AI Kit is a zero-dependency runtime engine (not a prompt collection) that brings trust-grade governance to AI-assisted software development. Its 43-module core includes a workflow state machine, circuit breaker, error budget, and self-healing CI, and it enforces a 7-phase SDLC through Scope Filters, Ethics Gates, Rigor Profiles (strict/standard/minimal), and Failure Templates. The intelligent agent system routes work across 26 specialized agents with reputation scoring, domain-aware routing, and an Instinct System (confidence-scored pattern memory) loaded on demand via keyword matching. Greenfield and brownfield onboarding workflows generate master documentation, market research, and architecture diagrams. Released under MIT with 1,037 passing tests and zero external dependencies, it installs into VS Code, Cursor, and other AI IDEs with a single command.",
+    technologies: [
+      "JavaScript",
+      "Python",
+      "Node.js",
+      "Zero Dependencies",
+      "MIT License",
+      "VS Code / Cursor",
+    ],
+    url: "https://devran-ai.github.io/kit/",
+    github: "https://github.com/devran-ai/kit",
+    hackernoon_link: "https://github.com/devran-ai/kit",
+    year: 2026,
+    role: "Creator & Maintainer",
+    team: "Solo Project",
+    metrics: [
+      "26 Agents · 39 Skills · 25 Workflows",
+      "1,037 Tests Passing",
+      "Zero External Dependencies",
+      "7-Phase Governed SDLC",
+    ],
+    challenge:
+      "AI coding assistants are powerful but ungoverned — inconsistent quality, no accountability, and 'prompt collections' that break the moment a project grows beyond a toy example.",
+    solution:
+      "Engineered a zero-dependency runtime with a real workflow state machine, circuit breakers, and error budgets, wrapped in a 7-phase governed SDLC. Specialized agents with reputation scoring and confidence-scored instinct memory route work intelligently, while strict/standard/minimal rigor profiles keep output trust-grade at any project scale.",
+    features: [
+      {
+        title: "Zero-Dependency Runtime",
+        description:
+          "A 43-module engine with a workflow state machine, circuit breaker, error budget, and self-healing CI — no external packages.",
+        icon: <i className="fas fa-microchip text-purple-500"></i>,
+      },
+      {
+        title: "Trust-Grade Governance",
+        description:
+          "15 governance rules enforced through a 7-phase SDLC with Scope Filters, Ethics Gates, and strict/standard/minimal Rigor Profiles.",
+        icon: <i className="fas fa-shield-halved text-indigo-500"></i>,
+      },
+      {
+        title: "Intelligent Agent System",
+        description:
+          "26 specialized agents with reputation scoring, domain-aware routing, and a confidence-scored Instinct System for pattern memory.",
+        icon: <i className="fas fa-people-group text-violet-500"></i>,
+      },
+      {
+        title: "One-Command Onboarding",
+        description:
+          "Greenfield/brownfield workflows scaffold master docs, market research, and architecture diagrams; installs into any AI IDE instantly.",
+        icon: <i className="fas fa-terminal text-blue-500"></i>,
+      },
+    ],
+    tags: ["Open Source", "AI Agents", "Developer Tools", "Zero Dependencies", "Live"],
+  },
+  {
+    title: "DeelMarkt — Trust-First P2P Marketplace",
+    slug: "deelmarkt-marketplace",
+    category: "E-commerce",
+    image: "/images/deelmarkt-thumbnail.png",
+    description:
+      "A trust-first Dutch peer-to-peer marketplace — a modern alternative to Marktplaats — with escrow payments, verified users, and secure shipping. Built with Flutter, Supabase, and Mollie, with GDPR/DSA/PSD2 compliance by design.",
+    detailedDescription:
+      "DeelMarkt ('Deel wat je hebt' — share what you have) is a trust-first peer-to-peer marketplace for the Netherlands, positioned as a modern, safer alternative to Marktplaats. The product is built around trust primitives: Mollie-powered escrow payments, verified user identities, and secure shipping, so buyers and sellers can transact with confidence. It is a cross-platform Flutter application backed by Supabase (PostgreSQL) with a TypeScript services layer, engineered from the ground up for European regulatory compliance — GDPR, the Digital Services Act (DSA), and PSD2 — alongside a dedicated design system and an 8-epic delivery roadmap. Currently in active development ahead of public launch.",
+    technologies: [
+      "Flutter",
+      "Dart",
+      "Supabase",
+      "PostgreSQL",
+      "Mollie Payments",
+      "TypeScript",
+    ],
+    url: "https://deelmarkt.com",
+    hackernoon_link: "https://deelmarkt.com",
+    year: 2026,
+    role: "Founder & Lead Developer",
+    team: "Startup Project",
+    metrics: [
+      "Escrow Payments (Mollie)",
+      "Verified Users & Secure Shipping",
+      "GDPR · DSA · PSD2 Compliant by Design",
+      "Cross-Platform Flutter App",
+    ],
+    challenge:
+      "Established classifieds platforms leave buyers and sellers exposed — no escrow, weak verification, and scams that erode trust in peer-to-peer trade.",
+    solution:
+      "Designed a trust-first marketplace where escrow payments, identity verification, and secure shipping are built in, not bolted on. A cross-platform Flutter app on a Supabase backend delivers a fast, consistent experience, and the architecture bakes in GDPR, DSA, and PSD2 compliance from day one.",
+    features: [
+      {
+        title: "Escrow-Protected Payments",
+        description:
+          "Mollie-powered escrow holds funds until delivery is confirmed, removing the biggest risk in peer-to-peer transactions.",
+        icon: <i className="fas fa-lock text-orange-500"></i>,
+      },
+      {
+        title: "Verified, Trusted Users",
+        description:
+          "Identity verification and trust signals keep the marketplace safe and reduce fraud on both sides of a trade.",
+        icon: <i className="fas fa-user-check text-green-500"></i>,
+      },
+      {
+        title: "Compliance by Design",
+        description:
+          "Architected for European regulation — GDPR, Digital Services Act (DSA), and PSD2 — from the first line of code.",
+        icon: <i className="fas fa-scale-balanced text-blue-500"></i>,
+      },
+      {
+        title: "Cross-Platform Flutter App",
+        description:
+          "A single Flutter codebase on a Supabase (PostgreSQL) backend delivers a consistent, fast experience across devices.",
+        icon: <i className="fas fa-mobile-screen text-purple-500"></i>,
+      },
+    ],
+    tags: ["Marketplace", "Flutter", "FinTech", "Startup", "In Development"],
+  },
+  {
     title: "QASmartTestLab",
     slug: "qa-smart-test-lab",
     category: "Test Automation",

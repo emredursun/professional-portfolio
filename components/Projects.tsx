@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Project } from "../types.ts";
@@ -6,6 +6,98 @@ import { PROJECTS } from "../constants.tsx";
 import ProjectModal from "./ProjectModal.tsx";
 import { useTranslatedProjects, useTranslatedProject } from "./hooks/useTranslatedProject.tsx";
 import SEO from "./SEO.tsx";
+
+// Renders technology chips capped to a maximum number of rows, collapsing the
+// overflow into a "+N" badge. Row count is measured from the real rendered
+// widths (via a hidden mirror) so it stays correct regardless of chip length,
+// container width, or breakpoint.
+const MAX_TAG_ROWS = 3;
+
+const chipBaseClass =
+  "text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg border";
+
+const TechTags: React.FC<{ technologies: string[] }> = ({ technologies }) => {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [visibleCount, setVisibleCount] = useState(technologies.length);
+
+  useLayoutEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+
+    const recompute = () => {
+      const mirror = wrap.querySelector<HTMLElement>("[data-tag-mirror]");
+      if (!mirror) return;
+      const chips = Array.from(mirror.children) as HTMLElement[];
+      if (chips.length === 0) return;
+
+      // Collect distinct row top-offsets in order.
+      const rowTops: number[] = [];
+      chips.forEach((chip) => {
+        if (!rowTops.some((t) => Math.abs(t - chip.offsetTop) < 2)) {
+          rowTops.push(chip.offsetTop);
+        }
+      });
+
+      if (rowTops.length <= MAX_TAG_ROWS) {
+        setVisibleCount(technologies.length);
+        return;
+      }
+
+      rowTops.sort((a, b) => a - b);
+      const cutoffTop = rowTops[MAX_TAG_ROWS - 1];
+      const fits = chips.filter((c) => c.offsetTop <= cutoffTop + 1).length;
+      // Drop one chip to leave room for the "+N" badge on the last row.
+      setVisibleCount(Math.max(1, fits - 1));
+    };
+
+    recompute();
+    const ro = new ResizeObserver(recompute);
+    ro.observe(wrap);
+    return () => ro.disconnect();
+  }, [technologies]);
+
+  const hidden =
+    visibleCount < technologies.length ? technologies.length - visibleCount : 0;
+
+  return (
+    <div ref={wrapRef} className="mt-auto relative">
+      {/* Hidden mirror: all chips at real width, out of flow, used only to measure rows. */}
+      <div
+        data-tag-mirror
+        aria-hidden="true"
+        className="flex flex-wrap gap-2 invisible absolute inset-x-0 top-0 pointer-events-none"
+      >
+        {technologies.map((tech) => (
+          <span
+            key={tech}
+            className={`${chipBaseClass} text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/5`}
+          >
+            {tech}
+          </span>
+        ))}
+      </div>
+
+      {/* Visible chips, capped to MAX_TAG_ROWS rows. */}
+      <div className="flex flex-wrap gap-2">
+        {technologies.slice(0, visibleCount).map((tech) => (
+          <span
+            key={tech}
+            className={`${chipBaseClass} text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/5 hover:border-yellow-400 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 hover:text-gray-900 dark:hover:text-neon-cyan hover:scale-105 transition-all duration-300`}
+          >
+            {tech}
+          </span>
+        ))}
+        {hidden > 0 && (
+          <span
+            className={`${chipBaseClass} text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/5`}
+          >
+            +{hidden}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
   project,
@@ -48,22 +140,8 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
           {project.description}
         </p>
 
-        {/* Tags - Pushed to Bottom */}
-        <div className="mt-auto flex flex-wrap gap-2">
-          {project.technologies.slice(0, 5).map((tech) => (
-            <span
-              key={tech}
-              className="text-[10px] font-bold uppercase tracking-wide text-gray-700 dark:text-gray-400 bg-gray-50 dark:bg-white/5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/5 hover:border-yellow-400 dark:hover:border-neon-cyan hover:bg-yellow-50 dark:hover:bg-neon-cyan/10 hover:text-gray-900 dark:hover:text-neon-cyan hover:scale-105 transition-all duration-300"
-            >
-              {tech}
-            </span>
-          ))}
-          {project.technologies.length > 5 && (
-            <span className="text-[10px] font-bold uppercase tracking-wide text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-white/5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/5">
-              +{project.technologies.length - 5}
-            </span>
-          )}
-        </div>
+        {/* Tags - Pushed to Bottom, capped to MAX_TAG_ROWS rows with "+N" overflow */}
+        <TechTags technologies={project.technologies} />
       </div>
     </div>
   );
