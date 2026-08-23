@@ -2,6 +2,9 @@ import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Page } from '../types.ts';
 
+/** Locales that get a URL prefix. Keep in sync with i18n and SEO.tsx. */
+const LOCALES = ['nl', 'tr'] as const;
+
 const About = lazy(() => import('./About.tsx'));
 const Resume = lazy(() => import('./Resume.tsx'));
 const Projects = lazy(() => import('./Projects.tsx'));
@@ -26,24 +29,33 @@ const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView, onN
         <Routes>
           {/* Root redirects */}
           <Route path="/" element={<Navigate to="/about" replace />} />
-          <Route path="/:lang" element={<Navigate to="about" replace />} />
-          
-          {/* Language-aware routes */}
+
+          {/* Default (English, unprefixed) routes */}
           <Route path="/about/:serviceSlug?" element={<About />} />
-          <Route path="/:lang/about/:serviceSlug?" element={<About />} />
-          
           <Route path="/resume" element={<Resume />} />
-          <Route path="/:lang/resume" element={<Resume />} />
-          
           <Route path="/projects" element={<Projects />} />
-          <Route path="/:lang/projects" element={<Projects />} />
-          
           <Route path="/projects/:slug" element={<Projects />} />
-          <Route path="/:lang/projects/:slug" element={<Projects />} />
-          
           <Route path="/contact" element={<Contact />} />
-          <Route path="/:lang/contact" element={<Contact />} />
-          
+
+          {/*
+            Localised routes are enumerated per language instead of using a
+            ":lang" param. A bare ":lang" matches ANY segment, so /anything/about
+            rendered the real About page and emitted a self-referencing canonical
+            for it — an unbounded set of crawlable, duplicate URLs. Listing the
+            supported languages keeps that surface closed; anything else falls
+            through to the catch-all below.
+          */}
+          {LOCALES.map((locale) => (
+            <React.Fragment key={locale}>
+              <Route path={`/${locale}`} element={<Navigate to={`/${locale}/about`} replace />} />
+              <Route path={`/${locale}/about/:serviceSlug?`} element={<About />} />
+              <Route path={`/${locale}/resume`} element={<Resume />} />
+              <Route path={`/${locale}/projects`} element={<Projects />} />
+              <Route path={`/${locale}/projects/:slug`} element={<Projects />} />
+              <Route path={`/${locale}/contact`} element={<Contact />} />
+            </React.Fragment>
+          ))}
+
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/about" replace />} />
         </Routes>

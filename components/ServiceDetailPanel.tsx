@@ -252,7 +252,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                       <div className="flex-shrink-0 w-32 h-24 rounded-lg overflow-hidden border-2 border-amber-400 dark:border-amber-600 shadow-[0_0_15px_rgba(251,191,36,0.3)] dark:shadow-[0_0_20px_rgba(251,191,36,0.2)] hover:shadow-[0_0_25px_rgba(251,191,36,0.5)] transition-shadow duration-300">
                         <img
                           src={service.certificateImage}
-                          alt="Trust-Grade AI Certificate"
+                          alt={`${service.title} certificate`}
                           loading="lazy"
                           className="w-full h-full object-cover"
                         />
@@ -293,6 +293,38 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                       )}
                     </div>
                   </div>
+
+                  {/* Supporting Course Badges */}
+                  {service.certificateBadges && service.certificateBadges.length > 0 && (
+                    <div className="mt-6 pt-5 border-t border-amber-300/60 dark:border-amber-700/40">
+                      <h4 className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+                        <i className="fas fa-award text-amber-500"></i>
+                        Certification Path
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {service.certificateBadges.map((badge) => (
+                          <motion.button
+                            key={badge.image}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => window.open(badge.image, '_blank')}
+                            title={badge.label}
+                            className="flex items-center gap-3 p-2 rounded-lg bg-white/70 dark:bg-white/5 border border-amber-200 dark:border-amber-800/40 hover:border-amber-400 dark:hover:border-amber-600 transition-colors duration-300 text-left group"
+                          >
+                            <img
+                              src={badge.image}
+                              alt={badge.label}
+                              loading="lazy"
+                              className="flex-shrink-0 w-16 h-12 object-cover rounded border border-amber-200 dark:border-amber-800/40"
+                            />
+                            <span className="text-xs font-medium text-gray-700 dark:text-gray-300 line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                              {badge.label}
+                            </span>
+                          </motion.button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               )}
 

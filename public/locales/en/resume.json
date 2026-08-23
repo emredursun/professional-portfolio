@@ -6,7 +6,8 @@
     "experience": "Experience",
     "skills": "Skills",
     "techStack": "Tech Stack",
-    "languages": "Languages"
+    "languages": "Languages",
+    "volunteering": "Volunteering"
   },
   "education": [
     {
@@ -36,7 +37,13 @@
   ],
   "experience": [
     {
-      "date": "Jun 2023 - Sep 2025",
+      "date": "May 2026 - Present",
+      "title": "QA Consultant (Pega & Tricentis Tosca)",
+      "company": "Sopra Steria - Nieuwegein, Utrecht, Netherlands · Hybrid",
+      "description": "QA Consultant in the Sopra Steria Pega Practice (RulesMatter), focused on test automation for Pega applications. Design test coverage, test data, and automation architecture across web UI, enterprise and desktop applications, API chains, and mobile automation using Tricentis Tosca's model-based approach. Combined with Certified Pega Business Architect (CPBA) and Certified Pega System Architect (CPSA) platform expertise, this builds testability into the case design from the start."
+    },
+    {
+      "date": "Sep 2023 - Sep 2025",
       "title": "Automation Engineer (PSS/True International Payments/Ch Dovetail)",
       "company": "ING Bank - Amsterdam, North Holland, Netherlands · Hybrid",
       "description": "As an Automation Test Engineer at ING's TIP Test Center (TTC), I designed and maintained automated end-to-end tests for real-time payment processing within the Dovetail system, a Fiserv payment platform, ensuring transaction accuracy across international branches. My responsibilities included designing test validations for various payment flows, managing and optimizing test data to accelerate deployment, and collaborating closely with development teams and stakeholders to ensure seamless integration with the automation framework."
@@ -84,20 +91,21 @@
       "description": "Played a key role in supporting Fiader's mission through effective volunteer coordination and administrative tasks. Managed volunteer records and scheduled shifts to optimize resource allocation. Assisted in organizing events and training sessions, ensuring all logistics were in place. Acted as a primary point of contact, enhancing communication and volunteer engagement."
     }
   ],
-  "skills": {
-    "testAutomation": "Test Automation",
-    "javaEcosystem": "Java & Ecosystem",
-    "seleniumCucumber": "Selenium & Cucumber",
-    "playwrightCypress": "Playwright & Cypress (TS)",
-    "apiTesting": "API Testing (Rest Assured)",
-    "cicd": "CI/CD (Jenkins & Azure)",
-    "docker": "Docker & Containerization",
-    "sql": "SQL & Databases"
-  },
   "languageLevels": {
     "native": "Native",
     "professional": "Professional (C1)",
     "intermediate": "Intermediate (B2)",
     "beginner": "Beginner (A1)"
-  }
+  },
+  "meta": {
+    "description": "Resume of Emre Dursun: QA Consultant with CPBA, CPSA and Tricentis Tosca Advanced certifications, plus experience at ING on real-time payments."
+  },
+  "volunteering": [
+    {
+      "date": "June 2024 - Present",
+      "title": "Event Coordinator (Volunteer)",
+      "company": "Stichting Kompas voor Diversiteit - Netherlands",
+      "description": "Volunteer coordinator at a foundation running events around diversity, inclusion and intercultural understanding. I handle the logistics (venue, agenda, materials), keep in touch with speakers and attendees, and support the workshops on the day itself. Roughly one event a month."
+    }
+  ]
 }

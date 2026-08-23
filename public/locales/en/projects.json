@@ -272,5 +272,8 @@
         }
       }
     }
+  },
+  "meta": {
+    "description": "Test automation and software projects by Emre Dursun, from banking payment regression suites to open-source AI governance tooling."
   }
 }

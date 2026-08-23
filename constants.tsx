@@ -10,11 +10,13 @@ import {
 
 export const PERSONAL_INFO = {
   name: "Emre Dursun",
-  title: "ISTQB® Certified Automation Engineer",
+  // NOTE: non-breaking space (U+00A0) between "Tricentis" and "Tosca" keeps the
+  // product name from wrapping mid-name in the narrow sidebar badge.
+  title: "QA Consultant — Pega & Tricentis Tosca",
   email: "info.emredursun@gmail.com",
   phone: "+31 6 2878 8948",
   location: "Amsterdam, Netherlands",
-  avatar: "/images/profile.png",
+  avatar: "/images/profile-workspace.png",
   resumeUrl: "#",
 };
 
@@ -22,7 +24,7 @@ export const PERSONAL_INFO = {
 // Available types: 'openToWork' | 'available' | 'freelance' | 'hiring' | 'busy' | 'none'
 export const STATUS_BADGE = {
   enabled: true,           // Set to false to hide the badge completely
-  type: 'openToWork',      // Change this to switch badge type
+  type: 'available',       // Change this to switch badge type
   // Badge styles for each type (colors are Tailwind classes)
   styles: {
     openToWork: {
@@ -93,6 +95,66 @@ export const SOCIAL_LINKS = [
 
 export const SERVICES: Service[] = [
   {
+    icon: <i className="fas fa-diagram-project"></i>,
+    title: "Pega Platform Architecture",
+    slug: "pega-platform-architecture",
+    description:
+      "Designing testable Pega applications from the case model up, certified as both Business Architect and System Architect.",
+    tags: ["Pega Platform", "CPBA", "CPSA", "Case Design", "Low-Code"],
+    featured: true,
+    badge: "Certified",
+    expertiseLabel: "Platform Certified",
+    fullDescription:
+      "Test automation on Pega stays fragile without understanding the platform from the inside, so the Certified Pega Business Architect and Certified Pega System Architect certifications came before the tooling. I work within the Sopra Steria Pega Practice (RulesMatter) on case design, data models, and the platform decisions that determine whether an application can be tested at all. Getting testability into the case design from the start is far cheaper than bolting it on after the fact.",
+    keyBenefits: [
+      "Case design and data modelling reviewed for testability from day one",
+      "Certified Pega Business Architect (CPBA): business rules and case lifecycle",
+      "Certified Pega System Architect (CPSA): data models, integrations, security",
+      "Bridges business analysts and QA with a shared platform vocabulary",
+      "Foundation for model-based automation in Tricentis Tosca"
+    ],
+    relatedProjects: ["quilyn-exam-prep"],
+    certificationDate: "June 2026",
+    certificateImage: "/images/pega-certified-system-architect-cpsa.png",
+    certificateBadges: [
+      { image: "/images/pega-certified-business-architect-cpba.png", label: "Certified Pega Business Architect (CPBA): June 2026" }
+    ]
+  },
+  {
+    icon: <i className="fas fa-vials"></i>,
+    title: "Tricentis Tosca Test Automation",
+    slug: "tricentis-tosca-automation",
+    description:
+      "Model-based test automation across web, API, desktop and mobile. Certified Product Consultant at Advanced proficiency.",
+    tags: ["Tricentis Tosca", "Model-Based Testing", "Test Data Service", "Mobile Automation", "API Testing"],
+    featured: true,
+    badge: "Certified",
+    expertiseLabel: "Advanced Proficiency",
+    fullDescription:
+      "I design test coverage, test data, and automation architecture using Tosca's model-based approach, scanning applications into reusable modules rather than writing brittle scripts. The Product Consultant certification came out of the full 13-course Tricentis Academy learning plan, roughly 63 hours of training, with the exam passed at 93.3%. The path covers web UI (AS1/AS2), API chains, automation beyond the browser through the Excel, PDF, Mail, UIA and WinX engines, requirements-driven TestCase design with risk weighting, stateful test data through the Test Data Service, and mobile automation on the Tricentis Mobile Agent. Combined with Pega platform knowledge, this lets testability be designed in rather than retrofitted.",
+    keyBenefits: [
+      "Model-based automation across web, desktop, API and mobile in one toolchain",
+      "Reusable TestStepBlocks, recovery scenarios and multi-browser execution",
+      "Stateful test data management across distributed test runs (TDS)",
+      "Risk-weighted, requirements-driven TestCase design",
+      "Mobile automation on the Tricentis Mobile Agent, including image-based cases",
+      "Product Consultant certification exam passed at 93.3%"
+    ],
+    relatedProjects: ["quilyn-exam-prep"],
+    certificateId: "C26494",
+    certificationDate: "August 2026",
+    certificateImage: "/images/tricentis-tosca-product-consultant-certificate.png",
+    certificateBadges: [
+      { image: "/images/tricentis-as1-badge.png", label: "AS1 — Automating Web Application Testing" },
+      { image: "/images/tricentis-as2-badge.png", label: "AS2 — Optimizing Test Automation with Centralized Test Data" },
+      { image: "/images/tricentis-api-badge.png", label: "Deep Dive — Automating API Test Cases" },
+      { image: "/images/tricentis-tds1-badge.png", label: "TDS1 — Structuring Test Cases and Test Data" },
+      { image: "/images/tricentis-tds2-badge.png", label: "TDS2 — Managing Stateful Test Data" },
+      { image: "/images/tricentis-ae1-badge.png", label: "AE1 — Automating Beyond Web Applications" },
+      { image: "/images/tricentis-kpi-badge.png", label: "Continuous Testing with Efficient KPI Management" }
+    ]
+  },
+  {
     icon: <i className="fas fa-robot"></i>,
     title: "Test Automation Architecture",
     slug: "test-automation-architecture",
@@ -115,7 +177,10 @@ export const SERVICES: Service[] = [
     yearsOfExperience: 5,
     certificateId: "ISTQB-CTFL-CERTIFIED",
     certificationDate: "June 2023",
-    certificateImage: "/images/istqb-foundation-level-certificate.png"
+    certificateImage: "/images/istqb-foundation-level-certificate.png",
+    certificateBadges: [
+      { image: "/images/ing-java-certificate.png", label: "Java @ ING — internal training, May 2024" }
+    ]
   },
   {
     icon: <i className="fas fa-sync-alt"></i>,
@@ -161,7 +226,9 @@ export const SERVICES: Service[] = [
       "Automated contract testing between services"
     ],
     relatedProjects: ["aegisqa", "hospital-portal-testing", "banking-payment-automation"],
-    yearsOfExperience: 5
+    yearsOfExperience: 5,
+    certificationDate: "April 2024",
+    certificateImage: "/images/ing-api-design-certificate.png"
   },
   {
     icon: <i className="fas fa-laptop-code"></i>,
@@ -246,9 +313,6 @@ export const ABOUT_INTRO =
 export const ABOUT_STORY =
   "I’ve worked across banking and e-commerce domains building API & UI automation, resilient test pipelines, and observability to help teams scale testing without slowing delivery. I enjoy breaking complex flows into simple, testable parts and collaborating cross-functionally to reduce risk.";
 
-export const ABOUT_TEXT =
-  "ISTQB® Certified Full-Stack Automation Engineer with experience in UI, API, and database testing using Java, Selenium, Cucumber, Postman, and Rest Assured. Skilled in designing scalable automation frameworks and integrating them with CI/CD pipelines. Proven track record of contributing to high-quality releases in Agile teams across banking, healthcare, and e-commerce domains. Fluent in Dutch, English, and Turkish (native).";
-
 export const EDUCATION: TimelineItem[] = [
   {
     date: "June 2022 - June 2023",
@@ -280,76 +344,19 @@ export const EDUCATION: TimelineItem[] = [
   },
 ];
 
-export const EXPERIENCE: TimelineItem[] = [
-  {
-    date: "Jun 2023 - Sep 2025",
-    title: "Automation Engineer (PSS/True International Payments/Ch Dovetail)",
-    company: "ING Bank - Amsterdam, North Holland, Netherlands · Hybrid",
-    description:
-      "As an Automation Test Engineer at ING's TIP Test Center (TTC), I designed and maintained automated end-to-end tests for real-time payment processing within the Dovetail system, a Fiserv payment platform, ensuring transaction accuracy across international branches. My responsibilities included designing test validations for various payment flows, managing and optimizing test data to accelerate deployment, and collaborating closely with development teams and stakeholders to ensure seamless integration with the automation framework.",
-  },
-  {
-    date: "Jun 2022 - Jun 2023",
-    title: "Full-Stack Automation Engineer (SDET)",
-    company: "TechPro Education EU - Netherlands · Remote",
-    description:
-      "Developed and managed a comprehensive Automation Framework based on acceptance criteria using Selenium WebDriver, Java, JUnit, and Cucumber. Executed UI, backend, and database tests for a hospital portal, covering functionalities like patient management and appointment scheduling. Performed API testing with Postman and Rest Assured, managed dependencies via Maven, and integrated CI/CD pipelines with Jenkins in an Agile environment.",
-  },
-  {
-    date: "May 2021 - Jan 2023",
-    title: "Manual Tester & e-Commerce Specialist",
-    company: "BSG Auto Parts & Nerex Motors - Amsterdam, Netherlands · On-site",
-    description:
-      "Played a pivotal role at Nerex Motors enhancing e-commerce strategies and product quality. Conducted manual testing on ERP systems to maintain high functionality standards, improved product search visibility on Amazon and eBay, and implemented strategic ad campaigns driving online sales. Successfully managed the Online Channel (AutoDoc) sales process for BSG Auto Parts, fostering B2B growth by developing tailored sales strategies, cultivating strong relationships with key accounts, and negotiating competitive commercial terms.",
-  },
-  {
-    date: "Mar 2019 - Sep 2020",
-    title: "Student Affairs & Content Coordinator",
-    company:
-      "LiveCoding | Online Web Development Bootcamp - Netherlands · Remote",
-    description:
-      "Played a key role in enhancing the student experience at LiveCoding through comprehensive support and engagement initiatives. Delivered tailored counseling to online students, helping them overcome various challenges. Organized and executed virtual activities to strengthen community ties among students. Maintained accurate student records, ensuring compliance with program policies and tracking progress effectively.",
-  },
-  {
-    date: "Jul 2017 - Sep 2020",
-    title: "FerriStar - Evergreen Niches",
-    company: "eBay - Netherlands · Self-employed",
-    description:
-      "Successfully contributed to FerriStar's mission of providing curated best sellers and evergreen essentials. Developed strong relationships with suppliers to ensure a consistent supply of high-quality products. Focused on enhancing customer experience through thoughtful product selection in various categories. Gained expertise in e-commerce and product curation, reinforcing FerriStar's reputation in the market.",
-  },
-  {
-    date: "Sep 2016 - Mar 2017",
-    title: "Mathematics Instructor",
-    company: "Mohammed Al Fatih Schools - El Jadida, Morocco · On-site",
-    description:
-      "Contributed significantly to mathematics instruction focusing on holistic student development. Employed interdisciplinary connections to enhance lesson relevance and student engagement. Collaborated with colleagues to support extracurricular activities and pastoral care initiatives.",
-  },
-  {
-    date: "Sep 2014 - Sep 2016",
-    title: "Mathematics Instructor",
-    company: "LUMINA Educational Institutions - Bucharest, Romania · On-site",
-    description:
-      "I had the privilege of teaching advanced mathematics at LUMINA Educational Institutions, where I focused on fostering student success in a diverse learning environment. Designed and graded internal assessments, providing detailed reports on student progress and predicted grades. Differentiated instruction to support students from various educational backgrounds, maintaining high international standards. Mentored students on their academic pathways, guiding them toward STEM-related university goals.",
-  },
-  {
-    date: "Mar 2012 - Sep 2014",
-    title: "Volunteer Assistant",
-    company: "Fiader - Istanbul, Turkey · Part-time",
-    description:
-      "Played a key role in supporting Fiader's mission through effective volunteer coordination and administrative tasks. Managed volunteer records and scheduled shifts to optimize resource allocation. Assisted in organizing events and training sessions, ensuring all logistics were in place. Acted as a primary point of contact, enhancing communication and volunteer engagement.",
-  },
-];
-
+// Ordered by current career priority (Pega/Tosca focus first), not by level.
 export const SKILLS: Skill[] = [
+  { name: "Tricentis Tosca (Model-Based)", level: 85 },
+  { name: "Pega Platform (CPBA & CPSA)", level: 85 },
   { name: "Test Automation", level: 95 },
-  { name: "AI Governance", level: 90 },
   { name: "Java & Ecosystem", level: 90 },
   { name: "Selenium & Cucumber", level: 90 },
-  { name: "Playwright & Cypress (TS)", level: 85 },
   { name: "API Testing (Rest Assured)", level: 85 },
+  { name: "Playwright & Cypress (TS)", level: 85 },
+  { name: "AI Governance", level: 90 },
   { name: "CI/CD (Jenkins & Azure)", level: 80 },
-  { name: "Docker & Containerization", level: 75 },
   { name: "SQL & Databases", level: 75 },
+  { name: "Docker & Containerization", level: 75 },
 ];
 
 export const LANGUAGES: Language[] = [
@@ -396,6 +403,18 @@ export const TECH_STACK: TechCategory[] = [
         icon: <i className="fab fa-js text-3xl text-blue-500"></i>,
       },
       {
+        name: "JavaScript",
+        icon: <i className="fab fa-square-js text-3xl text-yellow-400"></i>,
+      },
+      {
+        name: "Python",
+        icon: <i className="fab fa-python text-3xl text-blue-400"></i>,
+      },
+      {
+        name: "Spring Boot",
+        icon: <i className="fas fa-leaf text-3xl text-green-500"></i>,
+      },
+      {
         name: "SQL",
         icon: <i className="fas fa-database text-3xl text-blue-400"></i>,
       },
@@ -412,6 +431,14 @@ export const TECH_STACK: TechCategory[] = [
   {
     title: "Test Automation & Frameworks",
     technologies: [
+      {
+        name: "Tricentis Tosca",
+        icon: <i className="fas fa-cubes text-3xl text-blue-600"></i>,
+      },
+      {
+        name: "Pega Platform",
+        icon: <i className="fas fa-diagram-project text-3xl text-indigo-500"></i>,
+      },
       {
         name: "Playwright",
         icon: <i className="fas fa-masks-theater text-3xl text-green-500"></i>,
@@ -443,6 +470,14 @@ export const TECH_STACK: TechCategory[] = [
       {
         name: "Postman",
         icon: <i className="fas fa-rocket text-3xl text-orange-500"></i>,
+      },
+      {
+        name: "Swagger",
+        icon: <i className="fas fa-file-code text-3xl text-green-600"></i>,
+      },
+      {
+        name: "Appium",
+        icon: <i className="fas fa-mobile-screen text-3xl text-purple-500"></i>,
       },
     ],
   },
@@ -616,7 +651,9 @@ export const PROJECTS: Project[] = [
       "Node.js",
       "Zero Dependencies",
       "MIT License",
-      "VS Code / Cursor",
+      "Claude Code",
+      "Cursor",
+      "GitHub Copilot",
     ],
     url: "https://devran-ai.github.io/kit/",
     github: "https://github.com/devran-ai/kit",

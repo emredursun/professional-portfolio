@@ -206,7 +206,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
 
   // Get translated services
   const translatedServices = useMemo(() => {
-    const serviceKeys = ['testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce', 'aiGovernance'] as const;
+    const serviceKeys = ['pegaPlatform', 'toscaAutomation', 'testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce', 'aiGovernance'] as const;
     return SERVICES.map((service, index) => ({
       ...service,
       title: t(`services.${serviceKeys[index]}.title`),
@@ -270,7 +270,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
     <section ref={containerRef} className="animate-fade-in">
       <SEO 
         title={t('title')} 
-        description={t('introText', "Emre Dursun — ISTQB® Certified Full-Stack Automation Engineer based in the Netherlands.")}
+        description={t('meta.description', "QA Consultant in the Sopra Steria Pega Practice, specializing in Pega platform architecture and Tricentis Tosca model-based test automation.")}
         overrideTitle={true}
       />
       <motion.header
@@ -314,13 +314,13 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
       >
         {/* Intro Card - Large */}
         <motion.div
-          className="md:col-span-8"
+          className="md:col-span-8 h-full"
           variants={{
             hidden: { opacity: 0, y: 30 },
             visible: { opacity: 1, y: 0 },
           }}
         >
-          <BentoCard className="bg-white dark:bg-neon-bg border-gray-100 dark:border-neon-border">
+          <BentoCard className="h-full bg-white dark:bg-neon-bg border-gray-100 dark:border-neon-border">
             <i className="fas fa-quote-left text-5xl text-gray-100 dark:text-neon-border absolute top-6 right-8 transition-colors duration-500 group-hover:text-accent-yellow/10"></i>
             <p 
               className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-neon-text-primary leading-tight mb-8 relative z-10 [&_strong]:text-accent-yellow dark:[&_strong]:text-neon-cyan [&_strong]:font-extrabold"
@@ -335,9 +335,9 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
           </BentoCard>
         </motion.div>
 
-        {/* Stats / Quick Info - Small Vertical */}
+        {/* Stats / Quick Info + Languages - stacked to match the intro card's height exactly */}
         <motion.div
-          className="md:col-span-4"
+          className="md:col-span-4 flex flex-col justify-between gap-4 h-full"
           variants={{
             hidden: { opacity: 0, y: 30 },
             visible: { opacity: 1, y: 0 },
@@ -382,9 +382,9 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
                   }}
                 >
                   {[
-                    { icon: "fa-certificate", text: t('badges.istqbCertified') },
-                    { icon: "fa-sync", text: t('badges.agileScrum') },
-                    { icon: "fa-layer-group", text: t('badges.fullStackQA') },
+                    { icon: "fa-certificate", text: t('badges.pegaCertified') },
+                    { icon: "fa-cubes", text: t('badges.toscaAdvanced') },
+                    { icon: "fa-layer-group", text: t('badges.istqbCertified') },
                   ].map((badge, idx) => (
                     <motion.div
                       key={idx}
@@ -402,6 +402,27 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
               </div>
             </BentoCard>
           </Tilt3D>
+
+          <motion.div
+            className="w-full min-w-0 shrink-0 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-purple/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
+            whileHover={{
+              scale: 1.02,
+              borderColor: "#22c55e",
+              boxShadow: "0 10px 30px rgba(34, 197, 94, 0.15)",
+            }}
+          >
+            <div className="w-14 h-14 shrink-0 rounded-xl bg-green-50 dark:bg-neon-purple/10 border border-green-100 dark:border-neon-purple flex items-center justify-center text-green-600 dark:text-neon-purple text-xl">
+              <i className="fas fa-globe"></i>
+            </div>
+            <div className="min-w-0">
+              <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
+                {t('languages')}
+              </div>
+              <div className="font-bold text-gray-900 dark:text-white text-sm truncate">
+                {t('languageList')}
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Story Section - Wide */}
@@ -413,65 +434,22 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
           }}
         >
           <BentoCard>
-            <div className="flex flex-col lg:flex-row gap-10 items-center">
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-neon-text-primary mb-4 flex items-center gap-3">
-                  <span className="w-2.5 h-2.5 bg-accent-yellow dark:bg-neon-cyan rounded-full shadow-[0_0_10px_rgba(251,191,36,0.5)] dark:shadow-neon-cyan animate-pulse"></span>
-                  {t('myJourney')}
-                </h3>
-                <p 
-                  className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
-                  dangerouslySetInnerHTML={{ __html: t('storyPart1') }}
-                />
-                <p 
-                  className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
-                  dangerouslySetInnerHTML={{ __html: t('storyPart2') }}
-                />
-              </div>
-              <div className="hidden lg:block w-px h-32 bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent"></div>
-              <div className="w-full lg:w-1/3 flex flex-col sm:flex-row lg:flex-col gap-4">
-                <motion.div
-                  className="flex-1 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-cyan/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(6,182,212,0.1)]"
-                  whileHover={{
-                    scale: 1.02,
-                    borderColor: "#3b82f6",
-                    boxShadow: "0 10px 30px rgba(59, 130, 246, 0.15)",
-                  }}
-                >
-                  <div className="w-14 h-14 rounded-xl bg-blue-50 dark:bg-neon-cyan/10 border border-blue-100 dark:border-neon-cyan flex items-center justify-center text-blue-600 dark:text-neon-cyan text-xl">
-                    <i className="fas fa-map-pin"></i>
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
-                      {t('basedIn')}
-                    </div>
-                    <div className="font-bold text-gray-900 dark:text-white text-lg">
-                      {t('netherlands')}
-                    </div>
-                  </div>
-                </motion.div>
-                <motion.div
-                  className="flex-1 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-purple/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
-                  whileHover={{
-                    scale: 1.02,
-                    borderColor: "#22c55e",
-                    boxShadow: "0 10px 30px rgba(34, 197, 94, 0.15)",
-                  }}
-                >
-                  <div className="w-14 h-14 rounded-xl bg-green-50 dark:bg-neon-purple/10 border border-green-100 dark:border-neon-purple flex items-center justify-center text-green-600 dark:text-neon-purple text-xl">
-                    <i className="fas fa-globe"></i>
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
-                      {t('languages')}
-                    </div>
-                    <div className="font-bold text-gray-900 dark:text-white text-sm">
-                      {t('languageList')}
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-neon-text-primary mb-4 flex items-center gap-3">
+              <span className="w-2.5 h-2.5 bg-accent-yellow dark:bg-neon-cyan rounded-full shadow-[0_0_10px_rgba(251,191,36,0.5)] dark:shadow-neon-cyan animate-pulse"></span>
+              {t('myJourney')}
+            </h3>
+            <p
+              className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
+              dangerouslySetInnerHTML={{ __html: t('storyPart1') }}
+            />
+            <p
+              className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
+              dangerouslySetInnerHTML={{ __html: t('storyPart2') }}
+            />
+            <p
+              className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
+              dangerouslySetInnerHTML={{ __html: t('storyPart3') }}
+            />
           </BentoCard>
         </motion.div>
 

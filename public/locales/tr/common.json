@@ -15,7 +15,7 @@
   },
   "statusBadge": {
     "openToWork": "#OPENTOWORK",
-    "available": "Available",
+    "available": "Hollanda",
     "freelance": "Freelancer",
     "hiring": "İşe Alıyoruz",
     "busy": "Şu An Meşgul"
@@ -33,6 +33,6 @@
     "locationValue": "Amsterdam, Hollanda"
   },
   "meta": {
-    "description": "ISTQB® Sertifikalı Full-Stack Otomasyon Mühendisi. Otomasyon çerçeveleri, CI/CD, API, UI ve veritabanı testleri konusunda uzman. Hollanda'da yerleşik."
+    "description": "Pega & Tricentis Tosca test otomasyonu konusunda uzman QA Consultant, ISTQB® Sertifikalı. Hollanda'da yerleşik."
   }
 }

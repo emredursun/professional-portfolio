@@ -1,7 +1,11 @@
 // Service Worker for Emre Dursun Portfolio
 // Version: 1.0.0
 
-const CACHE_NAME = 'ed-portfolio-v2';
+// Bump this whenever a cached asset changes without its filename changing.
+// Static assets are served cache-first, so returning visitors keep the old copy
+// until the cache name changes and the activate handler purges the previous one.
+// v3: new profile photo, regenerated social-share.png, updated precache list.
+const CACHE_NAME = 'ed-portfolio-v3';
 const OFFLINE_URL = '/';
 
 // Assets to cache immediately on install
@@ -11,7 +15,7 @@ const PRECACHE_ASSETS = [
   '/site.webmanifest',
   '/favicon-32x32.png',
   '/favicon-96x96.png',
-  '/images/profile.png',
+  '/images/profile-workspace.png',
   '/images/social-share.png'
 ];
 

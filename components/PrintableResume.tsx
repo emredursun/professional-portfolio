@@ -18,6 +18,11 @@ const PrintableResume: React.FC = () => {
     return Array.isArray(expData) ? expData as TimelineItem[] : [];
   }, [t]);
 
+  const volunteering = useMemo(() => {
+    const volData = t('resume:volunteering', { returnObjects: true, defaultValue: [] });
+    return Array.isArray(volData) ? volData as TimelineItem[] : [];
+  }, [t]);
+
   // Get translated language levels
   const languageLevels = useMemo(() => {
     return t('resume:languageLevels', { returnObjects: true }) as Record<string, string>;
@@ -33,14 +38,30 @@ const PrintableResume: React.FC = () => {
     }));
   }, [languageLevels]);
 
+  // The About copy is authored as HTML (it uses <strong> for emphasis on the
+  // web page), so the markup has to come out before it is dropped into the PDF
+  // as plain text — otherwise the tags print literally.
+  const stripHtml = (html: string) =>
+    html
+      .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/g, '&')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
   // Get translated About text
   const aboutText = useMemo(() => {
-    return t('about:introText', { defaultValue: '' });
+    return stripHtml(t('about:introText', { defaultValue: '' }));
   }, [t]);
 
-  // Get My Journey text
+  // Get My Journey text. The story lives in three numbered parts; there has
+  // never been a plain "about:story" key, so reading that one rendered the
+  // heading with an empty body.
   const journeyText = useMemo(() => {
-    return t('about:story', { defaultValue: '' });
+    return ['storyPart1', 'storyPart2', 'storyPart3']
+      .map(key => stripHtml(t(`about:${key}`, { defaultValue: '' })))
+      .filter(Boolean)
+      .join(' ');
   }, [t]);
 
   // Get current language for section titles
@@ -65,7 +86,8 @@ const PrintableResume: React.FC = () => {
     experience: currentLang === 'nl' ? 'Werkervaring' : 
                 currentLang === 'tr' ? 'Mesleki Deneyim' : 
                 'Professional Experience',
-    education: t('resume:sections.education')
+    education: t('resume:sections.education'),
+    volunteering: t('resume:sections.volunteering')
   };
 
   return (
@@ -121,6 +143,15 @@ const PrintableResume: React.FC = () => {
           .no-break {
             break-inside: avoid;
             page-break-inside: avoid;
+          }
+
+          /* Never leave a section heading stranded at the foot of a page.
+             The Experience and Education sections are taller than a page, so
+             they cannot use .no-break; without this their <h3> printed alone
+             with the first entry pushed to the next page. */
+          h3, h4 {
+            break-after: avoid;
+            page-break-after: avoid;
           }
         }
       `}</style>
@@ -262,6 +293,25 @@ const PrintableResume: React.FC = () => {
                     ))}
                 </div>
               </section>
+
+              {/* 6. VOLUNTEERING */}
+              {volunteering.length > 0 && (
+                <section className="mb-4">
+                  <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-5 pb-1 text-black">{sectionTitles.volunteering}</h3>
+                  <div className="space-y-5">
+                      {volunteering.map((item, index) => (
+                          <div key={index} className="no-break">
+                               <div className="flex justify-between items-baseline">
+                                  <h4 className="text-sm font-bold text-black">{item.title}</h4>
+                                  <span className="text-xs font-medium text-gray-500">{item.date}</span>
+                              </div>
+                              <div className="text-sm text-gray-600 italic mb-1">{item.company}</div>
+                              <p className="text-xs text-gray-600 leading-snug">{item.description}</p>
+                          </div>
+                      ))}
+                  </div>
+                </section>
+              )}
 
               {/* --- RESUME CONTENT END --- */}
             </td>

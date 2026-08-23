@@ -6,7 +6,8 @@
     "experience": "Ervaring",
     "skills": "Vaardigheden",
     "techStack": "Tech Stack",
-    "languages": "Talen"
+    "languages": "Talen",
+    "volunteering": "Vrijwilligerswerk"
   },
   "education": [
     {
@@ -36,7 +37,13 @@
   ],
   "experience": [
     {
-      "date": "Jun 2023 - Sep 2025",
+      "date": "Mei 2026 - Heden",
+      "title": "QA Consultant (Pega & Tricentis Tosca)",
+      "company": "Sopra Steria - Nieuwegein, Utrecht, Nederland · Hybrid",
+      "description": "QA Consultant binnen de Sopra Steria Pega Practice (RulesMatter), gericht op testautomatisering voor Pega-applicaties. Ik ontwerp testdekking, testdata en automatiseringsarchitectuur voor web-UI, enterprise- en desktopapplicaties, API-ketens en mobiele automatisering met de model-based aanpak van Tricentis Tosca. Gecombineerd met platformexpertise als Certified Pega Business Architect (CPBA) en Certified Pega System Architect (CPSA) verwerk ik testbaarheid vanaf het begin in het case-ontwerp."
+    },
+    {
+      "date": "Sep 2023 - Sep 2025",
       "title": "Automation Engineer (PSS/True International Payments/Ch Dovetail)",
       "company": "ING Bank - Amsterdam, Nederland · Hybrid",
       "description": "Als Automation Test Engineer bij het TIP Test Center (TTC) van ING ontwierp en onderhield ik geautomatiseerde end-to-end tests voor real-time betalingsverwerking binnen het Dovetail-systeem, een Fiserv-betalingsplatform, waarbij ik de transactienauwkeurigheid over internationale vestigingen waarborgde. Mijn verantwoordelijkheden omvatten het ontwerpen van testvalidaties voor verschillende betalingsstromen, het beheren en optimaliseren van testdata om de implementatie te versnellen, en het nauw samenwerken met ontwikkelteams en stakeholders om een naadloze integratie met het automatiseringsframework te garanderen."
@@ -84,20 +91,21 @@
       "description": "Speelde een sleutelrol bij het ondersteunen van de missie van Fiader door effectieve coördinatie van vrijwilligers en administratieve taken. Beheerde vrijwilligersdossiers en plande diensten om de middelenallocatie te optimaliseren. Assisteerde bij het organiseren van evenementen en trainingssessies, waarbij alle logistiek werd geregeld. Trad op als primair aanspreekpunt, waardoor de communicatie en betrokkenheid van vrijwilligers werd verbeterd."
     }
   ],
-  "skills": {
-    "testAutomation": "Test Automation",
-    "javaEcosystem": "Java & Ecosysteem",
-    "seleniumCucumber": "Selenium & Cucumber",
-    "playwrightCypress": "Playwright & Cypress (TS)",
-    "apiTesting": "API Testing (Rest Assured)",
-    "cicd": "CI/CD (Jenkins & Azure)",
-    "docker": "Docker & Containerisatie",
-    "sql": "SQL & Databases"
-  },
   "languageLevels": {
     "native": "Moedertaal",
     "professional": "Professioneel (C1)",
     "intermediate": "Gemiddeld (B2)",
     "beginner": "Beginner (A1)"
-  }
+  },
+  "meta": {
+    "description": "CV van Emre Dursun: QA Consultant met CPBA-, CPSA- en Tricentis Tosca Advanced-certificering, plus ervaring bij ING met real-time betalingen."
+  },
+  "volunteering": [
+    {
+      "date": "Juni 2024 - Heden",
+      "title": "Event Coördinator (Vrijwilliger)",
+      "company": "Stichting Kompas voor Diversiteit - Nederland",
+      "description": "Vrijwilliger bij een stichting die evenementen organiseert rond diversiteit, inclusie en intercultureel begrip. Ik regel de logistiek (locatie, agenda, materialen), onderhoud contact met sprekers en deelnemers, en ondersteun de workshops op de dag zelf. Ongeveer één evenement per maand."
+    }
+  ]
 }
