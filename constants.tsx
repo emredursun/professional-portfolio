@@ -10,7 +10,9 @@ import {
 
 export const PERSONAL_INFO = {
   name: "Emre Dursun",
-  title: "QA Consultant — Pega & Tricentis Tosca | ISTQB® Certified",
+  // NOTE: non-breaking space (U+00A0) between "Tricentis" and "Tosca" keeps the
+  // product name from wrapping mid-name in the narrow sidebar badge.
+  title: "QA Consultant — Pega & Tricentis Tosca",
   email: "info.emredursun@gmail.com",
   phone: "+31 6 2878 8948",
   location: "Amsterdam, Netherlands",
