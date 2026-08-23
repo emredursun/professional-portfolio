@@ -206,7 +206,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
 
   // Get translated services
   const translatedServices = useMemo(() => {
-    const serviceKeys = ['testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce', 'aiGovernance', 'pegaPlatform', 'toscaAutomation'] as const;
+    const serviceKeys = ['pegaPlatform', 'toscaAutomation', 'testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce', 'aiGovernance'] as const;
     return SERVICES.map((service, index) => ({
       ...service,
       title: t(`services.${serviceKeys[index]}.title`),
