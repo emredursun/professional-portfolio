@@ -33,14 +33,30 @@ const PrintableResume: React.FC = () => {
     }));
   }, [languageLevels]);
 
+  // The About copy is authored as HTML (it uses <strong> for emphasis on the
+  // web page), so the markup has to come out before it is dropped into the PDF
+  // as plain text — otherwise the tags print literally.
+  const stripHtml = (html: string) =>
+    html
+      .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/g, '&')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
   // Get translated About text
   const aboutText = useMemo(() => {
-    return t('about:introText', { defaultValue: '' });
+    return stripHtml(t('about:introText', { defaultValue: '' }));
   }, [t]);
 
-  // Get My Journey text
+  // Get My Journey text. The story lives in three numbered parts; there has
+  // never been a plain "about:story" key, so reading that one rendered the
+  // heading with an empty body.
   const journeyText = useMemo(() => {
-    return t('about:story', { defaultValue: '' });
+    return ['storyPart1', 'storyPart2', 'storyPart3']
+      .map(key => stripHtml(t(`about:${key}`, { defaultValue: '' })))
+      .filter(Boolean)
+      .join(' ');
   }, [t]);
 
   // Get current language for section titles
@@ -121,6 +137,15 @@ const PrintableResume: React.FC = () => {
           .no-break {
             break-inside: avoid;
             page-break-inside: avoid;
+          }
+
+          /* Never leave a section heading stranded at the foot of a page.
+             The Experience and Education sections are taller than a page, so
+             they cannot use .no-break; without this their <h3> printed alone
+             with the first entry pushed to the next page. */
+          h3, h4 {
+            break-after: avoid;
+            page-break-after: avoid;
           }
         }
       `}</style>

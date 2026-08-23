@@ -106,7 +106,20 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
     const handleDownloadResume = (e: React.MouseEvent) => {
         if (!PERSONAL_INFO.resumeUrl || PERSONAL_INFO.resumeUrl === '#') {
             e.preventDefault();
+            // "Save as PDF" names the file after document.title, which would
+            // otherwise produce "Emre Dursun — QA Consultant, Pega & Tricentis
+            // Tosca.pdf". Swap in a clean filename for the duration of the
+            // print dialog and restore the real title afterwards.
+            const previousTitle = document.title;
+            document.title = 'Emre-Dursun-CV';
+            const restore = () => {
+                document.title = previousTitle;
+                window.removeEventListener('afterprint', restore);
+            };
+            window.addEventListener('afterprint', restore);
             window.print();
+            // Safari never fires afterprint reliably; make sure the title comes back.
+            setTimeout(restore, 1000);
         }
     };
 
