@@ -121,14 +121,14 @@
       "description": "Model-based test automation across web, API, desktop and mobile. Certified Product Consultant at Advanced proficiency.",
       "badge": "Certified",
       "expertiseLabel": "Advanced Proficiency",
-      "fullDescription": "I design test coverage, test data, and automation architecture using Tosca's model-based approach, scanning applications into reusable modules rather than writing brittle scripts. The Product Consultant certification came out of the full 13-course Tricentis Academy learning plan, roughly 63 hours of training, with the exam passed at 93.3% and the certification valid through August 2028. The path covers web UI (AS1/AS2), API chains, automation beyond the browser through the Excel, PDF, Mail, UIA and WinX engines, requirements-driven TestCase design with risk weighting, stateful test data through the Test Data Service, and mobile automation on the Tricentis Mobile Agent. Combined with Pega platform knowledge, this lets testability be designed in rather than retrofitted.",
+      "fullDescription": "I design test coverage, test data, and automation architecture using Tosca's model-based approach, scanning applications into reusable modules rather than writing brittle scripts. The Product Consultant certification came out of the full 13-course Tricentis Academy learning plan, roughly 63 hours of training, with the exam passed at 93.3%. The path covers web UI (AS1/AS2), API chains, automation beyond the browser through the Excel, PDF, Mail, UIA and WinX engines, requirements-driven TestCase design with risk weighting, stateful test data through the Test Data Service, and mobile automation on the Tricentis Mobile Agent. Combined with Pega platform knowledge, this lets testability be designed in rather than retrofitted.",
       "keyBenefits": [
         "Model-based automation across web, desktop, API and mobile in one toolchain",
         "Reusable TestStepBlocks, recovery scenarios and multi-browser execution",
         "Stateful test data management across distributed test runs (TDS)",
         "Risk-weighted, requirements-driven TestCase design",
         "Mobile automation on the Tricentis Mobile Agent, including image-based cases",
-        "Product Consultant exam passed at 93.3%, certified through August 2028"
+        "Product Consultant certification exam passed at 93.3%"
       ]
     },
     "details": {

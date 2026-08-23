@@ -121,14 +121,14 @@
       "description": "Web, API, masaüstü ve mobilde model-based test otomasyonu. Advanced seviyede sertifikalı Product Consultant.",
       "badge": "Sertifikalı",
       "expertiseLabel": "Advanced Seviye",
-      "fullDescription": "Tosca'nın model-based yaklaşımıyla test coverage, test data ve automation architecture tasarlıyorum; kırılgan script'ler yazmak yerine uygulamaları yeniden kullanılabilir modüllere tarayarak. Product Consultant sertifikası, Tricentis Academy'nin 13 kurstan oluşan yaklaşık 63 saatlik eğitim planının tamamından geldi; sınav %93,3 ile geçildi ve sertifika Ağustos 2028'e kadar geçerli. Bu yol web UI (AS1/AS2), API chain'leri, Excel/PDF/Mail/UIA ve WinX engine'leri ile tarayıcı ötesi otomasyon, risk ağırlıklı requirements-driven TestCase design, Test Data Service ile stateful test data ve Tricentis Mobile Agent üzerinde mobil otomasyon konularını kapsıyor. Pega platform bilgisiyle birleşince testability sonradan eklenen değil, tasarlanan bir şey haline geliyor.",
+      "fullDescription": "Tosca'nın model-based yaklaşımıyla test coverage, test data ve automation architecture tasarlıyorum; kırılgan script'ler yazmak yerine uygulamaları yeniden kullanılabilir modüllere tarayarak. Product Consultant sertifikası, Tricentis Academy'nin 13 kurstan oluşan yaklaşık 63 saatlik eğitim planının tamamından geldi; sınav %93,3 ile geçildi. Bu yol web UI (AS1/AS2), API chain'leri, Excel/PDF/Mail/UIA ve WinX engine'leri ile tarayıcı ötesi otomasyon, risk ağırlıklı requirements-driven TestCase design, Test Data Service ile stateful test data ve Tricentis Mobile Agent üzerinde mobil otomasyon konularını kapsıyor. Pega platform bilgisiyle birleşince testability sonradan eklenen değil, tasarlanan bir şey haline geliyor.",
       "keyBenefits": [
         "Tek toolchain'de web, desktop, API ve mobil için model-based otomasyon",
         "Yeniden kullanılabilir TestStepBlock'lar, recovery scenario'lar ve çoklu tarayıcı yürütme",
         "Distributed test run'lar arasında stateful test data yönetimi (TDS)",
         "Risk ağırlıklı, requirements-driven TestCase design",
         "Tricentis Mobile Agent üzerinde mobil otomasyon, image-based senaryolar dahil",
-        "Product Consultant sınavı %93,3 ile geçildi, Ağustos 2028'e kadar sertifikalı"
+        "Product Consultant sertifikasyon sınavı %93,3 ile geçildi"
       ]
     },
     "details": {
