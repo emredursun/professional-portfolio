@@ -206,7 +206,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
 
   // Get translated services
   const translatedServices = useMemo(() => {
-    const serviceKeys = ['testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce', 'aiGovernance'] as const;
+    const serviceKeys = ['testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce', 'aiGovernance', 'pegaTosca'] as const;
     return SERVICES.map((service, index) => ({
       ...service,
       title: t(`services.${serviceKeys[index]}.title`),
@@ -270,7 +270,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
     <section ref={containerRef} className="animate-fade-in">
       <SEO 
         title={t('title')} 
-        description={t('introText', "Emre Dursun — ISTQB® Certified Full-Stack Automation Engineer based in the Netherlands.")}
+        description={t('introText', "Emre Dursun — QA Consultant specializing in Pega & Tricentis Tosca test automation, ISTQB® Certified, based in the Netherlands.")}
         overrideTitle={true}
       />
       <motion.header

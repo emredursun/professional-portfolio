@@ -21,6 +21,12 @@ export interface Service {
   certificateId?: string;      // Official certificate ID for verification
   certificationDate?: string;  // Certification date (e.g., "January 2026")
   certificateImage?: string;   // Path to certificate image
+  certificateBadges?: CertificateBadge[]; // Supporting course/module badges
+}
+
+export interface CertificateBadge {
+  image: string;
+  label: string;
 }
 
 export interface TimelineItem {

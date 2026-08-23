@@ -36,6 +36,12 @@
   ],
   "experience": [
     {
+      "date": "May 2026 - Devam Ediyor",
+      "title": "QA Consultant (Pega & Tricentis Tosca)",
+      "company": "Sopra Steria - Nieuwegein, Utrecht, Hollanda · Hybrid",
+      "description": "Sopra Steria Pega Practice'te (RulesMatter) QA Consultant olarak Pega uygulamaları için test otomasyonuna odaklanıyorum. Web UI, kurumsal ve masaüstü uygulamaları, API chain'leri ve mobil otomasyonu kapsayan test coverage, test data ve automation architecture'ı, Tricentis Tosca'nın model-based yaklaşımını kullanarak tasarlıyorum — Certified Pega Business Architect (CPBA) ve Certified Pega System Architect (CPSA) platform uzmanlığıyla birleştirerek testability'i en baştan case design'a dahil ediyorum."
+    },
+    {
       "date": "Haz 2023 - Eyl 2025",
       "title": "Automation Engineer (PSS/True International Payments/Ch Dovetail)",
       "company": "ING Bank - Amsterdam, Hollanda · Hybrid",

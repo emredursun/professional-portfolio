@@ -1,9 +1,9 @@
 {
   "title": "Kısaca",
   "titleHighlight": "Ben",
-  "introText": "<strong>ISTQB® Sertifikalı Full-Stack Otomasyon Mühendisi</strong>, <strong>Java, Selenium, Cucumber, Postman ve REST Assured</strong> kullanarak <strong>UI, API ve veritabanı testlerinde</strong> deneyimli. <strong>Ölçeklenebilir otomasyon framework'leri</strong> tasarlayıp <strong>CI/CD pipeline'larına</strong> entegre etme konusunda uzman. <strong>Bankacılık, sağlık ve e-ticaret</strong> sektörlerindeki <strong>Agile ekiplerde</strong> kaliteli release'lere katkı sağlama konusunda kanıtlanmış bir deneyime sahip. Felemenkçe, İngilizce ve Türkçe (anadil) dillerinde akıcı.",
+  "introText": "<strong>Pega & Tricentis Tosca test otomasyonu konusunda uzman QA Consultant</strong>, <strong>ISTQB® Sertifikalı</strong>, <strong>Java, Selenium, Cucumber, Postman ve REST Assured</strong> kullanarak <strong>UI, API ve veritabanı testlerinde</strong> deneyimli. <strong>Ölçeklenebilir otomasyon framework'leri</strong> tasarlayıp <strong>CI/CD pipeline'larına</strong> entegre etme konusunda uzman. <strong>Bankacılık, sağlık ve e-ticaret</strong> sektörlerindeki <strong>Agile ekiplerde</strong> kaliteli release'lere katkı sağlama konusunda kanıtlanmış bir deneyime sahip. Felemenkçe, İngilizce ve Türkçe (anadil) dillerinde akıcı.",
   "introQuote": "<strong>Hassasiyetle</strong> yönlendirilen, <strong>merakla</strong> beslenen. Manuel test süreçlerini <strong>otomatik, tekrarlanabilir sistemlere</strong> dönüştürerek ekiplerin net geri bildirim almasını ve güvenle teslim etmesini sağlıyorum.",
-  "storyPart1": "Yolculuğum, sistematik problem çözme konusunda disiplinli bir yaklaşım kazandıran <strong>Matematik</strong> altyapısıyla başladı. Bu analitik bakış açısı, <strong>e-ticaret</strong> alanındaki ilk başarılarımı mümkün kıldı; burada global satış stratejilerini optimize ettim. Ardından asıl tutkum olan <strong>Yazılım Kalite Mühendisliğine</strong> yöneldim. Yıllar içinde manuel test uzmanlığından <strong>Full-Stack Otomasyon Mühendisliğine</strong> evrilirken, <strong>ING</strong>'deki kompleks bankacılık sistemleri için dayanıklı test framework'leri tasarladım ve <strong>AI destekli geliştirmenin</strong> sınırlarını keşfetmeye devam ediyorum.",
+  "storyPart1": "Yolculuğum, sistematik problem çözme konusunda disiplinli bir yaklaşım kazandıran <strong>Matematik</strong> altyapısıyla başladı. Bu analitik bakış açısı, <strong>e-ticaret</strong> alanındaki ilk başarılarımı mümkün kıldı; burada global satış stratejilerini optimize ettim. Ardından asıl tutkum olan <strong>Yazılım Kalite Mühendisliğine</strong> yöneldim. Yıllar içinde manuel test uzmanlığından <strong>Full-Stack Otomasyon Mühendisliğine</strong> evrilirken, <strong>ING</strong>'deki kompleks bankacılık sistemleri için dayanıklı test framework'leri tasarladım; şimdi ise <strong>Sopra Steria'da Pega uygulamaları için QA Consultant</strong> olarak Pega platform sertifikasyonumu Tricentis Tosca'nın model-based test otomasyonuyla birleştiriyorum — tüm bunlar boyunca <strong>AI destekli geliştirmenin</strong> sınırlarını keşfetmeye devam ediyorum.",
   "storyPart2": "Benim için kodlama sadece işlevsellikten ibaret değil—ekiplerin güvenle inovasyon yapmasını sağlayan <strong>güvenilir ve ölçeklenebilir ekosistemler</strong> inşa etmektir. Son dönemde uzmanlığımı <strong>AI Governance Architecture</strong> alanında derinleştiriyor; regülasyon uyumluluğu (regulatory compliance) ile gelişmiş <strong>multi-agent sistemleri</strong> birleştiren <strong>Trust-Grade platform</strong> mimarileri üzerine çalışıyorum.",
   "yearsExperience": "Yıllık Deneyim",
   "myJourney": "Yolculuğum",
@@ -99,6 +99,20 @@
         "9 Hata Modu + 5 Kurtarma Prosedürü",
         "L1-L5 Etik Eskalasyon Yolu",
         "✓ Sertifika ID: BESYNC-TGAI-20260112-001"
+      ]
+    },
+    "pegaTosca": {
+      "title": "Pega & Tricentis Tosca Test Otomasyonu",
+      "description": "Case design'a en baştan testability kazandırmak için Pega platform sertifikasyonunu Tricentis Tosca'nın model-based otomasyonuyla birleştirme.",
+      "badge": "Sertifikalı",
+      "expertiseLabel": "En Yeni Uzmanlık",
+      "fullDescription": "Sopra Steria Pega Practice'te QA Consultant olarak, web UI, kurumsal ve masaüstü uygulamaları, API chain'leri ve mobil otomasyonu (Tricentis Mobile Agent) kapsayan test coverage, test data ve automation architecture'ı Tosca'nın model-based yaklaşımıyla tasarlıyorum. Certified Pega Business Architect ve Certified Pega System Architect sertifikaları tooling'den önce geldi; bu sayede testability en baştan case design'a dahil ediliyor, sonradan eklenmiyor.",
+      "keyBenefits": [
+        "Web, desktop, API ve mobilde model-based test otomasyonu (Tricentis Tosca)",
+        "İlk günden Pega case-design testability'si (CPBA + CPSA platform derinliği)",
+        "Distributed test run'lar arasında stateful test data yönetimi",
+        "KPI odaklı sürekli test (coverage, defect, efficiency metrikleri)",
+        "Mobil TestCase'ler için Tricentis Mobile Agent otomasyonu"
       ]
     },
     "details": {

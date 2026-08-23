@@ -1,9 +1,9 @@
 {
   "title": "About",
   "titleHighlight": "Me",
-  "introText": "<strong>ISTQB® Certified Full-Stack Automation Engineer</strong> with experience in <strong>UI, API, and database testing</strong> using <strong>Java, Selenium, Cucumber, Postman, and REST Assured</strong>. Skilled in designing <strong>scalable automation frameworks</strong> and integrating them with <strong>CI/CD pipelines</strong>. Proven track record of contributing to high-quality releases in <strong>Agile teams</strong> across <strong>banking, healthcare, and e-commerce</strong> domains. Fluent in Dutch, English, and Turkish (native).",
+  "introText": "<strong>QA Consultant specializing in Pega & Tricentis Tosca</strong> test automation, <strong>ISTQB® Certified</strong>, with experience in <strong>UI, API, and database testing</strong> using <strong>Java, Selenium, Cucumber, Postman, and REST Assured</strong>. Skilled in designing <strong>scalable automation frameworks</strong> and integrating them with <strong>CI/CD pipelines</strong>. Proven track record of contributing to high-quality releases in <strong>Agile teams</strong> across <strong>banking, healthcare, and e-commerce</strong> domains. Fluent in Dutch, English, and Turkish (native).",
   "introQuote": "Driven by <strong>precision</strong>, powered by <strong>curiosity</strong>. I transform manual testing corridors into <strong>automated, repeatable systems</strong> so teams have clear feedback and confidence to ship.",
-  "storyPart1": "My journey began with a foundation in <strong>Mathematics</strong>, cultivating a disciplined approach to systematic problem-solving. This analytical mindset drove my initial success in <strong>e-commerce</strong>, where I optimized global sales strategies, before transitioning into my true passion: <strong>Software Quality Engineering</strong>. Over the years, I have evolved from a manual tester to a <strong>Full-Stack Automation Engineer</strong>, architecting resilient testing frameworks for complex banking systems at <strong>ING</strong> and continuously exploring the frontiers of <strong>AI-driven development</strong>.",
+  "storyPart1": "My journey began with a foundation in <strong>Mathematics</strong>, cultivating a disciplined approach to systematic problem-solving. This analytical mindset drove my initial success in <strong>e-commerce</strong>, where I optimized global sales strategies, before transitioning into my true passion: <strong>Software Quality Engineering</strong>. Over the years, I have evolved from a manual tester to a <strong>Full-Stack Automation Engineer</strong>, architecting resilient testing frameworks for complex banking systems at <strong>ING</strong>, and most recently as a <strong>QA Consultant for Pega applications at Sopra Steria</strong>, combining Pega platform certification with Tricentis Tosca's model-based test automation — all while continuously exploring the frontiers of <strong>AI-driven development</strong>.",
   "storyPart2": "For me, coding is not just about functional correctness—it's about crafting <strong>reliable, scalable ecosystems</strong> that empower teams to innovate with confidence. Recently, I have deepened my expertise in <strong>AI Governance Architecture</strong>, passionately designing <strong>Trust-Grade platforms</strong> that harmonize regulatory compliance with advanced <strong>multi-agent intelligence</strong>.",
   "yearsExperience": "Years Experience",
   "myJourney": "My Journey",
@@ -99,6 +99,20 @@
         "9 Failure Modes + 5 Recovery Procedures",
         "L1-L5 Ethics Escalation Path",
         "✓ Certificate ID: BESYNC-TGAI-20260112-001"
+      ]
+    },
+    "pegaTosca": {
+      "title": "Pega & Tricentis Tosca Test Automation",
+      "description": "Combining Pega platform certification with Tricentis Tosca's model-based automation to build testability into case design from the start.",
+      "badge": "Certified",
+      "expertiseLabel": "Latest Specialization",
+      "fullDescription": "QA Consultant in the Sopra Steria Pega Practice, I design test coverage, test data, and automation architecture across web UI, enterprise and desktop applications, API chains, and mobile automation (Tricentis Mobile Agent) using Tosca's model-based approach. Certified Pega Business Architect and Certified Pega System Architect certifications came before the tooling, so testability gets built into the case design from the start, not bolted on afterward.",
+      "keyBenefits": [
+        "Model-based test automation across web, desktop, API and mobile (Tricentis Tosca)",
+        "Pega case-design testability from day one (CPBA + CPSA platform depth)",
+        "Stateful test data management across distributed test runs",
+        "KPI-driven continuous testing (coverage, defect, efficiency metrics)",
+        "Tricentis Mobile Agent automation for mobile TestCases"
       ]
     },
     "details": {

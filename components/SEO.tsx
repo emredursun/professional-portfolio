@@ -36,12 +36,12 @@ const SEO: React.FC<SEOProps> = ({ title, description, overrideTitle = false }) 
   const canonicalUrl = `${baseUrl}${canonicalPath === '//' ? '/' : canonicalPath}`.replace(/\/$/, ''); // Remove trailing slash unless root
 
   // Dynamic Metadata defaults
-  const siteTitle = "Emre Dursun — ISTQB® Certified Full-Stack Automation Engineer";
+  const siteTitle = "Emre Dursun — QA Consultant, Pega & Tricentis Tosca";
   const metaTitle = title 
     ? (overrideTitle ? title : `${title} | Emre Dursun`) 
     : siteTitle;
     
-  const metaDescription = description || t('meta.description', "ISTQB® Certified Full-Stack Automation Engineer specializing in automation frameworks, CI/CD, API, UI & DB testing.");
+  const metaDescription = description || t('meta.description', "QA Consultant specializing in Pega & Tricentis Tosca test automation, ISTQB® Certified.");
 
   return (
     <Helmet>

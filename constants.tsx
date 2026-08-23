@@ -10,7 +10,7 @@ import {
 
 export const PERSONAL_INFO = {
   name: "Emre Dursun",
-  title: "ISTQB® Certified Automation Engineer",
+  title: "QA Consultant — Pega & Tricentis Tosca | ISTQB® Certified",
   email: "info.emredursun@gmail.com",
   phone: "+31 6 2878 8948",
   location: "Amsterdam, Netherlands",
@@ -237,6 +237,37 @@ export const SERVICES: Service[] = [
     certificateId: "BESYNC-TGAI-20260112-001",
     certificationDate: "January 2026",
     certificateImage: "/images/trust-grade-certificate.png"
+  },
+  {
+    icon: <i className="fas fa-sitemap"></i>,
+    title: "Pega & Tricentis Tosca Test Automation",
+    slug: "pega-tricentis-tosca-automation",
+    description:
+      "Combining Pega platform certification with Tricentis Tosca's model-based automation to build testability into case design from the start.",
+    tags: ["Pega", "Tricentis Tosca", "CPBA", "CPSA", "Model-Based Testing"],
+    featured: true,
+    badge: "Certified",
+    expertiseLabel: "Latest Specialization",
+    fullDescription:
+      "QA Consultant in the Sopra Steria Pega Practice, I design test coverage, test data, and automation architecture across web UI, enterprise and desktop applications, API chains, and mobile automation (Tricentis Mobile Agent) using Tosca's model-based approach. Certified Pega Business Architect and Certified Pega System Architect certifications came before the tooling, so testability gets built into the case design from the start, not bolted on afterward.",
+    keyBenefits: [
+      "Model-based test automation across web, desktop, API and mobile (Tricentis Tosca)",
+      "Pega case-design testability from day one (CPBA + CPSA platform depth)",
+      "Stateful test data management across distributed test runs",
+      "KPI-driven continuous testing (coverage, defect, efficiency metrics)",
+      "Tricentis Mobile Agent automation for mobile TestCases"
+    ],
+    relatedProjects: ["quilyn-exam-prep"],
+    certificateId: "C26494",
+    certificationDate: "August 2026",
+    certificateImage: "/images/tricentis-tosca-product-consultant-certificate.png",
+    certificateBadges: [
+      { image: "/images/tricentis-as1-badge.png", label: "AS1 — Automating Web Application Testing" },
+      { image: "/images/tricentis-as2-badge.png", label: "AS2 — Optimizing Test Automation with Centralized Test Data" },
+      { image: "/images/tricentis-api-badge.png", label: "Deep Dive — Automating API Test Cases" },
+      { image: "/images/tricentis-tds1-badge.png", label: "TDS1 — Structuring Test Cases and Test Data" },
+      { image: "/images/tricentis-tds2-badge.png", label: "TDS2 — Managing Stateful Test Data" }
+    ]
   }
 ];
 
@@ -245,9 +276,6 @@ export const ABOUT_INTRO =
 
 export const ABOUT_STORY =
   "I’ve worked across banking and e-commerce domains building API & UI automation, resilient test pipelines, and observability to help teams scale testing without slowing delivery. I enjoy breaking complex flows into simple, testable parts and collaborating cross-functionally to reduce risk.";
-
-export const ABOUT_TEXT =
-  "ISTQB® Certified Full-Stack Automation Engineer with experience in UI, API, and database testing using Java, Selenium, Cucumber, Postman, and Rest Assured. Skilled in designing scalable automation frameworks and integrating them with CI/CD pipelines. Proven track record of contributing to high-quality releases in Agile teams across banking, healthcare, and e-commerce domains. Fluent in Dutch, English, and Turkish (native).";
 
 export const EDUCATION: TimelineItem[] = [
   {
@@ -277,66 +305,6 @@ export const EDUCATION: TimelineItem[] = [
     company: "Istanbul University - Istanbul, Turkey",
     description:
       "Relevant Coursework and Skills: Differential Equations, Complex Analysis, Probability & Statistics, Advanced Calculus, General Physics, and skills in Abstract Reasoning, Systematic Problem Solving, and Data Analysis.",
-  },
-];
-
-export const EXPERIENCE: TimelineItem[] = [
-  {
-    date: "Jun 2023 - Sep 2025",
-    title: "Automation Engineer (PSS/True International Payments/Ch Dovetail)",
-    company: "ING Bank - Amsterdam, North Holland, Netherlands · Hybrid",
-    description:
-      "As an Automation Test Engineer at ING's TIP Test Center (TTC), I designed and maintained automated end-to-end tests for real-time payment processing within the Dovetail system, a Fiserv payment platform, ensuring transaction accuracy across international branches. My responsibilities included designing test validations for various payment flows, managing and optimizing test data to accelerate deployment, and collaborating closely with development teams and stakeholders to ensure seamless integration with the automation framework.",
-  },
-  {
-    date: "Jun 2022 - Jun 2023",
-    title: "Full-Stack Automation Engineer (SDET)",
-    company: "TechPro Education EU - Netherlands · Remote",
-    description:
-      "Developed and managed a comprehensive Automation Framework based on acceptance criteria using Selenium WebDriver, Java, JUnit, and Cucumber. Executed UI, backend, and database tests for a hospital portal, covering functionalities like patient management and appointment scheduling. Performed API testing with Postman and Rest Assured, managed dependencies via Maven, and integrated CI/CD pipelines with Jenkins in an Agile environment.",
-  },
-  {
-    date: "May 2021 - Jan 2023",
-    title: "Manual Tester & e-Commerce Specialist",
-    company: "BSG Auto Parts & Nerex Motors - Amsterdam, Netherlands · On-site",
-    description:
-      "Played a pivotal role at Nerex Motors enhancing e-commerce strategies and product quality. Conducted manual testing on ERP systems to maintain high functionality standards, improved product search visibility on Amazon and eBay, and implemented strategic ad campaigns driving online sales. Successfully managed the Online Channel (AutoDoc) sales process for BSG Auto Parts, fostering B2B growth by developing tailored sales strategies, cultivating strong relationships with key accounts, and negotiating competitive commercial terms.",
-  },
-  {
-    date: "Mar 2019 - Sep 2020",
-    title: "Student Affairs & Content Coordinator",
-    company:
-      "LiveCoding | Online Web Development Bootcamp - Netherlands · Remote",
-    description:
-      "Played a key role in enhancing the student experience at LiveCoding through comprehensive support and engagement initiatives. Delivered tailored counseling to online students, helping them overcome various challenges. Organized and executed virtual activities to strengthen community ties among students. Maintained accurate student records, ensuring compliance with program policies and tracking progress effectively.",
-  },
-  {
-    date: "Jul 2017 - Sep 2020",
-    title: "FerriStar - Evergreen Niches",
-    company: "eBay - Netherlands · Self-employed",
-    description:
-      "Successfully contributed to FerriStar's mission of providing curated best sellers and evergreen essentials. Developed strong relationships with suppliers to ensure a consistent supply of high-quality products. Focused on enhancing customer experience through thoughtful product selection in various categories. Gained expertise in e-commerce and product curation, reinforcing FerriStar's reputation in the market.",
-  },
-  {
-    date: "Sep 2016 - Mar 2017",
-    title: "Mathematics Instructor",
-    company: "Mohammed Al Fatih Schools - El Jadida, Morocco · On-site",
-    description:
-      "Contributed significantly to mathematics instruction focusing on holistic student development. Employed interdisciplinary connections to enhance lesson relevance and student engagement. Collaborated with colleagues to support extracurricular activities and pastoral care initiatives.",
-  },
-  {
-    date: "Sep 2014 - Sep 2016",
-    title: "Mathematics Instructor",
-    company: "LUMINA Educational Institutions - Bucharest, Romania · On-site",
-    description:
-      "I had the privilege of teaching advanced mathematics at LUMINA Educational Institutions, where I focused on fostering student success in a diverse learning environment. Designed and graded internal assessments, providing detailed reports on student progress and predicted grades. Differentiated instruction to support students from various educational backgrounds, maintaining high international standards. Mentored students on their academic pathways, guiding them toward STEM-related university goals.",
-  },
-  {
-    date: "Mar 2012 - Sep 2014",
-    title: "Volunteer Assistant",
-    company: "Fiader - Istanbul, Turkey · Part-time",
-    description:
-      "Played a key role in supporting Fiader's mission through effective volunteer coordination and administrative tasks. Managed volunteer records and scheduled shifts to optimize resource allocation. Assisted in organizing events and training sessions, ensuring all logistics were in place. Acted as a primary point of contact, enhancing communication and volunteer engagement.",
   },
 ];
 
@@ -616,7 +584,9 @@ export const PROJECTS: Project[] = [
       "Node.js",
       "Zero Dependencies",
       "MIT License",
-      "VS Code / Cursor",
+      "Claude Code",
+      "Cursor",
+      "GitHub Copilot",
     ],
     url: "https://devran-ai.github.io/kit/",
     github: "https://github.com/devran-ai/kit",
