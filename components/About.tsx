@@ -314,13 +314,13 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
       >
         {/* Intro Card - Large */}
         <motion.div
-          className="md:col-span-8"
+          className="md:col-span-8 h-full"
           variants={{
             hidden: { opacity: 0, y: 30 },
             visible: { opacity: 1, y: 0 },
           }}
         >
-          <BentoCard className="bg-white dark:bg-neon-bg border-gray-100 dark:border-neon-border">
+          <BentoCard className="h-full bg-white dark:bg-neon-bg border-gray-100 dark:border-neon-border">
             <i className="fas fa-quote-left text-5xl text-gray-100 dark:text-neon-border absolute top-6 right-8 transition-colors duration-500 group-hover:text-accent-yellow/10"></i>
             <p 
               className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-neon-text-primary leading-tight mb-8 relative z-10 [&_strong]:text-accent-yellow dark:[&_strong]:text-neon-cyan [&_strong]:font-extrabold"
@@ -335,9 +335,9 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
           </BentoCard>
         </motion.div>
 
-        {/* Stats / Quick Info - Small Vertical */}
+        {/* Stats / Quick Info + Languages - stacked to match the intro card's height exactly */}
         <motion.div
-          className="md:col-span-4"
+          className="md:col-span-4 flex flex-col justify-between gap-4 h-full"
           variants={{
             hidden: { opacity: 0, y: 30 },
             visible: { opacity: 1, y: 0 },
@@ -402,58 +402,27 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
               </div>
             </BentoCard>
           </Tilt3D>
-        </motion.div>
 
-        {/* Based In / Languages - directly below the stats card, same column width */}
-        <motion.div
-          className="md:col-span-4 md:col-start-9"
-          variants={{
-            hidden: { opacity: 0, y: 30 },
-            visible: { opacity: 1, y: 0 },
-          }}
-        >
-          <div className="flex flex-col gap-4">
-            <motion.div
-              className="w-full min-w-0 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-cyan/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(6,182,212,0.1)]"
-              whileHover={{
-                scale: 1.02,
-                borderColor: "#3b82f6",
-                boxShadow: "0 10px 30px rgba(59, 130, 246, 0.15)",
-              }}
-            >
-              <div className="w-14 h-14 shrink-0 rounded-xl bg-blue-50 dark:bg-neon-cyan/10 border border-blue-100 dark:border-neon-cyan flex items-center justify-center text-blue-600 dark:text-neon-cyan text-xl">
-                <i className="fas fa-map-pin"></i>
+          <motion.div
+            className="w-full min-w-0 shrink-0 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-purple/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
+            whileHover={{
+              scale: 1.02,
+              borderColor: "#22c55e",
+              boxShadow: "0 10px 30px rgba(34, 197, 94, 0.15)",
+            }}
+          >
+            <div className="w-14 h-14 shrink-0 rounded-xl bg-green-50 dark:bg-neon-purple/10 border border-green-100 dark:border-neon-purple flex items-center justify-center text-green-600 dark:text-neon-purple text-xl">
+              <i className="fas fa-globe"></i>
+            </div>
+            <div className="min-w-0">
+              <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
+                {t('languages')}
               </div>
-              <div className="min-w-0">
-                <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
-                  {t('basedIn')}
-                </div>
-                <div className="font-bold text-gray-900 dark:text-white text-lg truncate">
-                  {t('netherlands')}
-                </div>
+              <div className="font-bold text-gray-900 dark:text-white text-sm truncate">
+                {t('languageList')}
               </div>
-            </motion.div>
-            <motion.div
-              className="w-full min-w-0 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-purple/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
-              whileHover={{
-                scale: 1.02,
-                borderColor: "#22c55e",
-                boxShadow: "0 10px 30px rgba(34, 197, 94, 0.15)",
-              }}
-            >
-              <div className="w-14 h-14 shrink-0 rounded-xl bg-green-50 dark:bg-neon-purple/10 border border-green-100 dark:border-neon-purple flex items-center justify-center text-green-600 dark:text-neon-purple text-xl">
-                <i className="fas fa-globe"></i>
-              </div>
-              <div className="min-w-0">
-                <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
-                  {t('languages')}
-                </div>
-                <div className="font-bold text-gray-900 dark:text-white text-sm truncate">
-                  {t('languageList')}
-                </div>
-              </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Story Section - Wide */}
