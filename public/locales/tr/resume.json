@@ -6,7 +6,8 @@
     "experience": "Deneyim",
     "skills": "Yetkinlikler",
     "techStack": "Tech Stack",
-    "languages": "Diller"
+    "languages": "Diller",
+    "volunteering": "Gönüllülük"
   },
   "education": [
     {
@@ -98,5 +99,13 @@
   },
   "meta": {
     "description": "Emre Dursun'un özgeçmişi: CPBA, CPSA ve Tricentis Tosca Advanced sertifikalı QA Consultant; ING'de gerçek zamanlı ödeme sistemleri deneyimi."
-  }
+  },
+  "volunteering": [
+    {
+      "date": "Haziran 2024 - Devam Ediyor",
+      "title": "Etkinlik Koordinatörü (Gönüllü)",
+      "company": "Stichting Kompas voor Diversiteit - Hollanda",
+      "description": "Çeşitlilik, kapsayıcılık ve kültürlerarası anlayış üzerine etkinlikler düzenleyen bir vakıfta gönüllü koordinatörüm. Lojistiği (mekân, program, materyaller) yürütüyor, konuşmacılar ve katılımcılarla iletişimi sürdürüyor ve etkinlik günü atölyelere destek veriyorum. Ayda yaklaşık bir etkinlik."
+    }
+  ]
 }

@@ -177,7 +177,10 @@ export const SERVICES: Service[] = [
     yearsOfExperience: 5,
     certificateId: "ISTQB-CTFL-CERTIFIED",
     certificationDate: "June 2023",
-    certificateImage: "/images/istqb-foundation-level-certificate.png"
+    certificateImage: "/images/istqb-foundation-level-certificate.png",
+    certificateBadges: [
+      { image: "/images/ing-java-certificate.png", label: "Java @ ING — internal training, May 2024" }
+    ]
   },
   {
     icon: <i className="fas fa-sync-alt"></i>,
@@ -223,7 +226,9 @@ export const SERVICES: Service[] = [
       "Automated contract testing between services"
     ],
     relatedProjects: ["aegisqa", "hospital-portal-testing", "banking-payment-automation"],
-    yearsOfExperience: 5
+    yearsOfExperience: 5,
+    certificationDate: "April 2024",
+    certificateImage: "/images/ing-api-design-certificate.png"
   },
   {
     icon: <i className="fas fa-laptop-code"></i>,

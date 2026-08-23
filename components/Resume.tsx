@@ -74,6 +74,11 @@ const Resume: React.FC = () => {
         return Array.isArray(eduData) ? eduData as TimelineItem[] : [];
     }, [t]);
     
+    const volunteering = useMemo(() => {
+        const volData = t('volunteering', { returnObjects: true, defaultValue: [] });
+        return Array.isArray(volData) ? volData as TimelineItem[] : [];
+    }, [t]);
+
     const experience = useMemo(() => {
         const expData = t('experience', { returnObjects: true });
         return Array.isArray(expData) ? expData as TimelineItem[] : [];
@@ -142,6 +147,25 @@ const Resume: React.FC = () => {
                             ))}
                         </ul>
                     </div>
+
+                    {/* Volunteering sits in its own section rather than in Experience:
+                        it started mid-way through the ING role, so listing it there
+                        would interleave unpaid work with the paid timeline. */}
+                    {volunteering.length > 0 && (
+                        <div>
+                            <div className="flex items-center gap-4 mb-8">
+                                <div className="w-14 h-14 rounded-2xl bg-dark-card dark:bg-dark-card flex items-center justify-center text-accent-yellow dark:text-accent-yellow text-xl shadow-neu-md dark:shadow-neu-md">
+                                    <i className="fas fa-hands-helping"></i>
+                                </div>
+                                <h3 className="text-2xl font-semibold text-gray-900 dark:text-dark-text-primary">{t('sections.volunteering')}</h3>
+                            </div>
+                            <ul className="ml-2">
+                                {volunteering.map((item, index) => (
+                                    <TimelineCard key={index} item={item} isLast={index === volunteering.length - 1} />
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                 </div>
 
                 {/*Right Column: Skills & Languages (4 spans) - Sticky */}

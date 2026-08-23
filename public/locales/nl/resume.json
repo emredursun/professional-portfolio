@@ -6,7 +6,8 @@
     "experience": "Ervaring",
     "skills": "Vaardigheden",
     "techStack": "Tech Stack",
-    "languages": "Talen"
+    "languages": "Talen",
+    "volunteering": "Vrijwilligerswerk"
   },
   "education": [
     {
@@ -98,5 +99,13 @@
   },
   "meta": {
     "description": "CV van Emre Dursun: QA Consultant met CPBA-, CPSA- en Tricentis Tosca Advanced-certificering, plus ervaring bij ING met real-time betalingen."
-  }
+  },
+  "volunteering": [
+    {
+      "date": "Juni 2024 - Heden",
+      "title": "Event Coördinator (Vrijwilliger)",
+      "company": "Stichting Kompas voor Diversiteit - Nederland",
+      "description": "Vrijwilliger bij een stichting die evenementen organiseert rond diversiteit, inclusie en intercultureel begrip. Ik regel de logistiek (locatie, agenda, materialen), onderhoud contact met sprekers en deelnemers, en ondersteun de workshops op de dag zelf. Ongeveer één evenement per maand."
+    }
+  ]
 }
