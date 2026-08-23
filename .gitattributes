@@ -1,0 +1,9 @@
+# Generated files are written with LF by the scripts in scripts/.
+#
+# Without this, core.autocrlf=true rewrites them to CRLF on checkout while the
+# generators keep emitting LF, so `git status` reports them as modified after
+# every build even though `git diff` is empty. Pinning them to LF makes the
+# working tree agree with what the generators produce.
+profile/README.md           text eol=lf
+public/sitemap.xml          text eol=lf
+scripts/sitemap-state.json  text eol=lf
