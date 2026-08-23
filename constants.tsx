@@ -15,7 +15,7 @@ export const PERSONAL_INFO = {
   title: "QA Consultant — Pega & Tricentis Tosca",
   email: "info.emredursun@gmail.com",
   phone: "+31 6 2878 8948",
-  location: "Amsterdam, Netherlands",
+  location: "Nieuwegein, Netherlands",
   avatar: "/images/profile-workspace.png",
   resumeUrl: "#",
 };
