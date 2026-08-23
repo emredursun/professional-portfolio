@@ -2,10 +2,10 @@
   "title": "About",
   "titleHighlight": "Me",
   "introText": "I work on <strong>QA and test automation for Pega applications</strong>, in the <strong>Sopra Steria Pega Practice (RulesMatter)</strong>. Most of my background is in <strong>financial services</strong>, where release discipline and audit trails are hard requirements. I hold <strong>Certified Pega Business Architect (CPBA)</strong> and <strong>Certified Pega System Architect (CPSA)</strong>, and certified as a <strong>Tricentis Tosca Product Consultant</strong> at <strong>Advanced</strong> proficiency. Fluent in Dutch, English, and Turkish (native).",
-  "introQuote": "What I care about most is <strong>reliability</strong>. I want a framework I build to still work <strong>three releases from now</strong>, not just on the day I commit it. When a test goes flaky I'd rather find out <strong>why</strong> — timing, state pollution, data dependency — than rerun it until it goes green.",
+  "introQuote": "What I care about most is <strong>reliability</strong>. I want a framework I build to still work <strong>three releases from now</strong>, not just on the day I commit it. When a test goes flaky I'd rather find out <strong>why</strong> (timing, state pollution, data dependency) than rerun it until it goes green.",
   "storyPart1": "Before Sopra Steria I spent two years at <strong>ING</strong> as a <strong>Test Automation Engineer</strong> on <strong>Dovetail</strong>, the Fiserv real-time international payments platform. I built and maintained the shared <strong>Selenium, Cucumber and Java</strong> framework behind the daily regression suites, covering incoming and outgoing payment flows across <strong>four countries</strong>. I studied <strong>Applied Mathematics</strong> at Istanbul University, and it shows up in how I approach coverage decisions, edge cases, and breaking scenarios into independent variables. I am also <strong>ISTQB Certified Tester Foundation Level (CTFL)</strong>.",
-  "storyPart2": "I think about what level a test should live at, since <strong>end-to-end coverage is expensive</strong> and a unit test doesn't always prove what people assume it proves. That path now covers <strong>web, API, desktop and mobile automation</strong>, along with test data and stateful scenarios — and the reason for combining it with Pega is to get <strong>testability into the case design from the start</strong>. I use <strong>AI-assisted coding tools</strong> daily (Claude Code, Cursor, GitHub Copilot) and build infrastructure around them: the <strong>Devran AI Kit</strong> is an open-source framework I maintain for governance, quality gates, and session-persistent context. The questions there are the same ones as in QA — what makes output trustworthy, and how do you make that trust auditable.",
-  "storyPart3": "Through Sopra Steria I am available for <strong>QA Consultant, QA Lead, or Test Automation Engineer</strong> assignments in a <strong>Pega context</strong>, ideally where model-based automation in Tosca is the approach. My preference is <strong>financial services or government</strong> engagements. If this lines up with what you're working on, feel free to reach out — I'm always up for a conversation about testing real-time payment systems, model-based automation, or scaling QA inside a Pega project.",
+  "storyPart2": "I think about what level a test should live at, since <strong>end-to-end coverage is expensive</strong> and a unit test doesn't always prove what people assume it proves. The Tosca certification path covers <strong>web, API, desktop and mobile automation</strong>, along with test data and stateful scenarios. The reason for combining it with Pega is to get <strong>testability into the case design from the start</strong>. I use <strong>AI-assisted coding tools</strong> daily (Claude Code, Cursor, GitHub Copilot) and build infrastructure around them: the <strong>Devran AI Kit</strong> is an open-source framework I maintain for governance, quality gates, and session-persistent context. The questions there are the same ones as in QA: what makes output trustworthy, and how do you make that trust auditable.",
+  "storyPart3": "Through Sopra Steria I am available for <strong>QA Consultant, QA Lead, or Test Automation Engineer</strong> assignments in a <strong>Pega context</strong>, ideally where model-based automation in Tosca is the approach. My preference is <strong>financial services or government</strong> engagements. If this lines up with what you're working on, feel free to reach out. I'm always up for a conversation about testing real-time payment systems, model-based automation, or scaling QA inside a Pega project.",
   "yearsExperience": "Years Experience",
   "myJourney": "My Journey",
   "whatIDo": "What I Do",
@@ -77,7 +77,7 @@
       "title": "E-commerce Sales Optimization",
       "description": "Implementing data-driven sales strategies and SEO techniques to maximize product visibility and revenue across major e-commerce platforms like Amazon and eBay.",
       "badge": "Strategic Growth",
-      "fullDescription": "E-commerce success requires more than just listing products—it demands strategic optimization and continuous improvement. I leverage advanced SEO techniques, competitive analysis, and data-driven strategies to maximize product visibility and conversion rates on major platforms like Amazon, eBay, and AutoDoc. My approach includes keyword optimization, sponsored advertising campaigns, inventory management, and pricing strategies that drive revenue growth.",
+      "fullDescription": "E-commerce success requires more than just listing products. It demands strategic optimization and continuous improvement. I leverage advanced SEO techniques, competitive analysis, and data-driven strategies to maximize product visibility and conversion rates on major platforms like Amazon, eBay, and AutoDoc. My approach includes keyword optimization, sponsored advertising campaigns, inventory management, and pricing strategies that drive revenue growth.",
       "keyBenefits": [
         "Increase organic visibility through strategic SEO optimization",
         "Data-driven pricing and inventory strategies",
@@ -104,24 +104,24 @@
     },
     "pegaPlatform": {
       "title": "Pega Platform Architecture",
-      "description": "Designing testable Pega applications from the case model up — certified as both Business Architect and System Architect.",
+      "description": "Designing testable Pega applications from the case model up, certified as both Business Architect and System Architect.",
       "badge": "Certified",
       "expertiseLabel": "Platform Certified",
       "fullDescription": "Test automation on Pega stays fragile without understanding the platform from the inside, so the Certified Pega Business Architect and Certified Pega System Architect certifications came before the tooling. I work within the Sopra Steria Pega Practice (RulesMatter) on case design, data models, and the platform decisions that determine whether an application can be tested at all. Getting testability into the case design from the start is far cheaper than bolting it on after the fact.",
       "keyBenefits": [
         "Case design and data modelling reviewed for testability from day one",
-        "Certified Pega Business Architect (CPBA) — business rules and case lifecycle",
-        "Certified Pega System Architect (CPSA) — data models, integrations, security",
+        "Certified Pega Business Architect (CPBA): business rules and case lifecycle",
+        "Certified Pega System Architect (CPSA): data models, integrations, security",
         "Bridges business analysts and QA with a shared platform vocabulary",
         "Foundation for model-based automation in Tricentis Tosca"
       ]
     },
     "toscaAutomation": {
       "title": "Tricentis Tosca Test Automation",
-      "description": "Model-based test automation across web, API, desktop and mobile — certified Product Consultant at Advanced proficiency.",
+      "description": "Model-based test automation across web, API, desktop and mobile. Certified Product Consultant at Advanced proficiency.",
       "badge": "Certified",
       "expertiseLabel": "Advanced Proficiency",
-      "fullDescription": "I design test coverage, test data, and automation architecture using Tosca's model-based approach — scanning applications into reusable modules rather than writing brittle scripts. The certification path covers web UI (AS1/AS2), API chains, automation beyond the browser through Excel, PDF, Mail, UIA and WinX engines, requirements-driven TestCase design with risk weighting, and stateful test data through the Test Data Service. Combined with Pega platform knowledge, this lets testability be designed in rather than retrofitted.",
+      "fullDescription": "I design test coverage, test data, and automation architecture using Tosca's model-based approach, scanning applications into reusable modules rather than writing brittle scripts. The certification path covers web UI (AS1/AS2), API chains, automation beyond the browser through Excel, PDF, Mail, UIA and WinX engines, requirements-driven TestCase design with risk weighting, and stateful test data through the Test Data Service. Combined with Pega platform knowledge, this lets testability be designed in rather than retrofitted.",
       "keyBenefits": [
         "Model-based automation across web, desktop, API and mobile in one toolchain",
         "Reusable TestStepBlocks, recovery scenarios and multi-browser execution",

@@ -2,10 +2,10 @@
   "title": "Kısaca",
   "titleHighlight": "Ben",
   "introText": "<strong>Sopra Steria Pega Practice (RulesMatter)</strong> bünyesinde <strong>Pega uygulamaları için QA ve test otomasyonu</strong> üzerine çalışıyorum. Geçmişimin büyük kısmı, release disiplininin ve audit trail'lerin zorunluluk olduğu <strong>finansal hizmetler</strong> alanında geçti. <strong>Certified Pega Business Architect (CPBA)</strong> ve <strong>Certified Pega System Architect (CPSA)</strong> sertifikalarına sahibim; ayrıca <strong>Tricentis Tosca Product Consultant</strong> sertifikasını <strong>Advanced</strong> seviyede aldım. Felemenkçe, İngilizce ve Türkçe (anadil) dillerinde akıcı.",
-  "introQuote": "En çok önemsediğim şey <strong>güvenilirlik</strong>. Kurduğum bir framework'ün sadece commit ettiğim gün değil, <strong>üç release sonra da</strong> çalışmasını isterim. Bir test flaky hale geldiğinde, yeşile dönene kadar tekrar çalıştırmaktansa <strong>nedenini</strong> bulmayı tercih ederim — timing, state kirliliği, data bağımlılığı.",
+  "introQuote": "En çok önemsediğim şey <strong>güvenilirlik</strong>. Kurduğum bir framework'ün sadece commit ettiğim gün değil, <strong>üç release sonra da</strong> çalışmasını isterim. Bir test flaky hale geldiğinde, yeşile dönene kadar tekrar çalıştırmaktansa <strong>nedenini</strong> (timing, state kirliliği, data bağımlılığı) bulmayı tercih ederim.",
   "storyPart1": "Sopra Steria'dan önce iki yıl <strong>ING</strong>'de, Fiserv'in gerçek zamanlı uluslararası ödeme platformu <strong>Dovetail</strong> üzerinde <strong>Test Automation Engineer</strong> olarak çalıştım. Günlük regresyon suite'lerinin arkasındaki ortak <strong>Selenium, Cucumber ve Java</strong> framework'ünü kurdum ve sürdürdüm; <strong>dört ülkeye</strong> yayılan gelen ve giden ödeme akışlarını kapsıyordu. İstanbul Üniversitesi'nde <strong>Uygulamalı Matematik</strong> okudum ve bu, coverage kararlarına, edge case'lere ve senaryoları bağımsız değişkenlere ayırmaya yaklaşımımda kendini gösteriyor. Ayrıca <strong>ISTQB Certified Tester Foundation Level (CTFL)</strong> sertifikasına sahibim.",
-  "storyPart2": "Bir testin hangi seviyede yaşaması gerektiğini düşünürüm; çünkü <strong>uçtan uca coverage pahalıdır</strong> ve bir unit test her zaman insanların sandığı şeyi kanıtlamaz. Bu yol artık <strong>web, API, masaüstü ve mobil otomasyonu</strong> ile test data ve stateful senaryoları kapsıyor — Pega ile birleştirmemin sebebi ise <strong>testability'i en baştan case design'a dahil etmek</strong>. Günlük olarak <strong>AI destekli kodlama araçları</strong> kullanıyorum (Claude Code, Cursor, GitHub Copilot) ve çevrelerine altyapı kuruyorum: <strong>Devran AI Kit</strong>, governance, quality gate'ler ve session-persistent context için sürdürdüğüm açık kaynaklı bir framework. Oradaki sorular QA'dekilerle aynı — çıktıyı neyin güvenilir kıldığı ve bu güveni nasıl denetlenebilir hale getirdiğiniz.",
-  "storyPart3": "Sopra Steria üzerinden <strong>Pega bağlamında</strong> <strong>QA Consultant, QA Lead veya Test Automation Engineer</strong> pozisyonlarına açığım; tercihen Tosca'da model-based otomasyonun yaklaşım olduğu projelerde. Önceliğim <strong>finansal hizmetler veya kamu</strong> projeleri. Çalıştığınız işle örtüşüyorsa çekinmeden ulaşın — gerçek zamanlı ödeme sistemlerini test etmek, model-based otomasyon veya bir Pega projesi içinde QA'i ölçeklendirmek üzerine sohbet etmeye her zaman varım.",
+  "storyPart2": "Bir testin hangi seviyede yaşaması gerektiğini düşünürüm; çünkü <strong>uçtan uca coverage pahalıdır</strong> ve bir unit test her zaman insanların sandığı şeyi kanıtlamaz. Tosca sertifikasyon yolu <strong>web, API, masaüstü ve mobil otomasyonu</strong> ile test data ve stateful senaryoları kapsıyor. Pega ile birleştirmemin sebebi ise <strong>testability'i en baştan case design'a dahil etmek</strong>. Günlük olarak <strong>AI destekli kodlama araçları</strong> kullanıyorum (Claude Code, Cursor, GitHub Copilot) ve çevrelerine altyapı kuruyorum: <strong>Devran AI Kit</strong>, governance, quality gate'ler ve session-persistent context için sürdürdüğüm açık kaynaklı bir framework. Oradaki sorular QA'dekilerle aynı: çıktıyı neyin güvenilir kıldığı ve bu güveni nasıl denetlenebilir hale getirdiğiniz.",
+  "storyPart3": "Sopra Steria üzerinden <strong>Pega bağlamında</strong> <strong>QA Consultant, QA Lead veya Test Automation Engineer</strong> pozisyonlarına açığım; tercihen Tosca'da model-based otomasyonun yaklaşım olduğu projelerde. Önceliğim <strong>finansal hizmetler veya kamu</strong> projeleri. Çalıştığınız işle örtüşüyorsa çekinmeden ulaşın. Gerçek zamanlı ödeme sistemlerini test etmek, model-based otomasyon veya bir Pega projesi içinde QA'i ölçeklendirmek üzerine sohbet etmeye her zaman varım.",
   "yearsExperience": "Yıllık Deneyim",
   "myJourney": "Yolculuğum",
   "whatIDo": "Neler Yapıyorum",
@@ -104,24 +104,24 @@
     },
     "pegaPlatform": {
       "title": "Pega Platform Mimarisi",
-      "description": "Test edilebilir Pega uygulamalarını case modelinden itibaren tasarlamak — hem Business Architect hem System Architect sertifikalı.",
+      "description": "Test edilebilir Pega uygulamalarını case modelinden itibaren tasarlamak. Hem Business Architect hem System Architect sertifikalı.",
       "badge": "Sertifikalı",
       "expertiseLabel": "Platform Sertifikalı",
       "fullDescription": "Pega üzerinde test otomasyonu, platformu içeriden anlamadan kırılgan kalır; bu yüzden Certified Pega Business Architect ve Certified Pega System Architect sertifikaları tooling'den önce geldi. Sopra Steria Pega Practice (RulesMatter) bünyesinde case design, veri modelleri ve bir uygulamanın test edilebilir olup olmayacağını belirleyen platform kararları üzerine çalışıyorum. Testability'i en baştan case design'a dahil etmek, sonradan eklemekten çok daha ucuz.",
       "keyBenefits": [
         "Case design ve veri modelleme ilk günden testability açısından gözden geçirilir",
-        "Certified Pega Business Architect (CPBA) — business rule'lar ve case lifecycle",
-        "Certified Pega System Architect (CPSA) — veri modelleri, entegrasyonlar, güvenlik",
+        "Certified Pega Business Architect (CPBA): business rule'lar ve case lifecycle",
+        "Certified Pega System Architect (CPSA): veri modelleri, entegrasyonlar, güvenlik",
         "Business analistler ile QA arasında ortak bir platform dili kurar",
         "Tricentis Tosca'da model-based otomasyonun temelini oluşturur"
       ]
     },
     "toscaAutomation": {
       "title": "Tricentis Tosca Test Otomasyonu",
-      "description": "Web, API, masaüstü ve mobilde model-based test otomasyonu — Advanced seviyede sertifikalı Product Consultant.",
+      "description": "Web, API, masaüstü ve mobilde model-based test otomasyonu. Advanced seviyede sertifikalı Product Consultant.",
       "badge": "Sertifikalı",
       "expertiseLabel": "Advanced Seviye",
-      "fullDescription": "Tosca'nın model-based yaklaşımıyla test coverage, test data ve automation architecture tasarlıyorum — kırılgan script'ler yazmak yerine uygulamaları yeniden kullanılabilir modüllere tarayarak. Sertifikasyon yolu web UI (AS1/AS2), API chain'leri, Excel/PDF/Mail/UIA ve WinX engine'leri ile tarayıcı ötesi otomasyon, risk ağırlıklı requirements-driven TestCase design ve Test Data Service ile stateful test data konularını kapsıyor. Pega platform bilgisiyle birleşince testability sonradan eklenen değil, tasarlanan bir şey haline geliyor.",
+      "fullDescription": "Tosca'nın model-based yaklaşımıyla test coverage, test data ve automation architecture tasarlıyorum; kırılgan script'ler yazmak yerine uygulamaları yeniden kullanılabilir modüllere tarayarak. Sertifikasyon yolu web UI (AS1/AS2), API chain'leri, Excel/PDF/Mail/UIA ve WinX engine'leri ile tarayıcı ötesi otomasyon, risk ağırlıklı requirements-driven TestCase design ve Test Data Service ile stateful test data konularını kapsıyor. Pega platform bilgisiyle birleşince testability sonradan eklenen değil, tasarlanan bir şey haline geliyor.",
       "keyBenefits": [
         "Tek toolchain'de web, desktop, API ve mobil için model-based otomasyon",
         "Yeniden kullanılabilir TestStepBlock'lar, recovery scenario'lar ve çoklu tarayıcı yürütme",
