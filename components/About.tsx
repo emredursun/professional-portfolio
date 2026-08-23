@@ -404,6 +404,58 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
           </Tilt3D>
         </motion.div>
 
+        {/* Based In / Languages - directly below the stats card, same column width */}
+        <motion.div
+          className="md:col-span-4 md:col-start-9"
+          variants={{
+            hidden: { opacity: 0, y: 30 },
+            visible: { opacity: 1, y: 0 },
+          }}
+        >
+          <div className="flex flex-col sm:flex-row gap-4">
+            <motion.div
+              className="flex-1 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-cyan/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(6,182,212,0.1)]"
+              whileHover={{
+                scale: 1.02,
+                borderColor: "#3b82f6",
+                boxShadow: "0 10px 30px rgba(59, 130, 246, 0.15)",
+              }}
+            >
+              <div className="w-14 h-14 rounded-xl bg-blue-50 dark:bg-neon-cyan/10 border border-blue-100 dark:border-neon-cyan flex items-center justify-center text-blue-600 dark:text-neon-cyan text-xl">
+                <i className="fas fa-map-pin"></i>
+              </div>
+              <div>
+                <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
+                  {t('basedIn')}
+                </div>
+                <div className="font-bold text-gray-900 dark:text-white text-lg">
+                  {t('netherlands')}
+                </div>
+              </div>
+            </motion.div>
+            <motion.div
+              className="flex-1 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-purple/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
+              whileHover={{
+                scale: 1.02,
+                borderColor: "#22c55e",
+                boxShadow: "0 10px 30px rgba(34, 197, 94, 0.15)",
+              }}
+            >
+              <div className="w-14 h-14 rounded-xl bg-green-50 dark:bg-neon-purple/10 border border-green-100 dark:border-neon-purple flex items-center justify-center text-green-600 dark:text-neon-purple text-xl">
+                <i className="fas fa-globe"></i>
+              </div>
+              <div>
+                <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
+                  {t('languages')}
+                </div>
+                <div className="font-bold text-gray-900 dark:text-white text-sm">
+                  {t('languageList')}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+
         {/* Story Section - Wide */}
         <motion.div
           className="md:col-span-12"
@@ -413,69 +465,22 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
           }}
         >
           <BentoCard>
-            <div className="flex flex-col lg:flex-row gap-10 items-center">
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-neon-text-primary mb-4 flex items-center gap-3">
-                  <span className="w-2.5 h-2.5 bg-accent-yellow dark:bg-neon-cyan rounded-full shadow-[0_0_10px_rgba(251,191,36,0.5)] dark:shadow-neon-cyan animate-pulse"></span>
-                  {t('myJourney')}
-                </h3>
-                <p 
-                  className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
-                  dangerouslySetInnerHTML={{ __html: t('storyPart1') }}
-                />
-                <p
-                  className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
-                  dangerouslySetInnerHTML={{ __html: t('storyPart2') }}
-                />
-                <p
-                  className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
-                  dangerouslySetInnerHTML={{ __html: t('storyPart3') }}
-                />
-              </div>
-              <div className="hidden lg:block w-px h-32 bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent"></div>
-              <div className="w-full lg:w-1/3 flex flex-col sm:flex-row lg:flex-col gap-4">
-                <motion.div
-                  className="flex-1 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-cyan/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(6,182,212,0.1)]"
-                  whileHover={{
-                    scale: 1.02,
-                    borderColor: "#3b82f6",
-                    boxShadow: "0 10px 30px rgba(59, 130, 246, 0.15)",
-                  }}
-                >
-                  <div className="w-14 h-14 rounded-xl bg-blue-50 dark:bg-neon-cyan/10 border border-blue-100 dark:border-neon-cyan flex items-center justify-center text-blue-600 dark:text-neon-cyan text-xl">
-                    <i className="fas fa-map-pin"></i>
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
-                      {t('basedIn')}
-                    </div>
-                    <div className="font-bold text-gray-900 dark:text-white text-lg">
-                      {t('netherlands')}
-                    </div>
-                  </div>
-                </motion.div>
-                <motion.div
-                  className="flex-1 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-purple/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
-                  whileHover={{
-                    scale: 1.02,
-                    borderColor: "#22c55e",
-                    boxShadow: "0 10px 30px rgba(34, 197, 94, 0.15)",
-                  }}
-                >
-                  <div className="w-14 h-14 rounded-xl bg-green-50 dark:bg-neon-purple/10 border border-green-100 dark:border-neon-purple flex items-center justify-center text-green-600 dark:text-neon-purple text-xl">
-                    <i className="fas fa-globe"></i>
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
-                      {t('languages')}
-                    </div>
-                    <div className="font-bold text-gray-900 dark:text-white text-sm">
-                      {t('languageList')}
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-neon-text-primary mb-4 flex items-center gap-3">
+              <span className="w-2.5 h-2.5 bg-accent-yellow dark:bg-neon-cyan rounded-full shadow-[0_0_10px_rgba(251,191,36,0.5)] dark:shadow-neon-cyan animate-pulse"></span>
+              {t('myJourney')}
+            </h3>
+            <p
+              className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
+              dangerouslySetInnerHTML={{ __html: t('storyPart1') }}
+            />
+            <p
+              className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
+              dangerouslySetInnerHTML={{ __html: t('storyPart2') }}
+            />
+            <p
+              className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
+              dangerouslySetInnerHTML={{ __html: t('storyPart3') }}
+            />
           </BentoCard>
         </motion.div>
 
