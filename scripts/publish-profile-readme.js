@@ -85,23 +85,28 @@ function publish() {
     const target = path.join(workdir, 'README.md');
     fs.copyFileSync(SOURCE_PATH, target);
 
-    const changed = run('git', ['status', '--porcelain'], { cwd: workdir }).length > 0;
-    if (!changed) {
+    // Stage first, then ask git whether anything actually changed. `git status`
+    // is not a safe check here: on Windows core.autocrlf reports the freshly
+    // copied LF file as modified even when the normalized content is identical,
+    // which would send us on to commit an empty changeset.
+    run('git', ['add', 'README.md'], { cwd: workdir });
+    const staged = run('git', ['diff', '--cached', '--stat'], { cwd: workdir });
+
+    if (!staged) {
       console.log('✅ Profile README is already up to date - nothing to publish.');
       return;
     }
 
     console.log('\n📝 Pending changes:\n');
-    runVerbose('git', ['--no-pager', 'diff', '--stat'], { cwd: workdir });
+    console.log(staged);
 
     if (DRY_RUN) {
       console.log('\n🔍 Dry run - nothing pushed. Full diff:\n');
-      runVerbose('git', ['--no-pager', 'diff'], { cwd: workdir });
+      runVerbose('git', ['--no-pager', 'diff', '--cached'], { cwd: workdir });
       return;
     }
 
     const revision = sourceRevision();
-    run('git', ['add', 'README.md'], { cwd: workdir });
     run('git', ['commit', '-m', `docs: sync profile README from portfolio@${revision}`], { cwd: workdir });
     runVerbose('git', ['push'], { cwd: workdir });
 
