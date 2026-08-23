@@ -14,7 +14,7 @@ export const PERSONAL_INFO = {
   email: "info.emredursun@gmail.com",
   phone: "+31 6 2878 8948",
   location: "Amsterdam, Netherlands",
-  avatar: "/images/profile.png",
+  avatar: "/images/profile-workspace.png",
   resumeUrl: "#",
 };
 
@@ -22,7 +22,7 @@ export const PERSONAL_INFO = {
 // Available types: 'openToWork' | 'available' | 'freelance' | 'hiring' | 'busy' | 'none'
 export const STATUS_BADGE = {
   enabled: true,           // Set to false to hide the badge completely
-  type: 'openToWork',      // Change this to switch badge type
+  type: 'available',       // Change this to switch badge type
   // Badge styles for each type (colors are Tailwind classes)
   styles: {
     openToWork: {
@@ -336,16 +336,19 @@ export const EDUCATION: TimelineItem[] = [
   },
 ];
 
+// Ordered by current career priority (Pega/Tosca focus first), not by level.
 export const SKILLS: Skill[] = [
+  { name: "Tricentis Tosca (Model-Based)", level: 85 },
+  { name: "Pega Platform (CPBA & CPSA)", level: 75 },
   { name: "Test Automation", level: 95 },
-  { name: "AI Governance", level: 90 },
   { name: "Java & Ecosystem", level: 90 },
   { name: "Selenium & Cucumber", level: 90 },
-  { name: "Playwright & Cypress (TS)", level: 85 },
   { name: "API Testing (Rest Assured)", level: 85 },
+  { name: "Playwright & Cypress (TS)", level: 85 },
+  { name: "AI Governance", level: 90 },
   { name: "CI/CD (Jenkins & Azure)", level: 80 },
-  { name: "Docker & Containerization", level: 75 },
   { name: "SQL & Databases", level: 75 },
+  { name: "Docker & Containerization", level: 75 },
 ];
 
 export const LANGUAGES: Language[] = [
@@ -392,6 +395,18 @@ export const TECH_STACK: TechCategory[] = [
         icon: <i className="fab fa-js text-3xl text-blue-500"></i>,
       },
       {
+        name: "JavaScript",
+        icon: <i className="fab fa-square-js text-3xl text-yellow-400"></i>,
+      },
+      {
+        name: "Python",
+        icon: <i className="fab fa-python text-3xl text-blue-400"></i>,
+      },
+      {
+        name: "Spring Boot",
+        icon: <i className="fas fa-leaf text-3xl text-green-500"></i>,
+      },
+      {
         name: "SQL",
         icon: <i className="fas fa-database text-3xl text-blue-400"></i>,
       },
@@ -408,6 +423,14 @@ export const TECH_STACK: TechCategory[] = [
   {
     title: "Test Automation & Frameworks",
     technologies: [
+      {
+        name: "Tricentis Tosca",
+        icon: <i className="fas fa-cubes text-3xl text-blue-600"></i>,
+      },
+      {
+        name: "Pega Platform",
+        icon: <i className="fas fa-diagram-project text-3xl text-indigo-500"></i>,
+      },
       {
         name: "Playwright",
         icon: <i className="fas fa-masks-theater text-3xl text-green-500"></i>,
@@ -439,6 +462,14 @@ export const TECH_STACK: TechCategory[] = [
       {
         name: "Postman",
         icon: <i className="fas fa-rocket text-3xl text-orange-500"></i>,
+      },
+      {
+        name: "Swagger",
+        icon: <i className="fas fa-file-code text-3xl text-green-600"></i>,
+      },
+      {
+        name: "Appium",
+        icon: <i className="fas fa-mobile-screen text-3xl text-purple-500"></i>,
       },
     ],
   },

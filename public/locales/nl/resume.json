@@ -90,16 +90,6 @@
       "description": "Speelde een sleutelrol bij het ondersteunen van de missie van Fiader door effectieve coördinatie van vrijwilligers en administratieve taken. Beheerde vrijwilligersdossiers en plande diensten om de middelenallocatie te optimaliseren. Assisteerde bij het organiseren van evenementen en trainingssessies, waarbij alle logistiek werd geregeld. Trad op als primair aanspreekpunt, waardoor de communicatie en betrokkenheid van vrijwilligers werd verbeterd."
     }
   ],
-  "skills": {
-    "testAutomation": "Test Automation",
-    "javaEcosystem": "Java & Ecosysteem",
-    "seleniumCucumber": "Selenium & Cucumber",
-    "playwrightCypress": "Playwright & Cypress (TS)",
-    "apiTesting": "API Testing (Rest Assured)",
-    "cicd": "CI/CD (Jenkins & Azure)",
-    "docker": "Docker & Containerisatie",
-    "sql": "SQL & Databases"
-  },
   "languageLevels": {
     "native": "Moedertaal",
     "professional": "Professioneel (C1)",

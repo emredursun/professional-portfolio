@@ -90,16 +90,6 @@
       "description": "Effective volunteer coordination ve administrative task'lar yoluyla Fiader'in misyonunu desteklemede önemli bir rol oynadım. Resource allocation'ı optimize etmek için volunteer record'larını yönettim ve shift'leri planladım. Tüm logistics'in yerinde olmasını sağlayarak event'lerin ve training session'larının düzenlenmesine yardımcı oldum. Communication'ı ve volunteer engagement'ı artıran primary contact point olarak hareket ettim."
     }
   ],
-  "skills": {
-    "testAutomation": "Test Automation",
-    "javaEcosystem": "Java & Ecosystem",
-    "seleniumCucumber": "Selenium & Cucumber",
-    "playwrightCypress": "Playwright & Cypress (TS)",
-    "apiTesting": "API Testing (Rest Assured)",
-    "cicd": "CI/CD (Jenkins & Azure)",
-    "docker": "Docker & Containerization",
-    "sql": "SQL & Databases"
-  },
   "languageLevels": {
     "native": "Anadil",
     "professional": "Profesyonel (C1)",

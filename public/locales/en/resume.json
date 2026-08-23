@@ -90,16 +90,6 @@
       "description": "Played a key role in supporting Fiader's mission through effective volunteer coordination and administrative tasks. Managed volunteer records and scheduled shifts to optimize resource allocation. Assisted in organizing events and training sessions, ensuring all logistics were in place. Acted as a primary point of contact, enhancing communication and volunteer engagement."
     }
   ],
-  "skills": {
-    "testAutomation": "Test Automation",
-    "javaEcosystem": "Java & Ecosystem",
-    "seleniumCucumber": "Selenium & Cucumber",
-    "playwrightCypress": "Playwright & Cypress (TS)",
-    "apiTesting": "API Testing (Rest Assured)",
-    "cicd": "CI/CD (Jenkins & Azure)",
-    "docker": "Docker & Containerization",
-    "sql": "SQL & Databases"
-  },
   "languageLevels": {
     "native": "Native",
     "professional": "Professional (C1)",

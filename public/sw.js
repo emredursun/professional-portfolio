@@ -11,7 +11,7 @@ const PRECACHE_ASSETS = [
   '/site.webmanifest',
   '/favicon-32x32.png',
   '/favicon-96x96.png',
-  '/images/profile.png',
+  '/images/profile-workspace.png',
   '/images/social-share.png'
 ];
 
