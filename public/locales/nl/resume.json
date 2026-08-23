@@ -95,5 +95,8 @@
     "professional": "Professioneel (C1)",
     "intermediate": "Gemiddeld (B2)",
     "beginner": "Beginner (A1)"
+  },
+  "meta": {
+    "description": "CV van Emre Dursun: QA Consultant met CPBA-, CPSA- en Tricentis Tosca Advanced-certificering, plus ervaring bij ING met real-time betalingen."
   }
 }

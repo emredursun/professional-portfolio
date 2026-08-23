@@ -272,5 +272,8 @@
         }
       }
     }
+  },
+  "meta": {
+    "description": "Testautomatiserings- en softwareprojecten van Emre Dursun, van regressiesuites voor bankbetalingen tot open-source AI-governance tooling."
   }
 }

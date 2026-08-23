@@ -1,6 +1,5 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import { useParams, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 interface SEOProps {
@@ -9,90 +8,105 @@ interface SEOProps {
   overrideTitle?: boolean; // If true, don't append site name
 }
 
+/**
+ * Upsert a <meta> tag: update the existing one if present, otherwise create it.
+ *
+ * We deliberately mutate the tags that already exist in index.html rather than
+ * rendering new ones. index.html ships a static title/description/og set so that
+ * scrapers which never execute JavaScript (LinkedIn, WhatsApp, Slack) still see
+ * something; rendering a second copy from React would leave two of each tag in
+ * the document and make the canonical answer ambiguous for crawlers.
+ */
+const upsertMeta = (selector: string, attr: 'name' | 'property', key: string, content: string) => {
+  let el = document.head.querySelector<HTMLMetaElement>(selector);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+};
+
+/** Upsert a <link> tag, keyed by rel (+ hreflang when present). */
+const upsertLink = (rel: string, href: string, hreflang?: string) => {
+  const selector = hreflang
+    ? `link[rel="${rel}"][hreflang="${hreflang}"]`
+    : `link[rel="${rel}"]`;
+  let el = document.head.querySelector<HTMLLinkElement>(selector);
+  if (!el) {
+    el = document.createElement('link');
+    el.setAttribute('rel', rel);
+    if (hreflang) el.setAttribute('hreflang', hreflang);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('href', href);
+};
+
 const SEO: React.FC<SEOProps> = ({ title, description, overrideTitle = false }) => {
-  const { lang } = useParams<{ lang?: string }>();
   const location = useLocation();
   const { t } = useTranslation();
-  
-  // Default to English if no language parameter
-  const currentLang = lang || 'en';
-  
+
+  // Derive the language from the path rather than useParams(). useParams() only
+  // resolves for components rendered inside a matched <Route>, so any SEO usage
+  // outside the router's route tree would silently fall back to "en" and emit a
+  // canonical pointing at the English URL — which would tell Google the NL/TR
+  // pages are duplicates of the English one.
+  const langMatch = location.pathname.match(/^\/(nl|tr)(?:\/|$)/);
+  const currentLang = langMatch ? langMatch[1] : 'en';
+
   // Base URL
   const baseUrl = 'https://emredursun.nl';
-  
+
   // Clean path without language prefix
   // e.g. /nl/about -> /about
   // e.g. /about -> /about
   const pathWithoutLang = location.pathname.replace(/^\/(nl|tr)/, '') || '/';
-  
+
   // Construct Canonical URL (Self-referencing)
-  // Logic: 
   // - If EN (default): https://emredursun.nl + path
   // - If Other: https://emredursun.nl + /lang + path
-  const canonicalPath = currentLang === 'en' 
-    ? pathWithoutLang 
+  const canonicalPath = currentLang === 'en'
+    ? pathWithoutLang
     : `/${currentLang}${pathWithoutLang}`;
-    
-  const canonicalUrl = `${baseUrl}${canonicalPath === '//' ? '/' : canonicalPath}`.replace(/\/$/, ''); // Remove trailing slash unless root
+
+  const canonicalUrl = `${baseUrl}${canonicalPath === '//' ? '/' : canonicalPath}`.replace(/\/$/, '');
 
   // Dynamic Metadata defaults
   const siteTitle = "Emre Dursun — QA Consultant, Pega & Tricentis Tosca";
-  const metaTitle = title 
-    ? (overrideTitle ? title : `${title} | Emre Dursun`) 
+  const metaTitle = title
+    ? (overrideTitle ? title : `${title} | Emre Dursun`)
     : siteTitle;
-    
+
   const metaDescription = description || t('meta.description', "QA Consultant specializing in Pega & Tricentis Tosca test automation, ISTQB® Certified.");
 
-  return (
-    <Helmet>
-      {/* Primary Meta Tags */}
-      <title>{metaTitle}</title>
-      <meta name="title" content={metaTitle} />
-      <meta name="description" content={metaDescription} />
-      <html lang={currentLang} />
+  const enHref = `${baseUrl}${pathWithoutLang}`.replace(/\/$/, '') || baseUrl;
+  const nlHref = `${baseUrl}/nl${pathWithoutLang}`.replace(/\/$/, '');
+  const trHref = `${baseUrl}/tr${pathWithoutLang}`.replace(/\/$/, '');
 
-      {/* Canonical URL - Vital for SEO to avoid duplicate content penalty */}
-      <link rel="canonical" href={canonicalUrl} />
+  useEffect(() => {
+    document.title = metaTitle;
 
-      {/* Hreflang Tags - Tell Google about language variations of THIS specific page */}
-      <link 
-        rel="alternate" 
-        hrefLang="en" 
-        href={`${baseUrl}${pathWithoutLang}`.replace(/\/$/, '')} 
-      />
-      <link 
-        rel="alternate" 
-        hrefLang="nl" 
-        href={`${baseUrl}/nl${pathWithoutLang}`.replace(/\/$/, '')} 
-      />
-      <link 
-        rel="alternate" 
-        hrefLang="tr" 
-        href={`${baseUrl}/tr${pathWithoutLang}`.replace(/\/$/, '')} 
-      />
-      
-      {/* x-default: fallback for unmatched languages (points to EN) */}
-      <link 
-        rel="alternate" 
-        hrefLang="x-default" 
-        href={`${baseUrl}${pathWithoutLang}`.replace(/\/$/, '')} 
-      />
+    upsertMeta('meta[name="title"]', 'name', 'title', metaTitle);
+    upsertMeta('meta[name="description"]', 'name', 'description', metaDescription);
 
-      {/* Open Graph / Facebook */}
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:title" content={metaTitle} />
-      <meta property="og:description" content={metaDescription} />
-      <meta property="og:image" content="https://emredursun.nl/images/social-share.png" />
+    // Canonical + hreflang: the pair that tells Google these three URLs are the
+    // same page in different languages rather than duplicate content.
+    upsertLink('canonical', canonicalUrl);
+    upsertLink('alternate', enHref, 'en');
+    upsertLink('alternate', nlHref, 'nl');
+    upsertLink('alternate', trHref, 'tr');
+    upsertLink('alternate', enHref, 'x-default');
 
-      {/* Twitter */}
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={canonicalUrl} />
-      <meta property="twitter:title" content={metaTitle} />
-      <meta property="twitter:description" content={metaDescription} />
-      <meta property="twitter:image" content="https://emredursun.nl/images/social-share.png" />
-    </Helmet>
-  );
+    // Open Graph / Twitter: keep the per-page values in sync with the static
+    // fallbacks already present in index.html.
+    upsertMeta('meta[property="og:title"]', 'property', 'og:title', metaTitle);
+    upsertMeta('meta[property="og:description"]', 'property', 'og:description', metaDescription);
+    upsertMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
+    upsertMeta('meta[name="twitter:title"]', 'name', 'twitter:title', metaTitle);
+    upsertMeta('meta[name="twitter:description"]', 'name', 'twitter:description', metaDescription);
+  }, [metaTitle, metaDescription, canonicalUrl, enHref, nlHref, trHref]);
+
+  return null;
 };
 
 export default SEO;

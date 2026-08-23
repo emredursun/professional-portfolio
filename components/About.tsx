@@ -270,7 +270,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
     <section ref={containerRef} className="animate-fade-in">
       <SEO 
         title={t('title')} 
-        description={t('introText', "Emre Dursun — QA Consultant specializing in Pega & Tricentis Tosca test automation, ISTQB® Certified, based in the Netherlands.")}
+        description={t('meta.description', "QA Consultant in the Sopra Steria Pega Practice, specializing in Pega platform architecture and Tricentis Tosca model-based test automation.")}
         overrideTitle={true}
       />
       <motion.header

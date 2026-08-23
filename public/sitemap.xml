@@ -1,109 +1,169 @@
-<?xml="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://emredursun.nl</loc>
-    <lastmod>2026-08-23T18:56:14.713Z</lastmod>
+    <loc>https://emredursun.nl/</loc>
+    <lastmod>2026-08-23T19:17:16.530Z</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/tr</loc>
-    <lastmod>2026-08-23T18:56:14.713Z</lastmod>
+    <lastmod>2026-08-23T19:17:16.530Z</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/nl</loc>
-    <lastmod>2026-08-23T18:56:14.713Z</lastmod>
+    <lastmod>2026-08-23T19:17:16.530Z</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/about</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/about" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/about" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/about" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/tr/about</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/about" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/about" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/about" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/nl/about</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/about" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/about" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/about" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/resume</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/resume" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/resume" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/resume" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/resume" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/tr/resume</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/resume" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/resume" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/resume" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/resume" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/nl/resume</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/resume" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/resume" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/resume" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/resume" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/projects</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/projects" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/projects" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/projects" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/tr/projects</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/projects" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/projects" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/projects" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/nl/projects</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/projects" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/projects" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/projects" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/contact</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/contact" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/contact" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/contact" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/contact" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/tr/contact</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/contact" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/contact" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/contact" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/contact" />
+  </url>
 
   <url>
     <loc>https://emredursun.nl/nl/contact</loc>
-    <lastmod>2026-08-23T18:56:14.715Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    </url>
+    <lastmod>2026-08-23T19:17:16.531Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/contact" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/contact" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/contact" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/contact" />
+  </url>
 </urlset>

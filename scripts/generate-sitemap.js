@@ -44,14 +44,15 @@ function generateHreflangLinks(basePath = '') {
 /**
  * Generate URL entry with hreflang links
  */
-function generateUrlEntry(url, priority, changefreq, lastmod) {
+function generateUrlEntry(url, priority, changefreq, lastmod, basePath = '') {
     return `
   <url>
     <loc>${url}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
-    </url>`;
+${generateHreflangLinks(basePath)}
+  </url>`;
 }
 
 /**
@@ -67,19 +68,22 @@ function generateSitemap() {
     // Generate URLs for each language and route
     routes.forEach(route => {
         const lastMod = new Date().toISOString();
+        // Home carries the highest weight; content pages sit just below it.
+        const priority = route === '' ? '1.0' : '0.8';
+        const changefreq = route === '' ? 'weekly' : 'monthly';
 
         // English (Default)
-        urls.push(generateUrlEntry(`${SITE_URL}${route}`, '0.9', 'weekly', lastMod));
-        
+        urls.push(generateUrlEntry(`${SITE_URL}${route || '/'}`, priority, changefreq, lastMod, route));
+
         // Other languages
         ['tr', 'nl'].forEach(lang => {
              // Avoid double slash for root path if route is empty
             const langPath = route ? `/${lang}${route}` : `/${lang}`;
-            urls.push(generateUrlEntry(`${SITE_URL}${langPath}`, '0.9', 'weekly', lastMod));
+            urls.push(generateUrlEntry(`${SITE_URL}${langPath}`, priority, changefreq, lastMod, route));
         });
     });
 
-    return `<?xml="1.0" encoding="UTF-8"?>
+    return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls.join('\n')}
@@ -106,7 +110,8 @@ function writeSitemap() {
         console.log(`📍 Location: ${OUTPUT_PATH}`);
         console.log(`🔗 URL: ${SITE_URL}/sitemap.xml`);
         console.log(`📅 Last Modified: ${new Date().toISOString().split('T')[0]}`);
-        console.log(`📄 Total URLs: 3 (EN, TR, NL)`);
+        console.log(`📄 Total URLs: ${(sitemapContent.match(/<loc>/g) || []).length}`);
+        console.log(`🔀 hreflang alternates: ${(sitemapContent.match(/xhtml:link/g) || []).length}`);
         console.log(`🌍 Languages: English (default), Turkish, Dutch`);
 
     } catch (error) {

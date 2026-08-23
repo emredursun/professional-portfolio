@@ -140,5 +140,8 @@
       "yearsOfExperience": "Jaar Ervaring",
       "provenExpertise": "Bewezen expertise in productieomgevingen"
     }
+  },
+  "meta": {
+    "description": "QA Consultant binnen de Sopra Steria Pega Practice, gespecialiseerd in Pega-platformarchitectuur en Tricentis Tosca model-based testautomatisering."
   }
 }

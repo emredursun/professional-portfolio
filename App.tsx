@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { getLanguageFromUrl } from './i18n.ts';
 import { useGSAP } from "./components/hooks/useGSAP.tsx";
@@ -456,12 +455,12 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
     return (
-        <HelmetProvider>
-            <Router>
-                <SEO />
-                <AppContent />
-            </Router>
-        </HelmetProvider>
+        <Router>
+            {/* Each page renders its own <SEO/>; a global one here would run its
+                effect after the page-level instance and overwrite the per-page
+                title and description with the site defaults. */}
+            <AppContent />
+        </Router>
     );
 };
 

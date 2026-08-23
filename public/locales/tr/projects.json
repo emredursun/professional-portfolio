@@ -272,5 +272,8 @@
         }
       }
     }
+  },
+  "meta": {
+    "description": "Emre Dursun'un test otomasyonu ve yazılım projeleri: bankacılık ödeme regresyon suite'lerinden açık kaynaklı AI governance araçlarına."
   }
 }

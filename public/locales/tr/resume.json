@@ -95,5 +95,8 @@
     "professional": "Profesyonel (C1)",
     "intermediate": "Orta Seviye (B2)",
     "beginner": "Başlangıç (A1)"
+  },
+  "meta": {
+    "description": "Emre Dursun'un özgeçmişi: CPBA, CPSA ve Tricentis Tosca Advanced sertifikalı QA Consultant; ING'de gerçek zamanlı ödeme sistemleri deneyimi."
   }
 }

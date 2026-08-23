@@ -140,5 +140,8 @@
       "yearsOfExperience": "Yıl Deneyim",
       "provenExpertise": "Prodüksiyon ortamlarında kanıtlanmış uzmanlık"
     }
+  },
+  "meta": {
+    "description": "Sopra Steria Pega Practice bünyesinde QA Consultant. Pega platform mimarisi ve Tricentis Tosca model-based test otomasyonu konusunda uzman."
   }
 }
