@@ -26,8 +26,10 @@
     "build": "vite build",
     "preview": "vite preview",
     "generate:sitemap": "node scripts/generate-sitemap.js",
+    "generate:profile-readme": "node scripts/generate-profile-readme.js",
+    "publish:profile-readme": "npm run generate:profile-readme && node scripts/publish-profile-readme.js",
     "optimize:images": "node scripts/optimize-images.js",
-    "prebuild": "npm run generate:sitemap"
+    "prebuild": "npm run generate:sitemap && npm run generate:profile-readme"
   },
   "dependencies": {
     "@types/three": "^0.181.0",
