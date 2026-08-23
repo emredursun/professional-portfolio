@@ -121,13 +121,14 @@
       "description": "Model-based testautomatisering voor web, API, desktop en mobiel. Gecertificeerd Product Consultant op Advanced niveau.",
       "badge": "Gecertificeerd",
       "expertiseLabel": "Advanced Niveau",
-      "fullDescription": "Ik ontwerp testdekking, testdata en automatiseringsarchitectuur met de model-based aanpak van Tosca, door applicaties te scannen naar herbruikbare modules in plaats van brosse scripts te schrijven. Het certificeringspad omvat web-UI (AS1/AS2), API-ketens, automatisering buiten de browser via Excel-, PDF-, Mail-, UIA- en WinX-engines, requirements-gedreven TestCase-ontwerp met risicoweging, en stateful testdata via de Test Data Service. Gecombineerd met Pega-platformkennis wordt testbaarheid zo ontworpen in plaats van achteraf ingebouwd.",
+      "fullDescription": "Ik ontwerp testdekking, testdata en automatiseringsarchitectuur met de model-based aanpak van Tosca, door applicaties te scannen naar herbruikbare modules in plaats van brosse scripts te schrijven. De Product Consultant-certificering kwam voort uit het volledige leerplan van Tricentis Academy: 13 cursussen, ongeveer 63 uur training, met het examen behaald op 93,3% en de certificering geldig tot augustus 2028. Het pad omvat web-UI (AS1/AS2), API-ketens, automatisering buiten de browser via de Excel-, PDF-, Mail-, UIA- en WinX-engines, requirements-gedreven TestCase-ontwerp met risicoweging, stateful testdata via de Test Data Service, en mobiele automatisering op de Tricentis Mobile Agent. Gecombineerd met Pega-platformkennis wordt testbaarheid zo ontworpen in plaats van achteraf ingebouwd.",
       "keyBenefits": [
         "Model-based automatisering voor web, desktop, API en mobiel in één toolchain",
         "Herbruikbare TestStepBlocks, recovery scenarios en multi-browser executie",
         "Stateful testdatabeheer over gedistribueerde testruns (TDS)",
         "Risicogewogen, requirements-gedreven TestCase-ontwerp",
-        "KPI-gedreven continu testen (dekking, defect- en efficiencymetrics)"
+        "Mobiele automatisering op de Tricentis Mobile Agent, inclusief image-based cases",
+        "Product Consultant-examen behaald op 93,3%, gecertificeerd tot augustus 2028"
       ]
     },
     "details": {
