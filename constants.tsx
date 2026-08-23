@@ -341,7 +341,7 @@ export const EDUCATION: TimelineItem[] = [
 // Ordered by current career priority (Pega/Tosca focus first), not by level.
 export const SKILLS: Skill[] = [
   { name: "Tricentis Tosca (Model-Based)", level: 85 },
-  { name: "Pega Platform (CPBA & CPSA)", level: 75 },
+  { name: "Pega Platform (CPBA & CPSA)", level: 85 },
   { name: "Test Automation", level: 95 },
   { name: "Java & Ecosystem", level: 90 },
   { name: "Selenium & Cucumber", level: 90 },
