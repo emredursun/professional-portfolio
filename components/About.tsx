@@ -206,7 +206,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
 
   // Get translated services
   const translatedServices = useMemo(() => {
-    const serviceKeys = ['testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce', 'aiGovernance', 'pegaTosca'] as const;
+    const serviceKeys = ['testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce', 'aiGovernance', 'pegaPlatform', 'toscaAutomation'] as const;
     return SERVICES.map((service, index) => ({
       ...service,
       title: t(`services.${serviceKeys[index]}.title`),
@@ -382,9 +382,9 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
                   }}
                 >
                   {[
-                    { icon: "fa-certificate", text: t('badges.istqbCertified') },
-                    { icon: "fa-sync", text: t('badges.agileScrum') },
-                    { icon: "fa-layer-group", text: t('badges.fullStackQA') },
+                    { icon: "fa-certificate", text: t('badges.pegaCertified') },
+                    { icon: "fa-cubes", text: t('badges.toscaAdvanced') },
+                    { icon: "fa-layer-group", text: t('badges.istqbCertified') },
                   ].map((badge, idx) => (
                     <motion.div
                       key={idx}
@@ -423,9 +423,13 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
                   className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
                   dangerouslySetInnerHTML={{ __html: t('storyPart1') }}
                 />
-                <p 
-                  className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
+                <p
+                  className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
                   dangerouslySetInnerHTML={{ __html: t('storyPart2') }}
+                />
+                <p
+                  className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
+                  dangerouslySetInnerHTML={{ __html: t('storyPart3') }}
                 />
               </div>
               <div className="hidden lg:block w-px h-32 bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent"></div>

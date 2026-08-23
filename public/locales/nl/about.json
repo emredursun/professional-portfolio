@@ -1,10 +1,11 @@
 {
   "title": "Over",
   "titleHighlight": "Mij",
-  "introText": "<strong>QA Consultant gespecialiseerd in Pega & Tricentis Tosca</strong> testautomatisering, <strong>ISTQB® Gecertificeerd</strong>, met ervaring in <strong>UI-, API- en databasetesten</strong> met gebruik van <strong>Java, Selenium, Cucumber, Postman en REST Assured</strong>. Vaardig in het ontwerpen van <strong>schaalbare automatiseringsframeworks</strong> en het integreren ervan met <strong>CI/CD-pipelines</strong>. Bewezen staat van dienst in het bijdragen aan hoogwaardige releases in <strong>Agile-teams</strong> binnen de <strong>bank-, gezondheidszorg- en e-commerce</strong>sectoren. Vloeiend in Nederlands, Engels en Turks (moedertaal).",
-  "introQuote": "Gedreven door <strong>precisie</strong>, gevoed door <strong>nieuwsgierigheid</strong>. Ik transformeer handmatige testgangen in <strong>geautomatiseerde, herhaalbare systemen</strong> zodat teams duidelijke feedback krijgen en met vertrouwen kunnen leveren.",
-  "storyPart1": "Mijn reis begon met een achtergrond in <strong>Wiskunde</strong>, wat de basis legde voor een gedisciplineerde en systematische aanpak van probleemoplossing. Deze analytische mindset dreef mijn vroege successen in <strong>e-commerce</strong>, waar ik wereldwijde verkoopstrategieën optimaliseerde, voordat ik mijn ware passie vond: <strong>Software Quality Engineering</strong>. In de loop der jaren ben ik gegroeid van handmatig tester naar <strong>Full-Stack Automation Engineer</strong>. Ik heb veerkrachtige testframeworks ontworpen voor complexe banksystemen bij <strong>ING</strong>, en werk sindsdien als <strong>QA Consultant voor Pega-applicaties bij Sopra Steria</strong>, waar ik mijn Pega-platformcertificering combineer met de model-based testautomatisering van Tricentis Tosca — terwijl ik voortdurend de mogelijkheden van <strong>AI-gestuurde ontwikkeling</strong> blijf verkennen.",
-  "storyPart2": "Voor mij draait coderen niet alleen om functionaliteit, maar om het bouwen van <strong>betrouwbare, schaalbare ecosystemen</strong> die teams in staat stellen om met vertrouwen te innoveren. Recentelijk heb ik mijn expertise verdiept in <strong>AI Governance Architectuur</strong>, waarbij ik gepassioneerd <strong>Trust-Grade platforms</strong> ontwerp die regulatory compliance harmoniseren met geavanceerde <strong>multi-agent intelligentie</strong>.",
+  "introText": "Ik werk aan <strong>QA en testautomatisering voor Pega-applicaties</strong>, binnen de <strong>Sopra Steria Pega Practice (RulesMatter)</strong>. Mijn achtergrond ligt grotendeels in <strong>financiële dienstverlening</strong>, waar releasediscipline en audit trails harde eisen zijn. Ik ben <strong>Certified Pega Business Architect (CPBA)</strong> en <strong>Certified Pega System Architect (CPSA)</strong>, en certificeerde als <strong>Tricentis Tosca Product Consultant</strong> op <strong>Advanced</strong> niveau. Vloeiend in Nederlands, Engels en Turks (moedertaal).",
+  "introQuote": "Waar ik het meest om geef is <strong>betrouwbaarheid</strong>. Ik wil dat een framework dat ik bouw <strong>over drie releases</strong> nog steeds werkt, niet alleen op de dag dat ik het commit. Als een test flaky wordt, zoek ik liever uit <strong>waarom</strong> — timing, state-vervuiling, data-afhankelijkheid — dan hem te blijven herhalen tot hij groen is.",
+  "storyPart1": "Vóór Sopra Steria werkte ik twee jaar bij <strong>ING</strong> als <strong>Test Automation Engineer</strong> op <strong>Dovetail</strong>, het real-time internationale betalingsplatform van Fiserv. Ik bouwde en onderhield het gedeelde <strong>Selenium-, Cucumber- en Java</strong>-framework achter de dagelijkse regressiesuites, voor inkomende en uitgaande betalingsstromen over <strong>vier landen</strong>. Ik studeerde <strong>Toegepaste Wiskunde</strong> aan de Universiteit van Istanbul, en dat zie je terug in hoe ik dekkingsbeslissingen, edge cases en het opsplitsen van scenario's in onafhankelijke variabelen benader. Daarnaast ben ik <strong>ISTQB Certified Tester Foundation Level (CTFL)</strong>.",
+  "storyPart2": "Ik denk na over op welk niveau een test thuishoort, want <strong>end-to-end dekking is duur</strong> en een unit test bewijst niet altijd wat men aanneemt. Dat pad omvat inmiddels <strong>web-, API-, desktop- en mobiele automatisering</strong>, samen met testdata en stateful scenario's — en de reden om het met Pega te combineren is om <strong>testbaarheid vanaf het begin in het case-ontwerp</strong> te krijgen. Ik gebruik dagelijks <strong>AI-ondersteunde ontwikkeltools</strong> (Claude Code, Cursor, GitHub Copilot) en bouw er infrastructuur omheen: de <strong>Devran AI Kit</strong> is een open-source framework dat ik onderhoud voor governance, quality gates en session-persistent context. De vragen daar zijn dezelfde als in QA — wat maakt output betrouwbaar, en hoe maak je dat vertrouwen auditeerbaar.",
+  "storyPart3": "Via Sopra Steria ben ik beschikbaar voor opdrachten als <strong>QA Consultant, QA Lead of Test Automation Engineer</strong> in een <strong>Pega-context</strong>, bij voorkeur waar model-based automatisering in Tosca de aanpak is. Mijn voorkeur gaat uit naar <strong>financiële dienstverlening of overheid</strong>. Als dit aansluit bij waar je mee bezig bent, neem gerust contact op — ik ga graag in gesprek over het testen van real-time betalingssystemen, model-based automatisering, of het opschalen van QA binnen een Pega-project.",
   "yearsExperience": "Jaar Ervaring",
   "myJourney": "Mijn Reis",
   "whatIDo": "Wat Ik Doe",
@@ -13,9 +14,9 @@
   "languages": "Talen",
   "languageList": "Engels, Nederlands, Turks",
   "badges": {
-    "istqbCertified": "ISTQB® Gecertificeerd",
-    "agileScrum": "Agile & Scrum",
-    "fullStackQA": "Full-Stack QA"
+    "pegaCertified": "CPBA & CPSA Gecertificeerd",
+    "toscaAdvanced": "Tosca Advanced",
+    "istqbCertified": "ISTQB® Gecertificeerd"
   },
   "services": {
     "testAutomation": {
@@ -101,18 +102,32 @@
         "✓ Certificaat ID: BESYNC-TGAI-20260112-001"
       ]
     },
-    "pegaTosca": {
-      "title": "Pega & Tricentis Tosca Testautomatisering",
-      "description": "Combineert Pega-platformcertificering met de model-based automatisering van Tricentis Tosca om testbaarheid vanaf het begin in het case-ontwerp te verwerken.",
+    "pegaPlatform": {
+      "title": "Pega Platform Architectuur",
+      "description": "Testbare Pega-applicaties ontwerpen vanaf het casemodel — gecertificeerd als zowel Business Architect als System Architect.",
       "badge": "Gecertificeerd",
-      "expertiseLabel": "Nieuwste Specialisatie",
-      "fullDescription": "Als QA Consultant binnen de Sopra Steria Pega Practice ontwerp ik testdekking, testdata en automatiseringsarchitectuur voor web-UI, enterprise- en desktopapplicaties, API-ketens en mobiele automatisering (Tricentis Mobile Agent) met de model-based aanpak van Tosca. De certificeringen Certified Pega Business Architect en Certified Pega System Architect kwamen vóór de tooling, zodat testbaarheid vanaf het begin in het case-ontwerp wordt verwerkt, in plaats van er achteraf aan toegevoegd.",
+      "expertiseLabel": "Platform Gecertificeerd",
+      "fullDescription": "Testautomatisering op Pega blijft fragiel zonder het platform van binnenuit te begrijpen, daarom kwamen de certificeringen Certified Pega Business Architect en Certified Pega System Architect vóór de tooling. Binnen de Sopra Steria Pega Practice (RulesMatter) werk ik aan case-ontwerp, datamodellen en de platformkeuzes die bepalen of een applicatie überhaupt testbaar is. Testbaarheid vanaf het begin in het case-ontwerp verwerken is veel goedkoper dan het er achteraf aan toevoegen.",
       "keyBenefits": [
-        "Model-based testautomatisering voor web, desktop, API en mobiel (Tricentis Tosca)",
-        "Pega case-ontwerp testbaarheid vanaf dag één (CPBA + CPSA platformkennis)",
-        "Stateful testdatabeheer over gedistribueerde testruns",
-        "KPI-gedreven continu testen (dekking, defect- en efficiencymetrics)",
-        "Tricentis Mobile Agent automatisering voor mobiele TestCases"
+        "Case-ontwerp en datamodellering vanaf dag één getoetst op testbaarheid",
+        "Certified Pega Business Architect (CPBA) — business rules en case lifecycle",
+        "Certified Pega System Architect (CPSA) — datamodellen, integraties, security",
+        "Verbindt business analisten en QA met een gedeeld platformvocabulaire",
+        "Fundament voor model-based automatisering in Tricentis Tosca"
+      ]
+    },
+    "toscaAutomation": {
+      "title": "Tricentis Tosca Testautomatisering",
+      "description": "Model-based testautomatisering voor web, API, desktop en mobiel — gecertificeerd Product Consultant op Advanced niveau.",
+      "badge": "Gecertificeerd",
+      "expertiseLabel": "Advanced Niveau",
+      "fullDescription": "Ik ontwerp testdekking, testdata en automatiseringsarchitectuur met de model-based aanpak van Tosca — door applicaties te scannen naar herbruikbare modules in plaats van brosse scripts te schrijven. Het certificeringspad omvat web-UI (AS1/AS2), API-ketens, automatisering buiten de browser via Excel-, PDF-, Mail-, UIA- en WinX-engines, requirements-gedreven TestCase-ontwerp met risicoweging, en stateful testdata via de Test Data Service. Gecombineerd met Pega-platformkennis wordt testbaarheid zo ontworpen in plaats van achteraf ingebouwd.",
+      "keyBenefits": [
+        "Model-based automatisering voor web, desktop, API en mobiel in één toolchain",
+        "Herbruikbare TestStepBlocks, recovery scenarios en multi-browser executie",
+        "Stateful testdatabeheer over gedistribueerde testruns (TDS)",
+        "Risicogewogen, requirements-gedreven TestCase-ontwerp",
+        "KPI-gedreven continu testen (dekking, defect- en efficiencymetrics)"
       ]
     },
     "details": {

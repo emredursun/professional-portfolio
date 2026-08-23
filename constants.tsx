@@ -239,23 +239,49 @@ export const SERVICES: Service[] = [
     certificateImage: "/images/trust-grade-certificate.png"
   },
   {
-    icon: <i className="fas fa-sitemap"></i>,
-    title: "Pega & Tricentis Tosca Test Automation",
-    slug: "pega-tricentis-tosca-automation",
+    icon: <i className="fas fa-diagram-project"></i>,
+    title: "Pega Platform Architecture",
+    slug: "pega-platform-architecture",
     description:
-      "Combining Pega platform certification with Tricentis Tosca's model-based automation to build testability into case design from the start.",
-    tags: ["Pega", "Tricentis Tosca", "CPBA", "CPSA", "Model-Based Testing"],
+      "Designing testable Pega applications from the case model up — certified as both Business Architect and System Architect.",
+    tags: ["Pega Platform", "CPBA", "CPSA", "Case Design", "Low-Code"],
     featured: true,
     badge: "Certified",
-    expertiseLabel: "Latest Specialization",
+    expertiseLabel: "Platform Certified",
     fullDescription:
-      "QA Consultant in the Sopra Steria Pega Practice, I design test coverage, test data, and automation architecture across web UI, enterprise and desktop applications, API chains, and mobile automation (Tricentis Mobile Agent) using Tosca's model-based approach. Certified Pega Business Architect and Certified Pega System Architect certifications came before the tooling, so testability gets built into the case design from the start, not bolted on afterward.",
+      "Test automation on Pega stays fragile without understanding the platform from the inside, so the Certified Pega Business Architect and Certified Pega System Architect certifications came before the tooling. I work within the Sopra Steria Pega Practice (RulesMatter) on case design, data models, and the platform decisions that determine whether an application can be tested at all. Getting testability into the case design from the start is far cheaper than bolting it on after the fact.",
     keyBenefits: [
-      "Model-based test automation across web, desktop, API and mobile (Tricentis Tosca)",
-      "Pega case-design testability from day one (CPBA + CPSA platform depth)",
-      "Stateful test data management across distributed test runs",
-      "KPI-driven continuous testing (coverage, defect, efficiency metrics)",
-      "Tricentis Mobile Agent automation for mobile TestCases"
+      "Case design and data modelling reviewed for testability from day one",
+      "Certified Pega Business Architect (CPBA) — business rules and case lifecycle",
+      "Certified Pega System Architect (CPSA) — data models, integrations, security",
+      "Bridges business analysts and QA with a shared platform vocabulary",
+      "Foundation for model-based automation in Tricentis Tosca"
+    ],
+    relatedProjects: ["quilyn-exam-prep"],
+    certificationDate: "June 2026",
+    certificateImage: "/images/pega-certified-system-architect-cpsa.png",
+    certificateBadges: [
+      { image: "/images/pega-certified-business-architect-cpba.png", label: "Certified Pega Business Architect (CPBA) — June 2026" }
+    ]
+  },
+  {
+    icon: <i className="fas fa-vials"></i>,
+    title: "Tricentis Tosca Test Automation",
+    slug: "tricentis-tosca-automation",
+    description:
+      "Model-based test automation across web, API, desktop and mobile — certified Product Consultant at Advanced proficiency.",
+    tags: ["Tricentis Tosca", "Model-Based Testing", "Test Data Service", "Mobile Automation", "API Testing"],
+    featured: true,
+    badge: "Certified",
+    expertiseLabel: "Advanced Proficiency",
+    fullDescription:
+      "I design test coverage, test data, and automation architecture using Tosca's model-based approach — scanning applications into reusable modules rather than writing brittle scripts. The certification path covers web UI (AS1/AS2), API chains, automation beyond the browser through Excel, PDF, Mail, UIA and WinX engines, requirements-driven TestCase design with risk weighting, and stateful test data through the Test Data Service. Combined with Pega platform knowledge, this lets testability be designed in rather than retrofitted.",
+    keyBenefits: [
+      "Model-based automation across web, desktop, API and mobile in one toolchain",
+      "Reusable TestStepBlocks, recovery scenarios and multi-browser execution",
+      "Stateful test data management across distributed test runs (TDS)",
+      "Risk-weighted, requirements-driven TestCase design",
+      "KPI-driven continuous testing (coverage, defect and efficiency metrics)"
     ],
     relatedProjects: ["quilyn-exam-prep"],
     certificateId: "C26494",
@@ -266,7 +292,9 @@ export const SERVICES: Service[] = [
       { image: "/images/tricentis-as2-badge.png", label: "AS2 — Optimizing Test Automation with Centralized Test Data" },
       { image: "/images/tricentis-api-badge.png", label: "Deep Dive — Automating API Test Cases" },
       { image: "/images/tricentis-tds1-badge.png", label: "TDS1 — Structuring Test Cases and Test Data" },
-      { image: "/images/tricentis-tds2-badge.png", label: "TDS2 — Managing Stateful Test Data" }
+      { image: "/images/tricentis-tds2-badge.png", label: "TDS2 — Managing Stateful Test Data" },
+      { image: "/images/tricentis-ae1-badge.png", label: "AE1 — Automating Beyond Web Applications" },
+      { image: "/images/tricentis-kpi-badge.png", label: "Continuous Testing with Efficient KPI Management" }
     ]
   }
 ];
