@@ -5,7 +5,8 @@
 // Static assets are served cache-first, so returning visitors keep the old copy
 // until the cache name changes and the activate handler purges the previous one.
 // v3: new profile photo, regenerated social-share.png, updated precache list.
-const CACHE_NAME = 'ed-portfolio-v3';
+// v4: switched avatar to portfolio-pic-1.jpeg, updated precache list.
+const CACHE_NAME = 'ed-portfolio-v4';
 const OFFLINE_URL = '/';
 
 // Assets to cache immediately on install
@@ -15,7 +16,7 @@ const PRECACHE_ASSETS = [
   '/site.webmanifest',
   '/favicon-32x32.png',
   '/favicon-96x96.png',
-  '/images/profile-workspace.png',
+  '/images/portfolio-pic-1.jpeg',
   '/images/social-share.png'
 ];
 
