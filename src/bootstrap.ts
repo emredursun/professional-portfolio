@@ -30,6 +30,7 @@ import '@fontsource/space-mono/700.css';
 void import('@fortawesome/fontawesome-free/css/all.min.css');
 
 import gsap from 'gsap';
+import { MotionGlobalConfig } from 'framer-motion';
 import { installGlobalErrorReporting } from './utils/errorReporting.ts';
 
 /**
@@ -62,15 +63,19 @@ function registerServiceWorker(): void {
 }
 
 /**
- * With "reduce motion" on, run GSAP timelines so fast they land on their end
- * state immediately: entrance animations no longer move or fade, but code
- * that waits on a timeline's onComplete (the preloader) still gets its
- * callback.
+ * With "reduce motion" on, every animation lands on its end state at once:
+ * GSAP timelines run 1000x faster (so onComplete callbacks such as the
+ * preloader's still fire) and framer-motion skips animations entirely.
  */
 function respectReducedMotion(): void {
   const query = window.matchMedia?.('(prefers-reduced-motion: reduce)');
   if (!query) return;
-  const apply = () => gsap.globalTimeline.timeScale(query.matches ? 1000 : 1);
+  const apply = () => {
+    gsap.globalTimeline.timeScale(query.matches ? 1000 : 1);
+    // MotionConfig reducedMotion="user" (App.tsx) only drops transform and
+    // layout animations; opacity fades still play. Skip them all.
+    MotionGlobalConfig.skipAnimations = query.matches;
+  };
   apply();
   query.addEventListener?.('change', apply);
 }

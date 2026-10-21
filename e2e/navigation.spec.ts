@@ -69,8 +69,9 @@ test.describe('locale is preserved by in-app navigation', () => {
 
   test('command palette navigation on /tr stays in Turkish', async ({ page }) => {
     await page.goto('/tr/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
     await page.keyboard.press('Control+k');
-    await page.getByRole('textbox').last().fill('contact');
+    await page.getByRole('combobox', { name: 'Search commands' }).fill('contact');
     await page.keyboard.press('Enter');
     await expect(page).toHaveURL(/\/tr\/contact$/);
   });

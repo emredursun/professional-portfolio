@@ -145,6 +145,9 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
           transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="w-full max-w-2xl"
           onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Command palette"
         >
           {/* Command Palette Container */}
           <div className="relative rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-2xl overflow-hidden">
@@ -160,12 +163,20 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Type a command or search..."
+                aria-label="Search commands"
+                role="combobox"
+                aria-expanded="true"
+                aria-controls="command-palette-list"
+                aria-autocomplete="list"
+                aria-activedescendant={filteredCommands[selectedIndex] ? `command-option-${selectedIndex}` : undefined}
                 className="w-full bg-transparent pl-12 pr-4 py-4 text-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none"
                 autoComplete="off"
                 spellCheck="false"
               />
               {searchQuery && (
                 <button
+                  type="button"
+                  aria-label="Clear search"
                   onClick={() => setSearchQuery('')}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                 >
@@ -175,21 +186,29 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
             </div>
 
             {/* Commands List */}
+            {/* WAI-ARIA combobox pattern: focus stays in the input, the active
+                option is announced through aria-activedescendant. */}
             <div
               ref={listRef}
+              // Reachable with Tab so keyboard users can scroll a long result
+              // list (WCAG 2.1.1); option selection stays on the input.
+              tabIndex={0}
               className="max-h-[60vh] overflow-y-auto overscroll-contain"
               style={{ scrollbarWidth: 'thin' }}
             >
+              {filteredCommands.length > 0 || (!searchQuery && recentCommands.length > 0) ? (
+              <div id="command-palette-list" role="listbox" aria-label="Commands">
               {/* Recent Commands Section */}
               {!searchQuery && recentCommands.length > 0 && (
-                <div className="border-b border-gray-200 dark:border-gray-700">
-                  <div className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-2">
+                <div role="group" aria-label="Recent" className="border-b border-gray-200 dark:border-gray-700">
+                  <div aria-hidden="true" className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-2">
                     <i aria-hidden="true" className="far fa-clock" />
                     Recent
                   </div>
                   {recentCommands.map((cmd, index) => (
                     <CommandItem
                       key={`recent-${cmd.id}`}
+                      id={`recent-option-${index}`}
                       command={cmd}
                       isSelected={selectedIndex === index}
                       index={index}
@@ -206,8 +225,8 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
               {/* Grouped Commands */}
               {filteredCommands.length > 0 ? (
                 Object.entries(groupedCommands).map(([category, categoryCommands], catIndex) => (
-                  <div key={category} className={catIndex > 0 || (!searchQuery && recentCommands.length > 0) ? 'border-t border-gray-200 dark:border-gray-700' : ''}>
-                    <div className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  <div key={category} role="group" aria-label={category} className={catIndex > 0 || (!searchQuery && recentCommands.length > 0) ? 'border-t border-gray-200 dark:border-gray-700' : ''}>
+                    <div aria-hidden="true" className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                       {category}
                     </div>
                     {categoryCommands.map((cmd) => {
@@ -215,6 +234,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                       return (
                         <CommandItem
                           key={cmd.id}
+                          id={`command-option-${globalIndex}`}
                           command={cmd}
                           isSelected={selectedIndex === globalIndex}
                           index={globalIndex}
@@ -228,8 +248,10 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                     })}
                   </div>
                 ))
+              ) : null}
+              </div>
               ) : (
-                <div className="p-8 text-center text-gray-500 dark:text-gray-400">
+                <div role="status" className="p-8 text-center text-gray-500 dark:text-gray-400">
                   <i aria-hidden="true" className="fas fa-search text-3xl mb-3 opacity-50" />
                   <p className="text-sm">No commands found</p>
                   <p className="text-xs mt-1">Try a different search term</p>
@@ -266,6 +288,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
 
 // Command Item Component
 interface CommandItemProps {
+  id: string;
   command: Command;
   isSelected: boolean;
   index: number;
@@ -277,6 +300,7 @@ interface CommandItemProps {
 }
 
 const CommandItem: React.FC<CommandItemProps> = React.memo(({
+  id,
   command,
   isSelected,
   index,
@@ -288,6 +312,9 @@ const CommandItem: React.FC<CommandItemProps> = React.memo(({
 }) => {
   return (
     <motion.div
+      id={id}
+      role="option"
+      aria-selected={isSelected}
       data-command-index={index}
       initial={{ opacity: 0, x: -10 }}
       animate={{ opacity: 1, x: 0 }}
