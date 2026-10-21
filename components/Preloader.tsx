@@ -78,7 +78,10 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
             </div>
 
             {/* Background Texture/Noise */}
-             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+            {/* Same inline SVG grain as `.bg-noise` in index.css. Previously
+                hot-linked from grainy-gradients.vercel.app, which now answers
+                402 Payment Required and logged a console error on every load. */}
+            <div className="bg-noise absolute inset-0 opacity-[0.03]"></div>
         </div>
     );
 };

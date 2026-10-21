@@ -32,13 +32,16 @@
     "prebuild": "npm run generate:sitemap && npm run generate:profile-readme"
   },
   "dependencies": {
+    "@fontsource/plus-jakarta-sans": "^5.3.0",
+    "@fontsource/space-mono": "^5.3.0",
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "@types/three": "^0.181.0",
     "framer-motion": "^12.23.24",
     "fuse.js": "^7.1.0",
     "gsap": "^3.13.0",
     "i18next": "^25.7.3",
     "i18next-browser-languagedetector": "^8.2.0",
-    "i18next-http-backend": "^3.0.2",
+    "i18next-http-backend": "^4.0.4",
     "lenis": "^1.3.15",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -51,12 +54,12 @@
     "@vitejs/plugin-react": "^5.0.0",
     "autoprefixer": "^10.4.22",
     "postcss": "^8.5.6",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.5",
     "tailwindcss": "^3.4.18",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=22"
   }
 }
