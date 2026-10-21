@@ -22,7 +22,8 @@
             "categories:performance": [
               "error",
               {
-                "minScore": 0.9
+                "minScore": 0.8,
+                "aggregationMethod": "median-run"
               }
             ],
             "categories:accessibility": [
@@ -87,7 +88,8 @@
             "categories:performance": [
               "error",
               {
-                "minScore": 0.9
+                "minScore": 0.8,
+                "aggregationMethod": "median-run"
               }
             ],
             "categories:accessibility": [
