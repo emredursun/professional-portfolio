@@ -25,15 +25,7 @@ import '@fontsource/space-mono/700.css';
 // every `fas` / `far` / `fab` class name in the codebase keeps resolving.
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-type PlausibleFn = ((event: string, options?: Record<string, unknown>) => void) & {
-  q?: unknown[];
-};
-
-declare global {
-  interface Window {
-    plausible?: PlausibleFn;
-  }
-}
+import { installGlobalErrorReporting } from './utils/errorReporting.ts';
 
 /**
  * Queue stub for Plausible: calls made before the deferred script loads are
@@ -43,7 +35,7 @@ function installPlausibleQueue(): void {
   if (window.plausible) return;
 
   const queue: unknown[] = [];
-  const stub: PlausibleFn = (...args: unknown[]) => {
+  const stub: PlausibleFn = (...args) => {
     queue.push(args);
   };
   stub.q = queue;
@@ -65,4 +57,5 @@ function registerServiceWorker(): void {
 }
 
 installPlausibleQueue();
+installGlobalErrorReporting();
 registerServiceWorker();

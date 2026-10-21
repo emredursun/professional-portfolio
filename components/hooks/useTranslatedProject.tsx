@@ -32,8 +32,9 @@ export const useTranslatedProject = (project: Project): Project => {
     // Get translated metrics array
     const getMetrics = (): string[] | undefined => {
       const metrics = t(`projects.${translationKey}.metrics`, { returnObjects: true });
-      if (Array.isArray(metrics) && metrics.every((m): m is string => typeof m === 'string')) {
-        return metrics;
+      if (Array.isArray(metrics)) {
+        const strings = metrics.filter((m): m is string => typeof m === 'string');
+        if (strings.length === metrics.length) return strings;
       }
       return project.metrics;
     };
@@ -123,8 +124,9 @@ export const useTranslatedProjects = (projects: Project[]): Project[] => {
 
       const getMetrics = (): string[] | undefined => {
         const metrics = t(`projects.${translationKey}.metrics`, { returnObjects: true });
-        if (Array.isArray(metrics) && metrics.every((m): m is string => typeof m === 'string')) {
-          return metrics;
+        if (Array.isArray(metrics)) {
+          const strings = metrics.filter((m): m is string => typeof m === 'string');
+          if (strings.length === metrics.length) return strings;
         }
         return project.metrics;
       };

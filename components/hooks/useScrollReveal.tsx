@@ -7,7 +7,7 @@ interface ScrollRevealOptions {
 }
 
 export const useScrollReveal = (
-  ref: RefObject<HTMLElement>,
+  ref: RefObject<HTMLElement | null>,
   options: ScrollRevealOptions = {}
 ): boolean => {
   const { threshold = 0.1, rootMargin = '0px', triggerOnce = true } = options;

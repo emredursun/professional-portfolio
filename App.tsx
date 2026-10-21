@@ -28,7 +28,7 @@ const CustomCursor = React.lazy(() => import('./components/CustomCursor.tsx'));
 // Scroll Handler Component to preserve exact scroll behaviors
 const ScrollHandler: React.FC<{
   isMobileView: boolean;
-  contentRef: React.RefObject<HTMLDivElement>;
+  contentRef: React.RefObject<HTMLDivElement | null>;
   setIsScrollButtonVisible: (visible: boolean) => void;
   setReadingProgress: (progress: number) => void;
 }> = ({ isMobileView, contentRef, setIsScrollButtonVisible, setReadingProgress }) => {

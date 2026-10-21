@@ -3,7 +3,7 @@ import Lenis from 'lenis';
 
 interface SmoothScrollProps {
   children: React.ReactNode;
-  contentRef: React.RefObject<HTMLElement>;
+  contentRef: React.RefObject<HTMLElement | null>;
   isMobileView: boolean;
 }
 

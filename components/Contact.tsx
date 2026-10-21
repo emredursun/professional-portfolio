@@ -3,6 +3,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SOCIAL_LINKS } from '../constants.tsx';
 import SEO from "./SEO.tsx";
+import { reportError } from '../src/utils/errorReporting.ts';
+
+/**
+ * Web3Forms access keys are public by design - they only identify the inbox.
+ * Abuse protection comes from the honeypot below plus the domain allowlist
+ * configured in the Web3Forms dashboard (restrict to emredursun.nl).
+ */
+const WEB3FORMS_ACCESS_KEY = '309ce373-4042-4a9a-b924-e7684e84ba0a';
 
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -77,8 +85,15 @@ const Contact: React.FC = () => {
         const form = event.currentTarget;
         const formData = new FormData(form);
 
-        // Add Web3Forms access key
-        formData.append("access_key", "309ce373-4042-4a9a-b924-e7684e84ba0a");
+        formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+
+        // Honeypot: real visitors never see or tick this box. Bots that fill
+        // every field get a fake success so they do not retry with variations.
+        if (formData.get('botcheck')) {
+            setSubmissionStatus('success');
+            form.reset();
+            return;
+        }
 
         // Track form submission attempt
         const formDuration = formStartTime ? Date.now() - formStartTime : 0;
@@ -91,11 +106,7 @@ const Contact: React.FC = () => {
         }
 
         // Track with Plausible if available
-        if (typeof window !== 'undefined' && (window as any).plausible) {
-            (window as any).plausible('form_submit', {
-                props: { duration: formDuration }
-            });
-        }
+        window.plausible?.('form_submit', { props: { duration: formDuration } });
 
         try {
             const response = await fetch("https://api.web3forms.com/submit", {
@@ -103,7 +114,9 @@ const Contact: React.FC = () => {
                 body: formData
             });
 
-            const data = await response.json();
+            const data: { success?: boolean; message?: string } = response.ok
+                ? await response.json()
+                : { success: false, message: `HTTP ${response.status}` };
 
             if (data.success) {
                 setSubmissionStatus('success');
@@ -117,14 +130,12 @@ const Contact: React.FC = () => {
                 }
 
                 // Track success
-                if (typeof window !== 'undefined' && (window as any).plausible) {
-                    (window as any).plausible('form_success');
-                }
+                window.plausible?.('form_success');
             } else {
                 throw new Error(data.message || 'Failed to send message');
             }
         } catch (error) {
-            console.error('Form submission error:', error);
+            reportError(error, 'promise');
             setSubmissionStatus('error');
 
             // Hide loading
@@ -133,9 +144,7 @@ const Contact: React.FC = () => {
             }
 
             // Track error
-            if (typeof window !== 'undefined' && (window as any).plausible) {
-                (window as any).plausible('form_error');
-            }
+            window.plausible?.('form_error');
         }
     };
 
@@ -145,9 +154,7 @@ const Contact: React.FC = () => {
             setFormStartTime(Date.now());
 
             // Track form start
-            if (typeof window !== 'undefined' && (window as any).plausible) {
-                (window as any).plausible('form_start');
-            }
+            window.plausible?.('form_start');
         }
     };
 
@@ -187,10 +194,22 @@ const Contact: React.FC = () => {
                 return (
                     <div className="bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border rounded-[2rem] p-8 shadow-2xl dark:shadow-[0_0_40px_-10px_rgba(6,182,212,0.15)]">
                         <form className="space-y-6" onSubmit={handleSubmit}>
+                            {/* Web3Forms honeypot - hidden from people and assistive tech. */}
+                            <input
+                                type="checkbox"
+                                name="botcheck"
+                                className="hidden"
+                                tabIndex={-1}
+                                autoComplete="off"
+                                aria-hidden="true"
+                            />
                             <div className="group">
                                 <input
                                     type="text"
                                     name="name"
+                                    autoComplete="name"
+                                    maxLength={100}
+                                    aria-label={t('form.name.placeholder')}
                                     placeholder={t('form.name.placeholder')}
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                                     required
@@ -202,6 +221,9 @@ const Contact: React.FC = () => {
                                 <input
                                     type="email"
                                     name="email"
+                                    autoComplete="email"
+                                    maxLength={254}
+                                    aria-label={t('form.email.placeholder')}
                                     placeholder={t('form.email.placeholder')}
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                                     required
@@ -212,6 +234,8 @@ const Contact: React.FC = () => {
                             <div className="group">
                                 <textarea
                                     name="message"
+                                    maxLength={5000}
+                                    aria-label={t('form.message.placeholder')}
                                     placeholder={t('form.message.placeholder')}
                                     rows={5}
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)] resize-none"

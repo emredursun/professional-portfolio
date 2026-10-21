@@ -21,10 +21,11 @@ export const PERSONAL_INFO = {
 };
 
 // Status Badge Configuration
-// Available types: 'openToWork' | 'available' | 'freelance' | 'hiring' | 'busy' | 'none'
+export type StatusBadgeType = 'openToWork' | 'available' | 'freelance' | 'hiring' | 'busy' | 'none';
+
 export const STATUS_BADGE = {
   enabled: true,           // Set to false to hide the badge completely
-  type: 'available',       // Change this to switch badge type
+  type: 'available' as StatusBadgeType, // Change this to switch badge type
   // Badge styles for each type (colors are Tailwind classes)
   styles: {
     openToWork: {

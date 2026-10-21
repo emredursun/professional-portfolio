@@ -66,7 +66,7 @@ const WordByWordAnimation: React.FC<WordByWordAnimationProps> = ({
             y: 0,
             transition: {
                 duration: animationDuration,
-                ease: [0.25, 0.46, 0.45, 0.94], // Custom easing for smooth drop
+                ease: [0.25, 0.46, 0.45, 0.94] as const, // Custom easing for smooth drop
                 repeat: repeat ? Infinity : 0,
                 repeatType: 'loop' as const,
                 repeatDelay: repeat ? (repeatDelay + totalAnimationTime) : 0,
