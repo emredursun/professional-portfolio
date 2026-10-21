@@ -39,11 +39,12 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - The scrollable content area is keyboard-focusable.
 - `prefers-reduced-motion` is respected in CSS, GSAP and framer-motion.
 - Light-theme contrast fixes (highlight text was 1.66:1).
+- The command palette follows the WAI-ARIA combobox pattern.
 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
-- Vitest unit tests: 62 tests, 90% line coverage on logic modules.
-- Playwright end-to-end suite: 59 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes.
+- Vitest unit tests: 71 tests, 88% line coverage on logic modules.
+- Playwright end-to-end suite: 63 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes and on open overlays.
 - CI quality gates in front of every deploy, Lighthouse budgets, a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
 - Node 22+.
 
