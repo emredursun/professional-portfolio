@@ -158,9 +158,12 @@ describe('bootstrap', () => {
     delete window.plausible;
     vi.resetModules();
     await import('../src/bootstrap.ts');
-    window.plausible?.('form_start');
-    window.plausible?.('form_submit', { props: { duration: 3 } });
-    expect(window.plausible?.q).toEqual([['form_start'], ['form_submit', { props: { duration: 3 } }]]);
+    // Read through a fresh reference: after `delete` TypeScript narrows
+    // window.plausible to undefined, unaware the import reassigned it.
+    const plausible = (window as Window).plausible;
+    plausible?.('form_start');
+    plausible?.('form_submit', { props: { duration: 3 } });
+    expect(plausible?.q).toEqual([['form_start'], ['form_submit', { props: { duration: 3 } }]]);
   });
 
   it('keeps an already-loaded Plausible instead of replacing it', async () => {

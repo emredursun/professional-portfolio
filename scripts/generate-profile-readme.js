@@ -218,13 +218,19 @@ export function encodeBadgeSegment(text) {
     .replace(/\?/g, '%3F');
 }
 
-/** Build a single-segment shields.io badge image. */
+/**
+ * Build a single-segment shields.io badge image.
+ * @param {{ name: string, color: string, logo?: string, logoColor?: string, style?: string }} badge
+ */
 export function badgeUrl({ name, color, logo, logoColor = 'white', style = 'flat-square' }) {
   const base = `https://img.shields.io/badge/${encodeBadgeSegment(name)}-${color}?style=${style}`;
   return logo ? `${base}&logo=${logo}&logoColor=${logoColor}` : base;
 }
 
-/** Build a two-segment label/value shields.io badge, wrapped in a link. */
+/**
+ * Build a two-segment label/value shields.io badge, wrapped in a link.
+ * @param {{ label: string, value: string, color: string, logo?: string, logoColor?: string, href: string }} badge
+ */
 export function linkBadge({ label, value, color, logo, logoColor = 'white', href }) {
   const segment = `${encodeBadgeSegment(label)}-${encodeBadgeSegment(value)}-${color}`;
   const base = `https://img.shields.io/badge/${segment}?style=for-the-badge`;

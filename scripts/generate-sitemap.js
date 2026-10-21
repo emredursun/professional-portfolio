@@ -106,13 +106,25 @@ function readState() {
 }
 
 /**
+ * @typedef {{ hash: string, lastmod?: string }} RouteState
+ */
+
+/**
  * Pure core of the lastmod decision: given the previous state, the current
  * per-route hashes and "now", reuse a stored timestamp whenever that route's
  * hash is unchanged.
+ *
+ * @param {Record<string, RouteState>} previous
+ * @param {Record<string, string>} hashes
+ * @param {string} now
+ * @returns {{ lastMod: Record<string, string>, nextState: Record<string, RouteState>, changed: string[] }}
  */
 export function computeLastMod(previous, hashes, now) {
+    /** @type {Record<string, string>} */
     const lastMod = {};
+    /** @type {Record<string, RouteState>} */
     const nextState = {};
+    /** @type {string[]} */
     const changed = [];
 
     Object.entries(hashes).forEach(([route, hash]) => {
