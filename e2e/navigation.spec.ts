@@ -59,6 +59,37 @@ test.describe('in-app navigation', () => {
   });
 });
 
+test.describe('locale loading', () => {
+  const localeRequests = (page: import('@playwright/test').Page) => {
+    const urls: string[] = [];
+    page.on('request', (req) => {
+      const match = req.url().match(/\/locales\/(\w+)\/(\w+)\.json/);
+      if (match) urls.push(`${match[1]}/${match[2]}`);
+    });
+    return urls;
+  };
+
+  test('an English page fetches only English files, even for a returning Turkish visitor', async ({ page }) => {
+    // The language detector caches the last language in localStorage; the URL
+    // must still win, without first fetching the cached language's files.
+    await page.addInitScript(() => localStorage.setItem('i18nextLng', 'tr'));
+    const requests = localeRequests(page);
+    await page.goto('/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    expect(requests.every((r) => r.startsWith('en/'))).toBe(true);
+    expect(new Set(requests).size).toBe(6);
+  });
+
+  test('a Dutch page fetches Dutch plus the English fallback, never Turkish', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('i18nextLng', 'tr'));
+    const requests = localeRequests(page);
+    await page.goto('/nl/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    expect(requests.some((r) => r.startsWith('nl/'))).toBe(true);
+    expect(requests.some((r) => r.startsWith('tr/'))).toBe(false);
+  });
+});
+
 test.describe('locale is preserved by in-app navigation', () => {
   test('opening a service on /nl/about stays in Dutch', async ({ page }) => {
     await page.goto('/nl/about');

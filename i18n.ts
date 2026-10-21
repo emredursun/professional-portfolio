@@ -12,6 +12,15 @@ export const LANGUAGES = {
 
 export const DEFAULT_LANGUAGE = 'en';
 
+/**
+ * The URL decides the language (/nl, /tr, otherwise English), so initialise
+ * with it. Left to the detector, i18next started from localStorage or the
+ * browser language, fetched that locale plus the English fallback, and then
+ * App switched to the URL's language and fetched a third: up to 18 locale
+ * files and an extra language change on every first load instead of 6.
+ */
+const initialLanguage = window.location.pathname.match(/^\/(nl|tr)(?=\/|$)/)?.[1] ?? DEFAULT_LANGUAGE;
+
 i18n
   // Load translations using http backend
   .use(HttpBackend)
@@ -21,6 +30,7 @@ i18n
   .use(initReactI18next)
   // Initialize i18next
   .init({
+    lng: initialLanguage,
     fallbackLng: DEFAULT_LANGUAGE,
     supportedLngs: Object.keys(LANGUAGES),
     
