@@ -44,7 +44,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
 - Vitest unit tests: 71 tests, 88% line coverage on logic modules.
-- Playwright end-to-end suite: 63 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes and on open overlays.
+- Playwright end-to-end suite: 67 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes and on open overlays.
 - CI quality gates in front of every deploy, Lighthouse budgets, a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
 - Node 22+.
 
