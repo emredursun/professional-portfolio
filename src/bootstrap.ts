@@ -29,6 +29,7 @@ import '@fontsource/space-mono/700.css';
 // arrived anyway - nothing is lost by not waiting for this file.
 void import('@fortawesome/fontawesome-free/css/all.min.css');
 
+import gsap from 'gsap';
 import { installGlobalErrorReporting } from './utils/errorReporting.ts';
 
 /**
@@ -60,6 +61,21 @@ function registerServiceWorker(): void {
   });
 }
 
+/**
+ * With "reduce motion" on, run GSAP timelines so fast they land on their end
+ * state immediately: entrance animations no longer move or fade, but code
+ * that waits on a timeline's onComplete (the preloader) still gets its
+ * callback.
+ */
+function respectReducedMotion(): void {
+  const query = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+  if (!query) return;
+  const apply = () => gsap.globalTimeline.timeScale(query.matches ? 1000 : 1);
+  apply();
+  query.addEventListener?.('change', apply);
+}
+
 installPlausibleQueue();
+respectReducedMotion();
 installGlobalErrorReporting();
 registerServiceWorker();

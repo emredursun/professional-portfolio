@@ -78,7 +78,7 @@ const ProjectSectionNav: React.FC<ProjectSectionNavProps> = ({ sections }) => {
                   : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
               }`}
             >
-              <i className={`${section.icon} ${activeSection === section.id ? 'scale-110' : ''}`}></i>
+              <i aria-hidden="true" className={`${section.icon} ${activeSection === section.id ? 'scale-110' : ''}`}></i>
               <span>{section.label}</span>
             </button>
           ))}

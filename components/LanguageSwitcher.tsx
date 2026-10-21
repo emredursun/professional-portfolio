@@ -105,7 +105,7 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ isMobileView = fals
                   <div className="text-xs opacity-70 uppercase">{lang}</div>
                 </div>
                 {currentLanguage === lang && (
-                  <i className="fas fa-check text-sm"></i>
+                  <i aria-hidden="true" className="fas fa-check text-sm"></i>
                 )}
               </motion.button>
             ))}

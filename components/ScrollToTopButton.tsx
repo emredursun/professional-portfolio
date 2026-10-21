@@ -61,7 +61,7 @@ const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ onClick, progress
 
         {/* Inner Button Content */}
         <div className="relative z-10 flex items-center justify-center w-10 h-10 rounded-full bg-yellow-400 text-gray-900 shadow-lg group-hover:bg-yellow-300 transition-colors duration-300">
-          <i className="fas fa-arrow-up text-lg group-hover:animate-bounce-custom"></i>
+          <i aria-hidden="true" className="fas fa-arrow-up text-lg group-hover:animate-bounce-custom"></i>
         </div>
 
         {/* Glow Effect */}

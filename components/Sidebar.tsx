@@ -21,10 +21,10 @@ interface SidebarProps {
 }
 
 const pages: { label: Page; path: string; icon: React.ReactNode }[] = [
-    { label: 'About', path: '/about', icon: <i className="far fa-user"></i> },
-    { label: 'Resume', path: '/resume', icon: <i className="far fa-file-alt"></i> },
-    { label: 'Projects', path: '/projects', icon: <i className="far fa-folder-open"></i> },
-    { label: 'Contact', path: '/contact', icon: <i className="far fa-envelope"></i> },
+    { label: 'About', path: '/about', icon: <i aria-hidden="true" className="far fa-user"></i> },
+    { label: 'Resume', path: '/resume', icon: <i aria-hidden="true" className="far fa-file-alt"></i> },
+    { label: 'Projects', path: '/projects', icon: <i aria-hidden="true" className="far fa-folder-open"></i> },
+    { label: 'Contact', path: '/contact', icon: <i aria-hidden="true" className="far fa-envelope"></i> },
 ];
 
 const NavButton: React.FC<{
@@ -234,13 +234,13 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
                                     </span>
                                 )}
                                 {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'briefcase' && (
-                                    <i className="fas fa-briefcase text-xs"></i>
+                                    <i aria-hidden="true" className="fas fa-briefcase text-xs"></i>
                                 )}
                                 {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'users' && (
-                                    <i className="fas fa-users text-xs"></i>
+                                    <i aria-hidden="true" className="fas fa-users text-xs"></i>
                                 )}
                                 {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'clock' && (
-                                    <i className="fas fa-clock text-xs"></i>
+                                    <i aria-hidden="true" className="fas fa-clock text-xs"></i>
                                 )}
                                 <span className="text-[11px] font-extrabold uppercase tracking-wider" style={{ letterSpacing: '0.08em' }}>
                                     {t(`statusBadge.${STATUS_BADGE.type}`)}
@@ -320,7 +320,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
                         {/* Gradient glow border on hover */}
                         <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-yellow-400/20 via-amber-400/30 to-yellow-400/20 dark:from-cyan-400/20 dark:via-blue-400/30 dark:to-cyan-400/20 blur-sm -z-10"></div>
 
-                        <i className="fas fa-certificate text-base relative z-10"></i>
+                        <i aria-hidden="true" className="fas fa-certificate text-base relative z-10"></i>
                             <span className="relative z-10" style={{ wordSpacing: '0.15em' }}>{t('sidebar:personalInfo.title')}</span>
                     </motion.div>
                 </motion.div>
@@ -436,7 +436,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
                             {/* Shine Effect */}
                             <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent z-10"></div>
                             <span className="text-sm uppercase tracking-wider font-extrabold z-20">{t('buttons.downloadCV')}</span>
-                            <i className="fas fa-download z-20"></i>
+                            <i aria-hidden="true" className="fas fa-download z-20"></i>
                         </a>
                     </Magnetic>
                 </div>
@@ -450,7 +450,7 @@ const InfoRow: React.FC<{ icon: string; value: string; label: string; isLink?: b
     const content = (
         <div className="flex items-center gap-4 group cursor-default">
             <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center justify-center text-gray-400 dark:text-gray-500 shadow-sm shrink-0 group-hover:text-yellow-500 group-hover:scale-110 transition-all duration-300">
-                <i className={`fas ${icon}`}></i>
+                <i aria-hidden="true" className={`fas ${icon}`}></i>
             </div>
             <div className="flex-1 min-w-0">
                 <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-bold mb-0.5">{label}</p>

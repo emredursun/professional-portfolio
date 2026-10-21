@@ -89,7 +89,7 @@ const TechTags: React.FC<{ technologies: string[] }> = ({ technologies }) => {
         ))}
         {hidden > 0 && (
           <span
-            className={`${chipBaseClass} text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/5`}
+            className={`${chipBaseClass} text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/5`}
           >
             +{hidden}
           </span>
@@ -123,7 +123,7 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
 
         <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
           <div className="w-14 h-14 bg-yellow-400 dark:bg-neon-cyan rounded-full flex items-center justify-center text-black text-xl shadow-[0_0_20px_rgba(250,204,21,0.5)] dark:shadow-[0_0_20px_rgba(6,182,212,0.5)] transform scale-75 group-hover:scale-100 transition-transform duration-300">
-            <i className="fas fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-500"></i>
+            <i aria-hidden="true" className="fas fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-500"></i>
           </div>
         </div>
       </div>
@@ -280,9 +280,13 @@ const Projects: React.FC = () => {
 
   return (
     <section className="animate-fade-in h-full flex flex-col">
-      <SEO 
-        title={t('title')} 
-        description={t('meta.description', "Explore my portfolio of automation projects, including test frameworks, CI/CD pipelines, and full-stack applications.")}
+      <SEO
+        title={selectedProject ? translatedSelectedProject.title : t('title')}
+        description={
+          selectedProject
+            ? translatedSelectedProject.description
+            : t('meta.description', "Explore my portfolio of automation projects, including test frameworks, CI/CD pipelines, and full-stack applications.")
+        }
       />
       <header className="mb-10">
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-8">
@@ -326,7 +330,7 @@ const Projects: React.FC = () => {
                   : t('filters.selected', { count: selectedCategories.length })}
               </span>
               <i
-                className={`fas fa-chevron-down transition-transform duration-300 ${isCategoryOpen ? "rotate-180" : ""
+                aria-hidden="true" className={`fas fa-chevron-down transition-transform duration-300 ${isCategoryOpen ? "rotate-180" : ""
                   }`}
               ></i>
             </button>
@@ -383,7 +387,7 @@ const Projects: React.FC = () => {
                   : t('filters.selected', { count: selectedTechnologies.length })}
               </span>
               <i
-                className={`fas fa-chevron-down transition-transform duration-300 ${isTechnologyOpen ? "rotate-180" : ""
+                aria-hidden="true" className={`fas fa-chevron-down transition-transform duration-300 ${isTechnologyOpen ? "rotate-180" : ""
                   }`}
               ></i>
             </button>
@@ -431,7 +435,7 @@ const Projects: React.FC = () => {
                     onClick={() => toggleCategory(cat)}
                     className="hover:text-yellow-700 dark:hover:text-yellow-300"
                   >
-                    <i className="fas fa-times"></i>
+                    <i aria-hidden="true" className="fas fa-times"></i>
                   </button>
                 </span>
               ))}
@@ -445,7 +449,7 @@ const Projects: React.FC = () => {
                     onClick={() => toggleTechnology(tech)}
                     className="hover:text-blue-700 dark:hover:text-blue-300"
                   >
-                    <i className="fas fa-times"></i>
+                    <i aria-hidden="true" className="fas fa-times"></i>
                   </button>
                 </span>
               ))}
@@ -477,7 +481,7 @@ const Projects: React.FC = () => {
       ) : (
         <div className="flex flex-col items-center justify-center py-32 text-center bg-white/50 dark:bg-white/5 rounded-[2rem] border border-dashed border-gray-300 dark:border-white/10">
           <div className="w-20 h-20 bg-gray-100 dark:bg-white/5 rounded-full flex items-center justify-center mb-6">
-            <i className="fas fa-folder-open text-4xl text-gray-300 dark:text-gray-600"></i>
+            <i aria-hidden="true" className="fas fa-folder-open text-4xl text-gray-300 dark:text-gray-600"></i>
           </div>
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
             {t('filters.noResults')}

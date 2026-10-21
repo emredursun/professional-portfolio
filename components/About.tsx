@@ -112,7 +112,7 @@ const ServiceItem: React.FC<{ service: ExtendedService; onClick: () => void }> =
             transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
           >
             <div className="flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 rounded-full shadow-[0_2px_10px_rgba(251,191,36,0.5)] border border-amber-300">
-              <i className="fas fa-check-circle text-[10px] text-amber-800"></i>
+              <i aria-hidden="true" className="fas fa-check-circle text-[10px] text-amber-800"></i>
               <span className="text-[9px] font-black uppercase tracking-wider text-amber-900">{service.badge}</span>
             </div>
           </motion.div>
@@ -126,7 +126,7 @@ const ServiceItem: React.FC<{ service: ExtendedService; onClick: () => void }> =
             animate={{ scale: 1, rotate: 0 }}
             transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
           >
-            <i className="fas fa-star text-xs text-white"></i>
+            <i aria-hidden="true" className="fas fa-star text-xs text-white"></i>
           </motion.div>
         )}
         
@@ -170,7 +170,7 @@ const ServiceItem: React.FC<{ service: ExtendedService; onClick: () => void }> =
           </motion.span>
         ))}
         {service.tags && service.tags.length > 3 && (
-          <span className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/5">
+          <span className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/5">
             +{service.tags.length - 3}
           </span>
         )}
@@ -179,7 +179,7 @@ const ServiceItem: React.FC<{ service: ExtendedService; onClick: () => void }> =
       {/* Learn More Button - Enhanced hover animation */}
       <div className="mt-auto w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-neon-border bg-white dark:bg-black text-sm font-bold text-gray-700 dark:text-gray-300 group-hover:border-yellow-400 dark:group-hover:border-neon-cyan group-hover:bg-gradient-to-r group-hover:from-accent-yellow group-hover:to-orange-500 dark:group-hover:from-neon-cyan dark:group-hover:to-blue-500 group-hover:text-black dark:group-hover:text-black group-hover:shadow-lg dark:group-hover:shadow-neon-cyan/20 transition-all duration-300">
         <span>Learn More</span>
-        <i className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform duration-300"></i>
+        <i aria-hidden="true" className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform duration-300"></i>
       </div>
     </div>
   );
@@ -268,10 +268,12 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
 
   return (
     <section ref={containerRef} className="animate-fade-in">
-      <SEO 
-        title={t('title')} 
+      {/* No title: About is the landing page, so it carries the full site
+          title. It used to pass t('title') with overrideTitle, which made the
+          most important page appear in search results and tabs as just
+          "About" / "Kısaca" / "Over". */}
+      <SEO
         description={t('meta.description', "QA Consultant in the Sopra Steria Pega Practice, specializing in Pega platform architecture and Tricentis Tosca model-based test automation.")}
-        overrideTitle={true}
       />
       <motion.header
         ref={headerRef}
@@ -321,9 +323,9 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
           }}
         >
           <BentoCard className="h-full bg-white dark:bg-neon-bg border-gray-100 dark:border-neon-border">
-            <i className="fas fa-quote-left text-5xl text-gray-100 dark:text-neon-border absolute top-6 right-8 transition-colors duration-500 group-hover:text-accent-yellow/10"></i>
+            <i aria-hidden="true" className="fas fa-quote-left text-5xl text-gray-100 dark:text-neon-border absolute top-6 right-8 transition-colors duration-500 group-hover:text-accent-yellow/10"></i>
             <p 
-              className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-neon-text-primary leading-tight mb-8 relative z-10 [&_strong]:text-accent-yellow dark:[&_strong]:text-neon-cyan [&_strong]:font-extrabold"
+              className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-neon-text-primary leading-tight mb-8 relative z-10 [&_strong]:text-amber-700 dark:[&_strong]:text-neon-cyan [&_strong]:font-extrabold"
               dangerouslySetInnerHTML={{ __html: `"${t('introQuote')}"` }}
             />
             <div className="mt-auto relative z-10">
@@ -362,7 +364,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
                     +
                   </span>
                 </motion.div>
-                <div className="text-sm font-extrabold uppercase tracking-widest text-gray-500 dark:text-neon-text-secondary mb-8">
+                <div className="text-sm font-extrabold uppercase tracking-widest text-gray-600 dark:text-neon-text-secondary mb-8">
                   {t('yearsExperience')}
                 </div>
 
@@ -394,7 +396,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
                         visible: { opacity: 1, x: 0 },
                       }}
                     >
-                      <i className={`fas ${badge.icon} text-lg transition-all duration-500 group-hover/badge:scale-110 group-hover/badge:rotate-12`}></i>{" "}
+                      <i aria-hidden="true" className={`fas ${badge.icon} text-lg transition-all duration-500 group-hover/badge:scale-110 group-hover/badge:rotate-12`}></i>{" "}
                       {badge.text}
                     </motion.div>
                   ))}
@@ -412,7 +414,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
             }}
           >
             <div className="w-14 h-14 shrink-0 rounded-xl bg-green-50 dark:bg-neon-purple/10 border border-green-100 dark:border-neon-purple flex items-center justify-center text-green-600 dark:text-neon-purple text-xl">
-              <i className="fas fa-globe"></i>
+              <i aria-hidden="true" className="fas fa-globe"></i>
             </div>
             <div className="min-w-0">
               <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">

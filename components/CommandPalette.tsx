@@ -151,7 +151,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
             {/* Search Input */}
             <div className="relative border-b border-gray-200 dark:border-gray-700">
               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
-                <i className="fas fa-search text-lg" />
+                <i aria-hidden="true" className="fas fa-search text-lg" />
               </div>
               <input
                 ref={inputRef}
@@ -169,7 +169,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                   onClick={() => setSearchQuery('')}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                 >
-                  <i className="fas fa-times" />
+                  <i aria-hidden="true" className="fas fa-times" />
                 </button>
               )}
             </div>
@@ -184,7 +184,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
               {!searchQuery && recentCommands.length > 0 && (
                 <div className="border-b border-gray-200 dark:border-gray-700">
                   <div className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                    <i className="far fa-clock" />
+                    <i aria-hidden="true" className="far fa-clock" />
                     Recent
                   </div>
                   {recentCommands.map((cmd, index) => (
@@ -230,7 +230,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                 ))
               ) : (
                 <div className="p-8 text-center text-gray-500 dark:text-gray-400">
-                  <i className="fas fa-search text-3xl mb-3 opacity-50" />
+                  <i aria-hidden="true" className="fas fa-search text-3xl mb-3 opacity-50" />
                   <p className="text-sm">No commands found</p>
                   <p className="text-xs mt-1">Try a different search term</p>
                 </div>

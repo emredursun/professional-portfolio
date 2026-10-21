@@ -174,7 +174,7 @@ const Contact: React.FC = () => {
                     <div className="bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border rounded-[2rem] p-8 flex flex-col items-center justify-center text-center h-[436px] animate-fade-in relative overflow-hidden shadow-2xl dark:shadow-[0_0_40px_-10px_rgba(6,182,212,0.3)]">
                         <ConfettiCanvas />
                         <div className="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-6 animate-icon-pop-in z-10 border border-green-300 dark:border-green-500/30">
-                            <i className="fas fa-check text-4xl text-green-500"></i>
+                            <i aria-hidden="true" className="fas fa-check text-4xl text-green-500"></i>
                         </div>
                         <h4 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 z-10">{t('messages.success.title')}</h4>
                         <p className="text-gray-700 dark:text-gray-300 text-lg z-10">{t('messages.success.description')}<br />{t('messages.success.followUp')}</p>
@@ -184,7 +184,7 @@ const Contact: React.FC = () => {
                 return (
                     <div className="bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800 rounded-2xl p-8 flex flex-col items-center justify-center text-center h-[436px] animate-fade-in">
                         <div className="w-20 h-20 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mb-6">
-                            <i className="fas fa-exclamation-triangle text-4xl text-red-500"></i>
+                            <i aria-hidden="true" className="fas fa-exclamation-triangle text-4xl text-red-500"></i>
                         </div>
                         <h4 className="text-2xl font-bold text-red-800 dark:text-red-300 mb-2">{t('messages.error.title')}</h4>
                         <p className="text-red-600 dark:text-red-400 mb-8">{t('messages.error.description')}</p>
@@ -192,7 +192,7 @@ const Contact: React.FC = () => {
                             onClick={() => setSubmissionStatus('idle')}
                             className="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-xl flex items-center justify-center gap-2 hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                         >
-                            <i className="fas fa-redo"></i>
+                            <i aria-hidden="true" className="fas fa-redo"></i>
                             {t('buttons.tryAgain', { ns: 'common' })}
                         </button>
                     </div>
@@ -262,12 +262,12 @@ const Contact: React.FC = () => {
                             >
                                 {submissionStatus === 'submitting' ? (
                                     <>
-                                        <i className="fas fa-spinner fa-spin"></i>
+                                        <i aria-hidden="true" className="fas fa-spinner fa-spin"></i>
                                         {t('buttons.sending', { ns: 'common' })}
                                     </>
                                 ) : (
                                     <>
-                                        <i className="fas fa-paper-plane"></i>
+                                        <i aria-hidden="true" className="fas fa-paper-plane"></i>
                                         {t('buttons.sendMessage', { ns: 'common' })}
                                     </>
                                 )}
@@ -301,7 +301,7 @@ const Contact: React.FC = () => {
                 <div className="flex-1">
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg bg-yellow-400/10 flex items-center justify-center text-yellow-400">
-                            <i className="fas fa-envelope-open-text"></i>
+                            <i aria-hidden="true" className="fas fa-envelope-open-text"></i>
                         </div>
                         {t('sections.form')}
                     </h3>
@@ -310,7 +310,7 @@ const Contact: React.FC = () => {
                 <div className="flex-1">
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg bg-yellow-400/10 flex items-center justify-center text-yellow-400">
-                            <i className="fas fa-map-marked-alt"></i>
+                            <i aria-hidden="true" className="fas fa-map-marked-alt"></i>
                         </div>
                         {t('sections.findMe')}
                     </h3>

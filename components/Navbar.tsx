@@ -19,10 +19,10 @@ interface NavPage {
 }
 
 const pages: NavPage[] = [
-    { id: 'About', path: '/about', translationKey: 'nav.about', icon: <i className="far fa-user"></i> },
-    { id: 'Resume', path: '/resume', translationKey: 'nav.resume', icon: <i className="far fa-file-alt"></i> },
-    { id: 'Projects', path: '/projects', translationKey: 'nav.projects', icon: <i className="far fa-folder-open"></i> },
-    { id: 'Contact', path: '/contact', translationKey: 'nav.contact', icon: <i className="far fa-envelope"></i> },
+    { id: 'About', path: '/about', translationKey: 'nav.about', icon: <i aria-hidden="true" className="far fa-user"></i> },
+    { id: 'Resume', path: '/resume', translationKey: 'nav.resume', icon: <i aria-hidden="true" className="far fa-file-alt"></i> },
+    { id: 'Projects', path: '/projects', translationKey: 'nav.projects', icon: <i aria-hidden="true" className="far fa-folder-open"></i> },
+    { id: 'Contact', path: '/contact', translationKey: 'nav.contact', icon: <i aria-hidden="true" className="far fa-envelope"></i> },
 ];
 
 const NavButton: React.FC<{
@@ -133,7 +133,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent
                                     title="Search (⌘K)"
                                 >
                                     <span className="text-[16px] mb-[2px] z-10 transition-all duration-300 ease-out group-hover:scale-105 group-active:scale-95">
-                                        <i className="fas fa-search" />
+                                        <i aria-hidden="true" className="fas fa-search" />
                                     </span>
                                     <span className="text-[8px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap opacity-60 group-hover:opacity-80">
                                         {t('nav.search')}

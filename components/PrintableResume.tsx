@@ -124,19 +124,19 @@ const PrintableResume: React.FC = () => {
                 {/* Contact Info Grid */}
                 <div className="grid grid-cols-2 gap-y-2 text-sm font-medium text-gray-700 w-full">
                     <div className="flex items-center gap-3">
-                        <span className="w-5 flex justify-center text-gray-900"><i className="fas fa-envelope"></i></span> 
+                        <span className="w-5 flex justify-center text-gray-900"><i aria-hidden="true" className="fas fa-envelope"></i></span> 
                         {PERSONAL_INFO.email}
                     </div>
                     <div className="flex items-center gap-3">
-                        <span className="w-5 flex justify-center text-gray-900"><i className="fas fa-phone"></i></span> 
+                        <span className="w-5 flex justify-center text-gray-900"><i aria-hidden="true" className="fas fa-phone"></i></span> 
                         {PERSONAL_INFO.phone}
                     </div>
                     <div className="flex items-center gap-3">
-                         <span className="w-5 flex justify-center text-gray-900"><i className="fas fa-globe"></i></span> 
+                         <span className="w-5 flex justify-center text-gray-900"><i aria-hidden="true" className="fas fa-globe"></i></span> 
                          <span className="text-black">emredursun.nl</span>
                     </div>
                     <div className="flex items-center gap-3">
-                        <span className="w-5 flex justify-center text-gray-900"><i className="fas fa-map-marker-alt"></i></span> 
+                        <span className="w-5 flex justify-center text-gray-900"><i aria-hidden="true" className="fas fa-map-marker-alt"></i></span> 
                         {t('common:labels.locationValue')}
                     </div>
                 </div>

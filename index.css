@@ -77,3 +77,19 @@ html.dark ::-webkit-scrollbar-thumb {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/*
+ * Respect "reduce motion" (vestibular disorders, motion sensitivity).
+ * CSS animations and transitions complete immediately; GSAP and framer-motion
+ * are handled in src/bootstrap.ts and App.tsx respectively.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

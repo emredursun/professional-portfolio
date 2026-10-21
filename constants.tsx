@@ -69,34 +69,34 @@ export const STATUS_BADGE = {
 export const SOCIAL_LINKS = [
   {
     name: "github",
-    icon: <i className="fab fa-github"></i>,
+    icon: <i aria-hidden="true" className="fab fa-github"></i>,
     url: "https://github.com/emredursun",
   },
   {
     name: "linkedin",
-    icon: <i className="fab fa-linkedin-in"></i>,
+    icon: <i aria-hidden="true" className="fab fa-linkedin-in"></i>,
     url: "https://www.linkedin.com/in/emre-dursun-nl/",
   },
   {
     name: "whatsapp",
-    icon: <i className="fab fa-whatsapp"></i>,
+    icon: <i aria-hidden="true" className="fab fa-whatsapp"></i>,
     url: "https://wa.me/31628788948",
   },
   {
     name: "X",
-    icon: <i className="fab fa-x-twitter"></i>,
+    icon: <i aria-hidden="true" className="fab fa-x-twitter"></i>,
     url: "https://x.com/info_emredursun",
   },
   {
     name: "instagram",
-    icon: <i className="fab fa-instagram"></i>,
+    icon: <i aria-hidden="true" className="fab fa-instagram"></i>,
     url: "https://www.instagram.com/trueheartfeltjourney",
   },
 ];
 
 export const SERVICES: Service[] = [
   {
-    icon: <i className="fas fa-diagram-project"></i>,
+    icon: <i aria-hidden="true" className="fas fa-diagram-project"></i>,
     title: "Pega Platform Architecture",
     slug: "pega-platform-architecture",
     description:
@@ -122,7 +122,7 @@ export const SERVICES: Service[] = [
     ]
   },
   {
-    icon: <i className="fas fa-vials"></i>,
+    icon: <i aria-hidden="true" className="fas fa-vials"></i>,
     title: "Tricentis Tosca Test Automation",
     slug: "tricentis-tosca-automation",
     description:
@@ -156,7 +156,7 @@ export const SERVICES: Service[] = [
     ]
   },
   {
-    icon: <i className="fas fa-robot"></i>,
+    icon: <i aria-hidden="true" className="fas fa-robot"></i>,
     title: "Test Automation Architecture",
     slug: "test-automation-architecture",
     description:
@@ -184,7 +184,7 @@ export const SERVICES: Service[] = [
     ]
   },
   {
-    icon: <i className="fas fa-sync-alt"></i>,
+    icon: <i aria-hidden="true" className="fas fa-sync-alt"></i>,
     title: "CI/CD & DevOps Integration",
     slug: "cicd-devops-integration",
     description:
@@ -209,7 +209,7 @@ export const SERVICES: Service[] = [
     certificateImage: "/images/docker-foundations-professional-certificate.webp"
   },
   {
-    icon: <i className="fas fa-server"></i>,
+    icon: <i aria-hidden="true" className="fas fa-server"></i>,
     title: "API & Backend Validation",
     slug: "api-backend-validation",
     description:
@@ -232,7 +232,7 @@ export const SERVICES: Service[] = [
     certificateImage: "/images/ing-api-design-certificate.webp"
   },
   {
-    icon: <i className="fas fa-laptop-code"></i>,
+    icon: <i aria-hidden="true" className="fas fa-laptop-code"></i>,
     title: "AI-Powered Web Development",
     slug: "ai-powered-web-development",
     description:
@@ -259,7 +259,7 @@ export const SERVICES: Service[] = [
     yearsOfExperience: 2
   },
   {
-    icon: <i className="fas fa-chart-line"></i>,
+    icon: <i aria-hidden="true" className="fas fa-chart-line"></i>,
     title: "E-commerce Sales Optimization",
     slug: "ecommerce-sales-optimization",
     description:
@@ -280,7 +280,7 @@ export const SERVICES: Service[] = [
     yearsOfExperience: 4
   },
   {
-    icon: <i className="fas fa-brain"></i>,
+    icon: <i aria-hidden="true" className="fas fa-brain"></i>,
     title: "AI Governance Architecture",
     slug: "ai-governance-architecture",
     description:
@@ -397,35 +397,35 @@ export const TECH_STACK: TechCategory[] = [
     technologies: [
       {
         name: "Java",
-        icon: <i className="fab fa-java text-3xl text-red-500"></i>,
+        icon: <i aria-hidden="true" className="fab fa-java text-3xl text-red-500"></i>,
       },
       {
         name: "TypeScript",
-        icon: <i className="fab fa-js text-3xl text-blue-500"></i>,
+        icon: <i aria-hidden="true" className="fab fa-js text-3xl text-blue-500"></i>,
       },
       {
         name: "JavaScript",
-        icon: <i className="fab fa-square-js text-3xl text-yellow-400"></i>,
+        icon: <i aria-hidden="true" className="fab fa-square-js text-3xl text-yellow-400"></i>,
       },
       {
         name: "Python",
-        icon: <i className="fab fa-python text-3xl text-blue-400"></i>,
+        icon: <i aria-hidden="true" className="fab fa-python text-3xl text-blue-400"></i>,
       },
       {
         name: "Spring Boot",
-        icon: <i className="fas fa-leaf text-3xl text-green-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-leaf text-3xl text-green-500"></i>,
       },
       {
         name: "SQL",
-        icon: <i className="fas fa-database text-3xl text-blue-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-database text-3xl text-blue-400"></i>,
       },
       {
         name: "HTML",
-        icon: <i className="fab fa-html5 text-3xl text-orange-600"></i>,
+        icon: <i aria-hidden="true" className="fab fa-html5 text-3xl text-orange-600"></i>,
       },
       {
         name: "CSS",
-        icon: <i className="fab fa-css3-alt text-3xl text-blue-600"></i>,
+        icon: <i aria-hidden="true" className="fab fa-css3-alt text-3xl text-blue-600"></i>,
       },
     ],
   },
@@ -434,51 +434,51 @@ export const TECH_STACK: TechCategory[] = [
     technologies: [
       {
         name: "Tricentis Tosca",
-        icon: <i className="fas fa-cubes text-3xl text-blue-600"></i>,
+        icon: <i aria-hidden="true" className="fas fa-cubes text-3xl text-blue-600"></i>,
       },
       {
         name: "Pega Platform",
-        icon: <i className="fas fa-diagram-project text-3xl text-indigo-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-diagram-project text-3xl text-indigo-500"></i>,
       },
       {
         name: "Playwright",
-        icon: <i className="fas fa-masks-theater text-3xl text-green-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-masks-theater text-3xl text-green-500"></i>,
       },
       {
         name: "Cypress",
-        icon: <i className="fas fa-eye text-3xl text-gray-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-eye text-3xl text-gray-500"></i>,
       },
       {
         name: "JUnit",
-        icon: <i className="fas fa-vial text-3xl text-red-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-vial text-3xl text-red-500"></i>,
       },
       {
         name: "TestNG",
-        icon: <i className="fas fa-vials text-3xl text-blue-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-vials text-3xl text-blue-500"></i>,
       },
       {
         name: "Selenium",
-        icon: <i className="fas fa-check-circle text-3xl text-green-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-check-circle text-3xl text-green-500"></i>,
       },
       {
         name: "REST Assured",
-        icon: <i className="fas fa-globe text-3xl text-green-600"></i>,
+        icon: <i aria-hidden="true" className="fas fa-globe text-3xl text-green-600"></i>,
       },
       {
         name: "Cucumber",
-        icon: <i className="fas fa-leaf text-3xl text-green-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-leaf text-3xl text-green-500"></i>,
       },
       {
         name: "Postman",
-        icon: <i className="fas fa-rocket text-3xl text-orange-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-rocket text-3xl text-orange-500"></i>,
       },
       {
         name: "Swagger",
-        icon: <i className="fas fa-file-code text-3xl text-green-600"></i>,
+        icon: <i aria-hidden="true" className="fas fa-file-code text-3xl text-green-600"></i>,
       },
       {
         name: "Appium",
-        icon: <i className="fas fa-mobile-screen text-3xl text-purple-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-mobile-screen text-3xl text-purple-500"></i>,
       },
     ],
   },
@@ -487,25 +487,25 @@ export const TECH_STACK: TechCategory[] = [
     technologies: [
       {
         name: "Azure DevOps",
-        icon: <i className="fab fa-microsoft text-3xl text-blue-600"></i>,
+        icon: <i aria-hidden="true" className="fab fa-microsoft text-3xl text-blue-600"></i>,
       },
       {
         name: "Jenkins",
         icon: (
-          <i className="fab fa-jenkins text-3xl text-gray-700 dark:text-white"></i>
+          <i aria-hidden="true" className="fab fa-jenkins text-3xl text-gray-700 dark:text-white"></i>
         ),
       },
       {
         name: "Docker",
-        icon: <i className="fab fa-docker text-3xl text-blue-500"></i>,
+        icon: <i aria-hidden="true" className="fab fa-docker text-3xl text-blue-500"></i>,
       },
       {
         name: "Git",
-        icon: <i className="fab fa-git-alt text-3xl text-orange-600"></i>,
+        icon: <i aria-hidden="true" className="fab fa-git-alt text-3xl text-orange-600"></i>,
       },
       {
         name: "Maven",
-        icon: <i className="fas fa-feather-alt text-3xl text-red-600"></i>,
+        icon: <i aria-hidden="true" className="fas fa-feather-alt text-3xl text-red-600"></i>,
       },
     ],
   },
@@ -551,25 +551,25 @@ export const PROJECTS: Project[] = [
         title: "Study Guides & Practice Quizzes",
         description:
           "Concept cards, analogies, worked examples, and exam-pitfall warnings per module, plus single/multi-select quizzes with instant feedback, hints, rationales, and keyboard shortcuts.",
-        icon: <i className="fas fa-book-open text-blue-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-book-open text-blue-400"></i>,
       },
       {
         title: "Timed Mock Exams",
         description:
           "Full 90-minute exams at the real 65% pass mark with a live timer and per-domain score breakdown to pinpoint weak areas.",
-        icon: <i className="fas fa-stopwatch text-purple-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-stopwatch text-purple-400"></i>,
       },
       {
         title: "Spaced-Repetition Review",
         description:
           "A Leitner 5-box SRS engine with confidence calibration surfaces the cards you're most likely to forget, so revision time compounds.",
-        icon: <i className="fas fa-brain text-pink-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-brain text-pink-400"></i>,
       },
       {
         title: "Offline-First PWA",
         description:
           "Installable app with a service worker for full offline use, global Ctrl/⌘K search, dark/light themes, a study heatmap, and JSON progress backup/restore across devices.",
-        icon: <i className="fas fa-wifi text-green-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-wifi text-green-400"></i>,
       },
     ],
     tags: ["Open Source", "PWA", "EdTech", "Vanilla JS", "Live"],
@@ -614,25 +614,25 @@ export const PROJECTS: Project[] = [
         title: "Career DNA™ Engine",
         description:
           "Models skills, trajectory, and ambitions as a semantic profile, then matches it to opportunities via pgvector similarity search.",
-        icon: <i className="fas fa-dna text-cyan-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-dna text-cyan-400"></i>,
       },
       {
         title: "Multi-Model AI Pipelines",
         description:
           "FastAPI orchestrates Claude Sonnet 4 and Gemini Flash with Voyage AI v3 embeddings for analysis, matching, and personalized strategy.",
-        icon: <i className="fas fa-brain text-purple-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-brain text-purple-400"></i>,
       },
       {
         title: "Production Architecture",
         description:
           "Next.js 15 + TailwindCSS v4 frontend, PostgreSQL 16 + pgvector, Redis queue/cache, and stateless JWT auth.",
-        icon: <i className="fas fa-server text-blue-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-server text-blue-400"></i>,
       },
       {
         title: "Automated Delivery",
         description:
           "GitHub Actions quality gates ship the web app to Vercel and the API to Railway on every merge.",
-        icon: <i className="fas fa-rocket text-green-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-rocket text-green-400"></i>,
       },
     ],
     tags: ["AI", "Full-Stack", "Vector Search", "SaaS", "Live"],
@@ -677,25 +677,25 @@ export const PROJECTS: Project[] = [
         title: "Zero-Dependency Runtime",
         description:
           "A 43-module engine with a workflow state machine, circuit breaker, error budget, and self-healing CI — no external packages.",
-        icon: <i className="fas fa-microchip text-purple-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-microchip text-purple-500"></i>,
       },
       {
         title: "Trust-Grade Governance",
         description:
           "15 governance rules enforced through a 7-phase SDLC with Scope Filters, Ethics Gates, and strict/standard/minimal Rigor Profiles.",
-        icon: <i className="fas fa-shield-halved text-indigo-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-shield-halved text-indigo-500"></i>,
       },
       {
         title: "Intelligent Agent System",
         description:
           "26 specialized agents with reputation scoring, domain-aware routing, and a confidence-scored Instinct System for pattern memory.",
-        icon: <i className="fas fa-people-group text-violet-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-people-group text-violet-500"></i>,
       },
       {
         title: "One-Command Onboarding",
         description:
           "Greenfield/brownfield workflows scaffold master docs, market research, and architecture diagrams; installs into any AI IDE instantly.",
-        icon: <i className="fas fa-terminal text-blue-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-terminal text-blue-500"></i>,
       },
     ],
     tags: ["Open Source", "AI Agents", "Developer Tools", "Zero Dependencies", "Live"],
@@ -737,25 +737,25 @@ export const PROJECTS: Project[] = [
         title: "Escrow-Protected Payments",
         description:
           "Mollie-powered escrow holds funds until delivery is confirmed, removing the biggest risk in peer-to-peer transactions.",
-        icon: <i className="fas fa-lock text-orange-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-lock text-orange-500"></i>,
       },
       {
         title: "Verified, Trusted Users",
         description:
           "Identity verification and trust signals keep the marketplace safe and reduce fraud on both sides of a trade.",
-        icon: <i className="fas fa-user-check text-green-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-user-check text-green-500"></i>,
       },
       {
         title: "Compliance by Design",
         description:
           "Architected for European regulation — GDPR, Digital Services Act (DSA), and PSD2 — from the first line of code.",
-        icon: <i className="fas fa-scale-balanced text-blue-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-scale-balanced text-blue-500"></i>,
       },
       {
         title: "Cross-Platform Flutter App",
         description:
           "A single Flutter codebase on a Supabase (PostgreSQL) backend delivers a consistent, fast experience across devices.",
-        icon: <i className="fas fa-mobile-screen text-purple-500"></i>,
+        icon: <i aria-hidden="true" className="fas fa-mobile-screen text-purple-500"></i>,
       },
     ],
     tags: ["Marketplace", "Flutter", "FinTech", "Startup", "In Development"],
@@ -806,25 +806,25 @@ export const PROJECTS: Project[] = [
         title: "Multi-Layer Testing",
         description:
           "Comprehensive coverage across UI (Selenium), API (REST Assured), and database (JDBC) layers within a single unified framework.",
-        icon: <i className="fas fa-layer-group text-yellow-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-layer-group text-yellow-400"></i>,
       },
       {
         title: "Runtime Configuration",
         description:
           "Dynamic browser selection, headless mode, and remote Grid/Selenoid integration—all configurable at runtime without touching code.",
-        icon: <i className="fas fa-cogs text-blue-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-cogs text-blue-400"></i>,
       },
       {
         title: "Clean Architecture",
         description:
           "Page Object Model with clear separation: pages, steps, runners, utilities. Every component has a single responsibility.",
-        icon: <i className="fas fa-sitemap text-green-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-sitemap text-green-400"></i>,
       },
       {
         title: "Parallel Execution",
         description:
           "Tag-based filtering and parallel thread support for faster feedback cycles. Run smoke tests in minutes, full regression overnight.",
-        icon: <i className="fas fa-bolt text-purple-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-bolt text-purple-400"></i>,
       },
     ],
     results: [
@@ -873,22 +873,22 @@ export const PROJECTS: Project[] = [
       {
           title: "Comprehensive Coverage",
           description: "Implements UI End-to-End tests, RESTful API integration, and Pixel-perfect Visual Regression testing.",
-          icon: <i className="fas fa-layer-group text-blue-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-layer-group text-blue-500"></i>
       },
       {
           title: "Modern Framework Design",
           description: "Built on the Page Object Model (POM) pattern with flexible environment configuration and locator strategies.",
-          icon: <i className="fas fa-cubes text-purple-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-cubes text-purple-500"></i>
       },
       {
           title: "Advanced Capabilities",
           description: "Features cookie-based authentication, screenshot/video recording, and global parallel test execution.",
-          icon: <i className="fas fa-cogs text-green-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-cogs text-green-500"></i>
       },
       {
           title: "Cross-Browser & Debugging",
           description: "Validates across Chromium, Firefox, and WebKit with integrated Trace Viewer for deep failure analysis.",
-          icon: <i className="fas fa-bug text-red-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-bug text-red-500"></i>
       }
     ]
   },
@@ -915,22 +915,22 @@ export const PROJECTS: Project[] = [
       {
           title: "Intelligent Layout Engine",
           description: "Auto-adjusts content layout based on dimensions (Landscape, Portrait, Square) with smart element positioning.",
-          icon: <i className="fas fa-magic text-purple-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-magic text-purple-500"></i>
       },
       {
           title: "Multi-Platform Presets",
           description: "One-click presets for LinkedIn, Twitter/X, Instagram, YouTube, and Stories, plus custom dimensions (100px-5000px).",
-          icon: <i className="fas fa-expand text-blue-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-expand text-blue-500"></i>
       },
       {
           title: "Visual Customization",
           description: "6 professional templates and 6 dynamic background effects (Pattern, Circles, Grid, Waves, Dots) with custom color control.",
-          icon: <i className="fas fa-palette text-pink-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-palette text-pink-500"></i>
       },
       {
           title: "High-Performance Export",
           description: "Instant client-side generation using Canvas API with options for High/Ultra quality PNG export and clipboard copy.",
-          icon: <i className="fas fa-download text-green-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-download text-green-500"></i>
       }
     ]
   },
@@ -970,25 +970,25 @@ export const PROJECTS: Project[] = [
         title: "Test Validation Development",
         description:
           "Implementing and maintaining FFV test validations for EPP and non-EPP payment flows, including country-specific implementations.",
-        icon: <i className="fas fa-code-branch text-blue-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-code-branch text-blue-400"></i>,
       },
       {
         title: "Test Case Management",
         description:
           "Onboarding new test cases and adapting test coverage for implementations in different countries (BE, IT, HU, SK).",
-        icon: <i className="fas fa-tasks text-green-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-tasks text-green-400"></i>,
       },
       {
         title: "Regression Testing",
         description:
           "Executing and verifying daily end-to-end test streams and supporting test execution for new Dovetail releases.",
-        icon: <i className="fas fa-robot text-purple-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-robot text-purple-400"></i>,
       },
       {
         title: "Stakeholder Support",
         description:
           "Providing technical guidance to development teams, feature squads, and other stakeholders during the onboarding process.",
-        icon: <i className="fas fa-users text-orange-400"></i>,
+        icon: <i aria-hidden="true" className="fas fa-users text-orange-400"></i>,
       },
     ],
   },
@@ -1015,22 +1015,22 @@ export const PROJECTS: Project[] = [
       {
           title: "Test Automation",
           description: "Implemented a hybrid framework using Selenium WebDriver, Java, JUnit, and Cucumber BDD for readable and reusable test scenarios.",
-          icon: <i className="fas fa-robot text-blue-400"></i>
+          icon: <i aria-hidden="true" className="fas fa-robot text-blue-400"></i>
       },
       {
           title: "API Testing",
           description: "Performed comprehensive API validation using Postman and Rest Assured Library to ensure backend reliability.",
-          icon: <i className="fas fa-network-wired text-green-400"></i>
+          icon: <i aria-hidden="true" className="fas fa-network-wired text-green-400"></i>
       },
       {
           title: "Data Management",
           description: "Utilized Apache POI and Scenario Outlines to handle multiple test data sets efficiently.",
-          icon: <i className="fas fa-database text-yellow-400"></i>
+          icon: <i aria-hidden="true" className="fas fa-database text-yellow-400"></i>
       },
       {
           title: "CI/CD Integration",
           description: "Integrated the automation framework with Jenkins and Maven for continuous integration and deployment.",
-          icon: <i className="fas fa-sync text-purple-400"></i>
+          icon: <i aria-hidden="true" className="fas fa-sync text-purple-400"></i>
       }
     ]
   },
@@ -1056,22 +1056,22 @@ export const PROJECTS: Project[] = [
       {
           title: "B2C Marketing Strategy",
           description: "Created and executed targeted marketing strategies to drive revenue growth on major European e-commerce marketplaces.",
-          icon: <i className="fas fa-bullhorn text-red-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-bullhorn text-red-500"></i>
       },
       {
           title: "Advanced SEO Optimization",
           description: "Enriched product search terms including 'Generic Search Keywords' and 'OEM Numbers' to maximize organic visibility against competitors.",
-          icon: <i className="fas fa-search text-blue-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-search text-blue-500"></i>
       },
       {
           title: "SKU & Inventory Operations",
           description: "Managed seamless synchronization of inventory, pricing, and content for thousands of SKUs across retail and digital channels.",
-          icon: <i className="fas fa-boxes text-yellow-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-boxes text-yellow-500"></i>
       },
       {
           title: "PPC & Sponsored Ads",
           description: "Leveraged sponsored advertising campaigns on Amazon and eBay to increase product exposure and accelerate sales velocity.",
-          icon: <i className="fas fa-ad text-green-500"></i>
+          icon: <i aria-hidden="true" className="fas fa-ad text-green-500"></i>
       }
     ]
   },
@@ -1109,25 +1109,25 @@ export const PROJECTS: Project[] = [
         title: "The Focus Pulse",
         description:
           "Bioluminescent attention visualization — our killer feature that shows genuine engagement without compromising privacy.",
-        icon: <i className="fas fa-heart-pulse text-pink-500"></i>
+        icon: <i aria-hidden="true" className="fas fa-heart-pulse text-pink-500"></i>
       },
       {
         title: "Anti-Dopamine Engineering",
         description:
           "No infinite scroll, no addiction loops. Designed to respect users' time and mental health.",
-        icon: <i className="fas fa-brain text-purple-500"></i>
+        icon: <i aria-hidden="true" className="fas fa-brain text-purple-500"></i>
       },
       {
         title: "Privacy is Luxury",
         description:
           "GDPR+ compliance, Zero-Knowledge Proofs on roadmap. No ads ever, no data selling.",
-        icon: <i className="fas fa-lock text-cyan-500"></i>
+        icon: <i aria-hidden="true" className="fas fa-lock text-cyan-500"></i>
       },
       {
         title: "Trust-Grade AI Architecture",
         description:
           "5 specialized agents, 3 cognitive layers, L1-L5 ethics escalation. Trust > Optimization, Safety > Growth.",
-        icon: <i className="fas fa-shield-alt text-green-500"></i>
+        icon: <i aria-hidden="true" className="fas fa-shield-alt text-green-500"></i>
       }
     ],
     results: [
@@ -1203,25 +1203,25 @@ export const PROJECTS: Project[] = [
         title: "Full Stack Testing",
         description:
           "Unified platform covering UI (Playwright), API (REST Assured), and Database (PostgreSQL) testing with seamless cross-layer validation.",
-        icon: <i className="fas fa-layer-group text-blue-400"></i>
+        icon: <i aria-hidden="true" className="fas fa-layer-group text-blue-400"></i>
       },
       {
         title: "AI-Powered Test Generation",
         description:
           "Intelligent test generation with Google Gemini that analyzes coverage, creates new scenarios, and optimizes existing tests automatically.",
-        icon: <i className="fas fa-brain text-purple-400"></i>
+        icon: <i aria-hidden="true" className="fas fa-brain text-purple-400"></i>
       },
       {
         title: "Clean Architecture",
         description:
           "Page Object Model with clear separation between UI tests, API tests, database validation, shared utilities, and AI-assisted generation.",
-        icon: <i className="fas fa-sitemap text-green-400"></i>
+        icon: <i aria-hidden="true" className="fas fa-sitemap text-green-400"></i>
       },
       {
         title: "CI/CD Integration",
         description:
           "Fully integrated with GitHub Actions pipelines featuring automated execution, Allure reporting, and configurable quality gates.",
-        icon: <i className="fas fa-rocket text-orange-400"></i>
+        icon: <i aria-hidden="true" className="fas fa-rocket text-orange-400"></i>
       }
     ],
     results: [

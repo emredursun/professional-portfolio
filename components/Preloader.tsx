@@ -72,6 +72,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onReveal, onComplete }) => {
             ref={containerRef}
             className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black text-white overflow-hidden"
             aria-hidden="true"
+            data-testid="preloader"
         >
             <div className="relative z-10 flex flex-col items-center gap-4">
                 {/* Typographic Logo Construction */}

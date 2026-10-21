@@ -30,7 +30,8 @@
     "email": "Email",
     "phone": "Phone",
     "location": "Location",
-    "locationValue": "Nieuwegein, Netherlands"
+    "locationValue": "Nieuwegein, Netherlands",
+    "pageContent": "Page content"
   },
   "meta": {
     "description": "QA Consultant specializing in Pega & Tricentis Tosca test automation, ISTQB® Certified. Based in the Netherlands."

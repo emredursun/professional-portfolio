@@ -19,12 +19,11 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   const { t } = useTranslation('projects');
   const modalContentRef = useRef<HTMLDivElement>(null);
 
-  // Update document title and meta tags for SEO when project modal opens
+  // Social-card tags for the open project. The document title and meta
+  // description are set by the <SEO> in Projects.tsx: writing them here as
+  // well raced with that component, and on a direct visit to
+  // /projects/<slug> the page-level title won, so the tab read "Projects".
   useEffect(() => {
-    const originalTitle = document.title;
-    const originalDescription = document
-      .querySelector('meta[name="description"]')
-      ?.getAttribute("content");
     const originalOgTitle = document
       .querySelector('meta[property="og:title"]')
       ?.getAttribute("content");
@@ -34,18 +33,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
     const originalOgImage = document
       .querySelector('meta[property="og:image"]')
       ?.getAttribute("content");
-
-    // Update title
-    document.title = `${project.title} - Emre Dursun Portfolio`;
-
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        "content",
-        project.detailedDescription || project.description
-      );
-    }
 
     // Update Open Graph tags
     const ogTitle = document.querySelector('meta[property="og:title"]');
@@ -88,9 +75,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
     // Restore original meta tags when modal closes
     return () => {
-      document.title = originalTitle;
-      if (metaDescription && originalDescription)
-        metaDescription.setAttribute("content", originalDescription);
       if (ogTitle && originalOgTitle)
         ogTitle.setAttribute("content", originalOgTitle);
       if (ogDescription && originalOgDescription)
@@ -193,7 +177,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                       className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 p-4 rounded-xl border border-yellow-200 dark:border-yellow-800/30"
                     >
                       <div className="flex items-start gap-2">
-                        <i className="fas fa-check-circle text-yellow-500 dark:text-yellow-400 mt-1"></i>
+                        <i aria-hidden="true" className="fas fa-check-circle text-yellow-500 dark:text-yellow-400 mt-1"></i>
                         <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
                           {metric}
                         </p>
@@ -215,7 +199,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   <div className="bg-red-50 dark:bg-red-900/10 p-6 rounded-2xl border border-red-200 dark:border-red-800/30">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
-                        <i className="fas fa-exclamation-triangle text-white"></i>
+                        <i aria-hidden="true" className="fas fa-exclamation-triangle text-white"></i>
                       </div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                         {t('projectDetails.theChallenge')}
@@ -230,7 +214,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   <div className="bg-green-50 dark:bg-green-900/10 p-6 rounded-2xl border border-green-200 dark:border-green-800/30">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                        <i className="fas fa-lightbulb text-white"></i>
+                        <i aria-hidden="true" className="fas fa-lightbulb text-white"></i>
                       </div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                         {t('projectDetails.theSolution')}
@@ -390,7 +374,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                     rel="noopener noreferrer"
                     className="w-full sm:w-auto inline-flex items-center gap-3 bg-yellow-400 text-black font-bold py-4 px-8 rounded-xl hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-center"
                   >
-                    <i className="fas fa-external-link-alt text-lg"></i>
+                    <i aria-hidden="true" className="fas fa-external-link-alt text-lg"></i>
                     <span>{t('projectDetails.viewLiveDemo')}</span>
                   </a>
                 )}
@@ -401,7 +385,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                     rel="noopener noreferrer"
                     className="w-full sm:w-auto inline-flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-4 px-8 rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-center"
                   >
-                    <i className="fab fa-github text-lg"></i>
+                    <i aria-hidden="true" className="fab fa-github text-lg"></i>
                     <span>{t('projectDetails.viewOnGitHub')}</span>
                   </a>
                 )}

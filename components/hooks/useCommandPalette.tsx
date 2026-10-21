@@ -69,7 +69,7 @@ export const useCommandPalette = ({
         id: 'nav-about',
         label: 'Go to About',
         description: 'View profile and services',
-        icon: <i className="far fa-user" />,
+        icon: <i aria-hidden="true" className="far fa-user" />,
         category: 'Navigation',
         keywords: ['about', 'profile', 'home', 'services'],
         shortcut: '⌘1',
@@ -82,7 +82,7 @@ export const useCommandPalette = ({
         id: 'nav-resume',
         label: 'Go to Resume',
         description: 'View experience and education',
-        icon: <i className="far fa-file-alt" />,
+        icon: <i aria-hidden="true" className="far fa-file-alt" />,
         category: 'Navigation',
         keywords: ['resume', 'cv', 'experience', 'work', 'education'],
         shortcut: '⌘2',
@@ -95,7 +95,7 @@ export const useCommandPalette = ({
         id: 'nav-projects',
         label: 'Go to Projects',
         description: 'Browse portfolio projects',
-        icon: <i className="far fa-folder-open" />,
+        icon: <i aria-hidden="true" className="far fa-folder-open" />,
         category: 'Navigation',
         keywords: ['projects', 'portfolio', 'work', 'showcase'],
         shortcut: '⌘3',
@@ -108,7 +108,7 @@ export const useCommandPalette = ({
         id: 'nav-contact',
         label: 'Go to Contact',
         description: 'Get in touch',
-        icon: <i className="far fa-envelope" />,
+        icon: <i aria-hidden="true" className="far fa-envelope" />,
         category: 'Navigation',
         keywords: ['contact', 'email', 'message', 'reach'],
         shortcut: '⌘4',
@@ -121,7 +121,7 @@ export const useCommandPalette = ({
         id: 'action-download-resume',
         label: 'Download Resume',
         description: 'Download PDF version',
-        icon: <i className="fas fa-download" />,
+        icon: <i aria-hidden="true" className="fas fa-download" />,
         category: 'Actions',
         keywords: ['download', 'resume', 'cv', 'pdf'],
         action: () => {
@@ -137,8 +137,8 @@ export const useCommandPalette = ({
         label: 'Toggle Theme',
         description: 'Switch between light and dark',
         icon: theme === 'light' 
-          ? <i className="fas fa-moon" /> 
-          : <i className="fas fa-sun" />,
+          ? <i aria-hidden="true" className="fas fa-moon" /> 
+          : <i aria-hidden="true" className="fas fa-sun" />,
         category: 'Theme',
         keywords: ['theme', 'dark', 'light', 'mode', 'toggle'],
         shortcut: '⌘T',
@@ -151,7 +151,7 @@ export const useCommandPalette = ({
         id: 'theme-light',
         label: 'Switch to Light Theme',
         description: 'Enable light mode',
-        icon: <i className="fas fa-sun" />,
+        icon: <i aria-hidden="true" className="fas fa-sun" />,
         category: 'Theme',
         keywords: ['light', 'theme', 'bright', 'day'],
         action: () => {
@@ -163,7 +163,7 @@ export const useCommandPalette = ({
         id: 'theme-dark',
         label: 'Switch to Dark Theme',
         description: 'Enable dark mode',
-        icon: <i className="fas fa-moon" />,
+        icon: <i aria-hidden="true" className="fas fa-moon" />,
         category: 'Theme',
         keywords: ['dark', 'theme', 'night', 'black'],
         action: () => {
@@ -177,7 +177,7 @@ export const useCommandPalette = ({
         id: 'action-scroll-top',
         label: 'Scroll to Top',
         description: 'Return to top of page',
-        icon: <i className="fas fa-arrow-up" />,
+        icon: <i aria-hidden="true" className="fas fa-arrow-up" />,
         category: 'Actions',
         keywords: ['scroll', 'top', 'up', 'home'],
         shortcut: '↑',
@@ -190,7 +190,7 @@ export const useCommandPalette = ({
         id: 'action-copy-email',
         label: 'Copy Email Address',
         description: 'info.emredursun@gmail.com',
-        icon: <i className="fas fa-copy" />,
+        icon: <i aria-hidden="true" className="fas fa-copy" />,
         category: 'Actions',
         keywords: ['copy', 'email', 'contact', 'clipboard'],
         action: () => {
@@ -202,7 +202,7 @@ export const useCommandPalette = ({
         id: 'action-copy-linkedin',
         label: 'Copy LinkedIn URL',
         description: 'Get LinkedIn profile link',
-        icon: <i className="fab fa-linkedin" />,
+        icon: <i aria-hidden="true" className="fab fa-linkedin" />,
         category: 'Actions',
         keywords: ['copy', 'linkedin', 'profile', 'social'],
         action: () => {
@@ -217,7 +217,7 @@ export const useCommandPalette = ({
       id: `project-${project.slug}`,
       label: `View ${project.title}`,
       description: project.description.substring(0, 60) + '...',
-      icon: <i className="fas fa-folder" />,
+      icon: <i aria-hidden="true" className="fas fa-folder" />,
       category: 'Projects' as const,
       keywords: [
         project.title.toLowerCase(),
@@ -240,7 +240,7 @@ export const useCommandPalette = ({
       id: `filter-${category.toLowerCase().replace(/\s+/g, '-')}`,
       label: `Filter: ${category}`,
       description: `Show only ${category} projects`,
-      icon: <i className="fas fa-filter" />,
+      icon: <i aria-hidden="true" className="fas fa-filter" />,
       category: 'Projects' as const,
       keywords: ['filter', category.toLowerCase(), 'category', 'projects'],
       action: () => {

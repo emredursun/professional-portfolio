@@ -37,7 +37,7 @@ const TimelineCard: React.FC<{ item: TimelineItem; isFirst?: boolean; isLast?: b
                 
                 {/* Company Info */}
                 <div className="flex items-center gap-2 text-sm font-bold text-gray-500 dark:text-gray-400">
-                    <i className="fas fa-building text-yellow-500"></i>
+                    <i aria-hidden="true" className="fas fa-building text-yellow-500"></i>
                     {item.company}
                 </div>
                 
@@ -123,7 +123,7 @@ const Resume: React.FC = () => {
                     <div>
                      <div className="flex items-center gap-4 mb-8">
                              <div className="w-14 h-14 rounded-2xl bg-dark-card dark:bg-dark-card flex items-center justify-center text-accent-yellow dark:text-accent-yellow text-xl shadow-neu-md dark:shadow-neu-md">
-                                <i className="fas fa-briefcase"></i>
+                                <i aria-hidden="true" className="fas fa-briefcase"></i>
                             </div>
                             <h3 className="text-2xl font-semibold text-gray-900 dark:text-dark-text-primary">{t('sections.experience')}</h3>
                         </div>
@@ -137,7 +137,7 @@ const Resume: React.FC = () => {
                     <div>
                          <div className="flex items-center gap-4 mb-8">
                              <div className="w-14 h-14 rounded-2xl bg-dark-card dark:bg-dark-card flex items-center justify-center text-accent-yellow dark:text-accent-yellow text-xl shadow-neu-md dark:shadow-neu-md">
-                                <i className="fas fa-graduation-cap"></i>
+                                <i aria-hidden="true" className="fas fa-graduation-cap"></i>
                             </div>
                             <h3 className="text-2xl font-semibold text-gray-900 dark:text-dark-text-primary">{t('sections.education')}</h3>
                         </div>
@@ -155,7 +155,7 @@ const Resume: React.FC = () => {
                         <div>
                             <div className="flex items-center gap-4 mb-8">
                                 <div className="w-14 h-14 rounded-2xl bg-dark-card dark:bg-dark-card flex items-center justify-center text-accent-yellow dark:text-accent-yellow text-xl shadow-neu-md dark:shadow-neu-md">
-                                    <i className="fas fa-hands-helping"></i>
+                                    <i aria-hidden="true" className="fas fa-hands-helping"></i>
                                 </div>
                                 <h3 className="text-2xl font-semibold text-gray-900 dark:text-dark-text-primary">{t('sections.volunteering')}</h3>
                             </div>

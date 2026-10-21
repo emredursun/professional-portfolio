@@ -61,7 +61,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">
                 <div className="w-12 h-12 bg-yellow-400 dark:bg-neon-cyan rounded-full flex items-center justify-center">
-                  <i className="fas fa-search-plus text-black text-xl"></i>
+                  <i aria-hidden="true" className="fas fa-search-plus text-black text-xl"></i>
                 </div>
               </div>
             </div>
@@ -94,7 +94,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
               className="absolute left-4 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center text-xl z-10"
               aria-label="Previous image"
             >
-              <i className="fas fa-chevron-left"></i>
+              <i aria-hidden="true" className="fas fa-chevron-left"></i>
             </button>
           )}
 
@@ -124,7 +124,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
               className="absolute right-4 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center text-xl z-10"
               aria-label="Next image"
             >
-              <i className="fas fa-chevron-right"></i>
+              <i aria-hidden="true" className="fas fa-chevron-right"></i>
             </button>
           )}
         </div>

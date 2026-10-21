@@ -80,19 +80,19 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
           <div className="flex flex-wrap gap-4 text-gray-200 text-sm md:text-base">
             {project.role && (
               <div className="flex items-center gap-2">
-                <i className="fas fa-user-tie text-yellow-400"></i>
+                <i aria-hidden="true" className="fas fa-user-tie text-yellow-400"></i>
                 <span>{project.role}</span>
               </div>
             )}
             {project.duration && (
               <div className="flex items-center gap-2">
-                <i className="fas fa-clock text-yellow-400"></i>
+                <i aria-hidden="true" className="fas fa-clock text-yellow-400"></i>
                 <span>{project.duration}</span>
               </div>
             )}
             {project.team && (
               <div className="flex items-center gap-2">
-                <i className="fas fa-users text-yellow-400"></i>
+                <i aria-hidden="true" className="fas fa-users text-yellow-400"></i>
                 <span>{project.team}</span>
               </div>
             )}
@@ -111,7 +111,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                          hover:scale-110 group"
               aria-label="Previous Project"
             >
-              <i className="fas fa-chevron-left group-hover:scale-125 transition-transform"></i>
+              <i aria-hidden="true" className="fas fa-chevron-left group-hover:scale-125 transition-transform"></i>
             </button>
           )}
 
@@ -125,7 +125,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                          hover:scale-110 group"
               aria-label="Next Project"
             >
-              <i className="fas fa-chevron-right group-hover:scale-125 transition-transform"></i>
+              <i aria-hidden="true" className="fas fa-chevron-right group-hover:scale-125 transition-transform"></i>
             </button>
           )}
 
@@ -135,7 +135,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
             className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center"
             aria-label="Share project"
           >
-            <i className="fas fa-share-alt"></i>
+            <i aria-hidden="true" className="fas fa-share-alt"></i>
           </button>
           
           {/* Close Button */}
@@ -173,7 +173,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                            hover:scale-110 group"
                 aria-label="Previous Project"
               >
-                <i className="fas fa-chevron-left text-sm md:text-base 
+                <i aria-hidden="true" className="fas fa-chevron-left text-sm md:text-base 
                               group-hover:scale-125 transition-transform"></i>
               </button>
             )}
@@ -189,7 +189,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                            hover:scale-110 group"
                 aria-label="Next Project"
               >
-                <i className="fas fa-chevron-right text-sm md:text-base 
+                <i aria-hidden="true" className="fas fa-chevron-right text-sm md:text-base 
                               group-hover:scale-125 transition-transform"></i>
               </button>
             )}
@@ -204,7 +204,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                          hover:scale-110"
               aria-label="Share project"
             >
-              <i className="fas fa-share-alt text-sm md:text-base"></i>
+              <i aria-hidden="true" className="fas fa-share-alt text-sm md:text-base"></i>
             </button>
 
             {/* Close Button */}
@@ -217,7 +217,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                          hover:scale-110 group"
               aria-label="Close"
             >
-              <i className="fas fa-times text-sm md:text-base group-hover:rotate-90 transition-transform duration-300"></i>
+              <i aria-hidden="true" className="fas fa-times text-sm md:text-base group-hover:rotate-90 transition-transform duration-300"></i>
             </button>
           </div>
         </div>

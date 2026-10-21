@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { MotionConfig } from 'framer-motion';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getLanguageFromUrl } from './i18n.ts';
@@ -18,6 +19,7 @@ import { faviconController } from './src/utils/faviconController';
 
 import Preloader, { shouldShowPreloader } from './components/Preloader.tsx';
 import { useIdleReady } from './components/hooks/useIdleReady.tsx';
+import { useLanguageNavigate } from './components/hooks/useLanguageNavigate.tsx';
 
 // Lazy load decorative elements
 const ParticleBackground = React.lazy(() => import('./components/ParticleBackground.tsx'));
@@ -233,6 +235,15 @@ const AppContent: React.FC = () => {
   }, [isLoading]);
 
   const decorReady = useIdleReady();
+
+  // The command palette's "Go to ..." commands call this. It used to be a
+  // no-op left over from before React Router, so those commands only closed
+  // the palette.
+  const languageNavigate = useLanguageNavigate();
+  const navigateToPage = useCallback(
+    (page: Page) => languageNavigate(`/${page.toLowerCase()}`),
+    [languageNavigate],
+  );
   // Mount the palette on first open and keep it mounted, so its close
   // animation still plays.
   const [paletteMounted, setPaletteMounted] = useState(false);
@@ -389,7 +400,7 @@ const AppContent: React.FC = () => {
                 isOpen={isCommandPaletteOpen}
                 onClose={() => setIsCommandPaletteOpen(false)}
                 activePage={activePage}
-                onNavigate={() => { /* Navigation handled by Router Link, but kept for interface */ }}
+                onNavigate={navigateToPage}
                 theme={theme}
                 toggleTheme={toggleTheme}
                 isMobileView={isMobileView}
@@ -445,8 +456,13 @@ const AppContent: React.FC = () => {
 
             <div className={`relative flex-1 ${!isMobileView ? 'rounded-[2.5rem] bg-white/40 dark:bg-[#121212]/60 border border-white/60 dark:border-white/5 backdrop-blur-3xl shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)]' : ''}`}>
               <div 
-                ref={contentRef} 
-                className={`w-full h-full scroll-smooth transition-all duration-500 ${!isMobileView ? 'overflow-y-auto no-scrollbar rounded-[2.5rem]' : ''}`}
+                ref={contentRef}
+                // Keyboard users must be able to focus the scroll container
+                // to scroll it with the arrow keys (WCAG 2.1.1).
+                tabIndex={0}
+                role="region"
+                aria-label={i18n.t('common:labels.pageContent')}
+                className={`w-full h-full scroll-smooth focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 dark:focus-visible:ring-neon-cyan transition-all duration-500 ${!isMobileView ? 'overflow-y-auto no-scrollbar rounded-[2.5rem]' : ''}`}
               >
                 <MainContent activePage={activePage} isMobileView={isMobileView} onNavigate={() => {}} />
               </div>
@@ -497,7 +513,11 @@ const App: React.FC = () => {
             {/* Each page renders its own <SEO/>; a global one here would run its
                 effect after the page-level instance and overwrite the per-page
                 title and description with the site defaults. */}
-            <AppContent />
+            {/* reducedMotion="user": framer-motion skips transform and layout
+                animations for visitors who ask for reduced motion. */}
+            <MotionConfig reducedMotion="user">
+                <AppContent />
+            </MotionConfig>
         </Router>
     );
 };

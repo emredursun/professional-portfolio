@@ -33,7 +33,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = React.memo(({ theme, toggleT
       aria-label="Toggle theme"
     >
       <div className={`transition-all duration-500 transform ${isSpinning ? 'scale-50 opacity-50 blur-[1px]' : 'scale-100 opacity-100 blur-0'}`}>
-        {theme === 'light' ? <i className="fas fa-moon"></i> : <i className="fas fa-sun"></i>}
+        {theme === 'light' ? <i aria-hidden="true" className="fas fa-moon"></i> : <i aria-hidden="true" className="fas fa-sun"></i>}
       </div>
     </button>
   );
