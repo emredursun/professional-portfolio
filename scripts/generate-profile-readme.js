@@ -34,7 +34,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -168,7 +168,7 @@ const EXTRA_STACK_GROUPS = [
  * README should break when the data shape changes, not silently render
  * garbage.
  */
-async function loadConstants() {
+export async function loadConstants() {
   const esbuild = (await import('esbuild')).default;
   const source = fs
     .readFileSync(path.join(ROOT, 'constants.tsx'), 'utf8')
@@ -198,7 +198,7 @@ function loadLocale(name) {
 // ---------------------------------------------------------------------------
 
 /** Convert the locale files' inline HTML into Markdown emphasis. */
-function htmlToMarkdown(text) {
+export function htmlToMarkdown(text) {
   return text
     .replace(/<\/?strong>/g, '**')
     .replace(/<\/?em>/g, '*')
@@ -207,7 +207,7 @@ function htmlToMarkdown(text) {
 }
 
 /** Escape a shields.io path segment (dashes, underscores and spaces are syntax). */
-function encodeBadgeSegment(text) {
+export function encodeBadgeSegment(text) {
   return text
     .replace(/_/g, '__')
     .replace(/-/g, '--')
@@ -219,13 +219,13 @@ function encodeBadgeSegment(text) {
 }
 
 /** Build a single-segment shields.io badge image. */
-function badgeUrl({ name, color, logo, logoColor = 'white', style = 'flat-square' }) {
+export function badgeUrl({ name, color, logo, logoColor = 'white', style = 'flat-square' }) {
   const base = `https://img.shields.io/badge/${encodeBadgeSegment(name)}-${color}?style=${style}`;
   return logo ? `${base}&logo=${logo}&logoColor=${logoColor}` : base;
 }
 
 /** Build a two-segment label/value shields.io badge, wrapped in a link. */
-function linkBadge({ label, value, color, logo, logoColor = 'white', href }) {
+export function linkBadge({ label, value, color, logo, logoColor = 'white', href }) {
   const segment = `${encodeBadgeSegment(label)}-${encodeBadgeSegment(value)}-${color}`;
   const base = `https://img.shields.io/badge/${segment}?style=for-the-badge`;
   const url = logo ? `${base}&logo=${logo}&logoColor=${logoColor}` : base;
@@ -241,12 +241,12 @@ function stackRow(title, badges) {
 }
 
 /** "May 2026 - Present" -> "May 2026" */
-function startOfRange(range) {
+export function startOfRange(range) {
   return range.split(/\s+-\s+/)[0].trim();
 }
 
 /** "Professional (C1)" -> "C1"; "Native" -> "Native" */
-function shortLevel(level) {
+export function shortLevel(level) {
   const parenthesised = level.match(/\(([^)]+)\)/);
   return parenthesised ? parenthesised[1] : level.trim();
 }
@@ -255,14 +255,14 @@ function shortLevel(level) {
  * First sentence only, so the featured-work table stays scannable.
  * Falls back to the full text when the split would leave a stub.
  */
-function firstSentence(text) {
+export function firstSentence(text) {
   const match = text.match(/^.*?[.!?](?=\s+[A-Z“"])/s);
   const candidate = match ? match[0].trim() : text.trim();
   return candidate.length < 40 ? text.trim() : candidate;
 }
 
 /** "Sopra Steria - Nieuwegein, Utrecht, Netherlands · Hybrid" -> both halves. */
-function splitCompany(company) {
+export function splitCompany(company) {
   const [employer, rest = ''] = company.split(/\s+-\s+/);
   const city = rest.split(',')[0].split('·')[0].trim();
   return { employer: employer.trim(), city };
@@ -276,7 +276,7 @@ function splitCompany(company) {
  * Verify every piece of config still lines up with the portfolio data.
  * Throws on structural drift; warns on facts that merely disagree.
  */
-function validate({ constants, resume }) {
+export function validate({ constants, resume }) {
   const errors = [];
   const warnings = [];
 
@@ -485,7 +485,7 @@ ${cta}
 -->`;
 }
 
-function renderReadme({ constants, about, resume }) {
+export function renderReadme({ constants, about, resume }) {
   const first = resume.experience[0];
   const { employer, city } = splitCompany(first.company);
   const role = { title: first.title, employer, city, since: startOfRange(first.date) };
@@ -538,4 +538,7 @@ async function writeProfileReadme() {
   }
 }
 
-writeProfileReadme();
+// Run only when executed directly, so tests can import the functions above.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  writeProfileReadme();
+}

@@ -30,7 +30,7 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -69,7 +69,7 @@ const SHARED_SOURCES = [
 /**
  * Source files whose content determines a route's lastmod
  */
-function sourcesForRoute(route) {
+export function sourcesForRoute(route) {
     const namespace = ROUTE_NAMESPACES[route];
     const localeFiles = LANGUAGES.map(lang => `public/locales/${lang}/${namespace}.json`);
     return [...SHARED_SOURCES, ...localeFiles];
@@ -79,7 +79,7 @@ function sourcesForRoute(route) {
  * Hash a route's sources. Line endings are normalised so the same content
  * hashes identically on Windows and on a Linux CI runner.
  */
-function hashRoute(route) {
+export function hashRoute(route) {
     const hash = crypto.createHash('sha256');
 
     sourcesForRoute(route).sort().forEach(relativePath => {
@@ -106,19 +106,16 @@ function readState() {
 }
 
 /**
- * Resolve each route's lastmod, reusing the stored timestamp whenever that
- * route's content is unchanged. Returns the timestamps and the next state.
+ * Pure core of the lastmod decision: given the previous state, the current
+ * per-route hashes and "now", reuse a stored timestamp whenever that route's
+ * hash is unchanged.
  */
-function resolveLastMod() {
-    const previous = readState();
-    const now = new Date().toISOString();
-
+export function computeLastMod(previous, hashes, now) {
     const lastMod = {};
     const nextState = {};
     const changed = [];
 
-    ROUTES.forEach(route => {
-        const hash = hashRoute(route);
+    Object.entries(hashes).forEach(([route, hash]) => {
         const stored = previous[route];
 
         if (stored && stored.hash === hash && stored.lastmod) {
@@ -132,6 +129,14 @@ function resolveLastMod() {
     });
 
     return { lastMod, nextState, changed };
+}
+
+/**
+ * Resolve each route's lastmod against the files on disk and the saved state.
+ */
+function resolveLastMod() {
+    const hashes = Object.fromEntries(ROUTES.map(route => [route, hashRoute(route)]));
+    return computeLastMod(readState(), hashes, new Date().toISOString());
 }
 
 /**
@@ -164,7 +169,7 @@ ${generateHreflangLinks(basePath)}
 /**
  * Generate sitemap XML content
  */
-function generateSitemap(lastMod) {
+export function generateSitemap(lastMod) {
     const urls = [];
 
     // Generate URLs for each language and route
@@ -196,7 +201,7 @@ ${urls.join('\n')}
  * Write a file only when its content would actually change, so an unchanged
  * build leaves both the file and its mtime alone.
  */
-function writeIfChanged(filePath, content) {
+export function writeIfChanged(filePath, content) {
     const existing = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null;
     if (existing !== null && existing.replace(/\r\n/g, '\n') === content.replace(/\r\n/g, '\n')) {
         return false;
@@ -238,5 +243,7 @@ function writeSitemap() {
     }
 }
 
-// Run the script
-writeSitemap();
+// Run only when executed directly, so tests can import the functions above.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+    writeSitemap();
+}

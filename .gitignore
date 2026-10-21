@@ -38,3 +38,9 @@ Thumbs.db
 
 # Project management files
 FUTURE_ENHANCEMENTS.md
+
+# Test output
+coverage/
+playwright-report/
+test-results/
+blob-report/

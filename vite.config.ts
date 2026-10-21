@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
@@ -17,6 +18,29 @@ export default defineConfig(() => {
     return {
       preview: {
         headers: productionSecurityHeaders(),
+      },
+      test: {
+        environment: 'jsdom',
+        include: ['tests/**/*.test.{ts,tsx}'],
+        setupFiles: ['tests/setup.ts'],
+        restoreMocks: true,
+        coverage: {
+          provider: 'v8',
+          reporter: ['text', 'html', 'json-summary'],
+          // Unit coverage is measured on logic modules. Page components are
+          // exercised end to end by the Playwright suite in e2e/, and
+          // faviconController draws to <canvas>, which jsdom cannot render.
+          include: [
+            'scripts/generate-sitemap.js',
+            'scripts/generate-profile-readme.js',
+            'src/utils/errorReporting.ts',
+            'src/bootstrap.ts',
+            'components/ErrorBoundary.tsx',
+            'components/Preloader.tsx',
+            'components/hooks/useIdleReady.tsx',
+          ],
+          thresholds: { lines: 80, functions: 80, statements: 80, branches: 75 },
+        },
       },
       server: {
         port: 3000,
