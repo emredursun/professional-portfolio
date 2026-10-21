@@ -17,11 +17,17 @@ export default defineConfig(() => {
             main: path.resolve(__dirname, 'index.html')
           },
           output: {
-            manualChunks: {
-              'vendor-react': ['react', 'react-dom', 'react-router-dom', 'react-i18next', 'i18next'],
-              'vendor-ui': ['framer-motion', 'lenis'],
-              'vendor-3d': ['three'],
-              'vendor-anim': ['gsap'],
+            // Matched on the resolved path, not the package entry: the object
+            // form only caught bare `react-dom` / `gsap`, so `react-dom/client`
+            // (most of React) and `gsap/ScrollTrigger` landed in the app chunk
+            // and were re-downloaded on every deploy.
+            manualChunks(id: string) {
+              if (!id.includes('node_modules')) return undefined;
+              if (/[\\/]node_modules[\\/](react|react-dom|scheduler|react-router|react-router-dom|i18next|react-i18next|i18next-[^\\/]+)[\\/]/.test(id)) return 'vendor-react';
+              if (/[\\/]node_modules[\\/](framer-motion|motion-dom|motion-utils|lenis)[\\/]/.test(id)) return 'vendor-ui';
+              if (/[\\/]node_modules[\\/]three[\\/]/.test(id)) return 'vendor-3d';
+              if (/[\\/]node_modules[\\/]gsap[\\/]/.test(id)) return 'vendor-anim';
+              return undefined;
             }
           }
         }

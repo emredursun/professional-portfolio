@@ -10,10 +10,8 @@ import Sidebar from './components/Sidebar.tsx';
 import MainContent from './components/MainContent.tsx';
 import Navbar from './components/Navbar.tsx';
 import ScrollToTopButton from './components/ScrollToTopButton.tsx';
-import PrintableResume from './components/PrintableResume.tsx';
 import SmoothScroll from './components/SmoothScroll.tsx';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
-import CommandPalette from './components/CommandPalette.tsx';
 import SEO from './components/SEO.tsx';
 import { Page } from './types.ts';
 import { faviconController } from './src/utils/faviconController';
@@ -25,6 +23,12 @@ import { useIdleReady } from './components/hooks/useIdleReady.tsx';
 const ParticleBackground = React.lazy(() => import('./components/ParticleBackground.tsx'));
 const FloatingElements = React.lazy(() => import('./components/FloatingElements.tsx'));
 const CustomCursor = React.lazy(() => import('./components/CustomCursor.tsx'));
+// Neither is visible on first paint, so both stay out of the entry bundle:
+// the print layout mounts on idle (Download CV calls window.print()
+// synchronously, so it must already be in the DOM by then) and the command
+// palette - with its Fuse.js search index - on first open.
+const PrintableResume = React.lazy(() => import('./components/PrintableResume.tsx'));
+const CommandPalette = React.lazy(() => import('./components/CommandPalette.tsx'));
 
 // Scroll Handler Component to preserve exact scroll behaviors
 const ScrollHandler: React.FC<{
@@ -229,6 +233,12 @@ const AppContent: React.FC = () => {
   }, [isLoading]);
 
   const decorReady = useIdleReady();
+  // Mount the palette on first open and keep it mounted, so its close
+  // animation still plays.
+  const [paletteMounted, setPaletteMounted] = useState(false);
+  useEffect(() => {
+    if (isCommandPaletteOpen) setPaletteMounted(true);
+  }, [isCommandPaletteOpen]);
 
   const handlePreloaderReveal = () => {
     setIsLoading(false);
@@ -373,17 +383,25 @@ const AppContent: React.FC = () => {
       )}
       {!isLoading && (
         <ErrorBoundary>
-          <CommandPalette
-            isOpen={isCommandPaletteOpen}
-            onClose={() => setIsCommandPaletteOpen(false)}
-            activePage={activePage}
-            onNavigate={(page) => { /* Navigation handled by Router Link, but kept for interface */ }} 
-            theme={theme}
-            toggleTheme={toggleTheme}
-            isMobileView={isMobileView}
-          />
+          {paletteMounted && (
+            <React.Suspense fallback={null}>
+              <CommandPalette
+                isOpen={isCommandPaletteOpen}
+                onClose={() => setIsCommandPaletteOpen(false)}
+                activePage={activePage}
+                onNavigate={() => { /* Navigation handled by Router Link, but kept for interface */ }}
+                theme={theme}
+                toggleTheme={toggleTheme}
+                isMobileView={isMobileView}
+              />
+            </React.Suspense>
+          )}
           <SmoothScroll contentRef={contentRef} isMobileView={isMobileView}>
-            <PrintableResume />
+            {decorReady && (
+              <React.Suspense fallback={null}>
+                <PrintableResume />
+              </React.Suspense>
+            )}
     
             <main className={`print:hidden relative bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-gray-100 font-sans transition-colors duration-500 ${isMobileView ? 'min-h-screen p-4' : 'h-screen overflow-hidden p-6 lg:p-8'}`}>
           

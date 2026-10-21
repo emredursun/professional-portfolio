@@ -33,7 +33,7 @@ export function shouldShowPreloader(): boolean {
 /**
  * The intro used to hold the whole app unmounted for ~4.3s, including a
  * deliberate 1.5s "minimum display time" - which put LCP past 3s on its own.
- * It now runs ~1.6s and hands over to the page before it finishes: the
+ * It now runs ~1.3s and hands over to the page before it finishes: the
  * content mounts while the curtain slides away instead of after.
  */
 const Preloader: React.FC<PreloaderProps> = ({ onReveal, onComplete }) => {
@@ -44,30 +44,25 @@ const Preloader: React.FC<PreloaderProps> = ({ onReveal, onComplete }) => {
     useGSAP(() => {
         const tl = gsap.timeline({ onComplete });
 
-        gsap.set(textRef.current, { opacity: 0, y: 20 });
-
-        tl.to(textRef.current, {
-            opacity: 1,
-            y: 0,
+        // No fade-in: index.html ships an identical static copy of this screen
+        // inside #root, painted before any JavaScript runs. Starting from the
+        // same visible state lets React take over without a flicker.
+        tl.to({}, {
             duration: 0.5,
-            ease: 'power3.out'
-        })
-        .to({}, {
-            duration: 0.6,
             onUpdate: function () {
                 setProgress(Math.round(this.progress() * 100));
             }
-        }, '-=0.3')
+        })
         .to(textRef.current, {
             scale: 1.1,
             opacity: 0,
-            duration: 0.35,
+            duration: 0.3,
             ease: 'power2.in'
         })
         .call(onReveal)
         .to(containerRef.current, {
             y: '-100%',
-            duration: 0.6,
+            duration: 0.5,
             ease: 'power4.inOut'
         });
     }, []);

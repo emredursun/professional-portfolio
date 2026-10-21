@@ -402,7 +402,13 @@
   </head>
 
   <body>
-    <div id="root"></div>
+    <!--
+      Static copy of the Preloader's first frame (components/Preloader.tsx).
+      It paints as soon as the HTML and CSS arrive, before any JavaScript, so
+      first paint no longer waits on the bundle. React replaces it on mount
+      with the identical animated version. Keep the markup in sync.
+    -->
+    <div id="root"><div class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black text-white overflow-hidden" aria-hidden="true"><div class="relative z-10 flex flex-col items-center gap-4"><div class="flex flex-col items-center"><p class="text-6xl md:text-8xl font-black tracking-tighter mb-2"><span class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">EMRE</span><span class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-accent-yellow via-yellow-400 to-amber-600 ml-4">DURSUN</span></p><div class="h-1 w-24 bg-accent-yellow rounded-full mt-4"></div></div><div class="mt-8 font-mono text-sm text-gray-400">0%</div></div><div class="bg-noise absolute inset-0 opacity-[0.03]"></div></div></div>
     <script type="module" src="/index.tsx"></script>
     
   </body>

@@ -5,10 +5,28 @@ import { Page } from '../types.ts';
 /** Locales that get a URL prefix. Keep in sync with i18n and SEO.tsx. */
 const LOCALES = ['nl', 'tr'] as const;
 
-const About = lazy(() => import('./About.tsx'));
-const Resume = lazy(() => import('./Resume.tsx'));
-const Projects = lazy(() => import('./Projects.tsx'));
-const Contact = lazy(() => import('./Contact.tsx'));
+const loaders = {
+  about: () => import('./About.tsx'),
+  resume: () => import('./Resume.tsx'),
+  projects: () => import('./Projects.tsx'),
+  contact: () => import('./Contact.tsx'),
+};
+
+/**
+ * Start fetching the chunk for the page the visitor actually landed on as soon
+ * as this module evaluates. Left to React.lazy, the request would only begin
+ * when <MainContent> first renders - after the preloader - adding a full
+ * network round trip to LCP. import() caches the promise, so the lazy()
+ * call below reuses this request instead of issuing a second one.
+ */
+const landingPage = (Object.keys(loaders) as Array<keyof typeof loaders>)
+  .find((page) => page !== 'about' && window.location.pathname.includes(page)) ?? 'about';
+void loaders[landingPage]();
+
+const About = lazy(loaders.about);
+const Resume = lazy(loaders.resume);
+const Projects = lazy(loaders.projects);
+const Contact = lazy(loaders.contact);
 
 interface MainContentProps {
   activePage: Page;
