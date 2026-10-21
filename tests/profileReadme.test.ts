@@ -14,7 +14,9 @@ import {
   splitCompany,
   startOfRange,
   validate,
+  writeProfileReadme,
 } from '../scripts/generate-profile-readme.js';
+import os from 'os';
 
 const locale = (name: string) =>
   JSON.parse(fs.readFileSync(path.resolve(__dirname, `../public/locales/en/${name}.json`), 'utf8'));
@@ -93,6 +95,20 @@ describe('against the real portfolio data', () => {
   it('matches the committed profile/README.md byte for byte', () => {
     const committed = fs.readFileSync(path.resolve(__dirname, '../profile/README.md'), 'utf8').replace(/\r\n/g, '\n');
     expect(renderReadme({ constants, about, resume })).toBe(committed);
+  });
+
+  it('writes the README once and leaves an identical file untouched', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'profile-readme-'));
+    try {
+      const outputPath = path.join(dir, 'README.md');
+      const first = await writeProfileReadme({ outputPath });
+      expect(first.written).toBe(true);
+      expect(fs.readFileSync(outputPath, 'utf8')).toBe(first.markdown);
+      const second = await writeProfileReadme({ outputPath });
+      expect(second.written).toBe(false);
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
   });
 
   describe('drift guard', () => {

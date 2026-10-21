@@ -47,17 +47,27 @@ export function buildStamp({ commit, builtAt, ref }) {
     };
 }
 
-function writeVersion() {
+/**
+ * Write the stamp. Throws when the build output directory is missing.
+ *
+ * @param {{ outputPath?: string, env?: Record<string, string | undefined>, now?: string, runGit?: () => string }} [options]
+ */
+export function writeVersion({ outputPath = OUTPUT_PATH, env = process.env, now = new Date().toISOString(), runGit } = {}) {
+    if (!fs.existsSync(path.dirname(outputPath))) {
+        throw new Error('dist/ does not exist - run the build first');
+    }
+    const stamp = buildStamp({
+        commit: runGit ? resolveCommit(env, runGit) : resolveCommit(env),
+        builtAt: now,
+        ref: env.GITHUB_REF_NAME,
+    });
+    fs.writeFileSync(outputPath, `${JSON.stringify(stamp, null, 2)}\n`, 'utf8');
+    return stamp;
+}
+
+function main() {
     try {
-        if (!fs.existsSync(path.dirname(OUTPUT_PATH))) {
-            throw new Error('dist/ does not exist - run the build first');
-        }
-        const stamp = buildStamp({
-            commit: resolveCommit(),
-            builtAt: new Date().toISOString(),
-            ref: process.env.GITHUB_REF_NAME,
-        });
-        fs.writeFileSync(OUTPUT_PATH, `${JSON.stringify(stamp, null, 2)}\n`, 'utf8');
+        const stamp = writeVersion();
         console.log(`🏷️  version.json: ${stamp.shortCommit} built ${stamp.builtAt}`);
     } catch (error) {
         console.error('❌ Error writing version.json:', error.message);
@@ -66,5 +76,5 @@ function writeVersion() {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-    writeVersion();
+    main();
 }

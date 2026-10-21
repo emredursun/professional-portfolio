@@ -518,18 +518,30 @@ export function renderReadme({ constants, about, resume }) {
 // Entry point
 // ---------------------------------------------------------------------------
 
-async function writeProfileReadme() {
+/**
+ * Generate the README from the portfolio data and write it if it changed.
+ * Throws on validation failure; the output path is injectable for tests.
+ *
+ * @param {{ outputPath?: string }} [options]
+ * @returns {Promise<{ markdown: string, written: boolean }>}
+ */
+export async function writeProfileReadme({ outputPath = OUTPUT_PATH } = {}) {
+  const constants = await loadConstants();
+  const about = loadLocale('about');
+  const resume = loadLocale('resume');
+
+  validate({ constants, resume });
+
+  const markdown = renderReadme({ constants, about, resume });
+
+  // Only touch the file when the content changes, like the sitemap.
+  const written = writeIfChanged(outputPath, markdown);
+  return { markdown, written };
+}
+
+async function main() {
   try {
-    const constants = await loadConstants();
-    const about = loadLocale('about');
-    const resume = loadLocale('resume');
-
-    validate({ constants, resume });
-
-    const markdown = renderReadme({ constants, about, resume });
-
-    // Only touch the file when the content changes, like the sitemap.
-    writeIfChanged(OUTPUT_PATH, markdown);
+    const { markdown } = await writeProfileReadme();
 
     console.log('✅ Profile README generated successfully!');
     console.log(`📍 Location: ${OUTPUT_PATH}`);
@@ -547,5 +559,5 @@ async function writeProfileReadme() {
 
 // Run only when executed directly, so tests can import the functions above.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  writeProfileReadme();
+  main();
 }

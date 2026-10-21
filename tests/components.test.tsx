@@ -142,8 +142,20 @@ describe('useIdleReady', () => {
     expect(cancel).toHaveBeenCalledWith(7);
   });
 
+  it('clears the fallback timer on unmount', () => {
+    // Fake only the timer fallback; Vitest 5 would otherwise also fake
+    // requestIdleCallback and the hook would take the other branch.
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    const { unmount } = renderHook(() => useIdleReady());
+    expect(vi.getTimerCount()).toBe(1);
+    unmount();
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
   it('falls back to a timer where requestIdleCallback is missing', () => {
-    vi.useFakeTimers();
+    // Fake only the timer fallback; Vitest 5 would otherwise also fake
+    // requestIdleCallback and the hook would take the other branch.
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
     const { result } = renderHook(() => useIdleReady(5000));
     expect(result.current).toBe(false);
     act(() => {
@@ -164,6 +176,23 @@ describe('bootstrap', () => {
     plausible?.('form_start');
     plausible?.('form_submit', { props: { duration: 3 } });
     expect(plausible?.q).toEqual([['form_start'], ['form_submit', { props: { duration: 3 } }]]);
+  });
+
+  it('registers the service worker after load in production builds only', async () => {
+    const register = vi.fn().mockResolvedValue({});
+    Object.defineProperty(navigator, 'serviceWorker', { value: { register }, configurable: true });
+
+    vi.resetModules();
+    await import('../src/bootstrap.ts');
+    window.dispatchEvent(new Event('load'));
+    expect(register).not.toHaveBeenCalled();
+
+    vi.stubEnv('PROD', true);
+    vi.resetModules();
+    await import('../src/bootstrap.ts');
+    window.dispatchEvent(new Event('load'));
+    expect(register).toHaveBeenCalledWith('/sw.js');
+    vi.unstubAllEnvs();
   });
 
   it('keeps an already-loaded Plausible instead of replacing it', async () => {

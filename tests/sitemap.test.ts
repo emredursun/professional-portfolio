@@ -7,8 +7,10 @@ import {
   computeLastMod,
   generateSitemap,
   hashRoute,
+  readState,
   sourcesForRoute,
   writeIfChanged,
+  writeSitemap,
 } from '../scripts/generate-sitemap.js';
 
 const NOW = '2026-10-21T12:00:00.000Z';
@@ -125,5 +127,57 @@ describe('writeIfChanged', () => {
     fs.writeFileSync(file, 'old');
     expect(writeIfChanged(file, 'new')).toBe(true);
     expect(fs.readFileSync(file, 'utf8')).toBe('new');
+  });
+});
+
+describe('readState', () => {
+  it('returns an empty state for a missing or corrupt file', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sitemap-state-'));
+    try {
+      expect(readState(path.join(dir, 'missing.json'))).toEqual({});
+      fs.writeFileSync(path.join(dir, 'bad.json'), '{ not json');
+      expect(readState(path.join(dir, 'bad.json'))).toEqual({});
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+});
+
+describe('writeSitemap (end to end on a temp directory)', () => {
+  let dir: string;
+  beforeEach(() => {
+    dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sitemap-run-'));
+  });
+  afterEach(() => {
+    fs.rmSync(dir, { recursive: true, force: true });
+  });
+
+  it('stamps every route on the first run, then is a no-op', () => {
+    const outputPath = path.join(dir, 'sitemap.xml');
+    const statePath = path.join(dir, 'state.json');
+
+    const first = writeSitemap({ outputPath, statePath, now: OLD });
+    expect(first).toMatchObject({ sitemapWritten: true, urls: 15, alternates: 60 });
+    expect(first.changed).toEqual(['/', '/about', '/resume', '/projects', '/contact']);
+
+    const second = writeSitemap({ outputPath, statePath, now: NOW });
+    expect(second.sitemapWritten).toBe(false);
+    expect(second.changed).toEqual([]);
+    // The second run must not have restamped anything.
+    expect(fs.readFileSync(outputPath, 'utf8')).not.toContain(NOW);
+  });
+
+  it('restamps only the routes whose stored hash no longer matches', () => {
+    const outputPath = path.join(dir, 'sitemap.xml');
+    const statePath = path.join(dir, 'state.json');
+    writeSitemap({ outputPath, statePath, now: OLD });
+
+    const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+    state['/projects'].hash = 'stale';
+    fs.writeFileSync(statePath, JSON.stringify(state));
+
+    const run = writeSitemap({ outputPath, statePath, now: NOW });
+    expect(run.changed).toEqual(['/projects']);
+    expect(fs.readFileSync(outputPath, 'utf8').match(new RegExp(NOW, 'g'))).toHaveLength(3);
   });
 });

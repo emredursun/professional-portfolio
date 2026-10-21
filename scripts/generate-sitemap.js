@@ -97,9 +97,9 @@ export function hashRoute(route) {
 /**
  * Read the previous run's hashes and timestamps
  */
-function readState() {
+export function readState(statePath = STATE_PATH) {
     try {
-        return JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+        return JSON.parse(fs.readFileSync(statePath, 'utf8'));
     } catch {
         return {};
     }
@@ -146,9 +146,9 @@ export function computeLastMod(previous, hashes, now) {
 /**
  * Resolve each route's lastmod against the files on disk and the saved state.
  */
-function resolveLastMod() {
+function resolveLastMod(statePath, now) {
     const hashes = Object.fromEntries(ROUTES.map(route => [route, hashRoute(route)]));
-    return computeLastMod(readState(), hashes, new Date().toISOString());
+    return computeLastMod(readState(statePath), hashes, now);
 }
 
 /**
@@ -225,21 +225,36 @@ export function writeIfChanged(filePath, content) {
 }
 
 /**
- * Write sitemap to file
+ * Regenerate the sitemap and its state file. Paths and clock are injectable,
+ * so the whole flow can run against a temporary directory in tests.
+ *
+ * @param {{ outputPath?: string, statePath?: string, now?: string }} [options]
+ * @returns {{ sitemapWritten: boolean, changed: string[], urls: number, alternates: number }}
  */
-function writeSitemap() {
-    try {
-        const { lastMod, nextState, changed } = resolveLastMod();
-        const sitemapContent = generateSitemap(lastMod);
+export function writeSitemap({ outputPath = OUTPUT_PATH, statePath = STATE_PATH, now = new Date().toISOString() } = {}) {
+    const { lastMod, nextState, changed } = resolveLastMod(statePath, now);
+    const sitemapContent = generateSitemap(lastMod);
 
-        const sitemapWritten = writeIfChanged(OUTPUT_PATH, sitemapContent);
-        writeIfChanged(STATE_PATH, `${JSON.stringify(nextState, null, 2)}\n`);
+    const sitemapWritten = writeIfChanged(outputPath, sitemapContent);
+    writeIfChanged(statePath, `${JSON.stringify(nextState, null, 2)}\n`);
+
+    return {
+        sitemapWritten,
+        changed,
+        urls: (sitemapContent.match(/<loc>/g) || []).length,
+        alternates: (sitemapContent.match(/xhtml:link/g) || []).length,
+    };
+}
+
+function main() {
+    try {
+        const { sitemapWritten, changed, urls, alternates } = writeSitemap();
 
         console.log('✅ Sitemap generated successfully!');
         console.log(`📍 Location: ${OUTPUT_PATH}`);
         console.log(`🔗 URL: ${SITE_URL}/sitemap.xml`);
-        console.log(`📄 Total URLs: ${(sitemapContent.match(/<loc>/g) || []).length}`);
-        console.log(`🔀 hreflang alternates: ${(sitemapContent.match(/xhtml:link/g) || []).length}`);
+        console.log(`📄 Total URLs: ${urls}`);
+        console.log(`🔀 hreflang alternates: ${alternates}`);
         console.log(`🌍 Languages: English (default), Turkish, Dutch`);
 
         if (changed.length) {
@@ -257,5 +272,5 @@ function writeSitemap() {
 
 // Run only when executed directly, so tests can import the functions above.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-    writeSitemap();
+    main();
 }
