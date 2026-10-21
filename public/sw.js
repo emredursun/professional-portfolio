@@ -6,7 +6,9 @@
 // until the cache name changes and the activate handler purges the previous one.
 // v3: new profile photo, regenerated social-share.png, updated precache list.
 // v4: switched avatar to portfolio-pic-1.jpeg, updated precache list.
-const CACHE_NAME = 'ed-portfolio-v4';
+// v5: avatar served as a 400px WebP, favicons and OG image re-encoded at the
+//     same filenames, so the old bytes must be purged.
+const CACHE_NAME = 'ed-portfolio-v5';
 const OFFLINE_URL = '/';
 
 // Assets to cache immediately on install
@@ -16,7 +18,7 @@ const PRECACHE_ASSETS = [
   '/site.webmanifest',
   '/favicon-32x32.png',
   '/favicon-96x96.png',
-  '/images/portfolio-pic-1.jpeg',
+  '/images/portfolio-pic-1-400.webp',
   '/images/social-share.png'
 ];
 
@@ -25,7 +27,6 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('[SW] Precaching critical assets');
         return cache.addAll(PRECACHE_ASSETS);
       })
       .then(() => self.skipWaiting())
@@ -40,7 +41,6 @@ self.addEventListener('activate', (event) => {
         cacheNames
           .filter((name) => name !== CACHE_NAME)
           .map((name) => {
-            console.log('[SW] Deleting old cache:', name);
             return caches.delete(name);
           })
       );

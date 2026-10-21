@@ -16,7 +16,7 @@ export const PERSONAL_INFO = {
   email: "info.emredursun@gmail.com",
   phone: "+31 6 2878 8948",
   location: "Nieuwegein, Netherlands",
-  avatar: "/images/portfolio-pic-1.jpeg",
+  avatar: "/images/portfolio-pic-1-400.webp",
   resumeUrl: "#",
 };
 
@@ -116,9 +116,9 @@ export const SERVICES: Service[] = [
     ],
     relatedProjects: ["quilyn-exam-prep"],
     certificationDate: "June 2026",
-    certificateImage: "/images/pega-certified-system-architect-cpsa.png",
+    certificateImage: "/images/pega-certified-system-architect-cpsa.webp",
     certificateBadges: [
-      { image: "/images/pega-certified-business-architect-cpba.png", label: "Certified Pega Business Architect (CPBA): June 2026" }
+      { image: "/images/pega-certified-business-architect-cpba.webp", label: "Certified Pega Business Architect (CPBA): June 2026" }
     ]
   },
   {
@@ -144,15 +144,15 @@ export const SERVICES: Service[] = [
     relatedProjects: ["quilyn-exam-prep"],
     certificateId: "C26494",
     certificationDate: "August 2026",
-    certificateImage: "/images/tricentis-tosca-product-consultant-certificate.png",
+    certificateImage: "/images/tricentis-tosca-product-consultant-certificate.webp",
     certificateBadges: [
-      { image: "/images/tricentis-as1-badge.png", label: "AS1 — Automating Web Application Testing" },
-      { image: "/images/tricentis-as2-badge.png", label: "AS2 — Optimizing Test Automation with Centralized Test Data" },
-      { image: "/images/tricentis-api-badge.png", label: "Deep Dive — Automating API Test Cases" },
-      { image: "/images/tricentis-tds1-badge.png", label: "TDS1 — Structuring Test Cases and Test Data" },
-      { image: "/images/tricentis-tds2-badge.png", label: "TDS2 — Managing Stateful Test Data" },
-      { image: "/images/tricentis-ae1-badge.png", label: "AE1 — Automating Beyond Web Applications" },
-      { image: "/images/tricentis-kpi-badge.png", label: "Continuous Testing with Efficient KPI Management" }
+      { image: "/images/tricentis-as1-badge.webp", label: "AS1 — Automating Web Application Testing" },
+      { image: "/images/tricentis-as2-badge.webp", label: "AS2 — Optimizing Test Automation with Centralized Test Data" },
+      { image: "/images/tricentis-api-badge.webp", label: "Deep Dive — Automating API Test Cases" },
+      { image: "/images/tricentis-tds1-badge.webp", label: "TDS1 — Structuring Test Cases and Test Data" },
+      { image: "/images/tricentis-tds2-badge.webp", label: "TDS2 — Managing Stateful Test Data" },
+      { image: "/images/tricentis-ae1-badge.webp", label: "AE1 — Automating Beyond Web Applications" },
+      { image: "/images/tricentis-kpi-badge.webp", label: "Continuous Testing with Efficient KPI Management" }
     ]
   },
   {
@@ -178,9 +178,9 @@ export const SERVICES: Service[] = [
     yearsOfExperience: 5,
     certificateId: "ISTQB-CTFL-CERTIFIED",
     certificationDate: "June 2023",
-    certificateImage: "/images/istqb-foundation-level-certificate.png",
+    certificateImage: "/images/istqb-foundation-level-certificate.webp",
     certificateBadges: [
-      { image: "/images/ing-java-certificate.png", label: "Java @ ING — internal training, May 2024" }
+      { image: "/images/ing-java-certificate.webp", label: "Java @ ING — internal training, May 2024" }
     ]
   },
   {
@@ -206,7 +206,7 @@ export const SERVICES: Service[] = [
     yearsOfExperience: 4,
     certificateId: "DOCKER-FND-CERTIFIED",
     certificationDate: "2024",
-    certificateImage: "/images/docker-foundations-professional-certificate.png"
+    certificateImage: "/images/docker-foundations-professional-certificate.webp"
   },
   {
     icon: <i className="fas fa-server"></i>,
@@ -229,7 +229,7 @@ export const SERVICES: Service[] = [
     relatedProjects: ["aegisqa", "hospital-portal-testing", "banking-payment-automation"],
     yearsOfExperience: 5,
     certificationDate: "April 2024",
-    certificateImage: "/images/ing-api-design-certificate.png"
+    certificateImage: "/images/ing-api-design-certificate.webp"
   },
   {
     icon: <i className="fas fa-laptop-code"></i>,
@@ -304,7 +304,7 @@ export const SERVICES: Service[] = [
     yearsOfExperience: 1,
     certificateId: "BESYNC-TGAI-20260112-001",
     certificationDate: "January 2026",
-    certificateImage: "/images/trust-grade-certificate.png"
+    certificateImage: "/images/trust-grade-certificate.webp"
   }
 ];
 
@@ -516,7 +516,7 @@ export const PROJECTS: Project[] = [
     title: "Quilyn — Certification Exam Prep",
     slug: "quilyn-exam-prep",
     category: "Open Source",
-    image: "/images/quilyn-thumbnail.png",
+    image: "/images/quilyn-thumbnail.webp",
     description:
       "A free, offline-capable study app for IT certification exams — Pega (PCBA, PCSA) and Tricentis Tosca (AS1, AS2, API). Structured study guides, practice quizzes, timed mock exams, and spaced-repetition review. Built with zero dependencies and installable as a PWA.",
     detailedDescription:
@@ -578,7 +578,7 @@ export const PROJECTS: Project[] = [
     title: "PathForge — Career Intelligence Platform",
     slug: "pathforge-career-intelligence",
     category: "AI Architecture",
-    image: "/images/pathforge-thumbnail.png",
+    image: "/images/pathforge-thumbnail.webp",
     description:
       "An AI-powered career intelligence platform that decodes a professional's “Career DNA” — matching skills, trajectory, and ambitions to real opportunities. Built with Next.js 15, FastAPI, and a pgvector semantic engine powered by Claude and Voyage AI.",
     detailedDescription:
@@ -641,7 +641,7 @@ export const PROJECTS: Project[] = [
     title: "Devran AI Kit — Trust-Grade AI Framework",
     slug: "devran-ai-kit",
     category: "Open Source",
-    image: "/images/devran-kit-thumbnail.png",
+    image: "/images/devran-kit-thumbnail.webp",
     description:
       "An open-source, zero-dependency Trust-Grade AI development framework that turns any AI-powered IDE into a virtual engineering team — 26 agents, 39 skills, 25 workflows, and 15 governance rules behind one command.",
     detailedDescription:
@@ -704,7 +704,7 @@ export const PROJECTS: Project[] = [
     title: "DeelMarkt — Trust-First P2P Marketplace",
     slug: "deelmarkt-marketplace",
     category: "E-commerce",
-    image: "/images/deelmarkt-thumbnail.png",
+    image: "/images/deelmarkt-thumbnail.webp",
     description:
       "A trust-first Dutch peer-to-peer marketplace — a modern alternative to Marktplaats — with escrow payments, verified users, and secure shipping. Built with Flutter, Supabase, and Mollie, with GDPR/DSA/PSD2 compliance by design.",
     detailedDescription:
@@ -896,7 +896,7 @@ export const PROJECTS: Project[] = [
     title: "Social Share Image Generator",
     slug: "social-share-image-generator",
     category: "Open Source",
-    image: "/images/social-generator-thumbnail.png",
+    image: "/images/social-generator-thumbnail.webp",
     description:
       "Professional social media image generator with intelligent adaptive layouts. Features 5 premium templates, 6 visual effects, and instant presets for LinkedIn, Twitter, Instagram, YouTube & Stories.",
     detailedDescription:
@@ -1079,7 +1079,7 @@ export const PROJECTS: Project[] = [
     title: "BeSync — Social Synchronization Protocol",
     slug: "besync-trust-grade-ai",
     category: "AI Architecture",
-    image: "/images/trust-grade-certificate.png",
+    image: "/images/trust-grade-certificate.webp",
     description:
       "A Social Synchronization Protocol creating meaningful connections through The Focus Pulse, Anti-Dopamine Engineering, and Privacy-First design. Powered by a Trust-Grade AI Platform with multi-agent cognitive architecture.",
     detailedDescription:
