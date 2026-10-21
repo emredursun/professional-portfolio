@@ -1,0 +1,63 @@
+# main: run every quality gate, then deploy the exact build that passed them
+# to the live channel. Replaces firebase-deploy.yml and
+# firebase-hosting-merge.yml, which both deployed on every push to main.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Never run two production deploys at once; let an in-flight one finish.
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    uses: ./.github/workflows/quality.yml
+
+  deploy:
+    name: Deploy to emredursun.nl
+    needs: quality
+    runs-on: ubuntu-latest
+    # Add a required reviewer under Settings -> Environments -> production to
+    # make every release wait for an explicit approval (see docs/RUNBOOK.md).
+    environment:
+      name: production
+      url: https://emredursun.nl
+    permissions:
+      contents: read
+      checks: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMREDURSUN_PORTFOLIO }}
+          channelId: live
+          projectId: emredursun-portfolio
+
+      - name: Smoke test the release
+        run: |
+          set -euo pipefail
+          expected="$(cat dist/version.json | grep '"commit"' | cut -d'"' -f4)"
+          for attempt in 1 2 3 4 5 6; do
+            live="$(curl -fsS https://emredursun.nl/version.json | grep '"commit"' | cut -d'"' -f4 || true)"
+            [ "$live" = "$expected" ] && break
+            echo "Live is ${live:-unreachable}, waiting for $expected ($attempt/6)"; sleep 10
+          done
+          [ "$live" = "$expected" ] || { echo "::error::Live site does not serve the deployed commit"; exit 1; }
+          for path in / /about /resume /projects /contact /nl/about /tr/about; do
+            curl -fsS -o /dev/null "https://emredursun.nl$path"
+          done
+          echo "Live: $live"

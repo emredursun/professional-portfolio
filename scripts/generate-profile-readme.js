@@ -35,6 +35,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
+import { writeIfChanged } from './generate-sitemap.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -527,8 +528,8 @@ async function writeProfileReadme() {
 
     const markdown = renderReadme({ constants, about, resume });
 
-    fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
-    fs.writeFileSync(OUTPUT_PATH, markdown, 'utf8');
+    // Only touch the file when the content changes, like the sitemap.
+    writeIfChanged(OUTPUT_PATH, markdown);
 
     console.log('✅ Profile README generated successfully!');
     console.log(`📍 Location: ${OUTPUT_PATH}`);

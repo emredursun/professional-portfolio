@@ -1,0 +1,72 @@
+# Quality gates shared by preview.yml (pull requests) and deploy.yml (main).
+# Nothing deploys unless every step here passes.
+name: Quality gates
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Typecheck, test, build, e2e, Lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Dependency audit (runtime)
+        run: npm audit --omit=dev --audit-level=moderate
+
+      - name: Typecheck (strict)
+        run: npm run typecheck
+
+      - name: Unit tests with coverage gate
+        run: npm run test:coverage
+
+      - name: Build
+        run: npm run build
+
+      # prebuild regenerates the sitemap and the GitHub profile README from
+      # portfolio data. If either differs from the commit, someone changed
+      # content without committing the regenerated files.
+      - name: Generated files are committed
+        run: git diff --exit-code -- public/sitemap.xml scripts/sitemap-state.json profile/README.md
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: End-to-end tests
+        run: npm run test:e2e
+        env:
+          CI: true
+
+      - name: Lighthouse budgets
+        run: npx --yes @lhci/cli@0.15.1 autorun
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+      - name: Upload test reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            playwright-report
+            coverage
+            .lighthouseci
+          retention-days: 14

@@ -8,7 +8,7 @@
     ],
     "rewrites": [
       {
-        "source": "!/@(sitemap.xml|robots.txt|site.webmanifest)",
+        "source": "!/@(sitemap.xml|robots.txt|site.webmanifest|version.json)",
         "destination": "/index.html"
       }
     ],
@@ -133,6 +133,15 @@
       },
       {
         "source": "/sw.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/version.json",
         "headers": [
           {
             "key": "Cache-Control",
