@@ -1,0 +1,89 @@
+import { copy, expect, test } from './fixtures';
+
+const pages = [
+  { path: '/about', namespace: 'about' },
+  { path: '/resume', namespace: 'resume' },
+  { path: '/projects', namespace: 'projects' },
+  { path: '/contact', namespace: 'contact' },
+] as const;
+
+test.describe('pages', () => {
+  for (const { path, namespace } of pages) {
+    test(`${path} renders its heading and metadata`, async ({ page }) => {
+      const { title, titleHighlight } = copy('en', namespace);
+      await page.goto(path);
+
+      const heading = page.getByRole('heading', { level: 2 }).filter({ hasText: titleHighlight }).first();
+      await expect(heading).toContainText(title);
+
+      await expect(page).toHaveTitle(/Emre Dursun/);
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://emredursun.nl${path}`);
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.{50,}/);
+    });
+  }
+
+  test('the root redirects to /about', async ({ page }) => {
+    await page.goto('/');
+    await expect(page).toHaveURL(/\/about$/);
+  });
+});
+
+test.describe('languages', () => {
+  for (const locale of ['tr', 'nl'] as const) {
+    test(`/${locale} serves translated content and sets <html lang>`, async ({ page }) => {
+      const { titleHighlight } = copy(locale, 'about');
+      await page.goto(`/${locale}/about`);
+      await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      await expect(page.getByRole('heading', { level: 2 }).filter({ hasText: titleHighlight }).first()).toBeVisible();
+      await expect(page.locator(`link[rel="alternate"][hreflang="${locale}"]`)).toHaveAttribute(
+        'href',
+        `https://emredursun.nl/${locale}/about`,
+      );
+    });
+  }
+});
+
+test.describe('in-app navigation', () => {
+  test('sidebar links switch pages without a reload', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The sidebar navigation is desktop-only; mobile uses the bottom bar.');
+    await page.goto('/about');
+    await page.evaluate(() => ((window as unknown as { __marker: boolean }).__marker = true));
+
+    for (const target of ['Resume', 'Projects', 'Contact']) {
+      await page.getByRole('link', { name: target, exact: true }).first().click();
+      await expect(page).toHaveURL(new RegExp(`/${target.toLowerCase()}$`));
+    }
+
+    // Still the same document: client-side routing, not full page loads.
+    expect(await page.evaluate(() => (window as unknown as { __marker?: boolean }).__marker)).toBe(true);
+  });
+});
+
+test.describe('locale is preserved by in-app navigation', () => {
+  test('opening a service on /nl/about stays in Dutch', async ({ page }) => {
+    await page.goto('/nl/about');
+    const title = copy('nl', 'about').services.toscaAutomation.title;
+    await page.getByRole('heading', { name: title }).first().click();
+    await expect(page).toHaveURL(/\/nl\/about\/tricentis-tosca-automation$/);
+  });
+
+  test('command palette navigation on /tr stays in Turkish', async ({ page }) => {
+    await page.goto('/tr/about');
+    await page.keyboard.press('Control+k');
+    await page.getByRole('textbox').last().fill('contact');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/tr\/contact$/);
+  });
+});
+
+test.describe('structured data', () => {
+  test('every JSON-LD block parses and the Person schema is complete', async ({ page }) => {
+    await page.goto('/about');
+    const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+    expect(blocks.length).toBeGreaterThanOrEqual(3);
+    const parsed = blocks.map((text) => JSON.parse(text));
+    const person = parsed.find((b) => b['@type'] === 'Person');
+    expect(person).toMatchObject({ name: 'Emre Dursun', url: 'https://emredursun.nl' });
+    expect(person.image).toMatch(/^https:\/\/emredursun\.nl\/images\//);
+  });
+});
