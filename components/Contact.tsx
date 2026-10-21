@@ -12,6 +12,14 @@ import { reportError } from '../src/utils/errorReporting.ts';
  */
 const WEB3FORMS_ACCESS_KEY = '309ce373-4042-4a9a-b924-e7684e84ba0a';
 
+/**
+ * Google Maps embeds set Google cookies as soon as the iframe loads. Under the
+ * AVG/GDPR that needs consent, so the map loads only when the visitor asks
+ * for it (two-click pattern) - which also keeps a third-party page out of the
+ * initial load.
+ */
+const MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d38740.16919139266!2d5.13280806443481!3d52.69614777894901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c61c3b531a3977%3A0x868b248a39151740!2sHoogkarspel!5e0!3m2!1sen!2snl!4v1721323330345!5m2!1sen!2snl';
+
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -79,6 +87,7 @@ const Contact: React.FC = () => {
     const { t } = useTranslation('contact');
     const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
     const [formStartTime, setFormStartTime] = useState<number>(0);
+    const [showMap, setShowMap] = useState(false);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -209,7 +218,7 @@ const Contact: React.FC = () => {
                                     name="name"
                                     autoComplete="name"
                                     maxLength={100}
-                                    aria-label={t('form.name.placeholder')}
+                                    aria-label={t('form.name.label')}
                                     placeholder={t('form.name.placeholder')}
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                                     required
@@ -223,7 +232,7 @@ const Contact: React.FC = () => {
                                     name="email"
                                     autoComplete="email"
                                     maxLength={254}
-                                    aria-label={t('form.email.placeholder')}
+                                    aria-label={t('form.email.label')}
                                     placeholder={t('form.email.placeholder')}
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                                     required
@@ -235,7 +244,7 @@ const Contact: React.FC = () => {
                                 <textarea
                                     name="message"
                                     maxLength={5000}
-                                    aria-label={t('form.message.placeholder')}
+                                    aria-label={t('form.message.label')}
                                     placeholder={t('form.message.placeholder')}
                                     rows={5}
                                     className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)] resize-none"
@@ -307,17 +316,29 @@ const Contact: React.FC = () => {
                     </h3>
                     <div className="h-[300px] rounded-[2rem] overflow-hidden border border-gray-200 dark:border-neon-border shadow-2xl dark:shadow-none group relative transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">
                         <div className="absolute inset-0 border-4 border-transparent group-hover:border-yellow-400/30 dark:group-hover:border-neon-cyan/30 transition-colors duration-300 pointer-events-none z-10 rounded-[2rem]"></div>
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d38740.16919139266!2d5.13280806443481!3d52.69614777894901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c61c3b531a3977%3A0x868b248a39151740!2sHoogkarspel!5e0!3m2!1sen!2snl!4v1721323330345!5m2!1sen!2snl"
-                            width="100%"
-                            height="100%"
-                            style={{ border: 0 }}
-                            allowFullScreen={true}
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            title="Location Map"
-                            className="dark:grayscale-[100%] dark:invert-[100%] transition-transform duration-700 group-hover:scale-105"
-                        ></iframe>
+                        {showMap ? (
+                            <iframe
+                                src={MAP_EMBED_URL}
+                                width="100%"
+                                height="100%"
+                                style={{ border: 0 }}
+                                allowFullScreen={true}
+                                loading="lazy"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                                title="Location Map"
+                                className="dark:grayscale-[100%] dark:invert-[100%] transition-transform duration-700 group-hover:scale-105"
+                            ></iframe>
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={() => setShowMap(true)}
+                                className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
+                            >
+                                <i className="fas fa-map-marked-alt text-4xl text-yellow-500 dark:text-neon-cyan" aria-hidden="true"></i>
+                                <span className="font-bold">{t('map.load')}</span>
+                                <span className="text-sm text-gray-600 dark:text-gray-400 px-6 text-center">{t('map.notice')}</span>
+                            </button>
+                        )}
                     </div>
                     <div className="mt-12">
                         <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{t('sections.followMe')}</h3>

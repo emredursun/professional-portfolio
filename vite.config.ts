@@ -1,9 +1,23 @@
+import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+/**
+ * Security headers declared once in firebase.json (production) and replayed by
+ * `vite preview`, so CSP violations show up locally before they ship.
+ */
+function productionSecurityHeaders(): Record<string, string> {
+    const firebase = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'firebase.json'), 'utf8'));
+    const rule = firebase.hosting.headers.find((r: { source: string }) => r.source === '/**');
+    return Object.fromEntries(rule.headers.map((h: { key: string; value: string }) => [h.key, h.value]));
+}
+
 export default defineConfig(() => {
     return {
+      preview: {
+        headers: productionSecurityHeaders(),
+      },
       server: {
         port: 3000,
         host: '0.0.0.0',
@@ -12,6 +26,10 @@ export default defineConfig(() => {
       publicDir: 'public',
       build: {
         copyPublicDir: true,
+        // Never inline fonts as data: URIs. Small @fontsource subsets fell under
+        // the 4 KB default and were embedded in CSS, which the CSP's
+        // font-src 'self' rightly refuses. Other small assets keep the default.
+        assetsInlineLimit: (file: string) => (/\.(woff2?|ttf|otf|eot)$/i.test(file) ? false : undefined),
         rollupOptions: {
           input: {
             main: path.resolve(__dirname, 'index.html')

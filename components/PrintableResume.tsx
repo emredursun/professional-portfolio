@@ -1,5 +1,6 @@
 
 import React, { useMemo } from 'react';
+import './PrintableResume.css';
 import { useTranslation } from 'react-i18next';
 import { PERSONAL_INFO, SKILLS, LANGUAGES, TECH_STACK } from '../constants.tsx';
 import { TimelineItem } from '../types.ts';
@@ -92,69 +93,6 @@ const PrintableResume: React.FC = () => {
 
   return (
     <div className="hidden print:block font-sans text-gray-900 bg-white w-full h-full absolute top-0 left-0 z-[9999]">
-      <style>{`
-        @media print {
-          @page {
-            margin: 0; /* Hides browser default headers & footers (localhost, date, title) */
-            size: A4;
-          }
-          html, body {
-            height: 100%;
-            margin: 0 !important;
-            padding: 0 !important;
-            background-color: #ffffff !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-          }
-          /* Hide app root wrapper styling if any */
-          #root {
-            display: block;
-            width: 100%;
-          }
-          /* Force all text to be black */
-          * {
-            color: #000000 !important;
-            box-shadow: none !important;
-            text-shadow: none !important;
-          }
-          
-          /* Table Layout for Page Margins */
-          .print-container {
-            width: 100%;
-            border-collapse: collapse;
-          }
-          
-          /* The header repeats on every page top */
-          .print-header-space {
-            height: 15mm; /* Top Margin */
-          }
-          
-          /* The footer repeats on every page bottom */
-          .print-footer-space {
-            height: 15mm; /* Bottom Margin */
-          }
-          
-          /* The body content area */
-          .print-content {
-            padding: 0 15mm; /* Left/Right Margins */
-          }
-          
-          /* Utility to prevent awkward breaks */
-          .no-break {
-            break-inside: avoid;
-            page-break-inside: avoid;
-          }
-
-          /* Never leave a section heading stranded at the foot of a page.
-             The Experience and Education sections are taller than a page, so
-             they cannot use .no-break; without this their <h3> printed alone
-             with the first entry pushed to the next page. */
-          h3, h4 {
-            break-after: avoid;
-            page-break-after: avoid;
-          }
-        }
-      `}</style>
 
       {/* 
          Using a Table structure to simulate margins on every page 

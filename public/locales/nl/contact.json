@@ -33,5 +33,9 @@
   },
   "meta": {
     "description": "Neem contact op met Emre Dursun voor opdrachten als QA Consultant, QA Lead of Test Automation Engineer in een Pega- en Tricentis Tosca-context."
+  },
+  "map": {
+    "load": "Kaart tonen",
+    "notice": "Laadt Google Maps, dat cookies kan plaatsen."
   }
 }

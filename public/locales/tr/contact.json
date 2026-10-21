@@ -33,5 +33,9 @@
   },
   "meta": {
     "description": "Pega ve Tricentis Tosca bağlamında QA Consultant, QA Lead veya Test Automation Engineer pozisyonları için Emre Dursun ile iletişime geçin."
+  },
+  "map": {
+    "load": "Haritayı göster",
+    "notice": "Google Haritalar yüklenir; Google çerez kullanabilir."
   }
 }

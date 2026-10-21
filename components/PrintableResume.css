@@ -1,0 +1,66 @@
+/*
+ * Print layout for the Download CV / Ctrl+P output.
+ * Previously an inline <style> element inside PrintableResume.tsx; as a
+ * stylesheet it is cacheable and allowed by the CSP's style-src 'self'.
+ */
+@media print {
+  @page {
+    margin: 0; /* Hides browser default headers & footers (localhost, date, title) */
+    size: A4;
+  }
+  html, body {
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* Hide app root wrapper styling if any */
+  #root {
+    display: block;
+    width: 100%;
+  }
+  /* Force all text to be black */
+  * {
+    color: #000000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Table Layout for Page Margins */
+  .print-container {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  /* The header repeats on every page top */
+  .print-header-space {
+    height: 15mm; /* Top Margin */
+  }
+
+  /* The footer repeats on every page bottom */
+  .print-footer-space {
+    height: 15mm; /* Bottom Margin */
+  }
+
+  /* The body content area */
+  .print-content {
+    padding: 0 15mm; /* Left/Right Margins */
+  }
+
+  /* Utility to prevent awkward breaks */
+  .no-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Never leave a section heading stranded at the foot of a page.
+     The Experience and Education sections are taller than a page, so
+     they cannot use .no-break; without this their <h3> printed alone
+     with the first entry pushed to the next page. */
+  h3, h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+}
