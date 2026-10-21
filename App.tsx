@@ -18,7 +18,8 @@ import SEO from './components/SEO.tsx';
 import { Page } from './types.ts';
 import { faviconController } from './src/utils/faviconController';
 
-import Preloader from './components/Preloader.tsx';
+import Preloader, { shouldShowPreloader } from './components/Preloader.tsx';
+import { useIdleReady } from './components/hooks/useIdleReady.tsx';
 
 // Lazy load decorative elements
 const ParticleBackground = React.lazy(() => import('./components/ParticleBackground.tsx'));
@@ -165,7 +166,11 @@ const ScrollHandler: React.FC<{
 
 const AppContent: React.FC = () => {
   const { i18n } = useTranslation();
-  const [isLoading, setIsLoading] = useState(true);
+  // The intro plays once per session (and never with reduced motion). The page
+  // mounts as soon as the curtain starts lifting (`isLoading` false), while the
+  // preloader itself stays until its exit animation finishes.
+  const [showPreloader, setShowPreloader] = useState(shouldShowPreloader);
+  const [isLoading, setIsLoading] = useState(showPreloader);
   const location = useLocation();
   
   // Derived active page from location for backward compatibility with props
@@ -223,8 +228,14 @@ const AppContent: React.FC = () => {
     }
   }, [isLoading]);
 
-  const handlePreloaderComplete = () => {
+  const decorReady = useIdleReady();
+
+  const handlePreloaderReveal = () => {
     setIsLoading(false);
+  };
+
+  const handlePreloaderComplete = () => {
+    setShowPreloader(false);
   };
 
   useEffect(() => {
@@ -357,7 +368,9 @@ const AppContent: React.FC = () => {
         setReadingProgress={setReadingProgress}
       />
 
-      {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
+      {showPreloader && (
+        <Preloader onReveal={handlePreloaderReveal} onComplete={handlePreloaderComplete} />
+      )}
       {!isLoading && (
         <ErrorBoundary>
           <CommandPalette
@@ -375,15 +388,22 @@ const AppContent: React.FC = () => {
             <main className={`print:hidden relative bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-gray-100 font-sans transition-colors duration-500 ${isMobileView ? 'min-h-screen p-4' : 'h-screen overflow-hidden p-6 lg:p-8'}`}>
           
           <div className="bg-noise"></div>
-          <React.Suspense fallback={null}>
-            <ParticleBackground particleCount={150} connectionDistance={120} mouseInfluence={80} />
+          {/* Decorative layers wait for the first idle moment so they never
+              compete with the page content for the main thread. */}
+          {decorReady && (
+            <React.Suspense fallback={null}>
+              <ParticleBackground particleCount={150} connectionDistance={120} mouseInfluence={80} />
+              <CustomCursor />
+            </React.Suspense>
+          )}
 
-            <div ref={floatingRef} className="absolute inset-0 pointer-events-none z-[1]">
+          <div ref={floatingRef} className="absolute inset-0 pointer-events-none z-[1]">
+            {decorReady && (
+              <React.Suspense fallback={null}>
                 <FloatingElements />
-            </div>
-
-            <CustomCursor />
-          </React.Suspense>
+              </React.Suspense>
+            )}
+          </div>
 
           <div ref={bgOrbsRef} className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
             <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-yellow-400/10 dark:bg-yellow-600/5 blur-[130px] animate-blob"></div>

@@ -23,7 +23,11 @@ import '@fontsource/space-mono/700.css';
 
 // Font Awesome Free 6.x - same major as the previous CDN copy (6.5.1), so
 // every `fas` / `far` / `fab` class name in the codebase keeps resolving.
-import '@fortawesome/fontawesome-free/css/all.min.css';
+// Loaded as a dynamic import so Vite emits it as its own stylesheet, injected
+// after start-up instead of blocking first paint (~100 KB of CSS). Icon fonts
+// use font-display: block, so icons were never visible before their font
+// arrived anyway - nothing is lost by not waiting for this file.
+void import('@fortawesome/fontawesome-free/css/all.min.css');
 
 import { installGlobalErrorReporting } from './utils/errorReporting.ts';
 
