@@ -25,7 +25,6 @@ Branch `feat/preflight-remediation`. It raises the preflight score from 36/100 b
 | --- | --- | --- |
 | ESLint (typescript-eslint, react-hooks, jsx-a11y) and Prettier in CI | Lint and style gates; preflight D4 | The local `config-protection` hook blocks creating lint configs; owner to allow it once |
 | Split `constants.tsx` (1,245 lines) into `data/*.ts` | File-size guideline (800); easier content edits | Profile README generator must bundle instead of evaluating one file — small change |
-| Command palette: `role="dialog"`, `aria-modal`, focus trap | Screen-reader semantics; axe does not flag it because it is closed during the scan | — |
 | Tailwind CSS 3 → 4 | Clears the remaining build-time advisories (braces, micromatch, postcss-selector-parser). These do not ship to visitors | Visual regression pass |
 
 ## Milestone 3 — Mobile performance
