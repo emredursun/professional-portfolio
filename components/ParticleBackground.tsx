@@ -39,9 +39,12 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({
     cameraRef.current = camera;
 
     // Renderer setup
+    // No MSAA: thin lines on a soft, decorative background do not need it,
+    // and it multiplies fill cost at full-screen size.
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
-      antialias: true,
+      antialias: false,
+      powerPreference: 'low-power',
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -84,8 +87,17 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({
     scene.add(particles);
     particlesRef.current = particles;
 
-    // Line geometry for connections
+    // Line geometry for connections. Allocated once at the maximum possible
+    // size (every pair connected) and drawn with setDrawRange; the previous
+    // version built a new JS array every frame and a new GPU buffer whenever
+    // the number of connections changed - which was nearly every frame.
+    const maxPairs = (particleCount * (particleCount - 1)) / 2;
+    const linePositionBuffer = new Float32Array(maxPairs * 6);
     const lineGeometry = new THREE.BufferGeometry();
+    const linePositionAttribute = new THREE.BufferAttribute(linePositionBuffer, 3);
+    linePositionAttribute.setUsage(THREE.DynamicDrawUsage);
+    lineGeometry.setAttribute('position', linePositionAttribute);
+    lineGeometry.setDrawRange(0, 0);
     const lineMaterial = new THREE.LineBasicMaterial({
       color: 0xffa500,
       transparent: true,
@@ -120,7 +132,8 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({
       if (!particlesRef.current || !linesRef.current || !rendererRef.current || !sceneRef.current || !cameraRef.current) return;
 
       const positions = particlesRef.current.geometry.attributes.position.array as Float32Array;
-      const linePositions: number[] = [];
+      const maxDistanceSq = connectionDistance * connectionDistance;
+      let lineFloats = 0;
 
       // Update particle positions
       for (let i = 0; i < particleCount; i++) {
@@ -156,37 +169,25 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({
           const dx = positions[i3] - positions[j3];
           const dy = positions[i3 + 1] - positions[j3 + 1];
           const dz = positions[i3 + 2] - positions[j3 + 2];
-          const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-          if (distance < connectionDistance) {
-            linePositions.push(
-              positions[i3], positions[i3 + 1], positions[i3 + 2],
-              positions[j3], positions[j3 + 1], positions[j3 + 2]
-            );
+          // Compare squared distances: no square root for ~11k pairs a frame.
+          if (dx * dx + dy * dy + dz * dz < maxDistanceSq) {
+            linePositionBuffer[lineFloats++] = positions[i3];
+            linePositionBuffer[lineFloats++] = positions[i3 + 1];
+            linePositionBuffer[lineFloats++] = positions[i3 + 2];
+            linePositionBuffer[lineFloats++] = positions[j3];
+            linePositionBuffer[lineFloats++] = positions[j3 + 1];
+            linePositionBuffer[lineFloats++] = positions[j3 + 2];
           }
         }
       }
 
       particlesRef.current.geometry.attributes.position.needsUpdate = true;
 
-      // Update line connections - reuse buffer instead of creating new one
-      const lineGeom = linesRef.current.geometry;
-      const existingPositions = lineGeom.attributes.position;
-      
-      if (!existingPositions || existingPositions.array.length !== linePositions.length) {
-        // Only create new buffer if size changed
-        lineGeom.setAttribute(
-          'position',
-          new THREE.Float32BufferAttribute(linePositions, 3)
-        );
-      } else {
-        // Reuse existing buffer
-        const posArray = existingPositions.array as Float32Array;
-        for (let i = 0; i < linePositions.length; i++) {
-          posArray[i] = linePositions[i];
-        }
-        existingPositions.needsUpdate = true;
-      }
+      // Upload only the filled part of the preallocated line buffer.
+      linePositionAttribute.clearUpdateRanges();
+      linePositionAttribute.addUpdateRange(0, lineFloats);
+      linePositionAttribute.needsUpdate = true;
+      lineGeometry.setDrawRange(0, lineFloats / 3);
 
       // Rotate particles slowly
       particlesRef.current.rotation.y += 0.0002;

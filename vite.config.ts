@@ -35,6 +35,7 @@ export default defineConfig(() => {
             'scripts/generate-profile-readme.js',
             'scripts/write-version.js',
             'src/utils/errorReporting.ts',
+            'src/utils/decor.ts',
             'src/bootstrap.ts',
             'components/ErrorBoundary.tsx',
             'components/Preloader.tsx',

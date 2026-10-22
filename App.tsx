@@ -19,6 +19,7 @@ import { faviconController } from './src/utils/faviconController';
 
 import Preloader, { shouldShowPreloader } from './components/Preloader.tsx';
 import { useIdleReady } from './components/hooks/useIdleReady.tsx';
+import { shouldRenderDecor } from './src/utils/decor.ts';
 import { useLanguageNavigate } from './components/hooks/useLanguageNavigate.tsx';
 
 // Lazy load decorative elements
@@ -234,7 +235,11 @@ const AppContent: React.FC = () => {
     }
   }, [isLoading]);
 
-  const decorReady = useIdleReady();
+  const idleReady = useIdleReady();
+  // Decorative layers: idle time, and only on devices where they add
+  // something (see src/utils/decor.ts). Decided once per page load.
+  const [decorAllowed] = useState(shouldRenderDecor);
+  const decorReady = idleReady && decorAllowed;
 
   // The command palette's "Go to ..." commands call this. It used to be a
   // no-op left over from before React Router, so those commands only closed
@@ -408,7 +413,7 @@ const AppContent: React.FC = () => {
             </React.Suspense>
           )}
           <SmoothScroll contentRef={contentRef} isMobileView={isMobileView}>
-            {decorReady && (
+            {idleReady && (
               <React.Suspense fallback={null}>
                 <PrintableResume />
               </React.Suspense>
