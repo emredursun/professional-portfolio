@@ -30,13 +30,12 @@ Branch `feat/preflight-remediation`. It raises the preflight score from 36/100 b
 
 ## Milestone 3 — Mobile performance
 
-Desktop Lighthouse is 97. Mobile is 65–78, and the variance comes from total blocking time on a throttled CPU.
+Mobile Lighthouse is now 86–87 (was 57–58). The particle field was the blocking cost; it is now allocation-free and skipped on touch devices. What remains is LCP (3.4 s on simulated slow 4G):
 
 | Item | Expected effect |
 | --- | --- |
-| Use one animation library: GSAP **or** framer-motion (together about 90 KB gzip) | Largest remaining script cost |
-| Prerender routes (Vite SSG or Astro) | Real HTML per route for scrapers that run no JS, such as LinkedIn and WhatsApp. LCP independent of the JS bundle |
-| Lazy-load `three.js` particles only on capable desktop devices | 125 KB gzip off mobile entirely |
+| Use one animation library: GSAP **or** framer-motion (together about 90 KB gzip) | Less JavaScript before first render |
+| Prerender routes (Vite SSG or Astro) | Real HTML per route for scrapers that run no JS, such as LinkedIn and WhatsApp. LCP no longer waits on the JS bundle |
 
 ## Milestone 4 — Content and assets
 

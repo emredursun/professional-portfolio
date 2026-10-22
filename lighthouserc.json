@@ -22,7 +22,7 @@
             "categories:performance": [
               "error",
               {
-                "minScore": 0.8,
+                "minScore": 0.9,
                 "aggregationMethod": "median-run"
               }
             ],
@@ -57,9 +57,10 @@
               }
             ],
             "total-blocking-time": [
-              "warn",
+              "error",
               {
-                "maxNumericValue": 200
+                "maxNumericValue": 200,
+                "aggregationMethod": "median-run"
               }
             ],
             "resource-summary:script:size": [
@@ -88,7 +89,7 @@
             "categories:performance": [
               "error",
               {
-                "minScore": 0.8,
+                "minScore": 0.9,
                 "aggregationMethod": "median-run"
               }
             ],
@@ -123,9 +124,10 @@
               }
             ],
             "total-blocking-time": [
-              "warn",
+              "error",
               {
-                "maxNumericValue": 200
+                "maxNumericValue": 200,
+                "aggregationMethod": "median-run"
               }
             ],
             "resource-summary:script:size": [

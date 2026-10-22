@@ -17,7 +17,8 @@ The result of a production-readiness review (preflight score 36/100). On branch 
   - images converted to WebP
   - favicons that were really 1024 px now 96 px
   - the OG image cut from 588 to 110 KB
-- Lighthouse desktop 97 / 100 / 100 / 100.
+- The WebGL particle field no longer allocates per frame, and it is skipped on touch devices.
+- Lighthouse (same machine and load as before): mobile 57 → 86–87, desktop 91 → 94–99. Accessibility, best practices and SEO are 100.
 
 ### Security & privacy
 - Strict Content-Security-Policy (no `'unsafe-inline'`), COOP, a tighter Permissions-Policy, and HSTS preload.
