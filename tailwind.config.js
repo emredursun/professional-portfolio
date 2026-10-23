@@ -1,3 +1,5 @@
+import containerQueries from '@tailwindcss/container-queries';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -163,5 +165,7 @@ export default {
       },
     },
   },
-  plugins: [],
+  // Container queries: the page content sits beside a fixed-width sidebar on
+  // desktop, so viewport breakpoints misjudge the space a section really has.
+  plugins: [containerQueries],
 }

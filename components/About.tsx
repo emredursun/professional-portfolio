@@ -80,7 +80,7 @@ const BentoCard: React.FC<{
       {/* Light Mode Subtle Gradient Overlay */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white via-transparent to-gray-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 dark:hidden" />
 
-      <div className="relative h-full p-8 z-20 flex flex-col">
+      <div className="relative w-full h-full p-8 z-20 flex flex-col">
         {title && (
           <h3 className="text-lg font-bold text-gray-900 dark:text-neon-text-primary mb-4 uppercase tracking-wider">
             {title}
@@ -298,9 +298,15 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
         </h2>
       </motion.header>
 
-      {/* Bento Grid Layout */}
+      {/*
+        Bento Grid Layout. Breakpoints are container queries (@3xl = the grid
+        itself is at least 48rem wide), not viewport ones: beside the desktop
+        sidebar a 1100px window leaves the content barely 500px, which md:
+        still treated as room for an 8/4 split.
+      */}
+      <div className="@container">
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-12 gap-6"
+        className="grid grid-cols-1 @3xl:grid-cols-12 gap-6"
         initial="hidden"
         animate="visible"
         variants={{
@@ -316,7 +322,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
       >
         {/* Intro Card - Large */}
         <motion.div
-          className="md:col-span-8 h-full"
+          className="@3xl:col-span-8 h-full"
           variants={{
             hidden: { opacity: 0, y: 30 },
             visible: { opacity: 1, y: 0 },
@@ -325,7 +331,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
           <BentoCard className="h-full bg-white dark:bg-neon-bg border-gray-100 dark:border-neon-border">
             <i aria-hidden="true" className="fas fa-quote-left text-5xl text-gray-100 dark:text-neon-border absolute top-6 right-8 transition-colors duration-500 group-hover:text-accent-yellow/10"></i>
             <p 
-              className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-neon-text-primary leading-tight mb-8 relative z-10 [&_strong]:text-amber-700 dark:[&_strong]:text-neon-cyan [&_strong]:font-extrabold"
+              className="pr-12 text-2xl @3xl:text-3xl font-bold text-gray-900 dark:text-neon-text-primary leading-tight mb-8 relative z-10 [&_strong]:text-amber-700 dark:[&_strong]:text-neon-cyan [&_strong]:font-extrabold"
               dangerouslySetInnerHTML={{ __html: `"${t('introQuote')}"` }}
             />
             <div className="mt-auto relative z-10">
@@ -339,7 +345,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
 
         {/* Stats / Quick Info + Languages - stacked to match the intro card's height exactly */}
         <motion.div
-          className="md:col-span-4 flex flex-col justify-between gap-4 h-full"
+          className="@3xl:col-span-4 flex flex-col justify-between gap-4 h-full"
           variants={{
             hidden: { opacity: 0, y: 30 },
             visible: { opacity: 1, y: 0 },
@@ -351,7 +357,13 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
               <div className="absolute top-[-20%] right-[-20%] w-32 h-32 bg-accent-yellow/10 dark:bg-neon-cyan/20 rounded-full blur-2xl transition-all duration-500 group-hover:bg-accent-yellow/20"></div>
               <div className="absolute bottom-[-10%] left-[-10%] w-24 h-24 bg-accent-yellow/10 dark:bg-neon-purple/20 rounded-full blur-xl transition-all duration-500 group-hover:bg-accent-yellow/20"></div>
 
-              <div className="w-full h-full flex flex-col justify-center items-center relative z-10 py-6">
+              {/*
+                Stacked in the narrow 4-column slot; when the card spans the
+                full width (below the 8/4 split) the counter sits beside the
+                badges instead of floating above a wide, empty card.
+              */}
+              <div className="w-full h-full flex flex-col @lg:flex-row @3xl:flex-col justify-center items-center @lg:gap-8 @3xl:gap-0 relative z-10 py-6">
+                <div className="flex flex-col items-center shrink-0">
                 <motion.div
                   ref={counterRef}
                   className="text-7xl font-black mb-2 text-gray-900 dark:text-white tracking-tighter drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]"
@@ -364,12 +376,13 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
                     +
                   </span>
                 </motion.div>
-                <div className="text-sm font-extrabold uppercase tracking-widest text-gray-600 dark:text-neon-text-secondary mb-8">
+                <div className="text-sm font-extrabold uppercase tracking-widest text-gray-600 dark:text-neon-text-secondary mb-8 @lg:mb-0 @3xl:mb-8">
                   {t('yearsExperience')}
+                </div>
                 </div>
 
                 <motion.div
-                  className="w-full space-y-3"
+                  className="w-full grid gap-3"
                   initial="hidden"
                   animate="visible"
                   variants={{
@@ -420,7 +433,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
               <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
                 {t('languages')}
               </div>
-              <div className="font-bold text-gray-900 dark:text-white text-sm truncate">
+              <div className="font-bold text-gray-900 dark:text-white text-sm">
                 {t('languageList')}
               </div>
             </div>
@@ -429,7 +442,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
 
         {/* Story Section - Wide */}
         <motion.div
-          className="md:col-span-12"
+          className="@3xl:col-span-12"
           variants={{
             hidden: { opacity: 0, y: 30 },
             visible: { opacity: 1, y: 0 },
@@ -456,7 +469,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
         </motion.div>
 
         {/* Services - Grid */}
-        <div className="md:col-span-12 mt-8">
+        <div className="@3xl:col-span-12 mt-8">
           <motion.h3
             className="text-2xl font-bold text-gray-900 dark:text-neon-text-primary mb-6"
             initial={{ opacity: 0, x: -20 }}
@@ -467,7 +480,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
           </motion.h3>
           <div
             ref={servicesRef}
-            className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
+            className="grid grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 gap-6"
           >
             {translatedServices.map((service, index) => (
               <div
@@ -490,6 +503,7 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
           </div>
         </div>
       </motion.div>
+      </div>
       
       {/* Service Detail Panel */}
       <ServiceDetailPanel
