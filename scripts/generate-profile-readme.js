@@ -36,6 +36,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { writeIfChanged } from './generate-sitemap.js';
+import { loadConstants } from './lib/load-constants.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -163,33 +164,8 @@ const EXTRA_STACK_GROUPS = [
 // Portfolio data loading
 // ---------------------------------------------------------------------------
 
-/**
- * Evaluate constants.tsx and return its exports.
- *
- * The file is TSX, so it is transpiled with esbuild (already present as a Vite
- * dependency) with a stubbed JSX factory - the icon elements are irrelevant
- * here and collapse to null. This is deliberately not regex parsing: the
- * README should break when the data shape changes, not silently render
- * garbage.
- */
-export async function loadConstants() {
-  const esbuild = (await import('esbuild')).default;
-  const source = fs
-    .readFileSync(path.join(ROOT, 'constants.tsx'), 'utf8')
-    .replace(/^\s*import\s[\s\S]*?from\s+["'][^"']+["'];?\s*$/gm, '');
-
-  const { code } = esbuild.transformSync(source, {
-    loader: 'tsx',
-    jsx: 'transform',
-    jsxFactory: '__jsx',
-    jsxFragment: '__frag',
-    format: 'esm',
-  });
-
-  const stub = 'const __jsx = () => null; const __frag = null;\n';
-  const encoded = Buffer.from(stub + code, 'utf8').toString('base64');
-  return import(`data:text/javascript;base64,${encoded}`);
-}
+// Shared with the sitemap generator; re-exported for existing callers.
+export { loadConstants };
 
 /** Read one of the English locale files. */
 function loadLocale(name) {

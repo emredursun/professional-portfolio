@@ -6,6 +6,8 @@ interface SEOProps {
   title?: string;
   description?: string;
   overrideTitle?: boolean; // If true, don't append site name
+  /** Ask crawlers not to index this page (used by the 404 view). */
+  noindex?: boolean;
 }
 
 /**
@@ -42,7 +44,7 @@ const upsertLink = (rel: string, href: string, hreflang?: string) => {
   el.setAttribute('href', href);
 };
 
-const SEO: React.FC<SEOProps> = ({ title, description, overrideTitle = false }) => {
+const SEO: React.FC<SEOProps> = ({ title, description, overrideTitle = false, noindex = false }) => {
   const location = useLocation();
   const { t } = useTranslation();
 
@@ -105,6 +107,18 @@ const SEO: React.FC<SEOProps> = ({ title, description, overrideTitle = false }) 
     upsertMeta('meta[name="twitter:title"]', 'name', 'twitter:title', metaTitle);
     upsertMeta('meta[name="twitter:description"]', 'name', 'twitter:description', metaDescription);
   }, [metaTitle, metaDescription, canonicalUrl, enHref, nlHref, trHref]);
+
+  // Firebase serves index.html with a 200 for every SPA path, so an unknown URL
+  // cannot return a real 404 status. noindex keeps such pages out of search
+  // results; the tag is removed again when the page unmounts so the next
+  // client-side route is indexable.
+  useEffect(() => {
+    if (!noindex) return;
+    upsertMeta('meta[name="robots"]', 'name', 'robots', 'noindex, follow');
+    return () => {
+      document.head.querySelector('meta[name="robots"]')?.remove();
+    };
+  }, [noindex]);
 
   return null;
 };

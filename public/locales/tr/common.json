@@ -35,5 +35,11 @@
   },
   "meta": {
     "description": "Pega & Tricentis Tosca test otomasyonu konusunda uzman QA Consultant, ISTQB® Sertifikalı. Hollanda'da yerleşik."
+  },
+  "notFound": {
+    "title": "Sayfa bulunamadı",
+    "description": "Bu bağlantı sitede bir sayfaya çıkmıyor. Taşınmış olabilir ya da adreste bir yazım hatası olabilir.",
+    "home": "Hakkımda sayfasına git",
+    "projects": "Projelere göz at"
   }
 }

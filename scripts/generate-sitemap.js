@@ -31,6 +31,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath, pathToFileURL } from 'url';
+import { loadConstants } from './lib/load-constants.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,12 +45,27 @@ const STATE_PATH = path.join(__dirname, 'sitemap-state.json');
 // Supported languages
 const LANGUAGES = ['en', 'tr', 'nl'];
 
-// Routes to publish, in sitemap order
-const ROUTES = ['', '/about', '/resume', '/projects', '/contact'];
+// Top-level routes, in sitemap order. Detail pages are appended by listRoutes().
+export const STATIC_ROUTES = ['', '/about', '/resume', '/projects', '/contact'];
 
 /**
- * Locale namespace each route renders from. Combined with the shared sources
- * below to decide whether that route's content has actually changed.
+ * Every route to publish: the static pages, then one detail page per service
+ * (/about/<slug>) and per project (/projects/<slug>) defined in constants.tsx.
+ *
+ * @param {{ SERVICES: Array<{ slug: string }>, PROJECTS: Array<{ slug: string }> }} constants
+ */
+export function listRoutes({ SERVICES, PROJECTS }) {
+    return [
+        ...STATIC_ROUTES,
+        ...SERVICES.map(service => `/about/${service.slug}`),
+        ...PROJECTS.map(project => `/projects/${project.slug}`),
+    ];
+}
+
+/**
+ * Locale namespace each top-level route renders from. Combined with the shared
+ * sources below to decide whether that route's content has actually changed.
+ * Detail pages use the namespace of the section they belong to.
  */
 const ROUTE_NAMESPACES = {
     '': 'about',
@@ -58,6 +74,15 @@ const ROUTE_NAMESPACES = {
     '/projects': 'projects',
     '/contact': 'contact',
 };
+
+function namespaceForRoute(route) {
+    const section = route === '' ? '' : `/${route.split('/')[1]}`;
+    const namespace = ROUTE_NAMESPACES[section];
+    if (!namespace) {
+        throw new Error(`No locale namespace for sitemap route: ${route}`);
+    }
+    return namespace;
+}
 
 /** Files that affect every route: shared data and the labels in the chrome. */
 const SHARED_SOURCES = [
@@ -70,7 +95,7 @@ const SHARED_SOURCES = [
  * Source files whose content determines a route's lastmod
  */
 export function sourcesForRoute(route) {
-    const namespace = ROUTE_NAMESPACES[route];
+    const namespace = namespaceForRoute(route);
     const localeFiles = LANGUAGES.map(lang => `public/locales/${lang}/${namespace}.json`);
     return [...SHARED_SOURCES, ...localeFiles];
 }
@@ -146,8 +171,8 @@ export function computeLastMod(previous, hashes, now) {
 /**
  * Resolve each route's lastmod against the files on disk and the saved state.
  */
-function resolveLastMod(statePath, now) {
-    const hashes = Object.fromEntries(ROUTES.map(route => [route, hashRoute(route)]));
+function resolveLastMod(routes, statePath, now) {
+    const hashes = Object.fromEntries(routes.map(route => [route, hashRoute(route)]));
     return computeLastMod(readState(statePath), hashes, now);
 }
 
@@ -179,16 +204,24 @@ ${generateHreflangLinks(basePath)}
 }
 
 /**
- * Generate sitemap XML content
+ * Home carries the highest weight, section pages sit just below it and detail
+ * pages below those.
+ */
+function priorityForRoute(route) {
+    if (route === '') return '1.0';
+    return STATIC_ROUTES.includes(route) ? '0.8' : '0.6';
+}
+
+/**
+ * Generate sitemap XML content. Routes are emitted in the key order of lastMod.
  */
 export function generateSitemap(lastMod) {
     const urls = [];
 
     // Generate URLs for each language and route
-    ROUTES.forEach(route => {
+    Object.keys(lastMod).forEach(route => {
         const lastModified = lastMod[route];
-        // Home carries the highest weight; content pages sit just below it.
-        const priority = route === '' ? '1.0' : '0.8';
+        const priority = priorityForRoute(route);
         const changefreq = route === '' ? 'weekly' : 'monthly';
 
         // English (Default)
@@ -228,11 +261,16 @@ export function writeIfChanged(filePath, content) {
  * Regenerate the sitemap and its state file. Paths and clock are injectable,
  * so the whole flow can run against a temporary directory in tests.
  *
- * @param {{ outputPath?: string, statePath?: string, now?: string }} [options]
+ * @param {{ routes?: string[], outputPath?: string, statePath?: string, now?: string }} [options]
  * @returns {{ sitemapWritten: boolean, changed: string[], urls: number, alternates: number }}
  */
-export function writeSitemap({ outputPath = OUTPUT_PATH, statePath = STATE_PATH, now = new Date().toISOString() } = {}) {
-    const { lastMod, nextState, changed } = resolveLastMod(statePath, now);
+export function writeSitemap({
+    routes = STATIC_ROUTES,
+    outputPath = OUTPUT_PATH,
+    statePath = STATE_PATH,
+    now = new Date().toISOString(),
+} = {}) {
+    const { lastMod, nextState, changed } = resolveLastMod(routes, statePath, now);
     const sitemapContent = generateSitemap(lastMod);
 
     const sitemapWritten = writeIfChanged(outputPath, sitemapContent);
@@ -246,9 +284,10 @@ export function writeSitemap({ outputPath = OUTPUT_PATH, statePath = STATE_PATH,
     };
 }
 
-function main() {
+async function main() {
     try {
-        const { sitemapWritten, changed, urls, alternates } = writeSitemap();
+        const routes = listRoutes(await loadConstants());
+        const { sitemapWritten, changed, urls, alternates } = writeSitemap({ routes });
 
         console.log('✅ Sitemap generated successfully!');
         console.log(`📍 Location: ${OUTPUT_PATH}`);

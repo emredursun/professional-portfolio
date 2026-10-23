@@ -96,6 +96,17 @@ for (const colorScheme of ['light', 'dark'] as const) test.describe(`accessibili
       ).toEqual([]);
     });
   }
+
+  test('the not-found page has no axe violations', async ({ page }) => {
+    await page.goto('/no-such-page');
+    await expect(page.getByRole('heading', { level: 2, name: copy('en', 'common').notFound.title })).toBeVisible();
+
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .exclude('.print-container')
+      .analyze();
+    expect(results.violations.map((v) => `${v.id} (${v.impact}): ${v.help}`)).toEqual([]);
+  });
 });
 
 test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {

@@ -35,5 +35,11 @@
   },
   "meta": {
     "description": "QA Consultant specializing in Pega & Tricentis Tosca test automation, ISTQB® Certified. Based in the Netherlands."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This link doesn't lead anywhere on this site. It may have moved, or the address may contain a typo.",
+    "home": "Go to About",
+    "projects": "Browse projects"
   }
 }

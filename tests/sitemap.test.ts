@@ -7,7 +7,9 @@ import {
   computeLastMod,
   generateSitemap,
   hashRoute,
+  listRoutes,
   readState,
+  STATIC_ROUTES,
   sourcesForRoute,
   writeIfChanged,
   writeSitemap,
@@ -60,6 +62,34 @@ describe('sourcesForRoute', () => {
   it('maps the home page to the about namespace', () => {
     expect(sourcesForRoute('')).toContain('public/locales/en/about.json');
   });
+
+  it('gives detail pages the namespace of their section', () => {
+    expect(sourcesForRoute('/projects/aegisqa')).toContain('public/locales/nl/projects.json');
+    expect(sourcesForRoute('/about/pega-platform-architecture')).toContain('public/locales/tr/about.json');
+  });
+
+  it('rejects a route outside the known sections', () => {
+    expect(() => sourcesForRoute('/blog/post')).toThrow(/No locale namespace/);
+  });
+});
+
+describe('listRoutes', () => {
+  it('appends a detail route per service and project after the static pages', () => {
+    const routes = listRoutes({
+      SERVICES: [{ slug: 'svc' }],
+      PROJECTS: [{ slug: 'one' }, { slug: 'two' }],
+    });
+    expect(routes).toEqual([...STATIC_ROUTES, '/about/svc', '/projects/one', '/projects/two']);
+  });
+
+  it('covers every slug in the real constants.tsx without duplicates', async () => {
+    const { loadConstants } = await import('../scripts/lib/load-constants.js');
+    const constants = await loadConstants();
+    const routes = listRoutes(constants);
+    expect(routes).toHaveLength(STATIC_ROUTES.length + constants.SERVICES.length + constants.PROJECTS.length);
+    expect(new Set(routes).size).toBe(routes.length);
+    expect(routes).toContain('/projects/devran-ai-kit');
+  });
 });
 
 describe('hashRoute', () => {
@@ -92,6 +122,13 @@ describe('generateSitemap', () => {
 
   it('weights the home page above content pages', () => {
     expect(xml).toMatch(/<loc>https:\/\/emredursun\.nl\/<\/loc>[\s\S]*?<priority>1\.0<\/priority>/);
+  });
+
+  it('weights detail pages below sections, with per-language alternates', () => {
+    const detail = generateSitemap({ '/projects/aegisqa': OLD });
+    expect(detail).toContain('<priority>0.6</priority>');
+    expect(detail).toContain('<loc>https://emredursun.nl/nl/projects/aegisqa</loc>');
+    expect(detail).toContain('hreflang="tr" href="https://emredursun.nl/tr/projects/aegisqa"');
   });
 });
 
@@ -179,5 +216,15 @@ describe('writeSitemap (end to end on a temp directory)', () => {
     const run = writeSitemap({ outputPath, statePath, now: NOW });
     expect(run.changed).toEqual(['/projects']);
     expect(fs.readFileSync(outputPath, 'utf8').match(new RegExp(NOW, 'g'))).toHaveLength(3);
+  });
+
+  it('publishes the detail routes it is given', () => {
+    const outputPath = path.join(dir, 'sitemap.xml');
+    const statePath = path.join(dir, 'state.json');
+    const routes = [...STATIC_ROUTES, '/projects/aegisqa'];
+
+    const run = writeSitemap({ routes, outputPath, statePath, now: OLD });
+    expect(run).toMatchObject({ urls: 18, alternates: 72 });
+    expect(run.changed).toContain('/projects/aegisqa');
   });
 });

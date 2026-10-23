@@ -26,6 +26,27 @@ test.describe('pages', () => {
     await page.goto('/');
     await expect(page).toHaveURL(/\/about$/);
   });
+
+  test('an unknown URL shows a noindex "not found" page instead of redirecting', async ({ page }) => {
+    const { notFound } = copy('en', 'common');
+    await page.goto('/no-such-page');
+
+    await expect(page.getByRole('heading', { level: 2, name: notFound.title })).toBeVisible();
+    await expect(page).toHaveURL(/\/no-such-page$/);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
+
+    await page.getByRole('link', { name: notFound.home }).click();
+    await expect(page).toHaveURL(/\/about$/);
+    // Leaving the 404 must drop the noindex again, or /about would inherit it.
+    await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
+  });
+
+  test('a localised unknown URL keeps its language', async ({ page }) => {
+    const { notFound } = copy('nl', 'common');
+    await page.goto('/nl/geen-pagina');
+    await expect(page.getByRole('heading', { level: 2, name: notFound.title })).toBeVisible();
+    await expect(page.getByRole('link', { name: notFound.projects })).toHaveAttribute('href', '/nl/projects');
+  });
 });
 
 test.describe('languages', () => {

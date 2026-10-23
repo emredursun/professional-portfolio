@@ -27,6 +27,7 @@ const About = lazy(loaders.about);
 const Resume = lazy(loaders.resume);
 const Projects = lazy(loaders.projects);
 const Contact = lazy(loaders.contact);
+const NotFound = lazy(() => import('./NotFound.tsx'));
 
 interface MainContentProps {
   activePage: Page;
@@ -74,8 +75,8 @@ const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView, onN
             </React.Fragment>
           ))}
 
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/about" replace />} />
+          {/* Fallback: a real "not found" view (noindex), not a silent redirect */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </div>
