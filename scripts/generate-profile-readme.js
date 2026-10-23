@@ -64,23 +64,25 @@ const HEADER_LINES = [
  * are interpolated from the portfolio data, not retyped.
  */
 const ABOUT_BULLETS = [
-  '🧪 I do **QA and test automation for Pega applications** in the Sopra Steria **Pega Practice (RulesMatter)** — coverage design, test data, and automation architecture with **Tricentis Tosca\'s model-based approach**.',
-  '🏦 Most of my background is **financial services**. Two years at **ING** on **Dovetail** (the Fiserv real-time international payments platform), maintaining the shared **Selenium / Cucumber / Java** framework behind the daily regression suites across **four countries**.',
+  '🧪 I do **QA and test automation for Pega applications** in the Sopra Steria **Pega Practice (RulesMatter)** — coverage design, test data, and automation architecture with **Tricentis Tosca\'s model-based approach**, plus **Testim** for AI-driven web testing and **Playwright**.',
+  '🏦 Most of my background is **financial services**. Two years at **ING** on **Dovetail** (Fiserv\'s real-time payments platform), maintaining the shared **Selenium / Cucumber / Java** framework behind the daily regression suites across **multiple countries**.',
   '🧩 Certified **Pega Business Architect (CPBA)** and **Pega System Architect (CPSA)** — because automation on Pega stays fragile until you understand the case model from the inside. The goal is **testability designed into the case model**, not bolted on afterwards.',
   '📐 Applied Mathematics at **Istanbul University**. It still shows in how I approach coverage decisions, edge cases, and breaking scenarios into independent variables.',
-  '🤖 I use **AI-assisted coding tools** daily (Claude Code, Cursor, Copilot) and build governance infrastructure around them — see **[Devran AI Kit](https://github.com/devran-ai/kit)**.',
+  '🤖 Within Sopra Steria I work with **AI Backbone**, the group platform for AI-assisted software delivery, developing **Tosca skills and workflows** for it. It builds on **[Devran AI Kit](https://github.com/devran-ai/kit)**, my open-source governance layer for Claude Code, Cursor and Copilot.',
 ];
 
 /**
  * Certifications to surface, in display order. Dates are read from the
  * matching SERVICES entry so they cannot go stale; only the credential name
- * and issuer are declared here.
+ * and issuer are declared here. A credential with no service card of its own
+ * (Testim) declares `issued` instead of `service`.
  *
  * Deliberately excluded: the ING internal trainings (not public credentials)
  * and the self-issued BeSync Trust-Grade certificate - a self-issued ID next
  * to ISTQB and Pegasystems credentials reads as padding.
  */
 const CERTIFICATIONS = [
+  { name: 'Testim Product Consultant — Advanced proficiency', issuer: 'Tricentis', issued: 'September 2026' },
   { name: 'Tosca Product Consultant — Advanced proficiency', note: 'exam 93.3%', issuer: 'Tricentis', service: 'tricentis-tosca-automation' },
   { name: 'Certified Pega Business Architect (CPBA)', issuer: 'Pegasystems', service: 'pega-platform-architecture' },
   { name: 'Certified Pega System Architect (CPSA)', issuer: 'Pegasystems', service: 'pega-platform-architecture' },
@@ -118,6 +120,7 @@ const BADGES = {
   'CSS': { color: '1572B6', logo: 'css3' },
   // Test Automation & Frameworks
   'Tricentis Tosca': { color: '00A99D' },
+  'Tricentis Testim': { color: '0F9D8E' },
   'Pega Platform': { color: '1F4E79' },
   'Playwright': { color: '2EAD33', logo: 'playwright' },
   'Cypress': { color: '17202C', logo: 'cypress' },
@@ -289,6 +292,7 @@ export function validate({ constants, resume }) {
 
   const serviceSlugs = new Set(constants.SERVICES.map((service) => service.slug));
   CERTIFICATIONS.forEach((cert) => {
+    if (cert.issued) return;
     if (!serviceSlugs.has(cert.service)) {
       errors.push(`Certification "${cert.name}" points at service "${cert.service}", which no longer exists in constants.tsx`);
       return;
@@ -355,7 +359,7 @@ function renderHeader({ constants, role }) {
     linkBadge({ label: 'Portfolio', value: 'emredursun.nl', color: '111827', logo: 'googlechrome', href: site }),
     linkBadge({ label: 'LinkedIn', value: 'emre-dursun-nl', color: '0A66C2', logo: 'linkedin', href: linkedin }),
     linkBadge({ label: 'Pega', value: 'CPBA & CPSA', color: '1F4E79', href: site }),
-    linkBadge({ label: 'Tricentis Tosca', value: 'Advanced', color: '00A99D', href: site }),
+    linkBadge({ label: 'Tricentis', value: 'Tosca & Testim Advanced', color: '00A99D', href: site }),
     linkBadge({ label: 'ISTQB', value: 'CTFL', color: '6E4C9F', href: site }),
   ].join('\n');
 
@@ -421,9 +425,9 @@ function renderCertifications({ constants }) {
   const byslug = new Map(constants.SERVICES.map((service) => [service.slug, service]));
 
   const rows = CERTIFICATIONS.map((cert) => {
-    const service = byslug.get(cert.service);
+    const date = cert.issued ?? byslug.get(cert.service).certificationDate;
     const name = cert.note ? `**${cert.name}** (${cert.note})` : `**${cert.name}**`;
-    return `| ${name} | ${cert.issuer} | ${service.certificationDate} |`;
+    return `| ${name} | ${cert.issuer} | ${date} |`;
   }).join('\n');
 
   const tosca = byslug.get('tricentis-tosca-automation');

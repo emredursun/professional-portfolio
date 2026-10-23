@@ -126,7 +126,7 @@ export const SERVICES: Service[] = [
     title: "Tricentis Tosca Test Automation",
     slug: "tricentis-tosca-automation",
     description:
-      "Model-based test automation across web, API, desktop and mobile. Certified Product Consultant at Advanced proficiency.",
+      "Model-based test automation across web, API, desktop and mobile, plus AI-driven web testing with Testim. Certified Product Consultant in both, at Advanced proficiency.",
     tags: ["Tricentis Tosca", "Model-Based Testing", "Test Data Service", "Mobile Automation", "API Testing"],
     featured: true,
     badge: "Certified",
@@ -139,7 +139,8 @@ export const SERVICES: Service[] = [
       "Stateful test data management across distributed test runs (TDS)",
       "Risk-weighted, requirements-driven TestCase design",
       "Mobile automation on the Tricentis Mobile Agent, including image-based cases",
-      "Product Consultant certification exam passed at 93.3%"
+      "Product Consultant certification exam passed at 93.3%",
+      "Tricentis Testim Product Consultant (Advanced, September 2026): AI-driven web testing with smart locators and visual validation"
     ],
     relatedProjects: ["quilyn-exam-prep"],
     certificateId: "C26494",
@@ -435,6 +436,10 @@ export const TECH_STACK: TechCategory[] = [
       {
         name: "Tricentis Tosca",
         icon: <i aria-hidden="true" className="fas fa-cubes text-3xl text-blue-600"></i>,
+      },
+      {
+        name: "Tricentis Testim",
+        icon: <i aria-hidden="true" className="fas fa-wand-magic-sparkles text-3xl text-teal-500"></i>,
       },
       {
         name: "Pega Platform",
