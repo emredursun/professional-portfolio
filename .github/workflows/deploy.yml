@@ -57,7 +57,7 @@ jobs:
             echo "Live is ${live:-unreachable}, waiting for $expected ($attempt/6)"; sleep 10
           done
           [ "$live" = "$expected" ] || { echo "::error::Live site does not serve the deployed commit"; exit 1; }
-          for path in / /about /resume /projects /contact /nl/about /tr/about /projects/aegisqa /cv/Emre-Dursun-CV-en.pdf; do
+          for path in / /about /resume /projects /contact /nl/about /tr/about /projects/aegisqa /cv/Emre-Dursun-CV-en.pdf /quality.json /llms.txt /resume.json; do
             curl -fsS -o /dev/null "https://emredursun.nl$path"
           done
           # Deep links must get their own prerendered head (link previews).

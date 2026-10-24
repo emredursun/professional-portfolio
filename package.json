@@ -38,7 +38,7 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "postbuild": "node scripts/write-version.js && node scripts/prerender-routes.js"
+    "postbuild": "node scripts/write-version.js && node scripts/prerender-routes.js && node scripts/generate-agent-profile.js"
   },
   "dependencies": {
     "@fontsource/plus-jakarta-sans": "^5.3.0",
@@ -60,6 +60,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
+    "@jsonresume/schema": "^1.7.0",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/container-queries": "^0.1.1",
     "@testing-library/dom": "^10.4.2",

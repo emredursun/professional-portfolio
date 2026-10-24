@@ -61,6 +61,7 @@ export default defineConfig(() => {
             'scripts/generate-profile-readme.js',
             'scripts/write-version.js',
             'scripts/write-quality.js',
+            'scripts/generate-agent-profile.js',
             'src/utils/errorReporting.ts',
             'src/utils/decor.ts',
             'src/bootstrap.ts',

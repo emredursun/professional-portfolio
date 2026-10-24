@@ -84,7 +84,7 @@ const ABOUT_BULLETS = [
  * and the self-issued BeSync Trust-Grade certificate - a self-issued ID next
  * to ISTQB and Pegasystems credentials reads as padding.
  */
-const CERTIFICATIONS = [
+export const CERTIFICATIONS = [
   { name: 'Testim Product Consultant — Advanced proficiency', issuer: 'Tricentis', issued: 'September 2026' },
   { name: 'Tosca Product Consultant — Advanced proficiency', note: 'exam 93.3%', issuer: 'Tricentis', service: 'tricentis-tosca-automation' },
   { name: 'Certified Pega Business Architect (CPBA)', issuer: 'Pegasystems', service: 'pega-platform-architecture', verify: 'https://accounts.pega.com/profile/emre.dursun/share/BPEGACPBA25V1-PEGACPBA25V1' },

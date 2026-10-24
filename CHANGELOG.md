@@ -28,6 +28,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - Contact form: honeypot, length limits, response checking.
 
 ### Added
+- A machine-readable profile: `/resume.json` (JSON Resume, schema-validated) for résumé and ATS tools, and `/llms.txt` (llmstxt.org) for AI assistants, both generated from the site's own data at build time and linked from every page's head.
 - A `/quality` page with the results of the CI run behind the live build: unit tests and coverage, end-to-end tests, accessibility scans, Lighthouse and security checks. A verification card in the About section leads to it. Every number comes from the run itself (`dist/quality.json`); without a complete report the page says so instead of showing numbers.
 - Per-route HTML heads at build time: every page and every service and project detail page, in all three languages, has its own title, description, canonical, hreflang and Open Graph tags in the HTML itself, so shared links preview the right page.
 - Structured data as one linked graph (`@id`), with a `ProfilePage` for the About page and the portrait as an `ImageObject`. The portrait is renamed `emre-dursun-qa-consultant.jpg` (old URLs redirect with a 301) and listed in the image sitemap.
@@ -66,8 +67,8 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
-- Vitest unit tests: 112 tests, 88% line coverage on logic modules.
-- Playwright end-to-end suite: 134 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
+- Vitest unit tests: 119 tests, 87% line coverage on logic modules.
+- Playwright end-to-end suite: 140 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
 - `knip` in CI: unused files, exports and dependencies fail the build.
 - CI quality gates in front of every deploy, Lighthouse budgets, a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
 - Node 22+.
