@@ -420,7 +420,20 @@ const AppContent: React.FC = () => {
             )}
     
             <main className={`print:hidden relative bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-gray-100 font-sans transition-colors duration-500 ${isMobileView ? 'min-h-screen p-4' : 'h-screen overflow-hidden p-6 lg:p-8'}`}>
-          
+
+          {/* Skip link (WCAG 2.4.1): lets keyboard users jump past the sidebar's
+              contact details, socials and navigation straight to the page. */}
+          <a
+            href="#page-content"
+            onClick={(e) => {
+              e.preventDefault();
+              contentRef.current?.focus();
+            }}
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-5 focus:py-3 focus:rounded-xl focus:bg-yellow-400 focus:text-black focus:font-bold focus:shadow-lg"
+          >
+            {i18n.t('common:labels.skipToContent')}
+          </a>
+
           <div className="bg-noise"></div>
           {/* Decorative layers wait for the first idle moment so they never
               compete with the page content for the main thread. */}
@@ -462,6 +475,7 @@ const AppContent: React.FC = () => {
             <div className={`relative flex-1 ${!isMobileView ? 'rounded-[2.5rem] bg-white/40 dark:bg-[#121212]/60 border border-white/60 dark:border-white/5 backdrop-blur-3xl shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)]' : ''}`}>
               <div 
                 ref={contentRef}
+                id="page-content"
                 // Keyboard users must be able to focus the scroll container
                 // to scroll it with the arrow keys (WCAG 2.1.1).
                 tabIndex={0}

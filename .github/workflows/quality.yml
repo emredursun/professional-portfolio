@@ -30,6 +30,9 @@ jobs:
       - name: Typecheck (strict)
         run: npm run typecheck
 
+      - name: No unused files, exports or dependencies
+        run: npm run knip
+
       - name: Unit tests with coverage gate
         run: npm run test:coverage
 

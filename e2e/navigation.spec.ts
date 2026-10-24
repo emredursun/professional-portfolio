@@ -64,6 +64,23 @@ test.describe('languages', () => {
   }
 });
 
+test.describe('keyboard', () => {
+  test('the first Tab reaches a skip link that moves focus to the page content', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'Keyboard navigation is a desktop concern.');
+    await page.goto('/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+
+    await page.keyboard.press('Tab');
+    const skip = page.getByRole('link', { name: copy('en', 'common').labels.skipToContent });
+    await expect(skip).toBeFocused();
+    await expect(skip).toBeVisible();
+
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#page-content')).toBeFocused();
+    await expect(page).toHaveURL(/\/about$/);
+  });
+});
+
 test.describe('in-app navigation', () => {
   test('sidebar links switch pages without a reload', async ({ page, isMobile }) => {
     test.skip(isMobile, 'The sidebar navigation is desktop-only; mobile uses the bottom bar.');

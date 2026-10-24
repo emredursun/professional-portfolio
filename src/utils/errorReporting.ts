@@ -10,7 +10,7 @@
  * so a stack or error message can never carry form input or tokens out.
  */
 
-export type ErrorSource = 'render' | 'window' | 'promise';
+type ErrorSource = 'render' | 'window' | 'promise';
 
 const EVENT_NAME = 'JS Error';
 const MAX_MESSAGE_LENGTH = 120;

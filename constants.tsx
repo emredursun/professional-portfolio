@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Service,
-  TimelineItem,
   Skill,
   Project,
   TechCategory,
@@ -21,7 +20,7 @@ export const PERSONAL_INFO = {
 };
 
 // Status Badge Configuration
-export type StatusBadgeType = 'openToWork' | 'available' | 'freelance' | 'hiring' | 'busy' | 'none';
+type StatusBadgeType = 'openToWork' | 'available' | 'freelance' | 'hiring' | 'busy' | 'none';
 
 export const STATUS_BADGE = {
   enabled: true,           // Set to false to hide the badge completely
@@ -307,43 +306,6 @@ export const SERVICES: Service[] = [
     certificationDate: "January 2026",
     certificateImage: "/images/trust-grade-certificate.webp"
   }
-];
-
-export const ABOUT_INTRO =
-  "Driven by precision, powered by curiosity. I transform manual testing corridors into automated, repeatable systems so teams have clear feedback and confidence to ship.";
-
-export const ABOUT_STORY =
-  "I’ve worked across banking and e-commerce domains building API & UI automation, resilient test pipelines, and observability to help teams scale testing without slowing delivery. I enjoy breaking complex flows into simple, testable parts and collaborating cross-functionally to reduce risk.";
-
-export const EDUCATION: TimelineItem[] = [
-  {
-    date: "June 2022 - June 2023",
-    title: "Bachelor of Engineering - Full-Stack Automation Engineering",
-    company: "TechPro Education - Online/Remote",
-    description:
-      "Key Skills Developed: Test Automation (Selenium WebDriver, Cypress, Postman API, REST APIs, RESTful WebServices), CI/CD (Jenkins), Frameworks (Hybrid Framework, Cucumber/BDD), Languages/Tools (Java, Gherkin, SQL, Maven, TestNG, JUnit), Methodologies (Agile, Scrum, SDLC, QA Engineering, Test Planning), and more.",
-  },
-  {
-    date: "September 2019 - April 2020",
-    title: "Software Developer",
-    company: "ROC van Twente - Enschede, Netherlands",
-    description:
-      "Key Skills Developed: Core Programming (C#, JavaScript), Database Management (SQL, T-SQL, MongoDB), Version Control (Git, GitHub), Web Fundamentals (HTML, CSS), and Object-Oriented Programming (OOP).",
-  },
-  {
-    date: "October 2017 - March 2018",
-    title: "Full-Stack Web Development",
-    company: "HackYourFuture - Amsterdam, Netherlands",
-    description:
-      "Key Skills Developed: Web Technologies (HTML, CSS, JavaScript), API Testing, Version Control (Git, GitHub), C#, SQL, and Object-Oriented Programming (OOP).",
-  },
-  {
-    date: "September 2007 - July 2013",
-    title: "Bachelor of Applied Science - Mathematics",
-    company: "Istanbul University - Istanbul, Turkey",
-    description:
-      "Relevant Coursework and Skills: Differential Equations, Complex Analysis, Probability & Statistics, Advanced Calculus, General Physics, and skills in Abstract Reasoning, Systematic Problem Solving, and Data Analysis.",
-  },
 ];
 
 // Ordered by current career priority (Pega/Tosca focus first), not by level.

@@ -10,7 +10,7 @@ export const LANGUAGES = {
   tr: { nativeName: 'Türkçe', flag: '🇹🇷' }
 };
 
-export const DEFAULT_LANGUAGE = 'en';
+const DEFAULT_LANGUAGE = 'en';
 
 /**
  * The URL decides the language (/nl, /tr, otherwise English), so initialise
@@ -75,29 +75,3 @@ export const getLanguageFromUrl = (): string => {
   const match = path.match(/^\/(nl|tr)/);
   return match ? match[1] : DEFAULT_LANGUAGE;
 };
-
-// Helper function to update URL when language changes
-export const updateLanguageUrl = (language: string) => {
-  const currentPath = window.location.pathname;
-  const currentSearch = window.location.search;
-  const currentHash = window.location.hash;
-  
-  // Remove any existing language prefix
-  let newPath = currentPath.replace(/^\/(nl|tr)/, '');
-  
-  // Add new language prefix if not English
-  if (language !== DEFAULT_LANGUAGE) {
-    newPath = `/${language}${newPath || ''}`;
-  }
-  
-  // Ensure path starts with /
-  if (!newPath.startsWith('/')) {
-    newPath = '/' + newPath;
-  }
-  
-  // Update URL without reloading
-  const newUrl = `${newPath}${currentSearch}${currentHash}`;
-  window.history.pushState({}, '', newUrl);
-};
-
-export default i18n;
