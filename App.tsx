@@ -133,39 +133,29 @@ const ScrollHandler: React.FC<{
         setIsScrollButtonVisible(shouldShowButton);
       };
   
-      const scrollableElement = isMobileView ? window : contentRef.current;
-      if (scrollableElement) {
-        scrollableElement.addEventListener('scroll', handleScroll, { passive: true });
-      }
-      
-      const modalContent = document.querySelector('[data-modal-content]') as HTMLElement;
-      if (modalContent) {
-        modalContent.addEventListener('scroll', handleScroll, { passive: true });
-      }
-      
-      const observer = new MutationObserver(() => {
-        const modal = document.querySelector('[data-modal-content]') as HTMLElement;
-        if (modal) {
-          modal.addEventListener('scroll', handleScroll, { passive: true });
+      // Scroll events do not bubble, but they do pass through the document in
+      // the capture phase - so one listener hears the window, the content
+      // panel and any modal that opens later. This replaced a MutationObserver
+      // on the whole body that re-ran handleScroll (a forced layout) on every
+      // DOM change, which during the entrance animations pushed /about's Total
+      // Blocking Time over its budget. Reads are coalesced to one per frame.
+      let frame = 0;
+      const scheduleScroll = () => {
+        if (frame) return;
+        frame = requestAnimationFrame(() => {
+          frame = 0;
           handleScroll();
-        } else {
-          handleScroll();
-        }
-      });
-      
-      observer.observe(document.body, { childList: true, subtree: true });
-      
-      // Initial check
-      handleScroll();
+        });
+      };
+
+      document.addEventListener('scroll', scheduleScroll, { capture: true, passive: true });
+      window.addEventListener('resize', scheduleScroll, { passive: true });
+      scheduleScroll();
 
       return () => {
-        if (scrollableElement) {
-          scrollableElement.removeEventListener('scroll', handleScroll);
-        }
-        if (modalContent) {
-          modalContent.removeEventListener('scroll', handleScroll);
-        }
-        observer.disconnect();
+        document.removeEventListener('scroll', scheduleScroll, { capture: true });
+        window.removeEventListener('resize', scheduleScroll);
+        cancelAnimationFrame(frame);
       };
     }, [isMobileView, location.pathname, contentRef, setIsScrollButtonVisible, setReadingProgress]);
 
