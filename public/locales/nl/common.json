@@ -10,7 +10,8 @@
     "downloadCV": "CV Downloaden",
     "sendMessage": "Bericht Versturen",
     "sending": "Verzenden...",
-    "close": "Sluiten"
+    "close": "Sluiten",
+    "learnMore": "Meer informatie"
   },
   "statusBadge": {
     "openToWork": "#OPENTOWORK",
@@ -31,7 +32,19 @@
     "location": "Locatie",
     "locationValue": "Nieuwegein (Sopra Steria) · Hybride",
     "pageContent": "Pagina-inhoud",
-    "skipToContent": "Naar de inhoud"
+    "skipToContent": "Naar de inhoud",
+    "changeLanguage": "Taal wijzigen",
+    "toggleTheme": "Thema wisselen",
+    "scrollToTop": "Naar boven",
+    "closeLightbox": "Vergroting sluiten",
+    "previousImage": "Vorige afbeelding",
+    "nextImage": "Volgende afbeelding",
+    "previousProject": "Vorig project",
+    "nextProject": "Volgend project",
+    "shareProject": "Project delen",
+    "closeProject": "Projectdetails sluiten",
+    "followOn": "Volg mij op {{name}}",
+    "searchShortcut": "Zoeken (⌘K)"
   },
   "meta": {
     "description": "QA Consultant gespecialiseerd in Pega & Tricentis Tosca testautomatisering, ISTQB® Gecertificeerd. Gevestigd in Nederland."
@@ -75,5 +88,74 @@
       "failed": "mislukt"
     },
     "entryAction": "Bekijk rapport"
+  },
+  "palette": {
+    "dialog": "Opdrachtenpalet",
+    "placeholder": "Typ een opdracht of zoek...",
+    "search": "Opdrachten zoeken",
+    "clear": "Zoekopdracht wissen",
+    "list": "Opdrachten",
+    "recent": "Recent",
+    "empty": "Geen opdrachten gevonden",
+    "emptyHint": "Probeer een andere zoekterm",
+    "navigate": "Navigeren",
+    "select": "Kiezen",
+    "close": "Sluiten",
+    "count_one": "{{count}} opdracht",
+    "count_other": "{{count}} opdrachten",
+    "categories": {
+      "Navigation": "Navigatie",
+      "Actions": "Acties",
+      "Theme": "Thema",
+      "Projects": "Projecten"
+    },
+    "commands": {
+      "navAbout": {
+        "label": "Ga naar Over",
+        "description": "Profiel en diensten bekijken"
+      },
+      "navResume": {
+        "label": "Ga naar CV",
+        "description": "Ervaring en opleiding bekijken"
+      },
+      "navProjects": {
+        "label": "Ga naar Projecten",
+        "description": "Portfolioprojecten bekijken"
+      },
+      "navContact": {
+        "label": "Ga naar Contact",
+        "description": "Neem contact op"
+      },
+      "downloadResume": {
+        "label": "Cv downloaden",
+        "description": "Pdf-versie downloaden"
+      },
+      "toggleTheme": {
+        "label": "Thema wisselen",
+        "description": "Wisselen tussen licht en donker"
+      },
+      "lightTheme": {
+        "label": "Licht thema",
+        "description": "Lichte modus inschakelen"
+      },
+      "darkTheme": {
+        "label": "Donker thema",
+        "description": "Donkere modus inschakelen"
+      },
+      "scrollTop": {
+        "label": "Naar boven",
+        "description": "Terug naar de bovenkant van de pagina"
+      },
+      "copyEmail": {
+        "label": "E-mailadres kopiëren"
+      },
+      "copyLinkedIn": {
+        "label": "LinkedIn-URL kopiëren",
+        "description": "Link naar het LinkedIn-profiel"
+      },
+      "viewProject": "{{title}} bekijken",
+      "filterLabel": "Filter: {{category}}",
+      "filterDescription": "Alleen {{category}}-projecten tonen"
+    }
   }
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ThemeSwitcherProps {
   theme: string;
@@ -6,6 +7,7 @@ interface ThemeSwitcherProps {
 }
 
 const ThemeSwitcher: React.FC<ThemeSwitcherProps> = React.memo(({ theme, toggleTheme }) => {
+  const { t } = useTranslation('common');
   const [isSpinning, setIsSpinning] = useState(false);
 
   const handleToggle = () => {
@@ -30,7 +32,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = React.memo(({ theme, toggleT
           : 'bg-[#1e1e1e] text-yellow-400 border-gray-700 hover:bg-gray-800'}
         ${isSpinning ? 'rotate-[360deg] scale-90 shadow-inner' : 'hover:scale-110 hover:rotate-12 hover:shadow-xl'}
       `}
-      aria-label="Toggle theme"
+      aria-label={t('labels.toggleTheme')}
     >
       <div className={`transition-all duration-500 transform ${isSpinning ? 'scale-50 opacity-50 blur-[1px]' : 'scale-100 opacity-100 blur-0'}`}>
         {theme === 'light' ? <i aria-hidden="true" className="fas fa-moon"></i> : <i aria-hidden="true" className="fas fa-sun"></i>}

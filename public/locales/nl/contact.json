@@ -17,14 +17,16 @@
     },
     "message": {
       "label": "Uw Bericht",
-      "placeholder": "Schrijf hier uw bericht (minimaal 20 tekens)..."
+      "placeholder": "Schrijf hier uw bericht (minimaal 20 tekens)...",
+      "tooShort": "Uw bericht moet minimaal 20 tekens bevatten"
     }
   },
   "messages": {
     "success": {
       "title": "Verzonden!",
       "description": "Uw bericht is succesvol verzonden.",
-      "followUp": "Ik neem zo spoedig mogelijk contact met u op."
+      "followUp": "Ik neem zo spoedig mogelijk contact met u op.",
+      "notification": "Bericht verzonden! ✉️"
     },
     "error": {
       "title": "Verzending Mislukt",
@@ -36,6 +38,7 @@
   },
   "map": {
     "load": "Kaart tonen",
-    "notice": "Laadt Google Maps, dat cookies kan plaatsen."
+    "notice": "Laadt Google Maps, dat cookies kan plaatsen.",
+    "title": "Locatiekaart"
   }
 }

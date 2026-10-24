@@ -10,7 +10,7 @@ interface LanguageSwitcherProps {
 }
 
 const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ isMobileView = false, theme = 'light' }) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -71,7 +71,7 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ isMobileView = fals
           hover:scale-110 hover:rotate-12 hover:shadow-xl
         `}
         whileTap={{ scale: 0.95 }}
-        aria-label="Change language"
+        aria-label={t('labels.changeLanguage')}
         aria-expanded={isOpen}
       >
         <span className="text-xl">{LANGUAGES[currentLanguage as keyof typeof LANGUAGES]?.flag || '🌐'}</span>

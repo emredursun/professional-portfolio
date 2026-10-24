@@ -104,6 +104,7 @@ type ExtendedService = Service & { originalBadge?: string };
 const ServiceItem: React.FC<{ service: ExtendedService; to: string; onClick: () => void }> = ({ service, to, onClick }) => {
   // Use originalBadge for logic, badge for display
   const isCertified = service.originalBadge === "Certified" || service.badge === "Certified";
+  const { t } = useTranslation('common');
 
   return (
     <div className="flex flex-col h-full cursor-pointer">
@@ -190,7 +191,7 @@ const ServiceItem: React.FC<{ service: ExtendedService; to: string; onClick: () 
       
       {/* Learn More Button - Enhanced hover animation */}
       <div className="mt-auto w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-neon-border bg-white dark:bg-black text-sm font-bold text-gray-700 dark:text-gray-300 group-hover:border-yellow-400 dark:group-hover:border-neon-cyan group-hover:bg-gradient-to-r group-hover:from-accent-yellow group-hover:to-orange-500 dark:group-hover:from-neon-cyan dark:group-hover:to-blue-500 group-hover:text-black dark:group-hover:text-black group-hover:shadow-lg dark:group-hover:shadow-neon-cyan/20 transition-all duration-300">
-        <span>Learn More</span>
+        <span>{t('buttons.learnMore')}</span>
         <i aria-hidden="true" className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform duration-300"></i>
       </div>
     </div>

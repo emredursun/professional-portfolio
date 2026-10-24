@@ -130,7 +130,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent
                                     onClick={onOpenCommandPalette}
                                     className="relative flex flex-col items-center justify-center w-full min-w-[54px] py-[5px] rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                                     aria-label={t('nav.search')}
-                                    title="Search (⌘K)"
+                                    title={t('labels.searchShortcut')}
                                 >
                                     <span className="text-[16px] mb-[2px] z-10 transition-all duration-300 ease-out group-hover:scale-105 group-active:scale-95">
                                         <i aria-hidden="true" className="fas fa-search" />

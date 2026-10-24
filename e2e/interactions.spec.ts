@@ -22,6 +22,22 @@ test.describe('command palette', () => {
   });
 });
 
+test.describe('localised controls', () => {
+  test('buttons, the palette and service cards speak the page language', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    const nl = copy('nl', 'common');
+    await page.goto('/nl/about');
+    await expect(page.getByRole('button', { name: nl.labels.toggleTheme }).first()).toBeVisible();
+    await expect(page.getByRole('button', { name: nl.labels.changeLanguage }).first()).toBeVisible();
+    await expect(page.getByText(nl.buttons.learnMore).first()).toBeAttached();
+
+    await page.keyboard.press('Control+k');
+    const search = page.getByRole('combobox', { name: nl.palette.search });
+    await expect(search).toHaveAttribute('placeholder', nl.palette.placeholder);
+    await expect(page.getByRole('option', { name: new RegExp(nl.palette.commands.navContact.label) })).toBeVisible();
+  });
+});
+
 test.describe('projects', () => {
   test('a project opens in a deep-linkable modal and closes with Escape', async ({ page }) => {
     await page.goto('/projects');

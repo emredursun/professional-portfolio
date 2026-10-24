@@ -17,14 +17,16 @@
     },
     "message": {
       "label": "Mesajınız",
-      "placeholder": "Mesajınızı buraya yazın (en az 20 karakter)..."
+      "placeholder": "Mesajınızı buraya yazın (en az 20 karakter)...",
+      "tooShort": "Lütfen mesajınıza en az 20 karakter yazın"
     }
   },
   "messages": {
     "success": {
       "title": "Gönderim Başarılı!",
       "description": "Mesajınız başarıyla iletildi.",
-      "followUp": "En kısa sürede size geri dönüş yapacağım."
+      "followUp": "En kısa sürede size geri dönüş yapacağım.",
+      "notification": "Mesaj gönderildi! ✉️"
     },
     "error": {
       "title": "Gönderim Başarısız",
@@ -36,6 +38,7 @@
   },
   "map": {
     "load": "Haritayı göster",
-    "notice": "Google Haritalar yüklenir; Google çerez kullanabilir."
+    "notice": "Google Haritalar yüklenir; Google çerez kullanabilir.",
+    "title": "Konum haritası"
   }
 }

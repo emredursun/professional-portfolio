@@ -156,7 +156,7 @@ const Contact: React.FC = () => {
                 // Hide loading and show notification
                 if (typeof window !== 'undefined' && (window as any).faviconController) {
                     (window as any).faviconController.hideLoading();
-                    (window as any).faviconController.showNotification('Message sent! ✉️', 8000);
+                    (window as any).faviconController.showNotification(t('messages.success.notification'), 8000);
                 }
 
                 // Track success
@@ -265,7 +265,7 @@ const Contact: React.FC = () => {
                                     minLength={20}
                                     disabled={submissionStatus === 'submitting'}
                                     onFocus={handleFormFocus}
-                                    title="Please enter at least 20 characters for your message"
+                                    title={t('form.message.tooShort')}
                                 ></textarea>
                             </div>
                             {submissionStatus === 'error' && (
@@ -347,7 +347,7 @@ const Contact: React.FC = () => {
                                 allowFullScreen={true}
                                 loading="lazy"
                                 referrerPolicy="strict-origin-when-cross-origin"
-                                title="Location Map"
+                                title={t('map.title')}
                                 className="dark:grayscale-[100%] dark:invert-[100%] transition-transform duration-700 group-hover:scale-105"
                             ></iframe>
                         ) : (
@@ -371,7 +371,7 @@ const Contact: React.FC = () => {
                                     href={link.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    aria-label={`Follow me on ${link.name}`}
+                                    aria-label={t('labels.followOn', { ns: 'common', name: link.name })}
                                     className="w-14 h-14 rounded-2xl bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border flex items-center justify-center text-2xl text-gray-500 dark:text-gray-400 hover:text-white dark:hover:text-black hover:bg-yellow-400 dark:hover:bg-neon-cyan transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_-5px_rgba(234,179,8,0.5)] dark:hover:shadow-[0_10px_20px_-5px_rgba(6,182,212,0.5)] hover:rotate-12 hover:scale-110"
                                 >
                                     {link.icon}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Project } from '../types.ts';
 
 interface ProjectModalHeaderProps {
@@ -14,6 +15,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
   onShare,
   onNavigate
 }) => {
+  const { t } = useTranslation('common');
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -109,7 +111,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                          rounded-full text-white hover:bg-white/20 
                          transition-all duration-300 flex items-center justify-center
                          hover:scale-110 group"
-              aria-label="Previous Project"
+              aria-label={t('labels.previousProject')}
             >
               <i aria-hidden="true" className="fas fa-chevron-left group-hover:scale-125 transition-transform"></i>
             </button>
@@ -123,7 +125,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                          rounded-full text-white hover:bg-white/20 
                          transition-all duration-300 flex items-center justify-center
                          hover:scale-110 group"
-              aria-label="Next Project"
+              aria-label={t('labels.nextProject')}
             >
               <i aria-hidden="true" className="fas fa-chevron-right group-hover:scale-125 transition-transform"></i>
             </button>
@@ -133,7 +135,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
           <button
             onClick={handleShareClick}
             className="w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center"
-            aria-label="Share project"
+            aria-label={t('labels.shareProject')}
           >
             <i aria-hidden="true" className="fas fa-share-alt"></i>
           </button>
@@ -142,7 +144,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
           <button
             onClick={onClose}
             className="w-10 h-10 md:w-12 md:h-12 bg-yellow-400 rounded-full text-black hover:bg-yellow-500 transition-all duration-300 flex items-center justify-center text-xl md:text-2xl hover:rotate-90"
-            aria-label="Close project details"
+            aria-label={t('labels.closeProject')}
           >
             &times;
           </button>
@@ -171,7 +173,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                            hover:bg-yellow-400 hover:text-black dark:hover:bg-yellow-400
                            transition-all duration-300 flex items-center justify-center
                            hover:scale-110 group"
-                aria-label="Previous Project"
+                aria-label={t('labels.previousProject')}
               >
                 <i aria-hidden="true" className="fas fa-chevron-left text-sm md:text-base 
                               group-hover:scale-125 transition-transform"></i>
@@ -187,7 +189,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                            hover:bg-yellow-400 hover:text-black dark:hover:bg-yellow-400
                            transition-all duration-300 flex items-center justify-center
                            hover:scale-110 group"
-                aria-label="Next Project"
+                aria-label={t('labels.nextProject')}
               >
                 <i aria-hidden="true" className="fas fa-chevron-right text-sm md:text-base 
                               group-hover:scale-125 transition-transform"></i>
@@ -202,7 +204,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                          hover:bg-yellow-400 hover:text-black dark:hover:bg-yellow-400
                          transition-all duration-300 flex items-center justify-center
                          hover:scale-110"
-              aria-label="Share project"
+              aria-label={t('labels.shareProject')}
             >
               <i aria-hidden="true" className="fas fa-share-alt text-sm md:text-base"></i>
             </button>
@@ -215,7 +217,7 @@ const ProjectModalHeader: React.FC<ProjectModalHeaderProps> = ({
                          hover:bg-yellow-400 hover:text-black dark:hover:bg-yellow-400
                          transition-all duration-300 flex items-center justify-center
                          hover:scale-110 group"
-              aria-label="Close"
+              aria-label={t('buttons.close')}
             >
               <i aria-hidden="true" className="fas fa-times text-sm md:text-base group-hover:rotate-90 transition-transform duration-300"></i>
             </button>

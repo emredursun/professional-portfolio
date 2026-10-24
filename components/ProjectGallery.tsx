@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ProjectGalleryProps {
   images: string[];
@@ -6,6 +7,7 @@ interface ProjectGalleryProps {
 }
 
 const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle }) => {
+  const { t } = useTranslation('common');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -79,7 +81,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
           <button
             onClick={closeLightbox}
             className="absolute top-4 right-4 w-12 h-12 bg-yellow-400 rounded-full text-black hover:bg-yellow-500 transition-all duration-300 flex items-center justify-center text-2xl z-10 hover:rotate-90"
-            aria-label="Close lightbox"
+            aria-label={t('labels.closeLightbox')}
           >
             &times;
           </button>
@@ -92,7 +94,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
                 goToPrevious();
               }}
               className="absolute left-4 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center text-xl z-10"
-              aria-label="Previous image"
+              aria-label={t('labels.previousImage')}
             >
               <i aria-hidden="true" className="fas fa-chevron-left"></i>
             </button>
@@ -122,7 +124,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
                 goToNext();
               }}
               className="absolute right-4 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center text-xl z-10"
-              aria-label="Next image"
+              aria-label={t('labels.nextImage')}
             >
               <i aria-hidden="true" className="fas fa-chevron-right"></i>
             </button>

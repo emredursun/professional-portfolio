@@ -17,14 +17,16 @@
     },
     "message": {
       "label": "Your Message",
-      "placeholder": "Your Message (minimum 20 characters)"
+      "placeholder": "Your Message (minimum 20 characters)",
+      "tooShort": "Please enter at least 20 characters for your message"
     }
   },
   "messages": {
     "success": {
       "title": "Thank You!",
       "description": "Your message has been sent successfully.",
-      "followUp": "I will get back to you soon."
+      "followUp": "I will get back to you soon.",
+      "notification": "Message sent! ✉️"
     },
     "error": {
       "title": "Submission Failed",
@@ -36,6 +38,7 @@
   },
   "map": {
     "load": "Show map",
-    "notice": "Loads Google Maps, which may set cookies."
+    "notice": "Loads Google Maps, which may set cookies.",
+    "title": "Location Map"
   }
 }

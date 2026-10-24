@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { CommandPaletteProps, Command } from '../types';
 import { useCommandPalette } from './hooks/useCommandPalette.tsx';
 
@@ -12,6 +13,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
   toggleTheme,
   isMobileView,
 }) => {
+  const { t } = useTranslation('common');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -147,7 +149,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
           onClick={(e) => e.stopPropagation()}
           role="dialog"
           aria-modal="true"
-          aria-label="Command palette"
+          aria-label={t('palette.dialog')}
         >
           {/* Command Palette Container */}
           <div className="relative rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-2xl overflow-hidden">
@@ -162,8 +164,8 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Type a command or search..."
-                aria-label="Search commands"
+                placeholder={t('palette.placeholder')}
+                aria-label={t('palette.search')}
                 role="combobox"
                 aria-expanded="true"
                 aria-controls="command-palette-list"
@@ -176,7 +178,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
               {searchQuery && (
                 <button
                   type="button"
-                  aria-label="Clear search"
+                  aria-label={t('palette.clear')}
                   onClick={() => setSearchQuery('')}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                 >
@@ -197,13 +199,13 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
               style={{ scrollbarWidth: 'thin' }}
             >
               {filteredCommands.length > 0 || (!searchQuery && recentCommands.length > 0) ? (
-              <div id="command-palette-list" role="listbox" aria-label="Commands">
+              <div id="command-palette-list" role="listbox" aria-label={t('palette.list')}>
               {/* Recent Commands Section */}
               {!searchQuery && recentCommands.length > 0 && (
-                <div role="group" aria-label="Recent" className="border-b border-gray-200 dark:border-gray-700">
+                <div role="group" aria-label={t('palette.recent')} className="border-b border-gray-200 dark:border-gray-700">
                   <div aria-hidden="true" className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-2">
                     <i aria-hidden="true" className="far fa-clock" />
-                    Recent
+                    {t('palette.recent')}
                   </div>
                   {recentCommands.map((cmd, index) => (
                     <CommandItem
@@ -225,9 +227,9 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
               {/* Grouped Commands */}
               {filteredCommands.length > 0 ? (
                 Object.entries(groupedCommands).map(([category, categoryCommands], catIndex) => (
-                  <div key={category} role="group" aria-label={category} className={catIndex > 0 || (!searchQuery && recentCommands.length > 0) ? 'border-t border-gray-200 dark:border-gray-700' : ''}>
+                  <div key={category} role="group" aria-label={t(`palette.categories.${category}`)} className={catIndex > 0 || (!searchQuery && recentCommands.length > 0) ? 'border-t border-gray-200 dark:border-gray-700' : ''}>
                     <div aria-hidden="true" className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                      {category}
+                      {t(`palette.categories.${category}`)}
                     </div>
                     {categoryCommands.map((cmd) => {
                       const globalIndex = filteredCommands.indexOf(cmd);
@@ -253,8 +255,8 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
               ) : (
                 <div role="status" className="p-8 text-center text-gray-500 dark:text-gray-400">
                   <i aria-hidden="true" className="fas fa-search text-3xl mb-3 opacity-50" />
-                  <p className="text-sm">No commands found</p>
-                  <p className="text-xs mt-1">Try a different search term</p>
+                  <p className="text-sm">{t('palette.empty')}</p>
+                  <p className="text-xs mt-1">{t('palette.emptyHint')}</p>
                 </div>
               )}
             </div>
@@ -264,19 +266,19 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600">↑↓</kbd>
-                  Navigate
+                  {t('palette.navigate')}
                 </span>
                 <span className="flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600">↵</kbd>
-                  Select
+                  {t('palette.select')}
                 </span>
                 <span className="flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600">esc</kbd>
-                  Close
+                  {t('palette.close')}
                 </span>
               </div>
               <span className="hidden sm:block">
-                {filteredCommands.length} {filteredCommands.length === 1 ? 'command' : 'commands'}
+                {t('palette.count', { count: filteredCommands.length })}
               </span>
             </div>
           </div>

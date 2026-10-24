@@ -10,7 +10,8 @@
     "downloadCV": "CV İndir",
     "sendMessage": "Mesaj Gönder",
     "sending": "Gönderiliyor...",
-    "close": "Kapat"
+    "close": "Kapat",
+    "learnMore": "Daha fazla bilgi"
   },
   "statusBadge": {
     "openToWork": "#OPENTOWORK",
@@ -31,7 +32,19 @@
     "location": "Konum",
     "locationValue": "Nieuwegein (Sopra Steria) · Hibrit",
     "pageContent": "Sayfa içeriği",
-    "skipToContent": "İçeriğe geç"
+    "skipToContent": "İçeriğe geç",
+    "changeLanguage": "Dili değiştir",
+    "toggleTheme": "Temayı değiştir",
+    "scrollToTop": "Yukarı çık",
+    "closeLightbox": "Büyütmeyi kapat",
+    "previousImage": "Önceki görsel",
+    "nextImage": "Sonraki görsel",
+    "previousProject": "Önceki proje",
+    "nextProject": "Sonraki proje",
+    "shareProject": "Projeyi paylaş",
+    "closeProject": "Proje ayrıntılarını kapat",
+    "followOn": "{{name}} hesabımı takip edin",
+    "searchShortcut": "Ara (⌘K)"
   },
   "meta": {
     "description": "Pega & Tricentis Tosca test otomasyonu konusunda uzman QA Consultant, ISTQB® Sertifikalı. Hollanda'da yerleşik."
@@ -75,5 +88,74 @@
       "failed": "başarısız"
     },
     "entryAction": "Raporu gör"
+  },
+  "palette": {
+    "dialog": "Komut paleti",
+    "placeholder": "Bir komut yazın ya da arayın...",
+    "search": "Komutlarda ara",
+    "clear": "Aramayı temizle",
+    "list": "Komutlar",
+    "recent": "Son kullanılanlar",
+    "empty": "Komut bulunamadı",
+    "emptyHint": "Başka bir arama terimi deneyin",
+    "navigate": "Gezin",
+    "select": "Seç",
+    "close": "Kapat",
+    "count_one": "{{count}} komut",
+    "count_other": "{{count}} komut",
+    "categories": {
+      "Navigation": "Gezinme",
+      "Actions": "İşlemler",
+      "Theme": "Tema",
+      "Projects": "Projeler"
+    },
+    "commands": {
+      "navAbout": {
+        "label": "Hakkında sayfasına git",
+        "description": "Profili ve hizmetleri görüntüle"
+      },
+      "navResume": {
+        "label": "Özgeçmişe git",
+        "description": "Deneyim ve eğitimi görüntüle"
+      },
+      "navProjects": {
+        "label": "Projelere git",
+        "description": "Portföy projelerine göz at"
+      },
+      "navContact": {
+        "label": "İletişim sayfasına git",
+        "description": "İletişime geç"
+      },
+      "downloadResume": {
+        "label": "Özgeçmişi indir",
+        "description": "PDF sürümünü indir"
+      },
+      "toggleTheme": {
+        "label": "Temayı değiştir",
+        "description": "Açık ve koyu tema arasında geçiş yap"
+      },
+      "lightTheme": {
+        "label": "Açık temaya geç",
+        "description": "Açık modu etkinleştir"
+      },
+      "darkTheme": {
+        "label": "Koyu temaya geç",
+        "description": "Koyu modu etkinleştir"
+      },
+      "scrollTop": {
+        "label": "Yukarı çık",
+        "description": "Sayfanın başına dön"
+      },
+      "copyEmail": {
+        "label": "E-posta adresini kopyala"
+      },
+      "copyLinkedIn": {
+        "label": "LinkedIn URL'sini kopyala",
+        "description": "LinkedIn profil bağlantısı"
+      },
+      "viewProject": "{{title}} projesini görüntüle",
+      "filterLabel": "Filtre: {{category}}",
+      "filterDescription": "Yalnızca {{category}} projelerini göster"
+    }
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ScrollToTopButtonProps {
   onClick: () => void;
@@ -7,6 +8,7 @@ interface ScrollToTopButtonProps {
 }
 
 const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ onClick, progress, isMobileView }) => {
+  const { t } = useTranslation('common');
   // Calculate circle properties for the progress ring
   const radius = 24;
   const circumference = 2 * Math.PI * radius;
@@ -27,7 +29,7 @@ const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ onClick, progress
           border border-white/20 dark:border-white/10
           shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]
           hover:scale-110 hover:-translate-y-1 transition-all duration-300 ease-out"
-        aria-label="Scroll to top"
+        aria-label={t('labels.scrollToTop')}
       >
         {/* Progress Ring SVG */}
         <svg 
