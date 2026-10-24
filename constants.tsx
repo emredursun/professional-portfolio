@@ -1181,29 +1181,28 @@ export const PROJECTS: Project[] = [
     category: "Test Automation",
     image:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+    // Describes what the repository holds today; the roadmap items are
+    // labelled as planned, because the project card links to the code.
     description:
-      "A production-grade, AI-assisted full stack test automation platform combining UI, API, database, and performance validation into a single, scalable quality system.",
+      "A full-stack test automation platform in progress: Playwright UI tests and REST Assured API tests against a banking demo app in Docker, in one monorepo. Database validation, AI-assisted test generation and CI/CD are next on the roadmap.",
     detailedDescription:
-      "AegisQA is a portfolio-grade test automation platform showcasing senior/architect-level automation expertise. It demonstrates Full Stack Testing (UI + API + Database integration), Clean Architecture (Page Object Model, modular design), AI-Powered test generation with Google Gemini, and enterprise-level best practices. The platform combines Playwright (TypeScript) for UI automation, REST Assured (Java) for API automation, PostgreSQL for database validation, k6 for performance testing, and Allure for reporting. All tests are integrated into GitHub Actions pipelines with automated execution, reporting, and quality gates.",
+      "AegisQA is a work-in-progress test automation platform built as a monorepo. The UI module uses Playwright with TypeScript, page objects and fixtures; the API module uses REST Assured with Java and TestNG, typed API clients and central configuration. Both run against a local ParaBank banking application in Docker. The roadmap adds database validation on PostgreSQL, AI-assisted test generation with Google Gemini, and CI/CD with reporting.",
     technologies: [
       "Playwright",
       "TypeScript",
       "REST Assured",
       "Java",
-      "PostgreSQL",
-      "k6",
-      "Google Gemini",
-      "Allure",
-      "GitHub Actions",
-      "Docker"
+      "TestNG",
+      "Docker",
+      "PostgreSQL"
     ],
     url: "#",
     github: "https://github.com/emredursun/aegisqa",
     metrics: [
-      "Full Stack Testing (UI + API + DB)",
-      "AI-Powered Test Generation",
-      "Clean Architecture & POM Pattern",
-      "CI/CD with GitHub Actions"
+      "23 Automated Tests (11 UI · 12 API)",
+      "Page Object Model & Shared Config",
+      "Runs Against ParaBank in Docker",
+      "Roadmap: DB, AI Generation, CI/CD"
     ],
     gallery: [
       "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
@@ -1215,52 +1214,52 @@ export const PROJECTS: Project[] = [
     team: "Solo Project",
     year: 2025,
     challenge:
-      "Modern applications require comprehensive quality assurance across multiple layers—UI, API, and database—but most teams struggle with fragmented testing tools, manual test creation, and lack of AI-assisted intelligence to scale their coverage efficiently.",
+      "UI, API and database checks usually live in separate tools and repositories, so one business flow (log in, open an account, transfer money) is verified in pieces, with duplicated configuration and test data.",
     solution:
-      "Designed and built AegisQA as a unified full-stack test automation platform that integrates Playwright for UI testing, REST Assured for API validation, and PostgreSQL for database checks. Implemented an AI-assisted module powered by Google Gemini that analyzes existing test coverage, generates meaningful new test scenarios, and refactors existing tests for optimal maintainability.",
+      "Built the foundation as one monorepo with shared configuration and types: a Playwright + TypeScript UI module with page objects and fixtures, and a REST Assured + TestNG API module with typed clients, both against a local ParaBank instance in Docker. Fixed base-URL resolution and the wait strategy so the UI suite runs reliably, then planned the next sprints: database validation, AI-assisted test generation and CI/CD.",
     features: [
       {
-        title: "Full Stack Testing",
+        title: "UI and API in One Repository",
         description:
-          "Unified platform covering UI (Playwright), API (REST Assured), and Database (PostgreSQL) testing with seamless cross-layer validation.",
+          "Playwright (TypeScript) and REST Assured (Java) suites share configuration and types, and exercise the same banking flows.",
         icon: <i aria-hidden="true" className="fas fa-layer-group text-blue-400"></i>
-      },
-      {
-        title: "AI-Powered Test Generation",
-        description:
-          "Intelligent test generation with Google Gemini that analyzes coverage, creates new scenarios, and optimizes existing tests automatically.",
-        icon: <i aria-hidden="true" className="fas fa-brain text-purple-400"></i>
       },
       {
         title: "Clean Architecture",
         description:
-          "Page Object Model with clear separation between UI tests, API tests, database validation, shared utilities, and AI-assisted generation.",
+          "Page objects and fixtures for the UI, typed API clients and a central config manager for the API, a shared module for both.",
         icon: <i aria-hidden="true" className="fas fa-sitemap text-green-400"></i>
       },
       {
-        title: "CI/CD Integration",
+        title: "Reproducible Environment",
         description:
-          "Fully integrated with GitHub Actions pipelines featuring automated execution, Allure reporting, and configurable quality gates.",
-        icon: <i aria-hidden="true" className="fas fa-rocket text-orange-400"></i>
+          "ParaBank and PostgreSQL run in Docker Compose, so every test run starts from the same, local system under test.",
+        icon: <i aria-hidden="true" className="fab fa-docker text-cyan-400"></i>
+      },
+      {
+        title: "Planned: AI and CI/CD",
+        description:
+          "Next sprints: database validation, AI-assisted test generation with Google Gemini, and GitHub Actions with Allure reporting.",
+        icon: <i aria-hidden="true" className="fas fa-road text-purple-400"></i>
       }
     ],
     results: [
       {
-        metric: "Test Layers",
-        value: "4 Integrated",
-        description: "UI, API, Database, and Performance testing in a single platform"
+        metric: "Automated tests",
+        value: "23",
+        description: "11 Playwright UI tests and 12 REST Assured API tests"
       },
       {
-        metric: "AI Capabilities",
-        value: "Google Gemini",
-        description: "Intelligent test generation, coverage analysis, and optimization"
+        metric: "UI suite runtime",
+        value: "13 s",
+        description: "All active UI tests passing against the local Docker environment"
       },
       {
-        metric: "Architecture",
-        value: "Production-Grade",
-        description: "Clean architecture principles with enterprise-level best practices"
+        metric: "Roadmap",
+        value: "4 sprints",
+        description: "Database validation, AI-assisted generation, CI/CD with reporting, documentation"
       }
     ],
-    tags: ["Full Stack Testing", "AI-Powered", "Playwright", "REST Assured", "Clean Architecture"],
+    tags: ["Full Stack Testing", "Playwright", "REST Assured", "Clean Architecture", "Work in Progress"],
   },
 ];

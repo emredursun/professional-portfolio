@@ -1,106 +1,106 @@
 {
   "": {
-    "hash": "caaec17d700c31e5e005dc5d8e4f3a0e9798e69244fa7a25ab0a9ae4088e7f7a",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "5f71f68f29a54c70752adb081d3306e6b6a62280eb98ca118ef7f07fa2801d35",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/about": {
-    "hash": "caaec17d700c31e5e005dc5d8e4f3a0e9798e69244fa7a25ab0a9ae4088e7f7a",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "5f71f68f29a54c70752adb081d3306e6b6a62280eb98ca118ef7f07fa2801d35",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/resume": {
-    "hash": "7f6cca38dc85de7554cba66d3a0de11019bc1e64a7556282de76a73757204364",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "a9abb32455c37dfec22595c6325a2bc9e6991bb95ab53e8bf7b05b487b8c954f",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/contact": {
-    "hash": "1d9f365d41604054851a8d8bcd693727a9796dfedfb75ba6c1c6d54f565c813a",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "7ad15588706e52f183798fa4cedc1f71cdaa7f5f4275d8b5baabca6ad4323fb1",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/quality": {
-    "hash": "0ba3461a55ecc914386eb6672923f67950638e1ee995ab1ee517cab1e892e511",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e8910f8c2e7e98446820741b81ae96703cfab6c277c968ab26cb367ba735fb5b",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/about/pega-platform-architecture": {
-    "hash": "caaec17d700c31e5e005dc5d8e4f3a0e9798e69244fa7a25ab0a9ae4088e7f7a",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "5f71f68f29a54c70752adb081d3306e6b6a62280eb98ca118ef7f07fa2801d35",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/about/tricentis-tosca-automation": {
-    "hash": "caaec17d700c31e5e005dc5d8e4f3a0e9798e69244fa7a25ab0a9ae4088e7f7a",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "5f71f68f29a54c70752adb081d3306e6b6a62280eb98ca118ef7f07fa2801d35",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/about/test-automation-architecture": {
-    "hash": "caaec17d700c31e5e005dc5d8e4f3a0e9798e69244fa7a25ab0a9ae4088e7f7a",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "5f71f68f29a54c70752adb081d3306e6b6a62280eb98ca118ef7f07fa2801d35",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/about/cicd-devops-integration": {
-    "hash": "caaec17d700c31e5e005dc5d8e4f3a0e9798e69244fa7a25ab0a9ae4088e7f7a",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "5f71f68f29a54c70752adb081d3306e6b6a62280eb98ca118ef7f07fa2801d35",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/about/api-backend-validation": {
-    "hash": "caaec17d700c31e5e005dc5d8e4f3a0e9798e69244fa7a25ab0a9ae4088e7f7a",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "5f71f68f29a54c70752adb081d3306e6b6a62280eb98ca118ef7f07fa2801d35",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/about/ai-powered-web-development": {
-    "hash": "caaec17d700c31e5e005dc5d8e4f3a0e9798e69244fa7a25ab0a9ae4088e7f7a",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "5f71f68f29a54c70752adb081d3306e6b6a62280eb98ca118ef7f07fa2801d35",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/about/ecommerce-sales-optimization": {
-    "hash": "caaec17d700c31e5e005dc5d8e4f3a0e9798e69244fa7a25ab0a9ae4088e7f7a",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "5f71f68f29a54c70752adb081d3306e6b6a62280eb98ca118ef7f07fa2801d35",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/about/ai-governance-architecture": {
-    "hash": "caaec17d700c31e5e005dc5d8e4f3a0e9798e69244fa7a25ab0a9ae4088e7f7a",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "5f71f68f29a54c70752adb081d3306e6b6a62280eb98ca118ef7f07fa2801d35",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/quilyn-exam-prep": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/pathforge-career-intelligence": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/devran-ai-kit": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/deelmarkt-marketplace": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/qa-smart-test-lab": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/playwright-testing-project": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/social-share-image-generator": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/banking-payment-automation": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/hospital-portal-testing": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/ecommerce-sales-optimization": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/besync-trust-grade-ai": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   },
   "/projects/aegisqa": {
-    "hash": "04f8005c5be66ebf1ec94053c7a6828dfb87396fe77c095ef0d3a16a3e02e8c5",
-    "lastmod": "2026-10-24T14:31:37.337Z"
+    "hash": "e95ac1b1600367b8692f5a4a2c89af996d5fd0db3940483c65a37a7ccb064423",
+    "lastmod": "2026-10-24T14:33:12.562Z"
   }
 }

@@ -113,7 +113,7 @@
 
 | Project | What it is | Stack |
 |---|---|---|
-| **[AegisQA](https://github.com/emredursun/aegisqa)** | A production-grade, AI-assisted full stack test automation platform combining UI, API, database, and performance validation into a single, scalable quality system. | Playwright · TypeScript · REST Assured · Java |
+| **[AegisQA](https://github.com/emredursun/aegisqa)** | A full-stack test automation platform in progress: Playwright UI tests and REST Assured API tests against a banking demo app in Docker, in one monorepo. | Playwright · TypeScript · REST Assured · Java |
 | **[Devran AI Kit](https://github.com/devran-ai/kit)** | An open-source, zero-dependency Trust-Grade AI development framework that turns any AI-powered IDE into a virtual engineering team — 26 agents, 39 skills, 25 workflows, and 15 governance rules behind one command. | JavaScript · Python · Node.js · Zero Dependencies |
 | **[Quilyn](https://github.com/emredursun/quilyn)** | A free, offline-capable study app for IT certification exams — Pega (PCBA, PCSA) and Tricentis Tosca (AS1, AS2, API). | Vanilla JavaScript · ES6 Proxy State · PWA / Service Worker · HTML5 |
 | **[QASmartTestLab](https://github.com/emredursun/QASmartTestLab)** | A comprehensive test automation framework built with Java 17+, Selenium 4, and Cucumber for UI, API, and database testing with clean architecture and runtime configuration. | Java 17 · Selenium 4 · Cucumber · Maven |
