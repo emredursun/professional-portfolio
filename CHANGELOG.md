@@ -42,7 +42,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - The About bento grid and services grid respond to their container instead of the viewport. At about 1100 px, the content was squeezed into an 8/4 split.
 
 ### Fixed
-- The structured data still published the previous home address with its postcode; it now names Nieuwegein only. Job title, dates and services in it are current.
+- The structured data still published the previous home address with its postcode. It now gives the home province only (Noord-Holland) and Sopra Steria's Nieuwegein office as the work location; the sidebar reads "Nieuwegein (Sopra Steria) · Hybrid". Job title, dates and services in it are current.
 - The project view overwrote the page's social tags with a different title, and with a broken image URL for externally hosted project images.
 - A direct visit to a service URL (`/about/<service>`) crashed the page before its translations had loaded.
 - The "5+ years" counter only counted when it started above the fold: it listened to the window's scroll, but on desktop the page scrolls inside the content panel.

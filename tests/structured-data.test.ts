@@ -56,7 +56,11 @@ describe('site-wide structured data', () => {
     expect(fs.existsSync(path.join(ROOT, 'public', PERSONAL_INFO.portrait))).toBe(true);
   });
 
-  it('publishes no street address or postcode', () => {
+  it('publishes no street address or postcode, and keeps home and work apart', () => {
     expect(JSON.stringify(graph)).not.toMatch(/postalCode|streetAddress/);
+    const person = byId.get('https://emredursun.nl/#person') as Node;
+    // Home: province only. Nieuwegein is the employer's office.
+    expect(person.address).toEqual({ '@type': 'PostalAddress', addressRegion: 'Noord-Holland', addressCountry: 'NL' });
+    expect(JSON.stringify(person.workLocation)).toContain('Nieuwegein');
   });
 });
