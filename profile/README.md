@@ -14,7 +14,7 @@
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-emre--dursun--nl-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/emre-dursun-nl/)
 [![Pega](https://img.shields.io/badge/Pega-CPBA_%26_CPSA-1F4E79?style=for-the-badge)](https://emredursun.nl/)
 [![Tricentis](https://img.shields.io/badge/Tricentis-Tosca_%26_Testim_Advanced-00A99D?style=for-the-badge)](https://emredursun.nl/)
-[![ISTQB](https://img.shields.io/badge/ISTQB-CTFL-6E4C9F?style=for-the-badge)](https://emredursun.nl/)
+[![ISTQB](https://img.shields.io/badge/ISTQB-CTFL-6E4C9F?style=for-the-badge)](https://app.diplomasafe.com/en-US/diploma/d6c0c305f021fcae6f7dd0cae43d65eff636e76fe)
 
 </div>
 
@@ -52,9 +52,9 @@
 |---|---|---|
 | **Testim Product Consultant — Advanced proficiency** | Tricentis | September 2026 |
 | **Tosca Product Consultant — Advanced proficiency** (exam 93.3%) | Tricentis | August 2026 |
-| **Certified Pega Business Architect (CPBA)** | Pegasystems | June 2026 |
-| **Certified Pega System Architect (CPSA)** | Pegasystems | June 2026 |
-| **ISTQB® Certified Tester — Foundation Level (CTFL)** | ISTQB® | June 2023 |
+| **[Certified Pega Business Architect (CPBA)](https://accounts.pega.com/profile/emre.dursun/share/BPEGACPBA25V1-PEGACPBA25V1)** | Pegasystems | June 2026 |
+| **[Certified Pega System Architect (CPSA)](https://accounts.pega.com/profile/emre.dursun/share/BPEGACPSA25V1-PEGACPSA25V1)** | Pegasystems | June 2026 |
+| **[ISTQB® Certified Tester — Foundation Level (CTFL)](https://app.diplomasafe.com/en-US/diploma/d6c0c305f021fcae6f7dd0cae43d65eff636e76fe)** | ISTQB® | June 2023 |
 | **Docker Foundations Professional Certificate** | Docker | 2024 |
 
 <sub><b>Tosca learning path:</b> AS1 — Automating Web Application Testing · AS2 — Optimizing Test Automation with Centralized Test Data · Deep Dive — Automating API Test Cases · TDS1 — Structuring Test Cases and Test Data · TDS2 — Managing Stateful Test Data · AE1 — Automating Beyond Web Applications · Continuous Testing with Efficient KPI Management.</sub>

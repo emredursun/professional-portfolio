@@ -134,6 +134,8 @@
     "details": {
       "overview": "Genel Bakış",
       "keyBenefits": "Temel Avantajlar",
+      "verifyCredential": "Sertifikayı veren kurumda doğrula",
+      "opensInNewTab": "(yeni sekmede açılır)",
       "technologies": "Teknolojiler & Araçlar",
       "relatedProjects": "İlgili Projeler",
       "getInTouch": "İletişime Geç",

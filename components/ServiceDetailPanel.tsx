@@ -291,6 +291,21 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                           <span>View Certificate</span>
                         </motion.button>
                       )}
+
+                      {/* Issuer-hosted proof: anyone can check the credential is real */}
+                      {service.certificateUrl && (
+                        <a
+                          href={service.certificateUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-green-700 dark:text-green-400 hover:underline"
+                        >
+                          <i aria-hidden="true" className="fas fa-shield-halved text-xs"></i>
+                          <span>{t('services.details.verifyCredential')}</span>
+                          <i aria-hidden="true" className="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                          <span className="sr-only">{t('services.details.opensInNewTab')}</span>
+                        </a>
+                      )}
                     </div>
                   </div>
 

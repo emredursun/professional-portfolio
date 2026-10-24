@@ -134,6 +134,8 @@
     "details": {
       "overview": "Overview",
       "keyBenefits": "Key Benefits",
+      "verifyCredential": "Verify with the issuer",
+      "opensInNewTab": "(opens in a new tab)",
       "technologies": "Technologies & Tools",
       "relatedProjects": "Related Projects",
       "getInTouch": "Get in Touch",

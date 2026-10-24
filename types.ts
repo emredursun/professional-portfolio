@@ -21,6 +21,7 @@ export interface Service {
   certificateId?: string;      // Official certificate ID for verification
   certificationDate?: string;  // Certification date (e.g., "January 2026")
   certificateImage?: string;   // Path to certificate image
+  certificateUrl?: string;     // Issuer's public verification page
   certificateBadges?: CertificateBadge[]; // Supporting course/module badges
 }
 

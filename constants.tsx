@@ -115,6 +115,7 @@ export const SERVICES: Service[] = [
     relatedProjects: ["quilyn-exam-prep"],
     certificationDate: "June 2026",
     certificateImage: "/images/pega-certified-system-architect-cpsa.webp",
+    certificateUrl: "https://accounts.pega.com/profile/emre.dursun/share/BPEGACPSA25V1-PEGACPSA25V1",
     certificateBadges: [
       { image: "/images/pega-certified-business-architect-cpba.webp", label: "Certified Pega Business Architect (CPBA): June 2026" }
     ]
@@ -178,6 +179,7 @@ export const SERVICES: Service[] = [
     certificateId: "ISTQB-CTFL-CERTIFIED",
     certificationDate: "June 2023",
     certificateImage: "/images/istqb-foundation-level-certificate.webp",
+    certificateUrl: "https://app.diplomasafe.com/en-US/diploma/d6c0c305f021fcae6f7dd0cae43d65eff636e76fe",
     certificateBadges: [
       { image: "/images/ing-java-certificate.webp", label: "Java @ ING — internal training, May 2024" }
     ]

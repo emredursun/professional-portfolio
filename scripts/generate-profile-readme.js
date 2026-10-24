@@ -76,7 +76,9 @@ const ABOUT_BULLETS = [
  * Certifications to surface, in display order. Dates are read from the
  * matching SERVICES entry so they cannot go stale; only the credential name
  * and issuer are declared here. A credential with no service card of its own
- * (Testim) declares `issued` instead of `service`.
+ * (Testim) declares `issued` instead of `service`. The issuer verification
+ * link comes from the service's `certificateUrl`; `verify` overrides it for a
+ * credential that shares a card with another one (CPBA sits on the CPSA card).
  *
  * Deliberately excluded: the ING internal trainings (not public credentials)
  * and the self-issued BeSync Trust-Grade certificate - a self-issued ID next
@@ -85,7 +87,7 @@ const ABOUT_BULLETS = [
 const CERTIFICATIONS = [
   { name: 'Testim Product Consultant — Advanced proficiency', issuer: 'Tricentis', issued: 'September 2026' },
   { name: 'Tosca Product Consultant — Advanced proficiency', note: 'exam 93.3%', issuer: 'Tricentis', service: 'tricentis-tosca-automation' },
-  { name: 'Certified Pega Business Architect (CPBA)', issuer: 'Pegasystems', service: 'pega-platform-architecture' },
+  { name: 'Certified Pega Business Architect (CPBA)', issuer: 'Pegasystems', service: 'pega-platform-architecture', verify: 'https://accounts.pega.com/profile/emre.dursun/share/BPEGACPBA25V1-PEGACPBA25V1' },
   { name: 'Certified Pega System Architect (CPSA)', issuer: 'Pegasystems', service: 'pega-platform-architecture' },
   { name: 'ISTQB® Certified Tester — Foundation Level (CTFL)', issuer: 'ISTQB®', service: 'test-automation-architecture' },
   { name: 'Docker Foundations Professional Certificate', issuer: 'Docker', service: 'cicd-devops-integration' },
@@ -325,6 +327,7 @@ export function validate({ constants, resume }) {
 function renderHeader({ constants, role }) {
   const linkedin = constants.SOCIAL_LINKS.find((link) => link.name === 'linkedin').url;
   const site = 'https://emredursun.nl/';
+  const istqb = constants.SERVICES.find((service) => service.slug === 'test-automation-architecture');
 
   const typingUrl =
     'https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&duration=3200&pause=900' +
@@ -336,7 +339,7 @@ function renderHeader({ constants, role }) {
     linkBadge({ label: 'LinkedIn', value: 'emre-dursun-nl', color: '0A66C2', logo: 'linkedin', href: linkedin }),
     linkBadge({ label: 'Pega', value: 'CPBA & CPSA', color: '1F4E79', href: site }),
     linkBadge({ label: 'Tricentis', value: 'Tosca & Testim Advanced', color: '00A99D', href: site }),
-    linkBadge({ label: 'ISTQB', value: 'CTFL', color: '6E4C9F', href: site }),
+    linkBadge({ label: 'ISTQB', value: 'CTFL', color: '6E4C9F', href: istqb.certificateUrl ?? site }),
   ].join('\n');
 
   return `<div id="top"></div>
@@ -402,7 +405,9 @@ function renderCertifications({ constants }) {
 
   const rows = CERTIFICATIONS.map((cert) => {
     const date = cert.issued ?? byslug.get(cert.service).certificationDate;
-    const name = cert.note ? `**${cert.name}** (${cert.note})` : `**${cert.name}**`;
+    const verify = cert.verify ?? (cert.service ? byslug.get(cert.service).certificateUrl : undefined);
+    const title = verify ? `**[${cert.name}](${verify})**` : `**${cert.name}**`;
+    const name = cert.note ? `${title} (${cert.note})` : title;
     return `| ${name} | ${cert.issuer} | ${date} |`;
   }).join('\n');
 
