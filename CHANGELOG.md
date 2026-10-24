@@ -82,7 +82,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
 - Vitest unit tests: 129 tests, 86% line coverage on logic modules.
-- Playwright end-to-end suite: 162 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
+- Playwright end-to-end suite: 166 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
 - `knip` in CI: unused files, exports and dependencies fail the build.
 - ESLint (typescript-eslint, react-hooks with the React Compiler rules, jsx-a11y) and Prettier formatting in CI; any lint warning fails. Their first run found and fixed: project cards and gallery screenshots that the keyboard could not open, a conditionally called hook, a custom cursor 20 px off the pointer, particles retargeted on every render, and state that mirrored the URL.
 - CI quality gates in front of every deploy, Lighthouse budgets on desktop and mobile (median of 5 runs each), a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
