@@ -6,6 +6,7 @@
     "technologies": "Technologieën",
     "clearFilters": "Filters Wissen",
     "activeFilters": "Actieve filters:",
+    "removeFilter": "Filter verwijderen: {{name}}",
     "selected": "{{count}} geselecteerd",
     "showingResults": "{{count}} project weergegeven",
     "showingResults_plural": "{{count}} projecten weergegeven",

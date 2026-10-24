@@ -10,6 +10,9 @@ test.describe('downloadable CV', () => {
   for (const { locale, path } of locales) {
     test(`${path} offers the ${locale} CV as a real PDF`, async ({ page, request }) => {
       await page.goto(path);
+      // Wait for the app as the other specs do; under a loaded parallel run
+      // the sidebar can take longer than one assertion timeout to mount.
+      await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
       const button = page.getByRole('link', { name: copy(locale, 'common').buttons.downloadCV });
       const file = `Emre-Dursun-CV-${locale}.pdf`;
 
@@ -28,6 +31,7 @@ test.describe('downloadable CV', () => {
   test('clicking the button downloads the file', async ({ page, isMobile }) => {
     test.skip(isMobile, 'Same link on mobile; one browser is enough for the download itself.');
     await page.goto('/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
     const [download] = await Promise.all([
       page.waitForEvent('download'),
       page.getByRole('link', { name: copy('en', 'common').buttons.downloadCV }).click(),

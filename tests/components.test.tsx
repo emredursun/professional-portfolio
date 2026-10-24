@@ -202,4 +202,30 @@ describe('bootstrap', () => {
     await import('../src/bootstrap.ts');
     expect(window.plausible).toBe(real);
   });
+
+  it('reloads once when a lazy chunk from a previous deploy is gone, never in a loop', async () => {
+    const { handleStaleChunk } = await import('../src/bootstrap.ts');
+    const store = new Map<string, string>();
+    const storage = { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => void store.set(k, v) };
+    const reload = vi.fn();
+
+    const first = new Event('vite:preloadError', { cancelable: true });
+    handleStaleChunk(first, storage, reload);
+    expect(reload).toHaveBeenCalledTimes(1);
+    expect(first.defaultPrevented).toBe(true);
+
+    // Still failing after the reload: leave it to the error boundary.
+    const second = new Event('vite:preloadError', { cancelable: true });
+    handleStaleChunk(second, storage, reload);
+    expect(reload).toHaveBeenCalledTimes(1);
+    expect(second.defaultPrevented).toBe(false);
+  });
+
+  it('does not reload when session storage is blocked', async () => {
+    const { handleStaleChunk } = await import('../src/bootstrap.ts');
+    const blocked = { getItem: () => { throw new Error('SecurityError'); }, setItem: () => undefined };
+    const reload = vi.fn();
+    handleStaleChunk(new Event('vite:preloadError', { cancelable: true }), blocked, reload);
+    expect(reload).not.toHaveBeenCalled();
+  });
 });

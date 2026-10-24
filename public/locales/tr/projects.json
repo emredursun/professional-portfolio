@@ -6,6 +6,7 @@
     "technologies": "Teknolojiler",
     "clearFilters": "Filtreleri Temizle",
     "activeFilters": "Aktif filtreler:",
+    "removeFilter": "Filtreyi kaldır: {{name}}",
     "selected": "{{count}} seçili",
     "showingResults": "{{count}} proje gösteriliyor",
     "showingResults_plural": "{{count}} proje gösteriliyor",

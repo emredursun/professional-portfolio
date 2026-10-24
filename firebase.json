@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "dist",
+    "predeploy": ["node scripts/generate-cv.js --check"],
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -8,7 +9,27 @@
     ],
     "rewrites": [
       {
-        "source": "!/@(sitemap.xml|robots.txt|site.webmanifest|version.json)",
+        "source": "/",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/@(about|resume|projects|contact)",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/@(about|projects)/*",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/@(nl|tr)",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/@(nl|tr)/@(about|resume|projects|contact)",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/@(nl|tr)/@(about|projects)/*",
         "destination": "/index.html"
       }
     ],

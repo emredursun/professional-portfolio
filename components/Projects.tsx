@@ -429,7 +429,9 @@ const Projects: React.FC = () => {
                 >
                   {cat}
                   <button
+                    type="button"
                     onClick={() => toggleCategory(cat)}
+                    aria-label={t('filters.removeFilter', { name: cat })}
                     className="hover:text-yellow-700 dark:hover:text-yellow-300"
                   >
                     <i aria-hidden="true" className="fas fa-times"></i>
@@ -443,7 +445,9 @@ const Projects: React.FC = () => {
                 >
                   {tech}
                   <button
+                    type="button"
                     onClick={() => toggleTechnology(tech)}
+                    aria-label={t('filters.removeFilter', { name: tech })}
                     className="hover:text-blue-700 dark:hover:text-blue-300"
                   >
                     <i aria-hidden="true" className="fas fa-times"></i>

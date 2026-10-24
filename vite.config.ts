@@ -1,7 +1,7 @@
 /// <reference types="vitest/config" />
 import fs from 'fs';
 import path from 'path';
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
 /**
@@ -12,6 +12,29 @@ function productionSecurityHeaders(): Record<string, string> {
     const firebase = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'firebase.json'), 'utf8'));
     const rule = firebase.hosting.headers.find((r: { source: string }) => r.source === '/**');
     return Object.fromEntries(rule.headers.map((h: { key: string; value: string }) => [h.key, h.value]));
+}
+
+/**
+ * Emit dist/404.html, a copy of the app shell. firebase.json rewrites only
+ * the app's real routes to index.html; Firebase answers every other path with
+ * 404.html and a genuine 404 status, and the app then renders its NotFound
+ * view there. Without it, unknown URLs and missing files returned the SPA
+ * with a 200 - soft 404s.
+ */
+function notFoundPage(): Plugin {
+    let outDir = 'dist';
+    return {
+        name: 'not-found-page',
+        apply: 'build',
+        configResolved(config) {
+            outDir = path.resolve(config.root, config.build.outDir);
+        },
+        closeBundle() {
+            // Also called when the build failed; don't mask that error with ENOENT.
+            const shell = path.join(outDir, 'index.html');
+            if (fs.existsSync(shell)) fs.copyFileSync(shell, path.join(outDir, '404.html'));
+        },
+    };
 }
 
 export default defineConfig(() => {
@@ -48,7 +71,7 @@ export default defineConfig(() => {
         port: 3000,
         host: '0.0.0.0',
       },
-      plugins: [react()],
+      plugins: [react(), notFoundPage()],
       publicDir: 'public',
       build: {
         copyPublicDir: true,

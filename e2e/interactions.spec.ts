@@ -76,10 +76,41 @@ test.describe('services', () => {
     );
   });
 
+  test('a certification links to the issuer-hosted proof', async ({ page }) => {
+    await page.goto('/about/test-automation-architecture');
+    const verify = page.getByRole('link', { name: copy('en', 'about').services.details.verifyCredential });
+    await expect(verify).toHaveAttribute('href', /^https:\/\/app\.diplomasafe\.com\//);
+    await expect(verify).toHaveAttribute('rel', /noopener/);
+  });
+
   test('an unknown service slug shows the not-found page', async ({ page }) => {
     await page.goto('/about/no-such-service');
     await expect(page.getByRole('heading', { level: 2, name: copy('en', 'common').notFound.title })).toBeVisible();
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
+  });
+
+  test('going from an unknown service back to About renders the full page', async ({ page }) => {
+    // Same route (/about/:serviceSlug?), so this used to reuse the instance
+    // that had rendered NotFound: the header stayed invisible, the counter at 0.
+    const about = copy('en', 'about');
+    await page.goto('/about/no-such-service');
+    await page.getByRole('link', { name: copy('en', 'common').notFound.home }).click();
+    await expect(page).toHaveURL(/\/about$/);
+    await expect(page.getByRole('heading', { level: 2 }).filter({ hasText: about.titleHighlight }).first()).toBeVisible();
+    // The counter starts once it is on screen; it can sit below the fold.
+    const counter = page.getByText(/^\d\+$/).first();
+    await counter.scrollIntoViewIfNeeded();
+    await expect(counter).toHaveText('5+');
+  });
+
+  test('the years counter counts up when scrolled into view inside the content panel', async ({ page }) => {
+    // On desktop the page scrolls in the content panel, not the window: a
+    // window-based ScrollTrigger left the counter at "0+" below the fold.
+    await page.setViewportSize({ width: 1280, height: 600 });
+    await page.goto('/about');
+    const counter = page.getByText(/^\d\+$/).first();
+    await counter.scrollIntoViewIfNeeded();
+    await expect(counter).toHaveText('5+');
   });
 });
 

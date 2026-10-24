@@ -83,7 +83,29 @@ export async function generateCvs({ distDir = DIST, port = PORT } = {}) {
     }
 }
 
+/**
+ * Names of the CV PDFs missing from a build. firebase.json runs this as a
+ * predeploy check: production links to the PDFs unconditionally, and without
+ * them Firebase would answer with 404.html - which the button's download
+ * attribute saves as "Emre-Dursun-CV-en.pdf".
+ */
+export function missingCvs(distDir = DIST) {
+    return Object.keys(CV_PAGES)
+        .map(cvFileName)
+        .filter(file => !fs.existsSync(path.join(distDir, 'cv', file)));
+}
+
 async function main() {
+    if (process.argv.includes('--check')) {
+        const missing = missingCvs();
+        if (missing.length) {
+            console.error(`❌ Missing from dist/cv: ${missing.join(', ')}. Run \`npm run generate:cv\` before deploying.`);
+            process.exit(1);
+        }
+        console.log('✅ CV PDFs present');
+        return;
+    }
+
     try {
         const files = await generateCvs();
         files.forEach(file => {

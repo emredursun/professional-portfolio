@@ -63,6 +63,31 @@ function registerServiceWorker(): void {
 }
 
 /**
+ * Each deploy replaces the hashed /assets/* chunks. A tab left open across a
+ * release then fails to lazy-load the next page (Resume, NotFound, the command
+ * palette) and lands on the error boundary. Vite reports that as
+ * vite:preloadError; reload once to pick up the new build. The session flag
+ * stops a reload loop if the chunk is genuinely broken.
+ */
+export function handleStaleChunk(event: Event, storage: Pick<Storage, 'getItem' | 'setItem'>, reload: () => void): void {
+  const KEY = 'stale-chunk-reload';
+  try {
+    if (storage.getItem(KEY)) return;
+    storage.setItem(KEY, '1');
+  } catch {
+    return; // Storage blocked: let the error boundary handle it rather than risk a loop.
+  }
+  event.preventDefault();
+  reload();
+}
+
+function recoverFromStaleChunks(): void {
+  window.addEventListener('vite:preloadError', (event) =>
+    handleStaleChunk(event, sessionStorage, () => window.location.reload()),
+  );
+}
+
+/**
  * With "reduce motion" on, every animation lands on its end state at once:
  * GSAP timelines run 1000x faster (so onComplete callbacks such as the
  * preloader's still fire) and framer-motion skips animations entirely.
@@ -83,4 +108,5 @@ function respectReducedMotion(): void {
 installPlausibleQueue();
 respectReducedMotion();
 installGlobalErrorReporting();
+recoverFromStaleChunks();
 registerServiceWorker();

@@ -57,7 +57,10 @@ jobs:
             echo "Live is ${live:-unreachable}, waiting for $expected ($attempt/6)"; sleep 10
           done
           [ "$live" = "$expected" ] || { echo "::error::Live site does not serve the deployed commit"; exit 1; }
-          for path in / /about /resume /projects /contact /nl/about /tr/about; do
+          for path in / /about /resume /projects /contact /nl/about /tr/about /projects/aegisqa /cv/Emre-Dursun-CV-en.pdf; do
             curl -fsS -o /dev/null "https://emredursun.nl$path"
           done
+          # Unknown URLs must be real 404s (404.html), not the app with a 200.
+          status="$(curl -sS -o /dev/null -w '%{http_code}' https://emredursun.nl/no-such-page-smoke-test)"
+          [ "$status" = "404" ] || { echo "::error::Unknown URL returned $status, expected 404"; exit 1; }
           echo "Live: $live"

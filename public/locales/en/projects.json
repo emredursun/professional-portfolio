@@ -6,6 +6,7 @@
     "technologies": "Technologies",
     "clearFilters": "Clear Filters",
     "activeFilters": "Active filters:",
+    "removeFilter": "Remove filter: {{name}}",
     "selected": "{{count}} selected",
     "showingResults": "Showing {{count}} project",
     "showingResults_plural": "Showing {{count}} projects",

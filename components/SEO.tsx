@@ -108,10 +108,11 @@ const SEO: React.FC<SEOProps> = ({ title, description, overrideTitle = false, no
     upsertMeta('meta[name="twitter:description"]', 'name', 'twitter:description', metaDescription);
   }, [metaTitle, metaDescription, canonicalUrl, enHref, nlHref, trHref]);
 
-  // Firebase serves index.html with a 200 for every SPA path, so an unknown URL
-  // cannot return a real 404 status. noindex keeps such pages out of search
-  // results; the tag is removed again when the page unmounts so the next
-  // client-side route is indexable.
+  // Unknown top-level URLs get a real 404 from Firebase (404.html), but an
+  // unknown slug under a real section (/about/<typo>) is still rewritten to
+  // the app with a 200, and a client-side navigation never sees a status at
+  // all. noindex keeps those out of search results; the tag is removed again
+  // when the page unmounts so the next client-side route is indexable.
   useEffect(() => {
     if (!noindex) return;
     upsertMeta('meta[name="robots"]', 'name', 'robots', 'noindex, follow');

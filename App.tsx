@@ -27,9 +27,10 @@ const ParticleBackground = React.lazy(() => import('./components/ParticleBackgro
 const FloatingElements = React.lazy(() => import('./components/FloatingElements.tsx'));
 const CustomCursor = React.lazy(() => import('./components/CustomCursor.tsx'));
 // Neither is visible on first paint, so both stay out of the entry bundle:
-// the print layout mounts on idle (Download CV calls window.print()
-// synchronously, so it must already be in the DOM by then) and the command
-// palette - with its Fuse.js search index - on first open.
+// the print layout mounts on idle (scripts/generate-cv.js renders it into the
+// CV PDFs, and on the dev server Download CV falls back to window.print(),
+// which needs it in the DOM already) and the command palette - with its
+// Fuse.js search index - on first open.
 const PrintableResume = React.lazy(() => import('./components/PrintableResume.tsx'));
 const CommandPalette = React.lazy(() => import('./components/CommandPalette.tsx'));
 

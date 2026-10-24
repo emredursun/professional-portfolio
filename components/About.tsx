@@ -186,7 +186,23 @@ const ServiceItem: React.FC<{ service: ExtendedService; onClick: () => void }> =
   );
 };
 
-const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) => {
+type AboutProps = { onNavigate?: (page: Page) => void };
+
+/**
+ * /about and /about/<slug> are one route, so React keeps this instance alive
+ * when a visitor goes from an unknown slug's NotFound view back to /about.
+ * Deciding NotFound here, outside the page, makes that switch remount
+ * AboutPage: its scroll-reveal and GSAP hooks attach to refs that exist only
+ * once the page has rendered, and with an early return inside the page they
+ * stayed bound to null - an invisible header and a "0+" counter.
+ */
+const About: React.FC<AboutProps> = (props) => {
+  const { serviceSlug } = useParams<{ serviceSlug?: string }>();
+  if (serviceSlug && !SERVICES.some(s => s.slug === serviceSlug)) return <NotFound />;
+  return <AboutPage {...props} />;
+};
+
+const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
   // useSuspense is off app-wide, so this renders before the namespace has
   // loaded; `ready` gates everything that needs the translated services.
   const { t, i18n, ready } = useTranslation('about');
@@ -230,7 +246,6 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
   // Derived during render (not from selectedService state) so a direct visit
   // to /about/<slug> gets the service's title on the first paint.
   const activeService = serviceSlug && ready ? translatedServices.find(s => s.slug === serviceSlug) : undefined;
-  const isUnknownSlug = Boolean(serviceSlug) && !SERVICES.some(s => s.slug === serviceSlug);
 
   useEffect(() => {
     if (serviceSlug && ready) {
@@ -257,28 +272,26 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
         );
     }
 
-    // 2. Number Counter Animation (0 to 5)
-    // We animate a proxy object and update state
-    if (counterRef.current) {
-        const proxy = { val: 0 };
-        gsap.to(proxy, {
-            val: 5,
-            duration: 2,
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: counterRef.current,
-                start: "top 85%",
-                once: true, // Only count up once
-            },
-            onUpdate: () => {
-                setStatsCount(Math.ceil(proxy.val));
-            }
-        });
-    }
-
   }, []); // Empty dependency array - run once on mount
 
-  if (isUnknownSlug) return <NotFound />;
+  // 2. Number Counter Animation (0 to 5), once the counter is on screen.
+  // An IntersectionObserver rather than ScrollTrigger: on desktop the page
+  // scrolls inside the content panel, not the window, so a window-based
+  // ScrollTrigger only fired when the counter happened to start above the
+  // fold - below it (single-column layout) the counter stayed at "0+".
+  const isCounterVisible = useScrollReveal(counterRef, { threshold: 0.5 });
+  useGSAP(() => {
+    if (!isCounterVisible) return;
+    const proxy = { val: 0 };
+    gsap.to(proxy, {
+      val: 5,
+      duration: 2,
+      ease: "power2.out",
+      onUpdate: () => {
+        setStatsCount(Math.ceil(proxy.val));
+      }
+    });
+  }, [isCounterVisible]);
 
   return (
     <section ref={containerRef} className="animate-fade-in">
