@@ -84,6 +84,18 @@ test.describe('services', () => {
     );
   });
 
+  test('a service card opens from the keyboard, keeping the language', async ({ page }) => {
+    // The cards were clickable divs: no tab stop, so Enter did nothing.
+    const service = copy('nl', 'about').services.toscaAutomation;
+    await page.goto('/nl/about');
+    const card = page.getByRole('link', { name: service.title, exact: true });
+    await card.scrollIntoViewIfNeeded();
+    await card.focus();
+    await expect(card).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/nl\/about\/tricentis-tosca-automation$/);
+  });
+
   test('a certification links to the issuer-hosted proof', async ({ page }) => {
     await page.goto('/about/test-automation-architecture');
     const verify = page.getByRole('link', { name: copy('en', 'about').services.details.verifyCredential });
