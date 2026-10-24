@@ -19,6 +19,8 @@ The result of a production-readiness review (preflight score 36/100). On branch 
   - the OG image cut from 588 to 110 KB
 - The WebGL particle field no longer allocates per frame, and it is skipped on touch devices.
 - Total Blocking Time is now under 15 ms on every page (was 175–390 ms, over the 200 ms budget on /about and /contact). The particle field is drawn on a 2D canvas instead of three.js, whose WebGL setup blocked the main thread for ~300 ms (and 125 KB gzip less JavaScript); the scroll tracker no longer watches every DOM change; the app and the decorative layers mount as interruptible transitions; favicon canvases stay off the GPU.
+- No forced layouts on the About page's first render: the service cards' entrance is a CSS animation instead of a GSAP tween that read every card's transform, and smooth scrolling (Lenis) starts at the first idle moment. Its animation loop no longer outlives the component.
+- The pointer spotlights on the sidebar and the About cards follow the mouse through CSS variables instead of re-rendering in React on every move.
 - Lighthouse (same machine and load as before): mobile 57 → 86–87, desktop 91 → 94–99. Accessibility, best practices and SEO are 100.
 
 ### Security & privacy
@@ -31,6 +33,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - The service worker handles only its own origin (an exact match; look-alike hosts got through a substring test) and deletes only its own old caches.
 
 ### Added
+- Under the contact form: where a message goes (Web3Forms) and what name and email are used for, with a link to Web3Forms' privacy policy, in all three languages.
 - The Resume timeline fills with light as you scroll through it, lighting each role as you reach it, with a slow pulse on the current role. CSS scroll-driven animation only (no JavaScript, compositor-friendly); static for reduced motion and in browsers without scroll-driven animations.
 - A machine-readable profile: `/resume.json` (JSON Resume, schema-validated) for résumé and ATS tools, and `/llms.txt` (llmstxt.org) for AI assistants, both generated from the site's own data at build time and linked from every page's head.
 - A `/quality` page with the results of the CI run behind the live build: unit tests and coverage, end-to-end tests, accessibility scans, Lighthouse and security checks. A verification card in the About section leads to it. Every number comes from the run itself (`dist/quality.json`); without a complete report the page says so instead of showing numbers.
@@ -79,9 +82,9 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
 - Vitest unit tests: 129 tests, 86% line coverage on logic modules.
-- Playwright end-to-end suite: 160 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
+- Playwright end-to-end suite: 162 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
 - `knip` in CI: unused files, exports and dependencies fail the build.
-- CI quality gates in front of every deploy, Lighthouse budgets, a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
+- CI quality gates in front of every deploy, Lighthouse budgets on desktop and mobile (median of 5 runs each), a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
 - Node 22+.
 
 ## 2026-09-03
