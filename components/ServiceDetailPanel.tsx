@@ -1,40 +1,46 @@
-import React, { useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
-import { Service } from "../types.ts";
-import { PROJECTS } from "../constants.tsx";
+import { Service } from '../types.ts';
+import { PROJECTS } from '../constants.tsx';
 
 interface ServiceDetailPanelProps {
   service: Service | null;
   onClose: () => void;
-  onNavigate?: (direction: "prev" | "next") => void;
+  onNavigate?: (direction: 'prev' | 'next') => void;
 }
 
-const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClose, onNavigate }) => {
+const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
+  service,
+  onClose,
+  onNavigate,
+}) => {
   const { t } = useTranslation('about');
   const navigate = useLanguageNavigate();
 
   // Close on Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft" && onNavigate) onNavigate("prev");
-      if (e.key === "ArrowRight" && onNavigate) onNavigate("next");
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft' && onNavigate) onNavigate('prev');
+      if (e.key === 'ArrowRight' && onNavigate) onNavigate('next');
     };
-    window.addEventListener("keydown", handleEscape);
-    return () => window.removeEventListener("keydown", handleEscape);
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
   }, [onClose, onNavigate]);
 
   const handleShareClick = () => {
     if (navigator.share) {
-      navigator.share({
-        title: service?.title || "Service Details",
-        text: service?.description,
-        url: window.location.href,
-      }).catch(() => {
-        // Silently fail if user cancels
-      });
+      navigator
+        .share({
+          title: service?.title || 'Service Details',
+          text: service?.description,
+          url: window.location.href,
+        })
+        .catch(() => {
+          // Silently fail if user cancels
+        });
     } else {
       // Fallback: copy URL to clipboard
       navigator.clipboard.writeText(window.location.href);
@@ -45,12 +51,12 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
   // Prevent body scroll when panel is open
   useEffect(() => {
     if (service) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     }
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     };
   }, [service]);
 
@@ -77,10 +83,10 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
 
           {/* Panel */}
           <motion.div
-            initial={{ x: "100%" }}
+            initial={{ x: '100%' }}
             animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             className="fixed top-0 right-0 h-full w-full md:w-[600px] lg:w-[700px] bg-white dark:bg-black border-l-2 border-gray-200 dark:border-neon-border shadow-2xl z-[101] overflow-y-auto"
             data-lenis-prevent
             data-modal-content="true"
@@ -95,7 +101,6 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
 
                 {/* Right: Content Column */}
                 <div className="flex-1 flex flex-col justify-center min-w-0 h-16">
-                  
                   {/* Row 1: Badge & Controls */}
                   <div className="flex items-center justify-between mb-1 gap-4">
                     {/* Badge */}
@@ -112,16 +117,22 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                       {onNavigate && (
                         <>
                           <button
-                            onClick={() => onNavigate("prev")}
+                            onClick={() => onNavigate('prev')}
                             className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
                           >
-                            <i aria-hidden="true" className="fas fa-chevron-left text-sm group-hover:-translate-x-0.5 transition-transform duration-300"></i>
+                            <i
+                              aria-hidden="true"
+                              className="fas fa-chevron-left text-sm group-hover:-translate-x-0.5 transition-transform duration-300"
+                            ></i>
                           </button>
                           <button
-                            onClick={() => onNavigate("next")}
+                            onClick={() => onNavigate('next')}
                             className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
                           >
-                            <i aria-hidden="true" className="fas fa-chevron-right text-sm group-hover:translate-x-0.5 transition-transform duration-300"></i>
+                            <i
+                              aria-hidden="true"
+                              className="fas fa-chevron-right text-sm group-hover:translate-x-0.5 transition-transform duration-300"
+                            ></i>
                           </button>
                         </>
                       )}
@@ -129,13 +140,19 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                         onClick={handleShareClick}
                         className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
                       >
-                        <i aria-hidden="true" className="fas fa-share-alt text-sm group-hover:scale-110 transition-transform duration-300"></i>
+                        <i
+                          aria-hidden="true"
+                          className="fas fa-share-alt text-sm group-hover:scale-110 transition-transform duration-300"
+                        ></i>
                       </button>
                       <button
                         onClick={onClose}
                         className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
                       >
-                        <i aria-hidden="true" className="fas fa-times text-sm group-hover:rotate-90 transition-transform duration-300"></i>
+                        <i
+                          aria-hidden="true"
+                          className="fas fa-times text-sm group-hover:rotate-90 transition-transform duration-300"
+                        ></i>
                       </button>
                     </div>
                   </div>
@@ -149,12 +166,18 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
             </div>
 
             {/* Content - With safe area padding for mobile navbar */}
-            <div className="px-6 md:px-8 py-6 md:py-8 pb-32 md:pb-8 space-y-6 md:space-y-8" style={{ paddingBottom: 'max(8rem, calc(2rem + env(safe-area-inset-bottom)))' }}>
+            <div
+              className="px-6 md:px-8 py-6 md:py-8 pb-32 md:pb-8 space-y-6 md:space-y-8"
+              style={{ paddingBottom: 'max(8rem, calc(2rem + env(safe-area-inset-bottom)))' }}
+            >
               {/* Full Description */}
               {service.fullDescription && (
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                    <i aria-hidden="true" className="fas fa-info-circle text-accent-yellow dark:text-neon-cyan"></i>
+                    <i
+                      aria-hidden="true"
+                      className="fas fa-info-circle text-accent-yellow dark:text-neon-cyan"
+                    ></i>
                     {t('services.details.overview')}
                   </h3>
                   <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
@@ -167,7 +190,10 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
               {service.keyBenefits && service.keyBenefits.length > 0 && (
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <i aria-hidden="true" className="fas fa-check-circle text-accent-yellow dark:text-neon-cyan"></i>
+                    <i
+                      aria-hidden="true"
+                      className="fas fa-check-circle text-accent-yellow dark:text-neon-cyan"
+                    ></i>
                     {t('services.details.keyBenefits')}
                   </h3>
                   <div className="space-y-3">
@@ -195,7 +221,10 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
               {service.tags && service.tags.length > 0 && (
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <i aria-hidden="true" className="fas fa-layer-group text-accent-yellow dark:text-neon-cyan"></i>
+                    <i
+                      aria-hidden="true"
+                      className="fas fa-layer-group text-accent-yellow dark:text-neon-cyan"
+                    ></i>
                     {t('services.details.technologies')}
                   </h3>
                   <div className="flex flex-wrap gap-2">
@@ -223,7 +252,9 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                     </div>
                     <div>
                       <p className="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wide">
-                        {service.certificationDate ? `Certified ${service.certificationDate}` : t('services.details.yearsOfExperience')}
+                        {service.certificationDate
+                          ? `Certified ${service.certificationDate}`
+                          : t('services.details.yearsOfExperience')}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
                         {t('services.details.provenExpertise')}
@@ -245,7 +276,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                     <i aria-hidden="true" className="fas fa-certificate text-amber-500"></i>
                     {t('services.details.certification')}
                   </h3>
-                  
+
                   <div className="flex flex-col sm:flex-row gap-4 items-start">
                     {/* Certificate Thumbnail */}
                     {service.certificateImage && (
@@ -258,7 +289,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                         />
                       </div>
                     )}
-                    
+
                     {/* Certificate Details */}
                     <div className="flex-1 space-y-2">
                       {service.certificateId && (
@@ -269,16 +300,19 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                           </span>
                         </div>
                       )}
-                      
+
                       {service.certificationDate && (
                         <div className="flex items-center gap-2">
-                          <i aria-hidden="true" className="fas fa-calendar-check text-amber-500"></i>
+                          <i
+                            aria-hidden="true"
+                            className="fas fa-calendar-check text-amber-500"
+                          ></i>
                           <span className="text-sm text-gray-600 dark:text-gray-400">
                             {t('services.details.certifiedOn', { date: service.certificationDate })}
                           </span>
                         </div>
                       )}
-                      
+
                       {/* View Certificate Button */}
                       {service.certificateImage && (
                         <motion.button
@@ -302,7 +336,10 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                         >
                           <i aria-hidden="true" className="fas fa-shield-halved text-xs"></i>
                           <span>{t('services.details.verifyCredential')}</span>
-                          <i aria-hidden="true" className="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                          <i
+                            aria-hidden="true"
+                            className="fas fa-arrow-up-right-from-square text-[10px]"
+                          ></i>
                           <span className="sr-only">{t('services.details.opensInNewTab')}</span>
                         </a>
                       )}
@@ -347,7 +384,10 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
               {relatedProjects.length > 0 && (
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <i aria-hidden="true" className="fas fa-folder-open text-accent-yellow dark:text-neon-cyan"></i>
+                    <i
+                      aria-hidden="true"
+                      className="fas fa-folder-open text-accent-yellow dark:text-neon-cyan"
+                    ></i>
                     {t('services.details.relatedProjects')}
                   </h3>
                   <div className="space-y-3">
@@ -379,7 +419,10 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                               {project.category}
                             </p>
                           </div>
-                          <i aria-hidden="true" className="fas fa-arrow-right text-gray-400 group-hover:text-yellow-600 dark:group-hover:text-neon-cyan group-hover:translate-x-1 transition-all duration-300"></i>
+                          <i
+                            aria-hidden="true"
+                            className="fas fa-arrow-right text-gray-400 group-hover:text-yellow-600 dark:group-hover:text-neon-cyan group-hover:translate-x-1 transition-all duration-300"
+                          ></i>
                         </div>
                       </motion.div>
                     ))}
@@ -399,7 +442,10 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                   className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple text-white font-bold text-base shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group"
                 >
                   <span>{t('services.details.getInTouch')}</span>
-                  <i aria-hidden="true" className="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform duration-300"></i>
+                  <i
+                    aria-hidden="true"
+                    className="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform duration-300"
+                  ></i>
                 </motion.button>
               </div>
             </div>

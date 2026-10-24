@@ -4,7 +4,12 @@ import path from 'path';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { validate } from '@jsonresume/schema';
 import { loadConstants } from '../scripts/lib/load-constants.js';
-import { buildLlmsTxt, buildResume, dateRange, isoMonth } from '../scripts/generate-agent-profile.js';
+import {
+  buildLlmsTxt,
+  buildResume,
+  dateRange,
+  isoMonth,
+} from '../scripts/generate-agent-profile.js';
 
 const ROOT = path.resolve(__dirname, '..');
 const read = (file: string) => JSON.parse(fs.readFileSync(path.join(ROOT, file), 'utf8'));
@@ -14,7 +19,12 @@ let llms: string;
 beforeAll(async () => {
   const constants = await loadConstants();
   const about = read('public/locales/en/about.json');
-  resumeJson = buildResume({ constants, resume: read('public/locales/en/resume.json'), about, builtAt: '2026-10-24T12:00:00.000Z' });
+  resumeJson = buildResume({
+    constants,
+    resume: read('public/locales/en/resume.json'),
+    about,
+    builtAt: '2026-10-24T12:00:00.000Z',
+  });
   llms = buildLlmsTxt({ constants, about, resumeJson });
 });
 
@@ -34,15 +44,23 @@ describe('dates', () => {
 
 describe('resume.json', () => {
   it('validates against the official JSON Resume schema', async () => {
-    const errors = await new Promise((resolve) => validate(resumeJson, (err: unknown) => resolve(err)));
+    const errors = await new Promise((resolve) =>
+      validate(resumeJson, (err: unknown) => resolve(err)),
+    );
     expect(errors).toBeFalsy();
   });
 
   it('carries the current role, every certification and every project', () => {
     expect(resumeJson.work[0]).toMatchObject({ name: 'Sopra Steria', startDate: '2026-05' });
     expect(resumeJson.work[0]).not.toHaveProperty('endDate');
-    expect(resumeJson.certificates.find((c) => /ISTQB/.test(c.name))?.url).toMatch(/^https:\/\/app\.diplomasafe\.com\//);
-    expect(resumeJson.projects.every((p: { url: string }) => p.url.startsWith('https://emredursun.nl/projects/'))).toBe(true);
+    expect(resumeJson.certificates.find((c) => /ISTQB/.test(c.name))?.url).toMatch(
+      /^https:\/\/app\.diplomasafe\.com\//,
+    );
+    expect(
+      resumeJson.projects.every((p: { url: string }) =>
+        p.url.startsWith('https://emredursun.nl/projects/'),
+      ),
+    ).toBe(true);
     expect(resumeJson.basics.profiles.map((p: { network: string }) => p.network)).toEqual(
       expect.arrayContaining(['LinkedIn', 'GitHub', 'X']),
     );

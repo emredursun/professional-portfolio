@@ -6,7 +6,10 @@ import { expect, test } from './fixtures';
  * and mobile scrolls the window, so both projects run this.
  */
 const fill = (page: import('@playwright/test').Page, index: number) =>
-  page.locator('.timeline-beam').nth(index).evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).d);
+  page
+    .locator('.timeline-beam')
+    .nth(index)
+    .evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).d);
 
 test.describe('resume timeline beam', () => {
   test('fills a segment once the reader has scrolled past it', async ({ page }) => {
@@ -19,7 +22,10 @@ test.describe('resume timeline beam', () => {
 
     // Bring the second role to the middle of the screen: the first segment
     // has then been read and should be (close to) full.
-    await page.locator('.timeline-segment').nth(1).evaluate((el) => el.scrollIntoView({ block: 'center' }));
+    await page
+      .locator('.timeline-segment')
+      .nth(1)
+      .evaluate((el) => el.scrollIntoView({ block: 'center' }));
     await expect.poll(() => fill(page, 0), { timeout: 5000 }).toBeGreaterThan(0.9);
     // Segments further down have not been reached yet.
     expect(await fill(page, 3)).toBeLessThan(0.1);

@@ -54,7 +54,11 @@ describe('service worker', () => {
   });
 
   it('on activate deletes only its own old caches', async () => {
-    const { listeners, deleted } = loadWorker(['ed-portfolio-v1', 'ed-portfolio-v6', 'other-app-cache']);
+    const { listeners, deleted } = loadWorker([
+      'ed-portfolio-v1',
+      'ed-portfolio-v6',
+      'other-app-cache',
+    ]);
     let done: Promise<unknown> = Promise.resolve();
     listeners.activate({ waitUntil: (p: Promise<unknown>) => (done = p) });
     await done;

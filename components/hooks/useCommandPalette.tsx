@@ -162,9 +162,12 @@ export const useCommandPalette = ({
         id: 'theme-toggle',
         label: t('palette.commands.toggleTheme.label'),
         description: t('palette.commands.toggleTheme.description'),
-        icon: theme === 'light' 
-          ? <i aria-hidden="true" className="fas fa-moon" /> 
-          : <i aria-hidden="true" className="fas fa-sun" />,
+        icon:
+          theme === 'light' ? (
+            <i aria-hidden="true" className="fas fa-moon" />
+          ) : (
+            <i aria-hidden="true" className="fas fa-sun" />
+          ),
         category: 'Theme',
         keywords: ['theme', 'dark', 'light', 'mode', 'toggle'],
         shortcut: '⌘T',
@@ -248,7 +251,7 @@ export const useCommandPalette = ({
       keywords: [
         project.title.toLowerCase(),
         project.category.toLowerCase(),
-        ...project.technologies.map(t => t.toLowerCase()),
+        ...project.technologies.map((t) => t.toLowerCase()),
         'project',
       ],
       action: () => {
@@ -261,7 +264,7 @@ export const useCommandPalette = ({
     }));
 
     // Add category filter commands
-    const categories = Array.from(new Set(PROJECTS.map(p => p.category)));
+    const categories = Array.from(new Set(PROJECTS.map((p) => p.category)));
     const categoryCommands: Command[] = categories.map((category) => ({
       id: `filter-${category.toLowerCase().replace(/\s+/g, '-')}`,
       label: t('palette.commands.filterLabel', { category }),
@@ -293,7 +296,7 @@ export const useCommandPalette = ({
   // Get recent commands based on stored IDs
   const recentCommands = useMemo(() => {
     return recentCommandIds
-      .map(id => commands.find(cmd => cmd.id === id))
+      .map((id) => commands.find((cmd) => cmd.id === id))
       .filter((cmd): cmd is Command => cmd !== undefined)
       .slice(0, MAX_RECENT);
   }, [recentCommandIds, commands]);
@@ -312,30 +315,33 @@ export const useCommandPalette = ({
   }, [commands]);
 
   // Search function
-  const searchCommands = useCallback((query: string): Command[] => {
-    if (!query.trim()) {
-      return commands;
-    }
+  const searchCommands = useCallback(
+    (query: string): Command[] => {
+      if (!query.trim()) {
+        return commands;
+      }
 
-    const results = fuse.search(query);
-    return results.map(result => result.item);
-  }, [fuse, commands]);
+      const results = fuse.search(query);
+      return results.map((result) => result.item);
+    },
+    [fuse, commands],
+  );
 
   // Execute command and track in recent
   const executeCommand = useCallback((command: Command) => {
     command.action();
 
     // Update recent commands
-    setRecentCommandIds(prev => {
-      const filtered = prev.filter(id => id !== command.id);
+    setRecentCommandIds((prev) => {
+      const filtered = prev.filter((id) => id !== command.id);
       const updated = [command.id, ...filtered].slice(0, MAX_RECENT);
-      
+
       try {
         localStorage.setItem(RECENT_COMMANDS_KEY, JSON.stringify(updated));
       } catch (error) {
         console.error('Failed to save recent commands:', error);
       }
-      
+
       return updated;
     });
   }, []);

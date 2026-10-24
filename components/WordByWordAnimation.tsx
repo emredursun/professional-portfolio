@@ -2,22 +2,22 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 interface WordByWordAnimationProps {
-    text: string;
-    className?: string;
-    staggerDelay?: number;
-    initialDelay?: number;
-    dropDistance?: number;
-    animationDuration?: number;
-    repeat?: boolean;
-    repeatDelay?: number;
+  text: string;
+  className?: string;
+  staggerDelay?: number;
+  initialDelay?: number;
+  dropDistance?: number;
+  animationDuration?: number;
+  repeat?: boolean;
+  repeatDelay?: number;
 }
 
 /**
  * WordByWordAnimation Component
- * 
+ *
  * Animates text word by word with a dropdown effect and staggered delays.
  * Each word drops from above with fade-in effect.
- * 
+ *
  * @param text - The text to animate (will be split by spaces)
  * @param className - Additional CSS classes to apply to each word
  * @param staggerDelay - Delay between each word animation (default: 0.1s)
@@ -28,70 +28,70 @@ interface WordByWordAnimationProps {
  * @param repeatDelay - Delay before repeating the animation cycle (default: 2s)
  */
 const WordByWordAnimation: React.FC<WordByWordAnimationProps> = ({
-    text,
-    className = '',
-    staggerDelay = 0.1,
-    initialDelay = 0,
-    dropDistance = 20,
-    animationDuration = 0.5,
-    repeat = false,
-    repeatDelay = 2,
+  text,
+  className = '',
+  staggerDelay = 0.1,
+  initialDelay = 0,
+  dropDistance = 20,
+  animationDuration = 0.5,
+  repeat = false,
+  repeatDelay = 2,
 }) => {
-    // Split text into words
-    const words = text.split(' ');
-    
-    // Calculate total animation time for one complete cycle
-    const totalAnimationTime = (words.length * staggerDelay) + animationDuration;
+  // Split text into words
+  const words = text.split(' ');
 
-    // Container variants for staggered children
-    const containerVariants = {
-        hidden: { opacity: 1 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: staggerDelay,
-                delayChildren: initialDelay,
-            },
-        },
-    };
+  // Calculate total animation time for one complete cycle
+  const totalAnimationTime = words.length * staggerDelay + animationDuration;
 
-    // Individual word variants with optional repeat
-    const wordVariants = {
-        hidden: {
-            opacity: 0,
-            y: -dropDistance,
-        },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: animationDuration,
-                ease: [0.25, 0.46, 0.45, 0.94] as const, // Custom easing for smooth drop
-                repeat: repeat ? Infinity : 0,
-                repeatType: 'loop' as const,
-                repeatDelay: repeat ? (repeatDelay + totalAnimationTime) : 0,
-            },
-        },
-    };
+  // Container variants for staggered children
+  const containerVariants = {
+    hidden: { opacity: 1 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: staggerDelay,
+        delayChildren: initialDelay,
+      },
+    },
+  };
 
-    return (
+  // Individual word variants with optional repeat
+  const wordVariants = {
+    hidden: {
+      opacity: 0,
+      y: -dropDistance,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: animationDuration,
+        ease: [0.25, 0.46, 0.45, 0.94] as const, // Custom easing for smooth drop
+        repeat: repeat ? Infinity : 0,
+        repeatType: 'loop' as const,
+        repeatDelay: repeat ? repeatDelay + totalAnimationTime : 0,
+      },
+    },
+  };
+
+  return (
+    <motion.span
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="inline-flex flex-wrap gap-x-1.5"
+    >
+      {words.map((word, index) => (
         <motion.span
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="inline-flex flex-wrap gap-x-1.5"
+          key={`${word}-${index}`}
+          variants={wordVariants}
+          className={`inline-block ${className}`}
         >
-            {words.map((word, index) => (
-                <motion.span
-                    key={`${word}-${index}`}
-                    variants={wordVariants}
-                    className={`inline-block ${className}`}
-                >
-                    {word}
-                </motion.span>
-            ))}
+          {word}
         </motion.span>
-    );
+      ))}
+    </motion.span>
+  );
 };
 
 export default WordByWordAnimation;

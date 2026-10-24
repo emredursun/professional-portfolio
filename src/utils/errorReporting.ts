@@ -23,7 +23,8 @@ let reportsSent = 0;
 const seen = new Set<string>();
 
 const URL_QUERY = /(https?:\/\/[^\s?#]+)[?#]\S*/g;
-const CREDENTIAL = /\b([\w-]*(?:token|key|secret|password|passwd|auth|session|cookie)[\w-]*)\s*[=:]\s*[^\s,;&]+/gi;
+const CREDENTIAL =
+  /\b([\w-]*(?:token|key|secret|password|passwd|auth|session|cookie)[\w-]*)\s*[=:]\s*[^\s,;&]+/gi;
 const EMAIL = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g;
 const OPAQUE_ID = /\b(?=[A-Za-z0-9_]*\d)[A-Za-z0-9_]{24,}\b/g;
 const DIGIT_RUN = /\d{6,}/g;

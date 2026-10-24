@@ -31,9 +31,7 @@ const upsertMeta = (selector: string, attr: 'name' | 'property', key: string, co
 
 /** Upsert a <link> tag, keyed by rel (+ hreflang when present). */
 const upsertLink = (rel: string, href: string, hreflang?: string) => {
-  const selector = hreflang
-    ? `link[rel="${rel}"][hreflang="${hreflang}"]`
-    : `link[rel="${rel}"]`;
+  const selector = hreflang ? `link[rel="${rel}"][hreflang="${hreflang}"]` : `link[rel="${rel}"]`;
   let el = document.head.querySelector<HTMLLinkElement>(selector);
   if (!el) {
     el = document.createElement('link');
@@ -44,7 +42,12 @@ const upsertLink = (rel: string, href: string, hreflang?: string) => {
   el.setAttribute('href', href);
 };
 
-const SEO: React.FC<SEOProps> = ({ title, description, overrideTitle = false, noindex = false }) => {
+const SEO: React.FC<SEOProps> = ({
+  title,
+  description,
+  overrideTitle = false,
+  noindex = false,
+}) => {
   const location = useLocation();
   const { t } = useTranslation();
 
@@ -67,19 +70,24 @@ const SEO: React.FC<SEOProps> = ({ title, description, overrideTitle = false, no
   // Construct Canonical URL (Self-referencing)
   // - If EN (default): https://emredursun.nl + path
   // - If Other: https://emredursun.nl + /lang + path
-  const canonicalPath = currentLang === 'en'
-    ? pathWithoutLang
-    : `/${currentLang}${pathWithoutLang}`;
+  const canonicalPath =
+    currentLang === 'en' ? pathWithoutLang : `/${currentLang}${pathWithoutLang}`;
 
-  const canonicalUrl = `${baseUrl}${canonicalPath === '//' ? '/' : canonicalPath}`.replace(/\/$/, '');
+  const canonicalUrl = `${baseUrl}${canonicalPath === '//' ? '/' : canonicalPath}`.replace(
+    /\/$/,
+    '',
+  );
 
   // Dynamic Metadata defaults
-  const siteTitle = "Emre Dursun — QA Consultant, Pega & Tricentis Tosca";
-  const metaTitle = title
-    ? (overrideTitle ? title : `${title} | Emre Dursun`)
-    : siteTitle;
+  const siteTitle = 'Emre Dursun — QA Consultant, Pega & Tricentis Tosca';
+  const metaTitle = title ? (overrideTitle ? title : `${title} | Emre Dursun`) : siteTitle;
 
-  const metaDescription = description || t('meta.description', "QA Consultant specializing in Pega & Tricentis Tosca test automation, ISTQB® Certified.");
+  const metaDescription =
+    description ||
+    t(
+      'meta.description',
+      'QA Consultant specializing in Pega & Tricentis Tosca test automation, ISTQB® Certified.',
+    );
 
   const enHref = `${baseUrl}${pathWithoutLang}`.replace(/\/$/, '') || baseUrl;
   const nlHref = `${baseUrl}/nl${pathWithoutLang}`.replace(/\/$/, '');

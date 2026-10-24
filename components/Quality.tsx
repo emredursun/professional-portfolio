@@ -13,7 +13,8 @@ interface QualityReport {
   security: { runtimeAdvisories: number; strictCsp: boolean };
 }
 
-type LoadState = { status: 'loading' } | { status: 'ready'; report: QualityReport } | { status: 'unavailable' };
+type LoadState =
+  { status: 'loading' } | { status: 'ready'; report: QualityReport } | { status: 'unavailable' };
 
 const isCount = (value: unknown) => typeof value === 'number' && Number.isFinite(value);
 
@@ -25,15 +26,15 @@ function isQualityReport(data: unknown): data is QualityReport {
   const r = data as Partial<QualityReport> | null;
   return Boolean(
     r &&
-      typeof r.shortCommit === 'string' &&
-      typeof r.builtAt === 'string' &&
-      !Number.isNaN(Date.parse(r.builtAt)) &&
-      [r.unit?.passed, r.unit?.failed, r.unit?.coverage].every(isCount) &&
-      [r.e2e?.passed, r.e2e?.failed, r.e2e?.flaky].every(isCount) &&
-      isCount(r.a11y?.violations) &&
-      [r.lighthouse?.performance, r.lighthouse?.accessibility, r.lighthouse?.seo].every(isCount) &&
-      isCount(r.security?.runtimeAdvisories) &&
-      typeof r.security?.strictCsp === 'boolean',
+    typeof r.shortCommit === 'string' &&
+    typeof r.builtAt === 'string' &&
+    !Number.isNaN(Date.parse(r.builtAt)) &&
+    [r.unit?.passed, r.unit?.failed, r.unit?.coverage].every(isCount) &&
+    [r.e2e?.passed, r.e2e?.failed, r.e2e?.flaky].every(isCount) &&
+    isCount(r.a11y?.violations) &&
+    [r.lighthouse?.performance, r.lighthouse?.accessibility, r.lighthouse?.seo].every(isCount) &&
+    isCount(r.security?.runtimeAdvisories) &&
+    typeof r.security?.strictCsp === 'boolean',
   );
 }
 
@@ -68,9 +69,12 @@ const LINES = [
 
 /** Copy key for a line; the security line must not claim a strict CSP it lacks. */
 const lineKey = (id: (typeof LINES)[number]['id'], report: QualityReport) =>
-  id === 'security' && !report.security.strictCsp ? 'quality.lines.securityRelaxed' : `quality.lines.${id}`;
+  id === 'security' && !report.security.strictCsp
+    ? 'quality.lines.securityRelaxed'
+    : `quality.lines.${id}`;
 
-const cardClass = 'rounded-2xl border border-gray-100 dark:border-neon-border bg-white dark:bg-neon-bg shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-none';
+const cardClass =
+  'rounded-2xl border border-gray-100 dark:border-neon-border bg-white dark:bg-neon-bg shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-none';
 
 const Quality: React.FC = () => {
   const { t } = useTranslation('common');
@@ -79,10 +83,14 @@ const Quality: React.FC = () => {
   useEffect(() => {
     let cancelled = false;
     fetch('/quality.json', { cache: 'no-cache' })
-      .then((response) => (response.ok ? response.json() : Promise.reject(new Error(String(response.status)))))
+      .then((response) =>
+        response.ok ? response.json() : Promise.reject(new Error(String(response.status))),
+      )
       .then((data: unknown) => {
         if (cancelled) return;
-        setState(isQualityReport(data) ? { status: 'ready', report: data } : { status: 'unavailable' });
+        setState(
+          isQualityReport(data) ? { status: 'ready', report: data } : { status: 'unavailable' },
+        );
       })
       .catch(() => !cancelled && setState({ status: 'unavailable' }));
     return () => {
@@ -95,12 +103,16 @@ const Quality: React.FC = () => {
       <SEO title={t('quality.title')} description={t('quality.meta.description')} />
       <header className="mb-10">
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">{t('quality.headingHighlight')}</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">
+            {t('quality.headingHighlight')}
+          </span>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark">
             {t('quality.headingRest')}
           </span>
         </h2>
-        <p className="font-mono text-sm text-gray-600 dark:text-gray-400">/quality · {t('quality.subtitle')}</p>
+        <p className="font-mono text-sm text-gray-600 dark:text-gray-400">
+          /quality · {t('quality.subtitle')}
+        </p>
       </header>
 
       {state.status === 'unavailable' ? (
@@ -109,12 +121,19 @@ const Quality: React.FC = () => {
         </div>
       ) : (
         <div className="@container">
-          <div className="grid gap-6 @3xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]" aria-busy={state.status === 'loading'}>
+          <div
+            className="grid gap-6 @3xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]"
+            aria-busy={state.status === 'loading'}
+          >
             <div className={`${cardClass} p-6 font-mono text-sm leading-8`}>
               {state.status === 'loading' ? (
                 <div className="space-y-3 py-1" aria-hidden="true">
                   {[0, 1, 2, 3, 4, 5].map((i) => (
-                    <div key={i} className="h-4 rounded bg-gray-100 dark:bg-white/5 animate-pulse" style={{ width: `${88 - i * 7}%` }} />
+                    <div
+                      key={i}
+                      className="h-4 rounded bg-gray-100 dark:bg-white/5 animate-pulse"
+                      style={{ width: `${88 - i * 7}%` }}
+                    />
                   ))}
                 </div>
               ) : (
@@ -125,9 +144,20 @@ const Quality: React.FC = () => {
             <div className="grid gap-4 @lg:grid-cols-3 @3xl:grid-cols-1 content-start">
               {state.status === 'ready' && (
                 <>
-                  <Metric label={t('quality.metrics.coverage')} value={t('quality.metrics.coverageValue', { value: state.report.unit.coverage })} />
-                  <Metric label={t('quality.metrics.performance')} value={String(state.report.lighthouse.performance)} />
-                  <Metric label={t('quality.metrics.monitoring')} value={t('quality.metrics.monitoringValue')} />
+                  <Metric
+                    label={t('quality.metrics.coverage')}
+                    value={t('quality.metrics.coverageValue', {
+                      value: state.report.unit.coverage,
+                    })}
+                  />
+                  <Metric
+                    label={t('quality.metrics.performance')}
+                    value={String(state.report.lighthouse.performance)}
+                  />
+                  <Metric
+                    label={t('quality.metrics.monitoring')}
+                    value={t('quality.metrics.monitoringValue')}
+                  />
                 </>
               )}
             </div>
@@ -144,31 +174,51 @@ const Quality: React.FC = () => {
 
 const TerminalLines: React.FC<{ report: QualityReport }> = ({ report }) => {
   const { t, i18n } = useTranslation('common');
-  const date = new Intl.DateTimeFormat(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(report.builtAt));
+  const date = new Intl.DateTimeFormat(i18n.language, {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(report.builtAt));
   const passed = report.unit.passed + report.e2e.passed;
   const failed = report.unit.failed + report.e2e.failed;
   const allOk = LINES.every((line) => line.ok(report));
 
   // Lines tick in one after another; with reduced motion they are simply there.
-  const reveal = (index: number) => ({ className: 'motion-safe:opacity-0 motion-safe:animate-fade-in', style: { animationDelay: `${index * 120}ms` } });
+  const reveal = (index: number) => ({
+    className: 'motion-safe:opacity-0 motion-safe:animate-fade-in',
+    style: { animationDelay: `${index * 120}ms` },
+  });
   const summary = reveal(LINES.length + 1);
 
   return (
     <>
-      <p className="text-gray-500 dark:text-gray-400 break-words">$ npm run verify · build {report.shortCommit} · {date}</p>
+      <p className="text-gray-500 dark:text-gray-400 break-words">
+        $ npm run verify · build {report.shortCommit} · {date}
+      </p>
       <ul className="mt-1">
         {LINES.map((line, index) => {
           const ok = line.ok(report);
           const { className, style } = reveal(index + 1);
           return (
             <li key={line.id} className={`flex items-baseline gap-3 ${className}`} style={style}>
-              <span aria-hidden="true" className={ok ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}>
+              <span
+                aria-hidden="true"
+                className={
+                  ok ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'
+                }
+              >
                 {ok ? '✓' : '✗'}
               </span>
               {/* The tick is colour and glyph only; say it in words for screen readers. */}
-              <span className="sr-only">{ok ? t('quality.status.passed') : t('quality.status.failed')}:</span>
-              <span className="w-24 shrink-0 text-gray-900 dark:text-white font-bold">{line.id}</span>
-              <span className="text-gray-700 dark:text-gray-300 min-w-0">{t(lineKey(line.id, report), line.values(report))}</span>
+              <span className="sr-only">
+                {ok ? t('quality.status.passed') : t('quality.status.failed')}:
+              </span>
+              <span className="w-24 shrink-0 text-gray-900 dark:text-white font-bold">
+                {line.id}
+              </span>
+              <span className="text-gray-700 dark:text-gray-300 min-w-0">
+                {t(lineKey(line.id, report), line.values(report))}
+              </span>
             </li>
           );
         })}
@@ -185,8 +235,12 @@ const TerminalLines: React.FC<{ report: QualityReport }> = ({ report }) => {
 
 const Metric: React.FC<{ label: string; value: string }> = ({ label, value }) => (
   <div className={`${cardClass} p-5`}>
-    <div className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-neon-text-tertiary">{label}</div>
-    <div className="mt-1 text-3xl font-black tracking-tight text-gray-900 dark:text-white">{value}</div>
+    <div className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-neon-text-tertiary">
+      {label}
+    </div>
+    <div className="mt-1 text-3xl font-black tracking-tight text-gray-900 dark:text-white">
+      {value}
+    </div>
   </div>
 );
 

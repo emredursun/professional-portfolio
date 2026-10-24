@@ -7,7 +7,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 export const LANGUAGES = {
   en: { nativeName: 'English', flag: '🇺🇸' },
   nl: { nativeName: 'Nederlands', flag: '🇳🇱' },
-  tr: { nativeName: 'Türkçe', flag: '🇹🇷' }
+  tr: { nativeName: 'Türkçe', flag: '🇹🇷' },
 };
 
 const DEFAULT_LANGUAGE = 'en';
@@ -19,7 +19,8 @@ const DEFAULT_LANGUAGE = 'en';
  * App switched to the URL's language and fetched a third: up to 18 locale
  * files and an extra language change on every first load instead of 6.
  */
-const initialLanguage = window.location.pathname.match(/^\/(nl|tr)(?=\/|$)/)?.[1] ?? DEFAULT_LANGUAGE;
+const initialLanguage =
+  window.location.pathname.match(/^\/(nl|tr)(?=\/|$)/)?.[1] ?? DEFAULT_LANGUAGE;
 
 i18n
   // Load translations using http backend
@@ -33,7 +34,7 @@ i18n
     lng: initialLanguage,
     fallbackLng: DEFAULT_LANGUAGE,
     supportedLngs: Object.keys(LANGUAGES),
-    
+
     // Namespaces for better organization
     ns: ['common', 'sidebar', 'about', 'resume', 'projects', 'contact'],
     defaultNS: 'common',
@@ -42,7 +43,7 @@ i18n
     detection: {
       order: ['localStorage', 'navigator'],
       caches: ['localStorage'],
-      lookupLocalStorage: 'i18nextLng'
+      lookupLocalStorage: 'i18nextLng',
     },
 
     // Backend configuration

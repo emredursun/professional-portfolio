@@ -20,7 +20,11 @@ const OLD = '2026-01-01T00:00:00.000Z';
 
 describe('computeLastMod', () => {
   it('keeps the stored timestamp when a route hash is unchanged', () => {
-    const { lastMod, changed } = computeLastMod({ '/about': { hash: 'a', lastmod: OLD } }, { '/about': 'a' }, NOW);
+    const { lastMod, changed } = computeLastMod(
+      { '/about': { hash: 'a', lastmod: OLD } },
+      { '/about': 'a' },
+      NOW,
+    );
     expect(lastMod['/about']).toBe(OLD);
     expect(changed).toEqual([]);
   });
@@ -30,7 +34,11 @@ describe('computeLastMod', () => {
       '/about': { hash: 'a', lastmod: OLD },
       '/projects': { hash: 'p', lastmod: OLD },
     };
-    const { lastMod, changed } = computeLastMod(previous, { '/about': 'a', '/projects': 'p2' }, NOW);
+    const { lastMod, changed } = computeLastMod(
+      previous,
+      { '/about': 'a', '/projects': 'p2' },
+      NOW,
+    );
     expect(lastMod).toEqual({ '/about': OLD, '/projects': NOW });
     expect(changed).toEqual(['/projects']);
   });
@@ -65,7 +73,9 @@ describe('sourcesForRoute', () => {
 
   it('gives detail pages the namespace of their section', () => {
     expect(sourcesForRoute('/projects/aegisqa')).toContain('public/locales/nl/projects.json');
-    expect(sourcesForRoute('/about/pega-platform-architecture')).toContain('public/locales/tr/about.json');
+    expect(sourcesForRoute('/about/pega-platform-architecture')).toContain(
+      'public/locales/tr/about.json',
+    );
   });
 
   it('rejects a route outside the known sections', () => {
@@ -86,7 +96,9 @@ describe('listRoutes', () => {
     const { loadConstants } = await import('../scripts/lib/load-constants.js');
     const constants = await loadConstants();
     const routes = listRoutes(constants);
-    expect(routes).toHaveLength(STATIC_ROUTES.length + constants.SERVICES.length + constants.PROJECTS.length);
+    expect(routes).toHaveLength(
+      STATIC_ROUTES.length + constants.SERVICES.length + constants.PROJECTS.length,
+    );
     expect(new Set(routes).size).toBe(routes.length);
     expect(routes).toContain('/projects/devran-ai-kit');
   });

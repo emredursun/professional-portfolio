@@ -19,8 +19,10 @@ const loaders = {
  * network round trip to LCP. import() caches the promise, so the lazy()
  * call below reuses this request instead of issuing a second one.
  */
-const landingPage = (Object.keys(loaders) as Array<keyof typeof loaders>)
-  .find((page) => page !== 'about' && window.location.pathname.includes(page)) ?? 'about';
+const landingPage =
+  (Object.keys(loaders) as Array<keyof typeof loaders>).find(
+    (page) => page !== 'about' && window.location.pathname.includes(page),
+  ) ?? 'about';
 void loaders[landingPage]();
 
 const About = lazy(loaders.about);

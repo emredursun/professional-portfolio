@@ -2,29 +2,29 @@ import React, { useState } from 'react';
 import { useReducedMotion } from './hooks/useReducedMotion.tsx';
 
 function createElements() {
-    const shapes = ['circle', 'square', 'triangle'];
-    const count = 8; // Keep count low for performance
+  const shapes = ['circle', 'square', 'triangle'];
+  const count = 8; // Keep count low for performance
 
-    return Array.from({ length: count }, (_, i) => {
-      const shape = shapes[Math.floor(Math.random() * shapes.length)];
-      const size = Math.random() * 150 + 50; // 50-200px
-      const top = Math.random() * 100;
-      const left = Math.random() * 100;
-      const duration = Math.random() * 10 + 15; // 15-25s
-      const delay = Math.random() * 5;
-      const opacity = Math.random() * 0.03 + 0.01; // Very subtle: 0.01-0.04
-      
-      return {
-        id: i,
-        shape,
-        size,
-        top,
-        left,
-        duration,
-        delay,
-        opacity,
-      };
-    });
+  return Array.from({ length: count }, (_, i) => {
+    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+    const size = Math.random() * 150 + 50; // 50-200px
+    const top = Math.random() * 100;
+    const left = Math.random() * 100;
+    const duration = Math.random() * 10 + 15; // 15-25s
+    const delay = Math.random() * 5;
+    const opacity = Math.random() * 0.03 + 0.01; // Very subtle: 0.01-0.04
+
+    return {
+      id: i,
+      shape,
+      size,
+      top,
+      left,
+      duration,
+      delay,
+      opacity,
+    };
+  });
 }
 
 /**

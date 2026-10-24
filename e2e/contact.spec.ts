@@ -43,8 +43,12 @@ test.describe('contact form', () => {
 
     await expect(page.getByRole('alert')).toContainText(contact.messages.error.title);
     // What the visitor typed is still there, so a retry is one click.
-    await expect(page.getByRole('textbox', { name: contact.form.name.label })).toHaveValue('Ada Lovelace');
-    await expect(page.getByRole('textbox', { name: contact.form.message.label })).toHaveValue(/Tosca assignment/);
+    await expect(page.getByRole('textbox', { name: contact.form.name.label })).toHaveValue(
+      'Ada Lovelace',
+    );
+    await expect(page.getByRole('textbox', { name: contact.form.message.label })).toHaveValue(
+      /Tosca assignment/,
+    );
 
     await page.unroute(WEB3FORMS);
     await page.route(WEB3FORMS, (route) => route.fulfill({ json: { success: true } }));
@@ -57,7 +61,9 @@ test.describe('contact form', () => {
 
   test('a rejected message reports a fixed code, never the provider text', async ({ page }) => {
     await page.route(WEB3FORMS, (route) =>
-      route.fulfill({ json: { success: false, message: 'Blocked sender ada@example.com token=abc123' } }),
+      route.fulfill({
+        json: { success: false, message: 'Blocked sender ada@example.com token=abc123' },
+      }),
     );
 
     await fillValidForm(page);
@@ -71,7 +77,10 @@ test.describe('contact form', () => {
         .map((call) => JSON.stringify(call)),
     );
     expect(errors).toEqual([
-      JSON.stringify(['JS Error', { props: { message: 'ContactSubmitError: rejected', source: 'promise' } }]),
+      JSON.stringify([
+        'JS Error',
+        { props: { message: 'ContactSubmitError: rejected', source: 'promise' } },
+      ]),
     ]);
   });
 
@@ -84,16 +93,22 @@ test.describe('contact form', () => {
     await page.clock.fastForward(16000);
 
     await expect(page.getByRole('alert')).toContainText(contact.messages.error.title);
-    await expect(page.getByRole('textbox', { name: contact.form.message.label })).toHaveValue(/Tosca assignment/);
+    await expect(page.getByRole('textbox', { name: contact.form.message.label })).toHaveValue(
+      /Tosca assignment/,
+    );
   });
 
   test('the form says where a message goes before it is sent', async ({ page }) => {
     const nl = copy('nl', 'contact').form.notice;
     await page.goto('/nl/contact');
     await expect(page.getByText(nl.text)).toBeVisible();
-    await expect(page.getByRole('link', { name: nl.link })).toHaveAttribute('href', 'https://web3forms.com/privacy');
-    await expect(page.getByRole('button', { name: copy('nl', 'common').buttons.sendMessage }))
-      .toHaveAccessibleDescription(new RegExp(nl.text.slice(0, 30)));
+    await expect(page.getByRole('link', { name: nl.link })).toHaveAttribute(
+      'href',
+      'https://web3forms.com/privacy',
+    );
+    await expect(
+      page.getByRole('button', { name: copy('nl', 'common').buttons.sendMessage }),
+    ).toHaveAccessibleDescription(new RegExp(nl.text.slice(0, 30)));
   });
 
   test('a short message is blocked before any request is made', async ({ page }) => {
@@ -112,7 +127,9 @@ test.describe('contact form', () => {
     expect(requests).toBe(0);
   });
 
-  test('a bot that ticks the honeypot gets a fake success and no email is sent', async ({ page }) => {
+  test('a bot that ticks the honeypot gets a fake success and no email is sent', async ({
+    page,
+  }) => {
     let requests = 0;
     await page.route(WEB3FORMS, (route) => {
       requests += 1;
@@ -121,7 +138,9 @@ test.describe('contact form', () => {
 
     await fillValidForm(page);
     // A bot fills every field programmatically, including the hidden one.
-    await page.locator('input[name="botcheck"]').evaluate((el: HTMLInputElement) => (el.checked = true));
+    await page
+      .locator('input[name="botcheck"]')
+      .evaluate((el: HTMLInputElement) => (el.checked = true));
     await sendButton(page).click();
 
     await expect(page.getByRole('heading', { name: contact.messages.success.title })).toBeVisible();
@@ -146,7 +165,10 @@ test.describe('map consent', () => {
     await page.getByRole('button', { name: contact.map.load }).click();
 
     // The work city, never the home town (tests/privacy.test.ts).
-    await expect(page.locator('iframe[title="Location Map"]')).toHaveAttribute('src', /google\.com\/maps\?q=Nieuwegein.*output=embed/);
+    await expect(page.locator('iframe[title="Location Map"]')).toHaveAttribute(
+      'src',
+      /google\.com\/maps\?q=Nieuwegein.*output=embed/,
+    );
     await expect(page.locator('iframe[title="Location Map"]')).toHaveAttribute(
       'referrerpolicy',
       'strict-origin-when-cross-origin',

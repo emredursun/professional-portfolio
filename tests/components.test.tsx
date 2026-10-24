@@ -79,14 +79,22 @@ describe('ErrorBoundary', () => {
   });
 
   it('renders its children when nothing throws', () => {
-    render(<ErrorBoundary><p>content</p></ErrorBoundary>);
+    render(
+      <ErrorBoundary>
+        <p>content</p>
+      </ErrorBoundary>,
+    );
     expect(screen.getByText('content')).toBeTruthy();
   });
 
   it('replaces a crashed subtree with the fallback screen and reports it', () => {
     const plausible = vi.fn();
     window.plausible = plausible;
-    render(<ErrorBoundary><Boom /></ErrorBoundary>);
+    render(
+      <ErrorBoundary>
+        <Boom />
+      </ErrorBoundary>,
+    );
     expect(screen.getByRole('alert')).toBeTruthy();
     expect(screen.getByText('Oops! Something went wrong')).toBeTruthy();
     expect(plausible).toHaveBeenCalledWith('JS Error', {
@@ -95,17 +103,27 @@ describe('ErrorBoundary', () => {
   });
 
   it('uses a custom fallback when one is given', () => {
-    render(<ErrorBoundary fallback={<p>custom fallback</p>}><Boom /></ErrorBoundary>);
+    render(
+      <ErrorBoundary fallback={<p>custom fallback</p>}>
+        <Boom />
+      </ErrorBoundary>,
+    );
     expect(screen.getByText('custom fallback')).toBeTruthy();
   });
 
   it('does not take over the page for errors outside the React tree', () => {
-    render(<ErrorBoundary><p>still here</p></ErrorBoundary>);
+    render(
+      <ErrorBoundary>
+        <p>still here</p>
+      </ErrorBoundary>,
+    );
     // Stands in for the page's own handling, so jsdom does not escalate the
     // event to an uncaught exception.
     window.addEventListener('error', (e) => e.preventDefault(), { once: true });
     act(() => {
-      window.dispatchEvent(new ErrorEvent('error', { error: new Error('third-party'), message: 'third-party' }));
+      window.dispatchEvent(
+        new ErrorEvent('error', { error: new Error('third-party'), message: 'third-party' }),
+      );
     });
     expect(screen.getByText('still here')).toBeTruthy();
     expect(screen.queryByRole('alert')).toBeNull();
@@ -206,7 +224,10 @@ describe('bootstrap', () => {
   it('reloads once when a lazy chunk from a previous deploy is gone, never in a loop', async () => {
     const { handleStaleChunk } = await import('../src/bootstrap.ts');
     const store = new Map<string, string>();
-    const storage = { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => void store.set(k, v) };
+    const storage = {
+      getItem: (k: string) => store.get(k) ?? null,
+      setItem: (k: string, v: string) => void store.set(k, v),
+    };
     const reload = vi.fn();
 
     const first = new Event('vite:preloadError', { cancelable: true });
@@ -223,7 +244,12 @@ describe('bootstrap', () => {
 
   it('does not reload when session storage is blocked', async () => {
     const { handleStaleChunk } = await import('../src/bootstrap.ts');
-    const blocked = { getItem: () => { throw new Error('SecurityError'); }, setItem: () => undefined };
+    const blocked = {
+      getItem: () => {
+        throw new Error('SecurityError');
+      },
+      setItem: () => undefined,
+    };
     const reload = vi.fn();
     handleStaleChunk(new Event('vite:preloadError', { cancelable: true }), blocked, reload);
     expect(reload).not.toHaveBeenCalled();

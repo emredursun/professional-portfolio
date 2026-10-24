@@ -6,22 +6,22 @@ export interface Service {
   // Fix for: Cannot find namespace 'JSX'.
   icon: React.ReactNode;
   title: string;
-  slug: string;                // URL-friendly identifier for deep linking
+  slug: string; // URL-friendly identifier for deep linking
   description: string;
   tags?: string[];
-  
+
   // Premium enhancement fields
-  featured?: boolean;           // Highlight as featured service
-  badge?: string;              // Badge text (e.g., "Core Expertise", "Certified")
-  expertiseLabel?: string;     // Label shown below title (e.g., "Core Expertise", "Trust-Grade AI")
-  fullDescription?: string;    // Extended description for detail panel
-  keyBenefits?: string[];      // List of key benefits/features
-  relatedProjects?: string[];  // Related project slugs
-  yearsOfExperience?: number;  // Years of experience in this area
-  certificateId?: string;      // Official certificate ID for verification
-  certificationDate?: string;  // Certification date (e.g., "January 2026")
-  certificateImage?: string;   // Path to certificate image
-  certificateUrl?: string;     // Issuer's public verification page
+  featured?: boolean; // Highlight as featured service
+  badge?: string; // Badge text (e.g., "Core Expertise", "Certified")
+  expertiseLabel?: string; // Label shown below title (e.g., "Core Expertise", "Trust-Grade AI")
+  fullDescription?: string; // Extended description for detail panel
+  keyBenefits?: string[]; // List of key benefits/features
+  relatedProjects?: string[]; // Related project slugs
+  yearsOfExperience?: number; // Years of experience in this area
+  certificateId?: string; // Official certificate ID for verification
+  certificationDate?: string; // Certification date (e.g., "January 2026")
+  certificateImage?: string; // Path to certificate image
+  certificateUrl?: string; // Issuer's public verification page
   certificateBadges?: CertificateBadge[]; // Supporting course/module badges
 }
 
@@ -75,25 +75,25 @@ export interface Project {
   image: string;
   url?: string;
   github?: string;
-  hackernoon_link?: string;     // External article/reference link
+  hackernoon_link?: string; // External article/reference link
   description: string;
   technologies: string[];
   slug: string;
   detailedDescription?: string;
   metrics?: string[];
-  
+
   // Enhanced fields for immersive view
-  gallery?: string[];       // Additional images for carousel
-  duration?: string;        // Project timeline (e.g., "3 months")
-  role?: string;            // Your role in the project
-  team?: string;            // Team size (e.g., "5 developers")
-  challenge?: string;       // Problem/challenge statement
-  solution?: string;        // How you solved it
-  features?: Feature[];     // Key features with descriptions
-  results?: Result[];       // Measurable outcomes
+  gallery?: string[]; // Additional images for carousel
+  duration?: string; // Project timeline (e.g., "3 months")
+  role?: string; // Your role in the project
+  team?: string; // Team size (e.g., "5 developers")
+  challenge?: string; // Problem/challenge statement
+  solution?: string; // How you solved it
+  features?: Feature[]; // Key features with descriptions
+  results?: Result[]; // Measurable outcomes
   testimonial?: Testimonial; // Client/stakeholder feedback
-  tags?: string[];          // Additional categorization
-  year?: number;            // Project year
+  tags?: string[]; // Additional categorization
+  year?: number; // Project year
 }
 
 export interface Technology {

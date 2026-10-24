@@ -1,21 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Project } from "../types.ts";
-import ProjectModalHeader from "./ProjectModalHeader.tsx";
-import ProjectGallery from "./ProjectGallery.tsx";
-import ProjectSectionNav from "./ProjectSectionNav.tsx";
+import { Project } from '../types.ts';
+import ProjectModalHeader from './ProjectModalHeader.tsx';
+import ProjectGallery from './ProjectGallery.tsx';
+import ProjectSectionNav from './ProjectSectionNav.tsx';
 
 interface ProjectModalProps {
   project: Project;
   onClose: () => void;
-  onNavigate?: (direction: "prev" | "next") => void;
+  onNavigate?: (direction: 'prev' | 'next') => void;
 }
 
-const ProjectModal: React.FC<ProjectModalProps> = ({
-  project,
-  onClose,
-  onNavigate,
-}) => {
+const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigate }) => {
   const { t } = useTranslation('projects');
   const modalContentRef = useRef<HTMLDivElement>(null);
 
@@ -27,41 +23,41 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         onClose();
       }
-      if (event.key === "ArrowLeft" && onNavigate) {
-        onNavigate("prev");
+      if (event.key === 'ArrowLeft' && onNavigate) {
+        onNavigate('prev');
       }
-      if (event.key === "ArrowRight" && onNavigate) {
-        onNavigate("next");
+      if (event.key === 'ArrowRight' && onNavigate) {
+        onNavigate('next');
       }
     };
 
-    window.addEventListener("keydown", handleEsc);
-    document.body.style.overflow = "hidden";
+    window.addEventListener('keydown', handleEsc);
+    document.body.style.overflow = 'hidden';
 
     return () => {
-      window.removeEventListener("keydown", handleEsc);
-      document.body.style.overflow = "auto";
+      window.removeEventListener('keydown', handleEsc);
+      document.body.style.overflow = 'auto';
     };
   }, [onClose, onNavigate]);
 
   // Define sections for navigation
   const sections = [
-    { id: "overview", label: t('sections.overview'), icon: "fas fa-info-circle" },
+    { id: 'overview', label: t('sections.overview'), icon: 'fas fa-info-circle' },
     ...(project.challenge
-      ? [{ id: "challenge", label: t('sections.challenge'), icon: "fas fa-lightbulb" }]
+      ? [{ id: 'challenge', label: t('sections.challenge'), icon: 'fas fa-lightbulb' }]
       : []),
     ...(project.features && project.features.length > 0
-      ? [{ id: "features", label: t('sections.features'), icon: "fas fa-star" }]
+      ? [{ id: 'features', label: t('sections.features'), icon: 'fas fa-star' }]
       : []),
     ...(project.gallery && project.gallery.length > 0
-      ? [{ id: "gallery", label: t('sections.gallery'), icon: "fas fa-images" }]
+      ? [{ id: 'gallery', label: t('sections.gallery'), icon: 'fas fa-images' }]
       : []),
-    { id: "technologies", label: t('sections.technologies'), icon: "fas fa-code" },
+    { id: 'technologies', label: t('sections.technologies'), icon: 'fas fa-code' },
     ...(project.results && project.results.length > 0
-      ? [{ id: "results", label: t('sections.results'), icon: "fas fa-chart-line" }]
+      ? [{ id: 'results', label: t('sections.results'), icon: 'fas fa-chart-line' }]
       : []),
   ];
 
@@ -74,9 +70,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
       role="dialog"
       aria-labelledby="project-title"
     >
-      <div
-        className="relative bg-white dark:bg-[#2a2a2a] w-full h-full overflow-hidden flex flex-col"
-      >
+      <div className="relative bg-white dark:bg-[#2a2a2a] w-full h-full overflow-hidden flex flex-col">
         {/* Scrollable Content */}
         <div
           ref={modalContentRef}
@@ -112,7 +106,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                       className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 p-4 rounded-xl border border-yellow-200 dark:border-yellow-800/30"
                     >
                       <div className="flex items-start gap-2">
-                        <i aria-hidden="true" className="fas fa-check-circle text-yellow-500 dark:text-yellow-400 mt-1"></i>
+                        <i
+                          aria-hidden="true"
+                          className="fas fa-check-circle text-yellow-500 dark:text-yellow-400 mt-1"
+                        ></i>
                         <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
                           {metric}
                         </p>
@@ -134,7 +131,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   <div className="bg-red-50 dark:bg-red-900/10 p-6 rounded-2xl border border-red-200 dark:border-red-800/30">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
-                        <i aria-hidden="true" className="fas fa-exclamation-triangle text-white"></i>
+                        <i
+                          aria-hidden="true"
+                          className="fas fa-exclamation-triangle text-white"
+                        ></i>
                       </div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                         {t('projectDetails.theChallenge')}
@@ -200,10 +200,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                 <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
                   {t('projectDetails.gallery')}
                 </h2>
-                <ProjectGallery
-                  images={project.gallery}
-                  projectTitle={project.title}
-                />
+                <ProjectGallery images={project.gallery} projectTitle={project.title} />
               </section>
             )}
 
@@ -302,7 +299,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             {/* Action Buttons */}
             <section className="mb-20 md:mb-16">
               <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center">
-                {project.url && project.url !== "#" && (
+                {project.url && project.url !== '#' && (
                   <a
                     href={project.url}
                     target="_blank"

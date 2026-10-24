@@ -41,18 +41,25 @@ test.describe('command palette search', () => {
 });
 
 test.describe('localised controls', () => {
-  test('buttons, the palette and service cards speak the page language', async ({ page, isMobile }) => {
+  test('buttons, the palette and service cards speak the page language', async ({
+    page,
+    isMobile,
+  }) => {
     test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
     const nl = copy('nl', 'common');
     await page.goto('/nl/about');
     await expect(page.getByRole('button', { name: nl.labels.toggleTheme }).first()).toBeVisible();
-    await expect(page.getByRole('button', { name: nl.labels.changeLanguage }).first()).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: nl.labels.changeLanguage }).first(),
+    ).toBeVisible();
     await expect(page.getByText(nl.buttons.learnMore).first()).toBeAttached();
 
     await page.keyboard.press('Control+k');
     const search = page.getByRole('combobox', { name: nl.palette.search });
     await expect(search).toHaveAttribute('placeholder', nl.palette.placeholder);
-    await expect(page.getByRole('option', { name: new RegExp(nl.palette.commands.navContact.label) })).toBeVisible();
+    await expect(
+      page.getByRole('option', { name: new RegExp(nl.palette.commands.navContact.label) }),
+    ).toBeVisible();
   });
 });
 
@@ -62,9 +69,12 @@ test.describe('projects', () => {
     await page.getByText('Quilyn — Certification Exam Prep').first().click();
 
     await expect(page).toHaveURL(/\/projects\/quilyn-exam-prep$/);
-    await expect(page.getByRole('heading', { name: /Quilyn — Certification Exam Prep/, level: 1 }).or(
-      page.getByRole('heading', { name: /Quilyn — Certification Exam Prep/, level: 2 }),
-    ).first()).toBeVisible();
+    await expect(
+      page
+        .getByRole('heading', { name: /Quilyn — Certification Exam Prep/, level: 1 })
+        .or(page.getByRole('heading', { name: /Quilyn — Certification Exam Prep/, level: 2 }))
+        .first(),
+    ).toBeVisible();
 
     // The modal registers its Escape handler in an effect right after it
     // renders; retry the key press instead of racing that registration.
@@ -124,7 +134,9 @@ test.describe('projects', () => {
 
   test('an unknown project slug shows the not-found page', async ({ page }) => {
     await page.goto('/tr/projects/no-such-project');
-    await expect(page.getByRole('heading', { level: 2, name: copy('tr', 'common').notFound.title })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 2, name: copy('tr', 'common').notFound.title }),
+    ).toBeVisible();
     await expect(page).toHaveURL(/\/tr\/projects\/no-such-project$/);
   });
 });
@@ -134,7 +146,10 @@ test.describe('services', () => {
     const service = copy('en', 'about').services.pegaPlatform;
     await page.goto('/about/pega-platform-architecture');
     await expect(page).toHaveTitle(new RegExp(service.title));
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', service.description);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      service.description,
+    );
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       'href',
       'https://emredursun.nl/about/pega-platform-architecture',
@@ -155,14 +170,18 @@ test.describe('services', () => {
 
   test('a certification links to the issuer-hosted proof', async ({ page }) => {
     await page.goto('/about/test-automation-architecture');
-    const verify = page.getByRole('link', { name: copy('en', 'about').services.details.verifyCredential });
+    const verify = page.getByRole('link', {
+      name: copy('en', 'about').services.details.verifyCredential,
+    });
     await expect(verify).toHaveAttribute('href', /^https:\/\/app\.diplomasafe\.com\//);
     await expect(verify).toHaveAttribute('rel', /noopener/);
   });
 
   test('an unknown service slug shows the not-found page', async ({ page }) => {
     await page.goto('/about/no-such-service');
-    await expect(page.getByRole('heading', { level: 2, name: copy('en', 'common').notFound.title })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 2, name: copy('en', 'common').notFound.title }),
+    ).toBeVisible();
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
   });
 
@@ -173,14 +192,18 @@ test.describe('services', () => {
     await page.goto('/about/no-such-service');
     await page.getByRole('link', { name: copy('en', 'common').notFound.home }).click();
     await expect(page).toHaveURL(/\/about$/);
-    await expect(page.getByRole('heading', { level: 2 }).filter({ hasText: about.titleHighlight }).first()).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 2 }).filter({ hasText: about.titleHighlight }).first(),
+    ).toBeVisible();
     // The counter starts once it is on screen; it can sit below the fold.
     const counter = page.getByText(/^\d\+$/).first();
     await counter.scrollIntoViewIfNeeded();
     await expect(counter).toHaveText('5+');
   });
 
-  test('the years counter counts up when scrolled into view inside the content panel', async ({ page }) => {
+  test('the years counter counts up when scrolled into view inside the content panel', async ({
+    page,
+  }) => {
     // On desktop the page scrolls in the content panel, not the window: a
     // window-based ScrollTrigger left the counter at "0+" below the fold.
     await page.setViewportSize({ width: 1280, height: 600 });
@@ -197,7 +220,10 @@ test.describe('theme', () => {
     const html = page.locator('html');
     const startsDark = (await html.getAttribute('class'))?.includes('dark') ?? false;
 
-    await page.getByRole('button', { name: /theme|dark|light/i }).first().click();
+    await page
+      .getByRole('button', { name: /theme|dark|light/i })
+      .first()
+      .click();
     await expect(html).toHaveClass(startsDark ? /^(?!.*\bdark\b)/ : /\bdark\b/);
 
     await page.reload();
@@ -215,43 +241,51 @@ test.describe('print', () => {
   });
 });
 
-for (const colorScheme of ['light', 'dark'] as const) test.describe(`accessibility (WCAG 2.1 AA, ${colorScheme})`, () => {
-  test.use({ colorScheme });
-  // axe on the projects grid can take a while on a loaded CI runner.
-  test.describe.configure({ timeout: 60_000 });
-  for (const path of ['/about', '/resume', '/projects', '/contact']) {
-    test(`${path} has no axe violations`, async ({ page }) => {
-      await page.goto(path);
-      const { titleHighlight } = copy('en', path.slice(1));
-      await expect(page.getByRole('heading', { level: 2 }).filter({ hasText: titleHighlight }).first()).toBeVisible();
+for (const colorScheme of ['light', 'dark'] as const)
+  test.describe(`accessibility (WCAG 2.1 AA, ${colorScheme})`, () => {
+    test.use({ colorScheme });
+    // axe on the projects grid can take a while on a loaded CI runner.
+    test.describe.configure({ timeout: 60_000 });
+    for (const path of ['/about', '/resume', '/projects', '/contact']) {
+      test(`${path} has no axe violations`, async ({ page }) => {
+        await page.goto(path);
+        const { titleHighlight } = copy('en', path.slice(1));
+        await expect(
+          page.getByRole('heading', { level: 2 }).filter({ hasText: titleHighlight }).first(),
+        ).toBeVisible();
+
+        const results = await new AxeBuilder({ page })
+          .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+          .exclude('.print-container') // print-only layout, hidden on screen
+          .analyze();
+
+        expect(
+          results.violations.map(
+            (v) =>
+              `${v.id} (${v.impact}): ${v.help} -> ${v.nodes
+                .map(
+                  (node) =>
+                    `${node.target.join(' ')} [${node.any[0]?.message ?? node.failureSummary ?? ''}]`,
+                )
+                .join(' | ')}`,
+          ),
+        ).toEqual([]);
+      });
+    }
+
+    test('the not-found page has no axe violations', async ({ page }) => {
+      await page.goto('/no-such-page');
+      await expect(
+        page.getByRole('heading', { level: 2, name: copy('en', 'common').notFound.title }),
+      ).toBeVisible();
 
       const results = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-        .exclude('.print-container') // print-only layout, hidden on screen
+        .exclude('.print-container')
         .analyze();
-
-      expect(
-        results.violations.map(
-          (v) =>
-            `${v.id} (${v.impact}): ${v.help} -> ${v.nodes
-              .map((node) => `${node.target.join(' ')} [${node.any[0]?.message ?? node.failureSummary ?? ''}]`)
-              .join(' | ')}`,
-        ),
-      ).toEqual([]);
+      expect(results.violations.map((v) => `${v.id} (${v.impact}): ${v.help}`)).toEqual([]);
     });
-  }
-
-  test('the not-found page has no axe violations', async ({ page }) => {
-    await page.goto('/no-such-page');
-    await expect(page.getByRole('heading', { level: 2, name: copy('en', 'common').notFound.title })).toBeVisible();
-
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .exclude('.print-container')
-      .analyze();
-    expect(results.violations.map((v) => `${v.id} (${v.impact}): ${v.help}`)).toEqual([]);
   });
-});
 
 test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
   test.describe.configure({ timeout: 60_000 });
@@ -261,7 +295,8 @@ test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
       .include(include)
       .analyze();
     return results.violations.map(
-      (v) => `${v.id} (${v.impact}): ${v.help} -> ${v.nodes.map((n) => n.target.join(' ')).join(' | ')}`,
+      (v) =>
+        `${v.id} (${v.impact}): ${v.help} -> ${v.nodes.map((n) => n.target.join(' ')).join(' | ')}`,
     );
   };
 
@@ -275,7 +310,9 @@ test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
     // Items fade in with a stagger; measure contrast on the settled state.
     await expect
       .poll(() =>
-        page.$$eval('[role="option"]', (els) => els.every((el) => getComputedStyle(el).opacity === '1')),
+        page.$$eval('[role="option"]', (els) =>
+          els.every((el) => getComputedStyle(el).opacity === '1'),
+        ),
       )
       .toBe(true);
     expect(await scan(page, '[role="dialog"]')).toEqual([]);

@@ -40,10 +40,16 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     if (fallback) return fallback;
 
     return (
-      <div role="alert" className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-dark-bg p-4">
+      <div
+        role="alert"
+        className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-dark-bg p-4"
+      >
         <div className="max-w-md w-full bg-white dark:bg-dark-surface rounded-2xl shadow-xl p-8 text-center">
           <div className="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i className="fas fa-exclamation-triangle text-2xl text-red-600 dark:text-red-400" aria-hidden="true"></i>
+            <i
+              className="fas fa-exclamation-triangle text-2xl text-red-600 dark:text-red-400"
+              aria-hidden="true"
+            ></i>
           </div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
             Oops! Something went wrong

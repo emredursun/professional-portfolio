@@ -17,7 +17,9 @@ describe('describeError', () => {
   });
 
   it('strips query strings and fragments so URLs cannot leak tokens', () => {
-    const message = describeError(new Error('GET https://api.example.com/x?token=secret#frag failed'));
+    const message = describeError(
+      new Error('GET https://api.example.com/x?token=secret#frag failed'),
+    );
     expect(message).toBe('Error: GET https://api.example.com/x failed');
     expect(message).not.toContain('secret');
   });
@@ -28,7 +30,12 @@ describe('describeError', () => {
   });
 
   it('removes credential-like key=value pairs', () => {
-    for (const raw of ['token=demo-token', 'api_key: abc123', 'Password=hunter2', 'session=s3cr3t;']) {
+    for (const raw of [
+      'token=demo-token',
+      'api_key: abc123',
+      'Password=hunter2',
+      'session=s3cr3t;',
+    ]) {
       const message = describeError(new Error(`Request failed ${raw}`));
       expect(message).toMatch(/\[redacted\]/);
       expect(message).not.toMatch(/demo-token|abc123|hunter2|s3cr3t/);
@@ -36,14 +43,19 @@ describe('describeError', () => {
   });
 
   it('removes long opaque identifiers and long digit runs', () => {
-    const message = describeError(new Error('Bad id 9f86d081884c7d659a2feaa0c55ad015 for +31612345678'));
+    const message = describeError(
+      new Error('Bad id 9f86d081884c7d659a2feaa0c55ad015 for +31612345678'),
+    );
     expect(message).toBe('Error: Bad id [id] for +[number]');
   });
 
   it('keeps ordinary developer messages readable', () => {
     const raw = "TypeError: Cannot read properties of undefined (reading 'map')";
-    expect(describeError(new TypeError("Cannot read properties of undefined (reading 'map')"))).toBe(raw);
-    const chunk = 'Failed to fetch dynamically imported module: https://emredursun.nl/assets/About--tq-6pen.js';
+    expect(
+      describeError(new TypeError("Cannot read properties of undefined (reading 'map')")),
+    ).toBe(raw);
+    const chunk =
+      'Failed to fetch dynamically imported module: https://emredursun.nl/assets/About--tq-6pen.js';
     expect(describeError(new TypeError(chunk))).toBe(`TypeError: ${chunk}`);
   });
 
@@ -116,8 +128,12 @@ describe('installGlobalErrorReporting', () => {
   });
 
   it('reports uncaught errors from window "error" events', () => {
-    window.dispatchEvent(new ErrorEvent('error', { error: new Error('uncaught'), message: 'uncaught' }));
-    expect(plausible).toHaveBeenCalledWith('JS Error', { props: { message: 'Error: uncaught', source: 'window' } });
+    window.dispatchEvent(
+      new ErrorEvent('error', { error: new Error('uncaught'), message: 'uncaught' }),
+    );
+    expect(plausible).toHaveBeenCalledWith('JS Error', {
+      props: { message: 'Error: uncaught', source: 'window' },
+    });
   });
 
   it('ignores opaque cross-origin "Script error." events', () => {
@@ -126,7 +142,9 @@ describe('installGlobalErrorReporting', () => {
   });
 
   it('falls back to the event message when there is no error object', () => {
-    window.dispatchEvent(new ErrorEvent('error', { message: 'ResizeObserver loop limit exceeded' }));
+    window.dispatchEvent(
+      new ErrorEvent('error', { message: 'ResizeObserver loop limit exceeded' }),
+    );
     expect(plausible).toHaveBeenCalledWith('JS Error', {
       props: { message: 'ResizeObserver loop limit exceeded', source: 'window' },
     });
@@ -136,7 +154,9 @@ describe('installGlobalErrorReporting', () => {
     const event = new Event('unhandledrejection') as PromiseRejectionEvent;
     Object.defineProperty(event, 'reason', { value: new Error('rejected') });
     window.dispatchEvent(event);
-    expect(plausible).toHaveBeenCalledWith('JS Error', { props: { message: 'Error: rejected', source: 'promise' } });
+    expect(plausible).toHaveBeenCalledWith('JS Error', {
+      props: { message: 'Error: rejected', source: 'promise' },
+    });
   });
 
   it('stops reporting after uninstall', () => {

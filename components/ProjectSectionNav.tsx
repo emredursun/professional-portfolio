@@ -27,7 +27,7 @@ const ProjectSectionNav: React.FC<ProjectSectionNavProps> = ({ sections }) => {
       },
       {
         rootMargin: '-100px 0px -66% 0px',
-      }
+      },
     );
 
     // Observe all sections
@@ -78,7 +78,10 @@ const ProjectSectionNav: React.FC<ProjectSectionNavProps> = ({ sections }) => {
                   : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
               }`}
             >
-              <i aria-hidden="true" className={`${section.icon} ${activeSection === section.id ? 'scale-110' : ''}`}></i>
+              <i
+                aria-hidden="true"
+                className={`${section.icon} ${activeSection === section.id ? 'scale-110' : ''}`}
+              ></i>
               <span>{section.label}</span>
             </button>
           ))}
@@ -91,9 +94,7 @@ const ProjectSectionNav: React.FC<ProjectSectionNavProps> = ({ sections }) => {
           className="h-full bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan to-neon-purple transition-all duration-300"
           style={{
             width: `${
-              ((sections.findIndex((s) => s.id === activeSection) + 1) /
-                sections.length) *
-              100
+              ((sections.findIndex((s) => s.id === activeSection) + 1) / sections.length) * 100
             }%`,
           }}
         />

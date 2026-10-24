@@ -13,11 +13,17 @@ test.describe('pages', () => {
       const { title, titleHighlight } = copy('en', namespace);
       await page.goto(path);
 
-      const heading = page.getByRole('heading', { level: 2 }).filter({ hasText: titleHighlight }).first();
+      const heading = page
+        .getByRole('heading', { level: 2 })
+        .filter({ hasText: titleHighlight })
+        .first();
       await expect(heading).toContainText(title);
 
       await expect(page).toHaveTitle(/Emre Dursun/);
-      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://emredursun.nl${path}`);
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+        'href',
+        `https://emredursun.nl${path}`,
+      );
       await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.{50,}/);
     });
   }
@@ -27,7 +33,9 @@ test.describe('pages', () => {
     await expect(page).toHaveURL(/\/about$/);
   });
 
-  test('an unknown URL shows a noindex "not found" page instead of redirecting', async ({ page }) => {
+  test('an unknown URL shows a noindex "not found" page instead of redirecting', async ({
+    page,
+  }) => {
     const { notFound } = copy('en', 'common');
     await page.goto('/no-such-page');
 
@@ -45,7 +53,10 @@ test.describe('pages', () => {
     const { notFound } = copy('nl', 'common');
     await page.goto('/nl/geen-pagina');
     await expect(page.getByRole('heading', { level: 2, name: notFound.title })).toBeVisible();
-    await expect(page.getByRole('link', { name: notFound.projects })).toHaveAttribute('href', '/nl/projects');
+    await expect(page.getByRole('link', { name: notFound.projects })).toHaveAttribute(
+      'href',
+      '/nl/projects',
+    );
   });
 });
 
@@ -55,7 +66,9 @@ test.describe('languages', () => {
       const { titleHighlight } = copy(locale, 'about');
       await page.goto(`/${locale}/about`);
       await expect(page.locator('html')).toHaveAttribute('lang', locale);
-      await expect(page.getByRole('heading', { level: 2 }).filter({ hasText: titleHighlight }).first()).toBeVisible();
+      await expect(
+        page.getByRole('heading', { level: 2 }).filter({ hasText: titleHighlight }).first(),
+      ).toBeVisible();
       await expect(page.locator(`link[rel="alternate"][hreflang="${locale}"]`)).toHaveAttribute(
         'href',
         `https://emredursun.nl/${locale}/about`,
@@ -65,7 +78,10 @@ test.describe('languages', () => {
 });
 
 test.describe('keyboard', () => {
-  test('the first Tab reaches a skip link that moves focus to the page content', async ({ page, isMobile }) => {
+  test('the first Tab reaches a skip link that moves focus to the page content', async ({
+    page,
+    isMobile,
+  }) => {
     test.skip(isMobile, 'Keyboard navigation is a desktop concern.');
     await page.goto('/about');
     await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
@@ -93,7 +109,9 @@ test.describe('in-app navigation', () => {
     }
 
     // Still the same document: client-side routing, not full page loads.
-    expect(await page.evaluate(() => (window as unknown as { __marker?: boolean }).__marker)).toBe(true);
+    expect(await page.evaluate(() => (window as unknown as { __marker?: boolean }).__marker)).toBe(
+      true,
+    );
   });
 });
 
@@ -107,7 +125,9 @@ test.describe('locale loading', () => {
     return urls;
   };
 
-  test('an English page fetches only English files, even for a returning Turkish visitor', async ({ page }) => {
+  test('an English page fetches only English files, even for a returning Turkish visitor', async ({
+    page,
+  }) => {
     // The language detector caches the last language in localStorage; the URL
     // must still win, without first fetching the cached language's files.
     await page.addInitScript(() => localStorage.setItem('i18nextLng', 'tr'));
@@ -150,12 +170,22 @@ test.describe('structured data', () => {
   test('every JSON-LD block parses and the Person is one linked entity', async ({ page }) => {
     await page.goto('/about');
     const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
-    const nodes = blocks.map((text) => JSON.parse(text)).flatMap((block) => block['@graph'] ?? [block]);
+    const nodes = blocks
+      .map((text) => JSON.parse(text))
+      .flatMap((block) => block['@graph'] ?? [block]);
     const person = nodes.find((node) => node['@type'] === 'Person');
-    expect(person).toMatchObject({ '@id': 'https://emredursun.nl/#person', name: 'Emre Dursun', url: 'https://emredursun.nl' });
+    expect(person).toMatchObject({
+      '@id': 'https://emredursun.nl/#person',
+      name: 'Emre Dursun',
+      url: 'https://emredursun.nl',
+    });
     const portrait = nodes.find((node) => node['@id'] === person.image['@id']);
-    expect(portrait.contentUrl).toMatch(/^https:\/\/emredursun\.nl\/images\/emre-dursun-qa-consultant\.jpg$/);
+    expect(portrait.contentUrl).toMatch(
+      /^https:\/\/emredursun\.nl\/images\/emre-dursun-qa-consultant\.jpg$/,
+    );
     // The About page's own node, added at build time, points back to the Person.
-    expect(nodes.find((node) => node['@type'] === 'ProfilePage')).toMatchObject({ mainEntity: { '@id': person['@id'] } });
+    expect(nodes.find((node) => node['@type'] === 'ProfilePage')).toMatchObject({
+      mainEntity: { '@id': person['@id'] },
+    });
   });
 });

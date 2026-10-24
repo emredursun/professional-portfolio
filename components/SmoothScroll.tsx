@@ -31,10 +31,12 @@ const SmoothScroll: React.FC<SmoothScrollProps> = ({ children, contentRef, isMob
       touchMultiplier: 2,
       // Important: For Lenis to work on a specific element, we must provide that element as the wrapper
       // AND usually the content (or let it find the first child).
-      // However, Lenis is often designed for window scrolling. 
+      // However, Lenis is often designed for window scrolling.
       // When targeting a specific element, we need to pass that element as the wrapper.
       wrapper: isMobileView ? window : (contentRef.current as HTMLElement),
-      content: isMobileView ? document.body : (contentRef.current?.firstElementChild as HTMLElement),
+      content: isMobileView
+        ? document.body
+        : (contentRef.current?.firstElementChild as HTMLElement),
     });
 
     let frame = 0;

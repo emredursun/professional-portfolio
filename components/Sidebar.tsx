@@ -14,482 +14,531 @@ import LanguageSwitcher from './LanguageSwitcher.tsx';
 import { Page } from '../types.ts';
 
 interface SidebarProps {
-    theme: string;
-    toggleTheme: () => void;
-    activePage: Page; // Kept for interface compatibility if needed, but unused for nav state
-    onNavigate: (page: Page) => void; // Kept for interface compatibility
-    isMobileView: boolean;
+  theme: string;
+  toggleTheme: () => void;
+  activePage: Page; // Kept for interface compatibility if needed, but unused for nav state
+  onNavigate: (page: Page) => void; // Kept for interface compatibility
+  isMobileView: boolean;
 }
 
 const pages: { label: Page; path: string; icon: React.ReactNode }[] = [
-    { label: 'About', path: '/about', icon: <i aria-hidden="true" className="far fa-user"></i> },
-    { label: 'Resume', path: '/resume', icon: <i aria-hidden="true" className="far fa-file-alt"></i> },
-    { label: 'Projects', path: '/projects', icon: <i aria-hidden="true" className="far fa-folder-open"></i> },
-    { label: 'Contact', path: '/contact', icon: <i aria-hidden="true" className="far fa-envelope"></i> },
+  { label: 'About', path: '/about', icon: <i aria-hidden="true" className="far fa-user"></i> },
+  {
+    label: 'Resume',
+    path: '/resume',
+    icon: <i aria-hidden="true" className="far fa-file-alt"></i>,
+  },
+  {
+    label: 'Projects',
+    path: '/projects',
+    icon: <i aria-hidden="true" className="far fa-folder-open"></i>,
+  },
+  {
+    label: 'Contact',
+    path: '/contact',
+    icon: <i aria-hidden="true" className="far fa-envelope"></i>,
+  },
 ];
 
 const NavButton: React.FC<{
-    page: { label: Page; path: string; icon: React.ReactNode };
+  page: { label: Page; path: string; icon: React.ReactNode };
 }> = React.memo(({ page }) => {
-    const { t } = useTranslation('common');
-    
-    return (
+  const { t } = useTranslation('common');
+
+  return (
     <li>
-        <Magnetic>
-            <NavLink
-                to={page.path}
-                className={({ isActive }) => `w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all duration-300 font-semibold group relative overflow-hidden
-                    ${isActive
+      <Magnetic>
+        <NavLink
+          to={page.path}
+          className={({
+            isActive,
+          }) => `w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all duration-300 font-semibold group relative overflow-hidden
+                    ${
+                      isActive
                         ? 'bg-yellow-400 text-black shadow-[0_0_20px_rgba(250,204,21,0.4)]'
                         : 'text-gray-500 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] dark:hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] border border-transparent hover:border-yellow-400/50 dark:hover:border-neon-cyan/50'
-                    }`
-                }
-            >
-                {({ isActive }) => (
-                    <>
-                        <span className={`text-xl w-6 flex justify-center transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
-                            {page.icon}
-                        </span>
-                        <span className="relative z-10 tracking-wide text-sm">{t(`nav.${page.label.toLowerCase()}`)}</span>
-                    </>
-                )}
-            </NavLink>
-        </Magnetic>
+                    }`}
+        >
+          {({ isActive }) => (
+            <>
+              <span
+                className={`text-xl w-6 flex justify-center transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}
+              >
+                {page.icon}
+              </span>
+              <span className="relative z-10 tracking-wide text-sm">
+                {t(`nav.${page.label.toLowerCase()}`)}
+              </span>
+            </>
+          )}
+        </NavLink>
+      </Magnetic>
     </li>
-);});
+  );
+});
 
 // Dynamic greeting based on time of day
 const getGreetingKey = (): string => {
-    const hour = new Date().getHours();
-    if (hour >= 0 && hour < 6) return "time.goodNight";
-    if (hour >= 6 && hour < 12) return "time.goodMorning";
-    if (hour >= 12 && hour < 18) return "time.goodAfternoon";
-    return "time.goodEvening"; // 18:00 - 24:00
+  const hour = new Date().getHours();
+  if (hour >= 0 && hour < 6) return 'time.goodNight';
+  if (hour >= 6 && hour < 12) return 'time.goodMorning';
+  if (hour >= 12 && hour < 18) return 'time.goodAfternoon';
+  return 'time.goodEvening'; // 18:00 - 24:00
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) => {
-    const { t, i18n } = useTranslation(['common', 'sidebar']);
-    const [greetingKey, setGreetingKey] = useState(getGreetingKey());
-    const sidebarRef = useRef<HTMLElement>(null);
+  const { t, i18n } = useTranslation(['common', 'sidebar']);
+  const [greetingKey, setGreetingKey] = useState(getGreetingKey());
+  const sidebarRef = useRef<HTMLElement>(null);
 
-    // Get current language from i18n (which syncs with URL and localStorage)
-    const currentLang = i18n.language || 'en';
-    
-    // Compute language-aware paths
-    const languagePrefix = currentLang !== 'en' ? `/${currentLang}` : '';
-    const languageAwarePages = useMemo(() => 
-        pages.map(page => ({
-            ...page,
-            path: languagePrefix + page.path
-        })),
-        [languagePrefix]
-    );
+  // Get current language from i18n (which syncs with URL and localStorage)
+  const currentLang = i18n.language || 'en';
 
-    // Update greeting every minute
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setGreetingKey(getGreetingKey());
-        }, 60000);
-        return () => clearInterval(interval);
-    }, []);
+  // Compute language-aware paths
+  const languagePrefix = currentLang !== 'en' ? `/${currentLang}` : '';
+  const languageAwarePages = useMemo(
+    () =>
+      pages.map((page) => ({
+        ...page,
+        path: languagePrefix + page.path,
+      })),
+    [languagePrefix],
+  );
 
-    // The spotlight follows the pointer through CSS variables: a mouse move
-    // used to set state and re-render the whole sidebar.
-    const handleMouseMove = (e: React.MouseEvent) => {
-        const sidebar = sidebarRef.current;
-        if (sidebar) {
-            const rect = sidebar.getBoundingClientRect();
-            sidebar.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
-            sidebar.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
-        }
-    };
+  // Update greeting every minute
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGreetingKey(getGreetingKey());
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
-    // Production builds ship a PDF per language (scripts/generate-cv.js). The
-    // dev server has none, so there the button falls back to the print dialog.
-    const cvFile = cvFileName(i18n.language);
-    const cvUrl = import.meta.env.PROD ? `/cv/${cvFile}` : null;
+  // The spotlight follows the pointer through CSS variables: a mouse move
+  // used to set state and re-render the whole sidebar.
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const sidebar = sidebarRef.current;
+    if (sidebar) {
+      const rect = sidebar.getBoundingClientRect();
+      sidebar.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+      sidebar.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
+    }
+  };
 
-    const handleDownloadResume = (e: React.MouseEvent) => {
-        if (!cvUrl) {
-            e.preventDefault();
-            // "Save as PDF" names the file after document.title, which would
-            // otherwise produce "Emre Dursun — QA Consultant, Pega & Tricentis
-            // Tosca.pdf". Swap in a clean filename for the duration of the
-            // print dialog and restore the real title afterwards.
-            const previousTitle = document.title;
-            document.title = 'Emre-Dursun-CV';
-            const restore = () => {
-                document.title = previousTitle;
-                window.removeEventListener('afterprint', restore);
-            };
-            window.addEventListener('afterprint', restore);
-            window.print();
-            // Safari never fires afterprint reliably; make sure the title comes back.
-            setTimeout(restore, 1000);
-        }
-    };
+  // Production builds ship a PDF per language (scripts/generate-cv.js). The
+  // dev server has none, so there the button falls back to the print dialog.
+  const cvFile = cvFileName(i18n.language);
+  const cvUrl = import.meta.env.PROD ? `/cv/${cvFile}` : null;
 
-    return (
-        <aside
-            ref={sidebarRef}
-            onMouseMove={handleMouseMove}
-            className={`relative bg-white/70 dark:bg-[#121212]/80 backdrop-blur-2xl rounded-[2.5rem] border border-white/60 dark:border-white/5 shadow-2xl dark:shadow-[0_0_40px_-5px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden group/sidebar
+  const handleDownloadResume = (e: React.MouseEvent) => {
+    if (!cvUrl) {
+      e.preventDefault();
+      // "Save as PDF" names the file after document.title, which would
+      // otherwise produce "Emre Dursun — QA Consultant, Pega & Tricentis
+      // Tosca.pdf". Swap in a clean filename for the duration of the
+      // print dialog and restore the real title afterwards.
+      const previousTitle = document.title;
+      document.title = 'Emre-Dursun-CV';
+      const restore = () => {
+        document.title = previousTitle;
+        window.removeEventListener('afterprint', restore);
+      };
+      window.addEventListener('afterprint', restore);
+      window.print();
+      // Safari never fires afterprint reliably; make sure the title comes back.
+      setTimeout(restore, 1000);
+    }
+  };
+
+  return (
+    <aside
+      ref={sidebarRef}
+      onMouseMove={handleMouseMove}
+      className={`relative bg-white/70 dark:bg-[#121212]/80 backdrop-blur-2xl rounded-[2.5rem] border border-white/60 dark:border-white/5 shadow-2xl dark:shadow-[0_0_40px_-5px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden group/sidebar
             ${isMobileView ? 'w-full' : 'w-[360px] shrink-0 h-full max-h-[calc(100vh-4rem)] sticky top-8'}`}
-        >
-            {/* Animated Background Particles */}
-            <Particles count={25} />
+    >
+      {/* Animated Background Particles */}
+      <Particles count={25} />
 
-            {/* Interactive Spotlight Effect */}
-            <div
-                className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover/sidebar:opacity-100 z-50 rounded-[2.5rem]"
-                style={{
-                    background: `radial-gradient(800px circle at var(--spot-x, 0px) var(--spot-y, 0px), rgba(255, 255, 255, 0.05), transparent 40%)`,
-                }}
-            />
+      {/* Interactive Spotlight Effect */}
+      <div
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover/sidebar:opacity-100 z-50 rounded-[2.5rem]"
+        style={{
+          background: `radial-gradient(800px circle at var(--spot-x, 0px) var(--spot-y, 0px), rgba(255, 255, 255, 0.05), transparent 40%)`,
+        }}
+      />
 
-            {/* Theme Switcher - Left side */}
-            <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} />
-            
-            {/* Language Switcher - Right side */}
-            <div className="absolute top-6 right-6 z-50">
-                <LanguageSwitcher theme={theme} />
+      {/* Theme Switcher - Left side */}
+      <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} />
+
+      {/* Language Switcher - Right side */}
+      <div className="absolute top-6 right-6 z-50">
+        <LanguageSwitcher theme={theme} />
+      </div>
+
+      {/* Profile Header */}
+      <motion.div
+        className="pt-10 px-8 pb-6 flex flex-col items-center relative z-10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
+        {/* Avatar Container with Status */}
+        <Tilt3D tiltMaxAngle={10} scale={1.05}>
+          <motion.div
+            className="relative mb-6 group cursor-pointer"
+            animate={{ y: [0, -8, 0] }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          >
+            {/* Premium Glow Effect - Extended outward for better separation */}
+            <div className="absolute -inset-6 bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 dark:from-cyan-400 dark:via-blue-500 dark:to-purple-500 rounded-[3rem] blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse-slow -z-20"></div>
+            <div className="absolute -inset-4 bg-gradient-to-br from-yellow-400 to-orange-600 dark:from-neon-cyan dark:to-purple-600 rounded-[2.8rem] blur-2xl opacity-25 group-hover:opacity-40 transition-opacity duration-500 -z-20"></div>
+
+            {/* Outer frame with premium styling */}
+            <div className="relative p-2 bg-gradient-to-br from-gray-50 to-white dark:from-[#1a1a1a] dark:to-[#18181b] rounded-[2.2rem] shadow-2xl border-[1.5px] border-gray-200/50 dark:border-white/10 group-hover:border-yellow-400/70 dark:group-hover:border-neon-cyan/70 transition-all duration-500 z-10 isolate">
+              {/* Inner border for premium effect */}
+              <div className="p-[3px] bg-gradient-to-br from-yellow-400/20 via-orange-400/10 to-yellow-400/20 dark:from-cyan-400/20 dark:via-purple-400/10 dark:to-cyan-400/20 rounded-[2rem] group-hover:from-yellow-400/40 group-hover:to-orange-400/40 dark:group-hover:from-cyan-400/40 dark:group-hover:to-purple-400/40 transition-all duration-500">
+                <div className="relative overflow-hidden rounded-[1.9rem] w-40 h-40 bg-white dark:bg-gray-900 ring-1 ring-black/5 dark:ring-white/5">
+                  <img
+                    src={PERSONAL_INFO.avatar}
+                    alt={PERSONAL_INFO.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 select-none"
+                    style={{
+                      imageRendering: 'auto',
+                      WebkitFontSmoothing: 'antialiased',
+                      backfaceVisibility: 'hidden',
+                      transform: 'translateZ(0)',
+                      willChange: 'transform',
+                    }}
+                    draggable={false}
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Profile Header */}
-            <motion.div
-                className="pt-10 px-8 pb-6 flex flex-col items-center relative z-10"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
-            >
-
-                {/* Avatar Container with Status */}
-                <Tilt3D tiltMaxAngle={10} scale={1.05}>
-                    <motion.div
-                        className="relative mb-6 group cursor-pointer"
-                        animate={{ y: [0, -8, 0] }}
-                        transition={{
-                            duration: 4,
-                            repeat: Infinity,
-                            ease: 'easeInOut'
-                        }}
-                    >
-                        {/* Premium Glow Effect - Extended outward for better separation */}
-                        <div className="absolute -inset-6 bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 dark:from-cyan-400 dark:via-blue-500 dark:to-purple-500 rounded-[3rem] blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse-slow -z-20"></div>
-                        <div className="absolute -inset-4 bg-gradient-to-br from-yellow-400 to-orange-600 dark:from-neon-cyan dark:to-purple-600 rounded-[2.8rem] blur-2xl opacity-25 group-hover:opacity-40 transition-opacity duration-500 -z-20"></div>
-
-                        {/* Outer frame with premium styling */}
-                        <div className="relative p-2 bg-gradient-to-br from-gray-50 to-white dark:from-[#1a1a1a] dark:to-[#18181b] rounded-[2.2rem] shadow-2xl border-[1.5px] border-gray-200/50 dark:border-white/10 group-hover:border-yellow-400/70 dark:group-hover:border-neon-cyan/70 transition-all duration-500 z-10 isolate">
-                            {/* Inner border for premium effect */}
-                            <div className="p-[3px] bg-gradient-to-br from-yellow-400/20 via-orange-400/10 to-yellow-400/20 dark:from-cyan-400/20 dark:via-purple-400/10 dark:to-cyan-400/20 rounded-[2rem] group-hover:from-yellow-400/40 group-hover:to-orange-400/40 dark:group-hover:from-cyan-400/40 dark:group-hover:to-purple-400/40 transition-all duration-500">
-                                <div className="relative overflow-hidden rounded-[1.9rem] w-40 h-40 bg-white dark:bg-gray-900 ring-1 ring-black/5 dark:ring-white/5">
-                                    <img
-                                        src={PERSONAL_INFO.avatar}
-                                        alt={PERSONAL_INFO.name}
-                                        loading="lazy"
-                                        decoding="async"
-                                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 select-none"
-                                        style={{
-                                            imageRendering: 'auto',
-                                            WebkitFontSmoothing: 'antialiased',
-                                            backfaceVisibility: 'hidden',
-                                            transform: 'translateZ(0)',
-                                            willChange: 'transform'
-                                        }}
-                                        draggable={false}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Configurable Status Badge */}
-                        {STATUS_BADGE.enabled && (
-                            <motion.div
-                                className={`absolute -bottom-6 left-1/2 -translate-x-1/2 py-2 px-4 rounded-full border-[1.5px] flex items-center gap-2 z-40 whitespace-nowrap isolate
+            {/* Configurable Status Badge */}
+            {STATUS_BADGE.enabled && (
+              <motion.div
+                className={`absolute -bottom-6 left-1/2 -translate-x-1/2 py-2 px-4 rounded-full border-[1.5px] flex items-center gap-2 z-40 whitespace-nowrap isolate
                                     ${STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.bg || 'bg-white dark:bg-[#1f1f1f]'}
                                     ${STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.text || 'text-gray-700 dark:text-gray-200'}
                                     ${STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.glow || 'shadow-lg'}
                                     ${STATUS_BADGE.type === 'openToWork' ? 'border-green-400' : STATUS_BADGE.type === 'freelance' ? 'border-purple-400' : STATUS_BADGE.type === 'hiring' ? 'border-blue-400' : 'border-gray-200 dark:border-gray-700'}
                                 `}
-                                initial={{ scale: 0, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                transition={{ delay: 0.3, duration: 0.4, type: 'spring' }}
-                                style={{
-                                    WebkitFontSmoothing: 'antialiased',
-                                    backfaceVisibility: 'hidden',
-                                    transform: 'translateZ(0)'
-                                }}
-                            >
-                                {/* Badge Icon based on type */}
-                                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'ring' && (
-                                    <span className="relative flex h-3 w-3">
-                                        {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.pulse && (
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/70 opacity-75"></span>
-                                        )}
-                                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)]"></span>
-                                    </span>
-                                )}
-                                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'dot' && (
-                                    <span className="relative flex h-2.5 w-2.5">
-                                        {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.pulse && (
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                        )}
-                                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)] ring-2 ring-green-400/30"></span>
-                                    </span>
-                                )}
-                                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'briefcase' && (
-                                    <i aria-hidden="true" className="fas fa-briefcase text-xs"></i>
-                                )}
-                                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'users' && (
-                                    <i aria-hidden="true" className="fas fa-users text-xs"></i>
-                                )}
-                                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]?.icon === 'clock' && (
-                                    <i aria-hidden="true" className="fas fa-clock text-xs"></i>
-                                )}
-                                <span className="text-[11px] font-extrabold uppercase tracking-wider" style={{ letterSpacing: '0.08em' }}>
-                                    {t(`statusBadge.${STATUS_BADGE.type}`)}
-                                </span>
-                            </motion.div>
-                        )}
-                    </motion.div>
-                </Tilt3D>
-
-                {/* Dynamic Greeting - Word by Word Drop Animation */}
-                <div className="text-center mb-2 mt-2 overflow-visible py-2">
-                    <p className="text-lg font-semibold flex flex-wrap items-center justify-center gap-x-2">
-                        <WordByWordAnimation
-                            text={`${t(greetingKey)},`}
-                            className="bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 dark:from-cyan-400 dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent font-bold"
-                            staggerDelay={0.35}
-                            initialDelay={0.5}
-                            dropDistance={35}
-                            animationDuration={0.8}
-                            repeat={true}
-                            repeatDelay={3.5}
-                        />
-                        <WordByWordAnimation
-                            text={t('sidebar:greeting')}
-                            className="bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-400 dark:to-orange-400 bg-clip-text text-transparent font-bold"
-                            staggerDelay={0.35}
-                            initialDelay={1.85}
-                            dropDistance={35}
-                            animationDuration={0.8}
-                            repeat={true}
-                            repeatDelay={3.5}
-                        />
-                    </p>
-                </div>
-
-                {/* Identity with Animated Name */}
-                <motion.div
-                    className="text-center mb-5"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
-                >
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.8, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="mb-3"
-                    >
-                        <AnimatedName
-                            name={PERSONAL_INFO.name}
-                            variant="hacker"
-                        />
-                    </motion.div>
-                    <motion.div
-                        className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-700 dark:text-gray-300 shadow-[0_4px_12px_rgba(251,191,36,0.3)] dark:shadow-[0_4px_16px_rgba(6,182,212,0.5)] border border-gray-200 dark:border-white/5 backdrop-blur-sm overflow-hidden"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                            delay: 1.2,
-                            duration: 0.5,
-                            ease: [0.34, 1.56, 0.64, 1]
-                        }}
-                        whileHover={{
-                            scale: 1.05,
-                            y: -2,
-                            boxShadow: '0 8px 24px rgba(251,191,36,0.6)',
-                            transition: {
-                                type: "spring",
-                                stiffness: 400,
-                                damping: 10
-                            }
-                        }}
-                    >
-                        {/* Continuous shimmer overlay - visible in both themes */}
-                        <div className="absolute inset-0 animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-amber-200/60 dark:via-white/30 to-transparent"></div>
-
-                        {/* Gradient glow border on hover */}
-                        <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-yellow-400/20 via-amber-400/30 to-yellow-400/20 dark:from-cyan-400/20 dark:via-blue-400/30 dark:to-cyan-400/20 blur-sm -z-10"></div>
-
-                        <i aria-hidden="true" className="fas fa-certificate text-base relative z-10"></i>
-                            <span className="relative z-10" style={{ wordSpacing: '0.15em' }}>{t('sidebar:personalInfo.title')}</span>
-                    </motion.div>
-                </motion.div>
-            </motion.div>
-
-            <div className="flex-1 px-8 pb-8 overflow-y-auto no-scrollbar flex flex-col" data-lenis-prevent>
-
-                <div className="w-full border-t border-gray-200 dark:border-white/5 mb-6"></div>
-
-                {/* Contact Details */}
-                <motion.div
-                    className="space-y-5 mb-8"
-                    initial="hidden"
-                    animate="visible"
-                    variants={{
-                        hidden: { opacity: 0 },
-                        visible: {
-                            opacity: 1,
-                            transition: {
-                                staggerChildren: 0.1,
-                                delayChildren: 0.4,
-                            },
-                        },
-                    }}
-                >
-                    <InfoRow icon="fa-envelope" value={PERSONAL_INFO.email} label={t('labels.email')} isLink href={`mailto:${PERSONAL_INFO.email}`} />
-                    <InfoRow icon="fa-phone" value={PERSONAL_INFO.phone} label={t('labels.phone')} isLink href={`tel:${PERSONAL_INFO.phone}`} />
-                    <InfoRow icon="fa-map-marker-alt" value={t('labels.locationValue')} label={t('labels.location')} />
-                </motion.div>
-
-                {/* Socials with Enhanced Animations */}
-                <motion.div
-                    className="flex gap-3 justify-center mb-8"
-                    initial="hidden"
-                    animate="visible"
-                    variants={{
-                        hidden: { opacity: 0 },
-                        visible: {
-                            opacity: 1,
-                            transition: {
-                                staggerChildren: 0.08,
-                                delayChildren: 0.6,
-                            },
-                        },
-                    }}
-                >
-                    {SOCIAL_LINKS.map(link => (
-                        <motion.a
-                            key={link.name}
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-11 h-11 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 flex items-center justify-center text-gray-500 dark:text-gray-400 relative overflow-hidden group cursor-pointer"
-                            aria-label={link.name}
-                            variants={{
-                                hidden: { opacity: 0, y: 20 },
-                                visible: { opacity: 1, y: 0 },
-                            }}
-                            whileHover={{
-                                scale: 1.15,
-                                rotate: 8,
-                                backgroundColor: 'rgb(250, 204, 21)',
-                                borderColor: 'rgb(250, 204, 21)',
-                                boxShadow: '0 8px 25px -5px rgba(250, 204, 21, 0.5)',
-                                transition: {
-                                    type: "spring",
-                                    stiffness: 300,
-                                    damping: 15
-                                }
-                            }}
-                            whileTap={{
-                                scale: 0.9,
-                                rotate: -8,
-                                transition: {
-                                    type: "spring",
-                                    stiffness: 400,
-                                    damping: 10
-                                }
-                            }}
-                        >
-                            {/* Glow effect */}
-                            <span className="absolute inset-0 rounded-xl bg-yellow-400 opacity-0 group-hover:opacity-40 blur-lg transition-opacity duration-200"></span>
-                            {/* Icon */}
-                            <span className="relative z-10 group-hover:text-black transition-colors duration-200">
-                                {link.icon}
-                            </span>
-                        </motion.a>
-                    ))}
-                </motion.div>
-
-                {/* Navigation (Desktop) */}
-                {!isMobileView && (
-                    <nav className="flex-1 mb-8">
-                        <ul className="space-y-2">
-                            {languageAwarePages.map((page) => (
-                                <NavButton
-                                    key={page.label}
-                                    page={page}
-                                />
-                            ))}
-                        </ul>
-                    </nav>
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.4, type: 'spring' }}
+                style={{
+                  WebkitFontSmoothing: 'antialiased',
+                  backfaceVisibility: 'hidden',
+                  transform: 'translateZ(0)',
+                }}
+              >
+                {/* Badge Icon based on type */}
+                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]
+                  ?.icon === 'ring' && (
+                  <span className="relative flex h-3 w-3">
+                    {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]
+                      ?.pulse && (
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/70 opacity-75"></span>
+                    )}
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)]"></span>
+                  </span>
                 )}
+                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]
+                  ?.icon === 'dot' && (
+                  <span className="relative flex h-2.5 w-2.5">
+                    {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]
+                      ?.pulse && (
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    )}
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)] ring-2 ring-green-400/30"></span>
+                  </span>
+                )}
+                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]
+                  ?.icon === 'briefcase' && (
+                  <i aria-hidden="true" className="fas fa-briefcase text-xs"></i>
+                )}
+                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]
+                  ?.icon === 'users' && <i aria-hidden="true" className="fas fa-users text-xs"></i>}
+                {STATUS_BADGE.styles[STATUS_BADGE.type as keyof typeof STATUS_BADGE.styles]
+                  ?.icon === 'clock' && <i aria-hidden="true" className="fas fa-clock text-xs"></i>}
+                <span
+                  className="text-[11px] font-extrabold uppercase tracking-wider"
+                  style={{ letterSpacing: '0.08em' }}
+                >
+                  {t(`statusBadge.${STATUS_BADGE.type}`)}
+                </span>
+              </motion.div>
+            )}
+          </motion.div>
+        </Tilt3D>
 
-                <div className="mt-auto">
-                    <Magnetic>
-                        <a
-                            href={cvUrl ?? '#'}
-                            onClick={handleDownloadResume}
-                            download={cvUrl ? cvFile : undefined}
-                            type={cvUrl ? 'application/pdf' : undefined}
-                            className="group w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold py-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-yellow-400/20 transition-all duration-300 hover:shadow-yellow-400/40 hover:-translate-y-0.5 overflow-hidden relative ring-1 ring-white/20"
-                        >
-                            {/* Shine Effect */}
-                            <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent z-10"></div>
-                            <span className="text-sm uppercase tracking-wider font-extrabold z-20">{t('buttons.downloadCV')}</span>
-                            <i aria-hidden="true" className="fas fa-download z-20"></i>
-                        </a>
-                    </Magnetic>
-                </div>
-            </div>
-        </aside>
-    );
+        {/* Dynamic Greeting - Word by Word Drop Animation */}
+        <div className="text-center mb-2 mt-2 overflow-visible py-2">
+          <p className="text-lg font-semibold flex flex-wrap items-center justify-center gap-x-2">
+            <WordByWordAnimation
+              text={`${t(greetingKey)},`}
+              className="bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 dark:from-cyan-400 dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent font-bold"
+              staggerDelay={0.35}
+              initialDelay={0.5}
+              dropDistance={35}
+              animationDuration={0.8}
+              repeat={true}
+              repeatDelay={3.5}
+            />
+            <WordByWordAnimation
+              text={t('sidebar:greeting')}
+              className="bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-400 dark:to-orange-400 bg-clip-text text-transparent font-bold"
+              staggerDelay={0.35}
+              initialDelay={1.85}
+              dropDistance={35}
+              animationDuration={0.8}
+              repeat={true}
+              repeatDelay={3.5}
+            />
+          </p>
+        </div>
+
+        {/* Identity with Animated Name */}
+        <motion.div
+          className="text-center mb-5"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="mb-3"
+          >
+            <AnimatedName name={PERSONAL_INFO.name} variant="hacker" />
+          </motion.div>
+          <motion.div
+            className="group relative inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-xs font-bold text-gray-700 dark:text-gray-300 shadow-[0_4px_12px_rgba(251,191,36,0.3)] dark:shadow-[0_4px_16px_rgba(6,182,212,0.5)] border border-gray-200 dark:border-white/5 backdrop-blur-sm overflow-hidden"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              delay: 1.2,
+              duration: 0.5,
+              ease: [0.34, 1.56, 0.64, 1],
+            }}
+            whileHover={{
+              scale: 1.05,
+              y: -2,
+              boxShadow: '0 8px 24px rgba(251,191,36,0.6)',
+              transition: {
+                type: 'spring',
+                stiffness: 400,
+                damping: 10,
+              },
+            }}
+          >
+            {/* Continuous shimmer overlay - visible in both themes */}
+            <div className="absolute inset-0 animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-amber-200/60 dark:via-white/30 to-transparent"></div>
+
+            {/* Gradient glow border on hover */}
+            <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-yellow-400/20 via-amber-400/30 to-yellow-400/20 dark:from-cyan-400/20 dark:via-blue-400/30 dark:to-cyan-400/20 blur-sm -z-10"></div>
+
+            <i aria-hidden="true" className="fas fa-certificate text-base relative z-10"></i>
+            <span className="relative z-10" style={{ wordSpacing: '0.15em' }}>
+              {t('sidebar:personalInfo.title')}
+            </span>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+
+      <div
+        className="flex-1 px-8 pb-8 overflow-y-auto no-scrollbar flex flex-col"
+        data-lenis-prevent
+      >
+        <div className="w-full border-t border-gray-200 dark:border-white/5 mb-6"></div>
+
+        {/* Contact Details */}
+        <motion.div
+          className="space-y-5 mb-8"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.4,
+              },
+            },
+          }}
+        >
+          <InfoRow
+            icon="fa-envelope"
+            value={PERSONAL_INFO.email}
+            label={t('labels.email')}
+            isLink
+            href={`mailto:${PERSONAL_INFO.email}`}
+          />
+          <InfoRow
+            icon="fa-phone"
+            value={PERSONAL_INFO.phone}
+            label={t('labels.phone')}
+            isLink
+            href={`tel:${PERSONAL_INFO.phone}`}
+          />
+          <InfoRow
+            icon="fa-map-marker-alt"
+            value={t('labels.locationValue')}
+            label={t('labels.location')}
+          />
+        </motion.div>
+
+        {/* Socials with Enhanced Animations */}
+        <motion.div
+          className="flex gap-3 justify-center mb-8"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.08,
+                delayChildren: 0.6,
+              },
+            },
+          }}
+        >
+          {SOCIAL_LINKS.map((link) => (
+            <motion.a
+              key={link.name}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-11 h-11 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 flex items-center justify-center text-gray-500 dark:text-gray-400 relative overflow-hidden group cursor-pointer"
+              aria-label={link.name}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              whileHover={{
+                scale: 1.15,
+                rotate: 8,
+                backgroundColor: 'rgb(250, 204, 21)',
+                borderColor: 'rgb(250, 204, 21)',
+                boxShadow: '0 8px 25px -5px rgba(250, 204, 21, 0.5)',
+                transition: {
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 15,
+                },
+              }}
+              whileTap={{
+                scale: 0.9,
+                rotate: -8,
+                transition: {
+                  type: 'spring',
+                  stiffness: 400,
+                  damping: 10,
+                },
+              }}
+            >
+              {/* Glow effect */}
+              <span className="absolute inset-0 rounded-xl bg-yellow-400 opacity-0 group-hover:opacity-40 blur-lg transition-opacity duration-200"></span>
+              {/* Icon */}
+              <span className="relative z-10 group-hover:text-black transition-colors duration-200">
+                {link.icon}
+              </span>
+            </motion.a>
+          ))}
+        </motion.div>
+
+        {/* Navigation (Desktop) */}
+        {!isMobileView && (
+          <nav className="flex-1 mb-8">
+            <ul className="space-y-2">
+              {languageAwarePages.map((page) => (
+                <NavButton key={page.label} page={page} />
+              ))}
+            </ul>
+          </nav>
+        )}
+
+        <div className="mt-auto">
+          <Magnetic>
+            <a
+              href={cvUrl ?? '#'}
+              onClick={handleDownloadResume}
+              download={cvUrl ? cvFile : undefined}
+              type={cvUrl ? 'application/pdf' : undefined}
+              className="group w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold py-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-yellow-400/20 transition-all duration-300 hover:shadow-yellow-400/40 hover:-translate-y-0.5 overflow-hidden relative ring-1 ring-white/20"
+            >
+              {/* Shine Effect */}
+              <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent z-10"></div>
+              <span className="text-sm uppercase tracking-wider font-extrabold z-20">
+                {t('buttons.downloadCV')}
+              </span>
+              <i aria-hidden="true" className="fas fa-download z-20"></i>
+            </a>
+          </Magnetic>
+        </div>
+      </div>
+    </aside>
+  );
 };
 
+const InfoRow: React.FC<{
+  icon: string;
+  value: string;
+  label: string;
+  isLink?: boolean;
+  href?: string;
+}> = ({ icon, value, label, isLink, href }) => {
+  const content = (
+    <div className="flex items-center gap-4 group cursor-default">
+      <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center justify-center text-gray-400 dark:text-gray-500 shadow-sm shrink-0 group-hover:text-yellow-500 group-hover:scale-110 transition-all duration-300">
+        <i aria-hidden="true" className={`fas ${icon}`}></i>
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-bold mb-0.5">
+          {label}
+        </p>
+        <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 truncate group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
+          {value}
+        </p>
+      </div>
+    </div>
+  );
 
-const InfoRow: React.FC<{ icon: string; value: string; label: string; isLink?: boolean; href?: string }> = ({ icon, value, label, isLink, href }) => {
-    const content = (
-        <div className="flex items-center gap-4 group cursor-default">
-            <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 flex items-center justify-center text-gray-400 dark:text-gray-500 shadow-sm shrink-0 group-hover:text-yellow-500 group-hover:scale-110 transition-all duration-300">
-                <i aria-hidden="true" className={`fas ${icon}`}></i>
-            </div>
-            <div className="flex-1 min-w-0">
-                <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-bold mb-0.5">{label}</p>
-                <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 truncate group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">{value}</p>
-            </div>
-        </div>
-    );
-
-    if (isLink) {
-        return (
-            <motion.a
-                href={href}
-                className="block hover:bg-gray-50 dark:hover:bg-white/5 -mx-2 px-2 py-2 rounded-xl transition-colors"
-                variants={{
-                    hidden: { opacity: 0, x: -20 },
-                    visible: { opacity: 1, x: 0 },
-                }}
-            >
-                {content}
-            </motion.a>
-        )
-    }
+  if (isLink) {
     return (
-        <motion.div
-            className="-mx-2 px-2 py-2"
-            variants={{
-                hidden: { opacity: 0, x: -20 },
-                visible: { opacity: 1, x: 0 },
-            }}
-        >
-            {content}
-        </motion.div>
+      <motion.a
+        href={href}
+        className="block hover:bg-gray-50 dark:hover:bg-white/5 -mx-2 px-2 py-2 rounded-xl transition-colors"
+        variants={{
+          hidden: { opacity: 0, x: -20 },
+          visible: { opacity: 1, x: 0 },
+        }}
+      >
+        {content}
+      </motion.a>
     );
-}
+  }
+  return (
+    <motion.div
+      className="-mx-2 px-2 py-2"
+      variants={{
+        hidden: { opacity: 0, x: -20 },
+        visible: { opacity: 1, x: 0 },
+      }}
+    >
+      {content}
+    </motion.div>
+  );
+};
 
 export default Sidebar;
-

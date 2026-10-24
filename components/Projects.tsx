@@ -1,13 +1,13 @@
-import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from "react";
+import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Project } from "../types.ts";
-import { PROJECTS } from "../constants.tsx";
-import ProjectModal from "./ProjectModal.tsx";
-import NotFound from "./NotFound.tsx";
-import { useTranslatedProjects, useTranslatedProject } from "./hooks/useTranslatedProject.tsx";
-import { localePrefix, useLanguageNavigate } from "./hooks/useLanguageNavigate.tsx";
-import SEO from "./SEO.tsx";
+import { Project } from '../types.ts';
+import { PROJECTS } from '../constants.tsx';
+import ProjectModal from './ProjectModal.tsx';
+import NotFound from './NotFound.tsx';
+import { useTranslatedProjects, useTranslatedProject } from './hooks/useTranslatedProject.tsx';
+import { localePrefix, useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
+import SEO from './SEO.tsx';
 
 // Renders technology chips capped to a maximum number of rows, collapsing the
 // overflow into a "+N" badge. Row count is measured from the real rendered
@@ -15,8 +15,7 @@ import SEO from "./SEO.tsx";
 // container width, or breakpoint.
 const MAX_TAG_ROWS = 3;
 
-const chipBaseClass =
-  "text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg border";
+const chipBaseClass = 'text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg border';
 
 const TechTags: React.FC<{ technologies: string[] }> = ({ technologies }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -27,7 +26,7 @@ const TechTags: React.FC<{ technologies: string[] }> = ({ technologies }) => {
     if (!wrap) return;
 
     const recompute = () => {
-      const mirror = wrap.querySelector<HTMLElement>("[data-tag-mirror]");
+      const mirror = wrap.querySelector<HTMLElement>('[data-tag-mirror]');
       if (!mirror) return;
       const chips = Array.from(mirror.children) as HTMLElement[];
       if (chips.length === 0) return;
@@ -58,8 +57,7 @@ const TechTags: React.FC<{ technologies: string[] }> = ({ technologies }) => {
     return () => ro.disconnect();
   }, [technologies]);
 
-  const hidden =
-    visibleCount < technologies.length ? technologies.length - visibleCount : 0;
+  const hidden = visibleCount < technologies.length ? technologies.length - visibleCount : 0;
 
   return (
     <div ref={wrapRef} className="mt-auto relative">
@@ -104,14 +102,9 @@ const TechTags: React.FC<{ technologies: string[] }> = ({ technologies }) => {
 // The title is a real link to the project URL whose ::after covers the card:
 // the whole card stays clickable and it now opens from the keyboard too (it
 // was a clickable div that Tab skipped).
-const ProjectCard: React.FC<{ project: Project; to: string }> = ({
-  project,
-  to,
-}) => {
+const ProjectCard: React.FC<{ project: Project; to: string }> = ({ project, to }) => {
   return (
-    <div
-      className="group relative rounded-3xl bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] h-[540px] flex flex-col shadow-xl dark:shadow-none"
-    >
+    <div className="group relative rounded-3xl bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] h-[540px] flex flex-col shadow-xl dark:shadow-none">
       {/* Image Section - Fixed Height */}
       <div className="relative h-56 overflow-hidden flex-shrink-0">
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-yellow-900/40 dark:group-hover:from-neon-purple/40 transition-colors duration-500 z-10"></div>
@@ -127,7 +120,10 @@ const ProjectCard: React.FC<{ project: Project; to: string }> = ({
 
         <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
           <div className="w-14 h-14 bg-yellow-400 dark:bg-neon-cyan rounded-full flex items-center justify-center text-black text-xl shadow-[0_0_20px_rgba(250,204,21,0.5)] dark:shadow-[0_0_20px_rgba(6,182,212,0.5)] transform scale-75 group-hover:scale-100 transition-transform duration-300">
-            <i aria-hidden="true" className="fas fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-500"></i>
+            <i
+              aria-hidden="true"
+              className="fas fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-500"
+            ></i>
           </div>
         </div>
       </div>
@@ -166,12 +162,12 @@ const Projects: React.FC = () => {
   const { slug } = useParams();
   // The open project comes from the URL alone; an unknown slug renders the
   // "not found" view below rather than redirecting.
-  const selectedProject = PROJECTS.find(p => p.slug === slug) ?? null;
+  const selectedProject = PROJECTS.find((p) => p.slug === slug) ?? null;
   // Locale-aware: a plain useNavigate() sent /nl and /tr visitors who opened
   // or closed a project back to the English URLs.
   const navigate = useLanguageNavigate();
   const { pathname } = useLocation();
-  const isUnknownSlug = Boolean(slug) && !PROJECTS.some(p => p.slug === slug);
+  const isUnknownSlug = Boolean(slug) && !PROJECTS.some((p) => p.slug === slug);
 
   // Get translated projects
   const translatedProjects = useTranslatedProjects(PROJECTS);
@@ -187,25 +183,22 @@ const Projects: React.FC = () => {
   // Navigate to previous or next project
   const handleNavigateProject = (direction: 'prev' | 'next') => {
     if (!selectedProject) return;
-    
-    const currentIndex = PROJECTS.findIndex(p => p.slug === selectedProject.slug);
+
+    const currentIndex = PROJECTS.findIndex((p) => p.slug === selectedProject.slug);
     let newIndex;
-    
+
     if (direction === 'prev') {
       newIndex = currentIndex - 1 < 0 ? PROJECTS.length - 1 : currentIndex - 1;
     } else {
       newIndex = currentIndex + 1 >= PROJECTS.length ? 0 : currentIndex + 1;
     }
-    
+
     const newProject = PROJECTS[newIndex];
     navigate(`/projects/${newProject.slug}`);
   };
 
   // Extract unique categories and technologies
-  const categories = useMemo(
-    () => [...new Set(PROJECTS.map((p) => p.category))].sort(),
-    []
-  );
+  const categories = useMemo(() => [...new Set(PROJECTS.map((p) => p.category))].sort(), []);
   const allTechnologies = useMemo(() => {
     const techs = new Set<string>();
     PROJECTS.forEach((project) => {
@@ -218,13 +211,10 @@ const Projects: React.FC = () => {
   const filteredProjects = useMemo(() => {
     return translatedProjects.filter((project) => {
       const categoryMatch =
-        selectedCategories.length === 0 ||
-        selectedCategories.includes(project.category);
+        selectedCategories.length === 0 || selectedCategories.includes(project.category);
       const techMatch =
         selectedTechnologies.length === 0 ||
-        selectedTechnologies.every((tech) =>
-          project.technologies.includes(tech)
-        );
+        selectedTechnologies.every((tech) => project.technologies.includes(tech));
       return categoryMatch && techMatch;
     });
   }, [selectedCategories, selectedTechnologies, translatedProjects]);
@@ -232,16 +222,14 @@ const Projects: React.FC = () => {
   // Handle category toggle
   const toggleCategory = (category: string) => {
     setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
+      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category],
     );
   };
 
   // Handle technology toggle
   const toggleTechnology = (tech: string) => {
     setSelectedTechnologies((prev) =>
-      prev.includes(tech) ? prev.filter((t) => t !== tech) : [...prev, tech]
+      prev.includes(tech) ? prev.filter((t) => t !== tech) : [...prev, tech],
     );
   };
 
@@ -254,22 +242,16 @@ const Projects: React.FC = () => {
   // Click outside to close dropdowns
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        categoryRef.current &&
-        !categoryRef.current.contains(event.target as Node)
-      ) {
+      if (categoryRef.current && !categoryRef.current.contains(event.target as Node)) {
         setIsCategoryOpen(false);
       }
-      if (
-        technologyRef.current &&
-        !technologyRef.current.contains(event.target as Node)
-      ) {
+      if (technologyRef.current && !technologyRef.current.contains(event.target as Node)) {
         setIsTechnologyOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   if (isUnknownSlug) return <NotFound />;
@@ -281,12 +263,17 @@ const Projects: React.FC = () => {
         description={
           selectedProject
             ? translatedSelectedProject.description
-            : t('meta.description', "Explore my portfolio of automation projects, including test frameworks, CI/CD pipelines, and full-stack applications.")
+            : t(
+                'meta.description',
+                'Explore my portfolio of automation projects, including test frameworks, CI/CD pipelines, and full-stack applications.',
+              )
         }
       />
       <header className="mb-10">
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-8">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">{t('titleHighlight')} </span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">
+            {t('titleHighlight')}{' '}
+          </span>
           <span className="relative inline-block">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark animate-gradient bg-[length:200%_auto]">
               {t('title')}
@@ -315,10 +302,11 @@ const Projects: React.FC = () => {
                 setIsTechnologyOpen(false);
               }}
               className={`w-full flex items-center justify-between px-6 py-4 rounded-2xl text-sm font-semibold transition-all duration-300 border-2
-                                  ${isCategoryOpen
-                  ? "bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-                  : "bg-white dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-300 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan shadow-lg dark:shadow-none"
-                }`}
+                                  ${
+                                    isCategoryOpen
+                                      ? 'bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]'
+                                      : 'bg-white dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-300 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan shadow-lg dark:shadow-none'
+                                  }`}
             >
               <span>
                 {selectedCategories.length === 0
@@ -326,8 +314,10 @@ const Projects: React.FC = () => {
                   : t('filters.selected', { count: selectedCategories.length })}
               </span>
               <i
-                aria-hidden="true" className={`fas fa-chevron-down transition-transform duration-300 ${isCategoryOpen ? "rotate-180" : ""
-                  }`}
+                aria-hidden="true"
+                className={`fas fa-chevron-down transition-transform duration-300 ${
+                  isCategoryOpen ? 'rotate-180' : ''
+                }`}
               ></i>
             </button>
 
@@ -347,9 +337,7 @@ const Projects: React.FC = () => {
                       onChange={() => toggleCategory(cat)}
                       className="w-4 h-4 rounded border-gray-300 dark:border-white/20 text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0 cursor-pointer"
                     />
-                    <span className="ml-3 text-gray-700 dark:text-gray-300">
-                      {cat}
-                    </span>
+                    <span className="ml-3 text-gray-700 dark:text-gray-300">{cat}</span>
                   </label>
                 ))}
               </div>
@@ -372,10 +360,11 @@ const Projects: React.FC = () => {
                 setIsCategoryOpen(false);
               }}
               className={`w-full flex items-center justify-between px-6 py-4 rounded-2xl text-sm font-semibold transition-all duration-300 border-2
-                                ${isTechnologyOpen
-                  ? "bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-                  : "bg-white dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-300 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan shadow-lg dark:shadow-none"
-                }`}
+                                ${
+                                  isTechnologyOpen
+                                    ? 'bg-white dark:bg-black text-black dark:text-white border-yellow-400 dark:border-neon-cyan shadow-[0_0_20px_rgba(234,179,8,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.3)]'
+                                    : 'bg-white dark:bg-black/60 backdrop-blur-xl text-gray-700 dark:text-gray-300 border-gray-300 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan shadow-lg dark:shadow-none'
+                                }`}
             >
               <span>
                 {selectedTechnologies.length === 0
@@ -383,8 +372,10 @@ const Projects: React.FC = () => {
                   : t('filters.selected', { count: selectedTechnologies.length })}
               </span>
               <i
-                aria-hidden="true" className={`fas fa-chevron-down transition-transform duration-300 ${isTechnologyOpen ? "rotate-180" : ""
-                  }`}
+                aria-hidden="true"
+                className={`fas fa-chevron-down transition-transform duration-300 ${
+                  isTechnologyOpen ? 'rotate-180' : ''
+                }`}
               ></i>
             </button>
 
@@ -404,9 +395,7 @@ const Projects: React.FC = () => {
                       onChange={() => toggleTechnology(tech)}
                       className="w-4 h-4 rounded border-gray-300 dark:border-white/20 text-yellow-400 focus:ring-yellow-400 focus:ring-offset-0 cursor-pointer"
                     />
-                    <span className="ml-3 text-gray-700 dark:text-gray-300">
-                      {tech}
-                    </span>
+                    <span className="ml-3 text-gray-700 dark:text-gray-300">{tech}</span>
                   </label>
                 ))}
               </div>
@@ -415,52 +404,51 @@ const Projects: React.FC = () => {
         </div>
 
         {/* Active Filters & Clear Button */}
-        {(selectedCategories.length > 0 ||
-          selectedTechnologies.length > 0) && (
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="text-sm text-gray-500 dark:text-gray-400">
-                {t('filters.activeFilters')}
-              </span>
-              {selectedCategories.map((cat) => (
-                <span
-                  key={cat}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-xs font-semibold text-yellow-600 dark:text-yellow-400"
-                >
-                  {cat}
-                  <button
-                    type="button"
-                    onClick={() => toggleCategory(cat)}
-                    aria-label={t('filters.removeFilter', { name: cat })}
-                    className="hover:text-yellow-700 dark:hover:text-yellow-300"
-                  >
-                    <i aria-hidden="true" className="fas fa-times"></i>
-                  </button>
-                </span>
-              ))}
-              {selectedTechnologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-400/10 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-600 dark:text-blue-400"
-                >
-                  {tech}
-                  <button
-                    type="button"
-                    onClick={() => toggleTechnology(tech)}
-                    aria-label={t('filters.removeFilter', { name: tech })}
-                    className="hover:text-blue-700 dark:hover:text-blue-300"
-                  >
-                    <i aria-hidden="true" className="fas fa-times"></i>
-                  </button>
-                </span>
-              ))}
-              <button
-                onClick={clearFilters}
-                className="text-xs font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline hover:scale-110 transition-all duration-300"
+        {(selectedCategories.length > 0 || selectedTechnologies.length > 0) && (
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              {t('filters.activeFilters')}
+            </span>
+            {selectedCategories.map((cat) => (
+              <span
+                key={cat}
+                className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-xs font-semibold text-yellow-600 dark:text-yellow-400"
               >
-                {t('filters.clearFilters')}
-              </button>
-            </div>
-          )}
+                {cat}
+                <button
+                  type="button"
+                  onClick={() => toggleCategory(cat)}
+                  aria-label={t('filters.removeFilter', { name: cat })}
+                  className="hover:text-yellow-700 dark:hover:text-yellow-300"
+                >
+                  <i aria-hidden="true" className="fas fa-times"></i>
+                </button>
+              </span>
+            ))}
+            {selectedTechnologies.map((tech) => (
+              <span
+                key={tech}
+                className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-400/10 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-600 dark:text-blue-400"
+              >
+                {tech}
+                <button
+                  type="button"
+                  onClick={() => toggleTechnology(tech)}
+                  aria-label={t('filters.removeFilter', { name: tech })}
+                  className="hover:text-blue-700 dark:hover:text-blue-300"
+                >
+                  <i aria-hidden="true" className="fas fa-times"></i>
+                </button>
+              </span>
+            ))}
+            <button
+              onClick={clearFilters}
+              className="text-xs font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline hover:scale-110 transition-all duration-300"
+            >
+              {t('filters.clearFilters')}
+            </button>
+          </div>
+        )}
       </header>
 
       {filteredProjects.length > 0 ? (
@@ -481,14 +469,15 @@ const Projects: React.FC = () => {
       ) : (
         <div className="flex flex-col items-center justify-center py-32 text-center bg-white/50 dark:bg-white/5 rounded-[2rem] border border-dashed border-gray-300 dark:border-white/10">
           <div className="w-20 h-20 bg-gray-100 dark:bg-white/5 rounded-full flex items-center justify-center mb-6">
-            <i aria-hidden="true" className="fas fa-folder-open text-4xl text-gray-300 dark:text-gray-600"></i>
+            <i
+              aria-hidden="true"
+              className="fas fa-folder-open text-4xl text-gray-300 dark:text-gray-600"
+            ></i>
           </div>
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
             {t('filters.noResults')}
           </h3>
-          <p className="text-gray-500 dark:text-gray-400 mb-4">
-            {t('filters.noResults')}
-          </p>
+          <p className="text-gray-500 dark:text-gray-400 mb-4">{t('filters.noResults')}</p>
           <button
             onClick={clearFilters}
             className="px-6 py-2 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-500 hover:scale-105 hover:-translate-y-1 hover:shadow-lg transition-all duration-300"

@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import './PrintableResume.css';
 import { useTranslation } from 'react-i18next';
@@ -7,21 +6,21 @@ import { TimelineItem } from '../types.ts';
 
 const PrintableResume: React.FC = () => {
   const { t, i18n } = useTranslation(['resume', 'common', 'about']);
-  
+
   // Get translated data from locale files
   const education = useMemo(() => {
     const eduData = t('resume:education', { returnObjects: true });
-    return Array.isArray(eduData) ? eduData as TimelineItem[] : [];
+    return Array.isArray(eduData) ? (eduData as TimelineItem[]) : [];
   }, [t]);
 
   const experience = useMemo(() => {
     const expData = t('resume:experience', { returnObjects: true });
-    return Array.isArray(expData) ? expData as TimelineItem[] : [];
+    return Array.isArray(expData) ? (expData as TimelineItem[]) : [];
   }, [t]);
 
   const volunteering = useMemo(() => {
     const volData = t('resume:volunteering', { returnObjects: true, defaultValue: [] });
-    return Array.isArray(volData) ? volData as TimelineItem[] : [];
+    return Array.isArray(volData) ? (volData as TimelineItem[]) : [];
   }, [t]);
 
   // Get translated language levels
@@ -30,12 +29,16 @@ const PrintableResume: React.FC = () => {
   }, [t]);
 
   const translatedLanguages = useMemo(() => {
-    return LANGUAGES.map(lang => ({
+    return LANGUAGES.map((lang) => ({
       ...lang,
-      level: lang.level === 'Native' ? languageLevels.native :
-             lang.level.includes('C1') ? languageLevels.professional :
-             lang.level.includes('B2') ? languageLevels.intermediate :
-             languageLevels.beginner
+      level:
+        lang.level === 'Native'
+          ? languageLevels.native
+          : lang.level.includes('C1')
+            ? languageLevels.professional
+            : lang.level.includes('B2')
+              ? languageLevels.intermediate
+              : languageLevels.beginner,
     }));
   }, [languageLevels]);
 
@@ -60,40 +63,54 @@ const PrintableResume: React.FC = () => {
   // heading with an empty body.
   const journeyText = useMemo(() => {
     return ['storyPart1', 'storyPart2', 'storyPart3']
-      .map(key => stripHtml(t(`about:${key}`, { defaultValue: '' })))
+      .map((key) => stripHtml(t(`about:${key}`, { defaultValue: '' })))
       .filter(Boolean)
       .join(' ');
   }, [t]);
 
   // Get current language for section titles
   const currentLang = i18n.language;
-  
+
   // Localized section titles
   const sectionTitles = {
-    profile: currentLang === 'nl' ? 'Professioneel Profiel' : 
-             currentLang === 'tr' ? 'Profesyonel Profil' : 
-             'Professional Profile',
+    profile:
+      currentLang === 'nl'
+        ? 'Professioneel Profiel'
+        : currentLang === 'tr'
+          ? 'Profesyonel Profil'
+          : 'Professional Profile',
     journey: t('about:myJourney'),
-    skills: currentLang === 'nl' ? 'Vaardigheden & Expertise' : 
-            currentLang === 'tr' ? 'Beceriler & Uzmanlık' : 
-            'Skills & Expertise',
-    technologies: currentLang === 'nl' ? 'Technologieën' : 
-                  currentLang === 'tr' ? 'Teknolojiler' : 
-                  'Technologies',
+    skills:
+      currentLang === 'nl'
+        ? 'Vaardigheden & Expertise'
+        : currentLang === 'tr'
+          ? 'Beceriler & Uzmanlık'
+          : 'Skills & Expertise',
+    technologies:
+      currentLang === 'nl'
+        ? 'Technologieën'
+        : currentLang === 'tr'
+          ? 'Teknolojiler'
+          : 'Technologies',
     languages: t('resume:sections.languages'),
-    competencies: currentLang === 'nl' ? 'Kerncompetenties' : 
-                  currentLang === 'tr' ? 'Temel Yetkinlikler' : 
-                  'Key Competencies',
-    experience: currentLang === 'nl' ? 'Werkervaring' : 
-                currentLang === 'tr' ? 'Mesleki Deneyim' : 
-                'Professional Experience',
+    competencies:
+      currentLang === 'nl'
+        ? 'Kerncompetenties'
+        : currentLang === 'tr'
+          ? 'Temel Yetkinlikler'
+          : 'Key Competencies',
+    experience:
+      currentLang === 'nl'
+        ? 'Werkervaring'
+        : currentLang === 'tr'
+          ? 'Mesleki Deneyim'
+          : 'Professional Experience',
     education: t('resume:sections.education'),
-    volunteering: t('resume:sections.volunteering')
+    volunteering: t('resume:sections.volunteering'),
   };
 
   return (
     <div className="hidden print:block font-sans text-gray-900 bg-white w-full h-full absolute top-0 left-0 z-[9999]">
-
       {/* 
          Using a Table structure to simulate margins on every page 
          while suppressing browser headers/footers via @page { margin: 0 } 
@@ -106,147 +123,192 @@ const PrintableResume: React.FC = () => {
             </td>
           </tr>
         </thead>
-        
+
         <tbody>
           <tr>
             <td className="print-content align-top">
               {/* --- RESUME CONTENT START --- */}
-              
+
               {/* 1. HEADER */}
               <header className="border-b-2 border-black pb-6 mb-8 no-break">
                 <div className="flex justify-between items-start mb-4">
-                    <div className="flex-1">
-                        <h1 className="text-5xl font-bold uppercase tracking-tight leading-none mb-2">{PERSONAL_INFO.name}</h1>
-                        <p className="text-xl font-medium text-gray-700 tracking-wide">{PERSONAL_INFO.title}</p>
-                    </div>
+                  <div className="flex-1">
+                    <h1 className="text-5xl font-bold uppercase tracking-tight leading-none mb-2">
+                      {PERSONAL_INFO.name}
+                    </h1>
+                    <p className="text-xl font-medium text-gray-700 tracking-wide">
+                      {PERSONAL_INFO.title}
+                    </p>
+                  </div>
                 </div>
-                
+
                 {/* Contact Info Grid */}
                 <div className="grid grid-cols-2 gap-y-2 text-sm font-medium text-gray-700 w-full">
-                    <div className="flex items-center gap-3">
-                        <span className="w-5 flex justify-center text-gray-900"><i aria-hidden="true" className="fas fa-envelope"></i></span> 
-                        {PERSONAL_INFO.email}
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <span className="w-5 flex justify-center text-gray-900"><i aria-hidden="true" className="fas fa-phone"></i></span> 
-                        {PERSONAL_INFO.phone}
-                    </div>
-                    <div className="flex items-center gap-3">
-                         <span className="w-5 flex justify-center text-gray-900"><i aria-hidden="true" className="fas fa-globe"></i></span> 
-                         <span className="text-black">emredursun.nl</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <span className="w-5 flex justify-center text-gray-900"><i aria-hidden="true" className="fas fa-map-marker-alt"></i></span> 
-                        {t('common:labels.locationValue')}
-                    </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-5 flex justify-center text-gray-900">
+                      <i aria-hidden="true" className="fas fa-envelope"></i>
+                    </span>
+                    {PERSONAL_INFO.email}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-5 flex justify-center text-gray-900">
+                      <i aria-hidden="true" className="fas fa-phone"></i>
+                    </span>
+                    {PERSONAL_INFO.phone}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-5 flex justify-center text-gray-900">
+                      <i aria-hidden="true" className="fas fa-globe"></i>
+                    </span>
+                    <span className="text-black">emredursun.nl</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-5 flex justify-center text-gray-900">
+                      <i aria-hidden="true" className="fas fa-map-marker-alt"></i>
+                    </span>
+                    {t('common:labels.locationValue')}
+                  </div>
                 </div>
               </header>
 
               {/* 2. SUMMARY */}
               <section className="mb-8 no-break">
-                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-3 pb-1 text-black">{sectionTitles.profile}</h3>
+                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-3 pb-1 text-black">
+                  {sectionTitles.profile}
+                </h3>
                 <p className="text-sm leading-relaxed text-justify text-gray-800">{aboutText}</p>
               </section>
 
               {/* 2.5. MY JOURNEY */}
               <section className="mb-8 no-break">
-                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-3 pb-1 text-black">{sectionTitles.journey}</h3>
+                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-3 pb-1 text-black">
+                  {sectionTitles.journey}
+                </h3>
                 <p className="text-sm leading-relaxed text-justify text-gray-800">{journeyText}</p>
               </section>
 
               {/* 3. SKILLS (3 Column Grid) */}
               <section className="mb-8 no-break">
-                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-4 pb-1 text-black">{sectionTitles.skills}</h3>
+                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-4 pb-1 text-black">
+                  {sectionTitles.skills}
+                </h3>
                 <div className="grid grid-cols-3 gap-8">
-                    {/* Technical Skills */}
-                    <div className="col-span-2">
-                        <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">{sectionTitles.technologies}</h4>
-                        <div className="flex flex-wrap gap-2">
-                            {TECH_STACK.flatMap(cat => cat.technologies).map(tech => (
-                                <span key={tech.name} className="text-[11px] font-medium border border-gray-300 rounded px-1.5 py-0.5 bg-gray-50 text-black">
-                                    {tech.name}
-                                </span>
-                            ))}
-                        </div>
+                  {/* Technical Skills */}
+                  <div className="col-span-2">
+                    <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">
+                      {sectionTitles.technologies}
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {TECH_STACK.flatMap((cat) => cat.technologies).map((tech) => (
+                        <span
+                          key={tech.name}
+                          className="text-[11px] font-medium border border-gray-300 rounded px-1.5 py-0.5 bg-gray-50 text-black"
+                        >
+                          {tech.name}
+                        </span>
+                      ))}
                     </div>
-                    {/* Languages */}
-                    <div>
-                         <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">{sectionTitles.languages}</h4>
-                         <ul className="text-xs space-y-1.5">
-                            {translatedLanguages.map(lang => (
-                                <li key={lang.name} className="flex justify-between border-b border-dotted border-gray-300 pb-0.5 last:border-0">
-                                    <span className="font-semibold">{lang.name}</span>
-                                    <span className="text-gray-600">{lang.level}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                  </div>
+                  {/* Languages */}
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">
+                      {sectionTitles.languages}
+                    </h4>
+                    <ul className="text-xs space-y-1.5">
+                      {translatedLanguages.map((lang) => (
+                        <li
+                          key={lang.name}
+                          className="flex justify-between border-b border-dotted border-gray-300 pb-0.5 last:border-0"
+                        >
+                          <span className="font-semibold">{lang.name}</span>
+                          <span className="text-gray-600">{lang.level}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
                 <div className="mt-4">
-                    <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">{sectionTitles.competencies}</h4>
-                    <div className="flex flex-wrap gap-x-6 gap-y-1">
-                         {SKILLS.map(skill => (
-                            <div key={skill.name} className="flex items-center gap-2 text-xs w-[45%]">
-                                <div className="flex-1 font-medium">{skill.name}</div>
-                                <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                    <div className="h-full bg-gray-800" style={{ width: `${skill.level}%` }}></div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                  <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">
+                    {sectionTitles.competencies}
+                  </h4>
+                  <div className="flex flex-wrap gap-x-6 gap-y-1">
+                    {SKILLS.map((skill) => (
+                      <div key={skill.name} className="flex items-center gap-2 text-xs w-[45%]">
+                        <div className="flex-1 font-medium">{skill.name}</div>
+                        <div className="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gray-800"
+                            style={{ width: `${skill.level}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </section>
 
               {/* 4. EXPERIENCE */}
               <section className="mb-8">
-                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-5 pb-1 text-black">{sectionTitles.experience}</h3>
+                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-5 pb-1 text-black">
+                  {sectionTitles.experience}
+                </h3>
                 <div className="space-y-6">
-                    {experience.map((job, index) => (
-                        <div key={index} className="no-break relative pl-4 border-l-2 border-gray-200">
-                            <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-gray-400"></div>
-                            <div className="flex justify-between items-baseline mb-1">
-                                <h4 className="text-base font-bold text-black">{job.title}</h4>
-                                <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded whitespace-nowrap ml-4">{job.date}</span>
-                            </div>
-                            <div className="text-sm font-semibold text-gray-600 mb-2 italic">{job.company}</div>
-                            <p className="text-sm leading-relaxed text-gray-800 text-justify whitespace-pre-line">{job.description}</p>
-                        </div>
-                    ))}
+                  {experience.map((job, index) => (
+                    <div key={index} className="no-break relative pl-4 border-l-2 border-gray-200">
+                      <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-gray-400"></div>
+                      <div className="flex justify-between items-baseline mb-1">
+                        <h4 className="text-base font-bold text-black">{job.title}</h4>
+                        <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded whitespace-nowrap ml-4">
+                          {job.date}
+                        </span>
+                      </div>
+                      <div className="text-sm font-semibold text-gray-600 mb-2 italic">
+                        {job.company}
+                      </div>
+                      <p className="text-sm leading-relaxed text-gray-800 text-justify whitespace-pre-line">
+                        {job.description}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </section>
 
               {/* 5. EDUCATION */}
               <section className="mb-4">
-                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-5 pb-1 text-black">{sectionTitles.education}</h3>
+                <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-5 pb-1 text-black">
+                  {sectionTitles.education}
+                </h3>
                 <div className="space-y-5">
-                    {education.map((edu, index) => (
-                        <div key={index} className="no-break">
-                             <div className="flex justify-between items-baseline">
-                                <h4 className="text-sm font-bold text-black">{edu.title}</h4>
-                                <span className="text-xs font-medium text-gray-500">{edu.date}</span>
-                            </div>
-                            <div className="text-sm text-gray-600 italic mb-1">{edu.company}</div>
-                            <p className="text-xs text-gray-600 leading-snug">{edu.description}</p>
-                        </div>
-                    ))}
+                  {education.map((edu, index) => (
+                    <div key={index} className="no-break">
+                      <div className="flex justify-between items-baseline">
+                        <h4 className="text-sm font-bold text-black">{edu.title}</h4>
+                        <span className="text-xs font-medium text-gray-500">{edu.date}</span>
+                      </div>
+                      <div className="text-sm text-gray-600 italic mb-1">{edu.company}</div>
+                      <p className="text-xs text-gray-600 leading-snug">{edu.description}</p>
+                    </div>
+                  ))}
                 </div>
               </section>
 
               {/* 6. VOLUNTEERING */}
               {volunteering.length > 0 && (
                 <section className="mb-4">
-                  <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-5 pb-1 text-black">{sectionTitles.volunteering}</h3>
+                  <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-5 pb-1 text-black">
+                    {sectionTitles.volunteering}
+                  </h3>
                   <div className="space-y-5">
-                      {volunteering.map((item, index) => (
-                          <div key={index} className="no-break">
-                               <div className="flex justify-between items-baseline">
-                                  <h4 className="text-sm font-bold text-black">{item.title}</h4>
-                                  <span className="text-xs font-medium text-gray-500">{item.date}</span>
-                              </div>
-                              <div className="text-sm text-gray-600 italic mb-1">{item.company}</div>
-                              <p className="text-xs text-gray-600 leading-snug">{item.description}</p>
-                          </div>
-                      ))}
+                    {volunteering.map((item, index) => (
+                      <div key={index} className="no-break">
+                        <div className="flex justify-between items-baseline">
+                          <h4 className="text-sm font-bold text-black">{item.title}</h4>
+                          <span className="text-xs font-medium text-gray-500">{item.date}</span>
+                        </div>
+                        <div className="text-sm text-gray-600 italic mb-1">{item.company}</div>
+                        <p className="text-xs text-gray-600 leading-snug">{item.description}</p>
+                      </div>
+                    ))}
                   </div>
                 </section>
               )}
@@ -260,7 +322,7 @@ const PrintableResume: React.FC = () => {
           <tr>
             <td>
               <div className="print-footer-space flex items-end justify-center pb-4">
-                 {/* Optional clean footer, often kept empty or minimal */}
+                {/* Optional clean footer, often kept empty or minimal */}
               </div>
             </td>
           </tr>

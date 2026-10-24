@@ -8,16 +8,21 @@ export const useTranslatedProject = (project: Project): Project => {
 
   return useMemo(() => {
     const translationKey = PROJECT_TRANSLATION_KEYS[project.slug];
-    
+
     if (!translationKey) {
       // Return original project if no translation key found
       return project;
     }
 
     // Get translations for this project
-    const getProjectTranslation = (field: string, fallback: string | undefined): string | undefined => {
+    const getProjectTranslation = (
+      field: string,
+      fallback: string | undefined,
+    ): string | undefined => {
       const translated = t(`projects.${translationKey}.${field}`, { defaultValue: '' });
-      return translated && translated !== `projects.${translationKey}.${field}` ? translated : fallback;
+      return translated && translated !== `projects.${translationKey}.${field}`
+        ? translated
+        : fallback;
     };
 
     // Get translated metrics array
@@ -33,9 +38,10 @@ export const useTranslatedProject = (project: Project): Project => {
     // Get translated features
     const getFeatures = () => {
       if (!project.features) return undefined;
-      
-      const featuresData = t(`projects.${translationKey}.features`, { returnObjects: true }) as Record<string, { title: string; description: string }> | undefined;
-      
+
+      const featuresData = t(`projects.${translationKey}.features`, { returnObjects: true }) as
+        Record<string, { title: string; description: string }> | undefined;
+
       if (typeof featuresData !== 'object' || featuresData === null) {
         return project.features;
       }
@@ -45,7 +51,7 @@ export const useTranslatedProject = (project: Project): Project => {
       return project.features.map((feature, index) => {
         const key = featureKeys[index];
         const translatedFeature = key ? featuresData[key] : null;
-        
+
         return {
           ...feature,
           title: translatedFeature?.title || feature.title,
@@ -57,9 +63,10 @@ export const useTranslatedProject = (project: Project): Project => {
     // Get translated results
     const getResults = () => {
       if (!project.results) return undefined;
-      
-      const resultsData = t(`projects.${translationKey}.results`, { returnObjects: true }) as Record<string, { metric: string; value: string; description: string }> | undefined;
-      
+
+      const resultsData = t(`projects.${translationKey}.results`, { returnObjects: true }) as
+        Record<string, { metric: string; value: string; description: string }> | undefined;
+
       if (typeof resultsData !== 'object' || resultsData === null) {
         return project.results;
       }
@@ -68,7 +75,7 @@ export const useTranslatedProject = (project: Project): Project => {
       return project.results.map((result, index) => {
         const key = resultKeys[index];
         const translatedResult = key ? resultsData[key] : null;
-        
+
         return {
           ...result,
           metric: translatedResult?.metric || result.metric,
@@ -86,7 +93,10 @@ export const useTranslatedProject = (project: Project): Project => {
       team: getProjectTranslation('team', project.team),
       duration: getProjectTranslation('duration', project.duration),
       description: getProjectTranslation('description', project.description) || project.description,
-      detailedDescription: getProjectTranslation('detailedDescription', project.detailedDescription),
+      detailedDescription: getProjectTranslation(
+        'detailedDescription',
+        project.detailedDescription,
+      ),
       challenge: getProjectTranslation('challenge', project.challenge),
       solution: getProjectTranslation('solution', project.solution),
       metrics: getMetrics(),
@@ -103,14 +113,19 @@ export const useTranslatedProjects = (projects: Project[]): Project[] => {
   return useMemo(() => {
     return projects.map((project) => {
       const translationKey = PROJECT_TRANSLATION_KEYS[project.slug];
-      
+
       if (!translationKey) {
         return project;
       }
 
-      const getProjectTranslation = (field: string, fallback: string | undefined): string | undefined => {
+      const getProjectTranslation = (
+        field: string,
+        fallback: string | undefined,
+      ): string | undefined => {
         const translated = t(`projects.${translationKey}.${field}`, { defaultValue: '' });
-        return translated && translated !== `projects.${translationKey}.${field}` ? translated : fallback;
+        return translated && translated !== `projects.${translationKey}.${field}`
+          ? translated
+          : fallback;
       };
 
       const getMetrics = (): string[] | undefined => {
@@ -124,9 +139,10 @@ export const useTranslatedProjects = (projects: Project[]): Project[] => {
 
       const getFeatures = () => {
         if (!project.features) return undefined;
-        
-        const featuresData = t(`projects.${translationKey}.features`, { returnObjects: true }) as Record<string, { title: string; description: string }> | undefined;
-        
+
+        const featuresData = t(`projects.${translationKey}.features`, { returnObjects: true }) as
+          Record<string, { title: string; description: string }> | undefined;
+
         if (typeof featuresData !== 'object' || featuresData === null) {
           return project.features;
         }
@@ -135,7 +151,7 @@ export const useTranslatedProjects = (projects: Project[]): Project[] => {
         return project.features.map((feature, index) => {
           const key = featureKeys[index];
           const translatedFeature = key ? featuresData[key] : null;
-          
+
           return {
             ...feature,
             title: translatedFeature?.title || feature.title,
@@ -146,9 +162,10 @@ export const useTranslatedProjects = (projects: Project[]): Project[] => {
 
       const getResults = () => {
         if (!project.results) return undefined;
-        
-        const resultsData = t(`projects.${translationKey}.results`, { returnObjects: true }) as Record<string, { metric: string; value: string; description: string }> | undefined;
-        
+
+        const resultsData = t(`projects.${translationKey}.results`, { returnObjects: true }) as
+          Record<string, { metric: string; value: string; description: string }> | undefined;
+
         if (typeof resultsData !== 'object' || resultsData === null) {
           return project.results;
         }
@@ -157,7 +174,7 @@ export const useTranslatedProjects = (projects: Project[]): Project[] => {
         return project.results.map((result, index) => {
           const key = resultKeys[index];
           const translatedResult = key ? resultsData[key] : null;
-          
+
           return {
             ...result,
             metric: translatedResult?.metric || result.metric,
@@ -173,8 +190,12 @@ export const useTranslatedProjects = (projects: Project[]): Project[] => {
         role: getProjectTranslation('role', project.role),
         team: getProjectTranslation('team', project.team),
         duration: getProjectTranslation('duration', project.duration),
-        description: getProjectTranslation('description', project.description) || project.description,
-        detailedDescription: getProjectTranslation('detailedDescription', project.detailedDescription),
+        description:
+          getProjectTranslation('description', project.description) || project.description,
+        detailedDescription: getProjectTranslation(
+          'detailedDescription',
+          project.detailedDescription,
+        ),
         challenge: getProjectTranslation('challenge', project.challenge),
         solution: getProjectTranslation('solution', project.solution),
         metrics: getMetrics(),

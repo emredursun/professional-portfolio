@@ -7,15 +7,18 @@
  * mobile 58 with them, 85 without - while adding nothing on a touch screen,
  * where there is no cursor to follow.
  */
-export function shouldRenderDecor(env: {
-  matchMedia?: (query: string) => { matches: boolean };
-  innerWidth: number;
-  saveData?: boolean;
-} = {
-  matchMedia: window.matchMedia?.bind(window),
-  innerWidth: window.innerWidth,
-  saveData: (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData,
-}): boolean {
+export function shouldRenderDecor(
+  env: {
+    matchMedia?: (query: string) => { matches: boolean };
+    innerWidth: number;
+    saveData?: boolean;
+  } = {
+    matchMedia: window.matchMedia?.bind(window),
+    innerWidth: window.innerWidth,
+    saveData: (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+      ?.saveData,
+  },
+): boolean {
   const query = (q: string) => env.matchMedia?.(q).matches ?? false;
 
   if (query('(prefers-reduced-motion: reduce)')) return false;

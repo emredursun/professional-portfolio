@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import React, { useEffect, useState } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 const CustomCursor: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
@@ -27,21 +27,21 @@ const CustomCursor: React.FC = () => {
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const isClickable =
-        target.tagName === "BUTTON" ||
-        target.tagName === "A" ||
-        target.closest("button") ||
-        target.closest("a") ||
-        target.getAttribute("role") === "button" ||
-        target.classList.contains("cursor-pointer");
+        target.tagName === 'BUTTON' ||
+        target.tagName === 'A' ||
+        target.closest('button') ||
+        target.closest('a') ||
+        target.getAttribute('role') === 'button' ||
+        target.classList.contains('cursor-pointer');
 
       setIsHovering(!!isClickable);
     };
 
-    window.addEventListener("mousemove", manageMouseMove);
-    window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener('mousemove', manageMouseMove);
+    window.addEventListener('mouseover', handleMouseOver);
     return () => {
-      window.removeEventListener("mousemove", manageMouseMove);
-      window.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener('mousemove', manageMouseMove);
+      window.removeEventListener('mouseover', handleMouseOver);
     };
   }, [mouseX, mouseY]);
 
@@ -51,17 +51,15 @@ const CustomCursor: React.FC = () => {
         style={{
           left: smoothMouse.x,
           top: smoothMouse.y,
-          x: "-50%",
-          y: "-50%",
+          x: '-50%',
+          y: '-50%',
         }}
         animate={{
           width: cursorSize,
           height: cursorSize,
         }}
         className={`fixed rounded-full border border-yellow-400 mix-blend-difference transition-colors duration-200 ${
-          isHovering
-            ? "bg-yellow-400/20 border-transparent backdrop-blur-[1px]"
-            : ""
+          isHovering ? 'bg-yellow-400/20 border-transparent backdrop-blur-[1px]' : ''
         }`}
       >
         {/* Center Dot */}

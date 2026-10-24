@@ -69,7 +69,11 @@ function registerServiceWorker(): void {
  * vite:preloadError; reload once to pick up the new build. The session flag
  * stops a reload loop if the chunk is genuinely broken.
  */
-export function handleStaleChunk(event: Event, storage: Pick<Storage, 'getItem' | 'setItem'>, reload: () => void): void {
+export function handleStaleChunk(
+  event: Event,
+  storage: Pick<Storage, 'getItem' | 'setItem'>,
+  reload: () => void,
+): void {
   const KEY = 'stale-chunk-reload';
   try {
     if (storage.getItem(KEY)) return;

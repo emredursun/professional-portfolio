@@ -1,24 +1,24 @@
-import React, { useRef, useState, useMemo } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { localePrefix, useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
-import gsap from "gsap";
-import { useGSAP } from "./hooks/useGSAP.tsx";
-import { Service } from "../types.ts";
-import { SERVICES, SERVICE_TRANSLATION_KEYS } from "../constants.tsx";
-import Tilt3D from "./Tilt3D.tsx";
-import { useScrollReveal } from "./hooks/useScrollReveal.tsx";
-import ServiceDetailPanel from "./ServiceDetailPanel.tsx";
-import SEO from "./SEO.tsx";
-import NotFound from "./NotFound.tsx";
+import gsap from 'gsap';
+import { useGSAP } from './hooks/useGSAP.tsx';
+import { Service } from '../types.ts';
+import { SERVICES, SERVICE_TRANSLATION_KEYS } from '../constants.tsx';
+import Tilt3D from './Tilt3D.tsx';
+import { useScrollReveal } from './hooks/useScrollReveal.tsx';
+import ServiceDetailPanel from './ServiceDetailPanel.tsx';
+import SEO from './SEO.tsx';
+import NotFound from './NotFound.tsx';
 
 const BentoCard: React.FC<{
   children: React.ReactNode;
   className?: string;
   title?: string;
   noDefaultBg?: boolean;
-}> = ({ children, className = "", title, noDefaultBg = false }) => {
+}> = ({ children, className = '', title, noDefaultBg = false }) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [opacity, setOpacity] = useState(0);
 
@@ -100,7 +100,7 @@ type ExtendedService = Service & { originalBadge?: string };
 // the card.
 const ServiceItem: React.FC<{ service: ExtendedService; to: string }> = ({ service, to }) => {
   // Use originalBadge for logic, badge for display
-  const isCertified = service.originalBadge === "Certified" || service.badge === "Certified";
+  const isCertified = service.originalBadge === 'Certified' || service.badge === 'Certified';
   const { t } = useTranslation('common');
 
   return (
@@ -113,27 +113,29 @@ const ServiceItem: React.FC<{ service: ExtendedService; to: string }> = ({ servi
             className="absolute -top-3 -right-3 z-10"
             initial={{ scale: 0, rotate: -15 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+            transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
           >
             <div className="flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 rounded-full shadow-[0_2px_10px_rgba(251,191,36,0.5)] border border-amber-300">
               <i aria-hidden="true" className="fas fa-check-circle text-[10px] text-amber-800"></i>
-              <span className="text-[9px] font-black uppercase tracking-wider text-amber-900">{service.badge}</span>
+              <span className="text-[9px] font-black uppercase tracking-wider text-amber-900">
+                {service.badge}
+              </span>
             </div>
           </motion.div>
         )}
-        
+
         {/* Featured Star Badge - Shows for other featured services */}
         {service.featured && !isCertified && (
           <motion.div
             className="absolute -top-2 -right-2 w-7 h-7 bg-gradient-to-br from-yellow-400 to-orange-500 dark:from-yellow-400 dark:to-orange-600 rounded-full flex items-center justify-center shadow-lg z-10"
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+            transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
           >
             <i aria-hidden="true" className="fas fa-star text-xs text-white"></i>
           </motion.div>
         )}
-        
+
         {/* Premium Icon - Yellow in Light, Cyan in Dark */}
         <div className="w-[72px] h-[72px] rounded-3xl bg-accent-yellow/10 dark:bg-black border-2 border-accent-yellow dark:border-neon-cyan flex items-center justify-center text-3xl text-accent-yellow dark:text-neon-cyan shadow-[0_8px_20px_rgba(251,191,36,0.15)] dark:shadow-neon-cyan group-hover:bg-accent-yellow dark:group-hover:bg-neon-cyan group-hover:border-accent-yellow dark:group-hover:border-neon-cyan group-hover:text-white dark:group-hover:text-black group-hover:shadow-[0_0_40px_rgba(251,191,36,0.6)] dark:group-hover:shadow-[0_0_40px_rgba(6,182,212,0.8)] group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 relative overflow-hidden">
           <span className="relative z-10">{service.icon}</span>
@@ -149,7 +151,7 @@ const ServiceItem: React.FC<{ service: ExtendedService; to: string }> = ({ servi
           {service.title}
         </Link>
       </h4>
-      
+
       {/* Expertise Badge - Uses expertiseLabel if available, fallback to badge */}
       {(service.expertiseLabel || service.badge) && (
         <div className="mb-3">
@@ -158,7 +160,7 @@ const ServiceItem: React.FC<{ service: ExtendedService; to: string }> = ({ servi
           </span>
         </div>
       )}
-      
+
       {/* Description - Fixed Height: 3 Lines */}
       <div className="min-h-[4.5rem] mb-7">
         <p className="text-gray-600 dark:text-neon-text-secondary text-sm leading-relaxed line-clamp-3 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
@@ -184,16 +186,18 @@ const ServiceItem: React.FC<{ service: ExtendedService; to: string }> = ({ servi
           </span>
         )}
       </div>
-      
+
       {/* Learn More Button - Enhanced hover animation */}
       <div className="mt-auto w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-neon-border bg-white dark:bg-black text-sm font-bold text-gray-700 dark:text-gray-300 group-hover:border-yellow-400 dark:group-hover:border-neon-cyan group-hover:bg-gradient-to-r group-hover:from-accent-yellow group-hover:to-orange-500 dark:group-hover:from-neon-cyan dark:group-hover:to-blue-500 group-hover:text-black dark:group-hover:text-black group-hover:shadow-lg dark:group-hover:shadow-neon-cyan/20 transition-all duration-300">
         <span>{t('buttons.learnMore')}</span>
-        <i aria-hidden="true" className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform duration-300"></i>
+        <i
+          aria-hidden="true"
+          className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform duration-300"
+        ></i>
       </div>
     </div>
   );
 };
-
 
 /**
  * /about and /about/<slug> are one route, so React keeps this instance alive
@@ -205,7 +209,7 @@ const ServiceItem: React.FC<{ service: ExtendedService; to: string }> = ({ servi
  */
 const About: React.FC = () => {
   const { serviceSlug } = useParams<{ serviceSlug?: string }>();
-  if (serviceSlug && !SERVICES.some(s => s.slug === serviceSlug)) return <NotFound />;
+  if (serviceSlug && !SERVICES.some((s) => s.slug === serviceSlug)) return <NotFound />;
   return <AboutPage />;
 };
 
@@ -218,11 +222,10 @@ const AboutPage: React.FC = () => {
   const { pathname } = useLocation();
   const headerRef = useRef<HTMLElement>(null);
   const isHeaderVisible = useScrollReveal(headerRef, { threshold: 0.2 });
-  
+
   const containerRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
   const [statsCount, setStatsCount] = useState(0);
-
 
   // Get translated services
   const translatedServices = useMemo(() => {
@@ -236,7 +239,9 @@ const AboutPage: React.FC = () => {
         title: t(`services.${key}.title`),
         description: t(`services.${key}.description`),
         badge: t(`services.${key}.badge`),
-        expertiseLabel: t(`services.${key}.expertiseLabel`, { defaultValue: service.expertiseLabel || '' }),
+        expertiseLabel: t(`services.${key}.expertiseLabel`, {
+          defaultValue: service.expertiseLabel || '',
+        }),
         originalBadge: service.badge, // Preserve original badge for conditional logic
         fullDescription: t(`services.${key}.fullDescription`),
         keyBenefits: Array.isArray(keyBenefits) ? (keyBenefits as string[]) : service.keyBenefits,
@@ -247,8 +252,8 @@ const AboutPage: React.FC = () => {
   // The open service comes from the URL alone, derived during render: a
   // direct visit to /about/<slug> gets its title on the first paint, and
   // there is no state to keep in step with the route.
-  const activeService = serviceSlug && ready ? translatedServices.find(s => s.slug === serviceSlug) : undefined;
-
+  const activeService =
+    serviceSlug && ready ? translatedServices.find((s) => s.slug === serviceSlug) : undefined;
 
   // Number Counter Animation (0 to 5), once the counter is on screen.
   // An IntersectionObserver rather than ScrollTrigger: on desktop the page
@@ -262,10 +267,10 @@ const AboutPage: React.FC = () => {
     gsap.to(proxy, {
       val: 5,
       duration: 2,
-      ease: "power2.out",
+      ease: 'power2.out',
       onUpdate: () => {
         setStatsCount(Math.ceil(proxy.val));
-      }
+      },
     });
   }, [isCounterVisible]);
 
@@ -281,7 +286,10 @@ const AboutPage: React.FC = () => {
         title={activeService?.title}
         description={
           activeService?.description ??
-          t('meta.description', "QA Consultant in the Sopra Steria Pega Practice, specializing in Pega platform architecture and Tricentis Tosca model-based test automation.")
+          t(
+            'meta.description',
+            'QA Consultant in the Sopra Steria Pega Practice, specializing in Pega platform architecture and Tricentis Tosca model-based test automation.',
+          )
         }
       />
       <motion.header
@@ -289,11 +297,11 @@ const AboutPage: React.FC = () => {
         className="mb-12"
         initial={{ opacity: 0, y: 30 }}
         animate={isHeaderVisible ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
       >
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">
-            {t('title')}{" "}
+            {t('title')}{' '}
           </span>
           <span className="relative inline-block">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-yellow via-orange-500 to-accent-yellow-dark animate-gradient bg-[length:200%_auto]">
@@ -314,120 +322,126 @@ const AboutPage: React.FC = () => {
         still treated as room for an 8/4 split.
       */}
       <div className="@container">
-      <motion.div
-        className="grid grid-cols-1 @3xl:grid-cols-12 gap-6"
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: {
-              staggerChildren: 0.15,
-              delayChildren: 0.3,
+        <motion.div
+          className="grid grid-cols-1 @3xl:grid-cols-12 gap-6"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.15,
+                delayChildren: 0.3,
+              },
             },
-          },
-        }}
-      >
-        {/* Intro Card - Large */}
-        <motion.div
-          className="@3xl:col-span-8 h-full"
-          variants={{
-            hidden: { opacity: 0, y: 30 },
-            visible: { opacity: 1, y: 0 },
           }}
         >
-          <BentoCard className="h-full bg-white dark:bg-neon-bg border-gray-100 dark:border-neon-border">
-            <i aria-hidden="true" className="fas fa-quote-left text-5xl text-gray-100 dark:text-neon-border absolute top-6 right-8 transition-colors duration-500 group-hover:text-accent-yellow/10"></i>
-            <p 
-              className="pr-12 text-2xl @3xl:text-3xl font-bold text-gray-900 dark:text-neon-text-primary leading-tight mb-8 relative z-10 [&_strong]:text-amber-700 dark:[&_strong]:text-neon-cyan [&_strong]:font-extrabold"
-              dangerouslySetInnerHTML={{ __html: `"${t('introQuote')}"` }}
-            />
-            <div className="mt-auto relative z-10">
-              <p 
-                className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-base font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
-                dangerouslySetInnerHTML={{ __html: t('introText') }}
+          {/* Intro Card - Large */}
+          <motion.div
+            className="@3xl:col-span-8 h-full"
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
+            <BentoCard className="h-full bg-white dark:bg-neon-bg border-gray-100 dark:border-neon-border">
+              <i
+                aria-hidden="true"
+                className="fas fa-quote-left text-5xl text-gray-100 dark:text-neon-border absolute top-6 right-8 transition-colors duration-500 group-hover:text-accent-yellow/10"
+              ></i>
+              <p
+                className="pr-12 text-2xl @3xl:text-3xl font-bold text-gray-900 dark:text-neon-text-primary leading-tight mb-8 relative z-10 [&_strong]:text-amber-700 dark:[&_strong]:text-neon-cyan [&_strong]:font-extrabold"
+                dangerouslySetInnerHTML={{ __html: `"${t('introQuote')}"` }}
               />
-            </div>
-          </BentoCard>
-        </motion.div>
+              <div className="mt-auto relative z-10">
+                <p
+                  className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-base font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
+                  dangerouslySetInnerHTML={{ __html: t('introText') }}
+                />
+              </div>
+            </BentoCard>
+          </motion.div>
 
-        {/* Stats / Quick Info + Languages - stacked to match the intro card's height exactly */}
-        <motion.div
-          className="@3xl:col-span-4 flex flex-col justify-between gap-4 h-full"
-          variants={{
-            hidden: { opacity: 0, y: 30 },
-            visible: { opacity: 1, y: 0 },
-          }}
-        >
-          <Tilt3D tiltMaxAngle={12} scale={1.02}>
-            <BentoCard className="flex flex-col justify-center items-center text-center bg-white dark:bg-black border-yellow-600 dark:border-neon-cyan relative overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-neon-cyan group">
-              {/* Decorative circles */}
-              <div className="absolute top-[-20%] right-[-20%] w-32 h-32 bg-accent-yellow/10 dark:bg-neon-cyan/20 rounded-full blur-2xl transition-all duration-500 group-hover:bg-accent-yellow/20"></div>
-              <div className="absolute bottom-[-10%] left-[-10%] w-24 h-24 bg-accent-yellow/10 dark:bg-neon-purple/20 rounded-full blur-xl transition-all duration-500 group-hover:bg-accent-yellow/20"></div>
+          {/* Stats / Quick Info + Languages - stacked to match the intro card's height exactly */}
+          <motion.div
+            className="@3xl:col-span-4 flex flex-col justify-between gap-4 h-full"
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
+            <Tilt3D tiltMaxAngle={12} scale={1.02}>
+              <BentoCard className="flex flex-col justify-center items-center text-center bg-white dark:bg-black border-yellow-600 dark:border-neon-cyan relative overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-neon-cyan group">
+                {/* Decorative circles */}
+                <div className="absolute top-[-20%] right-[-20%] w-32 h-32 bg-accent-yellow/10 dark:bg-neon-cyan/20 rounded-full blur-2xl transition-all duration-500 group-hover:bg-accent-yellow/20"></div>
+                <div className="absolute bottom-[-10%] left-[-10%] w-24 h-24 bg-accent-yellow/10 dark:bg-neon-purple/20 rounded-full blur-xl transition-all duration-500 group-hover:bg-accent-yellow/20"></div>
 
-              {/*
+                {/*
                 Stacked in the narrow 4-column slot; when the card spans the
                 full width (below the 8/4 split) the counter sits beside the
                 badges instead of floating above a wide, empty card.
               */}
-              <div className="w-full h-full flex flex-col @lg:flex-row @3xl:flex-col justify-center items-center @lg:gap-8 @3xl:gap-0 relative z-10 py-6">
-                <div className="flex flex-col items-center shrink-0">
-                <motion.div
-                  ref={counterRef}
-                  className="text-7xl font-black mb-2 text-gray-900 dark:text-white tracking-tighter drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-                >
-                  {statsCount}
-                  <span className="text-4xl align-top text-accent-yellow dark:text-neon-cyan">
-                    +
-                  </span>
-                </motion.div>
-                <div className="text-sm font-extrabold uppercase tracking-widest text-gray-600 dark:text-neon-text-secondary mb-8 @lg:mb-0 @3xl:mb-8">
-                  {t('yearsExperience')}
-                </div>
-                </div>
-
-                <motion.div
-                  className="w-full grid gap-3"
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    hidden: { opacity: 0 },
-                    visible: {
-                      opacity: 1,
-                      transition: {
-                        staggerChildren: 0.1,
-                        delayChildren: 0.7,
-                      },
-                    },
-                  }}
-                >
-                  {[
-                    { icon: "fa-certificate", text: t('badges.pegaCertified') },
-                    { icon: "fa-cubes", text: t('badges.toscaAdvanced') },
-                    { icon: "fa-layer-group", text: t('badges.istqbCertified') },
-                  ].map((badge, idx) => (
+                <div className="w-full h-full flex flex-col @lg:flex-row @3xl:flex-col justify-center items-center @lg:gap-8 @3xl:gap-0 relative z-10 py-6">
+                  <div className="flex flex-col items-center shrink-0">
                     <motion.div
-                      key={idx}
-                      className="group/badge relative bg-gradient-to-br from-yellow-400 to-amber-500 dark:from-cyan-400 dark:to-blue-500 border border-yellow-500 dark:border-cyan-400 rounded-xl dark:rounded-none px-4 py-2.5 text-sm font-bold text-black dark:text-black flex items-center gap-3 shadow-[0_4px_16px_rgba(251,191,36,0.3)] dark:shadow-[0_4px_16px_rgba(6,182,212,0.4)] transition-all duration-500 ease-out hover:bg-gradient-to-br hover:from-yellow-400 hover:to-amber-500 dark:hover:bg-gray-900 hover:border-yellow-500 dark:hover:border-cyan-300 hover:text-white dark:hover:text-white hover:shadow-[0_12px_32px_rgba(251,191,36,0.8)] dark:hover:shadow-[0_8px_24px_rgba(6,182,212,0.6)] hover:scale-110 hover:-translate-y-2"
-                      variants={{
-                        hidden: { opacity: 0, x: -20 },
-                        visible: { opacity: 1, x: 0 },
-                      }}
+                      ref={counterRef}
+                      className="text-7xl font-black mb-2 text-gray-900 dark:text-white tracking-tighter drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
                     >
-                      <i aria-hidden="true" className={`fas ${badge.icon} text-lg transition-all duration-500 group-hover/badge:scale-110 group-hover/badge:rotate-12`}></i>{" "}
-                      {badge.text}
+                      {statsCount}
+                      <span className="text-4xl align-top text-accent-yellow dark:text-neon-cyan">
+                        +
+                      </span>
                     </motion.div>
-                  ))}
-                </motion.div>
-              </div>
-            </BentoCard>
-          </Tilt3D>
+                    <div className="text-sm font-extrabold uppercase tracking-widest text-gray-600 dark:text-neon-text-secondary mb-8 @lg:mb-0 @3xl:mb-8">
+                      {t('yearsExperience')}
+                    </div>
+                  </div>
 
-          {/*
+                  <motion.div
+                    className="w-full grid gap-3"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: {
+                        opacity: 1,
+                        transition: {
+                          staggerChildren: 0.1,
+                          delayChildren: 0.7,
+                        },
+                      },
+                    }}
+                  >
+                    {[
+                      { icon: 'fa-certificate', text: t('badges.pegaCertified') },
+                      { icon: 'fa-cubes', text: t('badges.toscaAdvanced') },
+                      { icon: 'fa-layer-group', text: t('badges.istqbCertified') },
+                    ].map((badge, idx) => (
+                      <motion.div
+                        key={idx}
+                        className="group/badge relative bg-gradient-to-br from-yellow-400 to-amber-500 dark:from-cyan-400 dark:to-blue-500 border border-yellow-500 dark:border-cyan-400 rounded-xl dark:rounded-none px-4 py-2.5 text-sm font-bold text-black dark:text-black flex items-center gap-3 shadow-[0_4px_16px_rgba(251,191,36,0.3)] dark:shadow-[0_4px_16px_rgba(6,182,212,0.4)] transition-all duration-500 ease-out hover:bg-gradient-to-br hover:from-yellow-400 hover:to-amber-500 dark:hover:bg-gray-900 hover:border-yellow-500 dark:hover:border-cyan-300 hover:text-white dark:hover:text-white hover:shadow-[0_12px_32px_rgba(251,191,36,0.8)] dark:hover:shadow-[0_8px_24px_rgba(6,182,212,0.6)] hover:scale-110 hover:-translate-y-2"
+                        variants={{
+                          hidden: { opacity: 0, x: -20 },
+                          visible: { opacity: 1, x: 0 },
+                        }}
+                      >
+                        <i
+                          aria-hidden="true"
+                          className={`fas ${badge.icon} text-lg transition-all duration-500 group-hover/badge:scale-110 group-hover/badge:rotate-12`}
+                        ></i>{' '}
+                        {badge.text}
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+              </BentoCard>
+            </Tilt3D>
+
+            {/*
             Proof next to the claims: the CI report behind this site. A card of
             its own, outside the tilting stats card - inside it, the target
             moved with the pointer and was hard to click. Same shape as the
@@ -435,117 +449,122 @@ const AboutPage: React.FC = () => {
             explicit "View report" action, arrow that moves on hover, lift,
             focus ring. The live dot pulses only when motion is allowed.
           */}
-          <Link
-            to={`${localePrefix(pathname)}/quality`}
-            className="group/verify w-full min-w-0 shrink-0 p-5 rounded-2xl flex items-center gap-4 border border-emerald-500/40 bg-white shadow-[0_4px_20px_rgba(16,185,129,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500 hover:shadow-[0_14px_32px_-8px_rgba(16,185,129,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:bg-black dark:border-emerald-400/40 dark:shadow-[0_0_15px_rgba(52,211,153,0.10)] dark:hover:border-emerald-400 dark:hover:shadow-[0_0_28px_rgba(52,211,153,0.35)] dark:focus-visible:ring-offset-black"
-          >
-            <span className="relative w-14 h-14 shrink-0 rounded-xl flex items-center justify-center text-xl bg-emerald-50 text-emerald-600 border border-emerald-100 transition-colors duration-300 group-hover/verify:bg-emerald-500 group-hover/verify:text-white dark:bg-emerald-400/10 dark:text-emerald-400 dark:border-emerald-400/60 dark:group-hover/verify:bg-emerald-400 dark:group-hover/verify:text-black">
-              <i aria-hidden="true" className="fas fa-shield-halved"></i>
-              <span aria-hidden="true" className="absolute -right-1 -top-1 flex h-3 w-3">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 motion-safe:animate-ping"></span>
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-black"></span>
+            <Link
+              to={`${localePrefix(pathname)}/quality`}
+              className="group/verify w-full min-w-0 shrink-0 p-5 rounded-2xl flex items-center gap-4 border border-emerald-500/40 bg-white shadow-[0_4px_20px_rgba(16,185,129,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500 hover:shadow-[0_14px_32px_-8px_rgba(16,185,129,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:bg-black dark:border-emerald-400/40 dark:shadow-[0_0_15px_rgba(52,211,153,0.10)] dark:hover:border-emerald-400 dark:hover:shadow-[0_0_28px_rgba(52,211,153,0.35)] dark:focus-visible:ring-offset-black"
+            >
+              <span className="relative w-14 h-14 shrink-0 rounded-xl flex items-center justify-center text-xl bg-emerald-50 text-emerald-600 border border-emerald-100 transition-colors duration-300 group-hover/verify:bg-emerald-500 group-hover/verify:text-white dark:bg-emerald-400/10 dark:text-emerald-400 dark:border-emerald-400/60 dark:group-hover/verify:bg-emerald-400 dark:group-hover/verify:text-black">
+                <i aria-hidden="true" className="fas fa-shield-halved"></i>
+                <span aria-hidden="true" className="absolute -right-1 -top-1 flex h-3 w-3">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 motion-safe:animate-ping"></span>
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-black"></span>
+                </span>
               </span>
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="block text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-                {t('quality.entrySubtitle', { ns: 'common' })}
+              <span className="min-w-0 flex-1">
+                <span className="block text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                  {t('quality.entrySubtitle', { ns: 'common' })}
+                </span>
+                <span className="block font-bold text-gray-900 dark:text-white text-sm">
+                  {t('quality.entryTitle', { ns: 'common' })}
+                </span>
               </span>
-              <span className="block font-bold text-gray-900 dark:text-white text-sm">{t('quality.entryTitle', { ns: 'common' })}</span>
-            </span>
-            <span className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400">
-              <span className="hidden @lg:inline @3xl:hidden @5xl:inline">{t('quality.entryAction', { ns: 'common' })}</span>
-              <i aria-hidden="true" className="fas fa-arrow-right transition-transform duration-300 group-hover/verify:translate-x-1"></i>
-            </span>
-          </Link>
+              <span className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                <span className="hidden @lg:inline @3xl:hidden @5xl:inline">
+                  {t('quality.entryAction', { ns: 'common' })}
+                </span>
+                <i
+                  aria-hidden="true"
+                  className="fas fa-arrow-right transition-transform duration-300 group-hover/verify:translate-x-1"
+                ></i>
+              </span>
+            </Link>
 
+            <motion.div
+              className="w-full min-w-0 shrink-0 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-purple/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
+              whileHover={{
+                scale: 1.02,
+                borderColor: '#22c55e',
+                boxShadow: '0 10px 30px rgba(34, 197, 94, 0.15)',
+              }}
+            >
+              <div className="w-14 h-14 shrink-0 rounded-xl bg-green-50 dark:bg-neon-purple/10 border border-green-100 dark:border-neon-purple flex items-center justify-center text-green-600 dark:text-neon-purple text-xl">
+                <i aria-hidden="true" className="fas fa-globe"></i>
+              </div>
+              <div className="min-w-0">
+                <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
+                  {t('languages')}
+                </div>
+                <div className="font-bold text-gray-900 dark:text-white text-sm">
+                  {t('languageList')}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Story Section - Wide */}
           <motion.div
-            className="w-full min-w-0 shrink-0 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-purple/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
-            whileHover={{
-              scale: 1.02,
-              borderColor: "#22c55e",
-              boxShadow: "0 10px 30px rgba(34, 197, 94, 0.15)",
+            className="@3xl:col-span-12"
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0 },
             }}
           >
-            <div className="w-14 h-14 shrink-0 rounded-xl bg-green-50 dark:bg-neon-purple/10 border border-green-100 dark:border-neon-purple flex items-center justify-center text-green-600 dark:text-neon-purple text-xl">
-              <i aria-hidden="true" className="fas fa-globe"></i>
-            </div>
-            <div className="min-w-0">
-              <div className="text-[10px] font-bold text-gray-500 dark:text-neon-text-tertiary uppercase tracking-wider">
-                {t('languages')}
-              </div>
-              <div className="font-bold text-gray-900 dark:text-white text-sm">
-                {t('languageList')}
-              </div>
-            </div>
+            <BentoCard>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-neon-text-primary mb-4 flex items-center gap-3">
+                <span className="w-2.5 h-2.5 bg-accent-yellow dark:bg-neon-cyan rounded-full shadow-[0_0_10px_rgba(251,191,36,0.5)] dark:shadow-neon-cyan animate-pulse"></span>
+                {t('myJourney')}
+              </h3>
+              <p
+                className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
+                dangerouslySetInnerHTML={{ __html: t('storyPart1') }}
+              />
+              <p
+                className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
+                dangerouslySetInnerHTML={{ __html: t('storyPart2') }}
+              />
+              <p
+                className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
+                dangerouslySetInnerHTML={{ __html: t('storyPart3') }}
+              />
+            </BentoCard>
           </motion.div>
-        </motion.div>
 
-        {/* Story Section - Wide */}
-        <motion.div
-          className="@3xl:col-span-12"
-          variants={{
-            hidden: { opacity: 0, y: 30 },
-            visible: { opacity: 1, y: 0 },
-          }}
-        >
-          <BentoCard>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-neon-text-primary mb-4 flex items-center gap-3">
-              <span className="w-2.5 h-2.5 bg-accent-yellow dark:bg-neon-cyan rounded-full shadow-[0_0_10px_rgba(251,191,36,0.5)] dark:shadow-neon-cyan animate-pulse"></span>
-              {t('myJourney')}
-            </h3>
-            <p
-              className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
-              dangerouslySetInnerHTML={{ __html: t('storyPart1') }}
-            />
-            <p
-              className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold mb-4"
-              dangerouslySetInnerHTML={{ __html: t('storyPart2') }}
-            />
-            <p
-              className="text-gray-600 dark:text-neon-text-secondary leading-relaxed text-lg font-medium [&_strong]:text-gray-900 dark:[&_strong]:text-neon-cyan [&_strong]:font-bold"
-              dangerouslySetInnerHTML={{ __html: t('storyPart3') }}
-            />
-          </BentoCard>
-        </motion.div>
-
-        {/* Services - Grid */}
-        <div className="@3xl:col-span-12 mt-8">
-          <motion.h3
-            className="text-2xl font-bold text-gray-900 dark:text-neon-text-primary mb-6"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8 }}
-          >
-            {t('whatIDo')}
-          </motion.h3>
-          <div
-            className="grid grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 gap-6"
-          >
-            {/* Staggered entrance as a CSS animation. It was a GSAP tween
+          {/* Services - Grid */}
+          <div className="@3xl:col-span-12 mt-8">
+            <motion.h3
+              className="text-2xl font-bold text-gray-900 dark:text-neon-text-primary mb-6"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              {t('whatIDo')}
+            </motion.h3>
+            <div className="grid grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 gap-6">
+              {/* Staggered entrance as a CSS animation. It was a GSAP tween
                 whose start read every card's computed transform: a ~50 ms
                 forced layout right after the first render. */}
-            {translatedServices.map((service, index) => (
-              <div
-                key={index}
-                className="animate-fade-in-up [animation-fill-mode:both]"
-                style={{ animationDelay: `${0.2 + index * 0.15}s` }}
-              >
-                <BentoCard
-                  noDefaultBg={true}
-                  className="h-[500px] bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border hover:border-yellow-600 dark:hover:border-neon-cyan group hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.8)] dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] transition-all duration-500 hover:-translate-y-1"
+              {translatedServices.map((service, index) => (
+                <div
+                  key={index}
+                  className="animate-fade-in-up [animation-fill-mode:both]"
+                  style={{ animationDelay: `${0.2 + index * 0.15}s` }}
                 >
-                  <ServiceItem
-                    service={service}
-                    to={`${localePrefix(pathname)}/about/${service.slug}`}
-                  />
-                </BentoCard>
-              </div>
-            ))}
+                  <BentoCard
+                    noDefaultBg={true}
+                    className="h-[500px] bg-white/80 dark:bg-black/60 backdrop-blur-xl border border-gray-200/50 dark:border-neon-border hover:border-yellow-600 dark:hover:border-neon-cyan group hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.8)] dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] transition-all duration-500 hover:-translate-y-1"
+                  >
+                    <ServiceItem
+                      service={service}
+                      to={`${localePrefix(pathname)}/about/${service.slug}`}
+                    />
+                  </BentoCard>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
       </div>
-      
+
       {/* Service Detail Panel */}
       <ServiceDetailPanel
         service={activeService ?? null}
@@ -554,16 +573,16 @@ const AboutPage: React.FC = () => {
         }}
         onNavigate={(direction) => {
           if (!activeService) return;
-          const currentIndex = translatedServices.findIndex(s => s.slug === activeService.slug);
+          const currentIndex = translatedServices.findIndex((s) => s.slug === activeService.slug);
           if (currentIndex === -1) return;
-          
+
           let nextIndex;
           if (direction === 'next') {
             nextIndex = (currentIndex + 1) % translatedServices.length;
           } else {
             nextIndex = (currentIndex - 1 + translatedServices.length) % translatedServices.length;
           }
-          
+
           // Use the index to find the service in the translatedServices array since we need the translated content
           const nextService = translatedServices[nextIndex];
           navigate(`/about/${nextService.slug}`);

@@ -16,9 +16,11 @@ const FORBIDDEN = [/Hoogkarspel/i, /\b1616\s?[A-Z]{2}\b/];
 function files(entry: string): string[] {
   const full = path.join(ROOT, entry);
   if (fs.statSync(full).isFile()) return [full];
-  return fs.readdirSync(full, { withFileTypes: true }).flatMap((dirent) =>
-    dirent.isDirectory() ? files(path.join(entry, dirent.name)) : [path.join(full, dirent.name)],
-  );
+  return fs
+    .readdirSync(full, { withFileTypes: true })
+    .flatMap((dirent) =>
+      dirent.isDirectory() ? files(path.join(entry, dirent.name)) : [path.join(full, dirent.name)],
+    );
 }
 
 describe('privacy', () => {
@@ -27,7 +29,9 @@ describe('privacy', () => {
       .filter((file) => /\.(tsx?|jsx?|json|html|css)$/.test(file))
       .flatMap((file) => {
         const text = fs.readFileSync(file, 'utf8');
-        return FORBIDDEN.filter((pattern) => pattern.test(text)).map((pattern) => `${path.relative(ROOT, file)} ${pattern}`);
+        return FORBIDDEN.filter((pattern) => pattern.test(text)).map(
+          (pattern) => `${path.relative(ROOT, file)} ${pattern}`,
+        );
       });
     expect(hits).toEqual([]);
   });

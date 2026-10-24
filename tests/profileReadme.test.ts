@@ -22,10 +22,10 @@ const locale = (name: string) =>
   JSON.parse(fs.readFileSync(path.resolve(__dirname, `../public/locales/en/${name}.json`), 'utf8'));
 
 describe('formatting helpers', () => {
-  it('converts the locale files\' inline HTML into Markdown emphasis', () => {
-    expect(htmlToMarkdown('I care about <strong>reliability</strong> and <em>craft</em>\n  here')).toBe(
-      'I care about **reliability** and *craft* here',
-    );
+  it("converts the locale files' inline HTML into Markdown emphasis", () => {
+    expect(
+      htmlToMarkdown('I care about <strong>reliability</strong> and <em>craft</em>\n  here'),
+    ).toBe('I care about **reliability** and *craft* here');
   });
 
   it('escapes shields.io path syntax', () => {
@@ -38,7 +38,9 @@ describe('formatting helpers', () => {
     expect(badgeUrl({ name: 'Pega Platform', color: '1F4E79' })).toBe(
       'https://img.shields.io/badge/Pega_Platform-1F4E79?style=flat-square',
     );
-    expect(badgeUrl({ name: 'Java', color: 'ED8B00', logo: 'openjdk' })).toContain('&logo=openjdk&logoColor=white');
+    expect(badgeUrl({ name: 'Java', color: 'ED8B00', logo: 'openjdk' })).toContain(
+      '&logo=openjdk&logoColor=white',
+    );
     expect(linkBadge({ label: 'ISTQB', value: 'CTFL', color: '6E4C9F', href: 'https://x' })).toBe(
       '[![ISTQB](https://img.shields.io/badge/ISTQB-CTFL-6E4C9F?style=for-the-badge)](https://x)',
     );
@@ -95,7 +97,9 @@ describe('against the real portfolio data', () => {
   });
 
   it('matches the committed profile/README.md byte for byte', () => {
-    const committed = fs.readFileSync(path.resolve(__dirname, '../profile/README.md'), 'utf8').replace(/\r\n/g, '\n');
+    const committed = fs
+      .readFileSync(path.resolve(__dirname, '../profile/README.md'), 'utf8')
+      .replace(/\r\n/g, '\n');
     expect(renderReadme({ constants, about, resume })).toBe(committed);
   });
 
@@ -114,18 +118,29 @@ describe('against the real portfolio data', () => {
   });
 
   describe('drift guard', () => {
-    const clone = () => structuredClone({ ...constants, SERVICES: constants.SERVICES, PROJECTS: constants.PROJECTS, TECH_STACK: constants.TECH_STACK, PERSONAL_INFO: constants.PERSONAL_INFO });
+    const clone = () =>
+      structuredClone({
+        ...constants,
+        SERVICES: constants.SERVICES,
+        PROJECTS: constants.PROJECTS,
+        TECH_STACK: constants.TECH_STACK,
+        PERSONAL_INFO: constants.PERSONAL_INFO,
+      });
 
     it('fails on a technology with no badge mapping', () => {
       const data = clone();
       data.TECH_STACK[0].technologies.push({ name: 'Kubernetes', icon: null });
-      expect(() => validate({ constants: data, resume })).toThrow(/Technology "Kubernetes".*no badge/);
+      expect(() => validate({ constants: data, resume })).toThrow(
+        /Technology "Kubernetes".*no badge/,
+      );
     });
 
     it('fails when a featured project slug disappears', () => {
       const data = clone();
       data.PROJECTS = data.PROJECTS.filter((p: { slug: string }) => p.slug !== 'aegisqa');
-      expect(() => validate({ constants: data, resume })).toThrow(/Featured project "aegisqa" no longer exists/);
+      expect(() => validate({ constants: data, resume })).toThrow(
+        /Featured project "aegisqa" no longer exists/,
+      );
     });
 
     it('fails when a featured project loses its GitHub link', () => {
@@ -136,12 +151,18 @@ describe('against the real portfolio data', () => {
 
     it('fails when a certification points at a removed service', () => {
       const data = clone();
-      data.SERVICES = data.SERVICES.filter((s: { slug: string }) => s.slug !== 'tricentis-tosca-automation');
-      expect(() => validate({ constants: data, resume })).toThrow(/no longer exists in constants.tsx/);
+      data.SERVICES = data.SERVICES.filter(
+        (s: { slug: string }) => s.slug !== 'tricentis-tosca-automation',
+      );
+      expect(() => validate({ constants: data, resume })).toThrow(
+        /no longer exists in constants.tsx/,
+      );
     });
 
     it('fails when resume.json has no experience', () => {
-      expect(() => validate({ constants: clone(), resume: { experience: [] } })).toThrow(/no experience entries/);
+      expect(() => validate({ constants: clone(), resume: { experience: [] } })).toThrow(
+        /no experience entries/,
+      );
     });
 
     it('warns, without failing, when the sidebar city disagrees with resume.json', () => {

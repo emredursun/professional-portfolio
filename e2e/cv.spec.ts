@@ -45,8 +45,13 @@ test.describe('downloadable CV', () => {
     await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
     await page.keyboard.press('Control+k');
     // The palette is in Dutch here; English keywords still find the command.
-    await page.getByRole('combobox', { name: copy('nl', 'common').palette.search }).fill('download resume');
-    const [download] = await Promise.all([page.waitForEvent('download'), page.keyboard.press('Enter')]);
+    await page
+      .getByRole('combobox', { name: copy('nl', 'common').palette.search })
+      .fill('download resume');
+    const [download] = await Promise.all([
+      page.waitForEvent('download'),
+      page.keyboard.press('Enter'),
+    ]);
     expect(download.suggestedFilename()).toBe('Emre-Dursun-CV-nl.pdf');
   });
 });

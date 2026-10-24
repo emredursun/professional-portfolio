@@ -10,7 +10,9 @@ describe('shouldRenderDecor', () => {
   });
 
   it('skips when the visitor prefers reduced motion', () => {
-    expect(shouldRenderDecor({ ...desktop, matchMedia: media(['(prefers-reduced-motion: reduce)']) })).toBe(false);
+    expect(
+      shouldRenderDecor({ ...desktop, matchMedia: media(['(prefers-reduced-motion: reduce)']) }),
+    ).toBe(false);
   });
 
   it('skips on touch-first devices', () => {

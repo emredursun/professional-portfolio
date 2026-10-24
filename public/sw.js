@@ -21,33 +21,37 @@ const PRECACHE_ASSETS = [
   '/favicon-32x32.png',
   '/favicon-96x96.png',
   '/images/emre-dursun-qa-consultant-400.webp',
-  '/images/social-share.png'
+  '/images/social-share.png',
 ];
 
 // Install event - precache critical assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches
+      .open(CACHE_NAME)
       .then((cache) => {
         return cache.addAll(PRECACHE_ASSETS);
       })
-      .then(() => self.skipWaiting())
+      .then(() => self.skipWaiting()),
   );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        // Only this app's older caches; anything else on the origin is not ours.
-        cacheNames
-          .filter((name) => name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME)
-          .map((name) => {
-            return caches.delete(name);
-          })
-      );
-    }).then(() => self.clients.claim())
+    caches
+      .keys()
+      .then((cacheNames) => {
+        return Promise.all(
+          // Only this app's older caches; anything else on the origin is not ours.
+          cacheNames
+            .filter((name) => name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME)
+            .map((name) => {
+              return caches.delete(name);
+            }),
+        );
+      })
+      .then(() => self.clients.claim()),
   );
 });
 
@@ -85,7 +89,7 @@ async function cacheFirst(request) {
   if (cachedResponse) {
     return cachedResponse;
   }
-  
+
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
@@ -113,7 +117,7 @@ async function networkFirst(request) {
     if (cachedResponse) {
       return cachedResponse;
     }
-    
+
     // Fallback to cached homepage for navigation requests
     if (request.mode === 'navigate') {
       const cachedHome = await caches.match(OFFLINE_URL);
@@ -121,7 +125,7 @@ async function networkFirst(request) {
         return cachedHome;
       }
     }
-    
+
     return new Response('Offline', { status: 503 });
   }
 }

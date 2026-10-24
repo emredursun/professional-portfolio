@@ -18,25 +18,43 @@
         {
           "matchingUrlPattern": "^(?!.*/projects$).*$",
           "assertions": {
-            "categories:performance": ["error", { "minScore": 0.75, "aggregationMethod": "median-run" }],
+            "categories:performance": [
+              "error",
+              { "minScore": 0.75, "aggregationMethod": "median-run" }
+            ],
             "categories:accessibility": ["error", { "minScore": 1 }],
             "categories:best-practices": ["error", { "minScore": 1 }],
             "categories:seo": ["error", { "minScore": 1 }],
-            "largest-contentful-paint": ["error", { "maxNumericValue": 4000, "aggregationMethod": "median-run" }],
+            "largest-contentful-paint": [
+              "error",
+              { "maxNumericValue": 4000, "aggregationMethod": "median-run" }
+            ],
             "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }],
-            "total-blocking-time": ["error", { "maxNumericValue": 300, "aggregationMethod": "median-run" }]
+            "total-blocking-time": [
+              "error",
+              { "maxNumericValue": 300, "aggregationMethod": "median-run" }
+            ]
           }
         },
         {
           "matchingUrlPattern": ".*/projects$",
           "assertions": {
-            "categories:performance": ["error", { "minScore": 0.65, "aggregationMethod": "median-run" }],
+            "categories:performance": [
+              "error",
+              { "minScore": 0.65, "aggregationMethod": "median-run" }
+            ],
             "categories:accessibility": ["error", { "minScore": 1 }],
             "categories:best-practices": ["error", { "minScore": 1 }],
             "categories:seo": ["error", { "minScore": 1 }],
-            "largest-contentful-paint": ["error", { "maxNumericValue": 4000, "aggregationMethod": "median-run" }],
+            "largest-contentful-paint": [
+              "error",
+              { "maxNumericValue": 4000, "aggregationMethod": "median-run" }
+            ],
             "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }],
-            "total-blocking-time": ["error", { "maxNumericValue": 600, "aggregationMethod": "median-run" }]
+            "total-blocking-time": [
+              "error",
+              { "maxNumericValue": 600, "aggregationMethod": "median-run" }
+            ]
           }
         }
       ]

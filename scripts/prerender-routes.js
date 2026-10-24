@@ -26,14 +26,14 @@ import { fileURLToPath, pathToFileURL } from 'url';
 import { loadConstants } from './lib/load-constants.js';
 import { listRoutes, readState } from './generate-sitemap.js';
 import {
-    BLOCK_END,
-    BLOCK_START,
-    LANGUAGES,
-    loadLocales,
-    localizedPath,
-    pageNode,
-    renderHeadBlock,
-    routeMeta,
+  BLOCK_END,
+  BLOCK_START,
+  LANGUAGES,
+  loadLocales,
+  localizedPath,
+  pageNode,
+  renderHeadBlock,
+  routeMeta,
 } from './lib/route-meta.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -41,19 +41,20 @@ const DIST = path.join(ROOT, 'dist');
 
 /** File that serves a route under cleanUrls: '' -> index.html, '/nl' -> nl.html. */
 export function outputFileFor(lang, route) {
-    const pathname = localizedPath(lang, route);
-    return pathname === '/' ? 'index.html' : `${pathname.slice(1)}.html`;
+  const pathname = localizedPath(lang, route);
+  return pathname === '/' ? 'index.html' : `${pathname.slice(1)}.html`;
 }
 
 /** Replace the route-meta block and the document language in the template. */
 export function renderRoutePage(template, meta, node) {
-    const start = template.indexOf(BLOCK_START);
-    const end = template.indexOf(BLOCK_END);
-    if (start === -1 || end === -1 || end < start) {
-        throw new Error('index.html has no route-meta block to replace');
-    }
-    const html = template.slice(0, start) + renderHeadBlock(meta, node) + template.slice(end + BLOCK_END.length);
-    return html.replace(/<html lang="[^"]*"/, `<html lang="${meta.lang}"`);
+  const start = template.indexOf(BLOCK_START);
+  const end = template.indexOf(BLOCK_END);
+  if (start === -1 || end === -1 || end < start) {
+    throw new Error('index.html has no route-meta block to replace');
+  }
+  const html =
+    template.slice(0, start) + renderHeadBlock(meta, node) + template.slice(end + BLOCK_END.length);
+  return html.replace(/<html lang="[^"]*"/, `<html lang="${meta.lang}"`);
 }
 
 /**
@@ -61,42 +62,42 @@ export function renderRoutePage(template, meta, node) {
  * @returns {Promise<string[]>} files written, relative to distDir
  */
 export async function prerenderRoutes({ distDir = DIST, constants, locales, state } = {}) {
-    const templatePath = path.join(distDir, 'index.html');
-    if (!fs.existsSync(templatePath)) {
-        throw new Error('dist/index.html is missing - run `vite build` first');
-    }
-    const template = fs.readFileSync(templatePath, 'utf8');
-    const data = constants ?? (await loadConstants());
-    const strings = locales ?? loadLocales(ROOT);
-    const lastmods = state ?? readState();
+  const templatePath = path.join(distDir, 'index.html');
+  if (!fs.existsSync(templatePath)) {
+    throw new Error('dist/index.html is missing - run `vite build` first');
+  }
+  const template = fs.readFileSync(templatePath, 'utf8');
+  const data = constants ?? (await loadConstants());
+  const strings = locales ?? loadLocales(ROOT);
+  const lastmods = state ?? readState();
 
-    const written = [];
-    for (const route of listRoutes(data)) {
-        for (const lang of LANGUAGES) {
-            const meta = routeMeta({ route, lang, constants: data, locales: strings });
-            // The profile's dateModified moves only when its content does: the
-            // sitemap's content-hash lastmod for that route.
-            const node = pageNode(meta, { dateModified: lastmods[route]?.lastmod });
-            const file = outputFileFor(lang, route);
-            const target = path.join(distDir, file);
-            fs.mkdirSync(path.dirname(target), { recursive: true });
-            fs.writeFileSync(target, renderRoutePage(template, meta, node), 'utf8');
-            written.push(file);
-        }
+  const written = [];
+  for (const route of listRoutes(data)) {
+    for (const lang of LANGUAGES) {
+      const meta = routeMeta({ route, lang, constants: data, locales: strings });
+      // The profile's dateModified moves only when its content does: the
+      // sitemap's content-hash lastmod for that route.
+      const node = pageNode(meta, { dateModified: lastmods[route]?.lastmod });
+      const file = outputFileFor(lang, route);
+      const target = path.join(distDir, file);
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.writeFileSync(target, renderRoutePage(template, meta, node), 'utf8');
+      written.push(file);
     }
-    return written;
+  }
+  return written;
 }
 
 async function main() {
-    try {
-        const files = await prerenderRoutes();
-        console.log(`🧭 Prerendered ${files.length} route heads into dist/`);
-    } catch (error) {
-        console.error('❌ Error prerendering routes:', error.message);
-        process.exit(1);
-    }
+  try {
+    const files = await prerenderRoutes();
+    console.log(`🧭 Prerendered ${files.length} route heads into dist/`);
+  } catch (error) {
+    console.error('❌ Error prerendering routes:', error.message);
+    process.exit(1);
+  }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-    main();
+  main();
 }

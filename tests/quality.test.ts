@@ -17,7 +17,17 @@ const lhr = (pathname: string, performance: number) => ({
 
 const strictFirebase = {
   hosting: {
-    headers: [{ source: '/**', headers: [{ key: 'Content-Security-Policy', value: "default-src 'self'; script-src 'self' https://plausible.io" }] }],
+    headers: [
+      {
+        source: '/**',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' https://plausible.io",
+          },
+        ],
+      },
+    ],
   },
 };
 
@@ -33,8 +43,14 @@ const inputs = {
           {
             title: 'accessibility',
             specs: [
-              { title: '/about has no axe violations', tests: [{ status: 'expected' }, { status: 'expected' }] },
-              { title: 'the not-found page has no axe violations', tests: [{ status: 'expected' }] },
+              {
+                title: '/about has no axe violations',
+                tests: [{ status: 'expected' }, { status: 'expected' }],
+              },
+              {
+                title: 'the not-found page has no axe violations',
+                tests: [{ status: 'expected' }],
+              },
             ],
           },
         ],
@@ -75,21 +91,33 @@ describe('buildQualityReport', () => {
   });
 
   it('counts advisories at the CI gate level only (moderate and above)', () => {
-    const audit = { metadata: { vulnerabilities: { info: 2, low: 3, moderate: 0, high: 0, critical: 0, total: 5 } } };
+    const audit = {
+      metadata: {
+        vulnerabilities: { info: 2, low: 3, moderate: 0, high: 0, critical: 0, total: 5 },
+      },
+    };
     expect(buildQualityReport({ ...inputs, audit }).security.runtimeAdvisories).toBe(0);
-    const failing = { metadata: { vulnerabilities: { low: 1, moderate: 1, high: 1, critical: 0, total: 3 } } };
+    const failing = {
+      metadata: { vulnerabilities: { low: 1, moderate: 1, high: 1, critical: 0, total: 3 } },
+    };
     expect(buildQualityReport({ ...inputs, audit: failing }).security.runtimeAdvisories).toBe(2);
   });
 
   it('refuses a report with a missing number or an unreadable date', () => {
     const unknownCoverage = { ...inputs, coverage: { total: { lines: { pct: 'Unknown' } } } };
-    expect(() => assertComplete(buildQualityReport(unknownCoverage))).toThrow(/report\.unit\.coverage/);
-    expect(() => assertComplete({ ...buildQualityReport(inputs), builtAt: 'yesterday' })).toThrow(/builtAt/);
+    expect(() => assertComplete(buildQualityReport(unknownCoverage))).toThrow(
+      /report\.unit\.coverage/,
+    );
+    expect(() => assertComplete({ ...buildQualityReport(inputs), builtAt: 'yesterday' })).toThrow(
+      /builtAt/,
+    );
     expect(assertComplete(buildQualityReport(inputs)).unit.coverage).toBe(89);
   });
 
   it('refuses to report Lighthouse for a page that was not measured', () => {
-    expect(() => buildQualityReport({ ...inputs, lighthouse: [lhr('/contact', 0.9)] })).toThrow(/\/about/);
+    expect(() => buildQualityReport({ ...inputs, lighthouse: [lhr('/contact', 0.9)] })).toThrow(
+      /\/about/,
+    );
   });
 });
 

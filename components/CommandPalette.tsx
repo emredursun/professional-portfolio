@@ -32,13 +32,16 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
   );
 
   // Category grouping
-  const groupedCommands = filteredCommands.reduce((acc, cmd) => {
-    if (!acc[cmd.category]) {
-      acc[cmd.category] = [];
-    }
-    acc[cmd.category].push(cmd);
-    return acc;
-  }, {} as Record<string, Command[]>);
+  const groupedCommands = filteredCommands.reduce(
+    (acc, cmd) => {
+      if (!acc[cmd.category]) {
+        acc[cmd.category] = [];
+      }
+      acc[cmd.category].push(cmd);
+      return acc;
+    },
+    {} as Record<string, Command[]>,
+  );
 
   // A new search starts at the first result. Set together with the query,
   // instead of an effect re-rendering after every keystroke.
@@ -64,7 +67,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
   useEffect(() => {
     if (listRef.current && isOpen) {
       const selectedElement = listRef.current.querySelector(
-        `[data-command-index="${selectedIndex}"]`
+        `[data-command-index="${selectedIndex}"]`,
       ) as HTMLElement;
       if (selectedElement) {
         selectedElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
@@ -73,30 +76,31 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
   }, [selectedIndex, isOpen]);
 
   // Keyboard navigation
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        setSelectedIndex(prev => 
-          prev < filteredCommands.length - 1 ? prev + 1 : prev
-        );
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        setSelectedIndex(prev => (prev > 0 ? prev - 1 : prev));
-        break;
-      case 'Enter':
-        e.preventDefault();
-        if (filteredCommands[selectedIndex]) {
-          executeCommand(filteredCommands[selectedIndex]);
-        }
-        break;
-      case 'Escape':
-        e.preventDefault();
-        onClose();
-        break;
-    }
-  }, [filteredCommands, selectedIndex, executeCommand, onClose]);
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          setSelectedIndex((prev) => (prev < filteredCommands.length - 1 ? prev + 1 : prev));
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          setSelectedIndex((prev) => (prev > 0 ? prev - 1 : prev));
+          break;
+        case 'Enter':
+          e.preventDefault();
+          if (filteredCommands[selectedIndex]) {
+            executeCommand(filteredCommands[selectedIndex]);
+          }
+          break;
+        case 'Escape':
+          e.preventDefault();
+          onClose();
+          break;
+      }
+    },
+    [filteredCommands, selectedIndex, executeCommand, onClose],
+  );
 
   // Click outside to close
   const handleBackdropClick = (e: React.MouseEvent) => {
@@ -128,10 +132,14 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
 
     const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const parts = text.split(new RegExp(`(${escaped})`, 'gi'));
-    return parts.map((part, i) => 
-      part.toLowerCase() === query.toLowerCase() 
-        ? <mark key={i} className="bg-yellow-200 dark:bg-yellow-500/30 text-current">{part}</mark>
-        : part
+    return parts.map((part, i) =>
+      part.toLowerCase() === query.toLowerCase() ? (
+        <mark key={i} className="bg-yellow-200 dark:bg-yellow-500/30 text-current">
+          {part}
+        </mark>
+      ) : (
+        part
+      ),
     );
   };
 
@@ -177,7 +185,9 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                 aria-expanded="true"
                 aria-controls="command-palette-list"
                 aria-autocomplete="list"
-                aria-activedescendant={filteredCommands[selectedIndex] ? `command-option-${selectedIndex}` : undefined}
+                aria-activedescendant={
+                  filteredCommands[selectedIndex] ? `command-option-${selectedIndex}` : undefined
+                }
                 className="w-full bg-transparent pl-12 pr-4 py-4 text-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none"
                 autoComplete="off"
                 spellCheck="false"
@@ -207,59 +217,80 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
               style={{ scrollbarWidth: 'thin' }}
             >
               {filteredCommands.length > 0 || (!searchQuery && recentCommands.length > 0) ? (
-              <div id="command-palette-list" role="listbox" aria-label={t('palette.list')}>
-              {/* Recent Commands Section */}
-              {!searchQuery && recentCommands.length > 0 && (
-                <div role="group" aria-label={t('palette.recent')} className="border-b border-gray-200 dark:border-gray-700">
-                  <div aria-hidden="true" className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                    <i aria-hidden="true" className="far fa-clock" />
-                    {t('palette.recent')}
-                  </div>
-                  {recentCommands.map((cmd, index) => (
-                    <CommandItem
-                      key={`recent-${cmd.id}`}
-                      id={`recent-option-${index}`}
-                      command={cmd}
-                      isSelected={selectedIndex === index}
-                      index={index}
-                      searchQuery={searchQuery}
-                      getCategoryColor={getCategoryColor}
-                      highlightMatch={highlightMatch}
-                      onClick={() => executeCommand(cmd)}
-                      onMouseEnter={() => setSelectedIndex(index)}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {/* Grouped Commands */}
-              {filteredCommands.length > 0 ? (
-                Object.entries(groupedCommands).map(([category, categoryCommands], catIndex) => (
-                  <div key={category} role="group" aria-label={t(`palette.categories.${category}`)} className={catIndex > 0 || (!searchQuery && recentCommands.length > 0) ? 'border-t border-gray-200 dark:border-gray-700' : ''}>
-                    <div aria-hidden="true" className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                      {t(`palette.categories.${category}`)}
-                    </div>
-                    {categoryCommands.map((cmd) => {
-                      const globalIndex = filteredCommands.indexOf(cmd);
-                      return (
+                <div id="command-palette-list" role="listbox" aria-label={t('palette.list')}>
+                  {/* Recent Commands Section */}
+                  {!searchQuery && recentCommands.length > 0 && (
+                    <div
+                      role="group"
+                      aria-label={t('palette.recent')}
+                      className="border-b border-gray-200 dark:border-gray-700"
+                    >
+                      <div
+                        aria-hidden="true"
+                        className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-2"
+                      >
+                        <i aria-hidden="true" className="far fa-clock" />
+                        {t('palette.recent')}
+                      </div>
+                      {recentCommands.map((cmd, index) => (
                         <CommandItem
-                          key={cmd.id}
-                          id={`command-option-${globalIndex}`}
+                          key={`recent-${cmd.id}`}
+                          id={`recent-option-${index}`}
                           command={cmd}
-                          isSelected={selectedIndex === globalIndex}
-                          index={globalIndex}
+                          isSelected={selectedIndex === index}
+                          index={index}
                           searchQuery={searchQuery}
                           getCategoryColor={getCategoryColor}
                           highlightMatch={highlightMatch}
                           onClick={() => executeCommand(cmd)}
-                          onMouseEnter={() => setSelectedIndex(globalIndex)}
+                          onMouseEnter={() => setSelectedIndex(index)}
                         />
-                      );
-                    })}
-                  </div>
-                ))
-              ) : null}
-              </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Grouped Commands */}
+                  {filteredCommands.length > 0
+                    ? Object.entries(groupedCommands).map(
+                        ([category, categoryCommands], catIndex) => (
+                          <div
+                            key={category}
+                            role="group"
+                            aria-label={t(`palette.categories.${category}`)}
+                            className={
+                              catIndex > 0 || (!searchQuery && recentCommands.length > 0)
+                                ? 'border-t border-gray-200 dark:border-gray-700'
+                                : ''
+                            }
+                          >
+                            <div
+                              aria-hidden="true"
+                              className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400"
+                            >
+                              {t(`palette.categories.${category}`)}
+                            </div>
+                            {categoryCommands.map((cmd) => {
+                              const globalIndex = filteredCommands.indexOf(cmd);
+                              return (
+                                <CommandItem
+                                  key={cmd.id}
+                                  id={`command-option-${globalIndex}`}
+                                  command={cmd}
+                                  isSelected={selectedIndex === globalIndex}
+                                  index={globalIndex}
+                                  searchQuery={searchQuery}
+                                  getCategoryColor={getCategoryColor}
+                                  highlightMatch={highlightMatch}
+                                  onClick={() => executeCommand(cmd)}
+                                  onMouseEnter={() => setSelectedIndex(globalIndex)}
+                                />
+                              );
+                            })}
+                          </div>
+                        ),
+                      )
+                    : null}
+                </div>
               ) : (
                 <div role="status" className="p-8 text-center text-gray-500 dark:text-gray-400">
                   <i aria-hidden="true" className="fas fa-search text-3xl mb-3 opacity-50" />
@@ -273,15 +304,21 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
             <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-2 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1">
-                  <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600">↑↓</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600">
+                    ↑↓
+                  </kbd>
                   {t('palette.navigate')}
                 </span>
                 <span className="flex items-center gap-1">
-                  <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600">↵</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600">
+                    ↵
+                  </kbd>
                   {t('palette.select')}
                 </span>
                 <span className="flex items-center gap-1">
-                  <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600">esc</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600">
+                    esc
+                  </kbd>
                   {t('palette.close')}
                 </span>
               </div>
@@ -309,68 +346,69 @@ interface CommandItemProps {
   onMouseEnter: () => void;
 }
 
-const CommandItem: React.FC<CommandItemProps> = React.memo(({
-  id,
-  command,
-  isSelected,
-  index,
-  searchQuery,
-  getCategoryColor,
-  highlightMatch,
-  onClick,
-  onMouseEnter,
-}) => {
-  return (
-    <motion.div
-      id={id}
-      role="option"
-      aria-selected={isSelected}
-      data-command-index={index}
-      initial={{ opacity: 0, x: -10 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.15, delay: Math.min(index * 0.03, 0.3) }}
-      className={`
+const CommandItem: React.FC<CommandItemProps> = React.memo(
+  ({
+    id,
+    command,
+    isSelected,
+    index,
+    searchQuery,
+    getCategoryColor,
+    highlightMatch,
+    onClick,
+    onMouseEnter,
+  }) => {
+    return (
+      <motion.div
+        id={id}
+        role="option"
+        aria-selected={isSelected}
+        data-command-index={index}
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.15, delay: Math.min(index * 0.03, 0.3) }}
+        className={`
         flex items-center gap-4 px-4 py-3 cursor-pointer transition-all duration-150
-        ${isSelected 
-          ? 'bg-yellow-50 dark:bg-cyan-500/10 border-l-2 border-yellow-500 dark:border-cyan-400' 
-          : 'hover:bg-gray-50 dark:hover:bg-gray-800/50 border-l-2 border-transparent'
+        ${
+          isSelected
+            ? 'bg-yellow-50 dark:bg-cyan-500/10 border-l-2 border-yellow-500 dark:border-cyan-400'
+            : 'hover:bg-gray-50 dark:hover:bg-gray-800/50 border-l-2 border-transparent'
         }
       `}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-    >
-      {/* Icon */}
-      <div className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg ${
-        isSelected 
-          ? 'bg-yellow-100 dark:bg-cyan-500/20' 
-          : 'bg-gray-100 dark:bg-gray-800'
-      }`}>
-        <span className={getCategoryColor(command.category)}>
-          {command.icon}
-        </span>
-      </div>
+        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+      >
+        {/* Icon */}
+        <div
+          className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg ${
+            isSelected ? 'bg-yellow-100 dark:bg-cyan-500/20' : 'bg-gray-100 dark:bg-gray-800'
+          }`}
+        >
+          <span className={getCategoryColor(command.category)}>{command.icon}</span>
+        </div>
 
-      {/* Content */}
-      <div className="flex-1 min-w-0">
-        <div className="font-medium text-gray-900 dark:text-white text-sm">
-          {highlightMatch(command.label, searchQuery)}
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <div className="font-medium text-gray-900 dark:text-white text-sm">
+            {highlightMatch(command.label, searchQuery)}
+          </div>
+          <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
+            {command.description}
+          </div>
         </div>
-        <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
-          {command.description}
-        </div>
-      </div>
 
-      {/* Shortcut */}
-      {command.shortcut && (
-        <div className="flex-shrink-0">
-          <kbd className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600 font-mono">
-            {command.shortcut}
-          </kbd>
-        </div>
-      )}
-    </motion.div>
-  );
-});
+        {/* Shortcut */}
+        {command.shortcut && (
+          <div className="flex-shrink-0">
+            <kbd className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600 font-mono">
+              {command.shortcut}
+            </kbd>
+          </div>
+        )}
+      </motion.div>
+    );
+  },
+);
 
 CommandItem.displayName = 'CommandItem';
 

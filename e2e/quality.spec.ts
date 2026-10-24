@@ -13,7 +13,9 @@ const report = {
 };
 
 const serveReport = (page: import('@playwright/test').Page, body: unknown, status = 200) =>
-  page.route('**/quality.json', (route) => route.fulfill({ status, contentType: 'application/json', body: JSON.stringify(body) }));
+  page.route('**/quality.json', (route) =>
+    route.fulfill({ status, contentType: 'application/json', body: JSON.stringify(body) }),
+  );
 
 const { quality } = copy('en', 'common');
 
@@ -23,9 +25,15 @@ test.describe('quality report', () => {
     await page.goto('/quality');
 
     await expect(page.getByRole('heading', { level: 2 })).toContainText('Quality');
-    await expect(page.getByText('$ npm run verify · build abcdef1', { exact: false })).toBeVisible();
-    await expect(page.getByRole('listitem').filter({ hasText: 'unit' })).toContainText('113 passed · coverage 88%');
-    await expect(page.getByRole('listitem').filter({ hasText: 'axe violations' })).toContainText('0 axe violations · WCAG 2.1 AA');
+    await expect(
+      page.getByText('$ npm run verify · build abcdef1', { exact: false }),
+    ).toBeVisible();
+    await expect(page.getByRole('listitem').filter({ hasText: 'unit' })).toContainText(
+      '113 passed · coverage 88%',
+    );
+    await expect(page.getByRole('listitem').filter({ hasText: 'axe violations' })).toContainText(
+      '0 axe violations · WCAG 2.1 AA',
+    );
     await expect(page.getByText('220 passed · 0 failed · 0 flaky')).toBeVisible();
     await expect(page.getByText(quality.metrics.monitoringValue)).toBeVisible();
     await expect(page).toHaveTitle(`${quality.title} | Emre Dursun`);
@@ -35,7 +43,9 @@ test.describe('quality report', () => {
     await serveReport(page, report);
     await page.goto('/quality');
     await expect(page.getByText('220 passed · 0 failed · 0 flaky')).toBeVisible();
-    await expect(page.locator('main a[href*="github.com/emredursun/professional-portfolio"]')).toHaveCount(0);
+    await expect(
+      page.locator('main a[href*="github.com/emredursun/professional-portfolio"]'),
+    ).toHaveCount(0);
   });
 
   test('marks a failing check instead of hiding it', async ({ page }) => {
@@ -58,13 +68,17 @@ test.describe('quality report', () => {
   test('the About stats card links to it, keeping the language', async ({ page }) => {
     await serveReport(page, report);
     await page.goto('/nl/about');
-    const entry = page.getByRole('link', { name: new RegExp(copy('nl', 'common').quality.entryTitle) });
+    const entry = page.getByRole('link', {
+      name: new RegExp(copy('nl', 'common').quality.entryTitle),
+    });
     // Centre it first: scrolled to the bottom edge it sits under the mobile
     // bottom navigation, which would take the tap.
     await entry.evaluate((el) => el.scrollIntoView({ block: 'center' }));
     await entry.click();
     await expect(page).toHaveURL(/\/nl\/quality$/);
-    await expect(page.getByRole('heading', { level: 2 })).toContainText(copy('nl', 'common').quality.headingRest);
+    await expect(page.getByRole('heading', { level: 2 })).toContainText(
+      copy('nl', 'common').quality.headingRest,
+    );
   });
 
   for (const colorScheme of ['light', 'dark'] as const) {
@@ -79,7 +93,8 @@ test.describe('quality report', () => {
         .analyze();
       expect(
         results.violations.map(
-          (v) => `${v.id} (${v.impact}): ${v.nodes.map((n) => `${n.target.join(' ')} [${n.any[0]?.message ?? ''}]`).join(' | ')}`,
+          (v) =>
+            `${v.id} (${v.impact}): ${v.nodes.map((n) => `${n.target.join(' ')} [${n.any[0]?.message ?? ''}]`).join(' | ')}`,
         ),
       ).toEqual([]);
     });

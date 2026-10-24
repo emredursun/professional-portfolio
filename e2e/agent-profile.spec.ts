@@ -4,7 +4,10 @@ import { expect, test } from './fixtures';
 test.describe('machine-readable profile', () => {
   test.skip(({ isMobile }) => isMobile, 'Plain HTTP checks; one browser is enough.');
 
-  test('serves llms.txt as Markdown text, discoverable from the page', async ({ page, request }) => {
+  test('serves llms.txt as Markdown text, discoverable from the page', async ({
+    page,
+    request,
+  }) => {
     const response = await request.get('/llms.txt');
     expect(response.status()).toBe(200);
     expect(response.headers()['content-type']).toMatch(/^text\/(plain|markdown)/);

@@ -45,7 +45,9 @@ describe('routeMeta', () => {
   it('mirrors the titles the pages set', () => {
     expect(meta('/about').title).toBe('Emre Dursun — QA Consultant, Pega & Tricentis Tosca');
     expect(meta('/resume').title).toBe('Resume | Emre Dursun');
-    expect(meta('/about/pega-platform-architecture').title).toBe('Pega Platform Architecture | Emre Dursun');
+    expect(meta('/about/pega-platform-architecture').title).toBe(
+      'Pega Platform Architecture | Emre Dursun',
+    );
     expect(meta('/projects/aegisqa').title).toMatch(/^AegisQA.* \| Emre Dursun$/);
     expect(meta('/about/pega-platform-architecture', 'nl').title).toBe(
       `${locales.nl.about.services.pegaPlatform.title} | Emre Dursun`,
@@ -55,7 +57,10 @@ describe('routeMeta', () => {
   it('builds self-canonicals and hreflang alternates, but no canonical on the home page', () => {
     const nl = meta('/projects/aegisqa', 'nl');
     expect(nl.canonical).toBe('https://emredursun.nl/nl/projects/aegisqa');
-    expect(nl.alternates).toContainEqual({ hreflang: 'x-default', href: 'https://emredursun.nl/projects/aegisqa' });
+    expect(nl.alternates).toContainEqual({
+      hreflang: 'x-default',
+      href: 'https://emredursun.nl/projects/aegisqa',
+    });
     expect(meta('').canonical).toBeNull();
     expect(meta('', 'tr').url).toBe('https://emredursun.nl/tr');
   });
@@ -66,7 +71,10 @@ describe('routeMeta', () => {
       mainEntity: { '@id': PERSON_ID },
       dateModified: '2026-10-24T00:00:00.000Z',
     });
-    expect(pageNode(meta('/contact'))).toMatchObject({ '@type': 'WebPage', about: { '@id': PERSON_ID } });
+    expect(pageNode(meta('/contact'))).toMatchObject({
+      '@type': 'WebPage',
+      about: { '@id': PERSON_ID },
+    });
   });
 });
 
@@ -109,7 +117,9 @@ describe('prerenderRoutes', () => {
 
       const page = fs.readFileSync(path.join(dist, 'projects', 'aegisqa.html'), 'utf8');
       expect(page).toMatch(/<title>AegisQA[^<]*\| Emre Dursun<\/title>/);
-      expect(page).toContain('<meta property="og:url" content="https://emredursun.nl/projects/aegisqa" />');
+      expect(page).toContain(
+        '<meta property="og:url" content="https://emredursun.nl/projects/aegisqa" />',
+      );
       expect(page.match(/route-meta:start/g)).toHaveLength(1);
     } finally {
       fs.rmSync(dist, { recursive: true, force: true });
@@ -117,7 +127,9 @@ describe('prerenderRoutes', () => {
   });
 
   it('refuses a template without the route-meta block', () => {
-    expect(() => renderRoutePage('<html lang="en"><head></head></html>', meta('/about'), null)).toThrow(/route-meta/);
+    expect(() =>
+      renderRoutePage('<html lang="en"><head></head></html>', meta('/about'), null),
+    ).toThrow(/route-meta/);
   });
 });
 
@@ -127,6 +139,8 @@ describe('image sitemap', () => {
     const xml = generateSitemap({ '': 'x', '/about': 'x', '/resume': 'x' }, images);
     expect(xml).toContain('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"');
     expect(xml.match(/<image:loc>/g)).toHaveLength(6);
-    expect(xml).toContain('<image:loc>https://emredursun.nl/images/emre-dursun-qa-consultant.jpg</image:loc>');
+    expect(xml).toContain(
+      '<image:loc>https://emredursun.nl/images/emre-dursun-qa-consultant.jpg</image:loc>',
+    );
   });
 });

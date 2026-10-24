@@ -25,7 +25,9 @@ describe('resolveCommit', () => {
 
 describe('buildStamp', () => {
   it('records the commit, a short form, the ref and the build time', () => {
-    expect(buildStamp({ commit: '5c89cce9872bffe8', builtAt: '2026-10-21T00:00:00.000Z', ref: 'main' })).toEqual({
+    expect(
+      buildStamp({ commit: '5c89cce9872bffe8', builtAt: '2026-10-21T00:00:00.000Z', ref: 'main' }),
+    ).toEqual({
       commit: '5c89cce9872bffe8',
       shortCommit: '5c89cce',
       ref: 'main',
@@ -59,15 +61,19 @@ describe('writeVersion', () => {
   });
 
   it('refuses to run before a build exists', () => {
-    expect(() => writeVersion({ outputPath: path.join(os.tmpdir(), 'no-such-dir-xyz', 'version.json') })).toThrow(
-      /run the build first/,
-    );
+    expect(() =>
+      writeVersion({ outputPath: path.join(os.tmpdir(), 'no-such-dir-xyz', 'version.json') }),
+    ).toThrow(/run the build first/);
   });
 
   it('uses git when no CI commit is set', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'version-'));
     try {
-      const stamp = writeVersion({ outputPath: path.join(dir, 'v.json'), env: {}, runGit: () => 'feedface99\n' });
+      const stamp = writeVersion({
+        outputPath: path.join(dir, 'v.json'),
+        env: {},
+        runGit: () => 'feedface99\n',
+      });
       expect(stamp).toMatchObject({ commit: 'feedface99', ref: null });
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
