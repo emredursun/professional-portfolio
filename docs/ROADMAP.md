@@ -27,7 +27,6 @@ Release extras: run `npm run publish:profile-readme` after the merge (the profil
 
 | Item | Why | Blocked on |
 | --- | --- | --- |
-| ESLint (typescript-eslint, react-hooks, jsx-a11y) and Prettier in CI | Lint and style gates; preflight D4 | The local `config-protection` hook blocks creating lint configs; owner to allow it once |
 | Split `constants.tsx` (1,245 lines) into `data/*.ts` | File-size guideline (800); easier content edits | Profile README generator must bundle instead of evaluating one file — small change |
 | Tailwind CSS 3 → 4 | Clears the remaining build-time advisories (braces, micromatch, postcss-selector-parser). These do not ship to visitors | Visual regression pass |
 

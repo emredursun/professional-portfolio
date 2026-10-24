@@ -34,6 +34,14 @@ jobs:
       - name: Typecheck (strict)
         run: npm run typecheck
 
+      # typescript-eslint, react-hooks (incl. the React Compiler rules) and
+      # jsx-a11y; warnings fail the build too.
+      - name: Lint
+        run: npx eslint . --max-warnings=0
+
+      - name: Formatting (Prettier)
+        run: npm run format:check
+
       - name: No unused files, exports or dependencies
         run: npm run knip
 

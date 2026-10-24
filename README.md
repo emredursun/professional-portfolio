@@ -22,6 +22,8 @@ Every pull request and every push to `main` runs [`quality.yml`](.github/workflo
 | --- | --- |
 | Dependency audit | `npm audit --omit=dev` — no moderate-or-worse advisories in runtime dependencies |
 | Type check | `tsc --noEmit` under `strict` |
+| Lint | ESLint with typescript-eslint, react-hooks (including the React Compiler rules) and jsx-a11y; any warning fails |
+| Formatting | Prettier, checked in CI (`npm run format:check`) |
 | Dead code | `knip`: no unused files, exports or dependencies |
 | Unit tests | 129 Vitest tests, coverage gate 80% lines / 75% branches on logic modules (currently 86% / 88%) |
 | End-to-end | 162 Playwright tests on desktop Chrome and Pixel 7, against the production build with production security headers |
@@ -62,6 +64,8 @@ No environment variables are needed. The contact form posts to Web3Forms with a 
 | `npm run preview` | Serve the build, replaying the production security headers from `firebase.json` |
 | `npm run typecheck` | Strict TypeScript check |
 | `npm run knip` | Find unused files, exports and dependencies |
+| `npm run lint` | ESLint (typescript-eslint, react-hooks, jsx-a11y) |
+| `npm run format` / `npm run format:check` | Format with Prettier / check formatting |
 | `npm test` / `npm run test:coverage` | Unit tests / with coverage gate |
 | `npm run test:e2e` | Playwright end-to-end and accessibility suite (builds and renders the CVs first if needed) |
 | `npm run generate:cv` | Render `dist/cv/Emre-Dursun-CV-{en,nl,tr}.pdf` from the build (needs `npx playwright install chromium`) |
