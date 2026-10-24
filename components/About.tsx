@@ -447,33 +447,41 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
                       {badge.text}
                     </motion.div>
                   ))}
-                  {/*
-                    Proof next to the claims: a verification card (the trust
-                    and status pattern of Stripe or Vercel) leading to the CI
-                    report behind this site. The live dot pulses only when
-                    motion is allowed.
-                  */}
-                  <Link
-                    to={`${localePrefix(pathname)}/quality`}
-                    className="group/verify mt-1 flex w-full items-center gap-3 rounded-xl dark:rounded-none border border-emerald-500/40 bg-white/90 px-3.5 py-2.5 text-left shadow-[0_4px_16px_rgba(16,185,129,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-500 hover:shadow-[0_10px_28px_rgba(16,185,129,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-emerald-400/55 dark:bg-emerald-400/[0.06] dark:shadow-[0_0_14px_rgba(52,211,153,0.15)] dark:hover:border-emerald-400 dark:hover:shadow-[0_0_24px_rgba(52,211,153,0.3)]"
-                  >
-                    <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 ring-1 ring-emerald-500/30 dark:text-emerald-400">
-                      <i aria-hidden="true" className="fas fa-shield-halved"></i>
-                      <span aria-hidden="true" className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5">
-                        <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 motion-safe:animate-ping"></span>
-                        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-                      </span>
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-bold text-gray-900 dark:text-white">{t('quality.entryTitle', { ns: 'common' })}</span>
-                      <span className="block text-xs text-gray-600 dark:text-gray-400">{t('quality.entrySubtitle', { ns: 'common' })}</span>
-                    </span>
-                    <i aria-hidden="true" className="fas fa-chevron-right text-xs text-gray-500 transition-transform duration-300 group-hover/verify:translate-x-0.5 group-hover/verify:text-emerald-600 dark:text-gray-400 dark:group-hover/verify:text-emerald-400"></i>
-                  </Link>
                 </motion.div>
               </div>
             </BentoCard>
           </Tilt3D>
+
+          {/*
+            Proof next to the claims: the CI report behind this site. A card of
+            its own, outside the tilting stats card - inside it, the target
+            moved with the pointer and was hard to click. Same shape as the
+            Languages card, with the affordances of a link: emerald accent,
+            explicit "View report" action, arrow that moves on hover, lift,
+            focus ring. The live dot pulses only when motion is allowed.
+          */}
+          <Link
+            to={`${localePrefix(pathname)}/quality`}
+            className="group/verify w-full min-w-0 shrink-0 p-5 rounded-2xl flex items-center gap-4 border border-emerald-500/40 bg-white shadow-[0_4px_20px_rgba(16,185,129,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500 hover:shadow-[0_14px_32px_-8px_rgba(16,185,129,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:bg-black dark:border-emerald-400/40 dark:shadow-[0_0_15px_rgba(52,211,153,0.10)] dark:hover:border-emerald-400 dark:hover:shadow-[0_0_28px_rgba(52,211,153,0.35)] dark:focus-visible:ring-offset-black"
+          >
+            <span className="relative w-14 h-14 shrink-0 rounded-xl flex items-center justify-center text-xl bg-emerald-50 text-emerald-600 border border-emerald-100 transition-colors duration-300 group-hover/verify:bg-emerald-500 group-hover/verify:text-white dark:bg-emerald-400/10 dark:text-emerald-400 dark:border-emerald-400/60 dark:group-hover/verify:bg-emerald-400 dark:group-hover/verify:text-black">
+              <i aria-hidden="true" className="fas fa-shield-halved"></i>
+              <span aria-hidden="true" className="absolute -right-1 -top-1 flex h-3 w-3">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 motion-safe:animate-ping"></span>
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-black"></span>
+              </span>
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                {t('quality.entrySubtitle', { ns: 'common' })}
+              </span>
+              <span className="block font-bold text-gray-900 dark:text-white text-sm">{t('quality.entryTitle', { ns: 'common' })}</span>
+            </span>
+            <span className="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400">
+              <span className="hidden @lg:inline @3xl:hidden @5xl:inline">{t('quality.entryAction', { ns: 'common' })}</span>
+              <i aria-hidden="true" className="fas fa-arrow-right transition-transform duration-300 group-hover/verify:translate-x-1"></i>
+            </span>
+          </Link>
 
           <motion.div
             className="w-full min-w-0 shrink-0 p-5 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-neon-purple/30 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(168,85,247,0.1)]"

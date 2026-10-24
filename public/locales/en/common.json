@@ -74,6 +74,7 @@
     "status": {
       "passed": "passed",
       "failed": "failed"
-    }
+    },
+    "entryAction": "View report"
   }
 }

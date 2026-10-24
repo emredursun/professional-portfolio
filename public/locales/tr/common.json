@@ -74,6 +74,7 @@
     "status": {
       "passed": "geçti",
       "failed": "başarısız"
-    }
+    },
+    "entryAction": "Raporu gör"
   }
 }

@@ -74,6 +74,7 @@
     "status": {
       "passed": "geslaagd",
       "failed": "mislukt"
-    }
+    },
+    "entryAction": "Bekijk rapport"
   }
 }
