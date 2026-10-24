@@ -103,8 +103,13 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
         }
     };
 
+    // Production builds ship a PDF per language (scripts/generate-cv.js). The
+    // dev server has none, so there the button falls back to the print dialog.
+    const cvLang = ['nl', 'tr'].includes(i18n.language) ? i18n.language : 'en';
+    const cvUrl = import.meta.env.PROD ? `/cv/Emre-Dursun-CV-${cvLang}.pdf` : null;
+
     const handleDownloadResume = (e: React.MouseEvent) => {
-        if (!PERSONAL_INFO.resumeUrl || PERSONAL_INFO.resumeUrl === '#') {
+        if (!cvUrl) {
             e.preventDefault();
             // "Save as PDF" names the file after document.title, which would
             // otherwise produce "Emre Dursun — QA Consultant, Pega & Tricentis
@@ -122,8 +127,6 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
             setTimeout(restore, 1000);
         }
     };
-
-    const isDirectDownload = PERSONAL_INFO.resumeUrl && PERSONAL_INFO.resumeUrl !== '#';
 
     return (
         <aside
@@ -428,9 +431,10 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
                 <div className="mt-auto">
                     <Magnetic>
                         <a
-                            href={PERSONAL_INFO.resumeUrl}
+                            href={cvUrl ?? '#'}
                             onClick={handleDownloadResume}
-                            download={isDirectDownload}
+                            download={cvUrl ? `Emre-Dursun-CV-${cvLang}.pdf` : undefined}
+                            type={cvUrl ? 'application/pdf' : undefined}
                             className="group w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold py-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-yellow-400/20 transition-all duration-300 hover:shadow-yellow-400/40 hover:-translate-y-0.5 overflow-hidden relative ring-1 ring-white/20"
                         >
                             {/* Shine Effect */}

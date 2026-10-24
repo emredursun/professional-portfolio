@@ -16,7 +16,6 @@ export const PERSONAL_INFO = {
   phone: "+31 6 2878 8948",
   location: "Nieuwegein, Netherlands",
   avatar: "/images/portfolio-pic-1-400.webp",
-  resumeUrl: "#",
 };
 
 // Status Badge Configuration

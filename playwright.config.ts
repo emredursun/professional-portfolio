@@ -28,8 +28,11 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
-    // CI builds once in an earlier step; locally, build if dist/ is missing.
-    command: isCI ? `npx vite preview --port ${PORT} --strictPort` : `npm run build && npx vite preview --port ${PORT} --strictPort`,
+    // CI builds and renders the CV PDFs in earlier steps; locally, do both
+    // when no server is already running.
+    command: isCI
+      ? `npx vite preview --port ${PORT} --strictPort`
+      : `npm run build && npm run generate:cv && npx vite preview --port ${PORT} --strictPort`,
     url: `http://localhost:${PORT}/about`,
     reuseExistingServer: !isCI,
     timeout: 180_000,

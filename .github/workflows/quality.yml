@@ -48,6 +48,12 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 
+      # Renders dist/cv/Emre-Dursun-CV-<lang>.pdf from the built print layout.
+      # Before the e2e step, which checks the files, and before the dist
+      # upload that deploy.yml ships.
+      - name: Generate CV PDFs
+        run: npm run generate:cv
+
       - name: End-to-end tests
         run: npm run test:e2e
         env:
