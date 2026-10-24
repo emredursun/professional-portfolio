@@ -60,6 +60,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - Opening, closing or paging a project on `/nl` or `/tr` sent the visitor to the English URL.
 - Unknown URLs and unknown service or project slugs showed real pages with a 200 (soft 404s), and missing static files returned the app.
 - The command palette's "Go to …" commands did nothing.
+- Typing "(", "[" or another regex character into the command palette crashed the page; the search text is now matched literally.
 - Dutch and Turkish visitors were sent to English pages from service links.
 - The landing page's title was just "About"; project deep links showed "Projects".
 - The error boundary missed render errors, yet replaced the whole site on unrelated script errors.
@@ -78,7 +79,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
 - Vitest unit tests: 129 tests, 86% line coverage on logic modules.
-- Playwright end-to-end suite: 158 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
+- Playwright end-to-end suite: 160 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
 - `knip` in CI: unused files, exports and dependencies fail the build.
 - CI quality gates in front of every deploy, Lighthouse budgets, a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
 - Node 22+.

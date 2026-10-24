@@ -22,6 +22,24 @@ test.describe('command palette', () => {
   });
 });
 
+test.describe('command palette search', () => {
+  test('regex characters in the search are plain text, not a crash', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    await page.goto('/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await page.keyboard.press('Control+k');
+    const search = page.getByRole('combobox', { name: 'Search commands' });
+
+    // Each used to reach new RegExp() unescaped; "(" threw and took the page down.
+    for (const query of ['(', 'c++', '[', 'a|b', '\\']) {
+      await search.fill(query);
+      await expect(search).toHaveValue(query);
+    }
+    await search.fill('(contact');
+    await expect(page.getByRole('option', { name: /Go to Contact/ })).toBeVisible();
+  });
+});
+
 test.describe('localised controls', () => {
   test('buttons, the palette and service cards speak the page language', async ({ page, isMobile }) => {
     test.skip(isMobile, 'The palette opens with a keyboard shortcut.');

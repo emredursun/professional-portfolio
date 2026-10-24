@@ -116,11 +116,13 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
     }
   };
 
-  // Highlight matching text
+  // Highlight matching text. The query is escaped: it is what the visitor
+  // typed, and "(" or "[" unescaped made new RegExp() throw mid-render.
   const highlightMatch = (text: string, query: string) => {
     if (!query.trim()) return text;
-    
-    const parts = text.split(new RegExp(`(${query})`, 'gi'));
+
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const parts = text.split(new RegExp(`(${escaped})`, 'gi'));
     return parts.map((part, i) => 
       part.toLowerCase() === query.toLowerCase() 
         ? <mark key={i} className="bg-yellow-200 dark:bg-yellow-500/30 text-current">{part}</mark>
