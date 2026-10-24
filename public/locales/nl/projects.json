@@ -179,13 +179,14 @@
       "description": "TTC is een gespecialiseerd framework dat transactionele testing automatiseert in het Dovetail systeem, een Fiserv payment platform dat real-time betalingsverwerking afhandelt.",
       "detailedDescription": "TTC is een gespecialiseerd framework dat transactionele testing automatiseert in het Dovetail systeem, een Fiserv payment platform dat real-time betalingsverwerking afhandelt. Het framework beheert end-to-end transactionele testautomatisering voor Dovetail betalingen en integreert met de ING Test Center (ITC) execution engine.",
       "metrics": [
-        "End-to-End Transactionele Automatisering",
-        "Dagelijkse Regressie in DEV5 Omgeving",
+        "850 Geautomatiseerde Betalingsscenario’s",
+        "Volledige Run + Rapport: Dagen → 3–5 Uur",
         "Multi-Country: BE, IT, HU, SK",
-        "Geïntegreerd met ING Test Center (ITC)"
+        "Geïntegreerd met ING Test Center (ITC)",
+        "Dagelijkse Regressie in DEV5 Omgeving"
       ],
-      "challenge": "Internationale bankbetalingssystemen vereisen rigoureus testen over meerdere landen met verschillende regelgevingen. Handmatig testen is tijdrovend en gevoelig voor menselijke fouten in complexe transactiestromen.",
-      "solution": "Ontworpen en geïmplementeerd geautomatiseerde end-to-end regressietests voor het Dovetail betalingsplatform, geïntegreerd met ING Test Center voor dagelijkse uitvoering. Landspecifieke testvalidaties gecreëerd voor EPP en niet-EPP betalingsstromen.",
+      "challenge": "Het TIP Test Center van ING draaide zo’n 400 end-to-end betalingsscenario’s voor het Dovetail-platform op een verouderde opzet. Een volledige regressierun met rapportage duurde meerdere dagen, wat elke Dovetail-release en elke landenuitrol vertraagde.",
+      "solution": "De 400 bestaande scenario’s overgezet naar het nieuwe TTC-framework (Selenium, Cucumber en Java op de ING Test Center-executie-engine) en 450 nieuwe toegevoegd, inclusief FFV-validaties per land voor EPP- en niet-EPP-betalingsstromen. Framework en testdata geoptimaliseerd, zodat de volledige suite dagelijks in DEV5 draait.",
       "features": {
         "validation": {
           "title": "Test Validatie Ontwikkeling",
@@ -202,6 +203,23 @@
         "stakeholder": {
           "title": "Stakeholder Support",
           "description": "Technische begeleiding bieden aan ontwikkelteams, feature squads en andere belanghebbenden tijdens het onboardingproces."
+        }
+      },
+      "results": {
+        "scenarios": {
+          "metric": "Geautomatiseerde scenario’s",
+          "value": "850",
+          "description": "400 bestaande scenario’s gemigreerd naar het nieuwe framework, plus 450 nieuwe toegevoegd"
+        },
+        "runtime": {
+          "metric": "Volledige run en rapportage",
+          "value": "3–5 u",
+          "description": "Was meerdere dagen voor een volledige regressierun met rapport"
+        },
+        "countries": {
+          "metric": "Landenuitrol",
+          "value": "4",
+          "description": "België, Italië, Hongarije en Slowakije gedekt met landspecifieke validaties"
         }
       }
     },

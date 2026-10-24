@@ -46,6 +46,14 @@ test.describe('projects', () => {
     await expect(page).toHaveTitle(/AegisQA/);
   });
 
+  test('a case study shows its measurable results, translated', async ({ page }) => {
+    const nl = copy('nl', 'projects').projects['banking-payment-automation'].results;
+    await page.goto('/nl/projects/banking-payment-automation');
+    await expect(page.getByText(nl.runtime.metric).first()).toBeVisible();
+    await expect(page.getByText(nl.runtime.value, { exact: true }).first()).toBeVisible();
+    await expect(page.getByText(nl.scenarios.description).first()).toBeVisible();
+  });
+
   test('opening and closing a project on /nl/projects stays in Dutch', async ({ page }) => {
     await page.goto('/nl/projects');
     await page.getByText('Quilyn — Certification Exam Prep').first().click();

@@ -179,13 +179,14 @@
       "description": "TTC is a specialized framework that automates transactional testing in the Dovetail system, a Fiserv payment platform that handles real-time payment processing.",
       "detailedDescription": "TTC is a specialized framework that automates transactional testing in the Dovetail system, a Fiserv payment platform that handles real-time payment processing. The framework manages end-to-end transactional test automation for Dovetail payments and integrates with the ING Test Center (ITC) execution engine—a web application with a GUI for visualizing, executing, and managing test cases. It functions as a library using Selenium/Cucumber with regression test scenarios that run daily in the DEV5 test environment, verifying transaction accuracy across both incoming and outgoing processes. As an Automation Test Engineer, I designed and maintained these automated end-to-end regression tests, ensuring transaction accuracy across international branches.",
       "metrics": [
-        "End-to-End Transactional Automation",
-        "Daily Regression in DEV5 Env",
+        "850 Automated Payment Scenarios",
+        "Full Run + Report: Days → 3–5 Hours",
         "Multi-Country: BE, IT, HU, SK",
-        "Integrated with ING Test Center (ITC)"
+        "Integrated with ING Test Center (ITC)",
+        "Daily Regression in DEV5 Env"
       ],
-      "challenge": "International banking payment systems require rigorous testing across multiple countries with different regulations. Manual testing is time-consuming and prone to human error in complex transaction flows.",
-      "solution": "Designed and implemented automated end-to-end regression tests for the Dovetail payment platform, integrating with ING Test Center for daily execution. Created country-specific test validations for EPP and non-EPP payment flows.",
+      "challenge": "ING's TIP Test Center ran around 400 end-to-end payment scenarios for the Dovetail platform on a legacy setup. A complete regression run, with its reporting, took several days, which slowed down every Dovetail release and every country rollout.",
+      "solution": "Onboarded the 400 legacy scenarios onto the new TTC framework (Selenium, Cucumber and Java on the ING Test Center execution engine) and added 450 new ones, including FFV validations for EPP and non-EPP payment flows per country. Optimized the framework and its test data so the full suite runs daily in DEV5.",
       "features": {
         "validation": {
           "title": "Test Validation Development",
@@ -202,6 +203,23 @@
         "stakeholder": {
           "title": "Stakeholder Support",
           "description": "Providing technical guidance to development teams, feature squads, and other stakeholders during the onboarding process."
+        }
+      },
+      "results": {
+        "scenarios": {
+          "metric": "Automated scenarios",
+          "value": "850",
+          "description": "400 legacy scenarios migrated to the new framework, plus 450 new ones onboarded"
+        },
+        "runtime": {
+          "metric": "Full run and reporting",
+          "value": "3–5 h",
+          "description": "Down from several days for a complete regression run and its report"
+        },
+        "countries": {
+          "metric": "Country rollouts",
+          "value": "4",
+          "description": "Belgium, Italy, Hungary and Slovakia covered by country-specific validations"
         }
       }
     },

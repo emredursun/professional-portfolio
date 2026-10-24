@@ -179,13 +179,14 @@
       "description": "TTC, gerçek zamanlı ödeme işlemlerini yürüten Fiserv ödeme platformu Dovetail sistemi için işlemsel testleri otomatize eden özelleşmiş bir framework'tür.",
       "detailedDescription": "TTC, gerçek zamanlı ödeme işlemlerini yürüten Fiserv ödeme platformu Dovetail sistemi için işlemsel testleri otomatize eden özelleşmiş bir framework'tür. Framework, Dovetail ödemeleri için uçtan uca işlemsel test otomasyonunu yönetir ve ING Test Merkezi (ITC) çalıştırma motoru ile entegre olur.",
       "metrics": [
-        "Uçtan Uca İşlemsel Otomasyon",
-        "DEV5 Ortamında Günlük Regresyon",
+        "850 Otomatik Ödeme Senaryosu",
+        "Tam Koşum + Rapor: Günler → 3–5 Saat",
         "Çok Ülkeli: BE, IT, HU, SK",
-        "ING Test Merkezi (ITC) Entegrasyonu"
+        "ING Test Merkezi (ITC) Entegrasyonu",
+        "DEV5 Ortamında Günlük Regresyon"
       ],
-      "challenge": "Uluslararası bankacılık ödeme sistemleri, farklı düzenlemelere sahip birden fazla ülkede titiz testler gerektirir. Manuel test, karmaşık işlem akışlarında zaman alıcı ve insan hatasına açıktır.",
-      "solution": "Dovetail ödeme platformu için otomatik uçtan uca regresyon testleri tasarladım ve uyguladım, günlük çalıştırma için ING Test Merkezi ile entegre ettim. EPP ve EPP olmayan ödeme akışları için ülkeye özgü test doğrulamaları oluşturdum.",
+      "challenge": "ING'nin TIP Test Center'ı, Dovetail platformu için yaklaşık 400 uçtan uca ödeme senaryosunu eski bir altyapıda çalıştırıyordu. Raporlamasıyla birlikte tam bir regresyon koşumu birkaç gün sürüyor, bu da her Dovetail sürümünü ve her ülke rollout'unu yavaşlatıyordu.",
+      "solution": "400 eski senaryoyu yeni TTC framework'üne (ING Test Center çalıştırma motoru üzerinde Selenium, Cucumber ve Java) taşıdım ve EPP ve EPP dışı ödeme akışları için ülkeye özgü FFV doğrulamaları dahil 450 yeni senaryo ekledim. Framework'ü ve test verisini, tüm suite DEV5'te her gün koşacak şekilde optimize ettim.",
       "features": {
         "validation": {
           "title": "Test Doğrulama Geliştirme",
@@ -202,6 +203,23 @@
         "stakeholder": {
           "title": "Paydaş Desteği",
           "description": "Sisteme dahil olma sürecinde geliştirme ekiplerine, özellik ekiplerine ve diğer paydaşlara teknik rehberlik sağlama."
+        }
+      },
+      "results": {
+        "scenarios": {
+          "metric": "Otomatik senaryo",
+          "value": "850",
+          "description": "400 eski senaryo yeni framework’e taşındı, üstüne 450 yeni senaryo eklendi"
+        },
+        "runtime": {
+          "metric": "Tam koşum ve raporlama",
+          "value": "3–5 sa",
+          "description": "Tam bir regresyon koşumu ve raporu eskiden birkaç gün sürüyordu"
+        },
+        "countries": {
+          "metric": "Ülke rollout’u",
+          "value": "4",
+          "description": "Belçika, İtalya, Macaristan ve Slovakya ülkeye özgü doğrulamalarla kapsandı"
         }
       }
     },

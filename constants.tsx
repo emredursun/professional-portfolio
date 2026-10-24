@@ -958,11 +958,32 @@ export const PROJECTS: Project[] = [
     ],
     url: "#",
     metrics: [
-      "End-to-End Transactional Automation",
-      "Daily Regression in DEV5 Env",
+      "850 Automated Payment Scenarios",
+      "Full Run + Report: Days → 3–5 Hours",
       "Multi-Country: BE, IT, HU, SK",
       "Integrated with ING Test Center (ITC)",
-      "Transaction Verification (Incoming/Outgoing)",
+      "Daily Regression in DEV5 Env",
+    ],
+    challenge:
+      "ING's TIP Test Center ran around 400 end-to-end payment scenarios for the Dovetail platform on a legacy setup. A complete regression run, with its reporting, took several days, which slowed down every Dovetail release and every country rollout.",
+    solution:
+      "Onboarded the 400 legacy scenarios onto the new TTC framework (Selenium, Cucumber and Java on the ING Test Center execution engine) and added 450 new ones, including FFV validations for EPP and non-EPP payment flows per country. Optimized the framework and its test data so the full suite runs daily in DEV5.",
+    results: [
+      {
+        metric: "Automated scenarios",
+        value: "850",
+        description: "400 legacy scenarios migrated to the new framework, plus 450 new ones onboarded",
+      },
+      {
+        metric: "Full run and reporting",
+        value: "3–5 h",
+        description: "Down from several days for a complete regression run and its report",
+      },
+      {
+        metric: "Country rollouts",
+        value: "4",
+        description: "Belgium, Italy, Hungary and Slovakia covered by country-specific validations",
+      },
     ],
     features: [
       {
