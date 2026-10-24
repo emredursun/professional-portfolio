@@ -1,18 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useState } from 'react';
 import { useReducedMotion } from './hooks/useReducedMotion.tsx';
 
-/**
- * FloatingElements - Ambient floating geometric shapes for premium background effect
- * Creates subtle moving shapes that add depth and visual interest without impacting performance
- */
-const FloatingElements: React.FC = () => {
-  const prefersReducedMotion = useReducedMotion();
-
-  // Generate random floating elements
-  const elements = useMemo(() => {
+function createElements() {
     const shapes = ['circle', 'square', 'triangle'];
     const count = 8; // Keep count low for performance
-    
+
     return Array.from({ length: count }, (_, i) => {
       const shape = shapes[Math.floor(Math.random() * shapes.length)];
       const size = Math.random() * 150 + 50; // 50-200px
@@ -33,7 +25,18 @@ const FloatingElements: React.FC = () => {
         opacity,
       };
     });
-  }, []);
+}
+
+/**
+ * FloatingElements - Ambient floating geometric shapes for premium background effect
+ * Creates subtle moving shapes that add depth and visual interest without impacting performance
+ */
+const FloatingElements: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
+
+  // Random once per mount: a useState initializer, not useMemo (which React
+  // may recompute and so re-shuffle the shapes).
+  const [elements] = useState(createElements);
 
   // Don't render if user prefers reduced motion
   if (prefersReducedMotion) {

@@ -1,38 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
+
+const QUERY = '(prefers-reduced-motion: reduce)';
+
+function subscribe(onChange: () => void): () => void {
+  if (typeof window === 'undefined' || !window.matchMedia) return () => {};
+  const mediaQuery = window.matchMedia(QUERY);
+  mediaQuery.addEventListener('change', onChange);
+  return () => mediaQuery.removeEventListener('change', onChange);
+}
+
+function getSnapshot(): boolean {
+  return typeof window !== 'undefined' && !!window.matchMedia && window.matchMedia(QUERY).matches;
+}
 
 /**
  * Custom hook to detect user's motion preferences
  * Respects prefers-reduced-motion media query for accessibility
  * @returns boolean - true if user prefers reduced motion
+ *
+ * Reads the media query through useSyncExternalStore: correct on the first
+ * render (no flash of motion before an effect corrects it) and updated when
+ * the visitor changes the setting.
  */
-export const useReducedMotion = (): boolean => {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  useEffect(() => {
-    // Check if matchMedia is supported
-    if (typeof window === 'undefined' || !window.matchMedia) {
-      return;
-    }
-
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    // Listen for changes in user preference
-    const listener = (e: MediaQueryListEvent) => {
-      setPrefersReducedMotion(e.matches);
-    };
-
-    // Modern browsers
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', listener);
-      return () => mediaQuery.removeEventListener('change', listener);
-    }
-    // Fallback for older browsers
-    else if (mediaQuery.addListener) {
-      mediaQuery.addListener(listener);
-      return () => mediaQuery.removeListener(listener);
-    }
-  }, []);
-
-  return prefersReducedMotion;
-};
+export const useReducedMotion = (): boolean =>
+  useSyncExternalStore(subscribe, getSnapshot, () => false);

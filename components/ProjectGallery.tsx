@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface ProjectGalleryProps {
@@ -20,13 +20,14 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
     setLightboxOpen(false);
   };
 
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
+  const count = images.length;
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % count);
+  }, [count]);
 
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
+  const goToPrevious = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + count) % count);
+  }, [count]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -40,7 +41,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxOpen]);
+  }, [lightboxOpen, goToNext, goToPrevious]);
 
   if (!images || images.length === 0) return null;
 

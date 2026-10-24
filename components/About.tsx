@@ -101,7 +101,7 @@ type ExtendedService = Service & { originalBadge?: string };
 // stretches over the whole card - the card stays clickable everywhere, the
 // link's name is the visible title (WCAG 2.5.3), and the focus ring outlines
 // the card.
-const ServiceItem: React.FC<{ service: ExtendedService; to: string; onClick: () => void }> = ({ service, to, onClick }) => {
+const ServiceItem: React.FC<{ service: ExtendedService; to: string }> = ({ service, to }) => {
   // Use originalBadge for logic, badge for display
   const isCertified = service.originalBadge === "Certified" || service.badge === "Certified";
   const { t } = useTranslation('common');
@@ -147,7 +147,6 @@ const ServiceItem: React.FC<{ service: ExtendedService; to: string; onClick: () 
       <h4 className="min-h-[3.5rem] text-xl font-bold tracking-tight text-gray-900 dark:text-neon-text-primary mb-3 line-clamp-2 leading-7 group-hover:text-accent-yellow dark:group-hover:text-neon-cyan transition-all duration-300">
         <Link
           to={to}
-          onClick={onClick}
           className="focus-visible:outline-none after:absolute after:inset-0 after:z-20 after:rounded-2xl focus-visible:after:ring-4 focus-visible:after:ring-inset focus-visible:after:ring-accent-yellow dark:focus-visible:after:ring-neon-cyan"
         >
           {service.title}
@@ -227,7 +226,6 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
   const [statsCount, setStatsCount] = useState(0);
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const storyRef = useRef<HTMLDivElement>(null);
@@ -255,18 +253,11 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
     });
   }, [t]);
 
-  // Derived during render (not from selectedService state) so a direct visit
-  // to /about/<slug> gets the service's title on the first paint.
+  // The open service comes from the URL alone, derived during render: a
+  // direct visit to /about/<slug> gets its title on the first paint, and
+  // there is no state to keep in step with the route.
   const activeService = serviceSlug && ready ? translatedServices.find(s => s.slug === serviceSlug) : undefined;
 
-  useEffect(() => {
-    if (serviceSlug && ready) {
-      const service = translatedServices.find(s => s.slug === serviceSlug);
-      setSelectedService(service || null);
-    } else if (!serviceSlug) {
-      setSelectedService(null);
-    }
-  }, [serviceSlug, translatedServices, ready]);
 
   // Number Counter Animation (0 to 5), once the counter is on screen.
   // An IntersectionObserver rather than ScrollTrigger: on desktop the page
@@ -555,7 +546,6 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
                   <ServiceItem
                     service={service}
                     to={`${localePrefix(pathname)}/about/${service.slug}`}
-                    onClick={() => setSelectedService(service)}
                   />
                 </BentoCard>
               </div>
@@ -567,14 +557,13 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
       
       {/* Service Detail Panel */}
       <ServiceDetailPanel
-        service={selectedService}
+        service={activeService ?? null}
         onClose={() => {
-          setSelectedService(null);
           navigate('/about', { state: { preserveScroll: true } });
         }}
         onNavigate={(direction) => {
-          if (!selectedService) return;
-          const currentIndex = translatedServices.findIndex(s => s.slug === selectedService.slug);
+          if (!activeService) return;
+          const currentIndex = translatedServices.findIndex(s => s.slug === activeService.slug);
           if (currentIndex === -1) return;
           
           let nextIndex;
@@ -586,7 +575,6 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
           
           // Use the index to find the service in the translatedServices array since we need the translated content
           const nextService = translatedServices[nextIndex];
-          setSelectedService(nextService);
           navigate(`/about/${nextService.slug}`);
         }}
       />

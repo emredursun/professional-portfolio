@@ -4,7 +4,7 @@ import { Project } from '../../types.ts';
 import { PROJECT_TRANSLATION_KEYS } from '../../constants.tsx';
 
 export const useTranslatedProject = (project: Project): Project => {
-  const { t, i18n } = useTranslation('projects');
+  const { t } = useTranslation('projects');
 
   return useMemo(() => {
     const translationKey = PROJECT_TRANSLATION_KEYS[project.slug];
@@ -93,12 +93,12 @@ export const useTranslatedProject = (project: Project): Project => {
       features: getFeatures(),
       results: getResults(),
     };
-  }, [project, t, i18n.language]);
+  }, [project, t]);
 };
 
 // Hook to translate an array of projects
 export const useTranslatedProjects = (projects: Project[]): Project[] => {
-  const { t, i18n } = useTranslation('projects');
+  const { t } = useTranslation('projects');
 
   return useMemo(() => {
     return projects.map((project) => {
@@ -182,5 +182,5 @@ export const useTranslatedProjects = (projects: Project[]): Project[] => {
         results: getResults(),
       };
     });
-  }, [projects, t, i18n.language]);
+  }, [projects, t]);
 };

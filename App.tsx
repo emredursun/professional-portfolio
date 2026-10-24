@@ -77,7 +77,7 @@ const ScrollHandler: React.FC<{
         }
        }
     }
-  }, [isMobileView, location.pathname, contentRef]);
+  }, [isMobileView, location.pathname, location.state, contentRef]);
 
   // Listen to location changes to trigger "Navigate" scroll logic if needed?
   // Actually, standard router behavior doesn't auto-scroll div containers, so we force it here.
@@ -241,11 +241,12 @@ const AppContent: React.FC = () => {
     [languageNavigate],
   );
   // Mount the palette on first open and keep it mounted, so its close
-  // animation still plays.
+  // animation still plays. Set where it opens, not mirrored by an effect.
   const [paletteMounted, setPaletteMounted] = useState(false);
-  useEffect(() => {
-    if (isCommandPaletteOpen) setPaletteMounted(true);
-  }, [isCommandPaletteOpen]);
+  const openCommandPalette = useCallback(() => {
+    setPaletteMounted(true);
+    setIsCommandPaletteOpen(true);
+  }, []);
 
   // Mounting the whole app is the largest render of the visit. As a
   // transition React renders it in slices and yields between them, instead
@@ -372,6 +373,7 @@ const AppContent: React.FC = () => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
+        setPaletteMounted(true);
         setIsCommandPaletteOpen(prev => !prev);
       }
     };
@@ -509,7 +511,7 @@ const AppContent: React.FC = () => {
             <Navbar 
               activePage={activePage}
               onNavigate={() => {}} // Handled by Links
-              onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+              onOpenCommandPalette={openCommandPalette}
               onScrollToContent={scrollToTopAction}
             />
           )}

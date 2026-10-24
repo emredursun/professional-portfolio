@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { CommandPaletteProps, Command } from '../types';
@@ -27,10 +27,12 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
     onClose,
   });
 
-  // Get filtered commands based on search
-  const filteredCommands = searchQuery.trim() 
-    ? searchCommands(searchQuery)
-    : commands;
+  // Get filtered commands based on search. Memoized so the keyboard and
+  // click handlers below, which depend on it, stay stable between renders.
+  const filteredCommands = useMemo(
+    () => (searchQuery.trim() ? searchCommands(searchQuery) : commands),
+    [searchQuery, searchCommands, commands],
+  );
 
   // Category grouping
   const groupedCommands = filteredCommands.reduce((acc, cmd) => {
@@ -41,18 +43,24 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
     return acc;
   }, {} as Record<string, Command[]>);
 
-  // Reset selected index when search changes
-  useEffect(() => {
+  // A new search starts at the first result. Set together with the query,
+  // instead of an effect re-rendering after every keystroke.
+  const updateSearch = (query: string) => {
+    setSearchQuery(query);
     setSelectedIndex(0);
-  }, [searchQuery]);
+  };
+
+  // Each opening starts with an empty search: state adjusted while rendering
+  // when isOpen changes (React's pattern for resetting on a prop change).
+  const [wasOpen, setWasOpen] = useState(isOpen);
+  if (isOpen !== wasOpen) {
+    setWasOpen(isOpen);
+    if (isOpen) updateSearch('');
+  }
 
   // Focus input when opened
   useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-      setSearchQuery('');
-      setSelectedIndex(0);
-    }
+    if (isOpen) inputRef.current?.focus();
   }, [isOpen]);
 
   // Scroll selected item into view
@@ -164,7 +172,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                 ref={inputRef}
                 type="text"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => updateSearch(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={t('palette.placeholder')}
                 aria-label={t('palette.search')}
@@ -181,7 +189,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                 <button
                   type="button"
                   aria-label={t('palette.clear')}
-                  onClick={() => setSearchQuery('')}
+                  onClick={() => updateSearch('')}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                 >
                   <i aria-hidden="true" className="fas fa-times" />

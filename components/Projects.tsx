@@ -162,9 +162,11 @@ const Projects: React.FC = () => {
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isTechnologyOpen, setIsTechnologyOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const { slug } = useParams();
+  // The open project comes from the URL alone; an unknown slug renders the
+  // "not found" view below rather than redirecting.
+  const selectedProject = PROJECTS.find(p => p.slug === slug) ?? null;
   // Locale-aware: a plain useNavigate() sent /nl and /tr visitors who opened
   // or closed a project back to the English URLs.
   const navigate = useLanguageNavigate();
@@ -177,12 +179,6 @@ const Projects: React.FC = () => {
 
   const categoryRef = useRef<HTMLDivElement>(null);
   const technologyRef = useRef<HTMLDivElement>(null);
-
-  // Handle Project Selection via URL
-  // An unknown slug renders the "not found" view below rather than redirecting.
-  useEffect(() => {
-    setSelectedProject(PROJECTS.find(p => p.slug === slug) ?? null);
-  }, [slug]);
 
   const handleCloseModal = () => {
     navigate('/projects');

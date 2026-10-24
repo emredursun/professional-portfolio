@@ -104,63 +104,71 @@ const AnimatedName: React.FC<AnimatedNameProps> = ({ name, variant, className = 
 
     // Variant 4: Hacker/Matrix Effect (Character Scrambling)
     if (variant === 'hacker') {
-        const HackerLetter: React.FC<{ letter: string; index: number; isParentHovered: boolean }> = ({ letter, index, isParentHovered }) => {
-            const [displayChar, setDisplayChar] = React.useState(letter);
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
-            
-            React.useEffect(() => {
-                if (!isParentHovered) {
-                    setDisplayChar(letter);
-                    return;
-                }
-                
-                let iteration = 0;
-                const maxIterations = 10;
-                
-                const interval = setInterval(() => {
-                    if (iteration < maxIterations) {
-                        setDisplayChar(characters[Math.floor(Math.random() * characters.length)]);
-                        iteration++;
-                    } else {
-                        setDisplayChar(letter);
-                        clearInterval(interval);
-                    }
-                }, 30 + (index * 5)); // Stagger the scrambling by index
-                
-                return () => clearInterval(interval);
-            }, [isParentHovered, letter, index]);
-            
-            return (
-                <motion.span
-                    className="bg-gradient-to-r from-green-700 via-emerald-800 to-green-700 dark:from-green-300 dark:via-emerald-300 dark:to-green-400 bg-clip-text text-transparent inline-block font-mono text-2xl md:text-3xl font-bold tracking-wide"
-                    style={{ fontFamily: "'Space Mono', monospace" }}
-                    animate={{ 
-                        opacity: isParentHovered ? 1 : 0.95,
-                        filter: isParentHovered ? 'drop-shadow(0 0 8px rgba(34, 197, 94, 0.6))' : 'none'
-                    }}
-                    transition={{ duration: 0.2 }}
-                >
-                    {displayChar === ' ' ? '\u00A0' : displayChar}
-                </motion.span>
-            );
-        };
-
-        const [isHovered, setIsHovered] = React.useState(false);
-
-        return (
-            <motion.h1 
-                className={`text-3xl font-extrabold tracking-tight inline-flex ${className}`}
-                onHoverStart={() => setIsHovered(true)}
-                onHoverEnd={() => setIsHovered(false)}
-            >
-                {letters.map((letter, index) => (
-                    <HackerLetter key={index} letter={letter} index={index} isParentHovered={isHovered} />
-                ))}
-            </motion.h1>
-        );
+        return <HackerName letters={letters} className={className} />;
     }
 
     return null;
+};
+
+const SCRAMBLE_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+
+// Module-level components: declared inside AnimatedName, HackerLetter was a
+// new component type on every render (each hover remounted every letter),
+// and the hacker variant's useState was a hook called conditionally.
+const HackerLetter: React.FC<{ letter: string; index: number; isParentHovered: boolean }> = ({ letter, index, isParentHovered }) => {
+    const [scrambled, setScrambled] = React.useState(letter);
+
+    React.useEffect(() => {
+        if (!isParentHovered) return;
+
+        let iteration = 0;
+        const maxIterations = 10;
+
+        const interval = setInterval(() => {
+            if (iteration < maxIterations) {
+                setScrambled(SCRAMBLE_CHARACTERS[Math.floor(Math.random() * SCRAMBLE_CHARACTERS.length)]);
+                iteration++;
+            } else {
+                setScrambled(letter);
+                clearInterval(interval);
+            }
+        }, 30 + (index * 5)); // Stagger the scrambling by index
+
+        return () => clearInterval(interval);
+    }, [isParentHovered, letter, index]);
+
+    // At rest the letter itself shows; the scramble only runs while hovered.
+    const displayChar = isParentHovered ? scrambled : letter;
+
+    return (
+        <motion.span
+            className="bg-gradient-to-r from-green-700 via-emerald-800 to-green-700 dark:from-green-300 dark:via-emerald-300 dark:to-green-400 bg-clip-text text-transparent inline-block font-mono text-2xl md:text-3xl font-bold tracking-wide"
+            style={{ fontFamily: "'Space Mono', monospace" }}
+            animate={{
+                opacity: isParentHovered ? 1 : 0.95,
+                filter: isParentHovered ? 'drop-shadow(0 0 8px rgba(34, 197, 94, 0.6))' : 'none'
+            }}
+            transition={{ duration: 0.2 }}
+        >
+            {displayChar === ' ' ? '\u00A0' : displayChar}
+        </motion.span>
+    );
+};
+
+const HackerName: React.FC<{ letters: string[]; className: string }> = ({ letters, className }) => {
+    const [isHovered, setIsHovered] = React.useState(false);
+
+    return (
+        <motion.h1
+            className={`text-3xl font-extrabold tracking-tight inline-flex ${className}`}
+            onHoverStart={() => setIsHovered(true)}
+            onHoverEnd={() => setIsHovered(false)}
+        >
+            {letters.map((letter, index) => (
+                <HackerLetter key={index} letter={letter} index={index} isParentHovered={isHovered} />
+            ))}
+        </motion.h1>
+    );
 };
 
 export default AnimatedName;
