@@ -46,8 +46,7 @@ Mobile Lighthouse is now 86–87 (was 57–58). The particle field was the block
 | --- | --- |
 | Self-host the project images now hot-linked from `servcorp.co.uk` and `images.unsplash.com` | Third-party image host and licensing risk. The Lighthouse budget for `/projects` is capped at the current 7 third-party requests until this is done |
 | Regenerate favicons from the new profile photo | Favicons still show the previous photo |
-| Regenerate `social-share.png` with the new photo | Via `dev-tools/social-share-generator.html`; keep it under 300 KB. LinkedIn shows this image for every page |
 | Per-page social images for projects and services | Built at build time next to the prerendered heads, so each shared link has its own card |
-| Measurable results for the remaining projects | Owner to supply figures (as done for ING). QASmartTestLab's "60% faster" and "85% reduction" cards are unverified |
+| Measurable results for the remaining projects | Owner to supply figures, as done for ING |
 | Calm design pass (less decoration) | Owner wants visual examples first |
 | View Transitions for project card → modal | Polish, after the above |

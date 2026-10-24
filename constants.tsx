@@ -765,25 +765,27 @@ export const PROJECTS: Project[] = [
     category: "Test Automation",
     image:
       "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80",
+    // Every claim below can be checked in the linked repository.
     description:
-      "A comprehensive test automation framework built with Java 17+, Selenium 4, and Cucumber for UI, API, and database testing with clean architecture and runtime configuration.",
+      "A Java 17 test automation framework on Selenium 4 and Cucumber 7: thread-safe parallel scenarios, local or remote Grid runs, and HTML, JSON and JUnit reports from every run.",
     detailedDescription:
-      "QASmartTestLab is a production-ready test automation framework demonstrating best practices in test automation. Built with Java 17+, Selenium 4, and Cucumber (JVM), it provides a clean, maintainable structure for UI, API, and database testing. The framework features runtime configuration for browsers (Chrome, Firefox, Edge), headless execution, remote Grid/Selenoid support, and comprehensive reporting. Following the Page Object Model pattern with clear separation of concerns, it includes configurable timeouts, parallel execution capabilities, and tag-based test filtering for flexible test management.",
+      "QASmartTestLab is a Cucumber (JVM) framework built on Selenium 4 and JUnit 5. Cucumber runs scenarios in parallel with a dynamic strategy, and each thread gets its own WebDriver through a ThreadLocal factory, so scenarios never share a browser. The same suite runs on a local Chrome (drivers managed by WebDriverManager) or on a remote Selenium Grid or Selenoid, chosen at runtime with a system property or environment variable. Page objects, step definitions, runners and support classes are kept apart; tags select what runs, and every run writes HTML, JSON and JUnit XML reports plus a console summary. Feature suites cover UI login and incoming and outgoing payment messages with XML validation fixtures.",
     technologies: [
       "Java 17",
       "Selenium 4",
-      "Cucumber",
-      "Maven",
+      "Cucumber 7",
       "JUnit 5",
+      "Maven",
+      "WebDriverManager",
       "Selenium Grid",
     ],
     url: "#",
     github: "https://github.com/emredursun/QASmartTestLab",
     metrics: [
-      "Multi-Layer Testing (UI, API, DB)",
-      "Parallel Execution Support",
-      "Remote Grid Integration",
-      "Clean Architecture \u0026 POM Pattern",
+      "Parallel Scenarios · Thread-Safe WebDriver",
+      "Local or Remote Grid/Selenoid Runs",
+      "4 Report Formats per Run",
+      "Page Object Model · Tag-Based Runs",
     ],
     // Enhanced immersive view data
     gallery: [
@@ -799,45 +801,48 @@ export const PROJECTS: Project[] = [
     challenge:
       "Test automation teams often struggle with framework complexity, poor maintainability, and lack of standardization across projects. Many frameworks become technical debt, difficult to understand for new team members, and hard to scale as the application grows.",
     solution:
-      "Designed and built QASmartTestLab from the ground up with clean architecture principles, emphasizing separation of concerns, clear naming conventions, and comprehensive documentation. Implemented flexible runtime configuration allowing teams to switch browsers, environments, and execution modes without code changes. The Page Object Model pattern ensures easy maintenance, while tag-based filtering enables precise test execution control.",
+      "Built QASmartTestLab around a small set of clear rules: page objects for the UI, step definitions that only orchestrate, one WebDriver per thread, and configuration at runtime instead of in code. The suite switches between a local browser and a remote Grid with a single property, runs scenarios in parallel safely, and selects what to run with tags.",
     features: [
       {
-        title: "Multi-Layer Testing",
+        title: "Payment Flow Features",
         description:
-          "Comprehensive coverage across UI (Selenium), API (REST Assured), and database (JDBC) layers within a single unified framework.",
+          "Cucumber suites for UI login and for incoming and outgoing payment messages, with XML validation fixtures per scenario.",
         icon: <i aria-hidden="true" className="fas fa-layer-group text-yellow-400"></i>,
       },
       {
         title: "Runtime Configuration",
         description:
-          "Dynamic browser selection, headless mode, and remote Grid/Selenoid integration—all configurable at runtime without touching code.",
+          "Local Chrome or a remote Selenium Grid/Selenoid, chosen with a system property or environment variable; WebDriverManager handles the drivers.",
         icon: <i aria-hidden="true" className="fas fa-cogs text-blue-400"></i>,
       },
       {
         title: "Clean Architecture",
         description:
-          "Page Object Model with clear separation: pages, steps, runners, utilities. Every component has a single responsibility.",
+          "Page objects, step definitions, runners and support classes kept apart, each with a single responsibility.",
         icon: <i aria-hidden="true" className="fas fa-sitemap text-green-400"></i>,
       },
       {
         title: "Parallel Execution",
         description:
-          "Tag-based filtering and parallel thread support for faster feedback cycles. Run smoke tests in minutes, full regression overnight.",
+          "Cucumber runs scenarios in parallel (dynamic strategy) with a ThreadLocal WebDriver per thread, so scenarios never share a browser.",
         icon: <i aria-hidden="true" className="fas fa-bolt text-purple-400"></i>,
       },
     ],
     results: [
       {
-        metric: "Test Execution Speed",
-        value: "60% faster",
-        description:
-          "Parallel execution reduced full regression time from 2 hours to 48 minutes",
+        metric: "Report formats",
+        value: "4",
+        description: "HTML, JSON, JUnit XML and a console summary from every run",
       },
       {
-        metric: "Code Maintainability",
-        value: "85% reduction",
-        description:
-          "POM pattern reduced test maintenance effort and increased team velocity",
+        metric: "Execution targets",
+        value: "2",
+        description: "Local Chrome or a remote Selenium Grid/Selenoid, switched without code changes",
+      },
+      {
+        metric: "Parallelism",
+        value: "Per scenario",
+        description: "A thread-safe WebDriver lets Cucumber run scenarios concurrently",
       },
     ],
     tags: ["Framework", "Best Practices", "Open Source", "Java", "Selenium"],
