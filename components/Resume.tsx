@@ -8,17 +8,27 @@ import SEO from "./SEO.tsx";
 
 const TimelineCard: React.FC<{ item: TimelineItem; isFirst?: boolean; isLast?: boolean }> = ({ item, isFirst, isLast }) => {
     return (
-        <li className="relative pl-8 sm:pl-12 group">
-            {/* Continuous Line */}
+        <li className="timeline-segment relative pl-8 sm:pl-12 group">
+            {/* Continuous Line, with the scroll-linked beam (index.css) on top */}
             {!isLast && (
-                <div className="absolute left-[9px] top-3 bottom-[-2rem] w-[2px] bg-gradient-to-b from-gray-300 via-gray-200 to-gray-100 dark:from-dark-border-strong dark:via-dark-border-DEFAULT dark:to-dark-border-subtle transition-colors duration-500"></div>
+                <div className="absolute left-[9px] top-3 bottom-[-2rem] w-[2px] bg-gradient-to-b from-gray-300 via-gray-200 to-gray-100 dark:from-dark-border-strong dark:via-dark-border-DEFAULT dark:to-dark-border-subtle transition-colors duration-500">
+                    <div aria-hidden="true" className="timeline-beam absolute inset-0 rounded-full"></div>
+                    <div aria-hidden="true" className="timeline-beam-head absolute inset-0">
+                        <span className="absolute -left-[3px] top-0 h-2 w-2 rounded-full bg-yellow-300 shadow-[0_0_10px_3px_rgba(250,204,21,0.55)] dark:bg-cyan-300 dark:shadow-[0_0_10px_3px_rgba(34,211,238,0.5)]"></span>
+                    </div>
+                </div>
             )}
-            
+
+            {/* The current role breathes; with reduced motion it stays still */}
+            {isFirst && (
+                <span aria-hidden="true" className="timeline-pulse absolute left-0 top-3 w-5 h-5 rounded-full bg-yellow-400/60"></span>
+            )}
+
             {/* Timeline Dot */}
             <div className={`absolute left-0 top-3 w-5 h-5 rounded-full border-[3px] transition-all duration-500 z-10
-                ${isFirst 
-                    ? 'border-yellow-500 bg-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.6)] dark:shadow-[0_0_15px_rgba(234,179,8,0.6)]' 
-                    : 'border-gray-400 dark:border-gray-600 bg-gray-50 dark:bg-black hover:border-yellow-500 hover:scale-125 hover:shadow-[0_0_10px_rgba(234,179,8,0.5)]'}
+                ${isFirst
+                    ? 'border-yellow-500 bg-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.6)] dark:shadow-[0_0_15px_rgba(234,179,8,0.6)]'
+                    : 'timeline-node border-gray-400 dark:border-gray-600 bg-gray-50 dark:bg-black hover:border-yellow-500 hover:scale-125 hover:shadow-[0_0_10px_rgba(234,179,8,0.5)]'}
             `}></div>
             
             <div className="relative flex flex-col gap-3 pb-12 pl-6 pr-6 pt-6 rounded-2xl bg-transparent hover:bg-white dark:hover:bg-white/5 transition-all duration-500 hover:-translate-y-1 border border-transparent hover:border-yellow-600 dark:hover:border-neon-cyan hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.8)] dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)]">

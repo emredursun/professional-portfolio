@@ -93,3 +93,88 @@ html.dark ::-webkit-scrollbar-thumb {
     scroll-behavior: auto !important;
   }
 }
+
+/*
+ * Resume timeline beam (components/Resume.tsx).
+ *
+ * Scroll-linked, not looping: each segment of the timeline fills with light
+ * as it passes through the viewport, a small head travels with the fill, and
+ * the next role's node lights up when the reader reaches it. Nothing moves
+ * while the page is still, apart from a slow pulse on the current role.
+ *
+ * - view() timelines follow the nearest scroll container, so this works in
+ *   the desktop content panel, which scrolls instead of the window.
+ * - Only transform and opacity animate (compositor), except the node colour.
+ * - Opt-in: browsers without scroll-driven animations (Firefox for now) and
+ *   visitors who asked for reduced motion keep the static timeline.
+ */
+.timeline-beam,
+.timeline-beam-head,
+.timeline-pulse {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .timeline-pulse {
+    display: block;
+    animation: timeline-pulse 2.8s ease-out infinite;
+  }
+
+  @supports (animation-timeline: view()) {
+    .timeline-segment {
+      view-timeline: --timeline-segment block;
+    }
+
+    .timeline-beam {
+      display: block;
+      transform-origin: top;
+      transform: scaleY(0);
+      background: linear-gradient(to bottom, #facc15, #f59e0b);
+      animation: timeline-fill linear both;
+      animation-timeline: --timeline-segment;
+      animation-range: cover 30% cover 70%;
+    }
+
+    .dark .timeline-beam {
+      background: linear-gradient(to bottom, #facc15, #06b6d4);
+    }
+
+    /* Full-height wrapper: translateY(100%) moves the head by the segment's
+       height, so it stays on the compositor. */
+    .timeline-beam-head {
+      display: block;
+      animation: timeline-head linear both;
+      animation-timeline: --timeline-segment;
+      animation-range: cover 30% cover 70%;
+    }
+
+    .timeline-node {
+      animation: timeline-node linear both;
+      animation-timeline: --timeline-segment;
+      animation-range: cover 22% cover 30%;
+    }
+  }
+}
+
+@keyframes timeline-fill {
+  to { transform: scaleY(1); }
+}
+
+@keyframes timeline-head {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+@keyframes timeline-node {
+  to {
+    border-color: #eab308;
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+  }
+}
+
+@keyframes timeline-pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  70%, 100% { transform: scale(2.2); opacity: 0; }
+}

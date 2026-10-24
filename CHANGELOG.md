@@ -28,6 +28,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - Contact form: honeypot, length limits, response checking.
 
 ### Added
+- The Resume timeline fills with light as you scroll through it, lighting each role as you reach it, with a slow pulse on the current role. CSS scroll-driven animation only (no JavaScript, compositor-friendly); static for reduced motion and in browsers without scroll-driven animations.
 - A machine-readable profile: `/resume.json` (JSON Resume, schema-validated) for résumé and ATS tools, and `/llms.txt` (llmstxt.org) for AI assistants, both generated from the site's own data at build time and linked from every page's head.
 - A `/quality` page with the results of the CI run behind the live build: unit tests and coverage, end-to-end tests, accessibility scans, Lighthouse and security checks. A verification card in the About section leads to it. Every number comes from the run itself (`dist/quality.json`); without a complete report the page says so instead of showing numbers.
 - Per-route HTML heads at build time: every page and every service and project detail page, in all three languages, has its own title, description, canonical, hreflang and Open Graph tags in the HTML itself, so shared links preview the right page.
