@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { PERSONAL_INFO, SOCIAL_LINKS, STATUS_BADGE } from '../constants.tsx';
+import { cvFileName } from '../src/utils/cv.ts';
 import ThemeSwitcher from './ThemeSwitcher.tsx';
 import Magnetic from './Magnetic.tsx';
 import Tilt3D from './Tilt3D.tsx';
@@ -105,8 +106,8 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
 
     // Production builds ship a PDF per language (scripts/generate-cv.js). The
     // dev server has none, so there the button falls back to the print dialog.
-    const cvLang = ['nl', 'tr'].includes(i18n.language) ? i18n.language : 'en';
-    const cvUrl = import.meta.env.PROD ? `/cv/Emre-Dursun-CV-${cvLang}.pdf` : null;
+    const cvFile = cvFileName(i18n.language);
+    const cvUrl = import.meta.env.PROD ? `/cv/${cvFile}` : null;
 
     const handleDownloadResume = (e: React.MouseEvent) => {
         if (!cvUrl) {
@@ -433,7 +434,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
                         <a
                             href={cvUrl ?? '#'}
                             onClick={handleDownloadResume}
-                            download={cvUrl ? `Emre-Dursun-CV-${cvLang}.pdf` : undefined}
+                            download={cvUrl ? cvFile : undefined}
                             type={cvUrl ? 'application/pdf' : undefined}
                             className="group w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold py-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-yellow-400/20 transition-all duration-300 hover:shadow-yellow-400/40 hover:-translate-y-0.5 overflow-hidden relative ring-1 ring-white/20"
                         >

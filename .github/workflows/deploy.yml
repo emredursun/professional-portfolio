@@ -61,7 +61,11 @@ jobs:
             curl -fsS -o /dev/null "https://emredursun.nl$path"
           done
           # Deep links must get their own prerendered head (link previews).
-          curl -fsS https://emredursun.nl/projects/aegisqa | grep -q '<link rel="canonical" href="https://emredursun.nl/projects/aegisqa" />' \
+          # Read the page fully first: piping into `grep -q` lets grep exit
+          # early, curl then fails writing (exit 23) and pipefail fails a
+          # healthy release.
+          html="$(curl -fsS https://emredursun.nl/projects/aegisqa)"
+          grep -qF '<link rel="canonical" href="https://emredursun.nl/projects/aegisqa" />' <<<"$html" \
             || { echo "::error::/projects/aegisqa is not served its prerendered head"; exit 1; }
           # The renamed portrait keeps old indexed URLs working.
           status="$(curl -sS -o /dev/null -w '%{http_code}' https://emredursun.nl/images/portfolio-pic-1.jpeg)"

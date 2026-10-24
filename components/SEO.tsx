@@ -85,6 +85,10 @@ const SEO: React.FC<SEOProps> = ({ title, description, overrideTitle = false, no
   const nlHref = `${baseUrl}/nl${pathWithoutLang}`.replace(/\/$/, '');
   const trHref = `${baseUrl}/tr${pathWithoutLang}`.replace(/\/$/, '');
 
+  // Keeps the tags crawlers read in step with the page while navigating in
+  // the app. Deliberately not updated: og:locale(:alternate) and the page's
+  // own ProfilePage/WebPage JSON-LD. Those come from the prerendered HTML of
+  // each URL (scripts/prerender-routes.js), and crawlers load every URL fresh.
   useEffect(() => {
     document.title = metaTitle;
 

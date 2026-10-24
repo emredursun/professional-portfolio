@@ -94,10 +94,32 @@ export function buildQualityReport({ vitest, coverage, playwright, lighthouse, a
         },
         lighthouse: lighthouseScores(lighthouse, '/about'),
         security: {
-            runtimeAdvisories: audit.metadata.vulnerabilities.total,
+            runtimeAdvisories: gatedAdvisories(audit),
             strictCsp: hasStrictCsp(firebase),
         },
     };
+}
+
+/**
+ * Advisories at the level the CI gate fails on (`--audit-level=moderate`).
+ * Counting low/info too would show a red ✗ for a build the gate accepted.
+ */
+function gatedAdvisories(audit) {
+    const { moderate = 0, high = 0, critical = 0 } = audit.metadata.vulnerabilities;
+    return moderate + high + critical;
+}
+
+/** Every number the page renders must be a real number, or the report is not written. */
+export function assertComplete(report) {
+    const bad = [];
+    const walk = (value, at) => {
+        if (typeof value === 'number' && !Number.isFinite(value)) bad.push(at);
+        else if (value && typeof value === 'object') Object.entries(value).forEach(([key, child]) => walk(child, `${at}.${key}`));
+    };
+    walk(report, 'report');
+    if (Number.isNaN(Date.parse(report.builtAt))) bad.push('report.builtAt');
+    if (bad.length) throw new Error(`Incomplete quality report: ${bad.join(', ')}`);
+    return report;
 }
 
 /**
@@ -121,7 +143,7 @@ export function readInputs(root = ROOT) {
 
 function main() {
     try {
-        const report = buildQualityReport(readInputs());
+        const report = assertComplete(buildQualityReport(readInputs()));
         fs.writeFileSync(path.join(ROOT, 'dist', 'quality.json'), `${JSON.stringify(report, null, 2)}\n`, 'utf8');
         console.log(`✅ quality.json: unit ${report.unit.passed}, e2e ${report.e2e.passed}, a11y ${report.a11y.scans} scans, perf ${report.lighthouse.performance}`);
     } catch (error) {

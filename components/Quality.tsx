@@ -15,17 +15,24 @@ interface QualityReport {
 
 type LoadState = { status: 'loading' } | { status: 'ready'; report: QualityReport } | { status: 'unavailable' };
 
-/** Accept only a complete report: a partial one would render "undefined passed". */
+const isCount = (value: unknown) => typeof value === 'number' && Number.isFinite(value);
+
+/**
+ * Accept only a complete report: every number the page renders, and a date
+ * Intl can format. A partial one would render "undefined passed" or throw.
+ */
 function isQualityReport(data: unknown): data is QualityReport {
   const r = data as Partial<QualityReport> | null;
   return Boolean(
     r &&
       typeof r.shortCommit === 'string' &&
       typeof r.builtAt === 'string' &&
-      typeof r.unit?.passed === 'number' &&
-      typeof r.e2e?.passed === 'number' &&
-      typeof r.a11y?.violations === 'number' &&
-      typeof r.lighthouse?.performance === 'number' &&
+      !Number.isNaN(Date.parse(r.builtAt)) &&
+      [r.unit?.passed, r.unit?.failed, r.unit?.coverage].every(isCount) &&
+      [r.e2e?.passed, r.e2e?.failed, r.e2e?.flaky].every(isCount) &&
+      isCount(r.a11y?.violations) &&
+      [r.lighthouse?.performance, r.lighthouse?.accessibility, r.lighthouse?.seo].every(isCount) &&
+      isCount(r.security?.runtimeAdvisories) &&
       typeof r.security?.strictCsp === 'boolean',
   );
 }
@@ -58,6 +65,10 @@ const LINES = [
     values: (r: QualityReport) => ({ advisories: r.security.runtimeAdvisories }),
   },
 ] as const;
+
+/** Copy key for a line; the security line must not claim a strict CSP it lacks. */
+const lineKey = (id: (typeof LINES)[number]['id'], report: QualityReport) =>
+  id === 'security' && !report.security.strictCsp ? 'quality.lines.securityRelaxed' : `quality.lines.${id}`;
 
 const cardClass = 'rounded-2xl border border-gray-100 dark:border-neon-border bg-white dark:bg-neon-bg shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-none';
 
@@ -154,8 +165,10 @@ const TerminalLines: React.FC<{ report: QualityReport }> = ({ report }) => {
               <span aria-hidden="true" className={ok ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}>
                 {ok ? '✓' : '✗'}
               </span>
+              {/* The tick is colour and glyph only; say it in words for screen readers. */}
+              <span className="sr-only">{ok ? t('quality.status.passed') : t('quality.status.failed')}:</span>
               <span className="w-24 shrink-0 text-gray-900 dark:text-white font-bold">{line.id}</span>
-              <span className="text-gray-700 dark:text-gray-300 min-w-0">{t(`quality.lines.${line.id}`, line.values(report))}</span>
+              <span className="text-gray-700 dark:text-gray-300 min-w-0">{t(lineKey(line.id, report), line.values(report))}</span>
             </li>
           );
         })}

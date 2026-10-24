@@ -47,6 +47,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - The About bento grid and services grid respond to their container instead of the viewport. At about 1100 px, the content was squeezed into an 8/4 split.
 
 ### Fixed
+- The contact page's on-demand map was centred on the home town; it now shows Nieuwegein, the work location. A test scans every shipped source for the home town and postcode.
 - The structured data still published the previous home address with its postcode. It now gives the home province only (Noord-Holland) and Sopra Steria's Nieuwegein office as the work location; the sidebar reads "Nieuwegein (Sopra Steria) · Hybrid". Job title, dates and services in it are current.
 - The project view overwrote the page's social tags with a different title, and with a broken image URL for externally hosted project images.
 - A direct visit to a service URL (`/about/<service>`) crashed the page before its translations had loaded.
@@ -70,8 +71,8 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
-- Vitest unit tests: 119 tests, 87% line coverage on logic modules.
-- Playwright end-to-end suite: 146 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
+- Vitest unit tests: 122 tests, 87% line coverage on logic modules.
+- Playwright end-to-end suite: 148 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
 - `knip` in CI: unused files, exports and dependencies fail the build.
 - CI quality gates in front of every deploy, Lighthouse budgets, a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
 - Node 22+.

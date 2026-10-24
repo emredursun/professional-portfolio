@@ -98,7 +98,8 @@ test.describe('map consent', () => {
 
     await page.getByRole('button', { name: contact.map.load }).click();
 
-    await expect(page.locator('iframe[title="Location Map"]')).toHaveAttribute('src', /google\.com\/maps\/embed/);
+    // The work city, never the home town (tests/privacy.test.ts).
+    await expect(page.locator('iframe[title="Location Map"]')).toHaveAttribute('src', /google\.com\/maps\?q=Nieuwegein.*output=embed/);
     await expect(page.locator('iframe[title="Location Map"]')).toHaveAttribute(
       'referrerpolicy',
       'strict-origin-when-cross-origin',

@@ -3,7 +3,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { describe, expect, it } from 'vitest';
-import { buildQualityReport, readInputs } from '../scripts/write-quality.js';
+import { assertComplete, buildQualityReport, readInputs } from '../scripts/write-quality.js';
 
 const lhr = (pathname: string, performance: number) => ({
   finalDisplayedUrl: `http://localhost:4181${pathname}`,
@@ -72,6 +72,20 @@ describe('buildQualityReport', () => {
     const loose = structuredClone(inputs);
     loose.firebase.hosting.headers[0].headers[0].value = "script-src 'self' 'unsafe-inline'";
     expect(buildQualityReport(loose).security.strictCsp).toBe(false);
+  });
+
+  it('counts advisories at the CI gate level only (moderate and above)', () => {
+    const audit = { metadata: { vulnerabilities: { info: 2, low: 3, moderate: 0, high: 0, critical: 0, total: 5 } } };
+    expect(buildQualityReport({ ...inputs, audit }).security.runtimeAdvisories).toBe(0);
+    const failing = { metadata: { vulnerabilities: { low: 1, moderate: 1, high: 1, critical: 0, total: 3 } } };
+    expect(buildQualityReport({ ...inputs, audit: failing }).security.runtimeAdvisories).toBe(2);
+  });
+
+  it('refuses a report with a missing number or an unreadable date', () => {
+    const unknownCoverage = { ...inputs, coverage: { total: { lines: { pct: 'Unknown' } } } };
+    expect(() => assertComplete(buildQualityReport(unknownCoverage))).toThrow(/report\.unit\.coverage/);
+    expect(() => assertComplete({ ...buildQualityReport(inputs), builtAt: 'yesterday' })).toThrow(/builtAt/);
+    expect(assertComplete(buildQualityReport(inputs)).unit.coverage).toBe(89);
   });
 
   it('refuses to report Lighthouse for a page that was not measured', () => {

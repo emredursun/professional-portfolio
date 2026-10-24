@@ -18,7 +18,9 @@ const WEB3FORMS_ACCESS_KEY = '309ce373-4042-4a9a-b924-e7684e84ba0a';
  * for it (two-click pattern) - which also keeps a third-party page out of the
  * initial load.
  */
-const MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d38740.16919139266!2d5.13280806443481!3d52.69614777894901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c61c3b531a3977%3A0x868b248a39151740!2sHoogkarspel!5e0!3m2!1sen!2snl!4v1721323330345!5m2!1sen!2snl';
+// The work location (Sopra Steria, Nieuwegein) at city level - never the home
+// address; tests/privacy.test.ts guards this.
+const MAP_EMBED_URL = 'https://www.google.com/maps?q=Nieuwegein,+Netherlands&z=12&output=embed';
 
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';

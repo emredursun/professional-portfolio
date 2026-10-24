@@ -2,6 +2,7 @@ import { useMemo, useCallback, useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
 import { Command, Page } from '../../types';
 import { PROJECTS } from '../../constants.tsx';
+import { cvFileName } from '../../src/utils/cv.ts';
 
 interface UseCommandPaletteProps {
   activePage: Page;
@@ -128,10 +129,11 @@ export const useCommandPalette = ({
           // Same as the sidebar button: production ships a PDF per language
           // (scripts/generate-cv.js); the dev server falls back to printing.
           if (import.meta.env.PROD) {
-            const lang = ['nl', 'tr'].includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
+            // App.tsx keeps <html lang> in step with the i18n language.
+            const file = cvFileName(document.documentElement.lang);
             const link = document.createElement('a');
-            link.href = `/cv/Emre-Dursun-CV-${lang}.pdf`;
-            link.download = `Emre-Dursun-CV-${lang}.pdf`;
+            link.href = `/cv/${file}`;
+            link.download = file;
             link.click();
           } else {
             window.print();

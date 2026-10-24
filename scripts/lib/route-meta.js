@@ -145,7 +145,8 @@ export function pageNode(meta, { dateModified } = {}) {
     const node = {
         '@context': 'https://schema.org',
         '@type': meta.pageType,
-        '@id': `${meta.url}#webpage`,
+        // "https://emredursun.nl/#webpage" on the home page, like the other site ids.
+        '@id': meta.url === SITE_URL ? `${SITE_URL}/#webpage` : `${meta.url}#webpage`,
         url: meta.url,
         name: meta.title,
         description: meta.description,

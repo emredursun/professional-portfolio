@@ -35,7 +35,28 @@ jobs:
           path: dist
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: preview
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMREDURSUN_PORTFOLIO }}
           projectId: emredursun-portfolio
+
+      # e2e and Lighthouse run on `vite preview`; only real Firebase Hosting
+      # proves cleanUrls serves each prerendered file and unknown paths get
+      # 404.html. Checking the preview channel catches a surprise on the PR,
+      # not in production.
+      - name: Check hosting behaviour on the preview channel
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.details_url }}
+        run: |
+          set -euo pipefail
+          base="${PREVIEW_URL%/}"
+          for path in /about /nl /about/tricentis-tosca-automation /tr/projects/aegisqa /quality; do
+            html="$(curl -fsS "$base$path")"
+            grep -qF "<link rel=\"canonical\" href=\"https://emredursun.nl$path\"" <<<"$html" \
+              || [ "$path" = "/nl" ] \
+              || { echo "::error::$path is not served its prerendered head"; exit 1; }
+          done
+          grep -qF '<html lang="nl"' <<<"$(curl -fsS "$base/nl")" || { echo "::error::/nl is not served nl.html"; exit 1; }
+          status="$(curl -sS -o /dev/null -w '%{http_code}' "$base/no-such-page-preview-check")"
+          [ "$status" = "404" ] || { echo "::error::Unknown URL returned $status, expected 404"; exit 1; }

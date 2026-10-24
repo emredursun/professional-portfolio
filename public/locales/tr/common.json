@@ -56,7 +56,8 @@
       "e2e": "{{passed}} geçti · desktop + mobil",
       "a11y": "{{violations}} axe ihlali · WCAG 2.1 AA",
       "lighthouse": "perf {{performance}} · a11y {{accessibility}} · seo {{seo}}",
-      "security": "sıkı CSP · {{advisories}} runtime güvenlik uyarısı"
+      "security": "sıkı CSP · {{advisories}} runtime güvenlik uyarısı",
+      "securityRelaxed": "CSP satır içi script'lere izin veriyor · {{advisories}} runtime güvenlik uyarısı"
     },
     "summary": "{{passed}} geçti · {{failed}} başarısız · {{flaky}} flaky",
     "metrics": {
@@ -69,6 +70,10 @@
     "unavailable": "Son rapora şu an ulaşılamıyor.",
     "footnote": "Her yayında otomatik olarak güncellenir.",
     "entryTitle": "Kalite raporu",
-    "entrySubtitle": "Her yayında doğrulanır"
+    "entrySubtitle": "Her yayında doğrulanır",
+    "status": {
+      "passed": "geçti",
+      "failed": "başarısız"
+    }
   }
 }

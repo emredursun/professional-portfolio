@@ -56,7 +56,8 @@
       "e2e": "{{passed}} geslaagd · desktop + mobiel",
       "a11y": "{{violations}} axe-schendingen · WCAG 2.1 AA",
       "lighthouse": "perf {{performance}} · a11y {{accessibility}} · seo {{seo}}",
-      "security": "strikte CSP · {{advisories}} runtime-advisories"
+      "security": "strikte CSP · {{advisories}} runtime-advisories",
+      "securityRelaxed": "CSP staat inline scripts toe · {{advisories}} runtime-advisories"
     },
     "summary": "{{passed}} geslaagd · {{failed}} mislukt · {{flaky}} flaky",
     "metrics": {
@@ -69,6 +70,10 @@
     "unavailable": "Het laatste rapport is nu niet beschikbaar.",
     "footnote": "Wordt bij elke release automatisch bijgewerkt.",
     "entryTitle": "Kwaliteitsrapport",
-    "entrySubtitle": "Bij elke release geverifieerd"
+    "entrySubtitle": "Bij elke release geverifieerd",
+    "status": {
+      "passed": "geslaagd",
+      "failed": "mislukt"
+    }
   }
 }

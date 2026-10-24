@@ -56,7 +56,8 @@
       "e2e": "{{passed}} passed · desktop + mobile",
       "a11y": "{{violations}} axe violations · WCAG 2.1 AA",
       "lighthouse": "perf {{performance}} · a11y {{accessibility}} · seo {{seo}}",
-      "security": "strict CSP · {{advisories}} runtime advisories"
+      "security": "strict CSP · {{advisories}} runtime advisories",
+      "securityRelaxed": "CSP allows inline scripts · {{advisories}} runtime advisories"
     },
     "summary": "{{passed}} passed · {{failed}} failed · {{flaky}} flaky",
     "metrics": {
@@ -69,6 +70,10 @@
     "unavailable": "The latest report isn't available right now.",
     "footnote": "Updated automatically on every release.",
     "entryTitle": "Quality report",
-    "entrySubtitle": "Verified on every release"
+    "entrySubtitle": "Verified on every release",
+    "status": {
+      "passed": "passed",
+      "failed": "failed"
+    }
   }
 }
