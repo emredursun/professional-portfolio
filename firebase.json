@@ -2,6 +2,18 @@
   "hosting": {
     "public": "dist",
     "predeploy": ["node scripts/generate-cv.js --check"],
+    "redirects": [
+      {
+        "source": "/images/portfolio-pic-1.jpeg",
+        "destination": "/images/emre-dursun-qa-consultant.jpg",
+        "type": 301
+      },
+      {
+        "source": "/images/portfolio-pic-1-400.webp",
+        "destination": "/images/emre-dursun-qa-consultant-400.webp",
+        "type": 301
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",

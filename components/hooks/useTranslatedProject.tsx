@@ -1,16 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Project } from '../../types.ts';
-
-// Map project slugs to translation keys
-const PROJECT_TRANSLATION_KEYS: Record<string, string> = {
-  'qa-smart-test-lab': 'qa-smart-test-lab',
-  'playwright-testing-project': 'playwright-testing-project',
-  'social-share-image-generator': 'social-share-image-generator',
-  'banking-payment-automation': 'banking-payment-automation',
-  'hospital-portal-testing': 'hospital-portal-testing',
-  'ecommerce-sales-optimization': 'ecommerce-sales-optimization',
-};
+import { PROJECT_TRANSLATION_KEYS } from '../../constants.tsx';
 
 export const useTranslatedProject = (project: Project): Project => {
   const { t, i18n } = useTranslation('projects');

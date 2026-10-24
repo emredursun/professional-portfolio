@@ -1,76 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
   <url>
     <loc>https://emredursun.nl/</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/" />
         <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr" />
         <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl" />
         <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/" />
+    <image:image>
+      <image:loc>https://emredursun.nl/images/emre-dursun-qa-consultant.jpg</image:loc>
+    </image:image>
   </url>
 
   <url>
     <loc>https://emredursun.nl/tr</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/" />
         <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr" />
         <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl" />
         <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/" />
+    <image:image>
+      <image:loc>https://emredursun.nl/images/emre-dursun-qa-consultant.jpg</image:loc>
+    </image:image>
   </url>
 
   <url>
     <loc>https://emredursun.nl/nl</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/" />
         <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr" />
         <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl" />
         <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/" />
+    <image:image>
+      <image:loc>https://emredursun.nl/images/emre-dursun-qa-consultant.jpg</image:loc>
+    </image:image>
   </url>
 
   <url>
     <loc>https://emredursun.nl/about</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about" />
         <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/about" />
         <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/about" />
         <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/about" />
+    <image:image>
+      <image:loc>https://emredursun.nl/images/emre-dursun-qa-consultant.jpg</image:loc>
+    </image:image>
   </url>
 
   <url>
     <loc>https://emredursun.nl/tr/about</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about" />
         <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/about" />
         <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/about" />
         <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/about" />
+    <image:image>
+      <image:loc>https://emredursun.nl/images/emre-dursun-qa-consultant.jpg</image:loc>
+    </image:image>
   </url>
 
   <url>
     <loc>https://emredursun.nl/nl/about</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about" />
         <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/about" />
         <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/about" />
         <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/about" />
+    <image:image>
+      <image:loc>https://emredursun.nl/images/emre-dursun-qa-consultant.jpg</image:loc>
+    </image:image>
   </url>
 
   <url>
     <loc>https://emredursun.nl/resume</loc>
-    <lastmod>2026-10-24T09:20:45.141Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/resume" />
@@ -81,7 +100,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/resume</loc>
-    <lastmod>2026-10-24T09:20:45.141Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/resume" />
@@ -92,7 +111,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/resume</loc>
-    <lastmod>2026-10-24T09:20:45.141Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/resume" />
@@ -103,7 +122,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects" />
@@ -114,7 +133,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects" />
@@ -125,7 +144,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects" />
@@ -136,7 +155,7 @@
 
   <url>
     <loc>https://emredursun.nl/contact</loc>
-    <lastmod>2026-10-24T09:20:45.141Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/contact" />
@@ -147,7 +166,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/contact</loc>
-    <lastmod>2026-10-24T09:20:45.141Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/contact" />
@@ -158,7 +177,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/contact</loc>
-    <lastmod>2026-10-24T09:20:45.141Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/contact" />
@@ -169,7 +188,7 @@
 
   <url>
     <loc>https://emredursun.nl/about/pega-platform-architecture</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/pega-platform-architecture" />
@@ -180,7 +199,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/about/pega-platform-architecture</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/pega-platform-architecture" />
@@ -191,7 +210,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/about/pega-platform-architecture</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/pega-platform-architecture" />
@@ -202,7 +221,7 @@
 
   <url>
     <loc>https://emredursun.nl/about/tricentis-tosca-automation</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/tricentis-tosca-automation" />
@@ -213,7 +232,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/about/tricentis-tosca-automation</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/tricentis-tosca-automation" />
@@ -224,7 +243,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/about/tricentis-tosca-automation</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/tricentis-tosca-automation" />
@@ -235,7 +254,7 @@
 
   <url>
     <loc>https://emredursun.nl/about/test-automation-architecture</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/test-automation-architecture" />
@@ -246,7 +265,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/about/test-automation-architecture</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/test-automation-architecture" />
@@ -257,7 +276,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/about/test-automation-architecture</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/test-automation-architecture" />
@@ -268,7 +287,7 @@
 
   <url>
     <loc>https://emredursun.nl/about/cicd-devops-integration</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/cicd-devops-integration" />
@@ -279,7 +298,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/about/cicd-devops-integration</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/cicd-devops-integration" />
@@ -290,7 +309,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/about/cicd-devops-integration</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/cicd-devops-integration" />
@@ -301,7 +320,7 @@
 
   <url>
     <loc>https://emredursun.nl/about/api-backend-validation</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/api-backend-validation" />
@@ -312,7 +331,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/about/api-backend-validation</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/api-backend-validation" />
@@ -323,7 +342,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/about/api-backend-validation</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/api-backend-validation" />
@@ -334,7 +353,7 @@
 
   <url>
     <loc>https://emredursun.nl/about/ai-powered-web-development</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/ai-powered-web-development" />
@@ -345,7 +364,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/about/ai-powered-web-development</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/ai-powered-web-development" />
@@ -356,7 +375,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/about/ai-powered-web-development</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/ai-powered-web-development" />
@@ -367,7 +386,7 @@
 
   <url>
     <loc>https://emredursun.nl/about/ecommerce-sales-optimization</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/ecommerce-sales-optimization" />
@@ -378,7 +397,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/about/ecommerce-sales-optimization</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/ecommerce-sales-optimization" />
@@ -389,7 +408,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/about/ecommerce-sales-optimization</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/ecommerce-sales-optimization" />
@@ -400,7 +419,7 @@
 
   <url>
     <loc>https://emredursun.nl/about/ai-governance-architecture</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/ai-governance-architecture" />
@@ -411,7 +430,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/about/ai-governance-architecture</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/ai-governance-architecture" />
@@ -422,7 +441,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/about/ai-governance-architecture</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/about/ai-governance-architecture" />
@@ -433,7 +452,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/quilyn-exam-prep</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/quilyn-exam-prep" />
@@ -444,7 +463,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/quilyn-exam-prep</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/quilyn-exam-prep" />
@@ -455,7 +474,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/quilyn-exam-prep</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/quilyn-exam-prep" />
@@ -466,7 +485,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/pathforge-career-intelligence</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/pathforge-career-intelligence" />
@@ -477,7 +496,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/pathforge-career-intelligence</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/pathforge-career-intelligence" />
@@ -488,7 +507,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/pathforge-career-intelligence</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/pathforge-career-intelligence" />
@@ -499,7 +518,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/devran-ai-kit</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/devran-ai-kit" />
@@ -510,7 +529,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/devran-ai-kit</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/devran-ai-kit" />
@@ -521,7 +540,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/devran-ai-kit</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/devran-ai-kit" />
@@ -532,7 +551,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/deelmarkt-marketplace</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/deelmarkt-marketplace" />
@@ -543,7 +562,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/deelmarkt-marketplace</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/deelmarkt-marketplace" />
@@ -554,7 +573,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/deelmarkt-marketplace</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/deelmarkt-marketplace" />
@@ -565,7 +584,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/qa-smart-test-lab</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/qa-smart-test-lab" />
@@ -576,7 +595,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/qa-smart-test-lab</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/qa-smart-test-lab" />
@@ -587,7 +606,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/qa-smart-test-lab</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/qa-smart-test-lab" />
@@ -598,7 +617,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/playwright-testing-project</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/playwright-testing-project" />
@@ -609,7 +628,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/playwright-testing-project</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/playwright-testing-project" />
@@ -620,7 +639,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/playwright-testing-project</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/playwright-testing-project" />
@@ -631,7 +650,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/social-share-image-generator</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/social-share-image-generator" />
@@ -642,7 +661,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/social-share-image-generator</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/social-share-image-generator" />
@@ -653,7 +672,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/social-share-image-generator</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/social-share-image-generator" />
@@ -664,7 +683,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/banking-payment-automation</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/banking-payment-automation" />
@@ -675,7 +694,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/banking-payment-automation</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/banking-payment-automation" />
@@ -686,7 +705,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/banking-payment-automation</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/banking-payment-automation" />
@@ -697,7 +716,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/hospital-portal-testing</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/hospital-portal-testing" />
@@ -708,7 +727,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/hospital-portal-testing</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/hospital-portal-testing" />
@@ -719,7 +738,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/hospital-portal-testing</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/hospital-portal-testing" />
@@ -730,7 +749,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/ecommerce-sales-optimization</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/ecommerce-sales-optimization" />
@@ -741,7 +760,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/ecommerce-sales-optimization</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/ecommerce-sales-optimization" />
@@ -752,7 +771,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/ecommerce-sales-optimization</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/ecommerce-sales-optimization" />
@@ -763,7 +782,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/besync-trust-grade-ai</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/besync-trust-grade-ai" />
@@ -774,7 +793,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/besync-trust-grade-ai</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/besync-trust-grade-ai" />
@@ -785,7 +804,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/besync-trust-grade-ai</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/besync-trust-grade-ai" />
@@ -796,7 +815,7 @@
 
   <url>
     <loc>https://emredursun.nl/projects/aegisqa</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/aegisqa" />
@@ -807,7 +826,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/projects/aegisqa</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/aegisqa" />
@@ -818,7 +837,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/projects/aegisqa</loc>
-    <lastmod>2026-10-24T09:41:36.857Z</lastmod>
+    <lastmod>2026-10-24T10:47:50.618Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/projects/aegisqa" />

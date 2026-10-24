@@ -28,6 +28,8 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - Contact form: honeypot, length limits, response checking.
 
 ### Added
+- Per-route HTML heads at build time: every page and every service and project detail page, in all three languages, has its own title, description, canonical, hreflang and Open Graph tags in the HTML itself, so shared links preview the right page.
+- Structured data as one linked graph (`@id`), with a `ProfilePage` for the About page and the portrait as an `ImageObject`. The portrait is renamed `emre-dursun-qa-consultant.jpg` (old URLs redirect with a 301) and listed in the image sitemap.
 - Downloadable PDF CV in English, Dutch and Turkish, rendered from the site's print layout at build time. It replaces the browser print dialog.
 - Service and project detail pages are in the sitemap (75 URLs across three languages). Each service page has its own title and description.
 - A localized `noindex` "not found" page, served with a real 404 status by Firebase.
@@ -40,6 +42,8 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - The About bento grid and services grid respond to their container instead of the viewport. At about 1100 px, the content was squeezed into an 8/4 split.
 
 ### Fixed
+- The structured data still published the previous home address with its postcode; it now names Nieuwegein only. Job title, dates and services in it are current.
+- The project view overwrote the page's social tags with a different title, and with a broken image URL for externally hosted project images.
 - A direct visit to a service URL (`/about/<service>`) crashed the page before its translations had loaded.
 - The "5+ years" counter only counted when it started above the fold: it listened to the window's scroll, but on desktop the page scrolls inside the content panel.
 - A tab left open across a deploy reloads once to pick up the new build, instead of hitting the error screen on its next lazy-loaded page.
@@ -61,8 +65,8 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
-- Vitest unit tests: 90 tests, 88% line coverage on logic modules.
-- Playwright end-to-end suite: 100 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
+- Vitest unit tests: 106 tests, 89% line coverage on logic modules.
+- Playwright end-to-end suite: 120 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
 - `knip` in CI: unused files, exports and dependencies fail the build.
 - CI quality gates in front of every deploy, Lighthouse budgets, a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
 - Node 22+.

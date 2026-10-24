@@ -64,6 +64,15 @@ CI fails if the regenerated sitemap or profile README differs from what is commi
 
 The CV PDFs (`/cv/Emre-Dursun-CV-<lang>.pdf`) are not committed: CI renders them from the build on every deploy, so a content change reaches the PDF automatically. To check one locally: `npm run build && npm run generate:cv`, then open `dist/cv/`.
 
+## Search Console
+
+The domain is verified in Google Search Console through DNS (the `google-site-verification` TXT records), so nothing in the HTML is needed.
+
+- After a release that adds pages: Indexing → Sitemaps → submit `https://emredursun.nl/sitemap.xml` (resubmitting is harmless).
+- Performance → Search results, filtered on the query `emre dursun`, shows impressions, position and which URL Google shows.
+- URL inspection → Test live URL renders a page as Googlebot; use it after changing structured data, then check Enhancements for the ProfilePage report.
+- Link previews: [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) re-fetches a URL. LinkedIn caches previews, so posts made before a fix keep the old card.
+
 ## Assets
 
 - `public/` deploys as-is. Unused images live in `assets-archive/`, which is not deployed.

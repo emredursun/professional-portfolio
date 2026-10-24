@@ -190,17 +190,40 @@ function generateHreflangLinks(basePath = '') {
 }
 
 /**
+ * Image entries for a URL. Google reads only <image:loc> today; caption,
+ * title, geo_location and license were dropped from its sitemap support.
+ */
+function generateImageEntries(images = []) {
+    return images.map(src => `
+    <image:image>
+      <image:loc>${src}</image:loc>
+    </image:image>`).join('');
+}
+
+/**
  * Generate URL entry with hreflang links
  */
-function generateUrlEntry(url, priority, changefreq, lastmod, basePath = '') {
+function generateUrlEntry(url, priority, changefreq, lastmod, basePath = '', images = []) {
     return `
   <url>
     <loc>${url}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
-${generateHreflangLinks(basePath)}
+${generateHreflangLinks(basePath)}${generateImageEntries(images)}
   </url>`;
+}
+
+/**
+ * Images to list per route: the portrait on the pages it represents, so
+ * Google Images can tie the photo to the profile.
+ *
+ * @param {{ PERSONAL_INFO: { portrait: string } }} constants
+ * @returns {Record<string, string[]>}
+ */
+export function routeImages({ PERSONAL_INFO }) {
+    const portrait = `${SITE_URL}${PERSONAL_INFO.portrait}`;
+    return { '': [portrait], '/about': [portrait] };
 }
 
 /**
@@ -214,8 +237,11 @@ function priorityForRoute(route) {
 
 /**
  * Generate sitemap XML content. Routes are emitted in the key order of lastMod.
+ *
+ * @param {Record<string, string>} lastMod
+ * @param {Record<string, string[]>} [images] image URLs per route
  */
-export function generateSitemap(lastMod) {
+export function generateSitemap(lastMod, images = {}) {
     const urls = [];
 
     // Generate URLs for each language and route
@@ -223,21 +249,23 @@ export function generateSitemap(lastMod) {
         const lastModified = lastMod[route];
         const priority = priorityForRoute(route);
         const changefreq = route === '' ? 'weekly' : 'monthly';
+        const routeImageList = images[route] ?? [];
 
         // English (Default)
-        urls.push(generateUrlEntry(`${SITE_URL}${route || '/'}`, priority, changefreq, lastModified, route));
+        urls.push(generateUrlEntry(`${SITE_URL}${route || '/'}`, priority, changefreq, lastModified, route, routeImageList));
 
         // Other languages
         ['tr', 'nl'].forEach(lang => {
             // Avoid double slash for root path if route is empty
             const langPath = route ? `/${lang}${route}` : `/${lang}`;
-            urls.push(generateUrlEntry(`${SITE_URL}${langPath}`, priority, changefreq, lastModified, route));
+            urls.push(generateUrlEntry(`${SITE_URL}${langPath}`, priority, changefreq, lastModified, route, routeImageList));
         });
     });
 
     return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${urls.join('\n')}
 </urlset>`;
 }
@@ -261,17 +289,18 @@ export function writeIfChanged(filePath, content) {
  * Regenerate the sitemap and its state file. Paths and clock are injectable,
  * so the whole flow can run against a temporary directory in tests.
  *
- * @param {{ routes?: string[], outputPath?: string, statePath?: string, now?: string }} [options]
+ * @param {{ routes?: string[], images?: Record<string, string[]>, outputPath?: string, statePath?: string, now?: string }} [options]
  * @returns {{ sitemapWritten: boolean, changed: string[], urls: number, alternates: number }}
  */
 export function writeSitemap({
     routes = STATIC_ROUTES,
+    images = {},
     outputPath = OUTPUT_PATH,
     statePath = STATE_PATH,
     now = new Date().toISOString(),
 } = {}) {
     const { lastMod, nextState, changed } = resolveLastMod(routes, statePath, now);
-    const sitemapContent = generateSitemap(lastMod);
+    const sitemapContent = generateSitemap(lastMod, images);
 
     const sitemapWritten = writeIfChanged(outputPath, sitemapContent);
     writeIfChanged(statePath, `${JSON.stringify(nextState, null, 2)}\n`);
@@ -286,8 +315,11 @@ export function writeSitemap({
 
 async function main() {
     try {
-        const routes = listRoutes(await loadConstants());
-        const { sitemapWritten, changed, urls, alternates } = writeSitemap({ routes });
+        const constants = await loadConstants();
+        const { sitemapWritten, changed, urls, alternates } = writeSitemap({
+            routes: listRoutes(constants),
+            images: routeImages(constants),
+        });
 
         console.log('✅ Sitemap generated successfully!');
         console.log(`📍 Location: ${OUTPUT_PATH}`);

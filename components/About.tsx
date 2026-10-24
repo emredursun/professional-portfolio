@@ -6,7 +6,7 @@ import { useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
 import gsap from "gsap";
 import { useGSAP } from "./hooks/useGSAP.tsx";
 import { Service, Page } from "../types.ts";
-import { SERVICES } from "../constants.tsx";
+import { SERVICES, SERVICE_TRANSLATION_KEYS } from "../constants.tsx";
 import Tilt3D from "./Tilt3D.tsx";
 import { useScrollReveal } from "./hooks/useScrollReveal.tsx";
 import ServiceDetailPanel from "./ServiceDetailPanel.tsx";
@@ -225,19 +225,19 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
 
   // Get translated services
   const translatedServices = useMemo(() => {
-    const serviceKeys = ['pegaPlatform', 'toscaAutomation', 'testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce', 'aiGovernance'] as const;
-    return SERVICES.map((service, index) => {
+    return SERVICES.map((service) => {
+      const key = SERVICE_TRANSLATION_KEYS[service.slug];
       // Before the namespace loads, returnObjects yields the key string, and
       // a direct visit to /about/<slug> crashed on keyBenefits.map().
-      const keyBenefits = t(`services.${serviceKeys[index]}.keyBenefits`, { returnObjects: true });
+      const keyBenefits = t(`services.${key}.keyBenefits`, { returnObjects: true });
       return {
         ...service,
-        title: t(`services.${serviceKeys[index]}.title`),
-        description: t(`services.${serviceKeys[index]}.description`),
-        badge: t(`services.${serviceKeys[index]}.badge`),
-        expertiseLabel: t(`services.${serviceKeys[index]}.expertiseLabel`, { defaultValue: service.expertiseLabel || '' }),
+        title: t(`services.${key}.title`),
+        description: t(`services.${key}.description`),
+        badge: t(`services.${key}.badge`),
+        expertiseLabel: t(`services.${key}.expertiseLabel`, { defaultValue: service.expertiseLabel || '' }),
         originalBadge: service.badge, // Preserve original badge for conditional logic
-        fullDescription: t(`services.${serviceKeys[index]}.fullDescription`),
+        fullDescription: t(`services.${key}.fullDescription`),
         keyBenefits: Array.isArray(keyBenefits) ? (keyBenefits as string[]) : service.keyBenefits,
       };
     });

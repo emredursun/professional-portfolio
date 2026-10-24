@@ -19,76 +19,11 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   const { t } = useTranslation('projects');
   const modalContentRef = useRef<HTMLDivElement>(null);
 
-  // Social-card tags for the open project. The document title and meta
-  // description are set by the <SEO> in Projects.tsx: writing them here as
-  // well raced with that component, and on a direct visit to
-  // /projects/<slug> the page-level title won, so the tab read "Projects".
-  useEffect(() => {
-    const originalOgTitle = document
-      .querySelector('meta[property="og:title"]')
-      ?.getAttribute("content");
-    const originalOgDescription = document
-      .querySelector('meta[property="og:description"]')
-      ?.getAttribute("content");
-    const originalOgImage = document
-      .querySelector('meta[property="og:image"]')
-      ?.getAttribute("content");
-
-    // Update Open Graph tags
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle)
-      ogTitle.setAttribute(
-        "content",
-        `${project.title} - Project by Emre Dursun`
-      );
-
-    const ogDescription = document.querySelector(
-      'meta[property="og:description"]'
-    );
-    if (ogDescription)
-      ogDescription.setAttribute("content", project.description);
-
-    const ogImage = document.querySelector('meta[property="og:image"]');
-    if (ogImage && project.image)
-      ogImage.setAttribute("content", `https://emredursun.nl${project.image}`);
-
-    // Update Twitter Card tags
-    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
-    if (twitterTitle)
-      twitterTitle.setAttribute(
-        "content",
-        `${project.title} - Project by Emre Dursun`
-      );
-
-    const twitterDescription = document.querySelector(
-      'meta[name="twitter:description"]'
-    );
-    if (twitterDescription)
-      twitterDescription.setAttribute("content", project.description);
-
-    const twitterImage = document.querySelector('meta[name="twitter:image"]');
-    if (twitterImage && project.image)
-      twitterImage.setAttribute(
-        "content",
-        `https://emredursun.nl${project.image}`
-      );
-
-    // Restore original meta tags when modal closes
-    return () => {
-      if (ogTitle && originalOgTitle)
-        ogTitle.setAttribute("content", originalOgTitle);
-      if (ogDescription && originalOgDescription)
-        ogDescription.setAttribute("content", originalOgDescription);
-      if (ogImage && originalOgImage)
-        ogImage.setAttribute("content", originalOgImage);
-      if (twitterTitle && originalOgTitle)
-        twitterTitle.setAttribute("content", originalOgTitle);
-      if (twitterDescription && originalOgDescription)
-        twitterDescription.setAttribute("content", originalOgDescription);
-      if (twitterImage && originalOgImage)
-        twitterImage.setAttribute("content", originalOgImage);
-    };
-  }, [project]);
+  // No head tags here: the <SEO> in Projects.tsx owns the title, description
+  // and social tags for /projects/<slug>, and scripts/prerender-routes.js
+  // writes the same values into the static HTML for link previews. This modal
+  // used to set its own og:title ("... - Project by Emre Dursun") and an
+  // og:image that broke for externally hosted project images.
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {

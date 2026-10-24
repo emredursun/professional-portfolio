@@ -147,13 +147,15 @@ test.describe('locale is preserved by in-app navigation', () => {
 });
 
 test.describe('structured data', () => {
-  test('every JSON-LD block parses and the Person schema is complete', async ({ page }) => {
+  test('every JSON-LD block parses and the Person is one linked entity', async ({ page }) => {
     await page.goto('/about');
     const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
-    expect(blocks.length).toBeGreaterThanOrEqual(3);
-    const parsed = blocks.map((text) => JSON.parse(text));
-    const person = parsed.find((b) => b['@type'] === 'Person');
-    expect(person).toMatchObject({ name: 'Emre Dursun', url: 'https://emredursun.nl' });
-    expect(person.image).toMatch(/^https:\/\/emredursun\.nl\/images\//);
+    const nodes = blocks.map((text) => JSON.parse(text)).flatMap((block) => block['@graph'] ?? [block]);
+    const person = nodes.find((node) => node['@type'] === 'Person');
+    expect(person).toMatchObject({ '@id': 'https://emredursun.nl/#person', name: 'Emre Dursun', url: 'https://emredursun.nl' });
+    const portrait = nodes.find((node) => node['@id'] === person.image['@id']);
+    expect(portrait.contentUrl).toMatch(/^https:\/\/emredursun\.nl\/images\/emre-dursun-qa-consultant\.jpg$/);
+    // The About page's own node, added at build time, points back to the Person.
+    expect(nodes.find((node) => node['@type'] === 'ProfilePage')).toMatchObject({ mainEntity: { '@id': person['@id'] } });
   });
 });

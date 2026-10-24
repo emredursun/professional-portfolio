@@ -8,7 +8,8 @@
 // v4: switched avatar to portfolio-pic-1.jpeg, updated precache list.
 // v5: avatar served as a 400px WebP, favicons and OG image re-encoded at the
 //     same filenames, so the old bytes must be purged.
-const CACHE_NAME = 'ed-portfolio-v5';
+// v6: portrait renamed to emre-dursun-qa-consultant-400.webp (image SEO).
+const CACHE_NAME = 'ed-portfolio-v6';
 const OFFLINE_URL = '/';
 
 // Assets to cache immediately on install
@@ -18,7 +19,7 @@ const PRECACHE_ASSETS = [
   '/site.webmanifest',
   '/favicon-32x32.png',
   '/favicon-96x96.png',
-  '/images/portfolio-pic-1-400.webp',
+  '/images/emre-dursun-qa-consultant-400.webp',
   '/images/social-share.png'
 ];
 

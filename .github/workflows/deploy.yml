@@ -60,6 +60,12 @@ jobs:
           for path in / /about /resume /projects /contact /nl/about /tr/about /projects/aegisqa /cv/Emre-Dursun-CV-en.pdf; do
             curl -fsS -o /dev/null "https://emredursun.nl$path"
           done
+          # Deep links must get their own prerendered head (link previews).
+          curl -fsS https://emredursun.nl/projects/aegisqa | grep -q '<link rel="canonical" href="https://emredursun.nl/projects/aegisqa" />' \
+            || { echo "::error::/projects/aegisqa is not served its prerendered head"; exit 1; }
+          # The renamed portrait keeps old indexed URLs working.
+          status="$(curl -sS -o /dev/null -w '%{http_code}' https://emredursun.nl/images/portfolio-pic-1.jpeg)"
+          [ "$status" = "301" ] || { echo "::error::Old portrait URL returned $status, expected 301"; exit 1; }
           # Unknown URLs must be real 404s (404.html), not the app with a 200.
           status="$(curl -sS -o /dev/null -w '%{http_code}' https://emredursun.nl/no-such-page-smoke-test)"
           [ "$status" = "404" ] || { echo "::error::Unknown URL returned $status, expected 404"; exit 1; }

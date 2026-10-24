@@ -15,7 +15,38 @@ export const PERSONAL_INFO = {
   email: "info.emredursun@gmail.com",
   phone: "+31 6 2878 8948",
   location: "Nieuwegein, Netherlands",
-  avatar: "/images/portfolio-pic-1-400.webp",
+  avatar: "/images/emre-dursun-qa-consultant-400.webp",
+  // Full-resolution portrait for search engines: the JSON-LD ImageObject and
+  // the image sitemap point here. A descriptive filename is one of Google's
+  // image signals; keep it in sync with index.html's JSON-LD.
+  portrait: "/images/emre-dursun-qa-consultant.jpg",
+};
+
+/**
+ * Locale keys for each service and project, by slug. Shared by the pages
+ * (About.tsx, useTranslatedProject) and the build-time route metadata
+ * (scripts/lib/route-meta.js), so a crawler sees the same title and
+ * description the page renders. Projects without an entry are shown
+ * untranslated, from the data below.
+ */
+export const SERVICE_TRANSLATION_KEYS: Record<string, string> = {
+  "pega-platform-architecture": "pegaPlatform",
+  "tricentis-tosca-automation": "toscaAutomation",
+  "test-automation-architecture": "testAutomation",
+  "cicd-devops-integration": "cicd",
+  "api-backend-validation": "apiBackend",
+  "ai-powered-web-development": "webDev",
+  "ecommerce-sales-optimization": "ecommerce",
+  "ai-governance-architecture": "aiGovernance",
+};
+
+export const PROJECT_TRANSLATION_KEYS: Record<string, string> = {
+  "qa-smart-test-lab": "qa-smart-test-lab",
+  "playwright-testing-project": "playwright-testing-project",
+  "social-share-image-generator": "social-share-image-generator",
+  "banking-payment-automation": "banking-payment-automation",
+  "hospital-portal-testing": "hospital-portal-testing",
+  "ecommerce-sales-optimization": "ecommerce-sales-optimization",
 };
 
 // Status Badge Configuration
