@@ -7,6 +7,12 @@
 type FaviconState = 'default' | 'pulse' | 'notification' | 'loading';
 type PageContext = 'About' | 'Resume' | 'Projects' | 'Contact';
 
+// Every favicon canvas ends in toDataURL(). On a GPU-rasterised canvas that is
+// a synchronous GPU readback, and the first one also sets up the GPU context:
+// ~190 ms on the main thread while /contact loads. A 96 px canvas is cheaper
+// on the CPU, which is what willReadFrequently asks for.
+const CANVAS_OPTIONS: CanvasRenderingContext2DSettings = { willReadFrequently: true };
+
 interface FaviconAnalytics {
   pulseActivations: number;
   userReturns: number;
@@ -252,7 +258,7 @@ class FaviconController {
         const size = 96;
         canvas.width = size;
         canvas.height = size;
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', CANVAS_OPTIONS);
         
         if (!ctx) return;
         
@@ -331,7 +337,7 @@ class FaviconController {
         const size = 96;
         canvas.width = size;
         canvas.height = size;
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', CANVAS_OPTIONS);
         
         if (!ctx) return;
         
@@ -403,7 +409,7 @@ class FaviconController {
       const size = 96;
       canvas.width = size;
       canvas.height = size;
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d', CANVAS_OPTIONS);
       
       if (!ctx || !this.faviconLink) return;
       

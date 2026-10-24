@@ -18,6 +18,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
   - favicons that were really 1024 px now 96 px
   - the OG image cut from 588 to 110 KB
 - The WebGL particle field no longer allocates per frame, and it is skipped on touch devices.
+- Total Blocking Time is now under 15 ms on every page (was 175–390 ms, over the 200 ms budget on /about and /contact). The particle field is drawn on a 2D canvas instead of three.js, whose WebGL setup blocked the main thread for ~300 ms (and 125 KB gzip less JavaScript); the scroll tracker no longer watches every DOM change; the app and the decorative layers mount as interruptible transitions; favicon canvases stay off the GPU.
 - Lighthouse (same machine and load as before): mobile 57 → 86–87, desktop 91 → 94–99. Accessibility, best practices and SEO are 100.
 
 ### Security & privacy

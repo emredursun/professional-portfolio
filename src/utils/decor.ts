@@ -1,6 +1,6 @@
 /**
- * Whether this device should render the decorative layers: the three.js
- * particle field, floating shapes and the custom cursor.
+ * Whether this device should render the decorative layers: the particle
+ * field, floating shapes and the custom cursor.
  *
  * They are pointer-driven, desktop-scale effects. Measured on a throttled
  * mobile profile they were the entire total-blocking-time cost - Lighthouse

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, startTransition } from 'react';
 import { MotionConfig } from 'framer-motion';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -247,8 +247,11 @@ const AppContent: React.FC = () => {
     if (isCommandPaletteOpen) setPaletteMounted(true);
   }, [isCommandPaletteOpen]);
 
+  // Mounting the whole app is the largest render of the visit. As a
+  // transition React renders it in slices and yields between them, instead
+  // of one ~0.5 s task that blocks input while the preloader fades out.
   const handlePreloaderReveal = () => {
-    setIsLoading(false);
+    startTransition(() => setIsLoading(false));
   };
 
   const handlePreloaderComplete = () => {

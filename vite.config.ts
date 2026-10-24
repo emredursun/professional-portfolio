@@ -97,7 +97,6 @@ export default defineConfig(() => {
               if (!id.includes('node_modules')) return undefined;
               if (/[\\/]node_modules[\\/](react|react-dom|scheduler|react-router|react-router-dom|i18next|react-i18next|i18next-[^\\/]+)[\\/]/.test(id)) return 'vendor-react';
               if (/[\\/]node_modules[\\/](framer-motion|motion-dom|motion-utils|lenis)[\\/]/.test(id)) return 'vendor-ui';
-              if (/[\\/]node_modules[\\/]three[\\/]/.test(id)) return 'vendor-3d';
               if (/[\\/]node_modules[\\/]gsap[\\/]/.test(id)) return 'vendor-anim';
               return undefined;
             }
