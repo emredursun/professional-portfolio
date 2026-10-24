@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { SOCIAL_LINKS } from '../constants.tsx';
 import SEO from "./SEO.tsx";
 import { reportError } from '../src/utils/errorReporting.ts';
+import { faviconController } from '../src/utils/faviconController.ts';
 
 /**
  * Web3Forms access keys are public by design - they only identify the inbox.
@@ -127,9 +128,7 @@ const Contact: React.FC = () => {
         setSubmissionStatus('submitting');
 
         // Show loading favicon
-        if (typeof window !== 'undefined' && (window as any).faviconController) {
-            (window as any).faviconController.showLoading();
-        }
+        faviconController.showLoading();
 
         // Track with Plausible if available
         window.plausible?.('form_submit', { props: { duration: formDuration } });
@@ -154,10 +153,8 @@ const Contact: React.FC = () => {
                 setFormStartTime(0);
 
                 // Hide loading and show notification
-                if (typeof window !== 'undefined' && (window as any).faviconController) {
-                    (window as any).faviconController.hideLoading();
-                    (window as any).faviconController.showNotification(t('messages.success.notification'), 8000);
-                }
+                faviconController.hideLoading();
+                faviconController.showNotification(t('messages.success.notification'), 8000);
 
                 // Track success
                 window.plausible?.('form_success');
@@ -172,9 +169,7 @@ const Contact: React.FC = () => {
             setSubmissionStatus('error');
 
             // Hide loading
-            if (typeof window !== 'undefined' && (window as any).faviconController) {
-                (window as any).faviconController.hideLoading();
-            }
+            faviconController.hideLoading();
 
             // Track error
             window.plausible?.('form_error');

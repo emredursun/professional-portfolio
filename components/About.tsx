@@ -1,11 +1,11 @@
-import React, { useRef, useState, useEffect, useMemo } from "react";
+import React, { useRef, useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { localePrefix, useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
 import gsap from "gsap";
 import { useGSAP } from "./hooks/useGSAP.tsx";
-import { Service, Page } from "../types.ts";
+import { Service } from "../types.ts";
 import { SERVICES, SERVICE_TRANSLATION_KEYS } from "../constants.tsx";
 import Tilt3D from "./Tilt3D.tsx";
 import { useScrollReveal } from "./hooks/useScrollReveal.tsx";
@@ -20,7 +20,6 @@ const BentoCard: React.FC<{
   noDefaultBg?: boolean;
 }> = ({ children, className = "", title, noDefaultBg = false }) => {
   const divRef = useRef<HTMLDivElement>(null);
-  const [isFocused, setIsFocused] = useState(false);
   const [opacity, setOpacity] = useState(0);
 
   // The spotlight follows the pointer through CSS variables on the card, so a
@@ -34,11 +33,9 @@ const BentoCard: React.FC<{
   };
 
   const handleFocus = () => {
-    setIsFocused(true);
     setOpacity(1);
   };
   const handleBlur = () => {
-    setIsFocused(false);
     setOpacity(0);
   };
   const handleMouseEnter = () => {
@@ -197,7 +194,6 @@ const ServiceItem: React.FC<{ service: ExtendedService; to: string }> = ({ servi
   );
 };
 
-type AboutProps = { onNavigate?: (page: Page) => void };
 
 /**
  * /about and /about/<slug> are one route, so React keeps this instance alive
@@ -207,16 +203,16 @@ type AboutProps = { onNavigate?: (page: Page) => void };
  * once the page has rendered, and with an early return inside the page they
  * stayed bound to null - an invisible header and a "0+" counter.
  */
-const About: React.FC<AboutProps> = (props) => {
+const About: React.FC = () => {
   const { serviceSlug } = useParams<{ serviceSlug?: string }>();
   if (serviceSlug && !SERVICES.some(s => s.slug === serviceSlug)) return <NotFound />;
-  return <AboutPage {...props} />;
+  return <AboutPage />;
 };
 
-const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
+const AboutPage: React.FC = () => {
   // useSuspense is off app-wide, so this renders before the namespace has
   // loaded; `ready` gates everything that needs the translated services.
-  const { t, i18n, ready } = useTranslation('about');
+  const { t, ready } = useTranslation('about');
   const { serviceSlug } = useParams<{ serviceSlug?: string }>();
   const navigate = useLanguageNavigate();
   const { pathname } = useLocation();
@@ -226,11 +222,6 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
   const [statsCount, setStatsCount] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const storyRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement[]>([]);
-  const currentLanguage = i18n.language;
 
 
   // Get translated services

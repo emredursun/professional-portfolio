@@ -5,6 +5,8 @@ import path from 'path';
 type Locale = 'en' | 'tr' | 'nl';
 
 /** Read a locale file, so assertions follow the copy instead of duplicating it. */
+// Untyped JSON read by path in assertions (copy(...).services.x.title).
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function copy(locale: Locale, namespace: string): Record<string, any> {
   const file = path.resolve(process.cwd(), `public/locales/${locale}/${namespace}.json`);
   return JSON.parse(fs.readFileSync(file, 'utf8'));

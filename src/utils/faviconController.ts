@@ -560,5 +560,5 @@ export const faviconController = new FaviconController();
 
 // Expose to window for debugging
 if (typeof window !== 'undefined') {
-  (window as any).faviconController = faviconController;
+  window.faviconController = faviconController;
 }

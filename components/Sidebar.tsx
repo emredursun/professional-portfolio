@@ -152,7 +152,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
             
             {/* Language Switcher - Right side */}
             <div className="absolute top-6 right-6 z-50">
-                <LanguageSwitcher isMobileView={isMobileView} theme={theme} />
+                <LanguageSwitcher theme={theme} />
             </div>
 
             {/* Profile Header */}

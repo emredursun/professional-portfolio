@@ -5,11 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LANGUAGES } from '../i18n.ts';
 
 interface LanguageSwitcherProps {
-  isMobileView?: boolean;
   theme?: string;
 }
 
-const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ isMobileView = false, theme = 'light' }) => {
+const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ theme = 'light' }) => {
   const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,7 +25,7 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ isMobileView = fals
     const { pathname } = location;
     
     // Remove current language prefix if exists
-    let pathWithoutLang = pathname.replace(/^\/(nl|tr)/, '');
+    const pathWithoutLang = pathname.replace(/^\/(nl|tr)/, '');
     
     // Add new language prefix (unless English)
     const newPath = lang === 'en' 

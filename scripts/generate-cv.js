@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* global document -- page.evaluate() callbacks run in the browser */
 
 /**
  * Render the CV as a PDF per language from the built site.

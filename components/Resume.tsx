@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TimelineItem, Skill, Language } from '../types.ts';
+import { TimelineItem, Skill } from '../types.ts';
 import { SKILLS, TECH_STACK, LANGUAGES } from '../constants.tsx';
 import SEO from "./SEO.tsx";
 

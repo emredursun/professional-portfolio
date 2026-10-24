@@ -379,7 +379,7 @@ ${bullets}
 > ${htmlToMarkdown(about.introQuote)}`;
 }
 
-function renderNow({ constants, role, about }) {
+function renderNow({ constants, role }) {
   const kit = constants.PROJECTS.find((project) => project.slug === 'devran-ai-kit');
   const linkedin = constants.SOCIAL_LINKS.find((link) => link.name === 'linkedin').url;
 

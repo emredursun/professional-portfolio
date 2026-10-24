@@ -123,9 +123,7 @@ export interface Command {
 export interface CommandPaletteProps {
   isOpen: boolean;
   onClose: () => void;
-  activePage: Page;
   onNavigate: (page: Page) => void;
   theme: string;
   toggleTheme: () => void;
-  isMobileView: boolean;
 }

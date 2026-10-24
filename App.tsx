@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useCallback, useRef, startTransition } from 'react';
 import { MotionConfig } from 'framer-motion';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getLanguageFromUrl } from './i18n.ts';
 import { useGSAP } from "./components/hooks/useGSAP.tsx";
@@ -13,7 +13,6 @@ import Navbar from './components/Navbar.tsx';
 import ScrollToTopButton from './components/ScrollToTopButton.tsx';
 import SmoothScroll from './components/SmoothScroll.tsx';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
-import SEO from './components/SEO.tsx';
 import { Page } from './types.ts';
 import { faviconController } from './src/utils/faviconController';
 
@@ -46,7 +45,7 @@ const ScrollHandler: React.FC<{
   // Handle Scroll behaviors based on route
   const scrollToTop = useCallback(() => {
      // Check if we should preserve scroll
-     if (location.state && (location.state as any).preserveScroll) {
+     if (location.state && (location.state as { preserveScroll?: boolean }).preserveScroll) {
        return;
      }
 
@@ -288,12 +287,6 @@ const AppContent: React.FC = () => {
   }, [activePage]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      (window as any).faviconController = faviconController;
-    }
-  }, []);
-
-  useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth < 1024);
     };
@@ -400,11 +393,9 @@ const AppContent: React.FC = () => {
               <CommandPalette
                 isOpen={isCommandPaletteOpen}
                 onClose={() => setIsCommandPaletteOpen(false)}
-                activePage={activePage}
                 onNavigate={navigateToPage}
                 theme={theme}
                 toggleTheme={toggleTheme}
-                isMobileView={isMobileView}
               />
             </React.Suspense>
           )}
@@ -480,7 +471,7 @@ const AppContent: React.FC = () => {
                 aria-label={i18n.t('common:labels.pageContent')}
                 className={`w-full h-full scroll-smooth focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 dark:focus-visible:ring-neon-cyan transition-all duration-500 ${!isMobileView ? 'overflow-y-auto no-scrollbar rounded-[2.5rem]' : ''}`}
               >
-                <MainContent activePage={activePage} isMobileView={isMobileView} onNavigate={() => {}} />
+                <MainContent isMobileView={isMobileView} />
               </div>
 
               {isScrollButtonVisible && (

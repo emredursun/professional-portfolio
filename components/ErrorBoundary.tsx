@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { Component, ReactNode } from 'react';
 import { reportError } from '../src/utils/errorReporting.ts';
 
 interface ErrorBoundaryProps {
@@ -28,7 +28,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     return { error };
   }
 
-  componentDidCatch(error: Error, _info: ErrorInfo): void {
+  componentDidCatch(error: Error): void {
     reportError(error, 'render');
   }
 

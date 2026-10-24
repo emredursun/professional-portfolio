@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 import Fuse from 'fuse.js';
 import { useTranslation } from 'react-i18next';
 import { Command, Page } from '../../types';
@@ -6,7 +6,6 @@ import { PROJECTS } from '../../constants.tsx';
 import { cvFileName } from '../../src/utils/cv.ts';
 
 interface UseCommandPaletteProps {
-  activePage: Page;
   onNavigate: (page: Page) => void;
   theme: string;
   toggleTheme: () => void;
@@ -39,7 +38,6 @@ const RECENT_COMMANDS_KEY = 'commandPaletteRecent';
 const MAX_RECENT = 5;
 
 export const useCommandPalette = ({
-  activePage,
   onNavigate,
   theme,
   toggleTheme,

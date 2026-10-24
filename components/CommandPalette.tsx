@@ -7,11 +7,9 @@ import { useCommandPalette } from './hooks/useCommandPalette.tsx';
 const CommandPalette: React.FC<CommandPaletteProps> = ({
   isOpen,
   onClose,
-  activePage,
   onNavigate,
   theme,
   toggleTheme,
-  isMobileView,
 }) => {
   const { t } = useTranslation('common');
   const [searchQuery, setSearchQuery] = useState('');
@@ -20,7 +18,6 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
   const listRef = useRef<HTMLDivElement>(null);
 
   const { commands, recentCommands, searchCommands, executeCommand } = useCommandPalette({
-    activePage,
     onNavigate,
     theme,
     toggleTheme,

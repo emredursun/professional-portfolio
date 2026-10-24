@@ -5,4 +5,6 @@ type PlausibleFn = ((event: string, options?: { props?: Record<string, string | 
 
 interface Window {
   plausible?: PlausibleFn;
+  /** Exposed for debugging in the browser console (src/utils/faviconController.ts). */
+  faviconController?: typeof import('../utils/faviconController').faviconController;
 }

@@ -1,6 +1,5 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Page } from '../types.ts';
 
 /** Locales that get a URL prefix. Keep in sync with i18n and SEO.tsx. */
 const LOCALES = ['nl', 'tr'] as const;
@@ -32,9 +31,7 @@ const Quality = lazy(loaders.quality);
 const NotFound = lazy(() => import('./NotFound.tsx'));
 
 interface MainContentProps {
-  activePage: Page;
   isMobileView: boolean;
-  onNavigate: (page: Page) => void;
 }
 
 const LoadingSpinner: React.FC = () => (
@@ -43,7 +40,7 @@ const LoadingSpinner: React.FC = () => (
   </div>
 );
 
-const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView, onNavigate }) => {
+const MainContent: React.FC<MainContentProps> = ({ isMobileView }) => {
   return (
     <div className={`${isMobileView ? 'pb-32' : 'p-8 md:p-12'}`}>
       <Suspense fallback={<LoadingSpinner />}>

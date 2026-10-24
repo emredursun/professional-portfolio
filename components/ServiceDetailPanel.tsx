@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
-import { Service, Page } from "../types.ts";
+import { Service } from "../types.ts";
 import { PROJECTS } from "../constants.tsx";
 
 interface ServiceDetailPanelProps {

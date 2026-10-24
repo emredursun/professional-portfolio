@@ -65,6 +65,8 @@ describe('formatting helpers', () => {
 });
 
 describe('against the real portfolio data', () => {
+  // The real constants module, loaded at run time and read by path.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let constants: Record<string, any>;
   const about = locale('about');
   const resume = locale('resume');

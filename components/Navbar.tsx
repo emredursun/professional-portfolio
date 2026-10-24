@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Magnetic from './Magnetic.tsx';
 import { Page } from '../types.ts';
 
@@ -92,7 +92,6 @@ const NavButton: React.FC<{
 
 const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent }) => {
     const { t, i18n } = useTranslation('common');
-    const location = useLocation();
     
     // Get current language from i18n (which syncs with URL and localStorage)
     const currentLang = i18n.language || 'en';
