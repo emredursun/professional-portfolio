@@ -125,8 +125,17 @@ export const useCommandPalette = ({
         category: 'Actions',
         keywords: ['download', 'resume', 'cv', 'pdf'],
         action: () => {
-          // Trigger print dialog which will show PrintableResume component
-          window.print();
+          // Same as the sidebar button: production ships a PDF per language
+          // (scripts/generate-cv.js); the dev server falls back to printing.
+          if (import.meta.env.PROD) {
+            const lang = ['nl', 'tr'].includes(document.documentElement.lang) ? document.documentElement.lang : 'en';
+            const link = document.createElement('a');
+            link.href = `/cv/Emre-Dursun-CV-${lang}.pdf`;
+            link.download = `Emre-Dursun-CV-${lang}.pdf`;
+            link.click();
+          } else {
+            window.print();
+          }
           onClose();
         },
       },

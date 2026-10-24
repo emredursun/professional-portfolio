@@ -38,4 +38,14 @@ test.describe('downloadable CV', () => {
     ]);
     expect(download.suggestedFilename()).toBe('Emre-Dursun-CV-en.pdf');
   });
+
+  test('the command palette downloads the PDF in the page language', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    await page.goto('/nl/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await page.keyboard.press('Control+k');
+    await page.getByRole('combobox', { name: 'Search commands' }).fill('download resume');
+    const [download] = await Promise.all([page.waitForEvent('download'), page.keyboard.press('Enter')]);
+    expect(download.suggestedFilename()).toBe('Emre-Dursun-CV-nl.pdf');
+  });
 });
