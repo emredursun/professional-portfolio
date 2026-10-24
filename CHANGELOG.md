@@ -40,6 +40,8 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - A "Skip to content" link as the first tab stop.
 
 ### Changed
+- ING case study with measurable results: 400 legacy payment scenarios migrated and 450 new ones onboarded (850), with a full regression run and its report cut from several days to 3–5 hours.
+- Claims audit against the public record: AegisQA is described as the work in progress its repository shows (23 tests; database, AI and CI/CD on the roadmap); QASmartTestLab's "100+ stars" card is removed (the repository has none); BeSync's links to its private repository (404s) are removed and its self-issued certificate is labelled as such; Devran AI Kit's skill count matches its README (44).
 - Content synced with the current LinkedIn profile: Tricentis Testim Product Consultant (Advanced, September 2026), Playwright, AI Backbone at Sopra Steria.
 - Experience: the ING entry explains the first year through Sogyo and the second internal, with the FFV validations and the Belgium, Italy, Hungary and Slovakia rollouts. Nerex Motors and BSG Auto Parts are shown as one group with their own dates (from September 2020).
 - The About bento grid and services grid respond to their container instead of the viewport. At about 1100 px, the content was squeezed into an 8/4 split.
@@ -69,7 +71,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
 - Vitest unit tests: 119 tests, 87% line coverage on logic modules.
-- Playwright end-to-end suite: 140 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
+- Playwright end-to-end suite: 146 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
 - `knip` in CI: unused files, exports and dependencies fail the build.
 - CI quality gates in front of every deploy, Lighthouse budgets, a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
 - Node 22+.

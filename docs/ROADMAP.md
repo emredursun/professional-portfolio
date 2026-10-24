@@ -11,6 +11,10 @@ Branch `feat/preflight-remediation`. It raises the preflight score from 36/100 b
 - seven functional, SEO and accessibility defects found by the new tests
 - missing tests and CI gates
 - operations: version stamp, smoke test, uptime checks, runbook
+- SEO: per-route prerendered heads, linked JSON-LD, image SEO, real 404s
+- new: PDF CV, quality report page, `resume.json` and `llms.txt`, case studies
+
+Release extras: run `npm run publish:profile-readme` after the merge (the profile README changed), then resubmit the sitemap in Search Console and re-scrape a project link in LinkedIn's Post Inspector.
 
 **Release checklist**
 - [ ] Owner reviews and approves the branch
@@ -34,7 +38,7 @@ Mobile Lighthouse is now 86–87 (was 57–58). The particle field was the block
 | Item | Expected effect |
 | --- | --- |
 | Use one animation library: GSAP **or** framer-motion (together about 90 KB gzip) | Less JavaScript before first render |
-| Prerender routes (Vite SSG or Astro) | Real HTML per route for scrapers that run no JS, such as LinkedIn and WhatsApp. LCP no longer waits on the JS bundle |
+| Prerender route bodies (Vite SSG) | Every route already ships its own prerendered head (link previews, metadata). Rendering the body too would let LCP stop waiting on the JS bundle |
 
 ## Milestone 4 — Content and assets
 
@@ -42,4 +46,8 @@ Mobile Lighthouse is now 86–87 (was 57–58). The particle field was the block
 | --- | --- |
 | Self-host the project images now hot-linked from `servcorp.co.uk` and `images.unsplash.com` | Third-party image host and licensing risk. The Lighthouse budget for `/projects` is capped at the current 7 third-party requests until this is done |
 | Regenerate favicons from the new profile photo | Favicons still show the previous photo |
-| Regenerate `social-share.png` with the new photo | Via `dev-tools/social-share-generator.html`; keep it under 300 KB |
+| Regenerate `social-share.png` with the new photo | Via `dev-tools/social-share-generator.html`; keep it under 300 KB. LinkedIn shows this image for every page |
+| Per-page social images for projects and services | Built at build time next to the prerendered heads, so each shared link has its own card |
+| Measurable results for the remaining projects | Owner to supply figures (as done for ING). QASmartTestLab's "60% faster" and "85% reduction" cards are unverified |
+| Calm design pass (less decoration) | Owner wants visual examples first |
+| View Transitions for project card → modal | Polish, after the above |
