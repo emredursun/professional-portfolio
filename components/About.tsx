@@ -225,7 +225,6 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
   const isHeaderVisible = useScrollReveal(headerRef, { threshold: 0.2 });
   
   const containerRef = useRef<HTMLDivElement>(null);
-  const servicesRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
   const [statsCount, setStatsCount] = useState(0);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
@@ -269,25 +268,7 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
     }
   }, [serviceSlug, translatedServices, ready]);
 
-  useGSAP((context) => {
-    // 1. Service Cards Stagger - animate immediately without scroll trigger
-    if (servicesRef.current) {
-        gsap.fromTo(servicesRef.current.children, 
-            { y: 20, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: "power3.out",
-                delay: 0.2
-            }
-        );
-    }
-
-  }, []); // Empty dependency array - run once on mount
-
-  // 2. Number Counter Animation (0 to 5), once the counter is on screen.
+  // Number Counter Animation (0 to 5), once the counter is on screen.
   // An IntersectionObserver rather than ScrollTrigger: on desktop the page
   // scrolls inside the content panel, not the window, so a window-based
   // ScrollTrigger only fired when the counter happened to start above the
@@ -556,12 +537,16 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
             {t('whatIDo')}
           </motion.h3>
           <div
-            ref={servicesRef}
             className="grid grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 gap-6"
           >
+            {/* Staggered entrance as a CSS animation. It was a GSAP tween
+                whose start read every card's computed transform: a ~50 ms
+                forced layout right after the first render. */}
             {translatedServices.map((service, index) => (
               <div
                 key={index}
+                className="animate-fade-in-up [animation-fill-mode:both]"
+                style={{ animationDelay: `${0.2 + index * 0.15}s` }}
               >
                 <BentoCard
                   noDefaultBg={true}
