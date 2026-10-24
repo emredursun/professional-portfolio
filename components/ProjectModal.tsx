@@ -66,16 +66,16 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   ];
 
   return (
+    // The panel fills the whole screen, so there is no backdrop left to click:
+    // the dialog closes with Escape or its close button.
     <div
       className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center animate-fade-in"
-      onClick={onClose}
       aria-modal="true"
       role="dialog"
       aria-labelledby="project-title"
     >
       <div
         className="relative bg-white dark:bg-[#2a2a2a] w-full h-full overflow-hidden flex flex-col"
-        onClick={(e) => e.stopPropagation()}
       >
         {/* Scrollable Content */}
         <div

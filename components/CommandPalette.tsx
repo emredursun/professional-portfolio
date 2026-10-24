@@ -196,6 +196,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
               ref={listRef}
               // Reachable with Tab so keyboard users can scroll a long result
               // list (WCAG 2.1.1); option selection stays on the input.
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scrollable region must be focusable (axe: scrollable-region-focusable)
               tabIndex={0}
               className="max-h-[60vh] overflow-y-auto overscroll-contain"
               style={{ scrollbarWidth: 'thin' }}

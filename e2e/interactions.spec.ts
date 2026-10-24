@@ -74,6 +74,29 @@ test.describe('projects', () => {
     }).toPass();
   });
 
+  test('a project card opens from the keyboard, keeping the language', async ({ page }) => {
+    // The cards were clickable divs: no tab stop, so Enter did nothing.
+    await page.goto('/nl/projects');
+    const card = page.getByRole('link', { name: 'Quilyn — Certification Exam Prep', exact: true });
+    await card.focus();
+    await expect(card).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/nl\/projects\/quilyn-exam-prep$/);
+  });
+
+  test('a gallery screenshot opens from the keyboard and Escape closes it', async ({ page }) => {
+    const common = copy('en', 'common');
+    await page.goto('/projects/qa-smart-test-lab');
+    const shot = page.getByRole('button', { name: /QASmartTestLab screenshot 1/ });
+    await shot.scrollIntoViewIfNeeded();
+    await shot.focus();
+    await page.keyboard.press('Enter');
+    const close = page.getByRole('button', { name: common.labels.closeLightbox });
+    await expect(close).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(close).toBeHidden();
+  });
+
   test('a project URL opens the modal directly', async ({ page }) => {
     await page.goto('/projects/aegisqa');
     await expect(page.getByText(/AegisQA/).first()).toBeVisible();

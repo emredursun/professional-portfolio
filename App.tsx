@@ -472,6 +472,7 @@ const AppContent: React.FC = () => {
                 id="page-content"
                 // Keyboard users must be able to focus the scroll container
                 // to scroll it with the arrow keys (WCAG 2.1.1).
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scrollable region must be focusable (axe: scrollable-region-focusable)
                 tabIndex={0}
                 role="region"
                 aria-label={i18n.t('common:labels.pageContent')}

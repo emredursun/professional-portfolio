@@ -1,12 +1,12 @@
 import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from "react";
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { Project } from "../types.ts";
 import { PROJECTS } from "../constants.tsx";
 import ProjectModal from "./ProjectModal.tsx";
 import NotFound from "./NotFound.tsx";
 import { useTranslatedProjects, useTranslatedProject } from "./hooks/useTranslatedProject.tsx";
-import { useLanguageNavigate } from "./hooks/useLanguageNavigate.tsx";
+import { localePrefix, useLanguageNavigate } from "./hooks/useLanguageNavigate.tsx";
 import SEO from "./SEO.tsx";
 
 // Renders technology chips capped to a maximum number of rows, collapsing the
@@ -101,14 +101,16 @@ const TechTags: React.FC<{ technologies: string[] }> = ({ technologies }) => {
   );
 };
 
-const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
+// The title is a real link to the project URL whose ::after covers the card:
+// the whole card stays clickable and it now opens from the keyboard too (it
+// was a clickable div that Tab skipped).
+const ProjectCard: React.FC<{ project: Project; to: string }> = ({
   project,
-  onOpen,
+  to,
 }) => {
   return (
     <div
       className="group relative rounded-3xl bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 hover:border-yellow-500 hover:shadow-[0_30px_60px_-15px_rgba(234,179,8,0.6)] dark:hover:border-neon-cyan dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.3)] h-[540px] flex flex-col shadow-xl dark:shadow-none"
-      onClick={onOpen}
     >
       {/* Image Section - Fixed Height */}
       <div className="relative h-56 overflow-hidden flex-shrink-0">
@@ -134,7 +136,12 @@ const ProjectCard: React.FC<{ project: Project; onOpen: () => void }> = ({
       <div className="p-8 flex-1 flex flex-col border-t border-gray-100/50 dark:border-white/5">
         {/* Title - Fixed Height with Line Clamp */}
         <h3 className="h-[3rem] text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-3 leading-tight line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-yellow-500 group-hover:to-orange-500 dark:group-hover:from-yellow-400 dark:group-hover:to-orange-500 transition-all duration-300">
-          {project.title}
+          <Link
+            to={to}
+            className="focus-visible:outline-none after:absolute after:inset-0 after:z-30 after:rounded-3xl focus-visible:after:ring-4 focus-visible:after:ring-inset focus-visible:after:ring-yellow-400 dark:focus-visible:after:ring-neon-cyan"
+          >
+            {project.title}
+          </Link>
         </h3>
 
         {/* Description - Fixed Height with Line Clamp */}
@@ -161,6 +168,7 @@ const Projects: React.FC = () => {
   // Locale-aware: a plain useNavigate() sent /nl and /tr visitors who opened
   // or closed a project back to the English URLs.
   const navigate = useLanguageNavigate();
+  const { pathname } = useLocation();
   const isUnknownSlug = Boolean(slug) && !PROJECTS.some(p => p.slug === slug);
 
   // Get translated projects
@@ -175,11 +183,6 @@ const Projects: React.FC = () => {
   useEffect(() => {
     setSelectedProject(PROJECTS.find(p => p.slug === slug) ?? null);
   }, [slug]);
-
-  // Update URL on Project Selection
-  const handleProjectClick = (project: Project) => {
-    navigate(`/projects/${project.slug}`);
-  };
 
   const handleCloseModal = () => {
     navigate('/projects');
@@ -474,7 +477,7 @@ const Projects: React.FC = () => {
             >
               <ProjectCard
                 project={project}
-                onOpen={() => handleProjectClick(project)}
+                to={`${localePrefix(pathname)}/projects/${project.slug}`}
               />
             </div>
           ))}

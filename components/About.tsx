@@ -17,9 +17,8 @@ const BentoCard: React.FC<{
   children: React.ReactNode;
   className?: string;
   title?: string;
-  onClick?: () => void;
   noDefaultBg?: boolean;
-}> = ({ children, className = "", title, onClick, noDefaultBg = false }) => {
+}> = ({ children, className = "", title, noDefaultBg = false }) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [opacity, setOpacity] = useState(0);
@@ -56,7 +55,6 @@ const BentoCard: React.FC<{
   return (
     <div
       ref={divRef}
-      onClick={onClick}
       onMouseMove={handleMouseMove}
       onFocus={handleFocus}
       onBlur={handleBlur}

@@ -49,9 +49,12 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
       {/* Gallery Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {images.map((image, index) => (
-          <div
+          // A button, so the screenshots open from the keyboard too; the
+          // image's alt text names it.
+          <button
+            type="button"
             key={index}
-            className="group relative aspect-video overflow-hidden rounded-xl cursor-pointer border border-gray-200 dark:border-gray-700 hover:border-yellow-400 dark:hover:border-neon-cyan transition-all duration-300"
+            className="group relative block w-full aspect-video overflow-hidden rounded-xl cursor-pointer border border-gray-200 dark:border-gray-700 hover:border-yellow-400 dark:hover:border-neon-cyan focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-yellow-400 dark:focus-visible:ring-neon-cyan transition-all duration-300"
             onClick={() => openLightbox(index)}
           >
             <img
@@ -67,13 +70,16 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
                 </div>
               </div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
 
       {/* Lightbox Modal */}
       {lightboxOpen && (
+        // Clicking the backdrop is a mouse shortcut; keyboard users close the
+        // lightbox with Escape (handled above) or the close button.
         <div
+          role="presentation"
           className="fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-4 animate-fade-in"
           onClick={closeLightbox}
         >
@@ -102,6 +108,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
 
           {/* Image Container */}
           <div
+            role="presentation"
             className="max-w-6xl max-h-[90vh] relative"
             onClick={(e) => e.stopPropagation()}
           >
