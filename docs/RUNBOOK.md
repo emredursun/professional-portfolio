@@ -58,7 +58,11 @@ Client-side errors appear in Plausible as the custom event **JS Error**, with `m
 | Projects, services, certifications, tech stack | `constants.tsx` | `npm run build`, then commit; if `profile/README.md` changed, `npm run publish:profile-readme` |
 | A new technology | Add it to `TECH_STACK` and a badge to `BADGES` in `scripts/generate-profile-readme.js` | The build fails until both exist, by design |
 
+| A new top-level page | Its route in `components/MainContent.tsx` and a rewrite in `firebase.json` | Without the rewrite the page returns 404 in production only; `tests/hosting.test.ts` catches it if the route is in the sitemap |
+
 CI fails if the regenerated sitemap or profile README differs from what is committed.
+
+The CV PDFs (`/cv/Emre-Dursun-CV-<lang>.pdf`) are not committed: CI renders them from the build on every deploy, so a content change reaches the PDF automatically. To check one locally: `npm run build && npm run generate:cv`, then open `dist/cv/`.
 
 ## Assets
 

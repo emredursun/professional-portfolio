@@ -27,7 +27,24 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - Dropped a Vite `define` that would have inlined `GEMINI_API_KEY` into the client bundle.
 - Contact form: honeypot, length limits, response checking.
 
+### Added
+- Downloadable PDF CV in English, Dutch and Turkish, rendered from the site's print layout at build time. It replaces the browser print dialog.
+- Service and project detail pages are in the sitemap (75 URLs across three languages). Each service page has its own title and description.
+- A localized `noindex` "not found" page, served with a real 404 status by Firebase.
+- Certifications link to the issuer's verification page (ISTQB on Diplomasafe, Pega CPBA/CPSA), on the site, in the JSON-LD and in the profile README.
+- A "Skip to content" link as the first tab stop.
+
+### Changed
+- Content synced with the current LinkedIn profile: Tricentis Testim Product Consultant (Advanced, September 2026), Playwright, AI Backbone at Sopra Steria.
+- Experience: the ING entry explains the first year through Sogyo and the second internal, with the FFV validations and the Belgium, Italy, Hungary and Slovakia rollouts. Nerex Motors and BSG Auto Parts are shown as one group with their own dates (from September 2020).
+- The About bento grid and services grid respond to their container instead of the viewport. At about 1100 px, the content was squeezed into an 8/4 split.
+
 ### Fixed
+- A direct visit to a service URL (`/about/<service>`) crashed the page before its translations had loaded.
+- The "5+ years" counter only counted when it started above the fold: it listened to the window's scroll, but on desktop the page scrolls inside the content panel.
+- A tab left open across a deploy reloads once to pick up the new build, instead of hitting the error screen on its next lazy-loaded page.
+- Opening, closing or paging a project on `/nl` or `/tr` sent the visitor to the English URL.
+- Unknown URLs and unknown service or project slugs showed real pages with a 200 (soft 404s), and missing static files returned the app.
 - The command palette's "Go to …" commands did nothing.
 - Dutch and Turkish visitors were sent to English pages from service links.
 - The landing page's title was just "About"; project deep links showed "Projects".
@@ -44,8 +61,9 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
-- Vitest unit tests: 71 tests, 88% line coverage on logic modules.
-- Playwright end-to-end suite: 67 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes and on open overlays.
+- Vitest unit tests: 90 tests, 88% line coverage on logic modules.
+- Playwright end-to-end suite: 100 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
+- `knip` in CI: unused files, exports and dependencies fail the build.
 - CI quality gates in front of every deploy, Lighthouse budgets, a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
 - Node 22+.
 
