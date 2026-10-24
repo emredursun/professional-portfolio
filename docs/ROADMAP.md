@@ -33,7 +33,7 @@ Release extras: run `npm run publish:profile-readme` after the merge (the profil
 
 ## Milestone 3 — Mobile performance
 
-Mobile Lighthouse is now 86–87 (was 57–58). The particle field was the blocking cost; it is now allocation-free and skipped on touch devices. What remains is LCP (3.4 s on simulated slow 4G):
+Mobile Lighthouse is now about 84 (75–84 on /projects; was 57–58) and has its own CI budget (`lighthouserc.mobile.json`). The particle field was the blocking cost; it is now a 2D canvas, skipped on touch devices. What remains is LCP (about 3.5 s on simulated slow 4G):
 
 | Item | Expected effect |
 | --- | --- |

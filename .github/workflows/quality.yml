@@ -12,7 +12,7 @@ jobs:
   verify:
     name: Typecheck, test, build, e2e, Lighthouse
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
 
@@ -63,7 +63,13 @@ jobs:
         env:
           CI: true
 
-      - name: Lighthouse budgets
+      # Mobile first: every LHCI collect clears .lighthouseci, so the desktop
+      # run below leaves only desktop results there for the quality report.
+      # The mobile reports are kept in .lighthouseci-mobile.
+      - name: Lighthouse budgets (mobile)
+        run: npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.mobile.json
+
+      - name: Lighthouse budgets (desktop)
         run: npx --yes @lhci/cli@0.15.1 autorun
 
       # dist/quality.json for the /quality page, from this run's reports.
@@ -87,5 +93,6 @@ jobs:
             playwright-report
             coverage
             .lighthouseci
+            .lighthouseci-mobile
             reports
           retention-days: 14
