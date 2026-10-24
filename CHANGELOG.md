@@ -27,6 +27,8 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - Runtime dependency advisories fixed: react-router, i18next-http-backend.
 - Dropped a Vite `define` that would have inlined `GEMINI_API_KEY` into the client bundle.
 - Contact form: honeypot, length limits, response checking.
+- Error reports to Plausible carry no personal data: email addresses, credentials, long ids and long numbers are removed, and the contact form reports a fixed code instead of the provider's error text.
+- The service worker handles only its own origin (an exact match; look-alike hosts got through a substring test) and deletes only its own old caches.
 
 ### Added
 - The Resume timeline fills with light as you scroll through it, lighting each role as you reach it, with a slow pulse on the current role. CSS scroll-driven animation only (no JavaScript, compositor-friendly); static for reduced motion and in browsers without scroll-driven animations.
@@ -48,6 +50,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - The About bento grid and services grid respond to their container instead of the viewport. At about 1100 px, the content was squeezed into an 8/4 split.
 
 ### Fixed
+- A failed contact form submission kept the error but lost the message: the form was replaced and "Try again" brought back an empty one. The form and its input now stay, with the error announced above the send button; a request that never answers times out after 15 s.
 - The contact page's on-demand map was centred on the home town; it now shows Nieuwegein, the work location. A test scans every shipped source for the home town and postcode.
 - The structured data still published the previous home address with its postcode. It now gives the home province only (Noord-Holland) and Sopra Steria's Nieuwegein office as the work location; the sidebar reads "Nieuwegein (Sopra Steria) · Hybrid". Job title, dates and services in it are current.
 - The project view overwrote the page's social tags with a different title, and with a broken image URL for externally hosted project images.
@@ -64,6 +67,8 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 - The sitemap was restamped on every build, and generated files showed phantom diffs on Windows.
 
 ### Accessibility
+- The About page's service cards open from the keyboard. They were clickable divs that Tab skipped; each title is now a link that covers its card.
+- Button labels, tooltips and the whole command palette are in the page's language; on the Dutch and Turkish pages they were English.
 - Decorative icons are hidden from screen readers; they had been leaking glyphs into link names.
 - The scrollable content area is keyboard-focusable.
 - `prefers-reduced-motion` is respected in CSS, GSAP and framer-motion.
@@ -72,8 +77,8 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
-- Vitest unit tests: 122 tests, 87% line coverage on logic modules.
-- Playwright end-to-end suite: 148 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
+- Vitest unit tests: 129 tests, 86% line coverage on logic modules.
+- Playwright end-to-end suite: 158 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
 - `knip` in CI: unused files, exports and dependencies fail the build.
 - CI quality gates in front of every deploy, Lighthouse budgets, a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
 - Node 22+.
