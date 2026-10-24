@@ -1,0 +1,4 @@
+# Mechanical reformatting; skip in git blame:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+# style: format the codebase with Prettier
+7e4e8d5cf8f5160da6836463b4d4a1ecf1f2bed3
