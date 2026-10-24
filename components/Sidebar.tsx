@@ -69,7 +69,6 @@ const getGreetingKey = (): string => {
 
 const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) => {
     const { t, i18n } = useTranslation(['common', 'sidebar']);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [greetingKey, setGreetingKey] = useState(getGreetingKey());
     const sidebarRef = useRef<HTMLElement>(null);
 
@@ -94,13 +93,14 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
         return () => clearInterval(interval);
     }, []);
 
+    // The spotlight follows the pointer through CSS variables: a mouse move
+    // used to set state and re-render the whole sidebar.
     const handleMouseMove = (e: React.MouseEvent) => {
-        if (sidebarRef.current) {
-            const rect = sidebarRef.current.getBoundingClientRect();
-            setMousePosition({
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top,
-            });
+        const sidebar = sidebarRef.current;
+        if (sidebar) {
+            const rect = sidebar.getBoundingClientRect();
+            sidebar.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+            sidebar.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
         }
     };
 
@@ -143,7 +143,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
             <div
                 className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover/sidebar:opacity-100 z-50 rounded-[2.5rem]"
                 style={{
-                    background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.05), transparent 40%)`,
+                    background: `radial-gradient(800px circle at var(--spot-x, 0px) var(--spot-y, 0px), rgba(255, 255, 255, 0.05), transparent 40%)`,
                 }}
             />
 
