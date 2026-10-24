@@ -6,8 +6,11 @@
  * "JS Error" event whose `message` and `source` props can be broken down in
  * the Plausible dashboard (Goals -> Custom events -> "JS Error").
  *
- * Messages are truncated and stripped of URLs' query strings before sending,
- * so a stack or error message can never carry form input or tokens out.
+ * Messages are scrubbed before sending: URL query strings, email addresses,
+ * key=value credentials, long opaque ids and long digit runs are removed, and
+ * the rest is truncated. That is a safety net, not a licence: callers that
+ * handle user or provider data (the contact form) report a fixed code instead
+ * of a message that could contain it.
  */
 
 type ErrorSource = 'render' | 'window' | 'promise';
@@ -19,7 +22,13 @@ const MAX_REPORTS_PER_PAGE = 5;
 let reportsSent = 0;
 const seen = new Set<string>();
 
-/** Normalise anything thrown into a short, query-string-free message. */
+const URL_QUERY = /(https?:\/\/[^\s?#]+)[?#]\S*/g;
+const CREDENTIAL = /\b([\w-]*(?:token|key|secret|password|passwd|auth|session|cookie)[\w-]*)\s*[=:]\s*[^\s,;&]+/gi;
+const EMAIL = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g;
+const OPAQUE_ID = /\b(?=[A-Za-z0-9_]*\d)[A-Za-z0-9_]{24,}\b/g;
+const DIGIT_RUN = /\d{6,}/g;
+
+/** Normalise anything thrown into a short message without personal data or secrets. */
 export function describeError(error: unknown): string {
   const raw =
     error instanceof Error
@@ -29,7 +38,11 @@ export function describeError(error: unknown): string {
         : 'Non-Error value thrown';
 
   return raw
-    .replace(/(https?:\/\/[^\s?#]+)[?#]\S*/g, '$1')
+    .replace(URL_QUERY, '$1')
+    .replace(CREDENTIAL, '$1=[redacted]')
+    .replace(EMAIL, '[email]')
+    .replace(OPAQUE_ID, '[id]')
+    .replace(DIGIT_RUN, '[number]')
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, MAX_MESSAGE_LENGTH);

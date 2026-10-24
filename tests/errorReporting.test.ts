@@ -22,6 +22,31 @@ describe('describeError', () => {
     expect(message).not.toContain('secret');
   });
 
+  it('removes email addresses', () => {
+    const message = describeError(new Error('Delivery failed for ada@example.com'));
+    expect(message).toBe('Error: Delivery failed for [email]');
+  });
+
+  it('removes credential-like key=value pairs', () => {
+    for (const raw of ['token=demo-token', 'api_key: abc123', 'Password=hunter2', 'session=s3cr3t;']) {
+      const message = describeError(new Error(`Request failed ${raw}`));
+      expect(message).toMatch(/\[redacted\]/);
+      expect(message).not.toMatch(/demo-token|abc123|hunter2|s3cr3t/);
+    }
+  });
+
+  it('removes long opaque identifiers and long digit runs', () => {
+    const message = describeError(new Error('Bad id 9f86d081884c7d659a2feaa0c55ad015 for +31612345678'));
+    expect(message).toBe('Error: Bad id [id] for +[number]');
+  });
+
+  it('keeps ordinary developer messages readable', () => {
+    const raw = "TypeError: Cannot read properties of undefined (reading 'map')";
+    expect(describeError(new TypeError("Cannot read properties of undefined (reading 'map')"))).toBe(raw);
+    const chunk = 'Failed to fetch dynamically imported module: https://emredursun.nl/assets/About--tq-6pen.js';
+    expect(describeError(new TypeError(chunk))).toBe(`TypeError: ${chunk}`);
+  });
+
   it('collapses whitespace and truncates to 120 characters', () => {
     const message = describeError(new Error(`a\n\n  ${'x'.repeat(300)}`));
     expect(message.startsWith('Error: a x')).toBe(true);

@@ -49,6 +49,26 @@ test.describe('contact form', () => {
     problems.splice(0, problems.length, ...problems.filter((p) => !p.includes('status of 500')));
   });
 
+  test('a rejected message reports a fixed code, never the provider text', async ({ page }) => {
+    await page.route(WEB3FORMS, (route) =>
+      route.fulfill({ json: { success: false, message: 'Blocked sender ada@example.com token=abc123' } }),
+    );
+
+    await fillValidForm(page);
+    await sendButton(page).click();
+    await expect(page.getByRole('heading', { name: contact.messages.error.title })).toBeVisible();
+
+    // The empty test stub of Plausible leaves every call on its queue.
+    const errors = await page.evaluate(() =>
+      (window.plausible?.q ?? [])
+        .filter((call) => Array.isArray(call) && call[0] === 'JS Error')
+        .map((call) => JSON.stringify(call)),
+    );
+    expect(errors).toEqual([
+      JSON.stringify(['JS Error', { props: { message: 'ContactSubmitError: rejected', source: 'promise' } }]),
+    ]);
+  });
+
   test('a short message is blocked before any request is made', async ({ page }) => {
     let requests = 0;
     await page.route(WEB3FORMS, (route) => {

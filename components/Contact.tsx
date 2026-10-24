@@ -25,6 +25,19 @@ const MAP_EMBED_URL = 'https://www.google.com/maps?q=Nieuwegein,+Netherlands&z=1
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
+/**
+ * A failed submission is reported as a fixed code only. Web3Forms' own error
+ * text and anything derived from the visitor's input stay out of analytics.
+ */
+class ContactSubmitError extends Error {
+    readonly code: string;
+    constructor(code: string) {
+        super(code);
+        this.name = 'ContactSubmitError';
+        this.code = code;
+    }
+}
+
 const ConfettiCanvas: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -125,9 +138,8 @@ const Contact: React.FC = () => {
                 body: formData
             });
 
-            const data: { success?: boolean; message?: string } = response.ok
-                ? await response.json()
-                : { success: false, message: `HTTP ${response.status}` };
+            if (!response.ok) throw new ContactSubmitError(`http-${response.status}`);
+            const data: { success?: boolean } = await response.json();
 
             if (data.success) {
                 setSubmissionStatus('success');
@@ -143,10 +155,11 @@ const Contact: React.FC = () => {
                 // Track success
                 window.plausible?.('form_success');
             } else {
-                throw new Error(data.message || 'Failed to send message');
+                throw new ContactSubmitError('rejected');
             }
         } catch (error) {
-            reportError(error, 'promise');
+            const code = error instanceof ContactSubmitError ? error.code : 'network';
+            reportError(new ContactSubmitError(code), 'promise');
             setSubmissionStatus('error');
 
             // Hide loading
