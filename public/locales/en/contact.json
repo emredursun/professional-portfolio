@@ -19,6 +19,10 @@
       "label": "Your Message",
       "placeholder": "Your Message (minimum 20 characters)",
       "tooShort": "Please enter at least 20 characters for your message"
+    },
+    "notice": {
+      "text": "Your message reaches my inbox through Web3Forms, a form service. I use your name and email only to reply to you.",
+      "link": "Web3Forms privacy policy"
     }
   },
   "messages": {

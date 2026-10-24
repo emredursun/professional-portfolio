@@ -19,6 +19,10 @@
       "label": "Mesajınız",
       "placeholder": "Mesajınızı buraya yazın (en az 20 karakter)...",
       "tooShort": "Lütfen mesajınıza en az 20 karakter yazın"
+    },
+    "notice": {
+      "text": "Mesajınız, bir form hizmeti olan Web3Forms aracılığıyla gelen kutuma ulaşır. Adınızı ve e-posta adresinizi yalnızca size yanıt vermek için kullanırım.",
+      "link": "Web3Forms gizlilik politikası"
     }
   },
   "messages": {

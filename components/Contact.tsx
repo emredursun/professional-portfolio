@@ -279,6 +279,7 @@ const Contact: React.FC = () => {
                             )}
                             <button
                                 type="submit"
+                                aria-describedby="contact-data-notice"
                                 className="w-full bg-yellow-400 text-black font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-yellow-500 transition-all duration-300 disabled:bg-yellow-300 disabled:cursor-not-allowed hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(234,179,8,0.4)] hover:scale-[1.02] active:scale-[0.98]"
                                 disabled={submissionStatus === 'submitting'}
                             >
@@ -294,6 +295,19 @@ const Contact: React.FC = () => {
                                     </>
                                 )}
                             </button>
+                            {/* Where the message goes and what it is used for,
+                                before anyone sends it. */}
+                            <p id="contact-data-notice" className="text-xs leading-relaxed text-gray-600 dark:text-gray-400">
+                                {t('form.notice.text')}{' '}
+                                <a
+                                    href="https://web3forms.com/privacy"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="underline underline-offset-2 hover:text-gray-900 dark:hover:text-white"
+                                >
+                                    {t('form.notice.link')}
+                                </a>
+                            </p>
                         </form>
                     </div>
                 );

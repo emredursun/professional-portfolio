@@ -19,6 +19,10 @@
       "label": "Uw Bericht",
       "placeholder": "Schrijf hier uw bericht (minimaal 20 tekens)...",
       "tooShort": "Uw bericht moet minimaal 20 tekens bevatten"
+    },
+    "notice": {
+      "text": "Uw bericht komt via Web3Forms, een formulierdienst, in mijn inbox. Ik gebruik uw naam en e-mailadres alleen om u te antwoorden.",
+      "link": "Privacybeleid van Web3Forms"
     }
   },
   "messages": {

@@ -87,6 +87,15 @@ test.describe('contact form', () => {
     await expect(page.getByRole('textbox', { name: contact.form.message.label })).toHaveValue(/Tosca assignment/);
   });
 
+  test('the form says where a message goes before it is sent', async ({ page }) => {
+    const nl = copy('nl', 'contact').form.notice;
+    await page.goto('/nl/contact');
+    await expect(page.getByText(nl.text)).toBeVisible();
+    await expect(page.getByRole('link', { name: nl.link })).toHaveAttribute('href', 'https://web3forms.com/privacy');
+    await expect(page.getByRole('button', { name: copy('nl', 'common').buttons.sendMessage }))
+      .toHaveAccessibleDescription(new RegExp(nl.text.slice(0, 30)));
+  });
+
   test('a short message is blocked before any request is made', async ({ page }) => {
     let requests = 0;
     await page.route(WEB3FORMS, (route) => {
