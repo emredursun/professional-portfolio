@@ -28,7 +28,7 @@
     },
     "error": {
       "title": "Verzending Mislukt",
-      "description": "Er is iets misgegaan. Probeer het opnieuw."
+      "description": "Er is iets misgegaan. Uw bericht staat er nog; verstuur het opnieuw."
     }
   },
   "meta": {

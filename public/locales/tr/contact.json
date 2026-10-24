@@ -28,7 +28,7 @@
     },
     "error": {
       "title": "Gönderim Başarısız",
-      "description": "Bir hata oluştu. Lütfen tekrar deneyiniz."
+      "description": "Bir hata oluştu. Mesajınız yerinde duruyor; lütfen tekrar gönderin."
     }
   },
   "meta": {

@@ -25,6 +25,8 @@ const MAP_EMBED_URL = 'https://www.google.com/maps?q=Nieuwegein,+Netherlands&z=1
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
+const SUBMIT_TIMEOUT_MS = 15000;
+
 /**
  * A failed submission is reported as a fixed code only. Web3Forms' own error
  * text and anything derived from the visitor's input stay out of analytics.
@@ -132,10 +134,15 @@ const Contact: React.FC = () => {
         // Track with Plausible if available
         window.plausible?.('form_submit', { props: { duration: formDuration } });
 
+        // A request that never answers would leave the button spinning forever.
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
+
         try {
             const response = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
-                body: formData
+                body: formData,
+                signal: controller.signal,
             });
 
             if (!response.ok) throw new ContactSubmitError(`http-${response.status}`);
@@ -158,7 +165,9 @@ const Contact: React.FC = () => {
                 throw new ContactSubmitError('rejected');
             }
         } catch (error) {
-            const code = error instanceof ContactSubmitError ? error.code : 'network';
+            const code = error instanceof ContactSubmitError
+                ? error.code
+                : controller.signal.aborted ? 'timeout' : 'network';
             reportError(new ContactSubmitError(code), 'promise');
             setSubmissionStatus('error');
 
@@ -169,6 +178,8 @@ const Contact: React.FC = () => {
 
             // Track error
             window.plausible?.('form_error');
+        } finally {
+            window.clearTimeout(timeout);
         }
     };
 
@@ -186,7 +197,7 @@ const Contact: React.FC = () => {
         switch (submissionStatus) {
             case 'success':
                 return (
-                    <div className="bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border rounded-[2rem] p-8 flex flex-col items-center justify-center text-center h-[436px] animate-fade-in relative overflow-hidden shadow-2xl dark:shadow-[0_0_40px_-10px_rgba(6,182,212,0.3)]">
+                    <div role="status" className="bg-white dark:bg-black/60 backdrop-blur-xl border border-gray-200 dark:border-neon-border rounded-[2rem] p-8 flex flex-col items-center justify-center text-center h-[436px] animate-fade-in relative overflow-hidden shadow-2xl dark:shadow-[0_0_40px_-10px_rgba(6,182,212,0.3)]">
                         <ConfettiCanvas />
                         <div className="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-6 animate-icon-pop-in z-10 border border-green-300 dark:border-green-500/30">
                             <i aria-hidden="true" className="fas fa-check text-4xl text-green-500"></i>
@@ -195,23 +206,10 @@ const Contact: React.FC = () => {
                         <p className="text-gray-700 dark:text-gray-300 text-lg z-10">{t('messages.success.description')}<br />{t('messages.success.followUp')}</p>
                     </div>
                 );
+            // A failure keeps the form - and what the visitor typed - on screen
+            // with the error above the button; it used to replace the form
+            // and "Try again" brought back an empty one.
             case 'error':
-                return (
-                    <div className="bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800 rounded-2xl p-8 flex flex-col items-center justify-center text-center h-[436px] animate-fade-in">
-                        <div className="w-20 h-20 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mb-6">
-                            <i aria-hidden="true" className="fas fa-exclamation-triangle text-4xl text-red-500"></i>
-                        </div>
-                        <h4 className="text-2xl font-bold text-red-800 dark:text-red-300 mb-2">{t('messages.error.title')}</h4>
-                        <p className="text-red-600 dark:text-red-400 mb-8">{t('messages.error.description')}</p>
-                        <button
-                            onClick={() => setSubmissionStatus('idle')}
-                            className="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-xl flex items-center justify-center gap-2 hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-                        >
-                            <i aria-hidden="true" className="fas fa-redo"></i>
-                            {t('buttons.tryAgain', { ns: 'common' })}
-                        </button>
-                    </div>
-                );
             case 'idle':
             case 'submitting':
             default:
@@ -270,6 +268,15 @@ const Contact: React.FC = () => {
                                     title="Please enter at least 20 characters for your message"
                                 ></textarea>
                             </div>
+                            {submissionStatus === 'error' && (
+                                <div role="alert" className="flex gap-3 items-start rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/10 p-4 text-left">
+                                    <i aria-hidden="true" className="fas fa-exclamation-triangle text-red-500 mt-1"></i>
+                                    <div>
+                                        <p className="font-bold text-red-800 dark:text-red-300">{t('messages.error.title')}</p>
+                                        <p className="text-sm text-red-700 dark:text-red-300">{t('messages.error.description')}</p>
+                                    </div>
+                                </div>
+                            )}
                             <button
                                 type="submit"
                                 className="w-full bg-yellow-400 text-black font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-yellow-500 transition-all duration-300 disabled:bg-yellow-300 disabled:cursor-not-allowed hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(234,179,8,0.4)] hover:scale-[1.02] active:scale-[0.98]"

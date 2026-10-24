@@ -28,7 +28,7 @@
     },
     "error": {
       "title": "Submission Failed",
-      "description": "Something went wrong. Please try again."
+      "description": "Something went wrong. Your message is still here; please send it again."
     }
   },
   "meta": {

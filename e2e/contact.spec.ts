@@ -41,9 +41,15 @@ test.describe('contact form', () => {
     await fillValidForm(page);
     await sendButton(page).click();
 
-    await expect(page.getByRole('heading', { name: contact.messages.error.title })).toBeVisible();
-    await page.getByRole('button', { name: common.buttons.tryAgain }).click();
-    await expect(sendButton(page)).toBeVisible();
+    await expect(page.getByRole('alert')).toContainText(contact.messages.error.title);
+    // What the visitor typed is still there, so a retry is one click.
+    await expect(page.getByRole('textbox', { name: contact.form.name.label })).toHaveValue('Ada Lovelace');
+    await expect(page.getByRole('textbox', { name: contact.form.message.label })).toHaveValue(/Tosca assignment/);
+
+    await page.unroute(WEB3FORMS);
+    await page.route(WEB3FORMS, (route) => route.fulfill({ json: { success: true } }));
+    await sendButton(page).click();
+    await expect(page.getByRole('heading', { name: contact.messages.success.title })).toBeVisible();
 
     // The browser logs the deliberate 500 itself; that line is expected here.
     problems.splice(0, problems.length, ...problems.filter((p) => !p.includes('status of 500')));
@@ -56,7 +62,7 @@ test.describe('contact form', () => {
 
     await fillValidForm(page);
     await sendButton(page).click();
-    await expect(page.getByRole('heading', { name: contact.messages.error.title })).toBeVisible();
+    await expect(page.getByRole('alert')).toContainText(contact.messages.error.title);
 
     // The empty test stub of Plausible leaves every call on its queue.
     const errors = await page.evaluate(() =>
@@ -67,6 +73,18 @@ test.describe('contact form', () => {
     expect(errors).toEqual([
       JSON.stringify(['JS Error', { props: { message: 'ContactSubmitError: rejected', source: 'promise' } }]),
     ]);
+  });
+
+  test('a request that never answers times out and keeps the message', async ({ page }) => {
+    // Never fulfilled: only the form's own timeout can end it.
+    await page.route(WEB3FORMS, () => {});
+    await page.clock.install();
+    await fillValidForm(page);
+    await sendButton(page).click();
+    await page.clock.fastForward(16000);
+
+    await expect(page.getByRole('alert')).toContainText(contact.messages.error.title);
+    await expect(page.getByRole('textbox', { name: contact.form.message.label })).toHaveValue(/Tosca assignment/);
   });
 
   test('a short message is blocked before any request is made', async ({ page }) => {
