@@ -95,11 +95,6 @@
           "metric": "Onderhoudbaarheid Code",
           "value": "85% reductie",
           "description": "POM patroon verminderde de onderhoudsinspanning voor tests en verhoogde de teamsnelheid"
-        },
-        "adoption": {
-          "metric": "Framework Adoptie",
-          "value": "100+ sterren",
-          "description": "GitHub repository kreeg tractie in de QA automation community"
         }
       }
     },

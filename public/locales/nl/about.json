@@ -140,7 +140,10 @@
       "relatedProjects": "Gerelateerde Projecten",
       "getInTouch": "Neem Contact Op",
       "yearsOfExperience": "Jaar Ervaring",
-      "provenExpertise": "Bewezen expertise in productieomgevingen"
+      "provenExpertise": "Bewezen expertise in productieomgevingen",
+      "certification": "Certificering",
+      "certifiedOn": "Gecertificeerd: {{date}}",
+      "viewCertificate": "Certificaat bekijken"
     }
   },
   "meta": {

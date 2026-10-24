@@ -642,7 +642,7 @@ export const PROJECTS: Project[] = [
     category: "Open Source",
     image: "/images/devran-kit-thumbnail.webp",
     description:
-      "An open-source, zero-dependency Trust-Grade AI development framework that turns any AI-powered IDE into a virtual engineering team — 26 agents, 39 skills, 25 workflows, and 15 governance rules behind one command.",
+      "An open-source, zero-dependency Trust-Grade AI development framework that turns any AI-powered IDE into a virtual engineering team — 26 agents, 44 skills, 25 workflows, and 15 governance rules behind one command.",
     detailedDescription:
       "Devran AI Kit is a zero-dependency runtime engine (not a prompt collection) that brings trust-grade governance to AI-assisted software development. Its 43-module core includes a workflow state machine, circuit breaker, error budget, and self-healing CI, and it enforces a 7-phase SDLC through Scope Filters, Ethics Gates, Rigor Profiles (strict/standard/minimal), and Failure Templates. The intelligent agent system routes work across 26 specialized agents with reputation scoring, domain-aware routing, and an Instinct System (confidence-scored pattern memory) loaded on demand via keyword matching. Greenfield and brownfield onboarding workflows generate master documentation, market research, and architecture diagrams. Released under MIT with 1,037 passing tests and zero external dependencies, it installs into VS Code, Cursor, and other AI IDEs with a single command.",
     technologies: [
@@ -662,7 +662,7 @@ export const PROJECTS: Project[] = [
     role: "Creator & Maintainer",
     team: "Solo Project",
     metrics: [
-      "26 Agents · 39 Skills · 25 Workflows",
+      "26 Agents · 44 Skills · 25 Workflows",
       "1,037 Tests Passing",
       "Zero External Dependencies",
       "7-Phase Governed SDLC",
@@ -838,12 +838,6 @@ export const PROJECTS: Project[] = [
         value: "85% reduction",
         description:
           "POM pattern reduced test maintenance effort and increased team velocity",
-      },
-      {
-        metric: "Framework Adoption",
-        value: "100+ stars",
-        description:
-          "GitHub repository gained traction in the QA automation community",
       },
     ],
     tags: ["Framework", "Best Practices", "Open Source", "Java", "Selenium"],
@@ -1116,8 +1110,7 @@ export const PROJECTS: Project[] = [
       "Docker"
     ],
     url: "#",
-    github: "https://github.com/emredursun/besync",
-    hackernoon_link: "https://github.com/emredursun/besync/blob/develop/.agent/trust-grade-alignment-report.md",
+    // No repository links: emredursun/besync is private, so they returned 404s.
     metrics: [
       "The Focus Pulse — Killer Feature",
       "5 Specialized AI Agents",
@@ -1167,8 +1160,8 @@ export const PROJECTS: Project[] = [
         description: "EU AI Act, GDPR, OECD, IEEE EAD, ISO/IEC 42001"
       },
       {
-        metric: "Official Certification",
-        value: "Trust-Grade",
+        metric: "Trust-Grade Certification",
+        value: "Self-Assessed",
         description: "Certificate ID: BESYNC-TGAI-20260112-001"
       }
     ],

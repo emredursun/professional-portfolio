@@ -140,7 +140,10 @@
       "relatedProjects": "Related Projects",
       "getInTouch": "Get in Touch",
       "yearsOfExperience": "Years of Experience",
-      "provenExpertise": "Proven expertise in production environments"
+      "provenExpertise": "Proven expertise in production environments",
+      "certification": "Certification",
+      "certifiedOn": "Certified: {{date}}",
+      "viewCertificate": "View certificate"
     }
   },
   "meta": {

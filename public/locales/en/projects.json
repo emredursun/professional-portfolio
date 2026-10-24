@@ -95,11 +95,6 @@
           "metric": "Code Maintainability",
           "value": "85% reduction",
           "description": "POM pattern reduced test maintenance effort and increased team velocity"
-        },
-        "adoption": {
-          "metric": "Framework Adoption",
-          "value": "100+ stars",
-          "description": "GitHub repository gained traction in the QA automation community"
         }
       }
     },

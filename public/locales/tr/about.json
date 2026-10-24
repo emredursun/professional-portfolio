@@ -140,7 +140,10 @@
       "relatedProjects": "İlgili Projeler",
       "getInTouch": "İletişime Geç",
       "yearsOfExperience": "Yıl Deneyim",
-      "provenExpertise": "Prodüksiyon ortamlarında kanıtlanmış uzmanlık"
+      "provenExpertise": "Prodüksiyon ortamlarında kanıtlanmış uzmanlık",
+      "certification": "Sertifika",
+      "certifiedOn": "Sertifika tarihi: {{date}}",
+      "viewCertificate": "Sertifikayı görüntüle"
     }
   },
   "meta": {

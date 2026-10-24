@@ -243,7 +243,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                 >
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                     <i aria-hidden="true" className="fas fa-certificate text-amber-500"></i>
-                    Official Certification
+                    {t('services.details.certification')}
                   </h3>
                   
                   <div className="flex flex-col sm:flex-row gap-4 items-start">
@@ -274,7 +274,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                         <div className="flex items-center gap-2">
                           <i aria-hidden="true" className="fas fa-calendar-check text-amber-500"></i>
                           <span className="text-sm text-gray-600 dark:text-gray-400">
-                            Certified: {service.certificationDate}
+                            {t('services.details.certifiedOn', { date: service.certificationDate })}
                           </span>
                         </div>
                       )}
@@ -288,7 +288,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({ service, onClos
                           className="mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 group"
                         >
                           <i aria-hidden="true" className="fas fa-external-link-alt text-xs"></i>
-                          <span>View Certificate</span>
+                          <span>{t('services.details.viewCertificate')}</span>
                         </motion.button>
                       )}
 

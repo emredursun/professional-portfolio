@@ -95,11 +95,6 @@
           "metric": "Kod Bakım Kolaylığı",
           "value": "%85 azalma",
           "description": "POM deseni test bakım eforunu azalttı ve ekip hızını artırdı"
-        },
-        "adoption": {
-          "metric": "Framework Benimsenmesi",
-          "value": "100+ yıldız",
-          "description": "GitHub reposu QA otomasyon topluluğunda ilgi gördü"
         }
       }
     },
