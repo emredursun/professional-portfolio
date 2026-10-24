@@ -9,7 +9,8 @@
 // v5: avatar served as a 400px WebP, favicons and OG image re-encoded at the
 //     same filenames, so the old bytes must be purged.
 // v6: portrait renamed to emre-dursun-qa-consultant-400.webp (image SEO).
-const CACHE_NAME = 'ed-portfolio-v6';
+const CACHE_PREFIX = 'ed-portfolio-';
+const CACHE_NAME = `${CACHE_PREFIX}v6`;
 const OFFLINE_URL = '/';
 
 // Assets to cache immediately on install
@@ -39,8 +40,9 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
+        // Only this app's older caches; anything else on the origin is not ours.
         cacheNames
-          .filter((name) => name !== CACHE_NAME)
+          .filter((name) => name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME)
           .map((name) => {
             return caches.delete(name);
           })
@@ -57,8 +59,10 @@ self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (request.method !== 'GET') return;
 
-  // Skip external requests (analytics, fonts CDN, etc.)
-  if (!url.origin.includes(self.location.origin)) return;
+  // Skip external requests (analytics, fonts CDN, etc.). An exact match: a
+  // substring test also let look-alike hosts such as
+  // emredursun.nl.example.com through.
+  if (url.origin !== self.location.origin) return;
 
   // Cache-first for static assets
   if (isStaticAsset(url.pathname)) {
