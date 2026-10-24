@@ -1,0 +1,22 @@
+# Build and test output
+dist/
+coverage/
+reports/
+playwright-report/
+test-results/
+.lighthouseci/
+.lighthouseci-mobile/
+
+# Written by build scripts; CI checks they match what the scripts produce
+public/sitemap.xml
+scripts/sitemap-state.json
+profile/
+
+# Not ours to format
+package-lock.json
+assets-archive/
+dev-tools/
+
+# Prose and pages: tables and the static app shell are laid out by hand
+*.md
+*.html
