@@ -11,6 +11,7 @@ import Tilt3D from "./Tilt3D.tsx";
 import { useScrollReveal } from "./hooks/useScrollReveal.tsx";
 import ServiceDetailPanel from "./ServiceDetailPanel.tsx";
 import SEO from "./SEO.tsx";
+import NotFound from "./NotFound.tsx";
 
 const BentoCard: React.FC<{
   children: React.ReactNode;
@@ -186,7 +187,9 @@ const ServiceItem: React.FC<{ service: ExtendedService; onClick: () => void }> =
 };
 
 const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) => {
-  const { t, i18n } = useTranslation('about');
+  // useSuspense is off app-wide, so this renders before the namespace has
+  // loaded; `ready` gates everything that needs the translated services.
+  const { t, i18n, ready } = useTranslation('about');
   const { serviceSlug } = useParams<{ serviceSlug?: string }>();
   const navigate = useLanguageNavigate();
   const headerRef = useRef<HTMLElement>(null);
@@ -207,26 +210,36 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
   // Get translated services
   const translatedServices = useMemo(() => {
     const serviceKeys = ['pegaPlatform', 'toscaAutomation', 'testAutomation', 'cicd', 'apiBackend', 'webDev', 'ecommerce', 'aiGovernance'] as const;
-    return SERVICES.map((service, index) => ({
-      ...service,
-      title: t(`services.${serviceKeys[index]}.title`),
-      description: t(`services.${serviceKeys[index]}.description`),
-      badge: t(`services.${serviceKeys[index]}.badge`),
-      expertiseLabel: t(`services.${serviceKeys[index]}.expertiseLabel`, { defaultValue: service.expertiseLabel || '' }),
-      originalBadge: service.badge, // Preserve original badge for conditional logic
-      fullDescription: t(`services.${serviceKeys[index]}.fullDescription`),
-      keyBenefits: t(`services.${serviceKeys[index]}.keyBenefits`, { returnObjects: true }) as string[],
-    }));
+    return SERVICES.map((service, index) => {
+      // Before the namespace loads, returnObjects yields the key string, and
+      // a direct visit to /about/<slug> crashed on keyBenefits.map().
+      const keyBenefits = t(`services.${serviceKeys[index]}.keyBenefits`, { returnObjects: true });
+      return {
+        ...service,
+        title: t(`services.${serviceKeys[index]}.title`),
+        description: t(`services.${serviceKeys[index]}.description`),
+        badge: t(`services.${serviceKeys[index]}.badge`),
+        expertiseLabel: t(`services.${serviceKeys[index]}.expertiseLabel`, { defaultValue: service.expertiseLabel || '' }),
+        originalBadge: service.badge, // Preserve original badge for conditional logic
+        fullDescription: t(`services.${serviceKeys[index]}.fullDescription`),
+        keyBenefits: Array.isArray(keyBenefits) ? (keyBenefits as string[]) : service.keyBenefits,
+      };
+    });
   }, [t]);
 
+  // Derived during render (not from selectedService state) so a direct visit
+  // to /about/<slug> gets the service's title on the first paint.
+  const activeService = serviceSlug && ready ? translatedServices.find(s => s.slug === serviceSlug) : undefined;
+  const isUnknownSlug = Boolean(serviceSlug) && !SERVICES.some(s => s.slug === serviceSlug);
+
   useEffect(() => {
-    if (serviceSlug && translatedServices.length > 0) {
+    if (serviceSlug && ready) {
       const service = translatedServices.find(s => s.slug === serviceSlug);
       setSelectedService(service || null);
     } else if (!serviceSlug) {
       setSelectedService(null);
     }
-  }, [serviceSlug, translatedServices]);
+  }, [serviceSlug, translatedServices, ready]);
 
   useGSAP((context) => {
     // 1. Service Cards Stagger - animate immediately without scroll trigger
@@ -265,15 +278,22 @@ const About: React.FC<{ onNavigate?: (page: Page) => void }> = ({ onNavigate }) 
 
   }, []); // Empty dependency array - run once on mount
 
+  if (isUnknownSlug) return <NotFound />;
 
   return (
     <section ref={containerRef} className="animate-fade-in">
-      {/* No title: About is the landing page, so it carries the full site
-          title. It used to pass t('title') with overrideTitle, which made the
-          most important page appear in search results and tabs as just
-          "About" / "Kısaca" / "Over". */}
+      {/* No title on /about itself: it is the landing page, so it carries the
+          full site title. It used to pass t('title') with overrideTitle, which
+          made the most important page appear in search results and tabs as
+          just "About" / "Kısaca" / "Over". A service URL (/about/<slug>) is
+          its own page in the sitemap and gets the service's title and
+          summary, so the eight of them are not duplicates of /about. */}
       <SEO
-        description={t('meta.description', "QA Consultant in the Sopra Steria Pega Practice, specializing in Pega platform architecture and Tricentis Tosca model-based test automation.")}
+        title={activeService?.title}
+        description={
+          activeService?.description ??
+          t('meta.description', "QA Consultant in the Sopra Steria Pega Practice, specializing in Pega platform architecture and Tricentis Tosca model-based test automation.")
+        }
       />
       <motion.header
         ref={headerRef}

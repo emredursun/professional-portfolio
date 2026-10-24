@@ -45,6 +45,42 @@ test.describe('projects', () => {
     await expect(page.getByText(/AegisQA/).first()).toBeVisible();
     await expect(page).toHaveTitle(/AegisQA/);
   });
+
+  test('opening and closing a project on /nl/projects stays in Dutch', async ({ page }) => {
+    await page.goto('/nl/projects');
+    await page.getByText('Quilyn — Certification Exam Prep').first().click();
+    await expect(page).toHaveURL(/\/nl\/projects\/quilyn-exam-prep$/);
+
+    await expect(async () => {
+      await page.keyboard.press('Escape');
+      await expect(page).toHaveURL(/\/nl\/projects$/, { timeout: 1000 });
+    }).toPass();
+  });
+
+  test('an unknown project slug shows the not-found page', async ({ page }) => {
+    await page.goto('/tr/projects/no-such-project');
+    await expect(page.getByRole('heading', { level: 2, name: copy('tr', 'common').notFound.title })).toBeVisible();
+    await expect(page).toHaveURL(/\/tr\/projects\/no-such-project$/);
+  });
+});
+
+test.describe('services', () => {
+  test('a service URL is its own page with its own title and description', async ({ page }) => {
+    const service = copy('en', 'about').services.pegaPlatform;
+    await page.goto('/about/pega-platform-architecture');
+    await expect(page).toHaveTitle(new RegExp(service.title));
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', service.description);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://emredursun.nl/about/pega-platform-architecture',
+    );
+  });
+
+  test('an unknown service slug shows the not-found page', async ({ page }) => {
+    await page.goto('/about/no-such-service');
+    await expect(page.getByRole('heading', { level: 2, name: copy('en', 'common').notFound.title })).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
+  });
 });
 
 test.describe('theme', () => {

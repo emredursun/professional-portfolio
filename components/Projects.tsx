@@ -1,10 +1,12 @@
 import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from "react";
 import { useTranslation } from 'react-i18next';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Project } from "../types.ts";
 import { PROJECTS } from "../constants.tsx";
 import ProjectModal from "./ProjectModal.tsx";
+import NotFound from "./NotFound.tsx";
 import { useTranslatedProjects, useTranslatedProject } from "./hooks/useTranslatedProject.tsx";
+import { useLanguageNavigate } from "./hooks/useLanguageNavigate.tsx";
 import SEO from "./SEO.tsx";
 
 // Renders technology chips capped to a maximum number of rows, collapsing the
@@ -156,7 +158,10 @@ const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const { slug } = useParams();
-  const navigate = useNavigate();
+  // Locale-aware: a plain useNavigate() sent /nl and /tr visitors who opened
+  // or closed a project back to the English URLs.
+  const navigate = useLanguageNavigate();
+  const isUnknownSlug = Boolean(slug) && !PROJECTS.some(p => p.slug === slug);
 
   // Get translated projects
   const translatedProjects = useTranslatedProjects(PROJECTS);
@@ -166,20 +171,10 @@ const Projects: React.FC = () => {
   const technologyRef = useRef<HTMLDivElement>(null);
 
   // Handle Project Selection via URL
+  // An unknown slug renders the "not found" view below rather than redirecting.
   useEffect(() => {
-    if (slug) {
-      const project = PROJECTS.find(p => p.slug === slug);
-      if (project) {
-        setSelectedProject(project);
-      } else {
-        // Invalid slug, navigate back to projects list
-        navigate('/projects', { replace: true });
-        setSelectedProject(null);
-      }
-    } else {
-      setSelectedProject(null);
-    }
-  }, [slug, navigate]);
+    setSelectedProject(PROJECTS.find(p => p.slug === slug) ?? null);
+  }, [slug]);
 
   // Update URL on Project Selection
   const handleProjectClick = (project: Project) => {
@@ -277,6 +272,8 @@ const Projects: React.FC = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  if (isUnknownSlug) return <NotFound />;
 
   return (
     <section className="animate-fade-in h-full flex flex-col">
