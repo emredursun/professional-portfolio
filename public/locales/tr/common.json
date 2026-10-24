@@ -42,5 +42,33 @@
     "description": "Bu bağlantı sitede bir sayfaya çıkmıyor. Taşınmış olabilir ya da adreste bir yazım hatası olabilir.",
     "home": "Hakkımda sayfasına git",
     "projects": "Projelere göz at"
+  },
+  "quality": {
+    "title": "Kalite raporu",
+    "headingHighlight": "Kalite ",
+    "headingRest": "Raporu",
+    "subtitle": "Her deploy'da CI'dan",
+    "meta": {
+      "description": "emredursun.nl nasıl test ediliyor: her deploy'un arkasındaki CI çalışmasından unit, uçtan uca, erişilebilirlik, performans ve güvenlik kontrolleri."
+    },
+    "lines": {
+      "unit": "{{passed}} geçti · coverage %{{coverage}}",
+      "e2e": "{{passed}} geçti · desktop + mobil",
+      "a11y": "{{violations}} axe ihlali · WCAG 2.1 AA",
+      "lighthouse": "perf {{performance}} · a11y {{accessibility}} · seo {{seo}}",
+      "security": "sıkı CSP · {{advisories}} runtime güvenlik uyarısı"
+    },
+    "summary": "{{passed}} geçti · {{failed}} başarısız · {{flaky}} flaky",
+    "metrics": {
+      "coverage": "Coverage",
+      "coverageValue": "%{{value}}",
+      "performance": "Performans",
+      "monitoring": "Uptime kontrolü",
+      "monitoringValue": "30 dakikada bir"
+    },
+    "unavailable": "Son rapora şu an ulaşılamıyor.",
+    "footnote": "Her yayında otomatik olarak güncellenir.",
+    "entryTitle": "Kalite raporu",
+    "entrySubtitle": "Her yayında doğrulanır"
   }
 }

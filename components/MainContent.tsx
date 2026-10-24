@@ -10,6 +10,7 @@ const loaders = {
   resume: () => import('./Resume.tsx'),
   projects: () => import('./Projects.tsx'),
   contact: () => import('./Contact.tsx'),
+  quality: () => import('./Quality.tsx'),
 };
 
 /**
@@ -27,6 +28,7 @@ const About = lazy(loaders.about);
 const Resume = lazy(loaders.resume);
 const Projects = lazy(loaders.projects);
 const Contact = lazy(loaders.contact);
+const Quality = lazy(loaders.quality);
 const NotFound = lazy(() => import('./NotFound.tsx'));
 
 interface MainContentProps {
@@ -55,6 +57,7 @@ const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView, onN
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:slug" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/quality" element={<Quality />} />
 
           {/*
             Localised routes are enumerated per language instead of using a
@@ -72,6 +75,7 @@ const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView, onN
               <Route path={`/${locale}/projects`} element={<Projects />} />
               <Route path={`/${locale}/projects/:slug`} element={<Projects />} />
               <Route path={`/${locale}/contact`} element={<Contact />} />
+              <Route path={`/${locale}/quality`} element={<Quality />} />
             </React.Fragment>
           ))}
 

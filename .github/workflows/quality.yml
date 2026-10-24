@@ -24,8 +24,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # The JSON copy feeds the /quality page (scripts/write-quality.js).
       - name: Dependency audit (runtime)
-        run: npm audit --omit=dev --audit-level=moderate
+        run: |
+          mkdir -p reports
+          npm audit --omit=dev --json > reports/audit.json || true
+          npm audit --omit=dev --audit-level=moderate
 
       - name: Typecheck (strict)
         run: npm run typecheck
@@ -62,6 +66,11 @@ jobs:
       - name: Lighthouse budgets
         run: npx --yes @lhci/cli@0.15.1 autorun
 
+      # dist/quality.json for the /quality page, from this run's reports.
+      # After every gate, so it can only describe a run that passed them.
+      - name: Quality report
+        run: node scripts/write-quality.js
+
       - name: Upload build
         uses: actions/upload-artifact@v4
         with:
@@ -78,4 +87,5 @@ jobs:
             playwright-report
             coverage
             .lighthouseci
+            reports
           retention-days: 14

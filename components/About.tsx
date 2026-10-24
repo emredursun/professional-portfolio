@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import { useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { localePrefix, useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
 import gsap from "gsap";
 import { useGSAP } from "./hooks/useGSAP.tsx";
 import { Service, Page } from "../types.ts";
@@ -208,6 +208,7 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
   const { t, i18n, ready } = useTranslation('about');
   const { serviceSlug } = useParams<{ serviceSlug?: string }>();
   const navigate = useLanguageNavigate();
+  const { pathname } = useLocation();
   const headerRef = useRef<HTMLElement>(null);
   const isHeaderVisible = useScrollReveal(headerRef, { threshold: 0.2 });
   
@@ -446,6 +447,29 @@ const AboutPage: React.FC<AboutProps> = ({ onNavigate }) => {
                       {badge.text}
                     </motion.div>
                   ))}
+                  {/*
+                    Proof next to the claims: a verification card (the trust
+                    and status pattern of Stripe or Vercel) leading to the CI
+                    report behind this site. The live dot pulses only when
+                    motion is allowed.
+                  */}
+                  <Link
+                    to={`${localePrefix(pathname)}/quality`}
+                    className="group/verify mt-1 flex w-full items-center gap-3 rounded-xl dark:rounded-none border border-emerald-500/40 bg-white/90 px-3.5 py-2.5 text-left shadow-[0_4px_16px_rgba(16,185,129,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-500 hover:shadow-[0_10px_28px_rgba(16,185,129,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-emerald-400/55 dark:bg-emerald-400/[0.06] dark:shadow-[0_0_14px_rgba(52,211,153,0.15)] dark:hover:border-emerald-400 dark:hover:shadow-[0_0_24px_rgba(52,211,153,0.3)]"
+                  >
+                    <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 ring-1 ring-emerald-500/30 dark:text-emerald-400">
+                      <i aria-hidden="true" className="fas fa-shield-halved"></i>
+                      <span aria-hidden="true" className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5">
+                        <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 motion-safe:animate-ping"></span>
+                        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                      </span>
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-bold text-gray-900 dark:text-white">{t('quality.entryTitle', { ns: 'common' })}</span>
+                      <span className="block text-xs text-gray-600 dark:text-gray-400">{t('quality.entrySubtitle', { ns: 'common' })}</span>
+                    </span>
+                    <i aria-hidden="true" className="fas fa-chevron-right text-xs text-gray-500 transition-transform duration-300 group-hover/verify:translate-x-0.5 group-hover/verify:text-emerald-600 dark:text-gray-400 dark:group-hover/verify:text-emerald-400"></i>
+                  </Link>
                 </motion.div>
               </div>
             </BentoCard>

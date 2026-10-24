@@ -64,6 +64,10 @@ CI fails if the regenerated sitemap or profile README differs from what is commi
 
 The CV PDFs (`/cv/Emre-Dursun-CV-<lang>.pdf`) are not committed: CI renders them from the build on every deploy, so a content change reaches the PDF automatically. To check one locally: `npm run build && npm run generate:cv`, then open `dist/cv/`.
 
+## Quality report
+
+`/quality` reads `dist/quality.json`, which the last step of `quality.yml` writes from that run's Vitest, Playwright, Lighthouse and audit reports. If the page says the report isn't available, the deployed build has no complete `quality.json`: check that step in the deploy run. Locally: run the unit tests with coverage, the e2e suite and Lighthouse, write `reports/audit.json` with `npm audit --omit=dev --json`, then `node scripts/write-quality.js`.
+
 ## Search Console
 
 The domain is verified in Google Search Console through DNS (the `google-site-verification` TXT records), so nothing in the HTML is needed.

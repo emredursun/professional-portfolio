@@ -85,6 +85,10 @@ function titleAndDescription({ route, lang, constants, locales }) {
             description: t('about', `services.${key}.description`),
         };
     }
+    if (section === 'quality') {
+        // Its strings live in common.json, so the page costs no extra locale file.
+        return { title: `${t('common', 'quality.title')} | Emre Dursun`, description: t('common', 'quality.meta.description') };
+    }
     if (section === 'projects' && slug) {
         const project = constants.PROJECTS.find(item => item.slug === slug);
         const key = constants.PROJECT_TRANSLATION_KEYS[slug];

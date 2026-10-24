@@ -14,7 +14,12 @@ export default defineConfig({
   forbidOnly: isCI,
   retries: isCI ? 2 : 0,
   workers: isCI ? 2 : undefined,
-  reporter: isCI ? [['github'], ['html', { open: 'never' }]] : [['list'], ['html', { open: 'never' }]],
+  // The JSON report feeds dist/quality.json (scripts/write-quality.js).
+  reporter: [
+    isCI ? ['github'] : ['list'],
+    ['html', { open: 'never' }],
+    ['json', { outputFile: 'reports/playwright.json' }],
+  ],
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',

@@ -194,8 +194,8 @@ describe('writeSitemap (end to end on a temp directory)', () => {
     const statePath = path.join(dir, 'state.json');
 
     const first = writeSitemap({ outputPath, statePath, now: OLD });
-    expect(first).toMatchObject({ sitemapWritten: true, urls: 15, alternates: 60 });
-    expect(first.changed).toEqual(['/', '/about', '/resume', '/projects', '/contact']);
+    expect(first).toMatchObject({ sitemapWritten: true, urls: 18, alternates: 72 });
+    expect(first.changed).toEqual(['/', '/about', '/resume', '/projects', '/contact', '/quality']);
 
     const second = writeSitemap({ outputPath, statePath, now: NOW });
     expect(second.sitemapWritten).toBe(false);
@@ -224,7 +224,7 @@ describe('writeSitemap (end to end on a temp directory)', () => {
     const routes = [...STATIC_ROUTES, '/projects/aegisqa'];
 
     const run = writeSitemap({ routes, outputPath, statePath, now: OLD });
-    expect(run).toMatchObject({ urls: 18, alternates: 72 });
+    expect(run).toMatchObject({ urls: 21, alternates: 84 });
     expect(run.changed).toContain('/projects/aegisqa');
   });
 });

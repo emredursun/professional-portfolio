@@ -46,7 +46,7 @@ const STATE_PATH = path.join(__dirname, 'sitemap-state.json');
 const LANGUAGES = ['en', 'tr', 'nl'];
 
 // Top-level routes, in sitemap order. Detail pages are appended by listRoutes().
-export const STATIC_ROUTES = ['', '/about', '/resume', '/projects', '/contact'];
+export const STATIC_ROUTES = ['', '/about', '/resume', '/projects', '/contact', '/quality'];
 
 /**
  * Every route to publish: the static pages, then one detail page per service
@@ -73,6 +73,7 @@ const ROUTE_NAMESPACES = {
     '/resume': 'resume',
     '/projects': 'projects',
     '/contact': 'contact',
+    '/quality': 'common',
 };
 
 function namespaceForRoute(route) {

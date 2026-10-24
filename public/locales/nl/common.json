@@ -42,5 +42,33 @@
     "description": "Deze link leidt nergens naartoe op deze site. Hij is mogelijk verplaatst, of het adres bevat een typfout.",
     "home": "Naar Over mij",
     "projects": "Projecten bekijken"
+  },
+  "quality": {
+    "title": "Kwaliteitsrapport",
+    "headingHighlight": "Kwaliteits",
+    "headingRest": "rapport",
+    "subtitle": "Uit CI bij elke deploy",
+    "meta": {
+      "description": "Hoe emredursun.nl wordt getest: unit-, end-to-end-, toegankelijkheids-, performance- en securitychecks uit de CI-run achter elke deploy."
+    },
+    "lines": {
+      "unit": "{{passed}} geslaagd · coverage {{coverage}}%",
+      "e2e": "{{passed}} geslaagd · desktop + mobiel",
+      "a11y": "{{violations}} axe-schendingen · WCAG 2.1 AA",
+      "lighthouse": "perf {{performance}} · a11y {{accessibility}} · seo {{seo}}",
+      "security": "strikte CSP · {{advisories}} runtime-advisories"
+    },
+    "summary": "{{passed}} geslaagd · {{failed}} mislukt · {{flaky}} flaky",
+    "metrics": {
+      "coverage": "Coverage",
+      "coverageValue": "{{value}}%",
+      "performance": "Performance",
+      "monitoring": "Uptime-check",
+      "monitoringValue": "elke 30 min"
+    },
+    "unavailable": "Het laatste rapport is nu niet beschikbaar.",
+    "footnote": "Wordt bij elke release automatisch bijgewerkt.",
+    "entryTitle": "Kwaliteitsrapport",
+    "entrySubtitle": "Bij elke release geverifieerd"
   }
 }

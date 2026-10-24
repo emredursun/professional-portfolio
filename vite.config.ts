@@ -47,6 +47,9 @@ export default defineConfig(() => {
         include: ['tests/**/*.test.{ts,tsx}'],
         setupFiles: ['tests/setup.ts'],
         restoreMocks: true,
+        // The JSON report feeds dist/quality.json (scripts/write-quality.js).
+        reporters: ['default', 'json'],
+        outputFile: { json: 'reports/vitest.json' },
         coverage: {
           provider: 'v8',
           reporter: ['text', 'html', 'json-summary'],
@@ -57,6 +60,7 @@ export default defineConfig(() => {
             'scripts/generate-sitemap.js',
             'scripts/generate-profile-readme.js',
             'scripts/write-version.js',
+            'scripts/write-quality.js',
             'src/utils/errorReporting.ts',
             'src/utils/decor.ts',
             'src/bootstrap.ts',
