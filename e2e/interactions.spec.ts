@@ -715,6 +715,25 @@ test.describe('the page keeps its place behind an overlay', () => {
   });
 });
 
+test.describe('a filtered project list survives opening a project', () => {
+  // Opening a project dropped ?category from the URL, which clears the
+  // filter, so closing it showed every project again.
+  test('closing a project returns to the same filtered list', async ({ page }) => {
+    await page.goto('/projects?category=Test%20Automation');
+    const quilyn = page.getByRole('link', { name: /^Quilyn/ });
+    const card = page.getByRole('link', { name: 'QASmartTestLab', exact: true });
+    await expect(card).toBeVisible();
+    await expect(quilyn).toHaveCount(0);
+    await card.click();
+    await expect(page.locator('[data-modal-content]')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('[data-modal-content]')).toBeHidden();
+    await expect(page).toHaveURL(/\/projects\?category=Test(%20|\+)Automation$/);
+    await expect(card).toBeVisible();
+    await expect(quilyn).toHaveCount(0);
+  });
+});
+
 test.describe('focus trap across layout changes', () => {
   // Crossing the 1024px breakpoint moves an open overlay between the content
   // card's layer and <body>, so React rebuilds its DOM. The trap stayed bound

@@ -25,6 +25,14 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
   const [panel, setPanel] = useState<HTMLDivElement | null>(null);
   useFocusTrap(panel, !!service);
 
+  // Paging to another service keeps the panel open; start it at the top so
+  // the new service is read from its title, not from where the last one
+  // was scrolled to.
+  const slug = service?.slug;
+  useEffect(() => {
+    if (slug) panel?.scrollTo({ top: 0 });
+  }, [panel, slug]);
+
   // Escape closes, the arrow keys page - only while this panel is the open
   // overlay on top (it listened even when closed: Escape on /about navigated).
   useEffect(() => {
