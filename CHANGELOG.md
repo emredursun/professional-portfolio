@@ -4,7 +4,16 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 
 ## [Unreleased]
 
-Post-launch hardening from the follow-up reviews. Branch `fix/post-launch-hardening`, not yet deployed.
+### Added
+- Dutch and Turkish text for Quilyn, PathForge, Devran AI Kit, DeelMarkt, BeSync and AegisQA. Their cards, detail pages and shared-link previews were English on the Dutch and Turkish pages. A unit test fails if a project has no translation, or a list that differs in length from the English one.
+- Each project page describes its project in structured data (`SoftwareSourceCode` with its repository, or `CreativeWork`), generated from the same data as the page. The site-wide graph had a hand-kept list of three projects from 2020–2023 instead.
+
+### Fixed
+- The Medunna project showed four of its five highlights in Dutch and Turkish; "Full Agile Lifecycle" was missing.
+
+## 2026-10-25 — post-launch hardening
+
+Post-launch hardening from the follow-up reviews, merged in pull request #9.
 
 ### Added
 - The Tricentis Testim Product Consultant certificate (Advanced, C26857, valid until September 2028) on the Tosca card, next to the Tosca certificate; its line in the Tosca benefits now shows in all three languages.
