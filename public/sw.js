@@ -6,7 +6,11 @@
 // until the cache name changes and the activate handler purges the previous one.
 // v3: new profile photo, regenerated social-share.png, updated precache list.
 // v4: switched avatar to portfolio-pic-1.jpeg, updated precache list.
-const CACHE_NAME = 'ed-portfolio-v4';
+// v5: avatar served as a 400px WebP, favicons and OG image re-encoded at the
+//     same filenames, so the old bytes must be purged.
+// v6: portrait renamed to emre-dursun-qa-consultant-400.webp (image SEO).
+const CACHE_PREFIX = 'ed-portfolio-';
+const CACHE_NAME = `${CACHE_PREFIX}v6`;
 const OFFLINE_URL = '/';
 
 // Assets to cache immediately on install
@@ -16,35 +20,38 @@ const PRECACHE_ASSETS = [
   '/site.webmanifest',
   '/favicon-32x32.png',
   '/favicon-96x96.png',
-  '/images/portfolio-pic-1.jpeg',
-  '/images/social-share.png'
+  '/images/emre-dursun-qa-consultant-400.webp',
+  '/images/social-share.png',
 ];
 
 // Install event - precache critical assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches
+      .open(CACHE_NAME)
       .then((cache) => {
-        console.log('[SW] Precaching critical assets');
         return cache.addAll(PRECACHE_ASSETS);
       })
-      .then(() => self.skipWaiting())
+      .then(() => self.skipWaiting()),
   );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames
-          .filter((name) => name !== CACHE_NAME)
-          .map((name) => {
-            console.log('[SW] Deleting old cache:', name);
-            return caches.delete(name);
-          })
-      );
-    }).then(() => self.clients.claim())
+    caches
+      .keys()
+      .then((cacheNames) => {
+        return Promise.all(
+          // Only this app's older caches; anything else on the origin is not ours.
+          cacheNames
+            .filter((name) => name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME)
+            .map((name) => {
+              return caches.delete(name);
+            }),
+        );
+      })
+      .then(() => self.clients.claim()),
   );
 });
 
@@ -56,8 +63,10 @@ self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (request.method !== 'GET') return;
 
-  // Skip external requests (analytics, fonts CDN, etc.)
-  if (!url.origin.includes(self.location.origin)) return;
+  // Skip external requests (analytics, fonts CDN, etc.). An exact match: a
+  // substring test also let look-alike hosts such as
+  // emredursun.nl.example.com through.
+  if (url.origin !== self.location.origin) return;
 
   // Cache-first for static assets
   if (isStaticAsset(url.pathname)) {
@@ -80,7 +89,7 @@ async function cacheFirst(request) {
   if (cachedResponse) {
     return cachedResponse;
   }
-  
+
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
@@ -103,12 +112,12 @@ async function networkFirst(request) {
       cache.put(request, networkResponse.clone());
     }
     return networkResponse;
-  } catch (error) {
+  } catch {
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
       return cachedResponse;
     }
-    
+
     // Fallback to cached homepage for navigation requests
     if (request.mode === 'navigate') {
       const cachedHome = await caches.match(OFFLINE_URL);
@@ -116,7 +125,7 @@ async function networkFirst(request) {
         return cachedHome;
       }
     }
-    
+
     return new Response('Offline', { status: 503 });
   }
 }

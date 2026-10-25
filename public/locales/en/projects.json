@@ -6,6 +6,7 @@
     "technologies": "Technologies",
     "clearFilters": "Clear Filters",
     "activeFilters": "Active filters:",
+    "removeFilter": "Remove filter: {{name}}",
     "selected": "{{count}} selected",
     "showingResults": "Showing {{count}} project",
     "showingResults_plural": "Showing {{count}} projects",
@@ -56,49 +57,49 @@
       "role": "Lead Automation Engineer",
       "team": "Solo Project",
       "duration": "4 months",
-      "description": "A comprehensive test automation framework built with Java 17+, Selenium 4, and Cucumber for UI, API, and database testing with clean architecture and runtime configuration.",
-      "detailedDescription": "QASmartTestLab is a production-ready test automation framework demonstrating best practices in test automation. Built with Java 17+, Selenium 4, and Cucumber (JVM), it provides a clean, maintainable structure for UI, API, and database testing. The framework features runtime configuration for browsers (Chrome, Firefox, Edge), headless execution, remote Grid/Selenoid support, and comprehensive reporting. Following the Page Object Model pattern with clear separation of concerns, it includes configurable timeouts, parallel execution capabilities, and tag-based test filtering for flexible test management.",
+      "description": "A Java 17 test automation framework on Selenium 4 and Cucumber 7: thread-safe parallel scenarios, local or remote Grid runs, and HTML, JSON and JUnit reports from every run.",
+      "detailedDescription": "QASmartTestLab is a Cucumber (JVM) framework built on Selenium 4 and JUnit 5. Cucumber runs scenarios in parallel with a dynamic strategy, and each thread gets its own WebDriver through a ThreadLocal factory, so scenarios never share a browser. The same suite runs on a local Chrome (drivers managed by WebDriverManager) or on a remote Selenium Grid or Selenoid, chosen at runtime with a system property or environment variable. Page objects, step definitions, runners and support classes are kept apart; tags select what runs, and every run writes HTML, JSON and JUnit XML reports plus a console summary. Feature suites cover UI login and incoming and outgoing payment messages with XML validation fixtures.",
       "challenge": "Test automation teams often struggle with framework complexity, poor maintainability, and lack of standardization across projects. Many frameworks become technical debt, difficult to understand for new team members, and hard to scale as the application grows.",
-      "solution": "Designed and built QASmartTestLab from the ground up with clean architecture principles, emphasizing separation of concerns, clear naming conventions, and comprehensive documentation. Implemented flexible runtime configuration allowing teams to switch browsers, environments, and execution modes without code changes. The Page Object Model pattern ensures easy maintenance, while tag-based filtering enables precise test execution control.",
+      "solution": "Built QASmartTestLab around a small set of clear rules: page objects for the UI, step definitions that only orchestrate, one WebDriver per thread, and configuration at runtime instead of in code. The suite switches between a local browser and a remote Grid with a single property, runs scenarios in parallel safely, and selects what to run with tags.",
       "metrics": [
-        "Multi-Layer Testing (UI, API, DB)",
-        "Parallel Execution Support",
-        "Remote Grid Integration",
-        "Clean Architecture & POM Pattern"
+        "Parallel Scenarios · Thread-Safe WebDriver",
+        "Local or Remote Grid/Selenoid Runs",
+        "4 Report Formats per Run",
+        "Page Object Model · Tag-Based Runs"
       ],
       "features": {
         "multiLayer": {
-          "title": "Multi-Layer Testing",
-          "description": "Comprehensive coverage across UI (Selenium), API (REST Assured), and database (JDBC) layers within a single unified framework."
+          "title": "Payment Flow Features",
+          "description": "Cucumber suites for UI login and for incoming and outgoing payment messages, with XML validation fixtures per scenario."
         },
         "runtimeConfig": {
           "title": "Runtime Configuration",
-          "description": "Dynamic browser selection, headless mode, and remote Grid/Selenoid integration—all configurable at runtime without touching code."
+          "description": "Local Chrome or a remote Selenium Grid/Selenoid, chosen with a system property or environment variable; WebDriverManager handles the drivers."
         },
         "cleanArch": {
           "title": "Clean Architecture",
-          "description": "Page Object Model with clear separation: pages, steps, runners, utilities. Every component has a single responsibility."
+          "description": "Page objects, step definitions, runners and support classes kept apart, each with a single responsibility."
         },
         "parallel": {
           "title": "Parallel Execution",
-          "description": "Tag-based filtering and parallel thread support for faster feedback cycles. Run smoke tests in minutes, full regression overnight."
+          "description": "Cucumber runs scenarios in parallel (dynamic strategy) with a ThreadLocal WebDriver per thread, so scenarios never share a browser."
         }
       },
       "results": {
-        "speed": {
-          "metric": "Test Execution Speed",
-          "value": "60% faster",
-          "description": "Parallel execution reduced full regression time from 2 hours to 48 minutes"
+        "formats": {
+          "metric": "Report formats",
+          "value": "4",
+          "description": "HTML, JSON, JUnit XML and a console summary from every run"
         },
-        "maintainability": {
-          "metric": "Code Maintainability",
-          "value": "85% reduction",
-          "description": "POM pattern reduced test maintenance effort and increased team velocity"
+        "targets": {
+          "metric": "Execution targets",
+          "value": "2",
+          "description": "Local Chrome or a remote Selenium Grid/Selenoid, switched without code changes"
         },
-        "adoption": {
-          "metric": "Framework Adoption",
-          "value": "100+ stars",
-          "description": "GitHub repository gained traction in the QA automation community"
+        "parallel": {
+          "metric": "Parallelism",
+          "value": "Per scenario",
+          "description": "A thread-safe WebDriver lets Cucumber run scenarios concurrently"
         }
       }
     },
@@ -178,13 +179,14 @@
       "description": "TTC is a specialized framework that automates transactional testing in the Dovetail system, a Fiserv payment platform that handles real-time payment processing.",
       "detailedDescription": "TTC is a specialized framework that automates transactional testing in the Dovetail system, a Fiserv payment platform that handles real-time payment processing. The framework manages end-to-end transactional test automation for Dovetail payments and integrates with the ING Test Center (ITC) execution engine—a web application with a GUI for visualizing, executing, and managing test cases. It functions as a library using Selenium/Cucumber with regression test scenarios that run daily in the DEV5 test environment, verifying transaction accuracy across both incoming and outgoing processes. As an Automation Test Engineer, I designed and maintained these automated end-to-end regression tests, ensuring transaction accuracy across international branches.",
       "metrics": [
-        "End-to-End Transactional Automation",
-        "Daily Regression in DEV5 Env",
+        "850 Automated Payment Scenarios",
+        "Full Run + Report: Days → 3–5 Hours",
         "Multi-Country: BE, IT, HU, SK",
-        "Integrated with ING Test Center (ITC)"
+        "Integrated with ING Test Center (ITC)",
+        "Daily Regression in DEV5 Env"
       ],
-      "challenge": "International banking payment systems require rigorous testing across multiple countries with different regulations. Manual testing is time-consuming and prone to human error in complex transaction flows.",
-      "solution": "Designed and implemented automated end-to-end regression tests for the Dovetail payment platform, integrating with ING Test Center for daily execution. Created country-specific test validations for EPP and non-EPP payment flows.",
+      "challenge": "ING's TIP Test Center ran around 400 end-to-end payment scenarios for the Dovetail platform on a legacy setup. A complete regression run, with its reporting, took several days, which slowed down every Dovetail release and every country rollout.",
+      "solution": "Onboarded the 400 legacy scenarios onto the new TTC framework (Selenium, Cucumber and Java on the ING Test Center execution engine) and added 450 new ones, including FFV validations for EPP and non-EPP payment flows per country. Optimized the framework and its test data so the full suite runs daily in DEV5.",
       "features": {
         "validation": {
           "title": "Test Validation Development",
@@ -201,6 +203,23 @@
         "stakeholder": {
           "title": "Stakeholder Support",
           "description": "Providing technical guidance to development teams, feature squads, and other stakeholders during the onboarding process."
+        }
+      },
+      "results": {
+        "scenarios": {
+          "metric": "Automated scenarios",
+          "value": "850",
+          "description": "400 legacy scenarios migrated to the new framework, plus 450 new ones onboarded"
+        },
+        "runtime": {
+          "metric": "Full run and reporting",
+          "value": "3–5 h",
+          "description": "Down from several days for a complete regression run and its report"
+        },
+        "countries": {
+          "metric": "Country rollouts",
+          "value": "4",
+          "description": "Belgium, Italy, Hungary and Slovakia covered by country-specific validations"
         }
       }
     },

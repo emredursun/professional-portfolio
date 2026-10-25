@@ -10,8 +10,8 @@
     "downloadCV": "Download CV",
     "sendMessage": "Send Message",
     "sending": "Sending...",
-    "tryAgain": "Try Again",
-    "close": "Close"
+    "close": "Close",
+    "learnMore": "Learn More"
   },
   "statusBadge": {
     "openToWork": "#OPENTOWORK",
@@ -30,9 +30,132 @@
     "email": "Email",
     "phone": "Phone",
     "location": "Location",
-    "locationValue": "Nieuwegein, Netherlands"
+    "locationValue": "Nieuwegein (Sopra Steria) · Hybrid",
+    "pageContent": "Page content",
+    "skipToContent": "Skip to content",
+    "changeLanguage": "Change language",
+    "toggleTheme": "Toggle theme",
+    "scrollToTop": "Scroll to top",
+    "closeLightbox": "Close lightbox",
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "previousProject": "Previous Project",
+    "nextProject": "Next Project",
+    "shareProject": "Share project",
+    "closeProject": "Close project details",
+    "followOn": "Follow me on {{name}}",
+    "searchShortcut": "Search (⌘K)"
   },
   "meta": {
     "description": "QA Consultant specializing in Pega & Tricentis Tosca test automation, ISTQB® Certified. Based in the Netherlands."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This link doesn't lead anywhere on this site. It may have moved, or the address may contain a typo.",
+    "home": "Go to About",
+    "projects": "Browse projects"
+  },
+  "quality": {
+    "title": "Quality report",
+    "headingHighlight": "Quality ",
+    "headingRest": "Report",
+    "subtitle": "From CI on every deploy",
+    "meta": {
+      "description": "How emredursun.nl is tested: unit, end-to-end, accessibility, performance and security checks from the CI run behind every deploy."
+    },
+    "lines": {
+      "unit": "{{passed}} passed · coverage {{coverage}}%",
+      "e2e": "{{passed}} passed · desktop + mobile",
+      "a11y": "{{violations}} axe violations · WCAG 2.1 AA",
+      "lighthouse": "perf {{performance}} · a11y {{accessibility}} · seo {{seo}}",
+      "security": "strict CSP · {{advisories}} runtime advisories",
+      "securityRelaxed": "CSP allows inline scripts · {{advisories}} runtime advisories"
+    },
+    "summary": "{{passed}} passed · {{failed}} failed · {{flaky}} flaky",
+    "metrics": {
+      "coverage": "Coverage",
+      "coverageValue": "{{value}}%",
+      "performance": "Performance",
+      "monitoring": "Uptime check",
+      "monitoringValue": "every 30 min"
+    },
+    "unavailable": "The latest report isn't available right now.",
+    "footnote": "Updated automatically on every release.",
+    "entryTitle": "Quality report",
+    "entrySubtitle": "Verified on every release",
+    "status": {
+      "passed": "passed",
+      "failed": "failed"
+    },
+    "entryAction": "View report"
+  },
+  "palette": {
+    "dialog": "Command palette",
+    "placeholder": "Type a command or search...",
+    "search": "Search commands",
+    "clear": "Clear search",
+    "list": "Commands",
+    "recent": "Recent",
+    "empty": "No commands found",
+    "emptyHint": "Try a different search term",
+    "navigate": "Navigate",
+    "select": "Select",
+    "close": "Close",
+    "count_one": "{{count}} command",
+    "count_other": "{{count}} commands",
+    "categories": {
+      "Navigation": "Navigation",
+      "Actions": "Actions",
+      "Theme": "Theme",
+      "Projects": "Projects"
+    },
+    "commands": {
+      "navAbout": {
+        "label": "Go to About",
+        "description": "View profile and services"
+      },
+      "navResume": {
+        "label": "Go to Resume",
+        "description": "View experience and education"
+      },
+      "navProjects": {
+        "label": "Go to Projects",
+        "description": "Browse portfolio projects"
+      },
+      "navContact": {
+        "label": "Go to Contact",
+        "description": "Get in touch"
+      },
+      "downloadResume": {
+        "label": "Download Resume",
+        "description": "Download PDF version"
+      },
+      "toggleTheme": {
+        "label": "Toggle Theme",
+        "description": "Switch between light and dark"
+      },
+      "lightTheme": {
+        "label": "Switch to Light Theme",
+        "description": "Enable light mode"
+      },
+      "darkTheme": {
+        "label": "Switch to Dark Theme",
+        "description": "Enable dark mode"
+      },
+      "scrollTop": {
+        "label": "Scroll to Top",
+        "description": "Return to top of page"
+      },
+      "copyEmail": {
+        "label": "Copy Email Address"
+      },
+      "copyLinkedIn": {
+        "label": "Copy LinkedIn URL",
+        "description": "Get LinkedIn profile link"
+      },
+      "viewProject": "View {{title}}",
+      "filterLabel": "Filter: {{category}}",
+      "filterDescription": "Show only {{category}} projects"
+    }
   }
 }

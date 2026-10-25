@@ -93,7 +93,7 @@ const Tilt3D: React.FC<Tilt3DProps> = ({
             e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
           }}
         />
-        
+
         {/* Content with 3D transform */}
         <div
           style={{

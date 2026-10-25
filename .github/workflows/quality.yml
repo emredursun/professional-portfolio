@@ -1,0 +1,106 @@
+# Quality gates shared by preview.yml (pull requests) and deploy.yml (main).
+# Nothing deploys unless every step here passes.
+name: Quality gates
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Typecheck, test, build, e2e, Lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The JSON copy feeds the /quality page (scripts/write-quality.js).
+      - name: Dependency audit (runtime)
+        run: |
+          mkdir -p reports
+          npm audit --omit=dev --json > reports/audit.json || true
+          npm audit --omit=dev --audit-level=moderate
+
+      - name: Typecheck (strict)
+        run: npm run typecheck
+
+      # typescript-eslint, react-hooks (incl. the React Compiler rules) and
+      # jsx-a11y; warnings fail the build too.
+      - name: Lint
+        run: npx eslint . --max-warnings=0
+
+      - name: Formatting (Prettier)
+        run: npm run format:check
+
+      - name: No unused files, exports or dependencies
+        run: npm run knip
+
+      - name: Unit tests with coverage gate
+        run: npm run test:coverage
+
+      - name: Build
+        run: npm run build
+
+      # prebuild regenerates the sitemap and the GitHub profile README from
+      # portfolio data. If either differs from the commit, someone changed
+      # content without committing the regenerated files.
+      - name: Generated files are committed
+        run: git diff --exit-code -- public/sitemap.xml scripts/sitemap-state.json profile/README.md
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      # Renders dist/cv/Emre-Dursun-CV-<lang>.pdf from the built print layout.
+      # Before the e2e step, which checks the files, and before the dist
+      # upload that deploy.yml ships.
+      - name: Generate CV PDFs
+        run: npm run generate:cv
+
+      - name: End-to-end tests
+        run: npm run test:e2e
+        env:
+          CI: true
+
+      # Mobile first: every LHCI collect clears .lighthouseci, so the desktop
+      # run below leaves only desktop results there for the quality report.
+      # The mobile reports are kept in .lighthouseci-mobile.
+      - name: Lighthouse budgets (mobile)
+        run: npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.mobile.json
+
+      - name: Lighthouse budgets (desktop)
+        run: npx --yes @lhci/cli@0.15.1 autorun
+
+      # dist/quality.json for the /quality page, from this run's reports.
+      # After every gate, so it can only describe a run that passed them.
+      - name: Quality report
+        run: node scripts/write-quality.js
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+      - name: Upload test reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            playwright-report
+            coverage
+            .lighthouseci
+            .lighthouseci-mobile
+            reports
+          retention-days: 14

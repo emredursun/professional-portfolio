@@ -30,7 +30,8 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
+import { loadConstants } from './lib/load-constants.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,150 +45,254 @@ const STATE_PATH = path.join(__dirname, 'sitemap-state.json');
 // Supported languages
 const LANGUAGES = ['en', 'tr', 'nl'];
 
-// Routes to publish, in sitemap order
-const ROUTES = ['', '/about', '/resume', '/projects', '/contact'];
+// Top-level routes, in sitemap order. Detail pages are appended by listRoutes().
+export const STATIC_ROUTES = ['', '/about', '/resume', '/projects', '/contact', '/quality'];
 
 /**
- * Locale namespace each route renders from. Combined with the shared sources
- * below to decide whether that route's content has actually changed.
+ * Every route to publish: the static pages, then one detail page per service
+ * (/about/<slug>) and per project (/projects/<slug>) defined in constants.tsx.
+ *
+ * @param {{ SERVICES: Array<{ slug: string }>, PROJECTS: Array<{ slug: string }> }} constants
+ */
+export function listRoutes({ SERVICES, PROJECTS }) {
+  return [
+    ...STATIC_ROUTES,
+    ...SERVICES.map((service) => `/about/${service.slug}`),
+    ...PROJECTS.map((project) => `/projects/${project.slug}`),
+  ];
+}
+
+/**
+ * Locale namespace each top-level route renders from. Combined with the shared
+ * sources below to decide whether that route's content has actually changed.
+ * Detail pages use the namespace of the section they belong to.
  */
 const ROUTE_NAMESPACES = {
-    '': 'about',
-    '/about': 'about',
-    '/resume': 'resume',
-    '/projects': 'projects',
-    '/contact': 'contact',
+  '': 'about',
+  '/about': 'about',
+  '/resume': 'resume',
+  '/projects': 'projects',
+  '/contact': 'contact',
+  '/quality': 'common',
 };
+
+function namespaceForRoute(route) {
+  const section = route === '' ? '' : `/${route.split('/')[1]}`;
+  const namespace = ROUTE_NAMESPACES[section];
+  if (!namespace) {
+    throw new Error(`No locale namespace for sitemap route: ${route}`);
+  }
+  return namespace;
+}
 
 /** Files that affect every route: shared data and the labels in the chrome. */
 const SHARED_SOURCES = [
-    'constants.tsx',
-    ...LANGUAGES.map(lang => `public/locales/${lang}/common.json`),
-    ...LANGUAGES.map(lang => `public/locales/${lang}/sidebar.json`),
+  'constants.tsx',
+  ...LANGUAGES.map((lang) => `public/locales/${lang}/common.json`),
+  ...LANGUAGES.map((lang) => `public/locales/${lang}/sidebar.json`),
 ];
 
 /**
  * Source files whose content determines a route's lastmod
  */
-function sourcesForRoute(route) {
-    const namespace = ROUTE_NAMESPACES[route];
-    const localeFiles = LANGUAGES.map(lang => `public/locales/${lang}/${namespace}.json`);
-    return [...SHARED_SOURCES, ...localeFiles];
+export function sourcesForRoute(route) {
+  const namespace = namespaceForRoute(route);
+  const localeFiles = LANGUAGES.map((lang) => `public/locales/${lang}/${namespace}.json`);
+  return [...SHARED_SOURCES, ...localeFiles];
 }
 
 /**
  * Hash a route's sources. Line endings are normalised so the same content
  * hashes identically on Windows and on a Linux CI runner.
  */
-function hashRoute(route) {
-    const hash = crypto.createHash('sha256');
+export function hashRoute(route) {
+  const hash = crypto.createHash('sha256');
 
-    sourcesForRoute(route).sort().forEach(relativePath => {
-        const absolute = path.join(ROOT, relativePath);
-        if (!fs.existsSync(absolute)) {
-            throw new Error(`Sitemap source is missing: ${relativePath}`);
-        }
-        const content = fs.readFileSync(absolute, 'utf8').replace(/\r\n/g, '\n');
-        hash.update(`${relativePath}\0${content}\0`);
+  sourcesForRoute(route)
+    .sort()
+    .forEach((relativePath) => {
+      const absolute = path.join(ROOT, relativePath);
+      if (!fs.existsSync(absolute)) {
+        throw new Error(`Sitemap source is missing: ${relativePath}`);
+      }
+      const content = fs.readFileSync(absolute, 'utf8').replace(/\r\n/g, '\n');
+      hash.update(`${relativePath}\0${content}\0`);
     });
 
-    return hash.digest('hex');
+  return hash.digest('hex');
 }
 
 /**
  * Read the previous run's hashes and timestamps
  */
-function readState() {
-    try {
-        return JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
-    } catch {
-        return {};
-    }
+export function readState(statePath = STATE_PATH) {
+  try {
+    return JSON.parse(fs.readFileSync(statePath, 'utf8'));
+  } catch {
+    return {};
+  }
 }
 
 /**
- * Resolve each route's lastmod, reusing the stored timestamp whenever that
- * route's content is unchanged. Returns the timestamps and the next state.
+ * @typedef {{ hash: string, lastmod?: string }} RouteState
  */
-function resolveLastMod() {
-    const previous = readState();
-    const now = new Date().toISOString();
 
-    const lastMod = {};
-    const nextState = {};
-    const changed = [];
+/**
+ * Pure core of the lastmod decision: given the previous state, the current
+ * per-route hashes and "now", reuse a stored timestamp whenever that route's
+ * hash is unchanged.
+ *
+ * @param {Record<string, RouteState>} previous
+ * @param {Record<string, string>} hashes
+ * @param {string} now
+ * @returns {{ lastMod: Record<string, string>, nextState: Record<string, RouteState>, changed: string[] }}
+ */
+export function computeLastMod(previous, hashes, now) {
+  /** @type {Record<string, string>} */
+  const lastMod = {};
+  /** @type {Record<string, RouteState>} */
+  const nextState = {};
+  /** @type {string[]} */
+  const changed = [];
 
-    ROUTES.forEach(route => {
-        const hash = hashRoute(route);
-        const stored = previous[route];
+  Object.entries(hashes).forEach(([route, hash]) => {
+    const stored = previous[route];
 
-        if (stored && stored.hash === hash && stored.lastmod) {
-            lastMod[route] = stored.lastmod;
-        } else {
-            lastMod[route] = now;
-            changed.push(route || '/');
-        }
+    if (stored && stored.hash === hash && stored.lastmod) {
+      lastMod[route] = stored.lastmod;
+    } else {
+      lastMod[route] = now;
+      changed.push(route || '/');
+    }
 
-        nextState[route] = { hash, lastmod: lastMod[route] };
-    });
+    nextState[route] = { hash, lastmod: lastMod[route] };
+  });
 
-    return { lastMod, nextState, changed };
+  return { lastMod, nextState, changed };
+}
+
+/**
+ * Resolve each route's lastmod against the files on disk and the saved state.
+ */
+function resolveLastMod(routes, statePath, now) {
+  const hashes = Object.fromEntries(routes.map((route) => [route, hashRoute(route)]));
+  return computeLastMod(readState(statePath), hashes, now);
 }
 
 /**
  * Generate hreflang links for a given path
  */
 function generateHreflangLinks(basePath = '') {
-    const links = LANGUAGES.map(lang => {
-        const href = lang === 'en' ? `${SITE_URL}${basePath || '/'}` : `${SITE_URL}/${lang}${basePath}`;
-        return `        <xhtml:link rel="alternate" hreflang="${lang}" href="${href}" />`;
-    });
-    // Add x-default pointing to English
-    links.push(`        <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${basePath || '/'}" />`);
-    return links.join('\n');
+  const links = LANGUAGES.map((lang) => {
+    const href = lang === 'en' ? `${SITE_URL}${basePath || '/'}` : `${SITE_URL}/${lang}${basePath}`;
+    return `        <xhtml:link rel="alternate" hreflang="${lang}" href="${href}" />`;
+  });
+  // Add x-default pointing to English
+  links.push(
+    `        <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${basePath || '/'}" />`,
+  );
+  return links.join('\n');
+}
+
+/**
+ * Image entries for a URL. Google reads only <image:loc> today; caption,
+ * title, geo_location and license were dropped from its sitemap support.
+ */
+function generateImageEntries(images = []) {
+  return images
+    .map(
+      (src) => `
+    <image:image>
+      <image:loc>${src}</image:loc>
+    </image:image>`,
+    )
+    .join('');
 }
 
 /**
  * Generate URL entry with hreflang links
  */
-function generateUrlEntry(url, priority, changefreq, lastmod, basePath = '') {
-    return `
+function generateUrlEntry(url, priority, changefreq, lastmod, basePath = '', images = []) {
+  return `
   <url>
     <loc>${url}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
-${generateHreflangLinks(basePath)}
+${generateHreflangLinks(basePath)}${generateImageEntries(images)}
   </url>`;
 }
 
 /**
- * Generate sitemap XML content
+ * Images to list per route: the portrait on the pages it represents, so
+ * Google Images can tie the photo to the profile.
+ *
+ * @param {{ PERSONAL_INFO: { portrait: string } }} constants
+ * @returns {Record<string, string[]>}
  */
-function generateSitemap(lastMod) {
-    const urls = [];
+export function routeImages({ PERSONAL_INFO }) {
+  const portrait = `${SITE_URL}${PERSONAL_INFO.portrait}`;
+  return { '': [portrait], '/about': [portrait] };
+}
 
-    // Generate URLs for each language and route
-    ROUTES.forEach(route => {
-        const lastModified = lastMod[route];
-        // Home carries the highest weight; content pages sit just below it.
-        const priority = route === '' ? '1.0' : '0.8';
-        const changefreq = route === '' ? 'weekly' : 'monthly';
+/**
+ * Home carries the highest weight, section pages sit just below it and detail
+ * pages below those.
+ */
+function priorityForRoute(route) {
+  if (route === '') return '1.0';
+  return STATIC_ROUTES.includes(route) ? '0.8' : '0.6';
+}
 
-        // English (Default)
-        urls.push(generateUrlEntry(`${SITE_URL}${route || '/'}`, priority, changefreq, lastModified, route));
+/**
+ * Generate sitemap XML content. Routes are emitted in the key order of lastMod.
+ *
+ * @param {Record<string, string>} lastMod
+ * @param {Record<string, string[]>} [images] image URLs per route
+ */
+export function generateSitemap(lastMod, images = {}) {
+  const urls = [];
 
-        // Other languages
-        ['tr', 'nl'].forEach(lang => {
-            // Avoid double slash for root path if route is empty
-            const langPath = route ? `/${lang}${route}` : `/${lang}`;
-            urls.push(generateUrlEntry(`${SITE_URL}${langPath}`, priority, changefreq, lastModified, route));
-        });
+  // Generate URLs for each language and route
+  Object.keys(lastMod).forEach((route) => {
+    const lastModified = lastMod[route];
+    const priority = priorityForRoute(route);
+    const changefreq = route === '' ? 'weekly' : 'monthly';
+    const routeImageList = images[route] ?? [];
+
+    // English (Default)
+    urls.push(
+      generateUrlEntry(
+        `${SITE_URL}${route || '/'}`,
+        priority,
+        changefreq,
+        lastModified,
+        route,
+        routeImageList,
+      ),
+    );
+
+    // Other languages
+    ['tr', 'nl'].forEach((lang) => {
+      // Avoid double slash for root path if route is empty
+      const langPath = route ? `/${lang}${route}` : `/${lang}`;
+      urls.push(
+        generateUrlEntry(
+          `${SITE_URL}${langPath}`,
+          priority,
+          changefreq,
+          lastModified,
+          route,
+          routeImageList,
+        ),
+      );
     });
+  });
 
-    return `<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${urls.join('\n')}
 </urlset>`;
 }
@@ -196,47 +301,77 @@ ${urls.join('\n')}
  * Write a file only when its content would actually change, so an unchanged
  * build leaves both the file and its mtime alone.
  */
-function writeIfChanged(filePath, content) {
-    const existing = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null;
-    if (existing !== null && existing.replace(/\r\n/g, '\n') === content.replace(/\r\n/g, '\n')) {
-        return false;
-    }
+export function writeIfChanged(filePath, content) {
+  const existing = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null;
+  if (existing !== null && existing.replace(/\r\n/g, '\n') === content.replace(/\r\n/g, '\n')) {
+    return false;
+  }
 
-    fs.mkdirSync(path.dirname(filePath), { recursive: true });
-    fs.writeFileSync(filePath, content, 'utf8');
-    return true;
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, content, 'utf8');
+  return true;
 }
 
 /**
- * Write sitemap to file
+ * Regenerate the sitemap and its state file. Paths and clock are injectable,
+ * so the whole flow can run against a temporary directory in tests.
+ *
+ * @param {{ routes?: string[], images?: Record<string, string[]>, outputPath?: string, statePath?: string, now?: string }} [options]
+ * @returns {{ sitemapWritten: boolean, changed: string[], urls: number, alternates: number }}
  */
-function writeSitemap() {
-    try {
-        const { lastMod, nextState, changed } = resolveLastMod();
-        const sitemapContent = generateSitemap(lastMod);
+export function writeSitemap({
+  routes = STATIC_ROUTES,
+  images = {},
+  outputPath = OUTPUT_PATH,
+  statePath = STATE_PATH,
+  now = new Date().toISOString(),
+} = {}) {
+  const { lastMod, nextState, changed } = resolveLastMod(routes, statePath, now);
+  const sitemapContent = generateSitemap(lastMod, images);
 
-        const sitemapWritten = writeIfChanged(OUTPUT_PATH, sitemapContent);
-        writeIfChanged(STATE_PATH, `${JSON.stringify(nextState, null, 2)}\n`);
+  const sitemapWritten = writeIfChanged(outputPath, sitemapContent);
+  writeIfChanged(statePath, `${JSON.stringify(nextState, null, 2)}\n`);
 
-        console.log('✅ Sitemap generated successfully!');
-        console.log(`📍 Location: ${OUTPUT_PATH}`);
-        console.log(`🔗 URL: ${SITE_URL}/sitemap.xml`);
-        console.log(`📄 Total URLs: ${(sitemapContent.match(/<loc>/g) || []).length}`);
-        console.log(`🔀 hreflang alternates: ${(sitemapContent.match(/xhtml:link/g) || []).length}`);
-        console.log(`🌍 Languages: English (default), Turkish, Dutch`);
-
-        if (changed.length) {
-            console.log(`📅 Restamped ${changed.length} route(s) with changed content: ${changed.join(', ')}`);
-        } else {
-            console.log('📅 No content changed - existing lastmod timestamps kept');
-        }
-        console.log(sitemapWritten ? '✍️  sitemap.xml updated' : '💤 sitemap.xml already current - not rewritten');
-
-    } catch (error) {
-        console.error('❌ Error generating sitemap:', error.message);
-        process.exit(1);
-    }
+  return {
+    sitemapWritten,
+    changed,
+    urls: (sitemapContent.match(/<loc>/g) || []).length,
+    alternates: (sitemapContent.match(/xhtml:link/g) || []).length,
+  };
 }
 
-// Run the script
-writeSitemap();
+async function main() {
+  try {
+    const constants = await loadConstants();
+    const { sitemapWritten, changed, urls, alternates } = writeSitemap({
+      routes: listRoutes(constants),
+      images: routeImages(constants),
+    });
+
+    console.log('✅ Sitemap generated successfully!');
+    console.log(`📍 Location: ${OUTPUT_PATH}`);
+    console.log(`🔗 URL: ${SITE_URL}/sitemap.xml`);
+    console.log(`📄 Total URLs: ${urls}`);
+    console.log(`🔀 hreflang alternates: ${alternates}`);
+    console.log(`🌍 Languages: English (default), Turkish, Dutch`);
+
+    if (changed.length) {
+      console.log(
+        `📅 Restamped ${changed.length} route(s) with changed content: ${changed.join(', ')}`,
+      );
+    } else {
+      console.log('📅 No content changed - existing lastmod timestamps kept');
+    }
+    console.log(
+      sitemapWritten ? '✍️  sitemap.xml updated' : '💤 sitemap.xml already current - not rewritten',
+    );
+  } catch (error) {
+    console.error('❌ Error generating sitemap:', error.message);
+    process.exit(1);
+  }
+}
+
+// Run only when executed directly, so tests can import the functions above.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main();
+}

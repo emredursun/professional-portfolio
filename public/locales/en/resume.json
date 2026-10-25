@@ -40,13 +40,13 @@
       "date": "May 2026 - Present",
       "title": "QA Consultant (Pega & Tricentis Tosca)",
       "company": "Sopra Steria - Nieuwegein, Utrecht, Netherlands · Hybrid",
-      "description": "QA Consultant in the Sopra Steria Pega Practice (RulesMatter), focused on test automation for Pega applications. Design test coverage, test data, and automation architecture across web UI, enterprise and desktop applications, API chains, and mobile automation using Tricentis Tosca's model-based approach. Combined with Certified Pega Business Architect (CPBA) and Certified Pega System Architect (CPSA) platform expertise, this builds testability into the case design from the start."
+      "description": "QA Consultant in the Sopra Steria Pega Practice (RulesMatter), focused on test automation for Pega applications. Design test coverage, test data, and automation architecture across web UI, enterprise and desktop applications, API chains, and mobile automation using Tricentis Tosca's model-based approach. Combined with Certified Pega Business Architect (CPBA) and Certified Pega System Architect (CPSA) platform expertise, this builds testability into the case design from the start. Within the group I work with AI Backbone, Sopra Steria's platform for AI-assisted software delivery, developing Tosca skills and workflows for it, and I share the approach inside the practice through a session on model-based test automation for Pega."
     },
     {
       "date": "Sep 2023 - Sep 2025",
       "title": "Automation Engineer (PSS/True International Payments/Ch Dovetail)",
-      "company": "ING Bank - Amsterdam, North Holland, Netherlands · Hybrid",
-      "description": "As an Automation Test Engineer at ING's TIP Test Center (TTC), I designed and maintained automated end-to-end tests for real-time payment processing within the Dovetail system, a Fiserv payment platform, ensuring transaction accuracy across international branches. My responsibilities included designing test validations for various payment flows, managing and optimizing test data to accelerate deployment, and collaborating closely with development teams and stakeholders to ensure seamless integration with the automation framework."
+      "company": "ING Bank (via Sogyo, then internal) - Amsterdam, North Holland, Netherlands · Hybrid",
+      "description": "Two years at ING's TIP Test Center (TTC): the first as an external consultant through Sogyo, the second on an internal contract. I designed and maintained automated end-to-end tests for real-time payment processing on Dovetail, Fiserv's payment platform, ensuring transaction accuracy across international branches. I implemented Functional Flow Validation (FFV) checks for EPP and non-EPP payment flows, including country-specific rollouts for Belgium, Italy, Hungary and Slovakia; ran and verified the daily end-to-end regression streams around new Dovetail releases; onboarded new test cases and optimized the framework and its test data; and supported development teams and feature squads integrating with the TTC framework. Moving the 400 legacy scenarios to the new framework and onboarding 450 new ones cut a full regression run with reporting from several days to 3–5 hours."
     },
     {
       "date": "Jun 2022 - Jun 2023",
@@ -55,10 +55,10 @@
       "description": "Developed and managed a comprehensive Automation Framework based on acceptance criteria using Selenium WebDriver, Java, JUnit, and Cucumber. Executed UI, backend, and database tests for a hospital portal, covering functionalities like patient management and appointment scheduling. Performed API testing with Postman and Rest Assured, managed dependencies via Maven, and integrated CI/CD pipelines with Jenkins in an Agile environment."
     },
     {
-      "date": "May 2021 - Jan 2023",
+      "date": "Sep 2020 - Jan 2023",
       "title": "Manual Tester & e-Commerce Specialist",
-      "company": "BSG Auto Parts & Nerex Motors - Amsterdam, Netherlands · On-site",
-      "description": "Played a pivotal role at Nerex Motors enhancing e-commerce strategies and product quality. Conducted manual testing on ERP systems to maintain high functionality standards, improved product search visibility on Amazon and eBay, and implemented strategic ad campaigns driving online sales. Successfully managed the Online Channel (AutoDoc) sales process for BSG Auto Parts, fostering B2B growth by developing tailored sales strategies, cultivating strong relationships with key accounts, and negotiating competitive commercial terms."
+      "company": "Nerex Motors & BSG Auto Parts (same group) - Amsterdam, Netherlands · On-site",
+      "description": "Two companies under the same group: Nerex Motors (Sep 2020 – Jan 2023) and, in parallel, BSG Auto Parts (Sep 2020 – Jan 2022). At Nerex Motors I conducted manual testing on ERP systems to maintain high functionality standards, improved product search visibility on Amazon and eBay, and ran strategic ad campaigns that drove online sales. For BSG Auto Parts I managed the Online Channel (AutoDoc) sales process, fostering B2B growth by developing tailored sales strategies, cultivating strong relationships with key accounts, and negotiating competitive commercial terms."
     },
     {
       "date": "Mar 2019 - Sep 2020",

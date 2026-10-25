@@ -6,6 +6,7 @@
     "technologies": "Teknolojiler",
     "clearFilters": "Filtreleri Temizle",
     "activeFilters": "Aktif filtreler:",
+    "removeFilter": "Filtreyi kaldır: {{name}}",
     "selected": "{{count}} seçili",
     "showingResults": "{{count}} proje gösteriliyor",
     "showingResults_plural": "{{count}} proje gösteriliyor",
@@ -56,49 +57,49 @@
       "role": "Lead Otomasyon Mühendisi",
       "team": "Bireysel Proje",
       "duration": "4 ay",
-      "description": "Java 17+, Selenium 4 ve Cucumber ile geliştirilmiş, Clean Architecture (Temiz Mimari) ve çalışma zamanı konfigürasyon desteğiyle UI, API ve veritabanı testi için kapsamlı bir test otomasyon framework'ü.",
-      "detailedDescription": "QASmartTestLab, test otomasyonunda en iyi uygulamaları sergileyen, üretime hazır bir test otomasyon framework'üdür. Java 17+, Selenium 4 ve Cucumber (JVM) ile geliştirilmiş olup UI, API ve veritabanı testi için temiz, bakımı kolay bir yapı sunar. Framework; tarayıcılar (Chrome, Firefox, Edge), headless çalıştırma, remote Grid/Selenoid desteği ve kapsamlı raporlama için çalışma zamanı (runtime) konfigürasyon özelliği içerir. Açık sorumluluk ayrımı (separation of concerns) ile Page Object Model desenini takip ederek, konfigüre edilebilir zaman aşımları, paralel çalıştırma ve esnek test yönetimi için etiket tabanlı test filtreleme sunar.",
+      "description": "Selenium 4 ve Cucumber 7 üzerinde Java 17 test otomasyon framework’ü: thread-safe paralel senaryolar, lokal ya da remote Grid koşumları ve her koşumda HTML, JSON ve JUnit raporları.",
+      "detailedDescription": "QASmartTestLab, Selenium 4 ve JUnit 5 üzerine kurulu bir Cucumber (JVM) framework’üdür. Cucumber senaryoları dinamik stratejiyle paralel çalıştırır; her thread ThreadLocal bir factory üzerinden kendi WebDriver’ını alır, böylece senaryolar hiçbir zaman aynı tarayıcıyı paylaşmaz. Aynı suite, lokal Chrome’da (driver’lar WebDriverManager ile) ya da remote bir Selenium Grid veya Selenoid üzerinde koşar; seçim, çalışma anında bir system property ya da ortam değişkeniyle yapılır. Page object’ler, step definition’lar, runner’lar ve destek sınıfları birbirinden ayrıdır; neyin koşacağını tag’ler belirler ve her koşum HTML, JSON ve JUnit XML raporlarıyla bir konsol özeti üretir. Feature suite’leri UI girişini ve XML doğrulama fixture’larıyla gelen ve giden ödeme mesajlarını kapsar.",
       "challenge": "Test otomasyon ekipleri genellikle framework karmaşıklığı, zayıf bakım kolaylığı ve projeler arasında standardizasyon eksikliği ile mücadele eder. Birçok framework teknik borca dönüşür, yeni ekip üyeleri için anlaşılması zorlaşır ve uygulama büyüdükçe ölçeklenmesi güçleşir.",
-      "solution": "QASmartTestLab'ı sıfırdan Clean Architecture prensipleri ile tasarlayıp geliştirdim; sorumlulukların ayrılması, açık isimlendirme standartları ve kapsamlı dokümantasyon üzerine yoğunlaştım. Ekiplerin kod değişikliği yapmadan tarayıcıları, ortamları ve çalıştırma modlarını değiştirmesine olanak tanıyan esnek çalışma zamanı konfigürasyonu uyguladım. Page Object Model deseni kolay bakım sağlarken, etiket tabanlı filtreleme hassas test çalıştırma kontrolü sunar.",
+      "solution": "QASmartTestLab’ı birkaç net kural üzerine kurdum: UI için page object’ler, sadece orkestrasyon yapan step definition’lar, thread başına bir WebDriver ve kod yerine çalışma anında konfigürasyon. Suite tek bir property ile lokal tarayıcı ile remote Grid arasında geçiş yapar, senaryoları güvenle paralel koşar ve neyin koşacağını tag’lerle seçer.",
       "metrics": [
-        "Çok Katmanlı Test (UI, API, DB)",
-        "Paralel Çalıştırma Desteği",
-        "Remote Grid Entegrasyonu",
-        "Clean Architecture & POM Deseni"
+        "Paralel Senaryolar · Thread-Safe WebDriver",
+        "Lokal ya da Remote Grid/Selenoid Koşumu",
+        "Koşum Başına 4 Rapor Formatı",
+        "Page Object Model · Tag Bazlı Koşum"
       ],
       "features": {
         "multiLayer": {
-          "title": "Çok Katmanlı Test",
-          "description": "Tek bir birleşik framework içinde UI (Selenium), API (REST Assured) ve veritabanı (JDBC) katmanlarında kapsamlı kapsama."
+          "title": "Ödeme Akışı Feature’ları",
+          "description": "UI girişi ve gelen/giden ödeme mesajları için, senaryo başına XML doğrulama fixture’larıyla Cucumber suite’leri."
         },
         "runtimeConfig": {
-          "title": "Çalışma Zamanı Konfigürasyonu",
-          "description": "Dinamik tarayıcı seçimi, headless mod ve remote Grid/Selenoid entegrasyonu—tümü koda dokunmadan çalışma zamanında yapılandırılabilir."
+          "title": "Çalışma Anı Konfigürasyonu",
+          "description": "Lokal Chrome ya da remote Selenium Grid/Selenoid; system property veya ortam değişkeniyle seçilir, driver’ları WebDriverManager yönetir."
         },
         "cleanArch": {
-          "title": "Temiz Mimari (Clean Architecture)",
-          "description": "Açık ayrım ile Page Object Model: sayfalar, adımlar, çalıştırıcılar, yardımcı araçlar. Her bileşen tek bir sorumluluk taşır."
+          "title": "Temiz Mimari",
+          "description": "Page object’ler, step definition’lar, runner’lar ve destek sınıfları ayrı; her biri tek bir sorumluluğa sahip."
         },
         "parallel": {
           "title": "Paralel Çalıştırma",
-          "description": "Daha hızlı geri bildirim döngüleri için etiket tabanlı filtreleme ve paralel iş parçacığı desteği. Smoke testlerini dakikalar içinde, tam regresyonu gece boyunca çalıştırın."
+          "description": "Cucumber, thread başına ThreadLocal WebDriver ile senaryoları paralel (dinamik strateji) koşar; senaryolar tarayıcı paylaşmaz."
         }
       },
       "results": {
-        "speed": {
-          "metric": "Test Çalıştırma Hızı",
-          "value": "%60 daha hızlı",
-          "description": "Paralel çalıştırma, tam regresyon süresini 2 saatten 48 dakikaya düşürdü"
+        "formats": {
+          "metric": "Rapor formatı",
+          "value": "4",
+          "description": "Her koşumda HTML, JSON, JUnit XML ve bir konsol özeti"
         },
-        "maintainability": {
-          "metric": "Kod Bakım Kolaylığı",
-          "value": "%85 azalma",
-          "description": "POM deseni test bakım eforunu azalttı ve ekip hızını artırdı"
+        "targets": {
+          "metric": "Çalıştırma hedefi",
+          "value": "2",
+          "description": "Lokal Chrome ya da remote Selenium Grid/Selenoid; kod değişikliği olmadan geçiş"
         },
-        "adoption": {
-          "metric": "Framework Benimsenmesi",
-          "value": "100+ yıldız",
-          "description": "GitHub reposu QA otomasyon topluluğunda ilgi gördü"
+        "parallel": {
+          "metric": "Paralellik",
+          "value": "Senaryo başına",
+          "description": "Thread-safe WebDriver, Cucumber’ın senaryoları eşzamanlı koşmasını sağlar"
         }
       }
     },
@@ -178,13 +179,14 @@
       "description": "TTC, gerçek zamanlı ödeme işlemlerini yürüten Fiserv ödeme platformu Dovetail sistemi için işlemsel testleri otomatize eden özelleşmiş bir framework'tür.",
       "detailedDescription": "TTC, gerçek zamanlı ödeme işlemlerini yürüten Fiserv ödeme platformu Dovetail sistemi için işlemsel testleri otomatize eden özelleşmiş bir framework'tür. Framework, Dovetail ödemeleri için uçtan uca işlemsel test otomasyonunu yönetir ve ING Test Merkezi (ITC) çalıştırma motoru ile entegre olur.",
       "metrics": [
-        "Uçtan Uca İşlemsel Otomasyon",
-        "DEV5 Ortamında Günlük Regresyon",
+        "850 Otomatik Ödeme Senaryosu",
+        "Tam Koşum + Rapor: Günler → 3–5 Saat",
         "Çok Ülkeli: BE, IT, HU, SK",
-        "ING Test Merkezi (ITC) Entegrasyonu"
+        "ING Test Merkezi (ITC) Entegrasyonu",
+        "DEV5 Ortamında Günlük Regresyon"
       ],
-      "challenge": "Uluslararası bankacılık ödeme sistemleri, farklı düzenlemelere sahip birden fazla ülkede titiz testler gerektirir. Manuel test, karmaşık işlem akışlarında zaman alıcı ve insan hatasına açıktır.",
-      "solution": "Dovetail ödeme platformu için otomatik uçtan uca regresyon testleri tasarladım ve uyguladım, günlük çalıştırma için ING Test Merkezi ile entegre ettim. EPP ve EPP olmayan ödeme akışları için ülkeye özgü test doğrulamaları oluşturdum.",
+      "challenge": "ING'nin TIP Test Center'ı, Dovetail platformu için yaklaşık 400 uçtan uca ödeme senaryosunu eski bir altyapıda çalıştırıyordu. Raporlamasıyla birlikte tam bir regresyon koşumu birkaç gün sürüyor, bu da her Dovetail sürümünü ve her ülke rollout'unu yavaşlatıyordu.",
+      "solution": "400 eski senaryoyu yeni TTC framework'üne (ING Test Center çalıştırma motoru üzerinde Selenium, Cucumber ve Java) taşıdım ve EPP ve EPP dışı ödeme akışları için ülkeye özgü FFV doğrulamaları dahil 450 yeni senaryo ekledim. Framework'ü ve test verisini, tüm suite DEV5'te her gün koşacak şekilde optimize ettim.",
       "features": {
         "validation": {
           "title": "Test Doğrulama Geliştirme",
@@ -201,6 +203,23 @@
         "stakeholder": {
           "title": "Paydaş Desteği",
           "description": "Sisteme dahil olma sürecinde geliştirme ekiplerine, özellik ekiplerine ve diğer paydaşlara teknik rehberlik sağlama."
+        }
+      },
+      "results": {
+        "scenarios": {
+          "metric": "Otomatik senaryo",
+          "value": "850",
+          "description": "400 eski senaryo yeni framework’e taşındı, üstüne 450 yeni senaryo eklendi"
+        },
+        "runtime": {
+          "metric": "Tam koşum ve raporlama",
+          "value": "3–5 sa",
+          "description": "Tam bir regresyon koşumu ve raporu eskiden birkaç gün sürüyordu"
+        },
+        "countries": {
+          "metric": "Ülke rollout’u",
+          "value": "4",
+          "description": "Belçika, İtalya, Macaristan ve Slovakya ülkeye özgü doğrulamalarla kapsandı"
         }
       }
     },

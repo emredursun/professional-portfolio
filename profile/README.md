@@ -13,8 +13,8 @@
 [![Portfolio](https://img.shields.io/badge/Portfolio-emredursun.nl-111827?style=for-the-badge&logo=googlechrome&logoColor=white)](https://emredursun.nl/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-emre--dursun--nl-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/emre-dursun-nl/)
 [![Pega](https://img.shields.io/badge/Pega-CPBA_%26_CPSA-1F4E79?style=for-the-badge)](https://emredursun.nl/)
-[![Tricentis Tosca](https://img.shields.io/badge/Tricentis_Tosca-Advanced-00A99D?style=for-the-badge)](https://emredursun.nl/)
-[![ISTQB](https://img.shields.io/badge/ISTQB-CTFL-6E4C9F?style=for-the-badge)](https://emredursun.nl/)
+[![Tricentis](https://img.shields.io/badge/Tricentis-Tosca_%26_Testim_Advanced-00A99D?style=for-the-badge)](https://emredursun.nl/)
+[![ISTQB](https://img.shields.io/badge/ISTQB-CTFL-6E4C9F?style=for-the-badge)](https://app.diplomasafe.com/en-US/diploma/d6c0c305f021fcae6f7dd0cae43d65eff636e76fe)
 
 </div>
 
@@ -22,11 +22,11 @@
 
 ## :man_technologist: About me
 
-- 🧪 I do **QA and test automation for Pega applications** in the Sopra Steria **Pega Practice (RulesMatter)** — coverage design, test data, and automation architecture with **Tricentis Tosca's model-based approach**.
-- 🏦 Most of my background is **financial services**. Two years at **ING** on **Dovetail** (the Fiserv real-time international payments platform), maintaining the shared **Selenium / Cucumber / Java** framework behind the daily regression suites across **four countries**.
+- 🧪 I do **QA and test automation for Pega applications** in the Sopra Steria **Pega Practice (RulesMatter)** — coverage design, test data, and automation architecture with **Tricentis Tosca's model-based approach**, plus **Testim** for AI-driven web testing and **Playwright**.
+- 🏦 Most of my background is **financial services**. Two years at **ING** on **Dovetail** (Fiserv's real-time payments platform), maintaining the shared **Selenium / Cucumber / Java** framework behind the daily regression suites across **multiple countries**.
 - 🧩 Certified **Pega Business Architect (CPBA)** and **Pega System Architect (CPSA)** — because automation on Pega stays fragile until you understand the case model from the inside. The goal is **testability designed into the case model**, not bolted on afterwards.
 - 📐 Applied Mathematics at **Istanbul University**. It still shows in how I approach coverage decisions, edge cases, and breaking scenarios into independent variables.
-- 🤖 I use **AI-assisted coding tools** daily (Claude Code, Cursor, Copilot) and build governance infrastructure around them — see **[Devran AI Kit](https://github.com/devran-ai/kit)**.
+- 🤖 Within Sopra Steria I work with **AI Backbone**, the group platform for AI-assisted software delivery, developing **Tosca skills and workflows** for it. It builds on **[Devran AI Kit](https://github.com/devran-ai/kit)**, my open-source governance layer for Claude Code, Cursor and Copilot.
 - 🗣️ Turkish (Native) · English (C1) · Dutch (B2) · Ukrainian (A1)
 - 🎾 Off-screen: tennis, better Dutch, and places I haven't been yet.
 
@@ -50,10 +50,11 @@
 
 | Certification | Issuer | Date |
 |---|---|---|
+| **Testim Product Consultant — Advanced proficiency** | Tricentis | September 2026 |
 | **Tosca Product Consultant — Advanced proficiency** (exam 93.3%) | Tricentis | August 2026 |
-| **Certified Pega Business Architect (CPBA)** | Pegasystems | June 2026 |
-| **Certified Pega System Architect (CPSA)** | Pegasystems | June 2026 |
-| **ISTQB® Certified Tester — Foundation Level (CTFL)** | ISTQB® | June 2023 |
+| **[Certified Pega Business Architect (CPBA)](https://accounts.pega.com/profile/emre.dursun/share/BPEGACPBA25V1-PEGACPBA25V1)** | Pegasystems | June 2026 |
+| **[Certified Pega System Architect (CPSA)](https://accounts.pega.com/profile/emre.dursun/share/BPEGACPSA25V1-PEGACPSA25V1)** | Pegasystems | June 2026 |
+| **[ISTQB® Certified Tester — Foundation Level (CTFL)](https://app.diplomasafe.com/en-US/diploma/d6c0c305f021fcae6f7dd0cae43d65eff636e76fe)** | ISTQB® | June 2023 |
 | **Docker Foundations Professional Certificate** | Docker | 2024 |
 
 <sub><b>Tosca learning path:</b> AS1 — Automating Web Application Testing · AS2 — Optimizing Test Automation with Centralized Test Data · Deep Dive — Automating API Test Cases · TDS1 — Structuring Test Cases and Test Data · TDS2 — Managing Stateful Test Data · AE1 — Automating Beyond Web Applications · Continuous Testing with Efficient KPI Management.</sub>
@@ -76,6 +77,7 @@
 **Test Automation & Frameworks**
 
 ![Tricentis Tosca](https://img.shields.io/badge/Tricentis_Tosca-00A99D?style=flat-square)
+![Tricentis Testim](https://img.shields.io/badge/Tricentis_Testim-0F9D8E?style=flat-square)
 ![Pega Platform](https://img.shields.io/badge/Pega_Platform-1F4E79?style=flat-square)
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white)
 ![Cypress](https://img.shields.io/badge/Cypress-17202C?style=flat-square&logo=cypress&logoColor=white)
@@ -111,10 +113,10 @@
 
 | Project | What it is | Stack |
 |---|---|---|
-| **[AegisQA](https://github.com/emredursun/aegisqa)** | A production-grade, AI-assisted full stack test automation platform combining UI, API, database, and performance validation into a single, scalable quality system. | Playwright · TypeScript · REST Assured · Java |
-| **[Devran AI Kit](https://github.com/devran-ai/kit)** | An open-source, zero-dependency Trust-Grade AI development framework that turns any AI-powered IDE into a virtual engineering team — 26 agents, 39 skills, 25 workflows, and 15 governance rules behind one command. | JavaScript · Python · Node.js · Zero Dependencies |
+| **[AegisQA](https://github.com/emredursun/aegisqa)** | A full-stack test automation platform in progress: Playwright UI tests and REST Assured API tests against a banking demo app in Docker, in one monorepo. | Playwright · TypeScript · REST Assured · Java |
+| **[Devran AI Kit](https://github.com/devran-ai/kit)** | An open-source, zero-dependency Trust-Grade AI development framework that turns any AI-powered IDE into a virtual engineering team — 26 agents, 44 skills, 25 workflows, and 15 governance rules behind one command. | JavaScript · Python · Node.js · Zero Dependencies |
 | **[Quilyn](https://github.com/emredursun/quilyn)** | A free, offline-capable study app for IT certification exams — Pega (PCBA, PCSA) and Tricentis Tosca (AS1, AS2, API). | Vanilla JavaScript · ES6 Proxy State · PWA / Service Worker · HTML5 |
-| **[QASmartTestLab](https://github.com/emredursun/QASmartTestLab)** | A comprehensive test automation framework built with Java 17+, Selenium 4, and Cucumber for UI, API, and database testing with clean architecture and runtime configuration. | Java 17 · Selenium 4 · Cucumber · Maven |
+| **[QASmartTestLab](https://github.com/emredursun/QASmartTestLab)** | A Java 17 test automation framework on Selenium 4 and Cucumber 7: thread-safe parallel scenarios, local or remote Grid runs, and HTML, JSON and JUnit reports from every run. | Java 17 · Selenium 4 · Cucumber 7 · JUnit 5 |
 | **[Playwright Testing Suite](https://github.com/emredursun/playwright-testing-project)** | Comprehensive Playwright test automation suite demonstrating UI, API, and visual testing capabilities with Page Object Model, cross-browser testing, and advanced debugging. | Playwright · TypeScript · Node.js · REST APIs |
 | **[PathForge](https://github.com/pathforge-labs/PathForge)** | An AI-powered career intelligence platform that decodes a professional's “Career DNA” — matching skills, trajectory, and ambitions to real opportunities. | Next.js 15 · FastAPI (Python 3.12) · PostgreSQL + pgvector · Claude Sonnet 4 |
 | **[Portfolio](https://github.com/emredursun/professional-portfolio)** | The source behind [emredursun.nl](https://emredursun.nl/) — trilingual, SEO-optimised, print-ready résumé. | React · TypeScript · Vite · Tailwind |
@@ -123,7 +125,7 @@
 
 <div align="center">
 
-Through Sopra Steria I am available for **QA Consultant, QA Lead, or Test Automation Engineer** assignments in a **Pega context**, ideally where model-based automation in Tosca is the approach. My preference is **financial services or government** engagements. If this lines up with what you're working on, feel free to reach out. I'm always up for a conversation about testing real-time payment systems, model-based automation, or scaling QA inside a Pega project.
+Through Sopra Steria I am available for **QA Consultant, QA Lead, or Test Automation Engineer** assignments in a **Pega context**, ideally where model-based automation in Tosca is the approach. My preference is **financial services or government** engagements. If this lines up with what you're working on, feel free to reach out. I'm always up for a conversation about testing real-time payments or scaling QA inside a Pega project.
 
 [![Let's talk](https://img.shields.io/badge/Let's_talk-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/emre-dursun-nl/)
 

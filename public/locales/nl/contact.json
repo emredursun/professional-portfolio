@@ -17,21 +17,32 @@
     },
     "message": {
       "label": "Uw Bericht",
-      "placeholder": "Schrijf hier uw bericht (minimaal 20 tekens)..."
+      "placeholder": "Schrijf hier uw bericht (minimaal 20 tekens)...",
+      "tooShort": "Uw bericht moet minimaal 20 tekens bevatten"
+    },
+    "notice": {
+      "text": "Uw bericht komt via Web3Forms, een formulierdienst, in mijn inbox. Ik gebruik uw naam en e-mailadres alleen om u te antwoorden.",
+      "link": "Privacybeleid van Web3Forms"
     }
   },
   "messages": {
     "success": {
       "title": "Verzonden!",
       "description": "Uw bericht is succesvol verzonden.",
-      "followUp": "Ik neem zo spoedig mogelijk contact met u op."
+      "followUp": "Ik neem zo spoedig mogelijk contact met u op.",
+      "notification": "Bericht verzonden! ✉️"
     },
     "error": {
       "title": "Verzending Mislukt",
-      "description": "Er is iets misgegaan. Probeer het opnieuw."
+      "description": "Er is iets misgegaan. Uw bericht staat er nog; verstuur het opnieuw."
     }
   },
   "meta": {
     "description": "Neem contact op met Emre Dursun voor opdrachten als QA Consultant, QA Lead of Test Automation Engineer in een Pega- en Tricentis Tosca-context."
+  },
+  "map": {
+    "load": "Kaart tonen",
+    "notice": "Laadt Google Maps, dat cookies kan plaatsen.",
+    "title": "Locatiekaart"
   }
 }

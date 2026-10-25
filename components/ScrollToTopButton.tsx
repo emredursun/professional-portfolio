@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ScrollToTopButtonProps {
   onClick: () => void;
@@ -6,18 +7,24 @@ interface ScrollToTopButtonProps {
   isMobileView: boolean;
 }
 
-const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ onClick, progress, isMobileView }) => {
+const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({
+  onClick,
+  progress,
+  isMobileView,
+}) => {
+  const { t } = useTranslation('common');
   // Calculate circle properties for the progress ring
   const radius = 24;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div 
+    <div
       className={`fixed z-50 transition-all duration-500 ease-out
-        ${isMobileView 
-          ? 'right-6 bottom-20' // Mobile: Fixed to viewport, closer to navbar (just above it)
-          : 'right-8 bottom-8' // Desktop: Fixed to viewport, bottom-right corner
+        ${
+          isMobileView
+            ? 'right-6 bottom-20' // Mobile: Fixed to viewport, closer to navbar (just above it)
+            : 'right-8 bottom-8' // Desktop: Fixed to viewport, bottom-right corner
         }`}
     >
       <button
@@ -27,10 +34,10 @@ const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ onClick, progress
           border border-white/20 dark:border-white/10
           shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]
           hover:scale-110 hover:-translate-y-1 transition-all duration-300 ease-out"
-        aria-label="Scroll to top"
+        aria-label={t('labels.scrollToTop')}
       >
         {/* Progress Ring SVG */}
-        <svg 
+        <svg
           className="absolute inset-0 w-full h-full -rotate-90 transform pointer-events-none"
           viewBox="0 0 60 60"
         >
@@ -61,7 +68,10 @@ const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ onClick, progress
 
         {/* Inner Button Content */}
         <div className="relative z-10 flex items-center justify-center w-10 h-10 rounded-full bg-yellow-400 text-gray-900 shadow-lg group-hover:bg-yellow-300 transition-colors duration-300">
-          <i className="fas fa-arrow-up text-lg group-hover:animate-bounce-custom"></i>
+          <i
+            aria-hidden="true"
+            className="fas fa-arrow-up text-lg group-hover:animate-bounce-custom"
+          ></i>
         </div>
 
         {/* Glow Effect */}
@@ -69,10 +79,12 @@ const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ onClick, progress
       </button>
 
       {/* Tooltip text (optional, appears on hover) */}
-      <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 
+      <span
+        className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 
         bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-xs font-medium text-gray-800 dark:text-gray-200 
         rounded-lg shadow-lg opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 
-        transition-all duration-300 pointer-events-none whitespace-nowrap hidden lg:block">
+        transition-all duration-300 pointer-events-none whitespace-nowrap hidden lg:block"
+      >
         Back to Top
       </span>
     </div>

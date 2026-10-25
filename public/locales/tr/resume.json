@@ -40,13 +40,13 @@
       "date": "May 2026 - Devam Ediyor",
       "title": "QA Consultant (Pega & Tricentis Tosca)",
       "company": "Sopra Steria - Nieuwegein, Utrecht, Hollanda · Hybrid",
-      "description": "Sopra Steria Pega Practice'te (RulesMatter) QA Consultant olarak Pega uygulamaları için test otomasyonuna odaklanıyorum. Web UI, kurumsal ve masaüstü uygulamaları, API chain'leri ve mobil otomasyonu kapsayan test coverage, test data ve automation architecture'ı, Tricentis Tosca'nın model-based yaklaşımını kullanarak tasarlıyorum. Certified Pega Business Architect (CPBA) ve Certified Pega System Architect (CPSA) platform uzmanlığıyla birleştirerek testability'i en baştan case design'a dahil ediyorum."
+      "description": "Sopra Steria Pega Practice'te (RulesMatter) QA Consultant olarak Pega uygulamaları için test otomasyonuna odaklanıyorum. Web UI, kurumsal ve masaüstü uygulamaları, API chain'leri ve mobil otomasyonu kapsayan test coverage, test data ve automation architecture'ı, Tricentis Tosca'nın model-based yaklaşımını kullanarak tasarlıyorum. Certified Pega Business Architect (CPBA) ve Certified Pega System Architect (CPSA) platform uzmanlığıyla birleştirerek testability'i en baştan case design'a dahil ediyorum. Grup içinde, Sopra Steria'nın yapay zekâ destekli yazılım teslimatı platformu AI Backbone ile çalışıyor ve onun için Tosca skill'leri ve workflow'ları geliştiriyorum; yaklaşımı ekip içinde Pega için model-based test otomasyonu üzerine verdiğim bir oturumla paylaşıyorum."
     },
     {
       "date": "Eyl 2023 - Eyl 2025",
       "title": "Automation Engineer (PSS/True International Payments/Ch Dovetail)",
-      "company": "ING Bank - Amsterdam, Hollanda · Hybrid",
-      "description": "ING'nin TIP Test Center'da (TTC) Automation Test Engineer olarak, Fiserv payment platformu Dovetail sistemi içindeki real-time ödeme işlemleri için otomatik end-to-end testler tasarladım ve maintain ettim. Uluslararası branch'lar arasında transaction doğruluğunu garanti altına aldım. Sorumluluklarım arasında çeşitli payment flow'ları için test validation'ları tasarlamak, deployment'ı hızlandırmak için test data'sını yönetmek ve optimize etmek, automation framework ile seamless integration sağlamak için development team'leri ve stakeholder'larla yakın işbirliği yapmak yer aldı."
+      "company": "ING Bank (önce Sogyo üzerinden, sonra internal) - Amsterdam, Hollanda · Hybrid",
+      "description": "ING'nin TIP Test Center'ında (TTC) iki yıl: ilk yıl Sogyo üzerinden dış danışman olarak, ikinci yıl ING'nin iç sözleşmesiyle. Fiserv'in ödeme platformu Dovetail üzerinde real-time ödeme işlemleri için otomatik end-to-end testler tasarladım ve sürdürdüm; uluslararası şubeler arasında işlem doğruluğunu güvence altına aldım. EPP ve EPP dışı ödeme akışları için Functional Flow Validation (FFV) kontrollerini Belçika, İtalya, Macaristan ve Slovakya'ya özgü rollout'lar dahil geliştirdim; yeni Dovetail sürümleri etrafında günlük end-to-end regresyon akışlarını yürütüp doğruladım; yeni test case'leri sisteme aldım, framework'ü ve test verisini optimize ettim; TTC framework'üne entegre olan geliştirme ekiplerine ve feature squad'lara destek verdim. 400 eski senaryoyu yeni framework’e taşıyıp 450 yeni senaryo ekleyerek, raporlamasıyla birlikte tam bir regresyon koşumunu birkaç günden 3–5 saate indirdim."
     },
     {
       "date": "Haz 2022 - Haz 2023",
@@ -55,10 +55,10 @@
       "description": "Selenium WebDriver, Java, JUnit ve Cucumber kullanarak acceptance criteria'ya dayalı kapsamlı bir Automation Framework geliştirdim ve yönettim. Bir hastane portalı için hasta yönetimi ve randevu scheduling gibi fonksiyonları kapsayan UI, backend ve database testlerini yürüttüm. Postman ve Rest Assured ile API testing gerçekleştirdim, Maven ile dependency'leri yönettim ve Agile ortamda Jenkins ile CI/CD pipeline'ları entegre ettim."
     },
     {
-      "date": "May 2021 - Oca 2023",
+      "date": "Eyl 2020 - Oca 2023",
       "title": "Manual Tester & E-Commerce Specialist",
-      "company": "BSG Auto Parts & Nerex Motors - Amsterdam, Hollanda · On-site",
-      "description": "Nerex Motors'da e-commerce stratejilerini ve ürün kalitesini artırmada kritik bir rol oynadım. Yüksek functionality standartlarını korumak için ERP sistemlerinde manuel testler yürüttüm, Amazon ve eBay'de product search visibility'yi iyileştirdim ve online satışları artıran stratejik ad campaign'leri uyguladım. BSG Auto Parts için B2B growth'u teşvik eden, custom sales stratejileri geliştiren, key account'larla güçlü ilişkiler kuran ve competitive commercial term'leri negotiate eden Online Channel (AutoDoc) sales sürecini başarıyla yönettim."
+      "company": "Nerex Motors & BSG Auto Parts (aynı grup) - Amsterdam, Hollanda · On-site",
+      "description": "Aynı grup altındaki iki şirket: Nerex Motors (Eyl 2020 – Oca 2023) ve paralel olarak BSG Auto Parts (Eyl 2020 – Oca 2022). Nerex Motors'ta yüksek işlevsellik standartlarını korumak için ERP sistemlerinde manuel testler yürüttüm, Amazon ve eBay'de ürün arama görünürlüğünü iyileştirdim ve online satışları artıran stratejik reklam kampanyaları yürüttüm. BSG Auto Parts'ta Online Channel (AutoDoc) satış sürecini yönettim; kanal ortaklarına özel satış stratejileri geliştirerek, kilit müşterilerle güçlü ilişkiler kurarak ve rekabetçi ticari koşullar müzakere ederek B2B büyümesini destekledim."
     },
     {
       "date": "Mar 2019 - Eyl 2020",

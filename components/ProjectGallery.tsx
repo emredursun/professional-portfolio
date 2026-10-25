@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ProjectGalleryProps {
   images: string[];
@@ -6,6 +7,7 @@ interface ProjectGalleryProps {
 }
 
 const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle }) => {
+  const { t } = useTranslation('common');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -18,13 +20,14 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
     setLightboxOpen(false);
   };
 
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
+  const count = images.length;
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % count);
+  }, [count]);
 
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
+  const goToPrevious = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + count) % count);
+  }, [count]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -38,7 +41,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxOpen]);
+  }, [lightboxOpen, goToNext, goToPrevious]);
 
   if (!images || images.length === 0) return null;
 
@@ -47,9 +50,12 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
       {/* Gallery Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {images.map((image, index) => (
-          <div
+          // A button, so the screenshots open from the keyboard too; the
+          // image's alt text names it.
+          <button
+            type="button"
             key={index}
-            className="group relative aspect-video overflow-hidden rounded-xl cursor-pointer border border-gray-200 dark:border-gray-700 hover:border-yellow-400 dark:hover:border-neon-cyan transition-all duration-300"
+            className="group relative block w-full aspect-video overflow-hidden rounded-xl cursor-pointer border border-gray-200 dark:border-gray-700 hover:border-yellow-400 dark:hover:border-neon-cyan focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-yellow-400 dark:focus-visible:ring-neon-cyan transition-all duration-300"
             onClick={() => openLightbox(index)}
           >
             <img
@@ -61,17 +67,20 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">
                 <div className="w-12 h-12 bg-yellow-400 dark:bg-neon-cyan rounded-full flex items-center justify-center">
-                  <i className="fas fa-search-plus text-black text-xl"></i>
+                  <i aria-hidden="true" className="fas fa-search-plus text-black text-xl"></i>
                 </div>
               </div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
 
       {/* Lightbox Modal */}
       {lightboxOpen && (
+        // Clicking the backdrop is a mouse shortcut; keyboard users close the
+        // lightbox with Escape (handled above) or the close button.
         <div
+          role="presentation"
           className="fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-4 animate-fade-in"
           onClick={closeLightbox}
         >
@@ -79,7 +88,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
           <button
             onClick={closeLightbox}
             className="absolute top-4 right-4 w-12 h-12 bg-yellow-400 rounded-full text-black hover:bg-yellow-500 transition-all duration-300 flex items-center justify-center text-2xl z-10 hover:rotate-90"
-            aria-label="Close lightbox"
+            aria-label={t('labels.closeLightbox')}
           >
             &times;
           </button>
@@ -92,14 +101,15 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
                 goToPrevious();
               }}
               className="absolute left-4 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center text-xl z-10"
-              aria-label="Previous image"
+              aria-label={t('labels.previousImage')}
             >
-              <i className="fas fa-chevron-left"></i>
+              <i aria-hidden="true" className="fas fa-chevron-left"></i>
             </button>
           )}
 
           {/* Image Container */}
           <div
+            role="presentation"
             className="max-w-6xl max-h-[90vh] relative"
             onClick={(e) => e.stopPropagation()}
           >
@@ -122,9 +132,9 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ images, projectTitle })
                 goToNext();
               }}
               className="absolute right-4 w-12 h-12 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white/20 transition-all duration-300 flex items-center justify-center text-xl z-10"
-              aria-label="Next image"
+              aria-label={t('labels.nextImage')}
             >
-              <i className="fas fa-chevron-right"></i>
+              <i aria-hidden="true" className="fas fa-chevron-right"></i>
             </button>
           )}
         </div>

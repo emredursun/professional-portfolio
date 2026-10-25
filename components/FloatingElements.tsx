@@ -1,5 +1,31 @@
-import React, { useMemo } from 'react';
+import React, { useState } from 'react';
 import { useReducedMotion } from './hooks/useReducedMotion.tsx';
+
+function createElements() {
+  const shapes = ['circle', 'square', 'triangle'];
+  const count = 8; // Keep count low for performance
+
+  return Array.from({ length: count }, (_, i) => {
+    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+    const size = Math.random() * 150 + 50; // 50-200px
+    const top = Math.random() * 100;
+    const left = Math.random() * 100;
+    const duration = Math.random() * 10 + 15; // 15-25s
+    const delay = Math.random() * 5;
+    const opacity = Math.random() * 0.03 + 0.01; // Very subtle: 0.01-0.04
+
+    return {
+      id: i,
+      shape,
+      size,
+      top,
+      left,
+      duration,
+      delay,
+      opacity,
+    };
+  });
+}
 
 /**
  * FloatingElements - Ambient floating geometric shapes for premium background effect
@@ -8,32 +34,9 @@ import { useReducedMotion } from './hooks/useReducedMotion.tsx';
 const FloatingElements: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
 
-  // Generate random floating elements
-  const elements = useMemo(() => {
-    const shapes = ['circle', 'square', 'triangle'];
-    const count = 8; // Keep count low for performance
-    
-    return Array.from({ length: count }, (_, i) => {
-      const shape = shapes[Math.floor(Math.random() * shapes.length)];
-      const size = Math.random() * 150 + 50; // 50-200px
-      const top = Math.random() * 100;
-      const left = Math.random() * 100;
-      const duration = Math.random() * 10 + 15; // 15-25s
-      const delay = Math.random() * 5;
-      const opacity = Math.random() * 0.03 + 0.01; // Very subtle: 0.01-0.04
-      
-      return {
-        id: i,
-        shape,
-        size,
-        top,
-        left,
-        duration,
-        delay,
-        opacity,
-      };
-    });
-  }, []);
+  // Random once per mount: a useState initializer, not useMemo (which React
+  // may recompute and so re-shuffle the shapes).
+  const [elements] = useState(createElements);
 
   // Don't render if user prefers reduced motion
   if (prefersReducedMotion) {

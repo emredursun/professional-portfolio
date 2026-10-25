@@ -10,8 +10,8 @@
     "downloadCV": "CV Downloaden",
     "sendMessage": "Bericht Versturen",
     "sending": "Verzenden...",
-    "tryAgain": "Opnieuw Proberen",
-    "close": "Sluiten"
+    "close": "Sluiten",
+    "learnMore": "Meer informatie"
   },
   "statusBadge": {
     "openToWork": "#OPENTOWORK",
@@ -30,9 +30,132 @@
     "email": "E-mail",
     "phone": "Telefoon",
     "location": "Locatie",
-    "locationValue": "Nieuwegein, Nederland"
+    "locationValue": "Nieuwegein (Sopra Steria) · Hybride",
+    "pageContent": "Pagina-inhoud",
+    "skipToContent": "Naar de inhoud",
+    "changeLanguage": "Taal wijzigen",
+    "toggleTheme": "Thema wisselen",
+    "scrollToTop": "Naar boven",
+    "closeLightbox": "Vergroting sluiten",
+    "previousImage": "Vorige afbeelding",
+    "nextImage": "Volgende afbeelding",
+    "previousProject": "Vorig project",
+    "nextProject": "Volgend project",
+    "shareProject": "Project delen",
+    "closeProject": "Projectdetails sluiten",
+    "followOn": "Volg mij op {{name}}",
+    "searchShortcut": "Zoeken (⌘K)"
   },
   "meta": {
     "description": "QA Consultant gespecialiseerd in Pega & Tricentis Tosca testautomatisering, ISTQB® Gecertificeerd. Gevestigd in Nederland."
+  },
+  "notFound": {
+    "title": "Pagina niet gevonden",
+    "description": "Deze link leidt nergens naartoe op deze site. Hij is mogelijk verplaatst, of het adres bevat een typfout.",
+    "home": "Naar Over mij",
+    "projects": "Projecten bekijken"
+  },
+  "quality": {
+    "title": "Kwaliteitsrapport",
+    "headingHighlight": "Kwaliteits",
+    "headingRest": "rapport",
+    "subtitle": "Uit CI bij elke deploy",
+    "meta": {
+      "description": "Hoe emredursun.nl wordt getest: unit-, end-to-end-, toegankelijkheids-, performance- en securitychecks uit de CI-run achter elke deploy."
+    },
+    "lines": {
+      "unit": "{{passed}} geslaagd · coverage {{coverage}}%",
+      "e2e": "{{passed}} geslaagd · desktop + mobiel",
+      "a11y": "{{violations}} axe-schendingen · WCAG 2.1 AA",
+      "lighthouse": "perf {{performance}} · a11y {{accessibility}} · seo {{seo}}",
+      "security": "strikte CSP · {{advisories}} runtime-advisories",
+      "securityRelaxed": "CSP staat inline scripts toe · {{advisories}} runtime-advisories"
+    },
+    "summary": "{{passed}} geslaagd · {{failed}} mislukt · {{flaky}} flaky",
+    "metrics": {
+      "coverage": "Coverage",
+      "coverageValue": "{{value}}%",
+      "performance": "Performance",
+      "monitoring": "Uptime-check",
+      "monitoringValue": "elke 30 min"
+    },
+    "unavailable": "Het laatste rapport is nu niet beschikbaar.",
+    "footnote": "Wordt bij elke release automatisch bijgewerkt.",
+    "entryTitle": "Kwaliteitsrapport",
+    "entrySubtitle": "Bij elke release geverifieerd",
+    "status": {
+      "passed": "geslaagd",
+      "failed": "mislukt"
+    },
+    "entryAction": "Bekijk rapport"
+  },
+  "palette": {
+    "dialog": "Opdrachtenpalet",
+    "placeholder": "Typ een opdracht of zoek...",
+    "search": "Opdrachten zoeken",
+    "clear": "Zoekopdracht wissen",
+    "list": "Opdrachten",
+    "recent": "Recent",
+    "empty": "Geen opdrachten gevonden",
+    "emptyHint": "Probeer een andere zoekterm",
+    "navigate": "Navigeren",
+    "select": "Kiezen",
+    "close": "Sluiten",
+    "count_one": "{{count}} opdracht",
+    "count_other": "{{count}} opdrachten",
+    "categories": {
+      "Navigation": "Navigatie",
+      "Actions": "Acties",
+      "Theme": "Thema",
+      "Projects": "Projecten"
+    },
+    "commands": {
+      "navAbout": {
+        "label": "Ga naar Over",
+        "description": "Profiel en diensten bekijken"
+      },
+      "navResume": {
+        "label": "Ga naar CV",
+        "description": "Ervaring en opleiding bekijken"
+      },
+      "navProjects": {
+        "label": "Ga naar Projecten",
+        "description": "Portfolioprojecten bekijken"
+      },
+      "navContact": {
+        "label": "Ga naar Contact",
+        "description": "Neem contact op"
+      },
+      "downloadResume": {
+        "label": "Cv downloaden",
+        "description": "Pdf-versie downloaden"
+      },
+      "toggleTheme": {
+        "label": "Thema wisselen",
+        "description": "Wisselen tussen licht en donker"
+      },
+      "lightTheme": {
+        "label": "Licht thema",
+        "description": "Lichte modus inschakelen"
+      },
+      "darkTheme": {
+        "label": "Donker thema",
+        "description": "Donkere modus inschakelen"
+      },
+      "scrollTop": {
+        "label": "Naar boven",
+        "description": "Terug naar de bovenkant van de pagina"
+      },
+      "copyEmail": {
+        "label": "E-mailadres kopiëren"
+      },
+      "copyLinkedIn": {
+        "label": "LinkedIn-URL kopiëren",
+        "description": "Link naar het LinkedIn-profiel"
+      },
+      "viewProject": "{{title}} bekijken",
+      "filterLabel": "Filter: {{category}}",
+      "filterDescription": "Alleen {{category}}-projecten tonen"
+    }
   }
 }

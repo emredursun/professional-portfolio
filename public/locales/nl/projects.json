@@ -6,6 +6,7 @@
     "technologies": "Technologieën",
     "clearFilters": "Filters Wissen",
     "activeFilters": "Actieve filters:",
+    "removeFilter": "Filter verwijderen: {{name}}",
     "selected": "{{count}} geselecteerd",
     "showingResults": "{{count}} project weergegeven",
     "showingResults_plural": "{{count}} projecten weergegeven",
@@ -56,49 +57,49 @@
       "role": "Lead Automation Engineer",
       "team": "Solo Project",
       "duration": "4 maanden",
-      "description": "Een uitgebreid test automation framework gebouwd met Java 17+, Selenium 4 en Cucumber voor UI, API en database testing met Clean Architecture en runtime configuratie.",
-      "detailedDescription": "QASmartTestLab is een productie-klaar test automation framework dat best practices in testautomatisering demonstreert. Gebouwd met Java 17+, Selenium 4 en Cucumber (JVM), biedt het een schone, onderhoudbare structuur voor UI, API en database testing. Het framework omvat runtime configuratie voor browsers (Chrome, Firefox, Edge), headless uitvoering, remote Grid/Selenoid ondersteuning en uitgebreide rapportage. Het volgt het Page Object Model patroon met duidelijke scheiding van verantwoordelijkheden, inclusief configureerbare time-outs, parallelle uitvoering en op tags gebaseerde testfiltering.",
+      "description": "Een Java 17-testautomatiseringsframework op Selenium 4 en Cucumber 7: thread-safe parallelle scenario’s, lokale of remote Grid-runs, en HTML-, JSON- en JUnit-rapporten bij elke run.",
+      "detailedDescription": "QASmartTestLab is een Cucumber (JVM)-framework op Selenium 4 en JUnit 5. Cucumber voert scenario’s parallel uit met een dynamische strategie, en elke thread krijgt een eigen WebDriver via een ThreadLocal-factory, zodat scenario’s nooit een browser delen. Dezelfde suite draait op een lokale Chrome (drivers via WebDriverManager) of op een remote Selenium Grid of Selenoid, gekozen tijdens runtime met een systeemproperty of omgevingsvariabele. Page objects, step definitions, runners en supportklassen zijn gescheiden; tags bepalen wat er draait, en elke run schrijft HTML-, JSON- en JUnit XML-rapporten plus een samenvatting in de console. De feature-suites dekken UI-login en inkomende en uitgaande betaalberichten met XML-validatiefixtures.",
       "challenge": "Test automation teams worstelen vaak met framework complexiteit, slechte onderhoudbaarheid en gebrek aan standaardisatie tussen projecten. Veel frameworks veranderen in technische schuld, zijn moeilijk te begrijpen voor nieuwe teamleden en lastig op te schalen naarmate de applicatie groeit.",
-      "solution": "Ik heb QASmartTestLab vanaf de grond opgebouwd met Clean Architecture principes, met de nadruk op scheiding van verantwoordelijkheden, duidelijke naamgevingsconventies en uitgebreide documentatie. Ik implementeerde flexibele runtime configuratie waarmee teams browsers, omgevingen en uitvoeringsmodi kunnen wisselen zonder codewijzigingen. Het Page Object Model patroon zorgt voor eenvoudig onderhoud, terwijl tag-based filtering precieze controle over de testuitvoering biedt.",
+      "solution": "QASmartTestLab gebouwd rond een paar heldere regels: page objects voor de UI, step definitions die alleen orkestreren, één WebDriver per thread, en configuratie tijdens runtime in plaats van in code. De suite wisselt met één property tussen een lokale browser en een remote Grid, voert scenario’s veilig parallel uit en selecteert met tags wat er draait.",
       "metrics": [
-        "Multi-Layer Testing (UI, API, DB)",
-        "Ondersteuning voor Parallelle Uitvoering",
-        "Remote Grid Integratie",
-        "Clean Architecture & POM Patroon"
+        "Parallelle Scenario’s · Thread-Safe WebDriver",
+        "Lokale of Remote Grid/Selenoid-Runs",
+        "4 Rapportformaten per Run",
+        "Page Object Model · Runs op Tags"
       ],
       "features": {
         "multiLayer": {
-          "title": "Multi-Layer Testing",
-          "description": "Uitgebreide dekking over UI (Selenium), API (REST Assured) en database (JDBC) lagen binnen één verenigd framework."
+          "title": "Betaalstroom-Features",
+          "description": "Cucumber-suites voor UI-login en voor inkomende en uitgaande betaalberichten, met XML-validatiefixtures per scenario."
         },
         "runtimeConfig": {
-          "title": "Runtime Configuratie",
-          "description": "Dynamische browserselectie, headless modus en remote Grid/Selenoid integratie—allemaal configureerbaar tijdens runtime zonder code aan te passen."
+          "title": "Runtime-Configuratie",
+          "description": "Lokale Chrome of een remote Selenium Grid/Selenoid, gekozen met een systeemproperty of omgevingsvariabele; WebDriverManager regelt de drivers."
         },
         "cleanArch": {
           "title": "Clean Architecture",
-          "description": "Page Object Model met duidelijke scheiding: pagina's, stappen, runners, hulpprogramma's. Elk onderdeel heeft één verantwoordelijkheid."
+          "description": "Page objects, step definitions, runners en supportklassen gescheiden, elk met één verantwoordelijkheid."
         },
         "parallel": {
-          "title": "Paralelle Uitvoering",
-          "description": "Tag-based filtering en parallel thread support voor snellere feedback cycli. Voer smoke tests uit in minuten, volledige regressie 's nachts."
+          "title": "Parallelle Uitvoering",
+          "description": "Cucumber voert scenario’s parallel uit (dynamische strategie) met een ThreadLocal WebDriver per thread, zodat scenario’s nooit een browser delen."
         }
       },
       "results": {
-        "speed": {
-          "metric": "Testuitvoeringssnelheid",
-          "value": "60% sneller",
-          "description": "Parallelle uitvoering verminderde de volledige regressietijd van 2 uur naar 48 minuten"
+        "formats": {
+          "metric": "Rapportformaten",
+          "value": "4",
+          "description": "HTML, JSON, JUnit XML en een samenvatting in de console bij elke run"
         },
-        "maintainability": {
-          "metric": "Onderhoudbaarheid Code",
-          "value": "85% reductie",
-          "description": "POM patroon verminderde de onderhoudsinspanning voor tests en verhoogde de teamsnelheid"
+        "targets": {
+          "metric": "Uitvoeringsdoelen",
+          "value": "2",
+          "description": "Lokale Chrome of een remote Selenium Grid/Selenoid, te wisselen zonder codewijziging"
         },
-        "adoption": {
-          "metric": "Framework Adoptie",
-          "value": "100+ sterren",
-          "description": "GitHub repository kreeg tractie in de QA automation community"
+        "parallel": {
+          "metric": "Parallellisme",
+          "value": "Per scenario",
+          "description": "Een thread-safe WebDriver laat Cucumber scenario’s gelijktijdig uitvoeren"
         }
       }
     },
@@ -178,13 +179,14 @@
       "description": "TTC is een gespecialiseerd framework dat transactionele testing automatiseert in het Dovetail systeem, een Fiserv payment platform dat real-time betalingsverwerking afhandelt.",
       "detailedDescription": "TTC is een gespecialiseerd framework dat transactionele testing automatiseert in het Dovetail systeem, een Fiserv payment platform dat real-time betalingsverwerking afhandelt. Het framework beheert end-to-end transactionele testautomatisering voor Dovetail betalingen en integreert met de ING Test Center (ITC) execution engine.",
       "metrics": [
-        "End-to-End Transactionele Automatisering",
-        "Dagelijkse Regressie in DEV5 Omgeving",
+        "850 Geautomatiseerde Betalingsscenario’s",
+        "Volledige Run + Rapport: Dagen → 3–5 Uur",
         "Multi-Country: BE, IT, HU, SK",
-        "Geïntegreerd met ING Test Center (ITC)"
+        "Geïntegreerd met ING Test Center (ITC)",
+        "Dagelijkse Regressie in DEV5 Omgeving"
       ],
-      "challenge": "Internationale bankbetalingssystemen vereisen rigoureus testen over meerdere landen met verschillende regelgevingen. Handmatig testen is tijdrovend en gevoelig voor menselijke fouten in complexe transactiestromen.",
-      "solution": "Ontworpen en geïmplementeerd geautomatiseerde end-to-end regressietests voor het Dovetail betalingsplatform, geïntegreerd met ING Test Center voor dagelijkse uitvoering. Landspecifieke testvalidaties gecreëerd voor EPP en niet-EPP betalingsstromen.",
+      "challenge": "Het TIP Test Center van ING draaide zo’n 400 end-to-end betalingsscenario’s voor het Dovetail-platform op een verouderde opzet. Een volledige regressierun met rapportage duurde meerdere dagen, wat elke Dovetail-release en elke landenuitrol vertraagde.",
+      "solution": "De 400 bestaande scenario’s overgezet naar het nieuwe TTC-framework (Selenium, Cucumber en Java op de ING Test Center-executie-engine) en 450 nieuwe toegevoegd, inclusief FFV-validaties per land voor EPP- en niet-EPP-betalingsstromen. Framework en testdata geoptimaliseerd, zodat de volledige suite dagelijks in DEV5 draait.",
       "features": {
         "validation": {
           "title": "Test Validatie Ontwikkeling",
@@ -201,6 +203,23 @@
         "stakeholder": {
           "title": "Stakeholder Support",
           "description": "Technische begeleiding bieden aan ontwikkelteams, feature squads en andere belanghebbenden tijdens het onboardingproces."
+        }
+      },
+      "results": {
+        "scenarios": {
+          "metric": "Geautomatiseerde scenario’s",
+          "value": "850",
+          "description": "400 bestaande scenario’s gemigreerd naar het nieuwe framework, plus 450 nieuwe toegevoegd"
+        },
+        "runtime": {
+          "metric": "Volledige run en rapportage",
+          "value": "3–5 u",
+          "description": "Was meerdere dagen voor een volledige regressierun met rapport"
+        },
+        "countries": {
+          "metric": "Landenuitrol",
+          "value": "4",
+          "description": "België, Italië, Hongarije en Slowakije gedekt met landspecifieke validaties"
         }
       }
     },

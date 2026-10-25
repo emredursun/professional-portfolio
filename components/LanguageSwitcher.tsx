@@ -5,12 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LANGUAGES } from '../i18n.ts';
 
 interface LanguageSwitcherProps {
-  isMobileView?: boolean;
   theme?: string;
 }
 
-const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ isMobileView = false, theme = 'light' }) => {
-  const { i18n } = useTranslation();
+const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ theme = 'light' }) => {
+  const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -24,18 +23,17 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ isMobileView = fals
 
     // 2. Calculate new path with language prefix
     const { pathname } = location;
-    
+
     // Remove current language prefix if exists
-    let pathWithoutLang = pathname.replace(/^\/(nl|tr)/, '');
-    
+    const pathWithoutLang = pathname.replace(/^\/(nl|tr)/, '');
+
     // Add new language prefix (unless English)
-    const newPath = lang === 'en' 
-      ? pathWithoutLang || '/about'
-      : `/${lang}${pathWithoutLang || '/about'}`;
+    const newPath =
+      lang === 'en' ? pathWithoutLang || '/about' : `/${lang}${pathWithoutLang || '/about'}`;
 
     // 3. Change language in i18n
-    i18n.changeLanguage(lang).catch(err => {
-        console.error('Failed to load language:', err);
+    i18n.changeLanguage(lang).catch((err) => {
+      console.error('Failed to load language:', err);
     });
 
     // 4. Navigate to new path with React Router
@@ -65,16 +63,20 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ isMobileView = fals
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl shadow-lg border transition-all duration-300
-          ${theme === 'light' 
-            ? 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' 
-            : 'bg-[#1e1e1e] text-gray-300 border-gray-700 hover:bg-gray-800'}
+          ${
+            theme === 'light'
+              ? 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+              : 'bg-[#1e1e1e] text-gray-300 border-gray-700 hover:bg-gray-800'
+          }
           hover:scale-110 hover:rotate-12 hover:shadow-xl
         `}
         whileTap={{ scale: 0.95 }}
-        aria-label="Change language"
+        aria-label={t('labels.changeLanguage')}
         aria-expanded={isOpen}
       >
-        <span className="text-xl">{LANGUAGES[currentLanguage as keyof typeof LANGUAGES]?.flag || '🌐'}</span>
+        <span className="text-xl">
+          {LANGUAGES[currentLanguage as keyof typeof LANGUAGES]?.flag || '🌐'}
+        </span>
       </motion.button>
 
       {/* Dropdown Menu */}
@@ -105,7 +107,7 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ isMobileView = fals
                   <div className="text-xs opacity-70 uppercase">{lang}</div>
                 </div>
                 {currentLanguage === lang && (
-                  <i className="fas fa-check text-sm"></i>
+                  <i aria-hidden="true" className="fas fa-check text-sm"></i>
                 )}
               </motion.button>
             ))}

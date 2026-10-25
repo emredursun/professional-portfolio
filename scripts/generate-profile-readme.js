@@ -34,7 +34,9 @@
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
+import { writeIfChanged } from './generate-sitemap.js';
+import { loadConstants } from './lib/load-constants.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -63,28 +65,58 @@ const HEADER_LINES = [
  * are interpolated from the portfolio data, not retyped.
  */
 const ABOUT_BULLETS = [
-  '🧪 I do **QA and test automation for Pega applications** in the Sopra Steria **Pega Practice (RulesMatter)** — coverage design, test data, and automation architecture with **Tricentis Tosca\'s model-based approach**.',
-  '🏦 Most of my background is **financial services**. Two years at **ING** on **Dovetail** (the Fiserv real-time international payments platform), maintaining the shared **Selenium / Cucumber / Java** framework behind the daily regression suites across **four countries**.',
+  "🧪 I do **QA and test automation for Pega applications** in the Sopra Steria **Pega Practice (RulesMatter)** — coverage design, test data, and automation architecture with **Tricentis Tosca's model-based approach**, plus **Testim** for AI-driven web testing and **Playwright**.",
+  "🏦 Most of my background is **financial services**. Two years at **ING** on **Dovetail** (Fiserv's real-time payments platform), maintaining the shared **Selenium / Cucumber / Java** framework behind the daily regression suites across **multiple countries**.",
   '🧩 Certified **Pega Business Architect (CPBA)** and **Pega System Architect (CPSA)** — because automation on Pega stays fragile until you understand the case model from the inside. The goal is **testability designed into the case model**, not bolted on afterwards.',
   '📐 Applied Mathematics at **Istanbul University**. It still shows in how I approach coverage decisions, edge cases, and breaking scenarios into independent variables.',
-  '🤖 I use **AI-assisted coding tools** daily (Claude Code, Cursor, Copilot) and build governance infrastructure around them — see **[Devran AI Kit](https://github.com/devran-ai/kit)**.',
+  '🤖 Within Sopra Steria I work with **AI Backbone**, the group platform for AI-assisted software delivery, developing **Tosca skills and workflows** for it. It builds on **[Devran AI Kit](https://github.com/devran-ai/kit)**, my open-source governance layer for Claude Code, Cursor and Copilot.',
 ];
 
 /**
  * Certifications to surface, in display order. Dates are read from the
  * matching SERVICES entry so they cannot go stale; only the credential name
- * and issuer are declared here.
+ * and issuer are declared here. A credential with no service card of its own
+ * (Testim) declares `issued` instead of `service`. The issuer verification
+ * link comes from the service's `certificateUrl`; `verify` overrides it for a
+ * credential that shares a card with another one (CPBA sits on the CPSA card).
  *
  * Deliberately excluded: the ING internal trainings (not public credentials)
  * and the self-issued BeSync Trust-Grade certificate - a self-issued ID next
  * to ISTQB and Pegasystems credentials reads as padding.
  */
-const CERTIFICATIONS = [
-  { name: 'Tosca Product Consultant — Advanced proficiency', note: 'exam 93.3%', issuer: 'Tricentis', service: 'tricentis-tosca-automation' },
-  { name: 'Certified Pega Business Architect (CPBA)', issuer: 'Pegasystems', service: 'pega-platform-architecture' },
-  { name: 'Certified Pega System Architect (CPSA)', issuer: 'Pegasystems', service: 'pega-platform-architecture' },
-  { name: 'ISTQB® Certified Tester — Foundation Level (CTFL)', issuer: 'ISTQB®', service: 'test-automation-architecture' },
-  { name: 'Docker Foundations Professional Certificate', issuer: 'Docker', service: 'cicd-devops-integration' },
+export const CERTIFICATIONS = [
+  {
+    name: 'Testim Product Consultant — Advanced proficiency',
+    issuer: 'Tricentis',
+    issued: 'September 2026',
+  },
+  {
+    name: 'Tosca Product Consultant — Advanced proficiency',
+    note: 'exam 93.3%',
+    issuer: 'Tricentis',
+    service: 'tricentis-tosca-automation',
+  },
+  {
+    name: 'Certified Pega Business Architect (CPBA)',
+    issuer: 'Pegasystems',
+    service: 'pega-platform-architecture',
+    verify: 'https://accounts.pega.com/profile/emre.dursun/share/BPEGACPBA25V1-PEGACPBA25V1',
+  },
+  {
+    name: 'Certified Pega System Architect (CPSA)',
+    issuer: 'Pegasystems',
+    service: 'pega-platform-architecture',
+  },
+  {
+    name: 'ISTQB® Certified Tester — Foundation Level (CTFL)',
+    issuer: 'ISTQB®',
+    service: 'test-automation-architecture',
+  },
+  {
+    name: 'Docker Foundations Professional Certificate',
+    issuer: 'Docker',
+    service: 'cicd-devops-integration',
+  },
 ];
 
 /**
@@ -107,33 +139,34 @@ const FEATURED_SLUGS = [
 /** Shields.io badge definitions, keyed by the technology name in TECH_STACK. */
 const BADGES = {
   // Languages & Core Tech
-  'Java': { color: 'ED8B00', logo: 'openjdk' },
-  'TypeScript': { color: '3178C6', logo: 'typescript' },
-  'JavaScript': { color: 'F7DF1E', logo: 'javascript', logoColor: 'black' },
-  'Python': { color: '3776AB', logo: 'python' },
+  Java: { color: 'ED8B00', logo: 'openjdk' },
+  TypeScript: { color: '3178C6', logo: 'typescript' },
+  JavaScript: { color: 'F7DF1E', logo: 'javascript', logoColor: 'black' },
+  Python: { color: '3776AB', logo: 'python' },
   'Spring Boot': { color: '6DB33F', logo: 'springboot' },
-  'SQL': { color: '4479A1', logo: 'postgresql' },
-  'HTML': { color: 'E34F26', logo: 'html5' },
-  'CSS': { color: '1572B6', logo: 'css3' },
+  SQL: { color: '4479A1', logo: 'postgresql' },
+  HTML: { color: 'E34F26', logo: 'html5' },
+  CSS: { color: '1572B6', logo: 'css3' },
   // Test Automation & Frameworks
   'Tricentis Tosca': { color: '00A99D' },
+  'Tricentis Testim': { color: '0F9D8E' },
   'Pega Platform': { color: '1F4E79' },
-  'Playwright': { color: '2EAD33', logo: 'playwright' },
-  'Cypress': { color: '17202C', logo: 'cypress' },
-  'JUnit': { color: '25A162', logo: 'junit5' },
-  'TestNG': { color: 'C71A36' },
-  'Selenium': { color: '43B02A', logo: 'selenium' },
+  Playwright: { color: '2EAD33', logo: 'playwright' },
+  Cypress: { color: '17202C', logo: 'cypress' },
+  JUnit: { color: '25A162', logo: 'junit5' },
+  TestNG: { color: 'C71A36' },
+  Selenium: { color: '43B02A', logo: 'selenium' },
   'REST Assured': { color: '6DB33F' },
-  'Cucumber': { color: '23D96C', logo: 'cucumber' },
-  'Postman': { color: 'FF6C37', logo: 'postman' },
-  'Swagger': { color: '85EA2D', logo: 'swagger', logoColor: 'black' },
-  'Appium': { color: '662D91', logo: 'appium' },
+  Cucumber: { color: '23D96C', logo: 'cucumber' },
+  Postman: { color: 'FF6C37', logo: 'postman' },
+  Swagger: { color: '85EA2D', logo: 'swagger', logoColor: 'black' },
+  Appium: { color: '662D91', logo: 'appium' },
   // CI/CD & DevOps Tools
   'Azure DevOps': { color: '0078D7', logo: 'azuredevops' },
-  'Jenkins': { color: 'D24939', logo: 'jenkins' },
-  'Docker': { color: '2496ED', logo: 'docker' },
-  'Git': { color: 'F05032', logo: 'git' },
-  'Maven': { color: 'C71A36', logo: 'apachemaven' },
+  Jenkins: { color: 'D24939', logo: 'jenkins' },
+  Docker: { color: '2496ED', logo: 'docker' },
+  Git: { color: 'F05032', logo: 'git' },
+  Maven: { color: 'C71A36', logo: 'apachemaven' },
 };
 
 /**
@@ -159,33 +192,8 @@ const EXTRA_STACK_GROUPS = [
 // Portfolio data loading
 // ---------------------------------------------------------------------------
 
-/**
- * Evaluate constants.tsx and return its exports.
- *
- * The file is TSX, so it is transpiled with esbuild (already present as a Vite
- * dependency) with a stubbed JSX factory - the icon elements are irrelevant
- * here and collapse to null. This is deliberately not regex parsing: the
- * README should break when the data shape changes, not silently render
- * garbage.
- */
-async function loadConstants() {
-  const esbuild = (await import('esbuild')).default;
-  const source = fs
-    .readFileSync(path.join(ROOT, 'constants.tsx'), 'utf8')
-    .replace(/^\s*import\s[\s\S]*?from\s+["'][^"']+["'];?\s*$/gm, '');
-
-  const { code } = esbuild.transformSync(source, {
-    loader: 'tsx',
-    jsx: 'transform',
-    jsxFactory: '__jsx',
-    jsxFragment: '__frag',
-    format: 'esm',
-  });
-
-  const stub = 'const __jsx = () => null; const __frag = null;\n';
-  const encoded = Buffer.from(stub + code, 'utf8').toString('base64');
-  return import(`data:text/javascript;base64,${encoded}`);
-}
+// Shared with the sitemap generator; re-exported for existing callers.
+export { loadConstants };
 
 /** Read one of the English locale files. */
 function loadLocale(name) {
@@ -198,7 +206,7 @@ function loadLocale(name) {
 // ---------------------------------------------------------------------------
 
 /** Convert the locale files' inline HTML into Markdown emphasis. */
-function htmlToMarkdown(text) {
+export function htmlToMarkdown(text) {
   return text
     .replace(/<\/?strong>/g, '**')
     .replace(/<\/?em>/g, '*')
@@ -207,7 +215,7 @@ function htmlToMarkdown(text) {
 }
 
 /** Escape a shields.io path segment (dashes, underscores and spaces are syntax). */
-function encodeBadgeSegment(text) {
+export function encodeBadgeSegment(text) {
   return text
     .replace(/_/g, '__')
     .replace(/-/g, '--')
@@ -218,14 +226,20 @@ function encodeBadgeSegment(text) {
     .replace(/\?/g, '%3F');
 }
 
-/** Build a single-segment shields.io badge image. */
-function badgeUrl({ name, color, logo, logoColor = 'white', style = 'flat-square' }) {
+/**
+ * Build a single-segment shields.io badge image.
+ * @param {{ name: string, color: string, logo?: string, logoColor?: string, style?: string }} badge
+ */
+export function badgeUrl({ name, color, logo, logoColor = 'white', style = 'flat-square' }) {
   const base = `https://img.shields.io/badge/${encodeBadgeSegment(name)}-${color}?style=${style}`;
   return logo ? `${base}&logo=${logo}&logoColor=${logoColor}` : base;
 }
 
-/** Build a two-segment label/value shields.io badge, wrapped in a link. */
-function linkBadge({ label, value, color, logo, logoColor = 'white', href }) {
+/**
+ * Build a two-segment label/value shields.io badge, wrapped in a link.
+ * @param {{ label: string, value: string, color: string, logo?: string, logoColor?: string, href: string }} badge
+ */
+export function linkBadge({ label, value, color, logo, logoColor = 'white', href }) {
   const segment = `${encodeBadgeSegment(label)}-${encodeBadgeSegment(value)}-${color}`;
   const base = `https://img.shields.io/badge/${segment}?style=for-the-badge`;
   const url = logo ? `${base}&logo=${logo}&logoColor=${logoColor}` : base;
@@ -234,19 +248,17 @@ function linkBadge({ label, value, color, logo, logoColor = 'white', href }) {
 
 /** Render one row of technology badges. */
 function stackRow(title, badges) {
-  const images = badges
-    .map((badge) => `![${badge.name}](${badgeUrl(badge)})`)
-    .join('\n');
+  const images = badges.map((badge) => `![${badge.name}](${badgeUrl(badge)})`).join('\n');
   return `**${title}**\n\n${images}\n`;
 }
 
 /** "May 2026 - Present" -> "May 2026" */
-function startOfRange(range) {
+export function startOfRange(range) {
   return range.split(/\s+-\s+/)[0].trim();
 }
 
 /** "Professional (C1)" -> "C1"; "Native" -> "Native" */
-function shortLevel(level) {
+export function shortLevel(level) {
   const parenthesised = level.match(/\(([^)]+)\)/);
   return parenthesised ? parenthesised[1] : level.trim();
 }
@@ -255,14 +267,14 @@ function shortLevel(level) {
  * First sentence only, so the featured-work table stays scannable.
  * Falls back to the full text when the split would leave a stub.
  */
-function firstSentence(text) {
+export function firstSentence(text) {
   const match = text.match(/^.*?[.!?](?=\s+[A-Z“"])/s);
   const candidate = match ? match[0].trim() : text.trim();
   return candidate.length < 40 ? text.trim() : candidate;
 }
 
 /** "Sopra Steria - Nieuwegein, Utrecht, Netherlands · Hybrid" -> both halves. */
-function splitCompany(company) {
+export function splitCompany(company) {
   const [employer, rest = ''] = company.split(/\s+-\s+/);
   const city = rest.split(',')[0].split('·')[0].trim();
   return { employer: employer.trim(), city };
@@ -276,14 +288,17 @@ function splitCompany(company) {
  * Verify every piece of config still lines up with the portfolio data.
  * Throws on structural drift; warns on facts that merely disagree.
  */
-function validate({ constants, resume }) {
+export function validate({ constants, resume }) {
   const errors = [];
   const warnings = [];
 
   const serviceSlugs = new Set(constants.SERVICES.map((service) => service.slug));
   CERTIFICATIONS.forEach((cert) => {
+    if (cert.issued) return;
     if (!serviceSlugs.has(cert.service)) {
-      errors.push(`Certification "${cert.name}" points at service "${cert.service}", which no longer exists in constants.tsx`);
+      errors.push(
+        `Certification "${cert.name}" points at service "${cert.service}", which no longer exists in constants.tsx`,
+      );
       return;
     }
     const service = constants.SERVICES.find((item) => item.slug === cert.service);
@@ -310,7 +325,9 @@ function validate({ constants, resume }) {
   constants.TECH_STACK.forEach((category) => {
     category.technologies.forEach((tech) => {
       if (!BADGES[tech.name]) {
-        errors.push(`Technology "${tech.name}" (${category.title}) has no badge in BADGES - add a colour and logo for it`);
+        errors.push(
+          `Technology "${tech.name}" (${category.title}) has no badge in BADGES - add a colour and logo for it`,
+        );
       }
     });
   });
@@ -319,15 +336,23 @@ function validate({ constants, resume }) {
     errors.push('resume.json has no experience entries - the current role cannot be resolved');
   } else {
     const { city } = splitCompany(resume.experience[0].company);
-    if (city && constants.PERSONAL_INFO.location && !constants.PERSONAL_INFO.location.includes(city)) {
-      warnings.push(`PERSONAL_INFO.location is "${constants.PERSONAL_INFO.location}" but the current role in resume.json is based in "${city}" - the profile README follows resume.json`);
+    if (
+      city &&
+      constants.PERSONAL_INFO.location &&
+      !constants.PERSONAL_INFO.location.includes(city)
+    ) {
+      warnings.push(
+        `PERSONAL_INFO.location is "${constants.PERSONAL_INFO.location}" but the current role in resume.json is based in "${city}" - the profile README follows resume.json`,
+      );
     }
   }
 
   warnings.forEach((warning) => console.warn(`⚠️  ${warning}`));
 
   if (errors.length) {
-    throw new Error(`Portfolio data drifted away from the profile README config:\n  - ${errors.join('\n  - ')}`);
+    throw new Error(
+      `Portfolio data drifted away from the profile README config:\n  - ${errors.join('\n  - ')}`,
+    );
   }
 }
 
@@ -338,6 +363,9 @@ function validate({ constants, resume }) {
 function renderHeader({ constants, role }) {
   const linkedin = constants.SOCIAL_LINKS.find((link) => link.name === 'linkedin').url;
   const site = 'https://emredursun.nl/';
+  const istqb = constants.SERVICES.find(
+    (service) => service.slug === 'test-automation-architecture',
+  );
 
   const typingUrl =
     'https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&duration=3200&pause=900' +
@@ -345,11 +373,33 @@ function renderHeader({ constants, role }) {
     HEADER_LINES.map((line) => encodeURIComponent(line).replace(/%20/g, '+')).join(';');
 
   const badges = [
-    linkBadge({ label: 'Portfolio', value: 'emredursun.nl', color: '111827', logo: 'googlechrome', href: site }),
-    linkBadge({ label: 'LinkedIn', value: 'emre-dursun-nl', color: '0A66C2', logo: 'linkedin', href: linkedin }),
+    linkBadge({
+      label: 'Portfolio',
+      value: 'emredursun.nl',
+      color: '111827',
+      logo: 'googlechrome',
+      href: site,
+    }),
+    linkBadge({
+      label: 'LinkedIn',
+      value: 'emre-dursun-nl',
+      color: '0A66C2',
+      logo: 'linkedin',
+      href: linkedin,
+    }),
     linkBadge({ label: 'Pega', value: 'CPBA & CPSA', color: '1F4E79', href: site }),
-    linkBadge({ label: 'Tricentis Tosca', value: 'Advanced', color: '00A99D', href: site }),
-    linkBadge({ label: 'ISTQB', value: 'CTFL', color: '6E4C9F', href: site }),
+    linkBadge({
+      label: 'Tricentis',
+      value: 'Tosca & Testim Advanced',
+      color: '00A99D',
+      href: site,
+    }),
+    linkBadge({
+      label: 'ISTQB',
+      value: 'CTFL',
+      color: '6E4C9F',
+      href: istqb.certificateUrl ?? site,
+    }),
   ].join('\n');
 
   return `<div id="top"></div>
@@ -370,9 +420,9 @@ ${badges}
 }
 
 function renderAbout({ constants, about }) {
-  const languages = constants.LANGUAGES
-    .map((language) => `${language.name} (${shortLevel(language.level)})`)
-    .join(' · ');
+  const languages = constants.LANGUAGES.map(
+    (language) => `${language.name} (${shortLevel(language.level)})`,
+  ).join(' · ');
 
   const bullets = [
     ...ABOUT_BULLETS,
@@ -389,15 +439,24 @@ ${bullets}
 > ${htmlToMarkdown(about.introQuote)}`;
 }
 
-function renderNow({ constants, role, about }) {
+function renderNow({ constants, role }) {
   const kit = constants.PROJECTS.find((project) => project.slug === 'devran-ai-kit');
   const linkedin = constants.SOCIAL_LINKS.find((link) => link.name === 'linkedin').url;
 
   const rows = [
     ['🏢 **Role**', `${role.title} @ **${role.employer}**, since ${role.since}`],
-    ['🔭 **Focus**', 'Model-based automation for Pega — web UI, API chains, desktop/UIA, mobile, and stateful test data (TDS)'],
-    ['🌱 **Building**', `[${kit.title.split('—')[0].trim()}](${kit.github}) — governance, quality gates, and session-persistent context for AI-assisted development`],
-    ['💬 **Happy to talk about**', 'Testing real-time payment systems, model-based automation, scaling QA inside a Pega programme'],
+    [
+      '🔭 **Focus**',
+      'Model-based automation for Pega — web UI, API chains, desktop/UIA, mobile, and stateful test data (TDS)',
+    ],
+    [
+      '🌱 **Building**',
+      `[${kit.title.split('—')[0].trim()}](${kit.github}) — governance, quality gates, and session-persistent context for AI-assisted development`,
+    ],
+    [
+      '💬 **Happy to talk about**',
+      'Testing real-time payment systems, model-based automation, scaling QA inside a Pega programme',
+    ],
     ['📫 **Reach me**', `[emredursun.nl](https://emredursun.nl/) · [LinkedIn](${linkedin})`],
   ]
     .map(([label, value]) => `| ${label} | ${value} |`)
@@ -414,9 +473,12 @@ function renderCertifications({ constants }) {
   const byslug = new Map(constants.SERVICES.map((service) => [service.slug, service]));
 
   const rows = CERTIFICATIONS.map((cert) => {
-    const service = byslug.get(cert.service);
-    const name = cert.note ? `**${cert.name}** (${cert.note})` : `**${cert.name}**`;
-    return `| ${name} | ${cert.issuer} | ${service.certificationDate} |`;
+    const date = cert.issued ?? byslug.get(cert.service).certificationDate;
+    const verify =
+      cert.verify ?? (cert.service ? byslug.get(cert.service).certificateUrl : undefined);
+    const title = verify ? `**[${cert.name}](${verify})**` : `**${cert.name}**`;
+    const name = cert.note ? `${title} (${cert.note})` : title;
+    return `| ${name} | ${cert.issuer} | ${date} |`;
   }).join('\n');
 
   const tosca = byslug.get('tricentis-tosca-automation');
@@ -435,8 +497,8 @@ function renderStack({ constants }) {
   const fromPortfolio = constants.TECH_STACK.map((category) =>
     stackRow(
       category.title,
-      category.technologies.map((tech) => ({ name: tech.name, ...BADGES[tech.name] }))
-    )
+      category.technologies.map((tech) => ({ name: tech.name, ...BADGES[tech.name] })),
+    ),
   );
 
   const extras = EXTRA_STACK_GROUPS.map((group) => stackRow(group.title, group.badges));
@@ -455,7 +517,9 @@ function renderFeatured({ constants }) {
   });
 
   const portfolioRepo = `https://github.com/${GITHUB_USER}/professional-portfolio`;
-  rows.push(`| **[Portfolio](${portfolioRepo})** | The source behind [emredursun.nl](https://emredursun.nl/) — trilingual, SEO-optimised, print-ready résumé. | React · TypeScript · Vite · Tailwind |`);
+  rows.push(
+    `| **[Portfolio](${portfolioRepo})** | The source behind [emredursun.nl](https://emredursun.nl/) — trilingual, SEO-optimised, print-ready résumé. | React · TypeScript · Vite · Tailwind |`,
+  );
 
   return `## 📌 Featured work
 
@@ -466,7 +530,13 @@ ${rows.join('\n')}`;
 
 function renderFooter({ constants, about }) {
   const linkedin = constants.SOCIAL_LINKS.find((link) => link.name === 'linkedin').url;
-  const cta = linkBadge({ label: "Let's talk", value: 'LinkedIn', color: '0A66C2', logo: 'linkedin', href: linkedin });
+  const cta = linkBadge({
+    label: "Let's talk",
+    value: 'LinkedIn',
+    color: '0A66C2',
+    logo: 'linkedin',
+    href: linkedin,
+  });
 
   return `<div align="center">
 
@@ -485,51 +555,67 @@ ${cta}
 -->`;
 }
 
-function renderReadme({ constants, about, resume }) {
+export function renderReadme({ constants, about, resume }) {
   const first = resume.experience[0];
   const { employer, city } = splitCompany(first.company);
   const role = { title: first.title, employer, city, since: startOfRange(first.date) };
 
-  return [
-    renderHeader({ constants, role }),
-    '---',
-    renderAbout({ constants, about }),
-    '---',
-    renderNow({ constants, role, about }),
-    '---',
-    renderCertifications({ constants }),
-    '---',
-    renderStack({ constants }),
-    '---',
-    renderFeatured({ constants }),
-    '---',
-    renderFooter({ constants, about }),
-  ].join('\n\n') + '\n';
+  return (
+    [
+      renderHeader({ constants, role }),
+      '---',
+      renderAbout({ constants, about }),
+      '---',
+      renderNow({ constants, role, about }),
+      '---',
+      renderCertifications({ constants }),
+      '---',
+      renderStack({ constants }),
+      '---',
+      renderFeatured({ constants }),
+      '---',
+      renderFooter({ constants, about }),
+    ].join('\n\n') + '\n'
+  );
 }
 
 // ---------------------------------------------------------------------------
 // Entry point
 // ---------------------------------------------------------------------------
 
-async function writeProfileReadme() {
+/**
+ * Generate the README from the portfolio data and write it if it changed.
+ * Throws on validation failure; the output path is injectable for tests.
+ *
+ * @param {{ outputPath?: string }} [options]
+ * @returns {Promise<{ markdown: string, written: boolean }>}
+ */
+export async function writeProfileReadme({ outputPath = OUTPUT_PATH } = {}) {
+  const constants = await loadConstants();
+  const about = loadLocale('about');
+  const resume = loadLocale('resume');
+
+  validate({ constants, resume });
+
+  const markdown = renderReadme({ constants, about, resume });
+
+  // Only touch the file when the content changes, like the sitemap.
+  const written = writeIfChanged(outputPath, markdown);
+  return { markdown, written };
+}
+
+async function main() {
   try {
-    const constants = await loadConstants();
-    const about = loadLocale('about');
-    const resume = loadLocale('resume');
-
-    validate({ constants, resume });
-
-    const markdown = renderReadme({ constants, about, resume });
-
-    fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
-    fs.writeFileSync(OUTPUT_PATH, markdown, 'utf8');
+    const { markdown } = await writeProfileReadme();
 
     console.log('✅ Profile README generated successfully!');
     console.log(`📍 Location: ${OUTPUT_PATH}`);
     console.log(`🎯 Target: github.com/${GITHUB_USER}/${GITHUB_USER}`);
     console.log(`🏅 Certifications: ${CERTIFICATIONS.length}`);
     console.log(`📌 Featured projects: ${FEATURED_SLUGS.length + 1}`);
-    console.log(`🛠️  Badges: ${Object.keys(BADGES).length} from TECH_STACK + ${EXTRA_STACK_GROUPS.reduce((total, group) => total + group.badges.length, 0)} README-only`);
+    console.log(
+      `🛠️  Badges: ${Object.keys(BADGES).length} from TECH_STACK + ${EXTRA_STACK_GROUPS.reduce((total, group) => total + group.badges.length, 0)} README-only`,
+    );
     console.log(`📄 Size: ${markdown.length} characters`);
     console.log('🚀 Publish with: npm run publish:profile-readme');
   } catch (error) {
@@ -538,4 +624,7 @@ async function writeProfileReadme() {
   }
 }
 
-writeProfileReadme();
+// Run only when executed directly, so tests can import the functions above.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main();
+}

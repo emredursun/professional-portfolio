@@ -1,19 +1,39 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Page } from '../types.ts';
 
 /** Locales that get a URL prefix. Keep in sync with i18n and SEO.tsx. */
 const LOCALES = ['nl', 'tr'] as const;
 
-const About = lazy(() => import('./About.tsx'));
-const Resume = lazy(() => import('./Resume.tsx'));
-const Projects = lazy(() => import('./Projects.tsx'));
-const Contact = lazy(() => import('./Contact.tsx'));
+const loaders = {
+  about: () => import('./About.tsx'),
+  resume: () => import('./Resume.tsx'),
+  projects: () => import('./Projects.tsx'),
+  contact: () => import('./Contact.tsx'),
+  quality: () => import('./Quality.tsx'),
+};
+
+/**
+ * Start fetching the chunk for the page the visitor actually landed on as soon
+ * as this module evaluates. Left to React.lazy, the request would only begin
+ * when <MainContent> first renders - after the preloader - adding a full
+ * network round trip to LCP. import() caches the promise, so the lazy()
+ * call below reuses this request instead of issuing a second one.
+ */
+const landingPage =
+  (Object.keys(loaders) as Array<keyof typeof loaders>).find(
+    (page) => page !== 'about' && window.location.pathname.includes(page),
+  ) ?? 'about';
+void loaders[landingPage]();
+
+const About = lazy(loaders.about);
+const Resume = lazy(loaders.resume);
+const Projects = lazy(loaders.projects);
+const Contact = lazy(loaders.contact);
+const Quality = lazy(loaders.quality);
+const NotFound = lazy(() => import('./NotFound.tsx'));
 
 interface MainContentProps {
-  activePage: Page;
   isMobileView: boolean;
-  onNavigate: (page: Page) => void;
 }
 
 const LoadingSpinner: React.FC = () => (
@@ -22,7 +42,7 @@ const LoadingSpinner: React.FC = () => (
   </div>
 );
 
-const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView, onNavigate }) => {
+const MainContent: React.FC<MainContentProps> = ({ isMobileView }) => {
   return (
     <div className={`${isMobileView ? 'pb-32' : 'p-8 md:p-12'}`}>
       <Suspense fallback={<LoadingSpinner />}>
@@ -36,6 +56,7 @@ const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView, onN
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:slug" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/quality" element={<Quality />} />
 
           {/*
             Localised routes are enumerated per language instead of using a
@@ -53,11 +74,12 @@ const MainContent: React.FC<MainContentProps> = ({ activePage, isMobileView, onN
               <Route path={`/${locale}/projects`} element={<Projects />} />
               <Route path={`/${locale}/projects/:slug`} element={<Projects />} />
               <Route path={`/${locale}/contact`} element={<Contact />} />
+              <Route path={`/${locale}/quality`} element={<Quality />} />
             </React.Fragment>
           ))}
 
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/about" replace />} />
+          {/* Fallback: a real "not found" view (noindex), not a silent redirect */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </div>

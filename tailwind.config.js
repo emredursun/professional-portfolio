@@ -1,10 +1,12 @@
+import containerQueries from '@tailwindcss/container-queries';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
-    "./*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    './index.html',
+    './*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'class',
   theme: {
@@ -17,9 +19,9 @@ export default {
         // Primary brand color
         primary: {
           DEFAULT: '#fbbf24', // Yellow-400
-          dark: '#f59e0b',    // Yellow-500
+          dark: '#f59e0b', // Yellow-500
         },
-        
+
         // Neon Minimalism Palette
         neon: {
           bg: '#000000',
@@ -75,7 +77,7 @@ export default {
         'neon-cyan': '0 0 5px rgba(6, 182, 212, 0.5), 0 0 20px rgba(6, 182, 212, 0.3)',
         'neon-purple': '0 0 5px rgba(168, 85, 247, 0.5), 0 0 20px rgba(168, 85, 247, 0.3)',
         'neon-white': '0 0 5px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2)',
-        
+
         // Premium shadows
         'dark-sm': '0 1px 2px 0 rgba(0, 0, 0, 0.5)',
         'dark-md': '0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3)',
@@ -84,14 +86,16 @@ export default {
         'dark-2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
         'glow-yellow': '0 0 20px rgba(251, 191, 36, 0.3), 0 0 40px rgba(251, 191, 36, 0.1)',
         'glow-blue': '0 0 20px rgba(59, 130, 246, 0.3), 0 0 40px rgba(59, 130, 246, 0.1)',
-        
+
         // Neumorphic Shadows
         'neu-flat': 'none',
         'neu-sm': '3px 3px 6px rgba(0, 0, 0, 0.4), -3px -3px 6px rgba(255, 255, 255, 0.02)',
         'neu-md': '6px 6px 12px rgba(0, 0, 0, 0.5), -6px -6px 12px rgba(255, 255, 255, 0.03)',
         'neu-lg': '10px 10px 20px rgba(0, 0, 0, 0.6), -10px -10px 20px rgba(255, 255, 255, 0.04)',
-        'neu-inset-sm': 'inset 3px 3px 6px rgba(0, 0, 0, 0.5), inset -3px -3px 6px rgba(255, 255, 255, 0.02)',
-        'neu-inset-md': 'inset 6px 6px 12px rgba(0, 0, 0, 0.6), inset -6px -6px 12px rgba(255, 255, 255, 0.03)',
+        'neu-inset-sm':
+          'inset 3px 3px 6px rgba(0, 0, 0, 0.5), inset -3px -3px 6px rgba(255, 255, 255, 0.02)',
+        'neu-inset-md':
+          'inset 6px 6px 12px rgba(0, 0, 0, 0.6), inset -6px -6px 12px rgba(255, 255, 255, 0.03)',
         'neu-accent': '0 0 20px rgba(251, 191, 36, 0.1)',
       },
       animation: {
@@ -163,5 +167,7 @@ export default {
       },
     },
   },
-  plugins: [],
-}
+  // Container queries: the page content sits beside a fixed-width sidebar on
+  // desktop, so viewport breakpoints misjudge the space a section really has.
+  plugins: [containerQueries],
+};

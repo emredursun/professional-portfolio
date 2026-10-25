@@ -1,163 +1,76 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Project } from "../types.ts";
-import ProjectModalHeader from "./ProjectModalHeader.tsx";
-import ProjectGallery from "./ProjectGallery.tsx";
-import ProjectSectionNav from "./ProjectSectionNav.tsx";
+import { Project } from '../types.ts';
+import ProjectModalHeader from './ProjectModalHeader.tsx';
+import ProjectGallery from './ProjectGallery.tsx';
+import ProjectSectionNav from './ProjectSectionNav.tsx';
 
 interface ProjectModalProps {
   project: Project;
   onClose: () => void;
-  onNavigate?: (direction: "prev" | "next") => void;
+  onNavigate?: (direction: 'prev' | 'next') => void;
 }
 
-const ProjectModal: React.FC<ProjectModalProps> = ({
-  project,
-  onClose,
-  onNavigate,
-}) => {
+const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigate }) => {
   const { t } = useTranslation('projects');
   const modalContentRef = useRef<HTMLDivElement>(null);
 
-  // Update document title and meta tags for SEO when project modal opens
-  useEffect(() => {
-    const originalTitle = document.title;
-    const originalDescription = document
-      .querySelector('meta[name="description"]')
-      ?.getAttribute("content");
-    const originalOgTitle = document
-      .querySelector('meta[property="og:title"]')
-      ?.getAttribute("content");
-    const originalOgDescription = document
-      .querySelector('meta[property="og:description"]')
-      ?.getAttribute("content");
-    const originalOgImage = document
-      .querySelector('meta[property="og:image"]')
-      ?.getAttribute("content");
-
-    // Update title
-    document.title = `${project.title} - Emre Dursun Portfolio`;
-
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        "content",
-        project.detailedDescription || project.description
-      );
-    }
-
-    // Update Open Graph tags
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle)
-      ogTitle.setAttribute(
-        "content",
-        `${project.title} - Project by Emre Dursun`
-      );
-
-    const ogDescription = document.querySelector(
-      'meta[property="og:description"]'
-    );
-    if (ogDescription)
-      ogDescription.setAttribute("content", project.description);
-
-    const ogImage = document.querySelector('meta[property="og:image"]');
-    if (ogImage && project.image)
-      ogImage.setAttribute("content", `https://emredursun.nl${project.image}`);
-
-    // Update Twitter Card tags
-    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
-    if (twitterTitle)
-      twitterTitle.setAttribute(
-        "content",
-        `${project.title} - Project by Emre Dursun`
-      );
-
-    const twitterDescription = document.querySelector(
-      'meta[name="twitter:description"]'
-    );
-    if (twitterDescription)
-      twitterDescription.setAttribute("content", project.description);
-
-    const twitterImage = document.querySelector('meta[name="twitter:image"]');
-    if (twitterImage && project.image)
-      twitterImage.setAttribute(
-        "content",
-        `https://emredursun.nl${project.image}`
-      );
-
-    // Restore original meta tags when modal closes
-    return () => {
-      document.title = originalTitle;
-      if (metaDescription && originalDescription)
-        metaDescription.setAttribute("content", originalDescription);
-      if (ogTitle && originalOgTitle)
-        ogTitle.setAttribute("content", originalOgTitle);
-      if (ogDescription && originalOgDescription)
-        ogDescription.setAttribute("content", originalOgDescription);
-      if (ogImage && originalOgImage)
-        ogImage.setAttribute("content", originalOgImage);
-      if (twitterTitle && originalOgTitle)
-        twitterTitle.setAttribute("content", originalOgTitle);
-      if (twitterDescription && originalOgDescription)
-        twitterDescription.setAttribute("content", originalOgDescription);
-      if (twitterImage && originalOgImage)
-        twitterImage.setAttribute("content", originalOgImage);
-    };
-  }, [project]);
+  // No head tags here: the <SEO> in Projects.tsx owns the title, description
+  // and social tags for /projects/<slug>, and scripts/prerender-routes.js
+  // writes the same values into the static HTML for link previews. This modal
+  // used to set its own og:title ("... - Project by Emre Dursun") and an
+  // og:image that broke for externally hosted project images.
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         onClose();
       }
-      if (event.key === "ArrowLeft" && onNavigate) {
-        onNavigate("prev");
+      if (event.key === 'ArrowLeft' && onNavigate) {
+        onNavigate('prev');
       }
-      if (event.key === "ArrowRight" && onNavigate) {
-        onNavigate("next");
+      if (event.key === 'ArrowRight' && onNavigate) {
+        onNavigate('next');
       }
     };
 
-    window.addEventListener("keydown", handleEsc);
-    document.body.style.overflow = "hidden";
+    window.addEventListener('keydown', handleEsc);
+    document.body.style.overflow = 'hidden';
 
     return () => {
-      window.removeEventListener("keydown", handleEsc);
-      document.body.style.overflow = "auto";
+      window.removeEventListener('keydown', handleEsc);
+      document.body.style.overflow = 'auto';
     };
   }, [onClose, onNavigate]);
 
   // Define sections for navigation
   const sections = [
-    { id: "overview", label: t('sections.overview'), icon: "fas fa-info-circle" },
+    { id: 'overview', label: t('sections.overview'), icon: 'fas fa-info-circle' },
     ...(project.challenge
-      ? [{ id: "challenge", label: t('sections.challenge'), icon: "fas fa-lightbulb" }]
+      ? [{ id: 'challenge', label: t('sections.challenge'), icon: 'fas fa-lightbulb' }]
       : []),
     ...(project.features && project.features.length > 0
-      ? [{ id: "features", label: t('sections.features'), icon: "fas fa-star" }]
+      ? [{ id: 'features', label: t('sections.features'), icon: 'fas fa-star' }]
       : []),
     ...(project.gallery && project.gallery.length > 0
-      ? [{ id: "gallery", label: t('sections.gallery'), icon: "fas fa-images" }]
+      ? [{ id: 'gallery', label: t('sections.gallery'), icon: 'fas fa-images' }]
       : []),
-    { id: "technologies", label: t('sections.technologies'), icon: "fas fa-code" },
+    { id: 'technologies', label: t('sections.technologies'), icon: 'fas fa-code' },
     ...(project.results && project.results.length > 0
-      ? [{ id: "results", label: t('sections.results'), icon: "fas fa-chart-line" }]
+      ? [{ id: 'results', label: t('sections.results'), icon: 'fas fa-chart-line' }]
       : []),
   ];
 
   return (
+    // The panel fills the whole screen, so there is no backdrop left to click:
+    // the dialog closes with Escape or its close button.
     <div
       className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center animate-fade-in"
-      onClick={onClose}
       aria-modal="true"
       role="dialog"
       aria-labelledby="project-title"
     >
-      <div
-        className="relative bg-white dark:bg-[#2a2a2a] w-full h-full overflow-hidden flex flex-col"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="relative bg-white dark:bg-[#2a2a2a] w-full h-full overflow-hidden flex flex-col">
         {/* Scrollable Content */}
         <div
           ref={modalContentRef}
@@ -193,7 +106,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                       className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 p-4 rounded-xl border border-yellow-200 dark:border-yellow-800/30"
                     >
                       <div className="flex items-start gap-2">
-                        <i className="fas fa-check-circle text-yellow-500 dark:text-yellow-400 mt-1"></i>
+                        <i
+                          aria-hidden="true"
+                          className="fas fa-check-circle text-yellow-500 dark:text-yellow-400 mt-1"
+                        ></i>
                         <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
                           {metric}
                         </p>
@@ -215,7 +131,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   <div className="bg-red-50 dark:bg-red-900/10 p-6 rounded-2xl border border-red-200 dark:border-red-800/30">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
-                        <i className="fas fa-exclamation-triangle text-white"></i>
+                        <i
+                          aria-hidden="true"
+                          className="fas fa-exclamation-triangle text-white"
+                        ></i>
                       </div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                         {t('projectDetails.theChallenge')}
@@ -230,7 +149,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   <div className="bg-green-50 dark:bg-green-900/10 p-6 rounded-2xl border border-green-200 dark:border-green-800/30">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                        <i className="fas fa-lightbulb text-white"></i>
+                        <i aria-hidden="true" className="fas fa-lightbulb text-white"></i>
                       </div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                         {t('projectDetails.theSolution')}
@@ -281,10 +200,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                 <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
                   {t('projectDetails.gallery')}
                 </h2>
-                <ProjectGallery
-                  images={project.gallery}
-                  projectTitle={project.title}
-                />
+                <ProjectGallery images={project.gallery} projectTitle={project.title} />
               </section>
             )}
 
@@ -383,14 +299,14 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             {/* Action Buttons */}
             <section className="mb-20 md:mb-16">
               <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center">
-                {project.url && project.url !== "#" && (
+                {project.url && project.url !== '#' && (
                   <a
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full sm:w-auto inline-flex items-center gap-3 bg-yellow-400 text-black font-bold py-4 px-8 rounded-xl hover:bg-yellow-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-center"
                   >
-                    <i className="fas fa-external-link-alt text-lg"></i>
+                    <i aria-hidden="true" className="fas fa-external-link-alt text-lg"></i>
                     <span>{t('projectDetails.viewLiveDemo')}</span>
                   </a>
                 )}
@@ -401,7 +317,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                     rel="noopener noreferrer"
                     className="w-full sm:w-auto inline-flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold py-4 px-8 rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-center"
                   >
-                    <i className="fab fa-github text-lg"></i>
+                    <i aria-hidden="true" className="fab fa-github text-lg"></i>
                     <span>{t('projectDetails.viewOnGitHub')}</span>
                   </a>
                 )}

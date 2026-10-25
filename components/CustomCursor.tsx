@@ -1,49 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import React, { useEffect, useState } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 const CustomCursor: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
   const cursorSize = isHovering ? 60 : 20;
 
-  const mouse = {
-    x: useMotionValue(0),
-    y: useMotionValue(0),
-  };
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
   const smoothOptions = { damping: 20, stiffness: 300, mass: 0.5 };
   const smoothMouse = {
-    x: useSpring(mouse.x, smoothOptions),
-    y: useSpring(mouse.y, smoothOptions),
-  };
-
-  const manageMouseMove = (e: MouseEvent) => {
-    const { clientX, clientY } = e;
-    const currentSize = isHovering ? 60 : 20;
-    mouse.x.set(clientX - currentSize / 2);
-    mouse.y.set(clientY - currentSize / 2);
-  };
-
-  const handleMouseOver = (e: MouseEvent) => {
-    const target = e.target as HTMLElement;
-    const isClickable =
-      target.tagName === "BUTTON" ||
-      target.tagName === "A" ||
-      target.closest("button") ||
-      target.closest("a") ||
-      target.getAttribute("role") === "button" ||
-      target.classList.contains("cursor-pointer");
-
-    setIsHovering(!!isClickable);
+    x: useSpring(mouseX, smoothOptions),
+    y: useSpring(mouseY, smoothOptions),
   };
 
   useEffect(() => {
-    window.addEventListener("mousemove", manageMouseMove);
-    window.addEventListener("mouseover", handleMouseOver);
-    return () => {
-      window.removeEventListener("mousemove", manageMouseMove);
-      window.removeEventListener("mouseover", handleMouseOver);
+    // The pointer position alone; the circle centres itself on it with
+    // translate(-50%, -50%). The handler used to subtract half the size it
+    // closed over at mount (20 px) forever, so the enlarged 60 px hover
+    // circle sat 20 px off the pointer.
+    const manageMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
-  }, []); // Empty dependency array - only set up once
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const isClickable =
+        target.tagName === 'BUTTON' ||
+        target.tagName === 'A' ||
+        target.closest('button') ||
+        target.closest('a') ||
+        target.getAttribute('role') === 'button' ||
+        target.classList.contains('cursor-pointer');
+
+      setIsHovering(!!isClickable);
+    };
+
+    window.addEventListener('mousemove', manageMouseMove);
+    window.addEventListener('mouseover', handleMouseOver);
+    return () => {
+      window.removeEventListener('mousemove', manageMouseMove);
+      window.removeEventListener('mouseover', handleMouseOver);
+    };
+  }, [mouseX, mouseY]);
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[100] hidden lg:block">
@@ -51,15 +51,15 @@ const CustomCursor: React.FC = () => {
         style={{
           left: smoothMouse.x,
           top: smoothMouse.y,
+          x: '-50%',
+          y: '-50%',
         }}
         animate={{
           width: cursorSize,
           height: cursorSize,
         }}
         className={`fixed rounded-full border border-yellow-400 mix-blend-difference transition-colors duration-200 ${
-          isHovering
-            ? "bg-yellow-400/20 border-transparent backdrop-blur-[1px]"
-            : ""
+          isHovering ? 'bg-yellow-400/20 border-transparent backdrop-blur-[1px]' : ''
         }`}
       >
         {/* Center Dot */}

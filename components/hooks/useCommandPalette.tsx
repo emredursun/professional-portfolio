@@ -1,10 +1,11 @@
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 import Fuse from 'fuse.js';
+import { useTranslation } from 'react-i18next';
 import { Command, Page } from '../../types';
 import { PROJECTS } from '../../constants.tsx';
+import { cvFileName } from '../../src/utils/cv.ts';
 
 interface UseCommandPaletteProps {
-  activePage: Page;
   onNavigate: (page: Page) => void;
   theme: string;
   toggleTheme: () => void;
@@ -18,16 +19,33 @@ interface UseCommandPaletteReturn {
   executeCommand: (command: Command) => void;
 }
 
+/** Command id -> its key under palette.commands in common.json. */
+const COMMAND_KEYS: Record<string, string> = {
+  'nav-about': 'navAbout',
+  'nav-resume': 'navResume',
+  'nav-projects': 'navProjects',
+  'nav-contact': 'navContact',
+  'action-download-resume': 'downloadResume',
+  'theme-toggle': 'toggleTheme',
+  'theme-light': 'lightTheme',
+  'theme-dark': 'darkTheme',
+  'action-scroll-top': 'scrollTop',
+  'action-copy-email': 'copyEmail',
+  'action-copy-linkedin': 'copyLinkedIn',
+};
+
 const RECENT_COMMANDS_KEY = 'commandPaletteRecent';
 const MAX_RECENT = 5;
 
 export const useCommandPalette = ({
-  activePage,
   onNavigate,
   theme,
   toggleTheme,
   onClose,
 }: UseCommandPaletteProps): UseCommandPaletteReturn => {
+  // Labels and descriptions follow the page language and are what Fuse
+  // searches first; the English keywords below still match in every language.
+  const { t } = useTranslation('common');
   const [recentCommandIds, setRecentCommandIds] = useState<string[]>(() => {
     try {
       const stored = localStorage.getItem(RECENT_COMMANDS_KEY);
@@ -51,11 +69,9 @@ export const useCommandPalette = ({
   }, []);
 
   // Copy to clipboard utility
-  const copyToClipboard = useCallback(async (text: string, label: string) => {
+  const copyToClipboard = useCallback(async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      // Could add toast notification here
-      console.log(`${label} copied to clipboard`);
     } catch (error) {
       console.error('Failed to copy:', error);
     }
@@ -67,9 +83,9 @@ export const useCommandPalette = ({
       // Navigation Commands
       {
         id: 'nav-about',
-        label: 'Go to About',
-        description: 'View profile and services',
-        icon: <i className="far fa-user" />,
+        label: t('palette.commands.navAbout.label'),
+        description: t('palette.commands.navAbout.description'),
+        icon: <i aria-hidden="true" className="far fa-user" />,
         category: 'Navigation',
         keywords: ['about', 'profile', 'home', 'services'],
         shortcut: '⌘1',
@@ -80,9 +96,9 @@ export const useCommandPalette = ({
       },
       {
         id: 'nav-resume',
-        label: 'Go to Resume',
-        description: 'View experience and education',
-        icon: <i className="far fa-file-alt" />,
+        label: t('palette.commands.navResume.label'),
+        description: t('palette.commands.navResume.description'),
+        icon: <i aria-hidden="true" className="far fa-file-alt" />,
         category: 'Navigation',
         keywords: ['resume', 'cv', 'experience', 'work', 'education'],
         shortcut: '⌘2',
@@ -93,9 +109,9 @@ export const useCommandPalette = ({
       },
       {
         id: 'nav-projects',
-        label: 'Go to Projects',
-        description: 'Browse portfolio projects',
-        icon: <i className="far fa-folder-open" />,
+        label: t('palette.commands.navProjects.label'),
+        description: t('palette.commands.navProjects.description'),
+        icon: <i aria-hidden="true" className="far fa-folder-open" />,
         category: 'Navigation',
         keywords: ['projects', 'portfolio', 'work', 'showcase'],
         shortcut: '⌘3',
@@ -106,9 +122,9 @@ export const useCommandPalette = ({
       },
       {
         id: 'nav-contact',
-        label: 'Go to Contact',
-        description: 'Get in touch',
-        icon: <i className="far fa-envelope" />,
+        label: t('palette.commands.navContact.label'),
+        description: t('palette.commands.navContact.description'),
+        icon: <i aria-hidden="true" className="far fa-envelope" />,
         category: 'Navigation',
         keywords: ['contact', 'email', 'message', 'reach'],
         shortcut: '⌘4',
@@ -119,14 +135,24 @@ export const useCommandPalette = ({
       },
       {
         id: 'action-download-resume',
-        label: 'Download Resume',
-        description: 'Download PDF version',
-        icon: <i className="fas fa-download" />,
+        label: t('palette.commands.downloadResume.label'),
+        description: t('palette.commands.downloadResume.description'),
+        icon: <i aria-hidden="true" className="fas fa-download" />,
         category: 'Actions',
         keywords: ['download', 'resume', 'cv', 'pdf'],
         action: () => {
-          // Trigger print dialog which will show PrintableResume component
-          window.print();
+          // Same as the sidebar button: production ships a PDF per language
+          // (scripts/generate-cv.js); the dev server falls back to printing.
+          if (import.meta.env.PROD) {
+            // App.tsx keeps <html lang> in step with the i18n language.
+            const file = cvFileName(document.documentElement.lang);
+            const link = document.createElement('a');
+            link.href = `/cv/${file}`;
+            link.download = file;
+            link.click();
+          } else {
+            window.print();
+          }
           onClose();
         },
       },
@@ -134,11 +160,14 @@ export const useCommandPalette = ({
       // Theme Commands
       {
         id: 'theme-toggle',
-        label: 'Toggle Theme',
-        description: 'Switch between light and dark',
-        icon: theme === 'light' 
-          ? <i className="fas fa-moon" /> 
-          : <i className="fas fa-sun" />,
+        label: t('palette.commands.toggleTheme.label'),
+        description: t('palette.commands.toggleTheme.description'),
+        icon:
+          theme === 'light' ? (
+            <i aria-hidden="true" className="fas fa-moon" />
+          ) : (
+            <i aria-hidden="true" className="fas fa-sun" />
+          ),
         category: 'Theme',
         keywords: ['theme', 'dark', 'light', 'mode', 'toggle'],
         shortcut: '⌘T',
@@ -149,9 +178,9 @@ export const useCommandPalette = ({
       },
       {
         id: 'theme-light',
-        label: 'Switch to Light Theme',
-        description: 'Enable light mode',
-        icon: <i className="fas fa-sun" />,
+        label: t('palette.commands.lightTheme.label'),
+        description: t('palette.commands.lightTheme.description'),
+        icon: <i aria-hidden="true" className="fas fa-sun" />,
         category: 'Theme',
         keywords: ['light', 'theme', 'bright', 'day'],
         action: () => {
@@ -161,9 +190,9 @@ export const useCommandPalette = ({
       },
       {
         id: 'theme-dark',
-        label: 'Switch to Dark Theme',
-        description: 'Enable dark mode',
-        icon: <i className="fas fa-moon" />,
+        label: t('palette.commands.darkTheme.label'),
+        description: t('palette.commands.darkTheme.description'),
+        icon: <i aria-hidden="true" className="fas fa-moon" />,
         category: 'Theme',
         keywords: ['dark', 'theme', 'night', 'black'],
         action: () => {
@@ -175,9 +204,9 @@ export const useCommandPalette = ({
       // Action Commands
       {
         id: 'action-scroll-top',
-        label: 'Scroll to Top',
-        description: 'Return to top of page',
-        icon: <i className="fas fa-arrow-up" />,
+        label: t('palette.commands.scrollTop.label'),
+        description: t('palette.commands.scrollTop.description'),
+        icon: <i aria-hidden="true" className="fas fa-arrow-up" />,
         category: 'Actions',
         keywords: ['scroll', 'top', 'up', 'home'],
         shortcut: '↑',
@@ -188,25 +217,25 @@ export const useCommandPalette = ({
       },
       {
         id: 'action-copy-email',
-        label: 'Copy Email Address',
+        label: t('palette.commands.copyEmail.label'),
         description: 'info.emredursun@gmail.com',
-        icon: <i className="fas fa-copy" />,
+        icon: <i aria-hidden="true" className="fas fa-copy" />,
         category: 'Actions',
         keywords: ['copy', 'email', 'contact', 'clipboard'],
         action: () => {
-          copyToClipboard('info.emredursun@gmail.com', 'Email');
+          copyToClipboard('info.emredursun@gmail.com');
           onClose();
         },
       },
       {
         id: 'action-copy-linkedin',
-        label: 'Copy LinkedIn URL',
-        description: 'Get LinkedIn profile link',
-        icon: <i className="fab fa-linkedin" />,
+        label: t('palette.commands.copyLinkedIn.label'),
+        description: t('palette.commands.copyLinkedIn.description'),
+        icon: <i aria-hidden="true" className="fab fa-linkedin" />,
         category: 'Actions',
         keywords: ['copy', 'linkedin', 'profile', 'social'],
         action: () => {
-          copyToClipboard('https://www.linkedin.com/in/emre-dursun-nl', 'LinkedIn URL');
+          copyToClipboard('https://www.linkedin.com/in/emre-dursun-nl');
           onClose();
         },
       },
@@ -215,14 +244,14 @@ export const useCommandPalette = ({
     // Add project-specific commands
     const projectCommands: Command[] = PROJECTS.map((project) => ({
       id: `project-${project.slug}`,
-      label: `View ${project.title}`,
+      label: t('palette.commands.viewProject', { title: project.title }),
       description: project.description.substring(0, 60) + '...',
-      icon: <i className="fas fa-folder" />,
+      icon: <i aria-hidden="true" className="fas fa-folder" />,
       category: 'Projects' as const,
       keywords: [
         project.title.toLowerCase(),
         project.category.toLowerCase(),
-        ...project.technologies.map(t => t.toLowerCase()),
+        ...project.technologies.map((t) => t.toLowerCase()),
         'project',
       ],
       action: () => {
@@ -235,12 +264,12 @@ export const useCommandPalette = ({
     }));
 
     // Add category filter commands
-    const categories = Array.from(new Set(PROJECTS.map(p => p.category)));
+    const categories = Array.from(new Set(PROJECTS.map((p) => p.category)));
     const categoryCommands: Command[] = categories.map((category) => ({
       id: `filter-${category.toLowerCase().replace(/\s+/g, '-')}`,
-      label: `Filter: ${category}`,
-      description: `Show only ${category} projects`,
-      icon: <i className="fas fa-filter" />,
+      label: t('palette.commands.filterLabel', { category }),
+      description: t('palette.commands.filterDescription', { category }),
+      icon: <i aria-hidden="true" className="fas fa-filter" />,
       category: 'Projects' as const,
       keywords: ['filter', category.toLowerCase(), 'category', 'projects'],
       action: () => {
@@ -251,13 +280,23 @@ export const useCommandPalette = ({
       },
     }));
 
-    return [...allCommands, ...projectCommands, ...categoryCommands];
-  }, [onNavigate, theme, toggleTheme, onClose, scrollToTop, copyToClipboard]);
+    // The English label is a keyword too, so a phrase such as "download
+    // resume" still finds its command on the Dutch and Turkish pages (English
+    // is the fallback language, so it is always loaded).
+    const searchableInEnglish = allCommands.map((cmd) => {
+      const key = COMMAND_KEYS[cmd.id];
+      if (!key) return cmd;
+      const english = t(`palette.commands.${key}.label`, { lng: 'en' });
+      return { ...cmd, keywords: [...(cmd.keywords ?? []), english] };
+    });
+
+    return [...searchableInEnglish, ...projectCommands, ...categoryCommands];
+  }, [t, onNavigate, theme, toggleTheme, onClose, scrollToTop, copyToClipboard]);
 
   // Get recent commands based on stored IDs
   const recentCommands = useMemo(() => {
     return recentCommandIds
-      .map(id => commands.find(cmd => cmd.id === id))
+      .map((id) => commands.find((cmd) => cmd.id === id))
       .filter((cmd): cmd is Command => cmd !== undefined)
       .slice(0, MAX_RECENT);
   }, [recentCommandIds, commands]);
@@ -276,30 +315,33 @@ export const useCommandPalette = ({
   }, [commands]);
 
   // Search function
-  const searchCommands = useCallback((query: string): Command[] => {
-    if (!query.trim()) {
-      return commands;
-    }
+  const searchCommands = useCallback(
+    (query: string): Command[] => {
+      if (!query.trim()) {
+        return commands;
+      }
 
-    const results = fuse.search(query);
-    return results.map(result => result.item);
-  }, [fuse, commands]);
+      const results = fuse.search(query);
+      return results.map((result) => result.item);
+    },
+    [fuse, commands],
+  );
 
   // Execute command and track in recent
   const executeCommand = useCallback((command: Command) => {
     command.action();
 
     // Update recent commands
-    setRecentCommandIds(prev => {
-      const filtered = prev.filter(id => id !== command.id);
+    setRecentCommandIds((prev) => {
+      const filtered = prev.filter((id) => id !== command.id);
       const updated = [command.id, ...filtered].slice(0, MAX_RECENT);
-      
+
       try {
         localStorage.setItem(RECENT_COMMANDS_KEY, JSON.stringify(updated));
       } catch (error) {
         console.error('Failed to save recent commands:', error);
       }
-      
+
       return updated;
     });
   }, []);

@@ -1,0 +1,47 @@
+# Production health check every 30 minutes. A failed scheduled run makes
+# GitHub email the repository owner - that is the alert (docs/RUNBOOK.md).
+name: Uptime
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Pages respond
+        run: |
+          set -euo pipefail
+          for path in / /about /resume /projects /contact /nl/about /tr/about /sitemap.xml /robots.txt; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://emredursun.nl$path")"
+            echo "$code $path"
+            [ "$code" = "200" ] || { echo "::error::$path returned $code"; exit 1; }
+          done
+
+      - name: Security headers present
+        run: |
+          set -euo pipefail
+          headers="$(curl -sSI --max-time 20 https://emredursun.nl/about)"
+          for h in content-security-policy strict-transport-security x-content-type-options x-frame-options; do
+            echo "$headers" | grep -qi "^$h:" || { echo "::error::Missing header: $h"; exit 1; }
+          done
+
+      - name: Build stamp and sitemap are valid
+        run: |
+          set -euo pipefail
+          curl -fsS --max-time 20 https://emredursun.nl/version.json | python3 -c "import json,sys; v=json.load(sys.stdin); print('live commit', v['shortCommit'], v['builtAt'])"
+          locs="$(curl -fsS --max-time 20 https://emredursun.nl/sitemap.xml | grep -c '<loc>')"
+          [ "$locs" -ge 15 ] || { echo "::error::sitemap.xml lists $locs URLs"; exit 1; }
+
+      - name: Social preview image stays under WhatsApp's limit
+        run: |
+          set -euo pipefail
+          size="$(curl -fsS --max-time 20 -o /dev/null -w '%{size_download}' https://emredursun.nl/images/social-share.png)"
+          echo "social-share.png: $size bytes"
+          [ "$size" -lt 300000 ] || { echo "::error::social-share.png is $size bytes"; exit 1; }

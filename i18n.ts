@@ -7,10 +7,20 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 export const LANGUAGES = {
   en: { nativeName: 'English', flag: '🇺🇸' },
   nl: { nativeName: 'Nederlands', flag: '🇳🇱' },
-  tr: { nativeName: 'Türkçe', flag: '🇹🇷' }
+  tr: { nativeName: 'Türkçe', flag: '🇹🇷' },
 };
 
-export const DEFAULT_LANGUAGE = 'en';
+const DEFAULT_LANGUAGE = 'en';
+
+/**
+ * The URL decides the language (/nl, /tr, otherwise English), so initialise
+ * with it. Left to the detector, i18next started from localStorage or the
+ * browser language, fetched that locale plus the English fallback, and then
+ * App switched to the URL's language and fetched a third: up to 18 locale
+ * files and an extra language change on every first load instead of 6.
+ */
+const initialLanguage =
+  window.location.pathname.match(/^\/(nl|tr)(?=\/|$)/)?.[1] ?? DEFAULT_LANGUAGE;
 
 i18n
   // Load translations using http backend
@@ -21,9 +31,10 @@ i18n
   .use(initReactI18next)
   // Initialize i18next
   .init({
+    lng: initialLanguage,
     fallbackLng: DEFAULT_LANGUAGE,
     supportedLngs: Object.keys(LANGUAGES),
-    
+
     // Namespaces for better organization
     ns: ['common', 'sidebar', 'about', 'resume', 'projects', 'contact'],
     defaultNS: 'common',
@@ -32,7 +43,7 @@ i18n
     detection: {
       order: ['localStorage', 'navigator'],
       caches: ['localStorage'],
-      lookupLocalStorage: 'i18nextLng'
+      lookupLocalStorage: 'i18nextLng',
     },
 
     // Backend configuration
@@ -65,29 +76,3 @@ export const getLanguageFromUrl = (): string => {
   const match = path.match(/^\/(nl|tr)/);
   return match ? match[1] : DEFAULT_LANGUAGE;
 };
-
-// Helper function to update URL when language changes
-export const updateLanguageUrl = (language: string) => {
-  const currentPath = window.location.pathname;
-  const currentSearch = window.location.search;
-  const currentHash = window.location.hash;
-  
-  // Remove any existing language prefix
-  let newPath = currentPath.replace(/^\/(nl|tr)/, '');
-  
-  // Add new language prefix if not English
-  if (language !== DEFAULT_LANGUAGE) {
-    newPath = `/${language}${newPath || ''}`;
-  }
-  
-  // Ensure path starts with /
-  if (!newPath.startsWith('/')) {
-    newPath = '/' + newPath;
-  }
-  
-  // Update URL without reloading
-  const newUrl = `${newPath}${currentSearch}${currentHash}`;
-  window.history.pushState({}, '', newUrl);
-};
-
-export default i18n;

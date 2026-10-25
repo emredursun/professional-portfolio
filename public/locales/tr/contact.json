@@ -17,21 +17,32 @@
     },
     "message": {
       "label": "Mesajınız",
-      "placeholder": "Mesajınızı buraya yazın (en az 20 karakter)..."
+      "placeholder": "Mesajınızı buraya yazın (en az 20 karakter)...",
+      "tooShort": "Lütfen mesajınıza en az 20 karakter yazın"
+    },
+    "notice": {
+      "text": "Mesajınız, bir form hizmeti olan Web3Forms aracılığıyla gelen kutuma ulaşır. Adınızı ve e-posta adresinizi yalnızca size yanıt vermek için kullanırım.",
+      "link": "Web3Forms gizlilik politikası"
     }
   },
   "messages": {
     "success": {
       "title": "Gönderim Başarılı!",
       "description": "Mesajınız başarıyla iletildi.",
-      "followUp": "En kısa sürede size geri dönüş yapacağım."
+      "followUp": "En kısa sürede size geri dönüş yapacağım.",
+      "notification": "Mesaj gönderildi! ✉️"
     },
     "error": {
       "title": "Gönderim Başarısız",
-      "description": "Bir hata oluştu. Lütfen tekrar deneyiniz."
+      "description": "Bir hata oluştu. Mesajınız yerinde duruyor; lütfen tekrar gönderin."
     }
   },
   "meta": {
     "description": "Pega ve Tricentis Tosca bağlamında QA Consultant, QA Lead veya Test Automation Engineer pozisyonları için Emre Dursun ile iletişime geçin."
+  },
+  "map": {
+    "load": "Haritayı göster",
+    "notice": "Google Haritalar yüklenir; Google çerez kullanabilir.",
+    "title": "Konum haritası"
   }
 }

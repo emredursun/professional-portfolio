@@ -7,6 +7,12 @@
 type FaviconState = 'default' | 'pulse' | 'notification' | 'loading';
 type PageContext = 'About' | 'Resume' | 'Projects' | 'Contact';
 
+// Every favicon canvas ends in toDataURL(). On a GPU-rasterised canvas that is
+// a synchronous GPU readback, and the first one also sets up the GPU context:
+// ~190 ms on the main thread while /contact loads. A 96 px canvas is cheaper
+// on the CPU, which is what willReadFrequently asks for.
+const CANVAS_OPTIONS: CanvasRenderingContext2DSettings = { willReadFrequently: true };
+
 interface FaviconAnalytics {
   pulseActivations: number;
   userReturns: number;
@@ -62,7 +68,7 @@ class FaviconController {
   private init(): void {
     // Get or create favicon link element
     this.faviconLink = document.querySelector("link[rel~='icon']");
-    
+
     if (!this.faviconLink) {
       this.faviconLink = document.createElement('link');
       this.faviconLink.rel = 'icon';
@@ -143,7 +149,7 @@ class FaviconController {
     }
 
     this.currentState = state;
-    
+
     if (this.badgeCount > 0) {
       this.updateFaviconWithBadge();
     } else if (this.currentPage !== 'About') {
@@ -158,7 +164,7 @@ class FaviconController {
    */
   private updateFavicon(): void {
     if (!this.faviconLink) return;
-    
+
     const iconPath = this.icons[this.currentState as keyof typeof this.icons] || this.icons.default;
     this.faviconLink.href = iconPath + '?v=' + Date.now(); // Cache busting
   }
@@ -168,9 +174,9 @@ class FaviconController {
    */
   private startTitleBlink(message: string): void {
     if (!this.animationsEnabled) return;
-    
+
     this.stopTitleBlink();
-    
+
     let isOriginal = true;
     this.blinkInterval = window.setInterval(() => {
       document.title = isOriginal ? message : this.originalTitle;
@@ -222,12 +228,12 @@ class FaviconController {
    */
   setBadgeCount(count: number): void {
     this.badgeCount = Math.max(0, count);
-    
+
     // Update analytics
     this.analytics.badgeCounts.total++;
     this.analytics.badgeCounts.max = Math.max(this.analytics.badgeCounts.max, this.badgeCount);
     this.saveAnalytics();
-    
+
     this.updateFaviconWithBadge();
   }
 
@@ -243,52 +249,53 @@ class FaviconController {
 
     try {
       // Load current favicon image
-      const currentIcon = this.icons[this.currentState as keyof typeof this.icons] || this.icons.default;
+      const currentIcon =
+        this.icons[this.currentState as keyof typeof this.icons] || this.icons.default;
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      
+
       img.onload = () => {
         const canvas = document.createElement('canvas');
         const size = 96;
         canvas.width = size;
         canvas.height = size;
-        const ctx = canvas.getContext('2d');
-        
+        const ctx = canvas.getContext('2d', CANVAS_OPTIONS);
+
         if (!ctx) return;
-        
+
         // Draw original favicon
         ctx.drawImage(img, 0, 0, size, size);
-        
+
         // Draw badge
         const badgeSize = 32;
         const badgeX = size - badgeSize;
         const badgeY = 0;
-        
+
         // Badge background
         ctx.fillStyle = '#ef4444'; // red-500
         ctx.beginPath();
-        ctx.arc(badgeX + badgeSize/2, badgeY + badgeSize/2, badgeSize/2, 0, 2 * Math.PI);
+        ctx.arc(badgeX + badgeSize / 2, badgeY + badgeSize / 2, badgeSize / 2, 0, 2 * Math.PI);
         ctx.fill();
-        
+
         // Badge border
         ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = 3;
         ctx.stroke();
-        
+
         // Badge text
         const badgeText = this.badgeCount > 9 ? '9+' : this.badgeCount.toString();
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 20px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(badgeText, badgeX + badgeSize/2, badgeY + badgeSize/2 + 1);
-        
+        ctx.fillText(badgeText, badgeX + badgeSize / 2, badgeY + badgeSize / 2 + 1);
+
         // Update favicon
         if (this.faviconLink) {
           this.faviconLink.href = canvas.toDataURL();
         }
       };
-      
+
       img.src = currentIcon;
     } catch (error) {
       console.error('Failed to create badge favicon:', error);
@@ -304,7 +311,7 @@ class FaviconController {
     this.currentPage = page;
     this.analytics.pageChanges[page]++;
     this.saveAnalytics();
-    
+
     if (this.badgeCount > 0) {
       this.updateFaviconWithBadge();
     } else {
@@ -322,43 +329,44 @@ class FaviconController {
     }
 
     try {
-      const currentIcon = this.icons[this.currentState as keyof typeof this.icons] || this.icons.default;
+      const currentIcon =
+        this.icons[this.currentState as keyof typeof this.icons] || this.icons.default;
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      
+
       img.onload = () => {
         const canvas = document.createElement('canvas');
         const size = 96;
         canvas.width = size;
         canvas.height = size;
-        const ctx = canvas.getContext('2d');
-        
+        const ctx = canvas.getContext('2d', CANVAS_OPTIONS);
+
         if (!ctx) return;
-        
+
         // Draw original favicon
         ctx.drawImage(img, 0, 0, size, size);
-        
+
         // Draw page indicator dot
         const dotSize = 12;
         const dotX = size - dotSize - 4;
         const dotY = size - dotSize - 4;
-        
+
         ctx.fillStyle = this.pageColors[this.currentPage];
         ctx.beginPath();
-        ctx.arc(dotX + dotSize/2, dotY + dotSize/2, dotSize/2, 0, 2 * Math.PI);
+        ctx.arc(dotX + dotSize / 2, dotY + dotSize / 2, dotSize / 2, 0, 2 * Math.PI);
         ctx.fill();
-        
+
         // Dot border
         ctx.strokeStyle = '#0a0a0a';
         ctx.lineWidth = 2;
         ctx.stroke();
-        
+
         // Update favicon
         if (this.faviconLink) {
           this.faviconLink.href = canvas.toDataURL();
         }
       };
-      
+
       img.src = currentIcon;
     } catch (error) {
       console.error('Failed to create page context favicon:', error);
@@ -372,9 +380,9 @@ class FaviconController {
   showLoading(): void {
     this.analytics.loadingStates++;
     this.saveAnalytics();
-    
+
     this.setState('loading');
-    
+
     // Auto-clear loading after 30 seconds (safety)
     this.loadingTimeout = window.setTimeout(() => {
       this.hideLoading();
@@ -397,37 +405,37 @@ class FaviconController {
    */
   private showLoadingFavicon(): void {
     let angle = 0;
-    
+
     const drawSpinner = () => {
       const canvas = document.createElement('canvas');
       const size = 96;
       canvas.width = size;
       canvas.height = size;
-      const ctx = canvas.getContext('2d');
-      
+      const ctx = canvas.getContext('2d', CANVAS_OPTIONS);
+
       if (!ctx || !this.faviconLink) return;
-      
+
       // Background
       ctx.fillStyle = '#0a0a0a';
       ctx.fillRect(0, 0, size, size);
-      
+
       // Spinner arc
       ctx.strokeStyle = '#fbbf24';
       ctx.lineWidth = 8;
       ctx.lineCap = 'round';
       ctx.beginPath();
-      ctx.arc(size/2, size/2, 32, angle, angle + Math.PI * 1.5);
+      ctx.arc(size / 2, size / 2, 32, angle, angle + Math.PI * 1.5);
       ctx.stroke();
-      
+
       this.faviconLink.href = canvas.toDataURL();
-      
+
       angle += 0.15;
-      
+
       if (this.currentState === 'loading') {
         requestAnimationFrame(drawSpinner);
       }
     };
-    
+
     drawSpinner();
   }
 
@@ -437,7 +445,7 @@ class FaviconController {
   setAnimationsEnabled(enabled: boolean): void {
     this.animationsEnabled = enabled;
     this.savePreferences();
-    
+
     if (!enabled && this.currentState === 'pulse') {
       this.setState('default');
       this.stopTitleBlink();
@@ -479,7 +487,7 @@ class FaviconController {
    */
   private calculateAverageReturnTime(): void {
     if (this.returnTimes.length === 0) return;
-    
+
     const sum = this.returnTimes.reduce((a, b) => a + b, 0);
     this.analytics.averageReturnTime = Math.round(sum / this.returnTimes.length);
   }
@@ -504,9 +512,12 @@ class FaviconController {
    */
   private savePreferences(): void {
     try {
-      localStorage.setItem('faviconPreferences', JSON.stringify({
-        animationsEnabled: this.animationsEnabled,
-      }));
+      localStorage.setItem(
+        'faviconPreferences',
+        JSON.stringify({
+          animationsEnabled: this.animationsEnabled,
+        }),
+      );
     } catch (error) {
       console.error('Failed to save favicon preferences:', error);
     }
@@ -554,5 +565,5 @@ export const faviconController = new FaviconController();
 
 // Expose to window for debugging
 if (typeof window !== 'undefined') {
-  (window as any).faviconController = faviconController;
+  window.faviconController = faviconController;
 }

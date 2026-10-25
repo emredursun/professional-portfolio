@@ -52,7 +52,9 @@ function runVerbose(command, args, options = {}) {
 /** Fail early with a readable message instead of a stack trace. */
 function assertPreconditions() {
   if (!fs.existsSync(SOURCE_PATH)) {
-    throw new Error('profile/README.md does not exist - run `npm run generate:profile-readme` first');
+    throw new Error(
+      'profile/README.md does not exist - run `npm run generate:profile-readme` first',
+    );
   }
 
   try {
@@ -107,7 +109,9 @@ function publish() {
     }
 
     const revision = sourceRevision();
-    run('git', ['commit', '-m', `docs: sync profile README from portfolio@${revision}`], { cwd: workdir });
+    run('git', ['commit', '-m', `docs: sync profile README from portfolio@${revision}`], {
+      cwd: workdir,
+    });
     runVerbose('git', ['push'], { cwd: workdir });
 
     console.log('\n✅ Profile README published!');

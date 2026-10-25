@@ -1,47 +1,55 @@
-import React, { useState, useEffect, ReactNode } from 'react';
+import React, { Component, ReactNode } from 'react';
+import { reportError } from '../src/utils/errorReporting.ts';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
   fallback?: ReactNode;
 }
 
-// Functional error boundary using React 19's error handling
-const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children, fallback }) => {
-  const [hasError, setHasError] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+interface ErrorBoundaryState {
+  error: Error | null;
+}
 
-  useEffect(() => {
-    const handleError = (event: ErrorEvent) => {
-      setHasError(true);
-      setError(event.error);
-      event.preventDefault();
-    };
+/**
+ * Catches errors thrown while rendering the React tree below it.
+ *
+ * This has to be a class: React only offers getDerivedStateFromError /
+ * componentDidCatch to class components. The previous implementation was a
+ * function component listening to window 'error' events, which is backwards
+ * in both directions - React render errors unmount the root before such a
+ * listener can help, while any unrelated failing script or promise replaced
+ * the whole site with this screen. Global errors are now only reported
+ * (see installGlobalErrorReporting), never rendered.
+ */
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  state: ErrorBoundaryState = { error: null };
 
-    const handleRejection = (event: PromiseRejectionEvent) => {
-      setHasError(true);
-      setError(new Error(event.reason));
-      event.preventDefault();
-    };
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { error };
+  }
 
-    window.addEventListener('error', handleError);
-    window.addEventListener('unhandledrejection', handleRejection);
+  componentDidCatch(error: Error): void {
+    reportError(error, 'render');
+  }
 
-    return () => {
-      window.removeEventListener('error', handleError);
-      window.removeEventListener('unhandledrejection', handleRejection);
-    };
-  }, []);
+  render(): ReactNode {
+    const { error } = this.state;
+    const { children, fallback } = this.props;
 
-  if (hasError) {
-    if (fallback) {
-      return <>{fallback}</>;
-    }
+    if (!error) return children;
+    if (fallback) return fallback;
 
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-dark-bg p-4">
+      <div
+        role="alert"
+        className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-dark-bg p-4"
+      >
         <div className="max-w-md w-full bg-white dark:bg-dark-surface rounded-2xl shadow-xl p-8 text-center">
           <div className="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i className="fas fa-exclamation-triangle text-2xl text-red-600 dark:text-red-400"></i>
+            <i
+              className="fas fa-exclamation-triangle text-2xl text-red-600 dark:text-red-400"
+              aria-hidden="true"
+            ></i>
           </div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
             Oops! Something went wrong
@@ -49,7 +57,8 @@ const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children, fallback }) => 
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             We encountered an unexpected error. Please try refreshing the page.
           </p>
-          {error && (
+          {/* Error text is a developer aid; production visitors do not need it. */}
+          {import.meta.env.DEV && (
             <details className="text-left mb-6 p-4 bg-gray-50 dark:bg-dark-bg rounded-lg">
               <summary className="cursor-pointer text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                 Error Details
@@ -60,6 +69,7 @@ const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children, fallback }) => 
             </details>
           )}
           <button
+            type="button"
             onClick={() => window.location.reload()}
             className="w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all duration-300"
           >
@@ -69,8 +79,6 @@ const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children, fallback }) => 
       </div>
     );
   }
-
-  return <>{children}</>;
-};
+}
 
 export default ErrorBoundary;
