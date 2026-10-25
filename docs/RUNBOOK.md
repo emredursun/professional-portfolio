@@ -12,11 +12,11 @@ This returns the deployed commit, branch and build time, written by `scripts/wri
 
 ## Releasing
 
-1. Work on a branch and open a pull request. [`preview.yml`](../.github/workflows/preview.yml) runs every quality gate, then posts a preview-channel URL on the PR. Review the change there.
-2. Merge to `main`. [`deploy.yml`](../.github/workflows/deploy.yml) runs the same gates, deploys the exact build that passed them, and smoke-tests production.
-3. The deploy job finishes only when `/version.json` on the live site reports the merged commit and every route returns 200.
+1. Work on a branch and open a pull request. [`preview.yml`](../.github/workflows/preview.yml) runs every quality gate. To also get a Firebase preview channel (its URL is commented on the PR), add the `preview` label to the PR; without it nothing is deployed.
+2. Merge to `main` once the `quality` check is green; branch protection allows nothing else (see below). [`deploy.yml`](../.github/workflows/deploy.yml) runs the same gates, then waits for your approval (Actions → the run → Review deployments → Approve).
+3. After approval it deploys the exact build that passed the gates and smoke-tests production. The deploy job finishes only when `/version.json` on the live site reports the merged commit and every route returns 200.
 
-**Approval gate (recommended).** The deploy job uses the `production` environment. In GitHub, go to Settings → Environments → `production` → Required reviewers and add yourself. Every release then pauses until you approve it in the Actions tab.
+**Guards (active).** `main` is protected: changes arrive only through a pull request whose `quality / Typecheck, test, build, e2e, Lighthouse` check passed; force pushes and deleting the branch are refused, for admins too. The `production` environment requires the owner's approval for every deploy and accepts deploys only from protected branches. Both are set in Settings → Branches and Settings → Environments → `production`.
 
 Only one production deploy runs at a time (`concurrency: production`).
 
@@ -25,13 +25,14 @@ Only one production deploy runs at a time (`concurrency: production`).
 **Preferred: revert in git.** Production stays reproducible from `main`.
 
 ```bash
+git switch -c revert/<short-name> origin/main
 git revert <bad-commit>
-git push origin main
+git push -u origin revert/<short-name>
 ```
 
-`deploy.yml` redeploys the reverted state through the full quality gates, which takes about 8–10 minutes.
+Open a pull request, merge it when `quality` is green, and approve the deploy. `deploy.yml` redeploys the reverted state through the full quality gates, which takes about 15–20 minutes including the approval.
 
-**Emergency: restore a previous release instantly.** In the Firebase console, open Hosting → Release history, find the last good release, and choose **Roll back**. It takes effect within seconds. Then revert in git as above, otherwise the next push to `main` redeploys the bad change.
+**Emergency: restore a previous release instantly.** In the Firebase console, open Hosting → Release history, find the last good release, and choose **Roll back**. It takes effect within seconds. Then revert in git as above, otherwise the next merge to `main` redeploys the bad change.
 
 ## Alerts
 

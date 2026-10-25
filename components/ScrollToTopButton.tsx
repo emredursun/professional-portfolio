@@ -77,16 +77,6 @@ const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({
         {/* Glow Effect */}
         <div className="absolute inset-0 rounded-full bg-yellow-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
       </button>
-
-      {/* Tooltip text (optional, appears on hover) */}
-      <span
-        className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 
-        bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-xs font-medium text-gray-800 dark:text-gray-200 
-        rounded-lg shadow-lg opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 
-        transition-all duration-300 pointer-events-none whitespace-nowrap hidden lg:block"
-      >
-        Back to Top
-      </span>
     </div>
   );
 };

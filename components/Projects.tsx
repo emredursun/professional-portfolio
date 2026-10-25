@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { Project } from '../types.ts';
 import { PROJECTS } from '../constants.tsx';
 import ProjectModal from './ProjectModal.tsx';
@@ -154,7 +154,24 @@ const ProjectCard: React.FC<{ project: Project; to: string }> = ({ project, to }
 
 const Projects: React.FC = () => {
   const { t } = useTranslation('projects');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  // ?category=<name> preselects a category (the command palette's filter
+  // commands link here); an unknown name is ignored.
+  const [searchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category');
+  const validCategoryParam =
+    categoryParam && PROJECTS.some((p) => p.category === categoryParam) ? categoryParam : null;
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    validCategoryParam ? [validCategoryParam] : [],
+  );
+  // Following the link while already on /projects changes only the query, so
+  // the component stays mounted: adopt the new category while rendering.
+  // When the query goes (Back, or the plain Projects link), its filter goes
+  // with it; otherwise the same URL showed a filtered list until a reload.
+  const [appliedCategoryParam, setAppliedCategoryParam] = useState(validCategoryParam);
+  if (validCategoryParam !== appliedCategoryParam) {
+    setAppliedCategoryParam(validCategoryParam);
+    setSelectedCategories(validCategoryParam ? [validCategoryParam] : []);
+  }
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isTechnologyOpen, setIsTechnologyOpen] = useState(false);
@@ -257,7 +274,7 @@ const Projects: React.FC = () => {
   if (isUnknownSlug) return <NotFound />;
 
   return (
-    <section className="animate-fade-in h-full flex flex-col">
+    <section className="animate-page-enter h-full flex flex-col">
       <SEO
         title={selectedProject ? translatedSelectedProject.title : t('title')}
         description={
@@ -456,7 +473,8 @@ const Projects: React.FC = () => {
           {filteredProjects.map((project, index) => (
             <div
               key={`${project.title}-${index}`}
-              className="animate-fade-in-up"
+              data-entrance="project"
+              className="animate-slide-in-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <ProjectCard

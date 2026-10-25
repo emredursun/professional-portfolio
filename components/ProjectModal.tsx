@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useFocusTrap } from './hooks/useFocusTrap.tsx';
 import { useTranslation } from 'react-i18next';
 import { Project } from '../types.ts';
 import ProjectModalHeader from './ProjectModalHeader.tsx';
@@ -14,6 +15,8 @@ interface ProjectModalProps {
 const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigate }) => {
   const { t } = useTranslation('projects');
   const modalContentRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(dialogRef, true);
 
   // No head tags here: the <SEO> in Projects.tsx owns the title, description
   // and social tags for /projects/<slug>, and scripts/prerender-routes.js
@@ -39,7 +42,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigat
 
     return () => {
       window.removeEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'auto';
+      // Back to the stylesheet's value; 'auto' left an inline override behind.
+      document.body.style.overflow = '';
     };
   }, [onClose, onNavigate]);
 
@@ -67,6 +71,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigat
     <div
       className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center animate-fade-in"
       aria-modal="true"
+      ref={dialogRef}
       role="dialog"
       aria-labelledby="project-title"
     >

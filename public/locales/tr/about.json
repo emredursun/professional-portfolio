@@ -128,7 +128,8 @@
         "Distributed test run'lar arasında stateful test data yönetimi (TDS)",
         "Risk ağırlıklı, requirements-driven TestCase design",
         "Tricentis Mobile Agent üzerinde mobil otomasyon, image-based senaryolar dahil",
-        "Product Consultant sertifikasyon sınavı %93,3 ile geçildi"
+        "Product Consultant sertifikasyon sınavı %93,3 ile geçildi",
+        "Tricentis Testim Product Consultant (Advanced, Eylül 2026): akıllı locator'lar ve görsel doğrulamayla yapay zekâ destekli web testi"
       ]
     },
     "details": {
@@ -142,7 +143,10 @@
       "yearsOfExperience": "Yıl Deneyim",
       "provenExpertise": "Prodüksiyon ortamlarında kanıtlanmış uzmanlık",
       "certification": "Sertifika",
+      "certificationPath": "Sertifikasyon yolu",
+      "certifiedDate": "Sertifika: {{date}}",
       "certifiedOn": "Sertifika tarihi: {{date}}",
+      "validUntil": "{{date}} tarihine kadar geçerli",
       "viewCertificate": "Sertifikayı görüntüle"
     }
   },

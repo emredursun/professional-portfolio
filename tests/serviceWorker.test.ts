@@ -54,11 +54,10 @@ describe('service worker', () => {
   });
 
   it('on activate deletes only its own old caches', async () => {
-    const { listeners, deleted } = loadWorker([
-      'ed-portfolio-v1',
-      'ed-portfolio-v6',
-      'other-app-cache',
-    ]);
+    // The current cache, read from the worker so a version bump needs no edit here.
+    const current = `ed-portfolio-${source.match(/CACHE_PREFIX\}(v\d+)/)?.[1]}`;
+    expect(current).toMatch(/^ed-portfolio-v\d+$/);
+    const { listeners, deleted } = loadWorker(['ed-portfolio-v1', current, 'other-app-cache']);
     let done: Promise<unknown> = Promise.resolve();
     listeners.activate({ waitUntil: (p: Promise<unknown>) => (done = p) });
     await done;

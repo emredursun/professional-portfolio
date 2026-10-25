@@ -16,8 +16,6 @@ import { Page } from '../types.ts';
 interface SidebarProps {
   theme: string;
   toggleTheme: () => void;
-  activePage: Page; // Kept for interface compatibility if needed, but unused for nav state
-  onNavigate: (page: Page) => void; // Kept for interface compatibility
   isMobileView: boolean;
 }
 
@@ -205,7 +203,12 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
                   <img
                     src={PERSONAL_INFO.avatar}
                     alt={PERSONAL_INFO.name}
-                    loading="lazy"
+                    // Above the fold on every page: fetch it at once, not
+                    // lazily, and reserve its 160 px square.
+                    loading="eager"
+                    fetchPriority="high"
+                    width={160}
+                    height={160}
                     decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 select-none"
                     style={{

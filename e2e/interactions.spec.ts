@@ -20,6 +20,91 @@ test.describe('command palette', () => {
     await page.keyboard.press('Escape');
     await expect(search).toBeHidden();
   });
+
+  const openPalette = async (page: import('@playwright/test').Page, path: string) => {
+    await page.goto(path);
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await page.keyboard.press('Control+k');
+    // The field is named in the page's language.
+    const locale = path.startsWith('/nl') ? 'nl' : path.startsWith('/tr') ? 'tr' : 'en';
+    const search = page.getByRole('combobox', { name: copy(locale, 'common').palette.search });
+    await expect(search).toBeVisible();
+    return search;
+  };
+
+  test('a project command opens that project', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    const search = await openPalette(page, '/nl/about');
+    await search.fill('Quilyn');
+    await page.keyboard.press('Enter');
+    // It set a #project-… hash the app no longer reads, so nothing opened.
+    await expect(page).toHaveURL(/\/nl\/projects\/quilyn-exam-prep$/);
+    await expect(page.locator('[data-modal-content]')).toBeVisible();
+  });
+
+  test('with recent commands, one option is selected and Enter runs it', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    let search = await openPalette(page, '/about');
+    await search.fill('contact');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/contact$/);
+
+    // "Go to Contact" is now the first recent command, above the full list.
+    search = await openPalette(page, '/about');
+    await expect(page.locator('[role="option"][aria-selected="true"]')).toHaveCount(1);
+    await expect(page.locator('[role="option"][aria-selected="true"]')).toContainText(
+      'Go to Contact',
+    );
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/contact$/);
+  });
+
+  test('"Scroll to Top" scrolls the content panel back up', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    await page.goto('/resume');
+    const panel = page.locator('#page-content');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await panel.evaluate((el) => el.scrollTo({ top: 1500 }));
+    await expect.poll(() => panel.evaluate((el) => el.scrollTop)).toBeGreaterThan(500);
+    await page.keyboard.press('Control+k');
+    await page.getByRole('combobox', { name: 'Search commands' }).fill('scroll to top');
+    await page.keyboard.press('Enter');
+    await expect.poll(() => panel.evaluate((el) => el.scrollTop)).toBeLessThan(10);
+  });
+
+  test('a category filter command filters the projects', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    const search = await openPalette(page, '/about');
+    await search.fill('Filter: Test Automation');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/projects\?category=Test(%20|\+)Automation$/);
+    await expect(page.getByRole('link', { name: 'QASmartTestLab', exact: true })).toBeVisible();
+    // A project from another category is filtered out.
+    await expect(page.getByRole('link', { name: /^Quilyn/ })).toHaveCount(0);
+  });
+
+  test('leaving the category URL shows all projects again', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    const quilyn = page.getByRole('link', { name: /^Quilyn/ });
+    await page.goto('/projects');
+    await expect(quilyn).toBeVisible();
+    const search = await openPalette(page, '/projects');
+    await search.fill('Filter: Test Automation');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\?category=/);
+    await expect(quilyn).toHaveCount(0);
+
+    // Back to /projects: the filter came from the URL, so it goes with it.
+    // It stayed, and the same URL showed 5 projects here but 12 on reload.
+    await page.goBack();
+    await expect(page).toHaveURL(/\/projects$/);
+    await expect(quilyn).toBeVisible();
+    await page.goForward();
+    await expect(quilyn).toHaveCount(0);
+  });
 });
 
 test.describe('command palette search', () => {
@@ -38,6 +123,56 @@ test.describe('command palette search', () => {
     await search.fill('(contact');
     await expect(page.getByRole('option', { name: /Go to Contact/ })).toBeVisible();
   });
+});
+
+test.describe('entrance animations keep text at full contrast', () => {
+  // The suite runs with reduced motion; these pages are checked as most
+  // visitors see them, with the entrance animations running.
+  test.use({ reducedMotion: 'no-preference', colorScheme: 'dark' });
+
+  /** True when no running animation on the matched elements changes opacity. */
+  const noOpacityAnimation = (page: import('@playwright/test').Page, selector: string) =>
+    page.$$eval(
+      selector,
+      (els) =>
+        els.length > 0 &&
+        els.every((el) =>
+          el
+            .getAnimations()
+            .every((a) =>
+              (a.effect as KeyframeEffect).getKeyframes().every((k) => !('opacity' in k)),
+            ),
+        ),
+    );
+
+  for (const { path, selector } of [
+    { path: '/about', selector: '[data-entrance="service"]' },
+    { path: '/projects', selector: '[data-entrance="project"]' },
+  ]) {
+    test(`${path} cards slide in without fading their text`, async ({ page }) => {
+      await page.goto(path);
+      await page.locator(selector).first().waitFor();
+      // Semi-transparent text in the animation's middle frames failed axe
+      // color-contrast; moving the card, not fading it, keeps the contrast.
+      expect(await noOpacityAnimation(page, selector)).toBe(true);
+      // Nor may a wrapper fade them: the whole About grid used to.
+      const effectiveOpacities = await page.$$eval(selector, (els) =>
+        els.map((el) => {
+          let opacity = 1;
+          for (let node: Element | null = el; node; node = node.parentElement) {
+            opacity *= Number(getComputedStyle(node).opacity);
+          }
+          return opacity;
+        }),
+      );
+      expect(effectiveOpacities.every((o) => o === 1)).toBe(true);
+      const results = await new AxeBuilder({ page })
+        .withRules(['color-contrast'])
+        .include(selector)
+        .analyze();
+      expect(results.violations.map((v) => v.nodes.length)).toEqual([]);
+    });
+  }
 });
 
 test.describe('localised controls', () => {
@@ -166,6 +301,18 @@ test.describe('services', () => {
     await expect(card).toBeFocused();
     await page.keyboard.press('Enter');
     await expect(page).toHaveURL(/\/nl\/about\/tricentis-tosca-automation$/);
+  });
+
+  test('the Tosca card also shows the Testim certificate', async ({ page }) => {
+    await page.goto('/about/tricentis-tosca-automation');
+    await expect(page.getByText('C26857')).toBeVisible();
+    // Both certificates have a "View certificate" link; this one is Testim's.
+    const testim = page.locator(
+      'a[href="/images/tricentis-testim-product-consultant-certificate.webp"]',
+    );
+    await expect(testim).toHaveAccessibleName(
+      new RegExp(copy('en', 'about').services.details.viewCertificate),
+    );
   });
 
   test('a certification links to the issuer-hosted proof', async ({ page }) => {
@@ -316,6 +463,109 @@ test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
       )
       .toBe(true);
     expect(await scan(page, '[role="dialog"]')).toEqual([]);
+  });
+
+  test('an open service panel is a named dialog with no axe violations', async ({ page }) => {
+    const about = copy('en', 'about');
+    const common = copy('en', 'common');
+    await page.goto('/about/pega-platform-architecture');
+    const dialog = page.getByRole('dialog', { name: about.services.pegaPlatform.title });
+    await expect(dialog).toBeVisible();
+    for (const name of [
+      common.labels.previousService,
+      common.labels.nextService,
+      common.labels.shareService,
+      common.buttons.close,
+    ]) {
+      await expect(dialog.getByRole('button', { name, exact: true })).toBeVisible();
+    }
+    // The panel slides in and its items fade in; scan the settled state.
+    await page.waitForTimeout(1500);
+    expect(await scan(page, '[role="dialog"]')).toEqual([]);
+  });
+
+  test('a related project in a service panel opens from the keyboard', async ({ page }) => {
+    await page.goto('/nl/about/tricentis-tosca-automation');
+    const link = page.getByRole('dialog').getByRole('link', { name: /Quilyn/ });
+    await link.focus();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/nl\/projects\/quilyn-exam-prep$/);
+  });
+
+  /** Presses Tab `count` times and reports whether focus ever left `selector`. */
+  const tabStaysInside = async (
+    page: import('@playwright/test').Page,
+    selector: string,
+    count: number,
+  ) => {
+    for (let i = 0; i < count; i += 1) {
+      await page.keyboard.press(i % 3 === 2 ? 'Shift+Tab' : 'Tab');
+      const inside = await page.evaluate((sel) => !!document.activeElement?.closest(sel), selector);
+      if (!inside) return false;
+    }
+    return true;
+  };
+
+  test('Tab stays inside an open service panel; closing returns focus', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, 'Keyboard navigation is a desktop concern.');
+    await page.goto('/about');
+    const card = page.getByRole('link', {
+      name: copy('en', 'about').services.pegaPlatform.title,
+      exact: true,
+    });
+    await card.focus();
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('dialog')).toBeVisible();
+    expect(await tabStaysInside(page, '[role="dialog"]', 40)).toBe(true);
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toBeHidden();
+    await expect(card).toBeFocused();
+  });
+
+  test('Tab stays inside an open project modal', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'Keyboard navigation is a desktop concern.');
+    await page.goto('/projects/aegisqa');
+    await expect(page.locator('[data-modal-content]')).toBeVisible();
+    expect(await tabStaysInside(page, '[role="dialog"]', 40)).toBe(true);
+  });
+
+  test('Tab stays inside the open command palette', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    await page.goto('/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await page.keyboard.press('Control+k');
+    await expect(page.getByRole('dialog', { name: 'Command palette' })).toBeVisible();
+    expect(await tabStaysInside(page, '[role="dialog"]', 12)).toBe(true);
+  });
+
+  test('the palette opened over a project modal moves Tab through its own controls', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    await page.goto('/projects/aegisqa');
+    await expect(page.locator('[data-modal-content]')).toBeVisible();
+    await page.keyboard.press('Control+k');
+    const palette = page.getByRole('dialog', { name: 'Command palette' });
+    const search = palette.getByRole('combobox', { name: 'Search commands' });
+    await expect(search).toBeFocused();
+    await search.fill('contact');
+    // Both traps handled every Tab: the modal pulled focus to itself and the
+    // palette pulled it back to the search field, so Tab never moved on.
+    await page.keyboard.press('Tab');
+    await expect(search).not.toBeFocused();
+    await expect(palette.locator(':focus')).toHaveCount(1);
+    await page.keyboard.press('Shift+Tab');
+    await expect(search).toBeFocused();
+    // Closing the palette hands Tab back to the project modal's trap.
+    await page.keyboard.press('Escape');
+    await expect(palette).toBeHidden();
+    const modal = page.getByRole('dialog');
+    expect(await tabStaysInside(page, '[role="dialog"]', 6)).toBe(true);
+    await expect(modal.locator(':focus')).toHaveCount(1);
   });
 
   test('an open project modal has no axe violations', async ({ page }) => {

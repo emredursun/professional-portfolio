@@ -5,8 +5,6 @@ import Magnetic from './Magnetic.tsx';
 import { Page } from '../types.ts';
 
 interface NavbarProps {
-  activePage: Page; // Kept for compatibility
-  onNavigate: (page: Page) => void; // Kept for compatibility
   onOpenCommandPalette?: () => void;
   onScrollToContent?: () => void;
 }

@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
+import { Link, useLocation } from 'react-router-dom';
+import { localePrefix } from './hooks/useLanguageNavigate.tsx';
+import { useFocusTrap } from './hooks/useFocusTrap.tsx';
 import { Service } from '../types.ts';
 import { PROJECTS } from '../constants.tsx';
 
@@ -17,7 +19,9 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
   onNavigate,
 }) => {
   const { t } = useTranslation('about');
-  const navigate = useLanguageNavigate();
+  const prefix = localePrefix(useLocation().pathname);
+  const panelRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(panelRef, !!service);
 
   // Close on Escape key
   useEffect(() => {
@@ -78,11 +82,18 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+            // A mouse shortcut; the keyboard closes the panel with Escape or
+            // its close button.
+            role="presentation"
             onClick={onClose}
           />
 
-          {/* Panel */}
+          {/* Panel: a modal dialog, named by its title */}
           <motion.div
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="service-panel-title"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -117,6 +128,8 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                       {onNavigate && (
                         <>
                           <button
+                            type="button"
+                            aria-label={t('labels.previousService', { ns: 'common' })}
                             onClick={() => onNavigate('prev')}
                             className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
                           >
@@ -126,6 +139,8 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                             ></i>
                           </button>
                           <button
+                            type="button"
+                            aria-label={t('labels.nextService', { ns: 'common' })}
                             onClick={() => onNavigate('next')}
                             className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
                           >
@@ -137,6 +152,8 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                         </>
                       )}
                       <button
+                        type="button"
+                        aria-label={t('labels.shareService', { ns: 'common' })}
                         onClick={handleShareClick}
                         className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
                       >
@@ -146,6 +163,8 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                         ></i>
                       </button>
                       <button
+                        type="button"
+                        aria-label={t('buttons.close', { ns: 'common' })}
                         onClick={onClose}
                         className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
                       >
@@ -158,7 +177,10 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                   </div>
 
                   {/* Row 2: Title */}
-                  <h2 className="text-lg font-bold text-gray-900 dark:text-white leading-tight truncate w-full">
+                  <h2
+                    id="service-panel-title"
+                    className="text-lg font-bold text-gray-900 dark:text-white leading-tight truncate w-full"
+                  >
                     {service.title}
                   </h2>
                 </div>
@@ -253,7 +275,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                     <div>
                       <p className="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wide">
                         {service.certificationDate
-                          ? `Certified ${service.certificationDate}`
+                          ? t('services.details.certifiedDate', { date: service.certificationDate })
                           : t('services.details.yearsOfExperience')}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
@@ -315,15 +337,16 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
 
                       {/* View Certificate Button */}
                       {service.certificateImage && (
-                        <motion.button
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          onClick={() => window.open(service.certificateImage, '_blank')}
-                          className="mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 group"
+                        <a
+                          href={service.certificateImage}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-bold shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 inline-flex items-center gap-2 group"
                         >
                           <i aria-hidden="true" className="fas fa-external-link-alt text-xs"></i>
                           <span>{t('services.details.viewCertificate')}</span>
-                        </motion.button>
+                          <span className="sr-only">{t('services.details.opensInNewTab')}</span>
+                        </a>
                       )}
 
                       {/* Issuer-hosted proof: anyone can check the credential is real */}
@@ -346,22 +369,71 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                     </div>
                   </div>
 
+                  {/* Further credentials on the same card (Testim next to Tosca) */}
+                  {service.additionalCertificates?.map((cert) => (
+                    <div
+                      key={cert.certificateId}
+                      className="mt-6 pt-5 border-t border-amber-300/60 dark:border-amber-700/40 flex flex-col sm:flex-row gap-4 items-start"
+                    >
+                      <div className="flex-shrink-0 w-32 h-24 rounded-lg overflow-hidden border-2 border-amber-400 dark:border-amber-600 shadow-[0_0_15px_rgba(251,191,36,0.3)] dark:shadow-[0_0_20px_rgba(251,191,36,0.2)]">
+                        <img
+                          src={cert.image}
+                          alt={`${cert.name} certificate`}
+                          loading="lazy"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 space-y-2">
+                        <p className="text-sm font-bold text-gray-900 dark:text-white">
+                          {cert.name}
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <i aria-hidden="true" className="fas fa-check-circle text-green-500"></i>
+                          <span className="text-sm font-mono text-gray-700 dark:text-gray-300">
+                            {cert.certificateId}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <i
+                            aria-hidden="true"
+                            className="fas fa-calendar-check text-amber-500"
+                          ></i>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                            {t('services.details.certifiedOn', { date: cert.date })}
+                            {cert.validUntil &&
+                              ` · ${t('services.details.validUntil', { date: cert.validUntil })}`}
+                          </span>
+                        </div>
+                        <a
+                          href={cert.image}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300 inline-flex items-center gap-2"
+                        >
+                          <i aria-hidden="true" className="fas fa-external-link-alt text-xs"></i>
+                          <span>{t('services.details.viewCertificate')}</span>
+                          <span className="sr-only">{t('services.details.opensInNewTab')}</span>
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+
                   {/* Supporting Course Badges */}
                   {service.certificateBadges && service.certificateBadges.length > 0 && (
                     <div className="mt-6 pt-5 border-t border-amber-300/60 dark:border-amber-700/40">
                       <h4 className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
                         <i aria-hidden="true" className="fas fa-award text-amber-500"></i>
-                        Certification Path
+                        {t('services.details.certificationPath')}
                       </h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {service.certificateBadges.map((badge) => (
-                          <motion.button
+                          <a
                             key={badge.image}
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => window.open(badge.image, '_blank')}
+                            href={badge.image}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             title={badge.label}
-                            className="flex items-center gap-3 p-2 rounded-lg bg-white/70 dark:bg-white/5 border border-amber-200 dark:border-amber-800/40 hover:border-amber-400 dark:hover:border-amber-600 transition-colors duration-300 text-left group"
+                            className="flex items-center gap-3 p-2 rounded-lg bg-white/70 dark:bg-white/5 border border-amber-200 dark:border-amber-800/40 hover:border-amber-400 dark:hover:border-amber-600 hover:scale-[1.02] transition-all duration-300 text-left group"
                           >
                             <img
                               src={badge.image}
@@ -372,7 +444,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                             <span className="text-xs font-medium text-gray-700 dark:text-gray-300 line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                               {badge.label}
                             </span>
-                          </motion.button>
+                          </a>
                         ))}
                       </div>
                     </div>
@@ -392,14 +464,13 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                   </h3>
                   <div className="space-y-3">
                     {relatedProjects.map((project) => (
-                      <motion.div
+                      // A link: the project's own URL, reachable with Tab and
+                      // Enter (it was a clickable div). Leaving /about closes
+                      // the panel on its own.
+                      <Link
                         key={project.slug}
-                        whileHover={{ scale: 1.02, x: 4 }}
-                        className="p-4 rounded-xl bg-white dark:bg-white/5 border-2 border-gray-200 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan transition-all duration-300 cursor-pointer group"
-                        onClick={() => {
-                          onClose();
-                          navigate(`/projects/${project.slug}`);
-                        }}
+                        to={`${prefix}/projects/${project.slug}`}
+                        className="block p-4 rounded-xl bg-white dark:bg-white/5 border-2 border-gray-200 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan hover:scale-[1.02] hover:translate-x-1 transition-all duration-300 group"
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-lg overflow-hidden border border-gray-200 dark:border-white/10">
@@ -424,7 +495,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                             className="fas fa-arrow-right text-gray-400 group-hover:text-yellow-600 dark:group-hover:text-neon-cyan group-hover:translate-x-1 transition-all duration-300"
                           ></i>
                         </div>
-                      </motion.div>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -432,21 +503,16 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
 
               {/* Call to Action */}
               <div className="pt-4">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    onClose();
-                    navigate('/contact');
-                  }}
-                  className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple text-white font-bold text-base shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group"
+                <Link
+                  to={`${prefix}/contact`}
+                  className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple text-white font-bold text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 group"
                 >
                   <span>{t('services.details.getInTouch')}</span>
                   <i
                     aria-hidden="true"
                     className="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform duration-300"
                   ></i>
-                </motion.button>
+                </Link>
               </div>
             </div>
           </motion.div>

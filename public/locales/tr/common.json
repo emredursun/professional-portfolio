@@ -44,7 +44,10 @@
     "shareProject": "Projeyi paylaş",
     "closeProject": "Proje ayrıntılarını kapat",
     "followOn": "{{name}} hesabımı takip edin",
-    "searchShortcut": "Ara (⌘K)"
+    "searchShortcut": "Ara (⌘K)",
+    "previousService": "Önceki hizmet",
+    "nextService": "Sonraki hizmet",
+    "shareService": "Hizmeti paylaş"
   },
   "meta": {
     "description": "Pega & Tricentis Tosca test otomasyonu konusunda uzman QA Consultant, ISTQB® Sertifikalı. Hollanda'da yerleşik."

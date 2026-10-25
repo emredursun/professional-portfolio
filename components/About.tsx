@@ -275,7 +275,7 @@ const AboutPage: React.FC = () => {
   }, [isCounterVisible]);
 
   return (
-    <section ref={containerRef} className="animate-fade-in">
+    <section ref={containerRef} className="animate-page-enter">
       {/* No title on /about itself: it is the landing page, so it carries the
           full site title. It used to pass t('title') with overrideTitle, which
           made the most important page appear in search results and tabs as
@@ -295,8 +295,8 @@ const AboutPage: React.FC = () => {
       <motion.header
         ref={headerRef}
         className="mb-12"
-        initial={{ opacity: 0, y: 30 }}
-        animate={isHeaderVisible ? { opacity: 1, y: 0 } : {}}
+        initial={{ y: 30 }}
+        animate={isHeaderVisible ? { y: 0 } : {}}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
@@ -322,14 +322,15 @@ const AboutPage: React.FC = () => {
         still treated as room for an 8/4 split.
       */}
       <div className="@container">
+        {/* Entrances on this page move content but never fade it: text at
+            partial opacity failed axe color-contrast while it played. */}
         <motion.div
           className="grid grid-cols-1 @3xl:grid-cols-12 gap-6"
           initial="hidden"
           animate="visible"
           variants={{
-            hidden: { opacity: 0 },
+            hidden: {},
             visible: {
-              opacity: 1,
               transition: {
                 staggerChildren: 0.15,
                 delayChildren: 0.3,
@@ -341,8 +342,8 @@ const AboutPage: React.FC = () => {
           <motion.div
             className="@3xl:col-span-8 h-full"
             variants={{
-              hidden: { opacity: 0, y: 30 },
-              visible: { opacity: 1, y: 0 },
+              hidden: { y: 30 },
+              visible: { y: 0 },
             }}
           >
             <BentoCard className="h-full bg-white dark:bg-neon-bg border-gray-100 dark:border-neon-border">
@@ -367,8 +368,8 @@ const AboutPage: React.FC = () => {
           <motion.div
             className="@3xl:col-span-4 flex flex-col justify-between gap-4 h-full"
             variants={{
-              hidden: { opacity: 0, y: 30 },
-              visible: { opacity: 1, y: 0 },
+              hidden: { y: 30 },
+              visible: { y: 0 },
             }}
           >
             <Tilt3D tiltMaxAngle={12} scale={1.02}>
@@ -406,9 +407,8 @@ const AboutPage: React.FC = () => {
                     initial="hidden"
                     animate="visible"
                     variants={{
-                      hidden: { opacity: 0 },
+                      hidden: {},
                       visible: {
-                        opacity: 1,
                         transition: {
                           staggerChildren: 0.1,
                           delayChildren: 0.7,
@@ -425,8 +425,8 @@ const AboutPage: React.FC = () => {
                         key={idx}
                         className="group/badge relative bg-gradient-to-br from-yellow-400 to-amber-500 dark:from-cyan-400 dark:to-blue-500 border border-yellow-500 dark:border-cyan-400 rounded-xl dark:rounded-none px-4 py-2.5 text-sm font-bold text-black dark:text-black flex items-center gap-3 shadow-[0_4px_16px_rgba(251,191,36,0.3)] dark:shadow-[0_4px_16px_rgba(6,182,212,0.4)] transition-all duration-500 ease-out hover:bg-gradient-to-br hover:from-yellow-400 hover:to-amber-500 dark:hover:bg-gray-900 hover:border-yellow-500 dark:hover:border-cyan-300 hover:text-white dark:hover:text-white hover:shadow-[0_12px_32px_rgba(251,191,36,0.8)] dark:hover:shadow-[0_8px_24px_rgba(6,182,212,0.6)] hover:scale-110 hover:-translate-y-2"
                         variants={{
-                          hidden: { opacity: 0, x: -20 },
-                          visible: { opacity: 1, x: 0 },
+                          hidden: { x: -20 },
+                          visible: { x: 0 },
                         }}
                       >
                         <i
@@ -505,8 +505,8 @@ const AboutPage: React.FC = () => {
           <motion.div
             className="@3xl:col-span-12"
             variants={{
-              hidden: { opacity: 0, y: 30 },
-              visible: { opacity: 1, y: 0 },
+              hidden: { y: 30 },
+              visible: { y: 0 },
             }}
           >
             <BentoCard>
@@ -533,8 +533,8 @@ const AboutPage: React.FC = () => {
           <div className="@3xl:col-span-12 mt-8">
             <motion.h3
               className="text-2xl font-bold text-gray-900 dark:text-neon-text-primary mb-6"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ x: -20 }}
+              animate={{ x: 0 }}
               transition={{ delay: 0.8 }}
             >
               {t('whatIDo')}
@@ -542,11 +542,14 @@ const AboutPage: React.FC = () => {
             <div className="grid grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 gap-6">
               {/* Staggered entrance as a CSS animation. It was a GSAP tween
                 whose start read every card's computed transform: a ~50 ms
-                forced layout right after the first render. */}
+                forced layout right after the first render. The cards slide
+                but do not fade: semi-transparent text in the middle frames
+                failed axe color-contrast. */}
               {translatedServices.map((service, index) => (
                 <div
                   key={index}
-                  className="animate-fade-in-up [animation-fill-mode:both]"
+                  data-entrance="service"
+                  className="animate-slide-in-up"
                   style={{ animationDelay: `${0.2 + index * 0.15}s` }}
                 >
                   <BentoCard

@@ -9,8 +9,9 @@
 // v5: avatar served as a 400px WebP, favicons and OG image re-encoded at the
 //     same filenames, so the old bytes must be purged.
 // v6: portrait renamed to emre-dursun-qa-consultant-400.webp (image SEO).
+// v7: social-share.png no longer precached (only link-preview bots read it).
 const CACHE_PREFIX = 'ed-portfolio-';
-const CACHE_NAME = `${CACHE_PREFIX}v6`;
+const CACHE_NAME = `${CACHE_PREFIX}v7`;
 const OFFLINE_URL = '/';
 
 // Assets to cache immediately on install
@@ -21,7 +22,6 @@ const PRECACHE_ASSETS = [
   '/favicon-32x32.png',
   '/favicon-96x96.png',
   '/images/emre-dursun-qa-consultant-400.webp',
-  '/images/social-share.png',
 ];
 
 // Install event - precache critical assets

@@ -180,6 +180,15 @@ export const SERVICES: Service[] = [
     certificateId: 'C26494',
     certificationDate: 'August 2026',
     certificateImage: '/images/tricentis-tosca-product-consultant-certificate.webp',
+    additionalCertificates: [
+      {
+        name: 'Tricentis Testim Product Consultant (Advanced)',
+        certificateId: 'C26857',
+        date: 'September 2026',
+        validUntil: 'September 2028',
+        image: '/images/tricentis-testim-product-consultant-certificate.webp',
+      },
+    ],
     certificateBadges: [
       {
         image: '/images/tricentis-as1-badge.webp',
