@@ -47,3 +47,6 @@ blob-report/
 .lighthouseci/
 .lighthouseci-mobile/
 reports/
+
+# Claude Code local session files
+.claude/

@@ -18,7 +18,7 @@ jobs:
       - name: Pages respond
         run: |
           set -euo pipefail
-          for path in / /about /resume /projects /contact /nl/about /tr/about /sitemap.xml /robots.txt; do
+          for path in / /about /resume /projects /contact /quality /nl/about /tr/about /sitemap.xml /robots.txt /llms.txt /resume.json; do
             code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://emredursun.nl$path")"
             echo "$code $path"
             [ "$code" = "200" ] || { echo "::error::$path returned $code"; exit 1; }
