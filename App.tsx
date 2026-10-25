@@ -8,6 +8,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Sidebar from './components/Sidebar.tsx';
 import MainContent from './components/MainContent.tsx';
+import { OverlayHostContext } from './components/Portal.tsx';
 import Navbar from './components/Navbar.tsx';
 import ScrollToTopButton from './components/ScrollToTopButton.tsx';
 import SmoothScroll from './components/SmoothScroll.tsx';
@@ -203,6 +204,7 @@ const AppContent: React.FC = () => {
   const [readingProgress, setReadingProgress] = useState(0);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [overlayHost, setOverlayHost] = useState<HTMLDivElement | null>(null);
 
   // Detect and set language from URL on mount
   useEffect(() => {
@@ -486,8 +488,20 @@ const AppContent: React.FC = () => {
                     aria-label={i18n.t('common:labels.pageContent')}
                     className={`w-full h-full scroll-smooth focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 dark:focus-visible:ring-neon-cyan transition-all duration-500 ${!isMobileView ? 'overflow-y-auto no-scrollbar rounded-[2.5rem]' : ''}`}
                   >
-                    <MainContent isMobileView={isMobileView} />
+                    <OverlayHostContext.Provider value={isMobileView ? null : overlayHost}>
+                      <MainContent isMobileView={isMobileView} />
+                    </OverlayHostContext.Provider>
                   </div>
+                  {/* Desktop overlays (service panel, project modal) open in
+                      this layer: over the card, clipped to its corners, and
+                      not scrolled with the page (components/Portal.tsx). */}
+                  {!isMobileView && (
+                    <div
+                      ref={setOverlayHost}
+                      data-overlay-host
+                      className="pointer-events-none absolute inset-0 z-[100] overflow-hidden rounded-[2.5rem] [contain:layout]"
+                    />
+                  )}
 
                   {isScrollButtonVisible && (
                     <ScrollToTopButton

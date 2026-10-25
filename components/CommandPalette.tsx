@@ -17,8 +17,9 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const dialogRef = useRef<HTMLDivElement>(null);
-  useFocusTrap(dialogRef, isOpen);
+  // State, not a ref: the trap must re-bind when React replaces the element.
+  const [dialog, setDialog] = useState<HTMLDivElement | null>(null);
+  useFocusTrap(dialog, isOpen);
 
   const { commands, recentCommands, searchCommands, executeCommand } = useCommandPalette({
     onNavigate,
@@ -176,7 +177,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
           transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="w-full max-w-2xl"
           onClick={(e) => e.stopPropagation()}
-          ref={dialogRef}
+          ref={setDialog}
           role="dialog"
           aria-modal="true"
           aria-label={t('palette.dialog')}

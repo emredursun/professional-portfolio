@@ -563,10 +563,17 @@ test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
     await expect(palette.locator(':focus')).toHaveCount(1);
     await page.keyboard.press('Shift+Tab');
     await expect(search).toBeFocused();
-    // Closing the palette hands Tab back to the project modal's trap.
+    // The arrow keys move the caret in the search field; they paged the
+    // project behind the palette.
+    await page.keyboard.press('ArrowLeft');
+    await expect(page).toHaveURL(/\/projects\/aegisqa$/);
+    // Escape closes the palette only; it closed the project too. Tab then
+    // goes back to the project modal's trap.
     await page.keyboard.press('Escape');
     await expect(palette).toBeHidden();
     const modal = page.getByRole('dialog');
+    await expect(modal).toBeVisible();
+    await expect(page).toHaveURL(/\/projects\/aegisqa$/);
     expect(await tabStaysInside(page, '[role="dialog"]', 6)).toBe(true);
     await expect(modal.locator(':focus')).toHaveCount(1);
   });
@@ -576,5 +583,168 @@ test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
     const modal = page.locator('[data-modal-content]');
     await expect(modal).toBeVisible();
     expect(await scan(page, '[data-modal-content]')).toEqual([]);
+  });
+});
+
+/**
+ * The service panel and the project modal open over the content card on
+ * desktop and over the screen on mobile, and scroll inside themselves. When
+ * a page's entrance animation left a transform on its section, they were
+ * positioned against that section instead: the overlay grew as tall as the
+ * page, its sticky controls scrolled away, and opening it from further down
+ * the page showed its empty bottom.
+ */
+test.describe('overlays stay on screen', () => {
+  const scrollPage = (page: import('@playwright/test').Page, top: number) =>
+    page.evaluate((y) => {
+      document.getElementById('page-content')?.scrollTo({ top: y });
+      window.scrollTo({ top: y });
+    }, top);
+
+  /**
+   * The overlay spans its host top to bottom: the content card on desktop
+   * (the sidebar stays in view), the viewport on mobile.
+   */
+  const expectOnScreen = async (page: import('@playwright/test').Page, selector: string) => {
+    const box = await page.locator(selector).first().boundingBox();
+    const host = page.locator('[data-overlay-host]');
+    const frame = (await host.count())
+      ? await host.boundingBox()
+      : { y: 0, height: page.viewportSize()?.height ?? 0 };
+    expect(Math.round(box?.y ?? -1)).toBe(Math.round(frame?.y ?? 0));
+    expect(Math.round(box?.height ?? 0)).toBe(Math.round(frame?.height ?? 0));
+  };
+
+  test('the service panel opens at its top and keeps its controls in view', async ({ page }) => {
+    await page.goto('/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await scrollPage(page, 1500);
+    const card = page.getByRole('link', {
+      name: copy('en', 'about').services.pegaPlatform.title,
+      exact: true,
+    });
+    await card.scrollIntoViewIfNeeded();
+    await card.click();
+
+    const panel = page.getByRole('dialog');
+    await expect(panel).toBeVisible();
+    await expectOnScreen(page, '[role="dialog"]');
+    expect(await panel.evaluate((el) => el.scrollTop)).toBe(0);
+
+    // Scrolled to its end, the header with its controls is still in view.
+    await panel.evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
+    const close = panel.getByRole('button', { name: copy('en', 'common').buttons.close });
+    await expect(close).toBeInViewport();
+    await expect(page.getByRole('button', { name: /next service/i })).toBeInViewport();
+  });
+
+  test('the project modal opens at its top and keeps its controls in view', async ({ page }) => {
+    await page.goto('/projects');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await scrollPage(page, 1200);
+    const card = page.getByRole('link', { name: 'QASmartTestLab', exact: true });
+    await card.scrollIntoViewIfNeeded();
+    await card.click();
+
+    const content = page.locator('[data-modal-content]');
+    await expect(content).toBeVisible();
+    await expectOnScreen(page, '[role="dialog"]');
+    expect(await content.evaluate((el) => el.scrollTop)).toBe(0);
+
+    await content.evaluate((el) => el.scrollTo({ top: 1500 }));
+    await expect(
+      page.getByRole('button', { name: copy('en', 'common').buttons.close }).last(),
+    ).toBeInViewport();
+  });
+});
+
+test.describe('the page keeps its place behind an overlay', () => {
+  const pageScroll = (page: import('@playwright/test').Page) =>
+    page.evaluate(() =>
+      Math.max(document.getElementById('page-content')?.scrollTop ?? 0, window.scrollY),
+    );
+  const scrollPage = (page: import('@playwright/test').Page, top: number) =>
+    page.evaluate((y) => {
+      document.getElementById('page-content')?.scrollTo({ top: y });
+      window.scrollTo({ top: y });
+    }, top);
+
+  // Behind an open service the page scrolls to its top on the route change;
+  // closing hands focus back to the card, which brings the visitor back to
+  // it. These guard that round trip.
+  test('closing a service panel returns to where the visitor was', async ({ page }) => {
+    await page.goto('/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    const card = page.getByRole('link', {
+      name: copy('en', 'about').services.pegaPlatform.title,
+      exact: true,
+    });
+    await card.scrollIntoViewIfNeeded();
+    const before = await pageScroll(page);
+    expect(before).toBeGreaterThan(300);
+    await card.click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toBeHidden();
+    await expect.poll(() => pageScroll(page)).toBeGreaterThan(before - 50);
+  });
+
+  test('the next service opens at the top of the panel', async ({ page }) => {
+    await page.goto('/about/pega-platform-architecture');
+    const panel = page.getByRole('dialog');
+    await expect(panel).toBeVisible();
+    await panel.evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
+    await panel.getByRole('button', { name: copy('en', 'common').labels.nextService }).click();
+    await expect(page).not.toHaveURL(/pega-platform-architecture$/);
+    await expect.poll(() => panel.evaluate((el) => el.scrollTop)).toBe(0);
+  });
+
+  test('closing a project returns to where the visitor was', async ({ page }) => {
+    await page.goto('/projects');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await scrollPage(page, 1200);
+    const card = page.getByRole('link', { name: 'QASmartTestLab', exact: true });
+    await card.scrollIntoViewIfNeeded();
+    const before = await pageScroll(page);
+    expect(before).toBeGreaterThan(300);
+    await card.click();
+    await expect(page.locator('[data-modal-content]')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('[data-modal-content]')).toBeHidden();
+    await expect.poll(() => pageScroll(page)).toBeGreaterThan(before - 50);
+  });
+});
+
+test.describe('focus trap across layout changes', () => {
+  // Crossing the 1024px breakpoint moves an open overlay between the content
+  // card's layer and <body>, so React rebuilds its DOM. The trap stayed bound
+  // to the element it started with, and Tab no longer moved at all.
+  test('Tab still cycles in a project modal after the window crosses the breakpoint', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, 'Resizes a desktop window.');
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/projects/aegisqa');
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toBeVisible();
+
+    await page.setViewportSize({ width: 900, height: 900 });
+    await expect(page.locator('[data-overlay-host]')).toHaveCount(0);
+    await expect(dialog).toBeVisible();
+    await dialog.getByRole('button').first().focus();
+
+    const seen = new Set<string>();
+    for (let i = 0; i < 6; i += 1) {
+      await page.keyboard.press('Tab');
+      const where = await page.evaluate(() => {
+        const el = document.activeElement;
+        return el?.closest('[role="dialog"]') ? (el.outerHTML.slice(0, 80) ?? '') : 'outside';
+      });
+      expect(where).not.toBe('outside');
+      seen.add(where);
+    }
+    // Focus moved through several controls instead of sticking on one.
+    expect(seen.size).toBeGreaterThan(2);
   });
 });
