@@ -1,9 +1,24 @@
-# Generated files are written with LF by the scripts in scripts/.
+# Every text file is checked out with LF, whatever core.autocrlf says.
 #
-# Without this, core.autocrlf=true rewrites them to CRLF on checkout while the
-# generators keep emitting LF, so `git status` reports them as modified after
-# every build even though `git diff` is empty. Pinning them to LF makes the
-# working tree agree with what the generators produce.
+# With core.autocrlf=true (the Git for Windows default) a checkout rewrote
+# text files to CRLF. A script's "#!/usr/bin/env node" line then ended in a
+# carriage return, which the test runner cannot parse: on a fresh Windows
+# clone half of the unit tests failed before running. The repository already
+# stores LF; this keeps the working tree the same as the repository.
+* text=auto eol=lf
+
+# Binary assets are never converted.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.ico  binary
+*.pdf  binary
+*.woff binary
+*.woff2 binary
+
+# Generated files are written with LF by the scripts in scripts/; listed
+# explicitly because `git diff --exit-code` in CI checks them after a build.
 profile/README.md           text eol=lf
 public/sitemap.xml          text eol=lf
 scripts/sitemap-state.json  text eol=lf
