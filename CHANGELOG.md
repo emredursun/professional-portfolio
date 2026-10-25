@@ -12,7 +12,8 @@ Post-launch hardening from the follow-up reviews. Branch `fix/post-launch-harden
 ### Fixed
 - The service detail panel is a named dialog; its previous, next, share and close buttons have names, and related projects, "Get in touch", certificates and course badges are real links.
 - Command palette: project commands open the project, "Scroll to Top" works on desktop, category filters filter (`/projects?category=…`), and with recent commands shown only one option is selected and Enter runs it.
-- Focus stays inside open modals (palette, project, service panel) and returns to where it was when they close.
+- Focus stays inside open modals (palette, project, service panel) and returns to where it was when they close. With the palette open over a project, only the palette handles Tab.
+- Leaving a palette category filter (Back, or the plain Projects link) shows all projects again; the filter stayed until a reload.
 - Page, card and quality-report entrances move or uncover text but no longer fade it, so text is never shown at reduced contrast while they play.
 - The Resume skill bars and the contact success icon animate; their animations were referenced but never defined.
 - "Certification path" and "Certified <date>" are translated; dead props and an invisible, untranslated tooltip are gone.
