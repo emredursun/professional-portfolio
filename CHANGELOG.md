@@ -6,6 +6,7 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 
 ### Fixed
 - The service panel and the project modal stay on screen again: opened further down a page they showed their empty bottom, and their previous, next, share and close buttons scrolled away. The page entrances introduced in the post-launch hardening left a transform on each page section, and a transformed ancestor captures `position: fixed`. Both now open in a layer of their own over the content card (the whole screen on mobile), always at their top, and the entrances leave no transform behind.
+- With the command palette open over a project, Escape closed the project too and the arrow keys in the search field paged it; the service panel listened for Escape even while closed. An overlay's shortcuts now act only when it is on top. After the window crossed the desktop breakpoint, Tab no longer moved inside an open project.
 
 ### Removed
 - Plausible analytics and the error reporting that sent to it. The site had no Plausible account, so every visit loaded its script and sent events that were thrown away. Pages now load nothing from third parties (an end-to-end test checks this), and the Content-Security-Policy no longer allows plausible.io.
