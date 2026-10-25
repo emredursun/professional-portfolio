@@ -1,5 +1,4 @@
 import React, { Component, ReactNode } from 'react';
-import { reportError } from '../src/utils/errorReporting.ts';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -18,18 +17,14 @@ interface ErrorBoundaryState {
  * function component listening to window 'error' events, which is backwards
  * in both directions - React render errors unmount the root before such a
  * listener can help, while any unrelated failing script or promise replaced
- * the whole site with this screen. Global errors are now only reported
- * (see installGlobalErrorReporting), never rendered.
+ * the whole site with this screen. Global errors are left to the browser
+ * console, never rendered.
  */
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: ErrorBoundaryState = { error: null };
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { error };
-  }
-
-  componentDidCatch(error: Error): void {
-    reportError(error, 'render');
   }
 
   render(): ReactNode {

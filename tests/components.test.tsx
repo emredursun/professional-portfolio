@@ -4,7 +4,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import ErrorBoundary from '../components/ErrorBoundary.tsx';
 import Preloader, { shouldShowPreloader } from '../components/Preloader.tsx';
 import { useIdleReady } from '../components/hooks/useIdleReady.tsx';
-import { resetErrorReportingForTests } from '../src/utils/errorReporting.ts';
 
 const mockReducedMotion = (reduce: boolean) => {
   window.matchMedia = vi.fn().mockImplementation((query: string) => ({
@@ -63,13 +62,8 @@ describe('ErrorBoundary', () => {
   };
 
   beforeEach(() => {
-    resetErrorReportingForTests();
     // React logs caught render errors; keep the test output readable.
     vi.spyOn(console, 'error').mockImplementation(() => {});
-  });
-
-  afterEach(() => {
-    delete window.plausible;
   });
 
   it('renders its children when nothing throws', () => {
@@ -81,9 +75,7 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText('content')).toBeTruthy();
   });
 
-  it('replaces a crashed subtree with the fallback screen and reports it', () => {
-    const plausible = vi.fn();
-    window.plausible = plausible;
+  it('replaces a crashed subtree with the fallback screen', () => {
     render(
       <ErrorBoundary>
         <Boom />
@@ -91,9 +83,6 @@ describe('ErrorBoundary', () => {
     );
     expect(screen.getByRole('alert')).toBeTruthy();
     expect(screen.getByText('Oops! Something went wrong')).toBeTruthy();
-    expect(plausible).toHaveBeenCalledWith('JS Error', {
-      props: { message: 'Error: render exploded', source: 'render' },
-    });
   });
 
   it('uses a custom fallback when one is given', () => {
@@ -178,18 +167,6 @@ describe('useIdleReady', () => {
 });
 
 describe('bootstrap', () => {
-  it('installs a Plausible queue that buffers calls until the script loads', async () => {
-    delete window.plausible;
-    vi.resetModules();
-    await import('../src/bootstrap.ts');
-    // Read through a fresh reference: after `delete` TypeScript narrows
-    // window.plausible to undefined, unaware the import reassigned it.
-    const plausible = (window as Window).plausible;
-    plausible?.('form_start');
-    plausible?.('form_submit', { props: { duration: 3 } });
-    expect(plausible?.q).toEqual([['form_start'], ['form_submit', { props: { duration: 3 } }]]);
-  });
-
   it('registers the service worker after load in production builds only', async () => {
     const register = vi.fn().mockResolvedValue({});
     Object.defineProperty(navigator, 'serviceWorker', { value: { register }, configurable: true });
@@ -205,14 +182,6 @@ describe('bootstrap', () => {
     window.dispatchEvent(new Event('load'));
     expect(register).toHaveBeenCalledWith('/sw.js');
     vi.unstubAllEnvs();
-  });
-
-  it('keeps an already-loaded Plausible instead of replacing it', async () => {
-    const real = vi.fn();
-    window.plausible = real;
-    vi.resetModules();
-    await import('../src/bootstrap.ts');
-    expect(window.plausible).toBe(real);
   });
 
   it('reloads once when a lazy chunk from a previous deploy is gone, never in a loop', async () => {

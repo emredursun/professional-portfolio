@@ -26,11 +26,6 @@ export const test = base.extend<Fixtures>({
     async ({ page }, use) => {
       const problems: string[] = [];
 
-      // Keep the suite hermetic: answer Plausible locally instead of calling out.
-      await page.route('https://plausible.io/**', (route) =>
-        route.fulfill({ status: 200, contentType: 'application/javascript', body: '' }),
-      );
-
       await page.addInitScript(() => {
         document.addEventListener('securitypolicyviolation', (e) => {
           console.error(`CSP violation: ${e.violatedDirective} ${e.blockedURI}`);

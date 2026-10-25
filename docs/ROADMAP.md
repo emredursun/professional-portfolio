@@ -18,9 +18,9 @@ Release extras: run `npm run publish:profile-readme` after the merge (the profil
 
 **Release checklist**
 - [ ] Owner reviews and approves the branch
-- [ ] Settings → Environments → `production` → add a required reviewer (approval gate for every deploy)
-- [ ] Web3Forms dashboard → restrict the access key to `emredursun.nl`
-- [ ] Plausible → add the `JS Error` custom-event goal
+- [x] Settings → Environments → `production` → add a required reviewer (approval gate for every deploy)
+- [x] Web3Forms dashboard: spam filter on, submissions kept 30 days (restricting the key to a domain is a paid feature, not used)
+- [x] Analytics: Plausible removed (it had no account); search traffic is in Google Search Console
 - [ ] Merge; confirm `/version.json` and that the Uptime workflow is green
 
 ## Milestone 2 — Engineering hygiene
