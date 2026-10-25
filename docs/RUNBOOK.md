@@ -49,7 +49,7 @@ To re-run a check by hand, open Actions → Uptime → Run workflow.
 
 ## Errors in the field
 
-Client-side errors appear in Plausible as the custom event **JS Error**, with `message` and `source` properties (`render`, `window` or `promise`). Add it as a goal under Site settings → Goals → Custom event once, then break it down by property. Messages have their query strings stripped and are capped at five per page view.
+There is no client-side error reporting: the site has no analytics service to send it to. A render error shows the error boundary's "Something went wrong" screen; anything else stays in the visitor's browser console. To investigate, reproduce it in the browser with the console open, or run the e2e suite, which fails on any console error. The Uptime workflow and the deploy smoke test cover outages.
 
 ## Content updates
 

@@ -4,7 +4,12 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 
 ## [Unreleased]
 
-Post-launch hardening from the follow-up reviews. Branch `fix/post-launch-hardening`, not yet deployed.
+### Removed
+- Plausible analytics and the error reporting that sent to it. The site had no Plausible account, so every visit loaded its script and sent events that were thrown away. Pages now load nothing from third parties (an end-to-end test checks this), and the Content-Security-Policy no longer allows plausible.io.
+
+## 2026-10-25 — post-launch hardening
+
+Post-launch hardening from the follow-up reviews, merged in pull request #9.
 
 ### Added
 - The Tricentis Testim Product Consultant certificate (Advanced, C26857, valid until September 2028) on the Tosca card, next to the Tosca certificate; its line in the Tosca benefits now shows in all three languages.

@@ -46,7 +46,10 @@ describe('service worker', () => {
 
   it('leaves other origins alone, including look-alikes that contain its own', () => {
     const { listeners } = loadWorker();
-    for (const url of ['https://plausible.io/js/script.js', `${ORIGIN}.evil.example/assets/x.js`]) {
+    for (const url of [
+      'https://cdn.example.com/js/script.js',
+      `${ORIGIN}.evil.example/assets/x.js`,
+    ]) {
       const event = fetchEvent(url);
       listeners.fetch(event);
       expect(event.respondWith, url).not.toHaveBeenCalled();

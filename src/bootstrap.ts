@@ -31,22 +31,6 @@ void import('@fortawesome/fontawesome-free/css/all.min.css');
 
 import gsap from 'gsap';
 import { MotionGlobalConfig } from 'framer-motion';
-import { installGlobalErrorReporting } from './utils/errorReporting.ts';
-
-/**
- * Queue stub for Plausible: calls made before the deferred script loads are
- * buffered on `plausible.q` and replayed by the real script once it arrives.
- */
-function installPlausibleQueue(): void {
-  if (window.plausible) return;
-
-  const queue: unknown[] = [];
-  const stub: PlausibleFn = (...args) => {
-    queue.push(args);
-  };
-  stub.q = queue;
-  window.plausible = stub;
-}
 
 /**
  * Register the service worker in production builds only. In development it
@@ -109,8 +93,6 @@ function respectReducedMotion(): void {
   query.addEventListener?.('change', apply);
 }
 
-installPlausibleQueue();
 respectReducedMotion();
-installGlobalErrorReporting();
 recoverFromStaleChunks();
 registerServiceWorker();
