@@ -21,13 +21,14 @@ import '@fontsource/plus-jakarta-sans/800.css';
 import '@fontsource/space-mono/400.css';
 import '@fontsource/space-mono/700.css';
 
-// Font Awesome Free 6.x - same major as the previous CDN copy (6.5.1), so
-// every `fas` / `far` / `fab` class name in the codebase keeps resolving.
+// Font Awesome Free 6.x, cut down to the icons the site uses (about 11 KB of
+// CSS and 16 KB of fonts instead of 74 KB and 300 KB): see
+// scripts/subset-icons.js. Every `fas` / `far` / `fab` class keeps working.
 // Loaded as a dynamic import so Vite emits it as its own stylesheet, injected
-// after start-up instead of blocking first paint (~100 KB of CSS). Icon fonts
-// use font-display: block, so icons were never visible before their font
-// arrived anyway - nothing is lost by not waiting for this file.
-void import('@fortawesome/fontawesome-free/css/all.min.css');
+// after start-up instead of blocking first paint. Icon fonts use
+// font-display: block, so icons were never visible before their font arrived
+// anyway - nothing is lost by not waiting for this file.
+void import('./styles/icons/icons.css');
 
 import gsap from 'gsap';
 import { MotionGlobalConfig } from 'framer-motion';

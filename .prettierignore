@@ -11,6 +11,7 @@ test-results/
 public/sitemap.xml
 scripts/sitemap-state.json
 profile/
+src/styles/icons/
 
 # Not ours to format
 package-lock.json
