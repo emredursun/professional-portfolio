@@ -171,11 +171,13 @@ test.describe('services', () => {
   test('the Tosca card also shows the Testim certificate', async ({ page }) => {
     await page.goto('/about/tricentis-tosca-automation');
     await expect(page.getByText('C26857')).toBeVisible();
-    await expect(
-      page.getByRole('link', {
-        name: new RegExp(copy('en', 'about').services.details.viewCertificate),
-      }),
-    ).toHaveAttribute('href', '/images/tricentis-testim-product-consultant-certificate.webp');
+    // Both certificates have a "View certificate" link; this one is Testim's.
+    const testim = page.locator(
+      'a[href="/images/tricentis-testim-product-consultant-certificate.webp"]',
+    );
+    await expect(testim).toHaveAccessibleName(
+      new RegExp(copy('en', 'about').services.details.viewCertificate),
+    );
   });
 
   test('a certification links to the issuer-hosted proof', async ({ page }) => {
@@ -326,6 +328,33 @@ test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
       )
       .toBe(true);
     expect(await scan(page, '[role="dialog"]')).toEqual([]);
+  });
+
+  test('an open service panel is a named dialog with no axe violations', async ({ page }) => {
+    const about = copy('en', 'about');
+    const common = copy('en', 'common');
+    await page.goto('/about/pega-platform-architecture');
+    const dialog = page.getByRole('dialog', { name: about.services.pegaPlatform.title });
+    await expect(dialog).toBeVisible();
+    for (const name of [
+      common.labels.previousService,
+      common.labels.nextService,
+      common.labels.shareService,
+      common.buttons.close,
+    ]) {
+      await expect(dialog.getByRole('button', { name, exact: true })).toBeVisible();
+    }
+    // The panel slides in and its items fade in; scan the settled state.
+    await page.waitForTimeout(1500);
+    expect(await scan(page, '[role="dialog"]')).toEqual([]);
+  });
+
+  test('a related project in a service panel opens from the keyboard', async ({ page }) => {
+    await page.goto('/nl/about/tricentis-tosca-automation');
+    const link = page.getByRole('dialog').getByRole('link', { name: /Quilyn/ });
+    await link.focus();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/nl\/projects\/quilyn-exam-prep$/);
   });
 
   test('an open project modal has no axe violations', async ({ page }) => {

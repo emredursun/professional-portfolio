@@ -44,7 +44,10 @@
     "shareProject": "Share project",
     "closeProject": "Close project details",
     "followOn": "Follow me on {{name}}",
-    "searchShortcut": "Search (⌘K)"
+    "searchShortcut": "Search (⌘K)",
+    "previousService": "Previous service",
+    "nextService": "Next service",
+    "shareService": "Share service"
   },
   "meta": {
     "description": "QA Consultant specializing in Pega & Tricentis Tosca test automation, ISTQB® Certified. Based in the Netherlands."
