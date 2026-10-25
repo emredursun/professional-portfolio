@@ -560,10 +560,17 @@ test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
     await expect(palette.locator(':focus')).toHaveCount(1);
     await page.keyboard.press('Shift+Tab');
     await expect(search).toBeFocused();
-    // Closing the palette hands Tab back to the project modal's trap.
+    // The arrow keys move the caret in the search field; they paged the
+    // project behind the palette.
+    await page.keyboard.press('ArrowLeft');
+    await expect(page).toHaveURL(/\/projects\/aegisqa$/);
+    // Escape closes the palette only; it closed the project too. Tab then
+    // goes back to the project modal's trap.
     await page.keyboard.press('Escape');
     await expect(palette).toBeHidden();
     const modal = page.getByRole('dialog');
+    await expect(modal).toBeVisible();
+    await expect(page).toHaveURL(/\/projects\/aegisqa$/);
     expect(await tabStaysInside(page, '[role="dialog"]', 6)).toBe(true);
     await expect(modal.locator(':focus')).toHaveCount(1);
   });
@@ -645,5 +652,39 @@ test.describe('overlays stay on screen', () => {
     await expect(
       page.getByRole('button', { name: copy('en', 'common').buttons.close }).last(),
     ).toBeInViewport();
+  });
+});
+
+test.describe('focus trap across layout changes', () => {
+  // Crossing the 1024px breakpoint moves an open overlay between the content
+  // card's layer and <body>, so React rebuilds its DOM. The trap stayed bound
+  // to the element it started with, and Tab no longer moved at all.
+  test('Tab still cycles in a project modal after the window crosses the breakpoint', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, 'Resizes a desktop window.');
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/projects/aegisqa');
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toBeVisible();
+
+    await page.setViewportSize({ width: 900, height: 900 });
+    await expect(page.locator('[data-overlay-host]')).toHaveCount(0);
+    await expect(dialog).toBeVisible();
+    await dialog.getByRole('button').first().focus();
+
+    const seen = new Set<string>();
+    for (let i = 0; i < 6; i += 1) {
+      await page.keyboard.press('Tab');
+      const where = await page.evaluate(() => {
+        const el = document.activeElement;
+        return el?.closest('[role="dialog"]') ? (el.outerHTML.slice(0, 80) ?? '') : 'outside';
+      });
+      expect(where).not.toBe('outside');
+      seen.add(where);
+    }
+    // Focus moved through several controls instead of sticking on one.
+    expect(seen.size).toBeGreaterThan(2);
   });
 });

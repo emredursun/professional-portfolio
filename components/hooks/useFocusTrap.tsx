@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from 'react';
+import { useEffect } from 'react';
 
 const FOCUSABLE = [
   'a[href]',
@@ -15,18 +15,32 @@ const FOCUSABLE = [
 let openTraps: readonly HTMLElement[] = [];
 
 /**
+ * Whether `container` is the open overlay on top, the only one that should
+ * act on its keyboard shortcuts. With the command palette over a project,
+ * Escape closed both and the arrow keys in the search field paged the
+ * project behind it.
+ */
+export function isTopmostTrap(container: HTMLElement | null): boolean {
+  return container !== null && openTraps[openTraps.length - 1] === container;
+}
+
+/**
  * Keeps keyboard focus inside a modal while it is open (WCAG 2.4.3).
  *
  * On opening, focus moves into the container (unless something inside
  * already has it, such as the command palette's search field); Tab and
  * Shift+Tab then cycle through its focusable elements only. On closing,
  * focus returns to the element that had it before - usually the card or
- * button that opened the modal. When modals stack, the newest one owns Tab
+ * button that opened the modal.
+ *
+ * It takes the element, not a ref, so it re-binds when React replaces it: an
+ * open overlay moves between the content card and <body> when the window
+ * crosses the desktop breakpoint, and a trap left on the old, detached
+ * element blocked every Tab. When modals stack, the newest one owns Tab
  * until it closes.
  */
-export function useFocusTrap(containerRef: RefObject<HTMLElement | null>, active: boolean): void {
+export function useFocusTrap(container: HTMLElement | null, active: boolean): void {
   useEffect(() => {
-    const container = containerRef.current;
     if (!active || !container) return;
 
     const previouslyFocused =
@@ -72,5 +86,5 @@ export function useFocusTrap(containerRef: RefObject<HTMLElement | null>, active
       // Back to where the visitor was, if that element is still on the page.
       if (previouslyFocused?.isConnected) previouslyFocused.focus();
     };
-  }, [containerRef, active]);
+  }, [container, active]);
 }

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { useFocusTrap } from './hooks/useFocusTrap.tsx';
+import React, { useEffect, useRef, useState } from 'react';
+import { isTopmostTrap, useFocusTrap } from './hooks/useFocusTrap.tsx';
 import { useTranslation } from 'react-i18next';
 import { Project } from '../types.ts';
 import ProjectModalHeader from './ProjectModalHeader.tsx';
@@ -16,8 +16,9 @@ interface ProjectModalProps {
 const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigate }) => {
   const { t } = useTranslation('projects');
   const modalContentRef = useRef<HTMLDivElement>(null);
-  const dialogRef = useRef<HTMLDivElement>(null);
-  useFocusTrap(dialogRef, true);
+  // State, not a ref: the trap must re-bind when React replaces the element.
+  const [dialog, setDialog] = useState<HTMLDivElement | null>(null);
+  useFocusTrap(dialog, true);
 
   // No head tags here: the <SEO> in Projects.tsx owns the title, description
   // and social tags for /projects/<slug>, and scripts/prerender-routes.js
@@ -27,6 +28,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigat
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
+      // Another overlay is on top, or already handled the key.
+      if (event.defaultPrevented || !isTopmostTrap(dialog)) return;
       if (event.key === 'Escape') {
         onClose();
       }
@@ -46,7 +49,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigat
       // Back to the stylesheet's value; 'auto' left an inline override behind.
       document.body.style.overflow = '';
     };
-  }, [onClose, onNavigate]);
+  }, [onClose, onNavigate, dialog]);
 
   // Define sections for navigation
   const sections = [
@@ -73,7 +76,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, onNavigat
       <div
         className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center animate-fade-in"
         aria-modal="true"
-        ref={dialogRef}
+        ref={setDialog}
         role="dialog"
         aria-labelledby="project-title"
       >

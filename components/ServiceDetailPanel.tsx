@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { localePrefix } from './hooks/useLanguageNavigate.tsx';
-import { useFocusTrap } from './hooks/useFocusTrap.tsx';
+import { isTopmostTrap, useFocusTrap } from './hooks/useFocusTrap.tsx';
 import Portal from './Portal.tsx';
 import { Service } from '../types.ts';
 import { PROJECTS } from '../constants.tsx';
@@ -21,19 +21,22 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
 }) => {
   const { t } = useTranslation('about');
   const prefix = localePrefix(useLocation().pathname);
-  const panelRef = useRef<HTMLDivElement>(null);
-  useFocusTrap(panelRef, !!service);
+  // State, not a ref: the trap must re-bind when React replaces the element.
+  const [panel, setPanel] = useState<HTMLDivElement | null>(null);
+  useFocusTrap(panel, !!service);
 
-  // Close on Escape key
+  // Escape closes, the arrow keys page - only while this panel is the open
+  // overlay on top (it listened even when closed: Escape on /about navigated).
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || !isTopmostTrap(panel)) return;
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowLeft' && onNavigate) onNavigate('prev');
       if (e.key === 'ArrowRight' && onNavigate) onNavigate('next');
     };
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
-  }, [onClose, onNavigate]);
+  }, [onClose, onNavigate, panel]);
 
   const handleShareClick = () => {
     if (navigator.share) {
@@ -92,7 +95,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
 
             {/* Panel: a modal dialog, named by its title */}
             <motion.div
-              ref={panelRef}
+              ref={setPanel}
               role="dialog"
               aria-modal="true"
               aria-labelledby="service-panel-title"
