@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { CommandPaletteProps, Command } from '../types';
+import { useFocusTrap } from './hooks/useFocusTrap.tsx';
 import { useCommandPalette } from './hooks/useCommandPalette.tsx';
 
 const CommandPalette: React.FC<CommandPaletteProps> = ({
@@ -16,6 +17,8 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(dialogRef, isOpen);
 
   const { commands, recentCommands, searchCommands, executeCommand } = useCommandPalette({
     onNavigate,
@@ -173,6 +176,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
           transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="w-full max-w-2xl"
           onClick={(e) => e.stopPropagation()}
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-label={t('palette.dialog')}

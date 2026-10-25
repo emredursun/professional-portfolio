@@ -472,6 +472,55 @@ test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
     await expect(page).toHaveURL(/\/nl\/projects\/quilyn-exam-prep$/);
   });
 
+  /** Presses Tab `count` times and reports whether focus ever left `selector`. */
+  const tabStaysInside = async (
+    page: import('@playwright/test').Page,
+    selector: string,
+    count: number,
+  ) => {
+    for (let i = 0; i < count; i += 1) {
+      await page.keyboard.press(i % 3 === 2 ? 'Shift+Tab' : 'Tab');
+      const inside = await page.evaluate((sel) => !!document.activeElement?.closest(sel), selector);
+      if (!inside) return false;
+    }
+    return true;
+  };
+
+  test('Tab stays inside an open service panel; closing returns focus', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, 'Keyboard navigation is a desktop concern.');
+    await page.goto('/about');
+    const card = page.getByRole('link', {
+      name: copy('en', 'about').services.pegaPlatform.title,
+      exact: true,
+    });
+    await card.focus();
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('dialog')).toBeVisible();
+    expect(await tabStaysInside(page, '[role="dialog"]', 40)).toBe(true);
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toBeHidden();
+    await expect(card).toBeFocused();
+  });
+
+  test('Tab stays inside an open project modal', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'Keyboard navigation is a desktop concern.');
+    await page.goto('/projects/aegisqa');
+    await expect(page.locator('[data-modal-content]')).toBeVisible();
+    expect(await tabStaysInside(page, '[role="dialog"]', 40)).toBe(true);
+  });
+
+  test('Tab stays inside the open command palette', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    await page.goto('/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await page.keyboard.press('Control+k');
+    await expect(page.getByRole('dialog', { name: 'Command palette' })).toBeVisible();
+    expect(await tabStaysInside(page, '[role="dialog"]', 12)).toBe(true);
+  });
+
   test('an open project modal has no axe violations', async ({ page }) => {
     await page.goto('/projects/aegisqa');
     const modal = page.locator('[data-modal-content]');

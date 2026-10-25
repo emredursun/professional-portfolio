@@ -1,0 +1,65 @@
+import { useEffect, type RefObject } from 'react';
+
+const FOCUSABLE = [
+  'a[href]',
+  'button:not([disabled])',
+  'input:not([disabled]):not([type="hidden"])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
+
+/**
+ * Keeps keyboard focus inside a modal while it is open (WCAG 2.4.3).
+ *
+ * On opening, focus moves into the container (unless something inside
+ * already has it, such as the command palette's search field); Tab and
+ * Shift+Tab then cycle through its focusable elements only. On closing,
+ * focus returns to the element that had it before - usually the card or
+ * button that opened the modal.
+ */
+export function useFocusTrap(containerRef: RefObject<HTMLElement | null>, active: boolean): void {
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!active || !container) return;
+
+    const previouslyFocused =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+    const focusables = () =>
+      Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
+        (el) => el.getClientRects().length > 0,
+      );
+
+    if (!container.contains(document.activeElement)) {
+      (focusables()[0] ?? container).focus();
+    }
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const items = focusables();
+      if (items.length === 0) {
+        e.preventDefault();
+        return;
+      }
+      const first = items[0];
+      const last = items[items.length - 1];
+      const current = document.activeElement;
+      const outside = !container.contains(current);
+      if (e.shiftKey && (current === first || outside)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (current === last || outside)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      // Back to where the visitor was, if that element is still on the page.
+      if (previouslyFocused?.isConnected) previouslyFocused.focus();
+    };
+  }, [containerRef, active]);
+}

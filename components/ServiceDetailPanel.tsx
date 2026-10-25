@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { localePrefix } from './hooks/useLanguageNavigate.tsx';
+import { useFocusTrap } from './hooks/useFocusTrap.tsx';
 import { Service } from '../types.ts';
 import { PROJECTS } from '../constants.tsx';
 
@@ -19,6 +20,8 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
 }) => {
   const { t } = useTranslation('about');
   const prefix = localePrefix(useLocation().pathname);
+  const panelRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(panelRef, !!service);
 
   // Close on Escape key
   useEffect(() => {
@@ -87,6 +90,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
 
           {/* Panel: a modal dialog, named by its title */}
           <motion.div
+            ref={panelRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="service-panel-title"
