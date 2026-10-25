@@ -104,8 +104,12 @@ export default {
         // Entrances for content with text: they move or uncover it but never
         // fade it, so text is never shown at reduced contrast (axe
         // color-contrast failed on the middle frames of the former fade-in-up).
-        'slide-in-up': 'slideInUp 0.8s ease-out both',
-        'page-enter': 'pageEnter 0.5s ease-out both',
+        // `backwards`, not `both`: a transform kept after the animation makes
+        // the section the containing block of every `position: fixed`
+        // descendant, which pulled the service panel and the project modal
+        // off the viewport.
+        'slide-in-up': 'slideInUp 0.8s ease-out backwards',
+        'page-enter': 'pageEnter 0.5s ease-out backwards',
         // Referenced by Resume and Contact but never defined, so they did
         // nothing; both scale, which needs no layout.
         'progress-fill': 'progressFill 1.2s ease-out both',

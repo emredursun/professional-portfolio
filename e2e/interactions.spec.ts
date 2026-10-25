@@ -575,3 +575,69 @@ test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
     expect(await scan(page, '[data-modal-content]')).toEqual([]);
   });
 });
+
+/**
+ * The service panel and the project modal are fixed to the viewport and
+ * scroll inside themselves. When a page's entrance animation left a
+ * transform on its section, `position: fixed` resolved against that section
+ * instead: the overlay grew as tall as the page, its sticky controls
+ * scrolled away, and opening it from further down the page showed its empty
+ * bottom.
+ */
+test.describe('overlays stay on screen', () => {
+  const scrollPage = (page: import('@playwright/test').Page, top: number) =>
+    page.evaluate((y) => {
+      document.getElementById('page-content')?.scrollTo({ top: y });
+      window.scrollTo({ top: y });
+    }, top);
+
+  /** The overlay fills the viewport vertically and starts at its top edge. */
+  const expectOnScreen = async (page: import('@playwright/test').Page, selector: string) => {
+    const box = await page.locator(selector).first().boundingBox();
+    const viewport = page.viewportSize();
+    expect(box?.y).toBeCloseTo(0, 0);
+    expect(Math.round(box?.height ?? 0)).toBe(viewport?.height);
+  };
+
+  test('the service panel opens at its top and keeps its controls in view', async ({ page }) => {
+    await page.goto('/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await scrollPage(page, 1500);
+    const card = page.getByRole('link', {
+      name: copy('en', 'about').services.pegaPlatform.title,
+      exact: true,
+    });
+    await card.scrollIntoViewIfNeeded();
+    await card.click();
+
+    const panel = page.getByRole('dialog');
+    await expect(panel).toBeVisible();
+    await expectOnScreen(page, '[role="dialog"]');
+    expect(await panel.evaluate((el) => el.scrollTop)).toBe(0);
+
+    // Scrolled to its end, the header with its controls is still in view.
+    await panel.evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
+    const close = panel.getByRole('button', { name: copy('en', 'common').buttons.close });
+    await expect(close).toBeInViewport();
+    await expect(page.getByRole('button', { name: /next service/i })).toBeInViewport();
+  });
+
+  test('the project modal opens at its top and keeps its controls in view', async ({ page }) => {
+    await page.goto('/projects');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await scrollPage(page, 1200);
+    const card = page.getByRole('link', { name: 'QASmartTestLab', exact: true });
+    await card.scrollIntoViewIfNeeded();
+    await card.click();
+
+    const content = page.locator('[data-modal-content]');
+    await expect(content).toBeVisible();
+    await expectOnScreen(page, '[role="dialog"]');
+    expect(await content.evaluate((el) => el.scrollTop)).toBe(0);
+
+    await content.evaluate((el) => el.scrollTo({ top: 1500 }));
+    await expect(
+      page.getByRole('button', { name: copy('en', 'common').buttons.close }).last(),
+    ).toBeInViewport();
+  });
+});

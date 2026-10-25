@@ -37,8 +37,10 @@ export function useFocusTrap(containerRef: RefObject<HTMLElement | null>, active
         (el) => el.getClientRects().length > 0,
       );
 
+    // Without scrolling: the container (a panel sliding in) would otherwise
+    // be scrolled to wherever its first control happens to sit.
     if (!container.contains(document.activeElement)) {
-      (focusables()[0] ?? container).focus();
+      (focusables()[0] ?? container).focus({ preventScroll: true });
     }
 
     openTraps = [...openTraps, container];

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { localePrefix } from './hooks/useLanguageNavigate.tsx';
 import { useFocusTrap } from './hooks/useFocusTrap.tsx';
+import Portal from './Portal.tsx';
 import { Service } from '../types.ts';
 import { PROJECTS } from '../constants.tsx';
 
@@ -72,453 +73,465 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
     : [];
 
   return (
-    <AnimatePresence>
-      {service && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
-            // A mouse shortcut; the keyboard closes the panel with Escape or
-            // its close button.
-            role="presentation"
-            onClick={onClose}
-          />
+    <Portal>
+      <AnimatePresence>
+        {service && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+              // A mouse shortcut; the keyboard closes the panel with Escape or
+              // its close button.
+              role="presentation"
+              onClick={onClose}
+            />
 
-          {/* Panel: a modal dialog, named by its title */}
-          <motion.div
-            ref={panelRef}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="service-panel-title"
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed top-0 right-0 h-full w-full md:w-[600px] lg:w-[700px] bg-white dark:bg-black border-l-2 border-gray-200 dark:border-neon-border shadow-2xl z-[101] overflow-y-auto"
-            data-lenis-prevent
-            data-modal-content="true"
-          >
-            {/* Header */}
-            <div className="sticky top-0 z-10 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-b border-gray-200 dark:border-neon-border py-2 px-3 md:p-6">
-              <div className="flex items-center gap-4">
-                {/* Left: Icon - Fixed Size */}
-                <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-black border border-gray-800 dark:border-neon-cyan/30 flex items-center justify-center text-3xl text-accent-yellow dark:text-neon-cyan shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(6,182,212,0.15)]">
-                  {service.icon}
-                </div>
-
-                {/* Right: Content Column */}
-                <div className="flex-1 flex flex-col justify-center min-w-0 h-16">
-                  {/* Row 1: Badge & Controls */}
-                  <div className="flex items-center justify-between mb-1 gap-4">
-                    {/* Badge */}
-                    <div className="min-w-0">
-                      {service.badge && (
-                        <span className="inline-flex items-center justify-center px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-gray-900 to-black border border-gray-700 dark:border-neon-cyan/50 text-white dark:text-neon-cyan rounded-full whitespace-nowrap">
-                          {service.badge}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Controls */}
-                    <div className="flex items-center gap-2">
-                      {onNavigate && (
-                        <>
-                          <button
-                            type="button"
-                            aria-label={t('labels.previousService', { ns: 'common' })}
-                            onClick={() => onNavigate('prev')}
-                            className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
-                          >
-                            <i
-                              aria-hidden="true"
-                              className="fas fa-chevron-left text-sm group-hover:-translate-x-0.5 transition-transform duration-300"
-                            ></i>
-                          </button>
-                          <button
-                            type="button"
-                            aria-label={t('labels.nextService', { ns: 'common' })}
-                            onClick={() => onNavigate('next')}
-                            className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
-                          >
-                            <i
-                              aria-hidden="true"
-                              className="fas fa-chevron-right text-sm group-hover:translate-x-0.5 transition-transform duration-300"
-                            ></i>
-                          </button>
-                        </>
-                      )}
-                      <button
-                        type="button"
-                        aria-label={t('labels.shareService', { ns: 'common' })}
-                        onClick={handleShareClick}
-                        className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
-                      >
-                        <i
-                          aria-hidden="true"
-                          className="fas fa-share-alt text-sm group-hover:scale-110 transition-transform duration-300"
-                        ></i>
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={t('buttons.close', { ns: 'common' })}
-                        onClick={onClose}
-                        className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
-                      >
-                        <i
-                          aria-hidden="true"
-                          className="fas fa-times text-sm group-hover:rotate-90 transition-transform duration-300"
-                        ></i>
-                      </button>
-                    </div>
+            {/* Panel: a modal dialog, named by its title */}
+            <motion.div
+              ref={panelRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="service-panel-title"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className="fixed top-0 right-0 h-full w-full md:w-[600px] lg:w-[700px] bg-white dark:bg-black border-l-2 border-gray-200 dark:border-neon-border shadow-2xl z-[101] overflow-y-auto"
+              data-lenis-prevent
+              data-modal-content="true"
+            >
+              {/* Header */}
+              <div className="sticky top-0 z-10 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-b border-gray-200 dark:border-neon-border py-2 px-3 md:p-6">
+                <div className="flex items-center gap-4">
+                  {/* Left: Icon - Fixed Size */}
+                  <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-black border border-gray-800 dark:border-neon-cyan/30 flex items-center justify-center text-3xl text-accent-yellow dark:text-neon-cyan shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(6,182,212,0.15)]">
+                    {service.icon}
                   </div>
 
-                  {/* Row 2: Title */}
-                  <h2
-                    id="service-panel-title"
-                    className="text-lg font-bold text-gray-900 dark:text-white leading-tight truncate w-full"
-                  >
-                    {service.title}
-                  </h2>
+                  {/* Right: Content Column */}
+                  <div className="flex-1 flex flex-col justify-center min-w-0 h-16">
+                    {/* Row 1: Badge & Controls */}
+                    <div className="flex items-center justify-between mb-1 gap-4">
+                      {/* Badge */}
+                      <div className="min-w-0">
+                        {service.badge && (
+                          <span className="inline-flex items-center justify-center px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-gray-900 to-black border border-gray-700 dark:border-neon-cyan/50 text-white dark:text-neon-cyan rounded-full whitespace-nowrap">
+                            {service.badge}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Controls */}
+                      <div className="flex items-center gap-2">
+                        {onNavigate && (
+                          <>
+                            <button
+                              type="button"
+                              aria-label={t('labels.previousService', { ns: 'common' })}
+                              onClick={() => onNavigate('prev')}
+                              className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                            >
+                              <i
+                                aria-hidden="true"
+                                className="fas fa-chevron-left text-sm group-hover:-translate-x-0.5 transition-transform duration-300"
+                              ></i>
+                            </button>
+                            <button
+                              type="button"
+                              aria-label={t('labels.nextService', { ns: 'common' })}
+                              onClick={() => onNavigate('next')}
+                              className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                            >
+                              <i
+                                aria-hidden="true"
+                                className="fas fa-chevron-right text-sm group-hover:translate-x-0.5 transition-transform duration-300"
+                              ></i>
+                            </button>
+                          </>
+                        )}
+                        <button
+                          type="button"
+                          aria-label={t('labels.shareService', { ns: 'common' })}
+                          onClick={handleShareClick}
+                          className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                        >
+                          <i
+                            aria-hidden="true"
+                            className="fas fa-share-alt text-sm group-hover:scale-110 transition-transform duration-300"
+                          ></i>
+                        </button>
+                        <button
+                          type="button"
+                          aria-label={t('buttons.close', { ns: 'common' })}
+                          onClick={onClose}
+                          className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-accent-yellow dark:hover:bg-neon-cyan flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 group"
+                        >
+                          <i
+                            aria-hidden="true"
+                            className="fas fa-times text-sm group-hover:rotate-90 transition-transform duration-300"
+                          ></i>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Row 2: Title */}
+                    <h2
+                      id="service-panel-title"
+                      className="text-lg font-bold text-gray-900 dark:text-white leading-tight truncate w-full"
+                    >
+                      {service.title}
+                    </h2>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Content - With safe area padding for mobile navbar */}
-            <div
-              className="px-6 md:px-8 py-6 md:py-8 pb-32 md:pb-8 space-y-6 md:space-y-8"
-              style={{ paddingBottom: 'max(8rem, calc(2rem + env(safe-area-inset-bottom)))' }}
-            >
-              {/* Full Description */}
-              {service.fullDescription && (
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                    <i
-                      aria-hidden="true"
-                      className="fas fa-info-circle text-accent-yellow dark:text-neon-cyan"
-                    ></i>
-                    {t('services.details.overview')}
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
-                    {service.fullDescription}
-                  </p>
-                </div>
-              )}
-
-              {/* Key Benefits */}
-              {service.keyBenefits && service.keyBenefits.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <i
-                      aria-hidden="true"
-                      className="fas fa-check-circle text-accent-yellow dark:text-neon-cyan"
-                    ></i>
-                    {t('services.details.keyBenefits')}
-                  </h3>
-                  <div className="space-y-3">
-                    {service.keyBenefits.map((benefit, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-yellow-400 dark:hover:border-neon-cyan transition-all duration-300"
-                      >
-                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple flex items-center justify-center">
-                          <i aria-hidden="true" className="fas fa-check text-xs text-white"></i>
-                        </div>
-                        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed flex-1">
-                          {benefit}
-                        </p>
-                      </motion.div>
-                    ))}
+              {/* Content - With safe area padding for mobile navbar */}
+              <div
+                className="px-6 md:px-8 py-6 md:py-8 pb-32 md:pb-8 space-y-6 md:space-y-8"
+                style={{ paddingBottom: 'max(8rem, calc(2rem + env(safe-area-inset-bottom)))' }}
+              >
+                {/* Full Description */}
+                {service.fullDescription && (
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                      <i
+                        aria-hidden="true"
+                        className="fas fa-info-circle text-accent-yellow dark:text-neon-cyan"
+                      ></i>
+                      {t('services.details.overview')}
+                    </h3>
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                      {service.fullDescription}
+                    </p>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Technologies */}
-              {service.tags && service.tags.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <i
-                      aria-hidden="true"
-                      className="fas fa-layer-group text-accent-yellow dark:text-neon-cyan"
-                    ></i>
-                    {t('services.details.technologies')}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {service.tags.map((tag, idx) => (
-                      <motion.span
-                        key={idx}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: idx * 0.05 }}
-                        className="px-4 py-2 text-sm font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 bg-white dark:bg-black border-2 border-gray-200 dark:border-neon-border rounded-xl hover:border-yellow-400 dark:hover:border-neon-cyan hover:text-gray-900 dark:hover:text-neon-cyan transition-all duration-300 cursor-default"
-                      >
-                        {tag}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Experience Badge */}
-              {service.yearsOfExperience && (
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/10 dark:to-orange-900/10 border-2 border-yellow-200 dark:border-yellow-800/30">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white text-xl font-black">
-                      {service.yearsOfExperience}+
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wide">
-                        {service.certificationDate
-                          ? t('services.details.certifiedDate', { date: service.certificationDate })
-                          : t('services.details.yearsOfExperience')}
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                        {t('services.details.provenExpertise')}
-                      </p>
+                {/* Key Benefits */}
+                {service.keyBenefits && service.keyBenefits.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                      <i
+                        aria-hidden="true"
+                        className="fas fa-check-circle text-accent-yellow dark:text-neon-cyan"
+                      ></i>
+                      {t('services.details.keyBenefits')}
+                    </h3>
+                    <div className="space-y-3">
+                      {service.keyBenefits.map((benefit, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.1 }}
+                          className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-yellow-400 dark:hover:border-neon-cyan transition-all duration-300"
+                        >
+                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple flex items-center justify-center">
+                            <i aria-hidden="true" className="fas fa-check text-xs text-white"></i>
+                          </div>
+                          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed flex-1">
+                            {benefit}
+                          </p>
+                        </motion.div>
+                      ))}
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Certificate Section */}
-              {(service.certificateId || service.certificateImage) && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="p-6 rounded-2xl bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 dark:from-amber-900/10 dark:via-yellow-900/10 dark:to-orange-900/10 border-2 border-amber-300 dark:border-amber-700/50 shadow-[0_0_20px_rgba(251,191,36,0.15)] dark:shadow-[0_0_25px_rgba(251,191,36,0.1)]"
-                >
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                    <i aria-hidden="true" className="fas fa-certificate text-amber-500"></i>
-                    {t('services.details.certification')}
-                  </h3>
+                {/* Technologies */}
+                {service.tags && service.tags.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                      <i
+                        aria-hidden="true"
+                        className="fas fa-layer-group text-accent-yellow dark:text-neon-cyan"
+                      ></i>
+                      {t('services.details.technologies')}
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {service.tags.map((tag, idx) => (
+                        <motion.span
+                          key={idx}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: idx * 0.05 }}
+                          className="px-4 py-2 text-sm font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 bg-white dark:bg-black border-2 border-gray-200 dark:border-neon-border rounded-xl hover:border-yellow-400 dark:hover:border-neon-cyan hover:text-gray-900 dark:hover:text-neon-cyan transition-all duration-300 cursor-default"
+                        >
+                          {tag}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-                  <div className="flex flex-col sm:flex-row gap-4 items-start">
-                    {/* Certificate Thumbnail */}
-                    {service.certificateImage && (
-                      <div className="flex-shrink-0 w-32 h-24 rounded-lg overflow-hidden border-2 border-amber-400 dark:border-amber-600 shadow-[0_0_15px_rgba(251,191,36,0.3)] dark:shadow-[0_0_20px_rgba(251,191,36,0.2)] hover:shadow-[0_0_25px_rgba(251,191,36,0.5)] transition-shadow duration-300">
-                        <img
-                          src={service.certificateImage}
-                          alt={`${service.title} certificate`}
-                          loading="lazy"
-                          className="w-full h-full object-cover"
-                        />
+                {/* Experience Badge */}
+                {service.yearsOfExperience && (
+                  <div className="p-6 rounded-2xl bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/10 dark:to-orange-900/10 border-2 border-yellow-200 dark:border-yellow-800/30">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white text-xl font-black">
+                        {service.yearsOfExperience}+
                       </div>
-                    )}
+                      <div>
+                        <p className="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wide">
+                          {service.certificationDate
+                            ? t('services.details.certifiedDate', {
+                                date: service.certificationDate,
+                              })
+                            : t('services.details.yearsOfExperience')}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                          {t('services.details.provenExpertise')}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
-                    {/* Certificate Details */}
-                    <div className="flex-1 space-y-2">
-                      {service.certificateId && (
-                        <div className="flex items-center gap-2">
-                          <i aria-hidden="true" className="fas fa-check-circle text-green-500"></i>
-                          <span className="text-sm font-mono text-gray-700 dark:text-gray-300">
-                            {service.certificateId}
-                          </span>
-                        </div>
-                      )}
+                {/* Certificate Section */}
+                {(service.certificateId || service.certificateImage) && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="p-6 rounded-2xl bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 dark:from-amber-900/10 dark:via-yellow-900/10 dark:to-orange-900/10 border-2 border-amber-300 dark:border-amber-700/50 shadow-[0_0_20px_rgba(251,191,36,0.15)] dark:shadow-[0_0_25px_rgba(251,191,36,0.1)]"
+                  >
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                      <i aria-hidden="true" className="fas fa-certificate text-amber-500"></i>
+                      {t('services.details.certification')}
+                    </h3>
 
-                      {service.certificationDate && (
-                        <div className="flex items-center gap-2">
-                          <i
-                            aria-hidden="true"
-                            className="fas fa-calendar-check text-amber-500"
-                          ></i>
-                          <span className="text-sm text-gray-600 dark:text-gray-400">
-                            {t('services.details.certifiedOn', { date: service.certificationDate })}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* View Certificate Button */}
+                    <div className="flex flex-col sm:flex-row gap-4 items-start">
+                      {/* Certificate Thumbnail */}
                       {service.certificateImage && (
-                        <a
-                          href={service.certificateImage}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-bold shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 inline-flex items-center gap-2 group"
-                        >
-                          <i aria-hidden="true" className="fas fa-external-link-alt text-xs"></i>
-                          <span>{t('services.details.viewCertificate')}</span>
-                          <span className="sr-only">{t('services.details.opensInNewTab')}</span>
-                        </a>
+                        <div className="flex-shrink-0 w-32 h-24 rounded-lg overflow-hidden border-2 border-amber-400 dark:border-amber-600 shadow-[0_0_15px_rgba(251,191,36,0.3)] dark:shadow-[0_0_20px_rgba(251,191,36,0.2)] hover:shadow-[0_0_25px_rgba(251,191,36,0.5)] transition-shadow duration-300">
+                          <img
+                            src={service.certificateImage}
+                            alt={`${service.title} certificate`}
+                            loading="lazy"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                       )}
 
-                      {/* Issuer-hosted proof: anyone can check the credential is real */}
-                      {service.certificateUrl && (
-                        <a
-                          href={service.certificateUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-green-700 dark:text-green-400 hover:underline"
-                        >
-                          <i aria-hidden="true" className="fas fa-shield-halved text-xs"></i>
-                          <span>{t('services.details.verifyCredential')}</span>
-                          <i
-                            aria-hidden="true"
-                            className="fas fa-arrow-up-right-from-square text-[10px]"
-                          ></i>
-                          <span className="sr-only">{t('services.details.opensInNewTab')}</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Further credentials on the same card (Testim next to Tosca) */}
-                  {service.additionalCertificates?.map((cert) => (
-                    <div
-                      key={cert.certificateId}
-                      className="mt-6 pt-5 border-t border-amber-300/60 dark:border-amber-700/40 flex flex-col sm:flex-row gap-4 items-start"
-                    >
-                      <div className="flex-shrink-0 w-32 h-24 rounded-lg overflow-hidden border-2 border-amber-400 dark:border-amber-600 shadow-[0_0_15px_rgba(251,191,36,0.3)] dark:shadow-[0_0_20px_rgba(251,191,36,0.2)]">
-                        <img
-                          src={cert.image}
-                          alt={`${cert.name} certificate`}
-                          loading="lazy"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
+                      {/* Certificate Details */}
                       <div className="flex-1 space-y-2">
-                        <p className="text-sm font-bold text-gray-900 dark:text-white">
-                          {cert.name}
-                        </p>
-                        <div className="flex items-center gap-2">
-                          <i aria-hidden="true" className="fas fa-check-circle text-green-500"></i>
-                          <span className="text-sm font-mono text-gray-700 dark:text-gray-300">
-                            {cert.certificateId}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <i
-                            aria-hidden="true"
-                            className="fas fa-calendar-check text-amber-500"
-                          ></i>
-                          <span className="text-sm text-gray-600 dark:text-gray-400">
-                            {t('services.details.certifiedOn', { date: cert.date })}
-                            {cert.validUntil &&
-                              ` · ${t('services.details.validUntil', { date: cert.validUntil })}`}
-                          </span>
-                        </div>
-                        <a
-                          href={cert.image}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300 inline-flex items-center gap-2"
-                        >
-                          <i aria-hidden="true" className="fas fa-external-link-alt text-xs"></i>
-                          <span>{t('services.details.viewCertificate')}</span>
-                          <span className="sr-only">{t('services.details.opensInNewTab')}</span>
-                        </a>
-                      </div>
-                    </div>
-                  ))}
+                        {service.certificateId && (
+                          <div className="flex items-center gap-2">
+                            <i
+                              aria-hidden="true"
+                              className="fas fa-check-circle text-green-500"
+                            ></i>
+                            <span className="text-sm font-mono text-gray-700 dark:text-gray-300">
+                              {service.certificateId}
+                            </span>
+                          </div>
+                        )}
 
-                  {/* Supporting Course Badges */}
-                  {service.certificateBadges && service.certificateBadges.length > 0 && (
-                    <div className="mt-6 pt-5 border-t border-amber-300/60 dark:border-amber-700/40">
-                      <h4 className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
-                        <i aria-hidden="true" className="fas fa-award text-amber-500"></i>
-                        {t('services.details.certificationPath')}
-                      </h4>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {service.certificateBadges.map((badge) => (
+                        {service.certificationDate && (
+                          <div className="flex items-center gap-2">
+                            <i
+                              aria-hidden="true"
+                              className="fas fa-calendar-check text-amber-500"
+                            ></i>
+                            <span className="text-sm text-gray-600 dark:text-gray-400">
+                              {t('services.details.certifiedOn', {
+                                date: service.certificationDate,
+                              })}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* View Certificate Button */}
+                        {service.certificateImage && (
                           <a
-                            key={badge.image}
-                            href={badge.image}
+                            href={service.certificateImage}
                             target="_blank"
                             rel="noopener noreferrer"
-                            title={badge.label}
-                            className="flex items-center gap-3 p-2 rounded-lg bg-white/70 dark:bg-white/5 border border-amber-200 dark:border-amber-800/40 hover:border-amber-400 dark:hover:border-amber-600 hover:scale-[1.02] transition-all duration-300 text-left group"
+                            className="mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-bold shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 inline-flex items-center gap-2 group"
                           >
-                            <img
-                              src={badge.image}
-                              alt={badge.label}
-                              loading="lazy"
-                              className="flex-shrink-0 w-16 h-12 object-cover rounded border border-amber-200 dark:border-amber-800/40"
-                            />
-                            <span className="text-xs font-medium text-gray-700 dark:text-gray-300 line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                              {badge.label}
-                            </span>
+                            <i aria-hidden="true" className="fas fa-external-link-alt text-xs"></i>
+                            <span>{t('services.details.viewCertificate')}</span>
+                            <span className="sr-only">{t('services.details.opensInNewTab')}</span>
                           </a>
-                        ))}
+                        )}
+
+                        {/* Issuer-hosted proof: anyone can check the credential is real */}
+                        {service.certificateUrl && (
+                          <a
+                            href={service.certificateUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-green-700 dark:text-green-400 hover:underline"
+                          >
+                            <i aria-hidden="true" className="fas fa-shield-halved text-xs"></i>
+                            <span>{t('services.details.verifyCredential')}</span>
+                            <i
+                              aria-hidden="true"
+                              className="fas fa-arrow-up-right-from-square text-[10px]"
+                            ></i>
+                            <span className="sr-only">{t('services.details.opensInNewTab')}</span>
+                          </a>
+                        )}
                       </div>
                     </div>
-                  )}
-                </motion.div>
-              )}
 
-              {/* Related Projects */}
-              {relatedProjects.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                    {/* Further credentials on the same card (Testim next to Tosca) */}
+                    {service.additionalCertificates?.map((cert) => (
+                      <div
+                        key={cert.certificateId}
+                        className="mt-6 pt-5 border-t border-amber-300/60 dark:border-amber-700/40 flex flex-col sm:flex-row gap-4 items-start"
+                      >
+                        <div className="flex-shrink-0 w-32 h-24 rounded-lg overflow-hidden border-2 border-amber-400 dark:border-amber-600 shadow-[0_0_15px_rgba(251,191,36,0.3)] dark:shadow-[0_0_20px_rgba(251,191,36,0.2)]">
+                          <img
+                            src={cert.image}
+                            alt={`${cert.name} certificate`}
+                            loading="lazy"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="flex-1 space-y-2">
+                          <p className="text-sm font-bold text-gray-900 dark:text-white">
+                            {cert.name}
+                          </p>
+                          <div className="flex items-center gap-2">
+                            <i
+                              aria-hidden="true"
+                              className="fas fa-check-circle text-green-500"
+                            ></i>
+                            <span className="text-sm font-mono text-gray-700 dark:text-gray-300">
+                              {cert.certificateId}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <i
+                              aria-hidden="true"
+                              className="fas fa-calendar-check text-amber-500"
+                            ></i>
+                            <span className="text-sm text-gray-600 dark:text-gray-400">
+                              {t('services.details.certifiedOn', { date: cert.date })}
+                              {cert.validUntil &&
+                                ` · ${t('services.details.validUntil', { date: cert.validUntil })}`}
+                            </span>
+                          </div>
+                          <a
+                            href={cert.image}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300 inline-flex items-center gap-2"
+                          >
+                            <i aria-hidden="true" className="fas fa-external-link-alt text-xs"></i>
+                            <span>{t('services.details.viewCertificate')}</span>
+                            <span className="sr-only">{t('services.details.opensInNewTab')}</span>
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* Supporting Course Badges */}
+                    {service.certificateBadges && service.certificateBadges.length > 0 && (
+                      <div className="mt-6 pt-5 border-t border-amber-300/60 dark:border-amber-700/40">
+                        <h4 className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+                          <i aria-hidden="true" className="fas fa-award text-amber-500"></i>
+                          {t('services.details.certificationPath')}
+                        </h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {service.certificateBadges.map((badge) => (
+                            <a
+                              key={badge.image}
+                              href={badge.image}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title={badge.label}
+                              className="flex items-center gap-3 p-2 rounded-lg bg-white/70 dark:bg-white/5 border border-amber-200 dark:border-amber-800/40 hover:border-amber-400 dark:hover:border-amber-600 hover:scale-[1.02] transition-all duration-300 text-left group"
+                            >
+                              <img
+                                src={badge.image}
+                                alt={badge.label}
+                                loading="lazy"
+                                className="flex-shrink-0 w-16 h-12 object-cover rounded border border-amber-200 dark:border-amber-800/40"
+                              />
+                              <span className="text-xs font-medium text-gray-700 dark:text-gray-300 line-clamp-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                                {badge.label}
+                              </span>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {/* Related Projects */}
+                {relatedProjects.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                      <i
+                        aria-hidden="true"
+                        className="fas fa-folder-open text-accent-yellow dark:text-neon-cyan"
+                      ></i>
+                      {t('services.details.relatedProjects')}
+                    </h3>
+                    <div className="space-y-3">
+                      {relatedProjects.map((project) => (
+                        // A link: the project's own URL, reachable with Tab and
+                        // Enter (it was a clickable div). Leaving /about closes
+                        // the panel on its own.
+                        <Link
+                          key={project.slug}
+                          to={`${prefix}/projects/${project.slug}`}
+                          className="block p-4 rounded-xl bg-white dark:bg-white/5 border-2 border-gray-200 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan hover:scale-[1.02] hover:translate-x-1 transition-all duration-300 group"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-lg overflow-hidden border border-gray-200 dark:border-white/10">
+                              <img
+                                src={project.image}
+                                alt={project.title}
+                                loading="lazy"
+                                decoding="async"
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div className="flex-1">
+                              <h4 className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-neon-cyan transition-colors">
+                                {project.title}
+                              </h4>
+                              <p className="text-xs text-gray-600 dark:text-gray-400">
+                                {project.category}
+                              </p>
+                            </div>
+                            <i
+                              aria-hidden="true"
+                              className="fas fa-arrow-right text-gray-400 group-hover:text-yellow-600 dark:group-hover:text-neon-cyan group-hover:translate-x-1 transition-all duration-300"
+                            ></i>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Call to Action */}
+                <div className="pt-4">
+                  <Link
+                    to={`${prefix}/contact`}
+                    className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple text-white font-bold text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 group"
+                  >
+                    <span>{t('services.details.getInTouch')}</span>
                     <i
                       aria-hidden="true"
-                      className="fas fa-folder-open text-accent-yellow dark:text-neon-cyan"
+                      className="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform duration-300"
                     ></i>
-                    {t('services.details.relatedProjects')}
-                  </h3>
-                  <div className="space-y-3">
-                    {relatedProjects.map((project) => (
-                      // A link: the project's own URL, reachable with Tab and
-                      // Enter (it was a clickable div). Leaving /about closes
-                      // the panel on its own.
-                      <Link
-                        key={project.slug}
-                        to={`${prefix}/projects/${project.slug}`}
-                        className="block p-4 rounded-xl bg-white dark:bg-white/5 border-2 border-gray-200 dark:border-neon-border hover:border-yellow-400 dark:hover:border-neon-cyan hover:scale-[1.02] hover:translate-x-1 transition-all duration-300 group"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg overflow-hidden border border-gray-200 dark:border-white/10">
-                            <img
-                              src={project.image}
-                              alt={project.title}
-                              loading="lazy"
-                              decoding="async"
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <div className="flex-1">
-                            <h4 className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-neon-cyan transition-colors">
-                              {project.title}
-                            </h4>
-                            <p className="text-xs text-gray-600 dark:text-gray-400">
-                              {project.category}
-                            </p>
-                          </div>
-                          <i
-                            aria-hidden="true"
-                            className="fas fa-arrow-right text-gray-400 group-hover:text-yellow-600 dark:group-hover:text-neon-cyan group-hover:translate-x-1 transition-all duration-300"
-                          ></i>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
+                  </Link>
                 </div>
-              )}
-
-              {/* Call to Action */}
-              <div className="pt-4">
-                <Link
-                  to={`${prefix}/contact`}
-                  className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple text-white font-bold text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 group"
-                >
-                  <span>{t('services.details.getInTouch')}</span>
-                  <i
-                    aria-hidden="true"
-                    className="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform duration-300"
-                  ></i>
-                </Link>
               </div>
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </Portal>
   );
 };
 
