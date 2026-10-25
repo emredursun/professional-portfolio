@@ -47,19 +47,6 @@
     />
 
     <!--
-      Plausible Analytics (cookieless, no consent banner required). The queue
-      stub that buffers calls made before this script loads lives in
-      src/bootstrap.ts, so the page carries no inline scripts and the CSP can
-      stay at script-src 'self'.
-    -->
-    <script
-      defer
-      data-domain="emredursun.nl"
-      src="https://plausible.io/js/script.js"
-    ></script>
-    <link rel="preconnect" href="https://plausible.io" />
-
-    <!--
       Fonts (Plus Jakarta Sans, Space Mono) and Font Awesome are self-hosted
       through npm and bundled by Vite - see src/bootstrap.ts. Loading them from
       Google Fonts and cdnjs was render-blocking on two extra origins.

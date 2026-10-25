@@ -2,13 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SOCIAL_LINKS } from '../constants.tsx';
 import SEO from './SEO.tsx';
-import { reportError } from '../src/utils/errorReporting.ts';
 import { faviconController } from '../src/utils/faviconController.ts';
 
 /**
  * Web3Forms access keys are public by design - they only identify the inbox.
- * Abuse protection comes from the honeypot below plus the domain allowlist
- * configured in the Web3Forms dashboard (restrict to emredursun.nl).
+ * Abuse protection comes from the honeypot below and Web3Forms' spam filter
+ * (its domain allowlist is a paid feature, not enabled).
  */
 const WEB3FORMS_ACCESS_KEY = '309ce373-4042-4a9a-b924-e7684e84ba0a';
 
@@ -25,19 +24,6 @@ const MAP_EMBED_URL = 'https://www.google.com/maps?q=Nieuwegein,+Netherlands&z=1
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 const SUBMIT_TIMEOUT_MS = 15000;
-
-/**
- * A failed submission is reported as a fixed code only. Web3Forms' own error
- * text and anything derived from the visitor's input stay out of analytics.
- */
-class ContactSubmitError extends Error {
-  readonly code: string;
-  constructor(code: string) {
-    super(code);
-    this.name = 'ContactSubmitError';
-    this.code = code;
-  }
-}
 
 const ConfettiCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -109,7 +95,6 @@ const ConfettiCanvas: React.FC = () => {
 const Contact: React.FC = () => {
   const { t } = useTranslation('contact');
   const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
-  const [formStartTime, setFormStartTime] = useState<number>(0);
   const [showMap, setShowMap] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -127,16 +112,10 @@ const Contact: React.FC = () => {
       return;
     }
 
-    // Track form submission attempt
-    const formDuration = formStartTime ? Date.now() - formStartTime : 0;
-
     setSubmissionStatus('submitting');
 
     // Show loading favicon
     faviconController.showLoading();
-
-    // Track with Plausible if available
-    window.plausible?.('form_submit', { props: { duration: formDuration } });
 
     // A request that never answers would leave the button spinning forever.
     const controller = new AbortController();
@@ -149,50 +128,28 @@ const Contact: React.FC = () => {
         signal: controller.signal,
       });
 
-      if (!response.ok) throw new ContactSubmitError(`http-${response.status}`);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data: { success?: boolean } = await response.json();
 
       if (data.success) {
         setSubmissionStatus('success');
         form.reset();
-        setFormStartTime(0);
 
         // Hide loading and show notification
         faviconController.hideLoading();
         faviconController.showNotification(t('messages.success.notification'), 8000);
-
-        // Track success
-        window.plausible?.('form_success');
       } else {
-        throw new ContactSubmitError('rejected');
+        throw new Error('Rejected by Web3Forms');
       }
-    } catch (error) {
-      const code =
-        error instanceof ContactSubmitError
-          ? error.code
-          : controller.signal.aborted
-            ? 'timeout'
-            : 'network';
-      reportError(new ContactSubmitError(code), 'promise');
+    } catch {
+      // HTTP error, rejection, network failure or timeout: the form keeps
+      // the message and shows the error above the send button.
       setSubmissionStatus('error');
 
       // Hide loading
       faviconController.hideLoading();
-
-      // Track error
-      window.plausible?.('form_error');
     } finally {
       window.clearTimeout(timeout);
-    }
-  };
-
-  // Track form start
-  const handleFormFocus = () => {
-    if (!formStartTime) {
-      setFormStartTime(Date.now());
-
-      // Track form start
-      window.plausible?.('form_start');
     }
   };
 
@@ -248,7 +205,6 @@ const Contact: React.FC = () => {
                   className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                   required
                   disabled={submissionStatus === 'submitting'}
-                  onFocus={handleFormFocus}
                 />
               </div>
               <div className="group">
@@ -262,7 +218,6 @@ const Contact: React.FC = () => {
                   className="w-full bg-gray-50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-neon-cyan focus:border-transparent transition-all duration-300 hover:border-yellow-400 dark:hover:border-neon-cyan focus:shadow-[0_0_20px_rgba(234,179,8,0.2)] dark:focus:shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                   required
                   disabled={submissionStatus === 'submitting'}
-                  onFocus={handleFormFocus}
                 />
               </div>
               <div className="group">
@@ -276,7 +231,6 @@ const Contact: React.FC = () => {
                   required
                   minLength={20}
                   disabled={submissionStatus === 'submitting'}
-                  onFocus={handleFormFocus}
                   title={t('form.message.tooShort')}
                 ></textarea>
               </div>

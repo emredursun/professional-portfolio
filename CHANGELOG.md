@@ -8,6 +8,9 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 - Dutch and Turkish text for Quilyn, PathForge, Devran AI Kit, DeelMarkt, BeSync and AegisQA. Their cards, detail pages and shared-link previews were English on the Dutch and Turkish pages. A unit test fails if a project has no translation, or a list that differs in length from the English one.
 - Each project page describes its project in structured data (`SoftwareSourceCode` with its repository, or `CreativeWork`), generated from the same data as the page. The site-wide graph had a hand-kept list of three projects from 2020–2023 instead.
 
+### Removed
+- Plausible analytics and the error reporting that sent to it. The site had no Plausible account, so every visit loaded its script and sent events that were thrown away. Pages now load nothing from third parties (an end-to-end test checks this), and the Content-Security-Policy no longer allows plausible.io.
+
 ### Fixed
 - The Medunna project showed four of its five highlights in Dutch and Turkish; "Full Agile Lifecycle" was missing.
 
