@@ -20,6 +20,71 @@ test.describe('command palette', () => {
     await page.keyboard.press('Escape');
     await expect(search).toBeHidden();
   });
+
+  const openPalette = async (page: import('@playwright/test').Page, path: string) => {
+    await page.goto(path);
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await page.keyboard.press('Control+k');
+    // The field is named in the page's language.
+    const locale = path.startsWith('/nl') ? 'nl' : path.startsWith('/tr') ? 'tr' : 'en';
+    const search = page.getByRole('combobox', { name: copy(locale, 'common').palette.search });
+    await expect(search).toBeVisible();
+    return search;
+  };
+
+  test('a project command opens that project', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    const search = await openPalette(page, '/nl/about');
+    await search.fill('Quilyn');
+    await page.keyboard.press('Enter');
+    // It set a #project-… hash the app no longer reads, so nothing opened.
+    await expect(page).toHaveURL(/\/nl\/projects\/quilyn-exam-prep$/);
+    await expect(page.locator('[data-modal-content]')).toBeVisible();
+  });
+
+  test('with recent commands, one option is selected and Enter runs it', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    let search = await openPalette(page, '/about');
+    await search.fill('contact');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/contact$/);
+
+    // "Go to Contact" is now the first recent command, above the full list.
+    search = await openPalette(page, '/about');
+    await expect(page.locator('[role="option"][aria-selected="true"]')).toHaveCount(1);
+    await expect(page.locator('[role="option"][aria-selected="true"]')).toContainText(
+      'Go to Contact',
+    );
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/contact$/);
+  });
+
+  test('"Scroll to Top" scrolls the content panel back up', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    await page.goto('/resume');
+    const panel = page.locator('#page-content');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await panel.evaluate((el) => el.scrollTo({ top: 1500 }));
+    await expect.poll(() => panel.evaluate((el) => el.scrollTop)).toBeGreaterThan(500);
+    await page.keyboard.press('Control+k');
+    await page.getByRole('combobox', { name: 'Search commands' }).fill('scroll to top');
+    await page.keyboard.press('Enter');
+    await expect.poll(() => panel.evaluate((el) => el.scrollTop)).toBeLessThan(10);
+  });
+
+  test('a category filter command filters the projects', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    const search = await openPalette(page, '/about');
+    await search.fill('Filter: Test Automation');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/projects\?category=Test(%20|\+)Automation$/);
+    await expect(page.getByRole('link', { name: 'QASmartTestLab', exact: true })).toBeVisible();
+    // A project from another category is filtered out.
+    await expect(page.getByRole('link', { name: /^Quilyn/ })).toHaveCount(0);
+  });
 });
 
 test.describe('command palette search', () => {

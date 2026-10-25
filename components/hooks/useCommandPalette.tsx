@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Command, Page } from '../../types';
 import { PROJECTS } from '../../constants.tsx';
 import { cvFileName } from '../../src/utils/cv.ts';
+import { useLanguageNavigate } from './useLanguageNavigate.tsx';
 
 interface UseCommandPaletteProps {
   onNavigate: (page: Page) => void;
@@ -46,6 +47,7 @@ export const useCommandPalette = ({
   // Labels and descriptions follow the page language and are what Fuse
   // searches first; the English keywords below still match in every language.
   const { t } = useTranslation('common');
+  const navigate = useLanguageNavigate();
   const [recentCommandIds, setRecentCommandIds] = useState<string[]>(() => {
     try {
       const stored = localStorage.getItem(RECENT_COMMANDS_KEY);
@@ -61,7 +63,9 @@ export const useCommandPalette = ({
     if (isMobile) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      const contentEl = document.querySelector('.main-content') as HTMLElement;
+      // The desktop content panel (App.tsx); a ".main-content" class this
+      // looked for no longer exists, so the command did nothing on desktop.
+      const contentEl = document.getElementById('page-content');
       if (contentEl) {
         contentEl.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -254,11 +258,10 @@ export const useCommandPalette = ({
         ...project.technologies.map((t) => t.toLowerCase()),
         'project',
       ],
+      // The project's own URL opens its modal; the #project-… hash this set
+      // is no longer read, so the command used to open nothing.
       action: () => {
-        onNavigate('Projects');
-        setTimeout(() => {
-          window.location.hash = `project-${project.slug}`;
-        }, 100);
+        navigate(`/projects/${project.slug}`);
         onClose();
       },
     }));
@@ -272,10 +275,9 @@ export const useCommandPalette = ({
       icon: <i aria-hidden="true" className="fas fa-filter" />,
       category: 'Projects' as const,
       keywords: ['filter', category.toLowerCase(), 'category', 'projects'],
+      // Projects reads ?category= into its category filter.
       action: () => {
-        onNavigate('Projects');
-        // Note: This would require exposing filter state management
-        // For now, navigates to projects page
+        navigate(`/projects?category=${encodeURIComponent(category)}`);
         onClose();
       },
     }));
@@ -291,7 +293,7 @@ export const useCommandPalette = ({
     });
 
     return [...searchableInEnglish, ...projectCommands, ...categoryCommands];
-  }, [t, onNavigate, theme, toggleTheme, onClose, scrollToTop, copyToClipboard]);
+  }, [t, navigate, onNavigate, theme, toggleTheme, onClose, scrollToTop, copyToClipboard]);
 
   // Get recent commands based on stored IDs
   const recentCommands = useMemo(() => {

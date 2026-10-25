@@ -31,6 +31,17 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
     [searchQuery, searchCommands, commands],
   );
 
+  // Everything the arrow keys move through, in display order: the recent
+  // commands (shown only without a search), then the full list. One index
+  // space for both - they used to share indices, so two options were
+  // selected at once and Enter ran the full list's item, not the recent one.
+  const showRecent = !searchQuery && recentCommands.length > 0;
+  const recentCount = showRecent ? recentCommands.length : 0;
+  const navigableCommands = useMemo(
+    () => (showRecent ? [...recentCommands, ...filteredCommands] : filteredCommands),
+    [showRecent, recentCommands, filteredCommands],
+  );
+
   // Category grouping
   const groupedCommands = filteredCommands.reduce(
     (acc, cmd) => {
@@ -81,7 +92,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
       switch (e.key) {
         case 'ArrowDown':
           e.preventDefault();
-          setSelectedIndex((prev) => (prev < filteredCommands.length - 1 ? prev + 1 : prev));
+          setSelectedIndex((prev) => (prev < navigableCommands.length - 1 ? prev + 1 : prev));
           break;
         case 'ArrowUp':
           e.preventDefault();
@@ -89,8 +100,8 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
           break;
         case 'Enter':
           e.preventDefault();
-          if (filteredCommands[selectedIndex]) {
-            executeCommand(filteredCommands[selectedIndex]);
+          if (navigableCommands[selectedIndex]) {
+            executeCommand(navigableCommands[selectedIndex]);
           }
           break;
         case 'Escape':
@@ -99,7 +110,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
           break;
       }
     },
-    [filteredCommands, selectedIndex, executeCommand, onClose],
+    [navigableCommands, selectedIndex, executeCommand, onClose],
   );
 
   // Click outside to close
@@ -186,7 +197,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                 aria-controls="command-palette-list"
                 aria-autocomplete="list"
                 aria-activedescendant={
-                  filteredCommands[selectedIndex] ? `command-option-${selectedIndex}` : undefined
+                  navigableCommands[selectedIndex] ? `command-option-${selectedIndex}` : undefined
                 }
                 className="w-full bg-transparent pl-12 pr-4 py-4 text-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none"
                 autoComplete="off"
@@ -216,10 +227,10 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
               className="max-h-[60vh] overflow-y-auto overscroll-contain"
               style={{ scrollbarWidth: 'thin' }}
             >
-              {filteredCommands.length > 0 || (!searchQuery && recentCommands.length > 0) ? (
+              {filteredCommands.length > 0 || showRecent ? (
                 <div id="command-palette-list" role="listbox" aria-label={t('palette.list')}>
                   {/* Recent Commands Section */}
-                  {!searchQuery && recentCommands.length > 0 && (
+                  {showRecent && (
                     <div
                       role="group"
                       aria-label={t('palette.recent')}
@@ -235,7 +246,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                       {recentCommands.map((cmd, index) => (
                         <CommandItem
                           key={`recent-${cmd.id}`}
-                          id={`recent-option-${index}`}
+                          id={`command-option-${index}`}
                           command={cmd}
                           isSelected={selectedIndex === index}
                           index={index}
@@ -258,7 +269,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                             role="group"
                             aria-label={t(`palette.categories.${category}`)}
                             className={
-                              catIndex > 0 || (!searchQuery && recentCommands.length > 0)
+                              catIndex > 0 || showRecent
                                 ? 'border-t border-gray-200 dark:border-gray-700'
                                 : ''
                             }
@@ -270,7 +281,7 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({
                               {t(`palette.categories.${category}`)}
                             </div>
                             {categoryCommands.map((cmd) => {
-                              const globalIndex = filteredCommands.indexOf(cmd);
+                              const globalIndex = recentCount + filteredCommands.indexOf(cmd);
                               return (
                                 <CommandItem
                                   key={cmd.id}
