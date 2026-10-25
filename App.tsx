@@ -470,13 +470,7 @@ const AppContent: React.FC = () => {
               <div
                 className={`relative z-10 max-w-[1500px] mx-auto flex gap-6 lg:gap-8 ${isMobileView ? 'flex-col' : 'flex-row h-full'}`}
               >
-                <Sidebar
-                  theme={theme}
-                  toggleTheme={toggleTheme}
-                  activePage={activePage}
-                  onNavigate={() => {}} // Navigation handled by Links in Sidebar
-                  isMobileView={isMobileView}
-                />
+                <Sidebar theme={theme} toggleTheme={toggleTheme} isMobileView={isMobileView} />
 
                 <div
                   className={`relative flex-1 ${!isMobileView ? 'rounded-[2.5rem] bg-white/40 dark:bg-[#121212]/60 border border-white/60 dark:border-white/5 backdrop-blur-3xl shadow-[0_0_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_60px_-15px_rgba(0,0,0,0.5)]' : ''}`}
@@ -523,8 +517,6 @@ const AppContent: React.FC = () => {
 
               {isMobileView && (
                 <Navbar
-                  activePage={activePage}
-                  onNavigate={() => {}} // Handled by Links
                   onOpenCommandPalette={openCommandPalette}
                   onScrollToContent={scrollToTopAction}
                 />

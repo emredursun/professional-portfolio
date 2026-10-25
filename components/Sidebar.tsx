@@ -16,8 +16,6 @@ import { Page } from '../types.ts';
 interface SidebarProps {
   theme: string;
   toggleTheme: () => void;
-  activePage: Page; // Kept for interface compatibility if needed, but unused for nav state
-  onNavigate: (page: Page) => void; // Kept for interface compatibility
   isMobileView: boolean;
 }
 

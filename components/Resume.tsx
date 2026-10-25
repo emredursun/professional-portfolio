@@ -79,7 +79,7 @@ const SkillBar: React.FC<{ skill: Skill }> = ({ skill }) => (
     </div>
     <div className="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2.5 overflow-hidden shadow-inner">
       <div
-        className="bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple h-full rounded-full relative transition-all duration-1000 ease-out w-0 animate-[progressFill_1.2s_ease-out_forwards] shadow-[0_0_10px_rgba(234,179,8,0.4)] dark:shadow-[0_0_10px_rgba(6,182,212,0.4)]"
+        className="bg-gradient-to-r from-yellow-400 to-orange-500 dark:from-neon-cyan dark:to-neon-purple h-full rounded-full relative origin-left animate-progress-fill shadow-[0_0_10px_rgba(234,179,8,0.4)] dark:shadow-[0_0_10px_rgba(6,182,212,0.4)]"
         style={{ width: `${skill.level}%` }}
       ></div>
     </div>

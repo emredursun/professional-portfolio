@@ -106,6 +106,10 @@ export default {
         // color-contrast failed on the middle frames of the former fade-in-up).
         'slide-in-up': 'slideInUp 0.8s ease-out both',
         'page-enter': 'pageEnter 0.5s ease-out both',
+        // Referenced by Resume and Contact but never defined, so they did
+        // nothing; both scale, which needs no layout.
+        'progress-fill': 'progressFill 1.2s ease-out both',
+        'icon-pop-in': 'iconPopIn 0.4s ease-out both',
         'reveal-line': 'revealLine 0.6s ease-out both',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         shimmer: 'shimmer 2s linear infinite',
@@ -136,6 +140,14 @@ export default {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
+        },
+        progressFill: {
+          '0%': { transform: 'scaleX(0)' },
+          '100%': { transform: 'scaleX(1)' },
+        },
+        iconPopIn: {
+          '0%': { transform: 'scale(0.6)' },
+          '100%': { transform: 'scale(1)' },
         },
         pageEnter: {
           '0%': { transform: 'translateY(12px)' },

@@ -275,7 +275,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                     <div>
                       <p className="text-sm font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wide">
                         {service.certificationDate
-                          ? `Certified ${service.certificationDate}`
+                          ? t('services.details.certifiedDate', { date: service.certificationDate })
                           : t('services.details.yearsOfExperience')}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
@@ -423,7 +423,7 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                     <div className="mt-6 pt-5 border-t border-amber-300/60 dark:border-amber-700/40">
                       <h4 className="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
                         <i aria-hidden="true" className="fas fa-award text-amber-500"></i>
-                        Certification Path
+                        {t('services.details.certificationPath')}
                       </h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {service.certificateBadges.map((badge) => (

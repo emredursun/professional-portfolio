@@ -143,6 +143,8 @@
       "yearsOfExperience": "Years of Experience",
       "provenExpertise": "Proven expertise in production environments",
       "certification": "Certification",
+      "certificationPath": "Certification path",
+      "certifiedDate": "Certified {{date}}",
       "certifiedOn": "Certified: {{date}}",
       "validUntil": "Valid until {{date}}",
       "viewCertificate": "View certificate"

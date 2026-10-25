@@ -143,6 +143,8 @@
       "yearsOfExperience": "Jaar Ervaring",
       "provenExpertise": "Bewezen expertise in productieomgevingen",
       "certification": "Certificering",
+      "certificationPath": "Certificeringstraject",
+      "certifiedDate": "Gecertificeerd {{date}}",
       "certifiedOn": "Gecertificeerd: {{date}}",
       "validUntil": "Geldig tot {{date}}",
       "viewCertificate": "Certificaat bekijken"

@@ -143,6 +143,8 @@
       "yearsOfExperience": "Yıl Deneyim",
       "provenExpertise": "Prodüksiyon ortamlarında kanıtlanmış uzmanlık",
       "certification": "Sertifika",
+      "certificationPath": "Sertifikasyon yolu",
+      "certifiedDate": "Sertifika: {{date}}",
       "certifiedOn": "Sertifika tarihi: {{date}}",
       "validUntil": "{{date}} tarihine kadar geçerli",
       "viewCertificate": "Sertifikayı görüntüle"
