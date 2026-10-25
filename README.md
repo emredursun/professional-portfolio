@@ -25,7 +25,7 @@ Every pull request and every push to `main` runs [`quality.yml`](.github/workflo
 | Lint | ESLint with typescript-eslint, react-hooks (including the React Compiler rules) and jsx-a11y; any warning fails |
 | Formatting | Prettier, checked in CI (`npm run format:check`) |
 | Dead code | `knip`: no unused files, exports or dependencies |
-| Unit tests | 109 Vitest tests, coverage gate 80% lines / 75% branches on logic modules (currently 85% / 88%) |
+| Unit tests | 115 Vitest tests, coverage gate 80% lines / 75% branches on logic modules (currently 85% / 88%) |
 | End-to-end | 208 Playwright tests on desktop Chrome and Pixel 7, against the production build with production security headers |
 | Accessibility | axe WCAG 2.1 A/AA on every page and the 404 page in light and dark themes, plus the open command palette and project modal |
 | Lighthouse budgets | Desktop, median of 5 runs: performance ≥ 90, accessibility / best practices / SEO = 100, TBT ≤ 200 ms, LCP < 2 s, CLS < 0.1, scripts < 460 KB, at most 2 third-party requests. Mobile (Lighthouse's Moto G profile on slow 4G), median of 5 runs: performance ≥ 75 (/projects ≥ 65), accessibility / best practices / SEO = 100, TBT ≤ 300 ms (/projects ≤ 600 ms), LCP < 4 s, CLS < 0.1 |
