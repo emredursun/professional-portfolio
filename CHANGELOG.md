@@ -4,8 +4,17 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 
 ## [Unreleased]
 
+### Changed
+- Font Awesome ships only the 110 icons the site uses: 16 KB of fonts and 10 KB of CSS instead of 300 KB and 74 KB. `npm run generate:icons` rebuilds the subset, and a unit test fails if a new icon is not in it.
+- Plus Jakarta Sans is one variable font (27 KB for Latin) instead of six static weights a page loaded four or five of.
+- GSAP (44 KB gzip, loaded at start-up) is gone. The intro, the "5+ years" counter and the background parallax use `requestAnimationFrame`, the Web Animations API and a CSS transition; the parallax now stays still with reduced motion.
+
 ### Removed
 - Plausible analytics and the error reporting that sent to it. The site had no Plausible account, so every visit loaded its script and sent events that were thrown away. Pages now load nothing from third parties (an end-to-end test checks this), and the Content-Security-Policy no longer allows plausible.io.
+- An unused `public/404.html` that loaded Google Fonts and the Tailwind CDN; the build always replaced it.
+
+### Fixed
+- The mobile navigation labels were dimmed to 2.3:1 (light) and 3.3:1 (dark) contrast; they are now full contrast.
 
 ## 2026-10-25 — post-launch hardening
 
