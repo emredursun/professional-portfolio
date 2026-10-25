@@ -66,6 +66,7 @@ export default defineConfig(() => {
           'scripts/generate-agent-profile.js',
           'src/utils/errorReporting.ts',
           'src/utils/decor.ts',
+          'src/utils/tween.ts',
           'src/bootstrap.ts',
           'components/ErrorBoundary.tsx',
           'components/Preloader.tsx',
@@ -93,9 +94,9 @@ export default defineConfig(() => {
         },
         output: {
           // Matched on the resolved path, not the package entry: the object
-          // form only caught bare `react-dom` / `gsap`, so `react-dom/client`
-          // (most of React) and `gsap/ScrollTrigger` landed in the app chunk
-          // and were re-downloaded on every deploy.
+          // form only caught bare `react-dom`, so `react-dom/client` (most of
+          // React) landed in the app chunk and was re-downloaded on every
+          // deploy.
           manualChunks(id: string) {
             if (!id.includes('node_modules')) return undefined;
             if (
@@ -106,7 +107,6 @@ export default defineConfig(() => {
               return 'vendor-react';
             if (/[\\/]node_modules[\\/](framer-motion|motion-dom|motion-utils|lenis)[\\/]/.test(id))
               return 'vendor-ui';
-            if (/[\\/]node_modules[\\/]gsap[\\/]/.test(id)) return 'vendor-anim';
             return undefined;
           },
         },

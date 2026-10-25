@@ -36,7 +36,6 @@ Mobile Lighthouse is now about 84 (75–84 on /projects; was 57–58) and has it
 
 | Item | Expected effect |
 | --- | --- |
-| Use one animation library: GSAP **or** framer-motion (together about 90 KB gzip) | Less JavaScript before first render |
 | Prerender route bodies (Vite SSG) | Every route already ships its own prerendered head (link previews, metadata). Rendering the body too would let LCP stop waiting on the JS bundle |
 
 ## Milestone 4 — Content and assets

@@ -1,10 +1,9 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { localePrefix, useLanguageNavigate } from './hooks/useLanguageNavigate.tsx';
-import gsap from 'gsap';
-import { useGSAP } from './hooks/useGSAP.tsx';
+import { tween } from '../src/utils/tween.ts';
 import { Service } from '../types.ts';
 import { SERVICES, SERVICE_TRANSLATION_KEYS } from '../constants.tsx';
 import Tilt3D from './Tilt3D.tsx';
@@ -203,7 +202,7 @@ const ServiceItem: React.FC<{ service: ExtendedService; to: string }> = ({ servi
  * /about and /about/<slug> are one route, so React keeps this instance alive
  * when a visitor goes from an unknown slug's NotFound view back to /about.
  * Deciding NotFound here, outside the page, makes that switch remount
- * AboutPage: its scroll-reveal and GSAP hooks attach to refs that exist only
+ * AboutPage: its scroll-reveal and counter hooks attach to refs that exist only
  * once the page has rendered, and with an early return inside the page they
  * stayed bound to null - an invisible header and a "0+" counter.
  */
@@ -261,16 +260,15 @@ const AboutPage: React.FC = () => {
   // ScrollTrigger only fired when the counter happened to start above the
   // fold - below it (single-column layout) the counter stayed at "0+".
   const isCounterVisible = useScrollReveal(counterRef, { threshold: 0.5 });
-  useGSAP(() => {
+  useEffect(() => {
     if (!isCounterVisible) return;
-    const proxy = { val: 0 };
-    gsap.to(proxy, {
-      val: 5,
-      duration: 2,
-      ease: 'power2.out',
-      onUpdate: () => {
-        setStatsCount(Math.ceil(proxy.val));
-      },
+    return tween({
+      from: 0,
+      to: 5,
+      duration: 2000,
+      // Cubic ease-out (GSAP's power2.out), as before.
+      ease: (t) => 1 - (1 - t) ** 3,
+      onUpdate: (value) => setStatsCount(Math.ceil(value)),
     });
   }, [isCounterVisible]);
 

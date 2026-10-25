@@ -27,7 +27,6 @@ import '@fontsource/space-mono/700.css';
 // anyway - nothing is lost by not waiting for this file.
 void import('./styles/icons/icons.css');
 
-import gsap from 'gsap';
 import { MotionGlobalConfig } from 'framer-motion';
 import { installGlobalErrorReporting } from './utils/errorReporting.ts';
 
@@ -90,15 +89,13 @@ function recoverFromStaleChunks(): void {
 }
 
 /**
- * With "reduce motion" on, every animation lands on its end state at once:
- * GSAP timelines run 1000x faster (so onComplete callbacks such as the
- * preloader's still fire) and framer-motion skips animations entirely.
+ * With "reduce motion" on, framer-motion skips animations entirely (the
+ * site's own tweens in src/utils/tween.ts check the setting themselves).
  */
 function respectReducedMotion(): void {
   const query = window.matchMedia?.('(prefers-reduced-motion: reduce)');
   if (!query) return;
   const apply = () => {
-    gsap.globalTimeline.timeScale(query.matches ? 1000 : 1);
     // MotionConfig reducedMotion="user" (App.tsx) only drops transform and
     // layout animations; opacity fades still play. Skip them all.
     MotionGlobalConfig.skipAnimations = query.matches;
