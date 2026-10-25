@@ -76,6 +76,28 @@ describe('routeMeta', () => {
       about: { '@id': PERSON_ID },
     });
   });
+
+  // The site-wide graph listed three projects from 2020-2023 by hand; every
+  // project page now describes its own project, generated from the data.
+  it('describes each project on its own page, in the page language', () => {
+    for (const project of constants.PROJECTS) {
+      for (const lang of LANGUAGES) {
+        const page = meta(`/projects/${project.slug}`, lang);
+        const node = pageNode(page) as Record<string, unknown>;
+        const work = node.mainEntity as Record<string, unknown>;
+        expect(work, `${lang} ${project.slug}`).toMatchObject({
+          '@type': project.github ? 'SoftwareSourceCode' : 'CreativeWork',
+          '@id': `https://emredursun.nl/projects/${project.slug}#project`,
+          name: page.title.replace(/ \| Emre Dursun$/, ''),
+          description: page.description,
+          creator: { '@id': PERSON_ID },
+          dateCreated: String(project.year),
+        });
+        if (project.github) expect(work.codeRepository).toBe(project.github);
+      }
+    }
+    expect(pageNode(meta('/projects'))).not.toHaveProperty('mainEntity');
+  });
 });
 
 describe('index.html', () => {
