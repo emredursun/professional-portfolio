@@ -9,15 +9,12 @@
  *     script-src 'self' without 'unsafe-inline' or per-script hashes
  */
 
-// Self-hosted fonts. Each weight ships one CSS file whose @font-face rules use
-// unicode-range, so browsers only download the subsets a page actually needs
-// (latin-ext is required for Turkish and Dutch diacritics).
-import '@fontsource/plus-jakarta-sans/300.css';
-import '@fontsource/plus-jakarta-sans/400.css';
-import '@fontsource/plus-jakarta-sans/500.css';
-import '@fontsource/plus-jakarta-sans/600.css';
-import '@fontsource/plus-jakarta-sans/700.css';
-import '@fontsource/plus-jakarta-sans/800.css';
+// Self-hosted fonts. The @font-face rules use unicode-range, so browsers only
+// download the subsets a page actually needs (latin-ext is required for
+// Turkish and Dutch diacritics). Plus Jakarta Sans is the variable font: one
+// 27 KB file covers weights 200-800, where the six static weights were
+// 12 KB each and a page needed four or five of them.
+import '@fontsource-variable/plus-jakarta-sans/wght.css';
 import '@fontsource/space-mono/400.css';
 import '@fontsource/space-mono/700.css';
 
