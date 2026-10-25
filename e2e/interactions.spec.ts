@@ -577,12 +577,12 @@ test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
 });
 
 /**
- * The service panel and the project modal are fixed to the viewport and
- * scroll inside themselves. When a page's entrance animation left a
- * transform on its section, `position: fixed` resolved against that section
- * instead: the overlay grew as tall as the page, its sticky controls
- * scrolled away, and opening it from further down the page showed its empty
- * bottom.
+ * The service panel and the project modal open over the content card on
+ * desktop and over the screen on mobile, and scroll inside themselves. When
+ * a page's entrance animation left a transform on its section, they were
+ * positioned against that section instead: the overlay grew as tall as the
+ * page, its sticky controls scrolled away, and opening it from further down
+ * the page showed its empty bottom.
  */
 test.describe('overlays stay on screen', () => {
   const scrollPage = (page: import('@playwright/test').Page, top: number) =>
@@ -591,12 +591,18 @@ test.describe('overlays stay on screen', () => {
       window.scrollTo({ top: y });
     }, top);
 
-  /** The overlay fills the viewport vertically and starts at its top edge. */
+  /**
+   * The overlay spans its host top to bottom: the content card on desktop
+   * (the sidebar stays in view), the viewport on mobile.
+   */
   const expectOnScreen = async (page: import('@playwright/test').Page, selector: string) => {
     const box = await page.locator(selector).first().boundingBox();
-    const viewport = page.viewportSize();
-    expect(box?.y).toBeCloseTo(0, 0);
-    expect(Math.round(box?.height ?? 0)).toBe(viewport?.height);
+    const host = page.locator('[data-overlay-host]');
+    const frame = (await host.count())
+      ? await host.boundingBox()
+      : { y: 0, height: page.viewportSize()?.height ?? 0 };
+    expect(Math.round(box?.y ?? -1)).toBe(Math.round(frame?.y ?? 0));
+    expect(Math.round(box?.height ?? 0)).toBe(Math.round(frame?.height ?? 0));
   };
 
   test('the service panel opens at its top and keeps its controls in view', async ({ page }) => {
