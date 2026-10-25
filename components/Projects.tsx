@@ -165,10 +165,12 @@ const Projects: React.FC = () => {
   );
   // Following the link while already on /projects changes only the query, so
   // the component stays mounted: adopt the new category while rendering.
+  // When the query goes (Back, or the plain Projects link), its filter goes
+  // with it; otherwise the same URL showed a filtered list until a reload.
   const [appliedCategoryParam, setAppliedCategoryParam] = useState(validCategoryParam);
   if (validCategoryParam !== appliedCategoryParam) {
     setAppliedCategoryParam(validCategoryParam);
-    if (validCategoryParam) setSelectedCategories([validCategoryParam]);
+    setSelectedCategories(validCategoryParam ? [validCategoryParam] : []);
   }
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);

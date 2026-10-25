@@ -85,6 +85,26 @@ test.describe('command palette', () => {
     // A project from another category is filtered out.
     await expect(page.getByRole('link', { name: /^Quilyn/ })).toHaveCount(0);
   });
+
+  test('leaving the category URL shows all projects again', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    const quilyn = page.getByRole('link', { name: /^Quilyn/ });
+    await page.goto('/projects');
+    await expect(quilyn).toBeVisible();
+    const search = await openPalette(page, '/projects');
+    await search.fill('Filter: Test Automation');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\?category=/);
+    await expect(quilyn).toHaveCount(0);
+
+    // Back to /projects: the filter came from the URL, so it goes with it.
+    // It stayed, and the same URL showed 5 projects here but 12 on reload.
+    await page.goBack();
+    await expect(page).toHaveURL(/\/projects$/);
+    await expect(quilyn).toBeVisible();
+    await page.goForward();
+    await expect(quilyn).toHaveCount(0);
+  });
 });
 
 test.describe('command palette search', () => {
