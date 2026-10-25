@@ -234,6 +234,7 @@
         "Süre: 6 Ay",
         "Ekip: 5 Geliştirici, 3 Test Uzmanı",
         "30 Hikaye, 100+ Test Senaryosu",
+        "Uçtan Uca Agile Yaşam Döngüsü",
         "UI, API & DB Doğrulama"
       ],
       "challenge": "Sağlık sistemleri yüksek güvenilirlik ve veri gizliliği uyumluluğu gerektirir. Hastane portalının hasta verilerinin güvenliğini ve sistem kararlılığını sağlamak için UI, API ve veritabanı katmanlarında kapsamlı testlere ihtiyacı vardı.",
@@ -288,6 +289,240 @@
         "ads": {
           "title": "PPC & Sponsorlu Reklamlar",
           "description": "Ürün görünürlüğünü artırmak ve satış hızını ivmelendirmek için Amazon ve eBay'de sponsorlu reklam kampanyalarından yararlandım."
+        }
+      }
+    },
+    "quilyn-exam-prep": {
+      "title": "Quilyn — Sertifika Sınavı Hazırlığı",
+      "role": "Geliştirici ve Tek Sorumlu",
+      "team": "Bireysel Proje",
+      "description": "IT sertifika sınavları için ücretsiz ve çevrimdışı da çalışan bir çalışma uygulaması — Pega (PCBA, PCSA) ve Tricentis Tosca (AS1, AS2, API). Yapılandırılmış çalışma rehberleri, alıştırma testleri, süreli deneme sınavları ve aralıklı tekrar. Hiçbir bağımlılık olmadan geliştirildi ve PWA olarak kurulabiliyor.",
+      "detailedDescription": "Quilyn, Pega ve Tricentis Tosca sertifikalarına hazırlanmak için geliştirdiğim, hiçbir bağımlılığı olmayan bir çalışma platformu; aynı sınavlara çalışan başkaları da yararlansın diye açık kaynak yaptım. 5 öğrenme yolu ve 100'den fazla modül içeriyor; her modülde kavram kartları, çözümlü örnekler, sınav tuzaklarına dair uyarılar ve bir alıştırma testi var. Uygulama vanilla JavaScript ile yazıldı: ES6 Proxy tabanlı reaktif bir state store, hash tabanlı bir SPA yönlendiricisi ve tamamen JSON olarak yazılmış içerik — yeni modüller kod değişikliği gerekmeden kendiliğinden görünüyor. Tamamen çevrimdışı kullanım için service worker'lı, kurulabilir bir PWA olarak sunuluyor: kartlar için 5 kutulu Leitner aralıklı tekrar (SRS) motoru, alan bazında döküm veren tam süreli deneme sınavları, tüm modüllerde arama, klavyeyle çözülebilen testler, bir çalışma ısı haritası ve ilerlemenin cihazlar arasında JSON olarak yedeklenip geri yüklenmesi. Hesap yok, takip yok — tüm ilerleme tarayıcıda kalıyor.",
+      "metrics": [
+        "5 Yol · 100+ Modül",
+        "Aralıklı Tekrar (5 Kutulu Leitner)",
+        "Alan Bazında Süreli Deneme Sınavları",
+        "Çevrimdışı PWA · Sıfır Bağımlılık"
+      ],
+      "challenge": "Sertifika adayları dağınık PDF'ler, videolar ve testlerle uğraşıyor; çevrimdışı çalışabilecekleri, kendilerini sınayabilecekleri ve neyin akılda kaldığını görebilecekleri tek bir yer yok — üstelik sınav hazırlık araçlarının çoğu ücretli ya da hesap gerektiriyor.",
+      "solution": "Yapılandırılmış çalışma rehberlerini, alıştırma testlerini, tam deneme sınavlarını ve aralıklı tekrarı tek, sade bir arayüzde birleştiren çevrimdışı öncelikli bir uygulama tasarladım. İçerik düz JSON'da duruyor, böylece materyal koda dokunmadan büyüyebiliyor; service worker sayesinde de uygulamanın tamamı ilk ziyaretten sonra çevrimdışı kullanılabiliyor — ücretsiz, hesapsız ve gizliliğe saygılı.",
+      "features": {
+        "studyGuides": {
+          "title": "Çalışma Rehberleri ve Alıştırma Testleri",
+          "description": "Her modülde kavram kartları, benzetmeler, çözümlü örnekler ve sınav tuzağı uyarıları; ayrıca anında geri bildirim, ipuçları, açıklamalar ve klavye kısayolları olan tek ve çok seçimli testler."
+        },
+        "mockExams": {
+          "title": "Süreli Deneme Sınavları",
+          "description": "Gerçek %65 geçme notuyla 90 dakikalık tam sınavlar; canlı sayaç ve zayıf noktaları gösteren alan bazında puan dökümü."
+        },
+        "spacedRepetition": {
+          "title": "Aralıklı Tekrar",
+          "description": "Güven kalibrasyonlu 5 kutulu bir Leitner SRS motoru, en kolay unutacağın kartları öne çıkarıyor; böylece tekrar süren giderek daha verimli oluyor."
+        },
+        "offlinePwa": {
+          "title": "Çevrimdışı Öncelikli PWA",
+          "description": "Tamamen çevrimdışı kullanım için service worker'lı kurulabilir uygulama; Ctrl/⌘K ile arama, koyu ve açık tema, çalışma ısı haritası ve ilerlemenin JSON olarak yedeklenip geri yüklenmesi."
+        }
+      }
+    },
+    "pathforge-career-intelligence": {
+      "title": "PathForge — Kariyer Zekâsı Platformu",
+      "role": "Kurucu ve Full-Stack Yapay Zekâ Mühendisi",
+      "team": "Bireysel Proje",
+      "description": "Bir profesyonelin “Kariyer DNA'sını” çözen, yetkinlikleri, kariyer yolunu ve hedefleri gerçek fırsatlarla eşleştiren yapay zekâ destekli bir kariyer zekâsı platformu. Next.js 15, FastAPI ve Claude ile Voyage AI destekli, pgvector tabanlı bir anlamsal motorla geliştirildi.",
+      "detailedDescription": "PathForge, kurumsal düzeydeki kariyer zekâsını — Skills Graph'ler, pazar sinyalleri ve tahmine dayalı analizler — yalnız büyük şirketlerde çalışanlara değil, her profesyonele açıyor. Full-stack ve yapay zekâ odaklı bir ürün: Next.js 15 + TailwindCSS v4 ile yapılmış web deneyimi, Claude Sonnet 4 ve Gemini Flash üzerinde LLM hatlarını yöneten bir FastAPI (Python 3.12) servisine dayanıyor; anlamsal eşleştirme için Voyage AI v3 embedding'leri PostgreSQL 16 + pgvector'de tutuluyor. Redis, JWT kara listesini ve bir ARQ görev kuyruğunu yönetiyor; kimlik doğrulama access ve refresh JWT'leriyle durumsuz; sistemin tamamı GitHub Actions kalite kapılarından geçerek Vercel'e (web) ve Railway'e (API) çıkıyor. Sonuç, fırsatların kişinin etrafında kurulduğu bir kariyer platformu — ‘sıradan bir iş ilanı sitesi değil’.",
+      "metrics": [
+        "Anlamsal Eşleştirme (pgvector + Voyage AI)",
+        "LLM Hatları (Claude Sonnet 4 · Gemini Flash)",
+        "Next.js 15 + FastAPI Full-Stack",
+        "Vercel + Railway'e CI/CD"
+      ],
+      "challenge": "Kurumsal düzeydeki kariyer zekâsı — skills graph'ler, pazar sinyalleri, tahmine dayalı analizler — hep büyük kuruluşların içinde kaldı; geri kalan herkes ise kariyer yolunu ve hedefleri yok sayıp anahtar kelimeyle eşleştiren iş ilanı siteleriyle yetinmek zorunda.",
+      "solution": "Her profesyonelin ‘Kariyer DNA'sını’ modelleyen ve vektör aramayla güncel pazar sinyalleriyle eşleştiren, yapay zekâ odaklı bir platform geliştirdim. Bir FastAPI arka ucu çok modelli LLM hatlarını ve pgvector üzerindeki Voyage AI embedding'lerini yönetiyor; Next.js 15 ön yüzü deneyimi sunuyor — hepsi otomatik CI/CD kalite kapılarıyla yayına alınıyor.",
+      "features": {
+        "careerDna": {
+          "title": "Career DNA™ Motoru",
+          "description": "Yetkinlikleri, kariyer yolunu ve hedefleri anlamsal bir profil olarak modelliyor, ardından pgvector benzerlik aramasıyla fırsatlarla eşleştiriyor."
+        },
+        "aiPipelines": {
+          "title": "Çok Modelli Yapay Zekâ Hatları",
+          "description": "FastAPI, analiz, eşleştirme ve kişiye özel strateji için Claude Sonnet 4 ve Gemini Flash'ı Voyage AI v3 embedding'leriyle birlikte yönetiyor."
+        },
+        "architecture": {
+          "title": "Üretim Mimarisi",
+          "description": "Next.js 15 + TailwindCSS v4 ön yüz, PostgreSQL 16 + pgvector, kuyruk ve önbellek için Redis ve durumsuz JWT kimlik doğrulama."
+        },
+        "delivery": {
+          "title": "Otomatik Teslimat",
+          "description": "GitHub Actions kalite kapıları, her merge'de web uygulamasını Vercel'e, API'yi Railway'e gönderiyor."
+        }
+      }
+    },
+    "devran-ai-kit": {
+      "title": "Devran AI Kit — Trust-Grade Yapay Zekâ Çerçevesi",
+      "role": "Geliştirici ve Bakımcı",
+      "team": "Bireysel Proje",
+      "description": "Her yapay zekâ destekli IDE'yi sanal bir mühendislik ekibine dönüştüren, açık kaynak ve bağımlılıksız bir Trust-Grade yapay zekâ geliştirme çerçevesi — tek bir komutun arkasında 26 agent, 44 skill, 25 workflow ve 15 yönetişim kuralı.",
+      "detailedDescription": "Devran AI Kit, yapay zekâ destekli yazılım geliştirmeye güvenilir düzeyde yönetişim getiren, bağımlılıksız bir çalışma zamanı motoru (bir prompt koleksiyonu değil). 43 modüllü çekirdeğinde bir workflow durum makinesi, circuit breaker, error budget ve kendi kendini onaran CI var; Scope Filter'lar, Ethics Gate'ler, Rigor Profile'lar (strict/standard/minimal) ve Failure Template'lerle 7 aşamalı bir SDLC uyguluyor. Agent sistemi işi itibar puanlaması ve alana göre yönlendirmeyle 26 uzman agent arasında dağıtıyor; Instinct System (güven puanlı örüntü belleği) gerektiğinde anahtar kelimeyle yükleniyor. Sıfırdan ve mevcut projeler için hazırlanan onboarding workflow'ları ana dokümantasyonu, pazar araştırmasını ve mimari diyagramları üretiyor. MIT lisansıyla, 1.037 başarılı testle ve hiçbir harici bağımlılık olmadan yayımlandı; VS Code, Cursor ve diğer yapay zekâ IDE'lerine tek komutla kuruluyor.",
+      "metrics": [
+        "26 Agent · 44 Skill · 25 Workflow",
+        "1.037 Başarılı Test",
+        "Sıfır Harici Bağımlılık",
+        "7 Aşamalı Yönetilen SDLC"
+      ],
+      "challenge": "Yapay zekâ kod asistanları güçlü ama denetimsiz — tutarsız kalite, hesap verebilirlik yok ve proje bir oyuncak örnekten büyüdüğü anda dağılan ‘prompt koleksiyonları’.",
+      "solution": "Gerçek bir workflow durum makinesi, circuit breaker'lar ve error budget'larla bağımsız bir çalışma zamanı geliştirdim ve bunu 7 aşamalı, yönetilen bir SDLC'ye yerleştirdim. İtibar puanlı uzman agent'lar ve güven puanlı içgüdü belleği işi akıllıca yönlendiriyor; strict/standard/minimal rigor profile'ları da çıktıyı her proje ölçeğinde güvenilir tutuyor.",
+      "features": {
+        "runtime": {
+          "title": "Bağımlılıksız Çalışma Zamanı",
+          "description": "Workflow durum makinesi, circuit breaker, error budget ve kendi kendini onaran CI içeren 43 modüllü bir motor — harici paket yok."
+        },
+        "governance": {
+          "title": "Trust-Grade Yönetişim",
+          "description": "Scope Filter'lar, Ethics Gate'ler ve strict/standard/minimal Rigor Profile'larla 7 aşamalı bir SDLC üzerinden uygulanan 15 yönetişim kuralı."
+        },
+        "agents": {
+          "title": "Akıllı Agent Sistemi",
+          "description": "İtibar puanlaması, alana göre yönlendirme ve örüntü belleği olarak güven puanlı bir Instinct System'e sahip 26 uzman agent."
+        },
+        "onboarding": {
+          "title": "Tek Komutla Kurulum",
+          "description": "Yeni ve mevcut projeler için workflow'lar ana dokümanları, pazar araştırmasını ve mimari diyagramları hazırlıyor; her yapay zekâ IDE'sine anında kuruluyor."
+        }
+      }
+    },
+    "deelmarkt-marketplace": {
+      "title": "DeelMarkt — Güven Odaklı P2P Pazar Yeri",
+      "role": "Kurucu ve Baş Geliştirici",
+      "team": "Girişim Projesi",
+      "description": "Güveni merkeze alan bir Hollanda P2P pazar yeri — Marktplaats'a modern bir alternatif — emanet (escrow) ödemeler, doğrulanmış kullanıcılar ve güvenli kargo ile. Flutter, Supabase ve Mollie ile geliştirildi; GDPR, DSA ve PSD2 uyumu tasarımın parçası.",
+      "detailedDescription": "DeelMarkt (‘Deel wat je hebt’ — elindekini paylaş), Hollanda için güveni merkeze alan bir P2P pazar yeri; Marktplaats'a modern ve daha güvenli bir alternatif olarak konumlanıyor. Ürün güvenin yapı taşları üzerine kurulu: Mollie destekli emanet ödemeler, doğrulanmış kimlikler ve güvenli kargo; böylece alıcılar ve satıcılar gönül rahatlığıyla alışveriş yapabiliyor. TypeScript servis katmanıyla Supabase (PostgreSQL) üzerinde çalışan, platformlar arası bir Flutter uygulaması; en baştan Avrupa mevzuatına — GDPR, Dijital Hizmetler Yasası (DSA) ve PSD2 — göre tasarlandı, kendine ait bir tasarım sistemi ve 8 epic'lik bir yol haritası var. Şu anda halka açık lansmana doğru aktif geliştirme aşamasında.",
+      "metrics": [
+        "Emanet Ödemeler (Mollie)",
+        "Doğrulanmış Kullanıcılar ve Güvenli Kargo",
+        "Tasarımdan GDPR · DSA · PSD2 Uyumu",
+        "Platformlar Arası Flutter Uygulaması"
+      ],
+      "challenge": "Köklü ilan platformları alıcıları ve satıcıları korumasız bırakıyor — emanet ödeme yok, doğrulama zayıf ve dolandırıcılık bireyler arası ticarete olan güveni aşındırıyor.",
+      "solution": "Emanet ödemelerin, kimlik doğrulamanın ve güvenli kargonun sonradan eklenmediği, baştan yerleşik olduğu güven odaklı bir pazar yeri tasarladım. Supabase arka ucunda çalışan platformlar arası bir Flutter uygulaması hızlı ve tutarlı bir deneyim sunuyor; mimari ise GDPR, DSA ve PSD2 uyumunu ilk günden içeriyor.",
+      "features": {
+        "escrow": {
+          "title": "Emanet Korumalı Ödemeler",
+          "description": "Mollie destekli emanet sistemi, teslimat onaylanana kadar parayı tutuyor ve bireyler arası alışverişteki en büyük riski ortadan kaldırıyor."
+        },
+        "verifiedUsers": {
+          "title": "Doğrulanmış, Güvenilir Kullanıcılar",
+          "description": "Kimlik doğrulama ve güven sinyalleri pazar yerini güvenli tutuyor ve bir alışverişin iki tarafında da dolandırıcılığı azaltıyor."
+        },
+        "compliance": {
+          "title": "Tasarımdan Gelen Uyum",
+          "description": "Avrupa mevzuatına — GDPR, Dijital Hizmetler Yasası (DSA) ve PSD2 — göre ilk kod satırından itibaren tasarlandı."
+        },
+        "flutterApp": {
+          "title": "Platformlar Arası Flutter Uygulaması",
+          "description": "Supabase (PostgreSQL) arka ucunda tek bir Flutter kod tabanı, her cihazda tutarlı ve hızlı bir deneyim sunuyor."
+        }
+      }
+    },
+    "besync-trust-grade-ai": {
+      "title": "BeSync — Sosyal Senkronizasyon Protokolü",
+      "description": "The Focus Pulse, Anti-Dopamine Engineering ve gizliliği öne koyan tasarımıyla anlamlı bağlantılar kuran bir sosyal senkronizasyon protokolü. Çok agent'lı bilişsel mimariye sahip, Trust-Grade bir yapay zekâ platformuyla çalışıyor.",
+      "detailedDescription": "BeSync, yenilikçi özelliklerle anlamlı bağlantılar kuran bir sosyal senkronizasyon protokolü: The Focus Pulse (dikkatin biyolüminesans bir görselleştirmesi), Anti-Dopamine Engineering (sonsuz kaydırma yok, bağımlılık döngüsü yok) ve Privacy is Luxury (GDPR+ uyumu, yol haritasında Zero-Knowledge Proof'lar). Temel vaatleri: yalnız onayla otomatik yenileme (varsayılan KAPALI), Asla Reklam Yok ve Flex Premium (istediğin zaman duraklat). Platform, tasarladığım Trust-Grade bir yapay zekâ sistemiyle çalışıyor: 5 uzman agent (Persona, Matchmaking, Safety, UX, Growth + Alignment Engine), 3 bilişsel katman (Intelligence, Audit, Emotion) ve AB Yapay Zekâ Yasası, GDPR, OECD AI Principles, IEEE EAD ve ISO/IEC 42001 ile tam uyum.",
+      "metrics": [
+        "The Focus Pulse — Temel Özellik",
+        "5 Uzman Yapay Zekâ Agent'ı",
+        "3 Bilişsel Katman",
+        "5 Standartla Uyum"
+      ],
+      "features": {
+        "focusPulse": {
+          "title": "The Focus Pulse",
+          "description": "Dikkatin biyolüminesans bir görselleştirmesi — gizliliği zedelemeden gerçek ilgiyi gösteren temel özelliğimiz."
+        },
+        "antiDopamine": {
+          "title": "Anti-Dopamine Engineering",
+          "description": "Sonsuz kaydırma yok, bağımlılık döngüsü yok. Kullanıcıların zamanına ve ruh sağlığına saygı duyacak şekilde tasarlandı."
+        },
+        "privacy": {
+          "title": "Privacy is Luxury",
+          "description": "GDPR+ uyumu, yol haritasında Zero-Knowledge Proof'lar. Asla reklam yok, asla veri satışı yok."
+        },
+        "trustGradeAi": {
+          "title": "Trust-Grade Yapay Zekâ Mimarisi",
+          "description": "5 uzman agent, 3 bilişsel katman, L1–L5 etik eskalasyonu. Güven > Optimizasyon, Güvenlik > Büyüme."
+        }
+      },
+      "results": {
+        "promises": {
+          "metric": "Temel Vaatler",
+          "value": "3 Değişmez",
+          "description": "Yalnız onayla otomatik yenileme (varsayılan KAPALI), Asla Reklam Yok, Flex Premium"
+        },
+        "agents": {
+          "metric": "Yapay Zekâ Agent'ları",
+          "value": "5 Uzman",
+          "description": "Persona, Matchmaking, Safety, UX, Growth + Alignment Engine"
+        },
+        "compliance": {
+          "metric": "Uyum",
+          "value": "5 Standart",
+          "description": "AB Yapay Zekâ Yasası, GDPR, OECD, IEEE EAD, ISO/IEC 42001"
+        },
+        "certification": {
+          "metric": "Trust-Grade Sertifikası",
+          "value": "Öz Değerlendirme",
+          "description": "Sertifika No: BESYNC-TGAI-20260112-001"
+        }
+      }
+    },
+    "aegisqa": {
+      "title": "AegisQA — Yapay Zekâ Destekli Full-Stack Test Otomasyonu",
+      "role": "Lead Otomasyon Mimarı",
+      "team": "Bireysel Proje",
+      "duration": "Devam ediyor",
+      "description": "Geliştirme aşamasında bir full-stack test otomasyon platformu: tek bir monorepo'da, Docker'daki bir demo bankacılık uygulamasına karşı Playwright UI testleri ve REST Assured API testleri. Veritabanı doğrulaması, yapay zekâ destekli test üretimi ve CI/CD yol haritasında sırada.",
+      "detailedDescription": "AegisQA, monorepo olarak kurulmuş ve geliştirilmeye devam eden bir test otomasyon platformu. UI modülü TypeScript ile Playwright, page object'ler ve fixture'lar kullanıyor; API modülü Java ve TestNG ile REST Assured, tipli API istemcileri ve merkezi yapılandırma kullanıyor. İkisi de Docker'da çalışan yerel bir ParaBank bankacılık uygulamasına karşı koşuyor. Yol haritasında PostgreSQL üzerinde veritabanı doğrulaması, Google Gemini ile yapay zekâ destekli test üretimi ve raporlamalı CI/CD var.",
+      "metrics": [
+        "23 Otomatik Test (11 UI · 12 API)",
+        "Page Object Model ve Ortak Yapılandırma",
+        "Docker'daki ParaBank'a Karşı Çalışıyor",
+        "Yol Haritası: DB, Yapay Zekâ ile Üretim, CI/CD"
+      ],
+      "challenge": "UI, API ve veritabanı kontrolleri genellikle ayrı araçlarda ve depolarda duruyor; bu yüzden tek bir iş akışı (giriş yap, hesap aç, para gönder) parça parça doğrulanıyor, yapılandırma ve test verisi tekrarlanıyor.",
+      "solution": "Temeli ortak yapılandırma ve tiplerle tek bir monorepo olarak kurdum: page object'li ve fixture'lı bir Playwright + TypeScript UI modülü ve tipli istemcilerle bir REST Assured + TestNG API modülü; ikisi de Docker'daki yerel bir ParaBank'a karşı. UI suite'inin güvenilir çalışması için base URL çözümlemesini ve bekleme stratejisini düzelttim, ardından sonraki sprintleri planladım: veritabanı doğrulaması, yapay zekâ destekli test üretimi ve CI/CD.",
+      "features": {
+        "monorepo": {
+          "title": "UI ve API Tek Depoda",
+          "description": "Playwright (TypeScript) ve REST Assured (Java) suite'leri yapılandırmayı ve tipleri paylaşıyor ve aynı bankacılık akışlarını test ediyor."
+        },
+        "cleanArch": {
+          "title": "Temiz Mimari",
+          "description": "UI için page object'ler ve fixture'lar, API için tipli istemciler ve merkezi bir yapılandırma yöneticisi, ikisi için de ortak bir modül."
+        },
+        "environment": {
+          "title": "Tekrarlanabilir Ortam",
+          "description": "ParaBank ve PostgreSQL Docker Compose'da çalışıyor; böylece her test koşusu aynı yerel test edilen sistemle başlıyor."
+        },
+        "roadmap": {
+          "title": "Planlanan: Yapay Zekâ ve CI/CD",
+          "description": "Sonraki sprintler: veritabanı doğrulaması, Google Gemini ile yapay zekâ destekli test üretimi ve Allure raporlamalı GitHub Actions."
+        }
+      },
+      "results": {
+        "tests": {
+          "metric": "Otomatik testler",
+          "value": "23",
+          "description": "11 Playwright UI testi ve 12 REST Assured API testi"
+        },
+        "runtime": {
+          "metric": "UI suite süresi",
+          "value": "13 sn",
+          "description": "Tüm aktif UI testleri yerel Docker ortamında geçiyor"
+        },
+        "roadmap": {
+          "metric": "Yol haritası",
+          "value": "4 sprint",
+          "description": "Veritabanı doğrulaması, yapay zekâ destekli üretim, raporlamalı CI/CD, dokümantasyon"
         }
       }
     }

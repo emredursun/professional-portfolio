@@ -73,6 +73,27 @@ function urlFor(lang, route) {
   return pathname === '/' ? SITE_URL : `${SITE_URL}${pathname}`;
 }
 
+/**
+ * The project a /projects/<slug> page is about, as a schema.org node: source
+ * code when the repository is public, otherwise a creative work. One @id per
+ * project, shared by its three language versions.
+ */
+function projectNode(project, { title, description }) {
+  const live = project.url && project.url !== '#' ? project.url : null;
+  return {
+    '@type': project.github ? 'SoftwareSourceCode' : 'CreativeWork',
+    '@id': `${SITE_URL}/projects/${project.slug}#project`,
+    name: title.replace(/ \| Emre Dursun$/, ''),
+    description,
+    creator: { '@id': PERSON_ID },
+    dateCreated: String(project.year),
+    keywords: project.technologies.join(', '),
+    ...(project.image?.startsWith('/') ? { image: `${SITE_URL}${project.image}` } : {}),
+    ...(project.github ? { codeRepository: project.github } : {}),
+    ...(live && live !== project.github ? { sameAs: live } : {}),
+  };
+}
+
 function titleAndDescription({ route, lang, constants, locales }) {
   const [, section, slug] = route.split('/');
   const t = (ns, key) => lookup(locales, lang, ns, key);
@@ -127,6 +148,9 @@ export function routeMeta({ route, lang, constants, locales }) {
   }
 
   const isProfile = route === '' || route === '/about';
+  const [, section, slug] = route.split('/');
+  const project =
+    section === 'projects' && slug ? constants.PROJECTS.find((item) => item.slug === slug) : null;
   return {
     route,
     lang,
@@ -145,6 +169,7 @@ export function routeMeta({ route, lang, constants, locales }) {
       (other) => OG_LOCALES[other],
     ),
     pageType: isProfile ? 'ProfilePage' : 'WebPage',
+    ...(project ? { mainEntity: projectNode(project, { title, description }) } : {}),
   };
 }
 
@@ -179,6 +204,7 @@ export function pageNode(meta, { dateModified } = {}) {
     if (dateModified) node.dateModified = dateModified;
   } else {
     node.about = { '@id': PERSON_ID };
+    if (meta.mainEntity) node.mainEntity = meta.mainEntity;
   }
   return node;
 }

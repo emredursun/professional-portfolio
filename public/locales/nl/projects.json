@@ -234,6 +234,7 @@
         "Duur: 6 Maanden",
         "Team: 5 Devs, 3 Testers",
         "30 Stories, 100+ Testgevallen",
+        "Volledige Agile-Levenscyclus",
         "UI, API & DB Validatie"
       ],
       "challenge": "Gezondheidszorgsystemen eisen hoge betrouwbaarheid en naleving van gegevensprivacy. Het ziekenhuisportaal had uitgebreide tests nodig over UI, API en databaselagen om patiëntgegevensbeveiliging en systeemstabiliteit te waarborgen.",
@@ -288,6 +289,240 @@
         "ads": {
           "title": "PPC & Gesponsorde Advertenties",
           "description": "Gesponsorde advertentiecampagnes op Amazon en eBay ingezet om productexposure te verhogen en verkoopsnelheid te versnellen."
+        }
+      }
+    },
+    "quilyn-exam-prep": {
+      "title": "Quilyn — Voorbereiding op certificeringsexamens",
+      "role": "Creator & Sole Developer",
+      "team": "Solo Project",
+      "description": "Een gratis studie-app die ook offline werkt, voor IT-certificeringsexamens — Pega (PCBA, PCSA) en Tricentis Tosca (AS1, AS2, API). Gestructureerde studiegidsen, oefenquizzen, getimede proefexamens en herhaling met spaced repetition. Gebouwd zonder dependencies en te installeren als PWA.",
+      "detailedDescription": "Quilyn is een studieplatform zonder dependencies dat ik bouwde om me voor te bereiden op Pega- en Tricentis Tosca-certificeringen, en daarna open source maakte zodat anderen die voor dezelfde examens leren er ook iets aan hebben. Het omvat 5 leertrajecten en meer dan 100 modules, elk met conceptkaarten, uitgewerkte voorbeelden, waarschuwingen voor examenvalkuilen en een oefenquiz. De app is geschreven in vanilla JavaScript met een reactieve state store op ES6 Proxy, een hash-gebaseerde SPA-router, en content die volledig als JSON is geschreven — nieuwe modules verschijnen automatisch, zonder codewijzigingen. Hij wordt geleverd als installeerbare PWA met een service worker voor volledig offline gebruik, een Leitner-systeem met 5 vakken (SRS) voor flashcards, volledige getimede proefexamens met een uitsplitsing per domein, zoeken in alle modules, quizzen die met het toetsenbord werken, een heatmap van je studieactiviteit, en back-up en herstel van je voortgang als JSON tussen apparaten. Geen account, geen tracking — alle voortgang blijft in de browser.",
+      "metrics": [
+        "5 Trajecten · 100+ Modules",
+        "Spaced Repetition (Leitner, 5 vakken)",
+        "Getimede Proefexamens per Domein",
+        "Offline-First PWA · Zonder Dependencies"
+      ],
+      "challenge": "Kandidaten voor een certificering werken met verspreide pdf’s, video’s en quizzen, zonder één plek om offline te studeren, zichzelf te testen en te zien wat blijft hangen — en de meeste tools voor examenvoorbereiding zitten achter een betaalmuur of een account.",
+      "solution": "Eén offline-first app ontworpen die studiegidsen, oefenquizzen, volledige proefexamens en spaced repetition samenbrengt achter één overzichtelijke interface. De content staat in gewone JSON, zodat het materiaal kan groeien zonder de code aan te raken, en een service worker maakt de hele app na het eerste bezoek offline bruikbaar — gratis, zonder account en privacyvriendelijk.",
+      "features": {
+        "studyGuides": {
+          "title": "Studiegidsen & Oefenquizzen",
+          "description": "Conceptkaarten, analogieën, uitgewerkte voorbeelden en waarschuwingen voor examenvalkuilen per module, plus quizzen met één of meer antwoorden, directe feedback, hints, toelichtingen en sneltoetsen."
+        },
+        "mockExams": {
+          "title": "Getimede Proefexamens",
+          "description": "Volledige examens van 90 minuten met de echte slaaggrens van 65%, een lopende timer en een score per domein om zwakke punten te vinden."
+        },
+        "spacedRepetition": {
+          "title": "Herhaling met Spaced Repetition",
+          "description": "Een Leitner-systeem met 5 vakken en kalibratie van je zekerheid laat de kaarten zien die je het snelst vergeet, zodat herhalen steeds meer oplevert."
+        },
+        "offlinePwa": {
+          "title": "Offline-First PWA",
+          "description": "Een installeerbare app met een service worker voor volledig offline gebruik, zoeken met Ctrl/⌘K, een donker en licht thema, een studieheatmap en back-up en herstel van je voortgang als JSON."
+        }
+      }
+    },
+    "pathforge-career-intelligence": {
+      "title": "PathForge — Platform voor loopbaaninzicht",
+      "role": "Founder & Full-Stack AI Engineer",
+      "team": "Solo Project",
+      "description": "Een AI-platform voor loopbaaninzicht dat het “Career DNA” van een professional ontcijfert — en vaardigheden, loopbaan en ambities koppelt aan echte kansen. Gebouwd met Next.js 15, FastAPI en een semantische engine op pgvector, aangedreven door Claude en Voyage AI.",
+      "detailedDescription": "PathForge maakt loopbaaninzicht op enterpriseniveau — Skills Graphs, marktsignalen en voorspellende analyses — beschikbaar voor elke professional, niet alleen voor wie bij een groot bedrijf werkt. Het is een full-stack, AI-native product: een webervaring in Next.js 15 + TailwindCSS v4 op een FastAPI-service (Python 3.12) die LLM-pipelines over Claude Sonnet 4 en Gemini Flash aanstuurt, met Voyage AI v3-embeddings in PostgreSQL 16 + pgvector voor semantisch matchen. Redis verzorgt de JWT-blacklist en een ARQ-takenwachtrij, authenticatie is stateless met access- en refresh-JWT’s, en het hele systeem gaat via kwaliteitspoorten in GitHub Actions naar Vercel (web) en Railway (API). Het resultaat is een loopbaanplatform waarin kansen om de persoon heen worden gebouwd — ‘niet zomaar weer een vacaturebank’.",
+      "metrics": [
+        "Semantisch Matchen (pgvector + Voyage AI)",
+        "LLM-Pipelines (Claude Sonnet 4 · Gemini Flash)",
+        "Full-Stack met Next.js 15 + FastAPI",
+        "CI/CD naar Vercel + Railway"
+      ],
+      "challenge": "Loopbaaninzicht op enterpriseniveau — skills graphs, marktsignalen, voorspellende analyses — zat altijd opgesloten in grote organisaties, terwijl de rest het moet doen met vacaturebanken die op trefwoorden matchen en loopbaan en ambitie negeren.",
+      "solution": "Een AI-native platform gebouwd dat het ‘Career DNA’ van elke professional modelleert en dat met vector search matcht aan actuele marktsignalen. Een FastAPI-backend stuurt LLM-pipelines met meerdere modellen en Voyage AI-embeddings over pgvector aan, en een Next.js 15-frontend levert de ervaring — alles uitgerold via geautomatiseerde kwaliteitspoorten in CI/CD.",
+      "features": {
+        "careerDna": {
+          "title": "Career DNA™-Engine",
+          "description": "Modelleert vaardigheden, loopbaan en ambities als semantisch profiel en koppelt dat met similarity search in pgvector aan kansen."
+        },
+        "aiPipelines": {
+          "title": "AI-Pipelines met Meerdere Modellen",
+          "description": "FastAPI stuurt Claude Sonnet 4 en Gemini Flash aan met Voyage AI v3-embeddings voor analyse, matching en een persoonlijke strategie."
+        },
+        "architecture": {
+          "title": "Productiearchitectuur",
+          "description": "Frontend in Next.js 15 + TailwindCSS v4, PostgreSQL 16 + pgvector, Redis als wachtrij en cache, en stateless JWT-authenticatie."
+        },
+        "delivery": {
+          "title": "Geautomatiseerde Oplevering",
+          "description": "Kwaliteitspoorten in GitHub Actions zetten bij elke merge de webapp op Vercel en de API op Railway."
+        }
+      }
+    },
+    "devran-ai-kit": {
+      "title": "Devran AI Kit — Trust-Grade AI-framework",
+      "role": "Creator & Maintainer",
+      "team": "Solo Project",
+      "description": "Een open-source Trust-Grade AI-ontwikkelframework zonder dependencies dat elke AI-IDE verandert in een virtueel engineeringteam — 26 agents, 44 skills, 25 workflows en 15 governanceregels achter één commando.",
+      "detailedDescription": "Devran AI Kit is een runtime-engine zonder dependencies (geen verzameling prompts) die governance op trust-grade-niveau naar AI-ondersteunde softwareontwikkeling brengt. De kern van 43 modules bevat een workflow state machine, circuit breaker, error budget en zelfherstellende CI, en dwingt een SDLC in 7 fasen af met Scope Filters, Ethics Gates, Rigor Profiles (strict/standard/minimal) en Failure Templates. Het agentsysteem verdeelt werk over 26 gespecialiseerde agents met reputatiescores, routering per domein en een Instinct System (patroongeheugen met betrouwbaarheidsscores) dat op trefwoorden wordt geladen wanneer het nodig is. Workflows voor greenfield- en brownfieldprojecten genereren hoofddocumentatie, marktonderzoek en architectuurdiagrammen. Uitgebracht onder MIT met 1.037 geslaagde tests en zonder externe dependencies, en met één commando te installeren in VS Code, Cursor en andere AI-IDE’s.",
+      "metrics": [
+        "26 Agents · 44 Skills · 25 Workflows",
+        "1.037 Geslaagde Tests",
+        "Zonder Externe Dependencies",
+        "Beheerde SDLC in 7 Fasen"
+      ],
+      "challenge": "AI-codeassistenten zijn krachtig maar ongereguleerd — wisselende kwaliteit, geen verantwoording, en ‘promptverzamelingen’ die breken zodra een project groter wordt dan een speelvoorbeeld.",
+      "solution": "Een runtime zonder dependencies gebouwd met een echte workflow state machine, circuit breakers en error budgets, verpakt in een beheerde SDLC in 7 fasen. Gespecialiseerde agents met reputatiescores en een instinctgeheugen met betrouwbaarheidsscores verdelen het werk slim, terwijl de rigor profiles strict/standard/minimal de output op elke projectomvang betrouwbaar houden.",
+      "features": {
+        "runtime": {
+          "title": "Runtime zonder Dependencies",
+          "description": "Een engine van 43 modules met een workflow state machine, circuit breaker, error budget en zelfherstellende CI — zonder externe packages."
+        },
+        "governance": {
+          "title": "Trust-Grade Governance",
+          "description": "15 governanceregels, afgedwongen via een SDLC in 7 fasen met Scope Filters, Ethics Gates en de Rigor Profiles strict/standard/minimal."
+        },
+        "agents": {
+          "title": "Slim Agentsysteem",
+          "description": "26 gespecialiseerde agents met reputatiescores, routering per domein en een Instinct System met betrouwbaarheidsscores als patroongeheugen."
+        },
+        "onboarding": {
+          "title": "Onboarding met Eén Commando",
+          "description": "Workflows voor greenfield en brownfield zetten hoofddocumentatie, marktonderzoek en architectuurdiagrammen op; direct te installeren in elke AI-IDE."
+        }
+      }
+    },
+    "deelmarkt-marketplace": {
+      "title": "DeelMarkt — P2P-marktplaats waar vertrouwen voorop staat",
+      "role": "Founder & Lead Developer",
+      "team": "Startup Project",
+      "description": "Een Nederlandse peer-to-peer-marktplaats waar vertrouwen voorop staat — een modern alternatief voor Marktplaats — met escrowbetalingen, geverifieerde gebruikers en veilige verzending. Gebouwd met Flutter, Supabase en Mollie, en vanaf het ontwerp conform AVG, DSA en PSD2.",
+      "detailedDescription": "DeelMarkt (‘Deel wat je hebt’) is een peer-to-peer-marktplaats voor Nederland waar vertrouwen voorop staat, gepositioneerd als modern en veiliger alternatief voor Marktplaats. Het product is opgebouwd rond bouwstenen voor vertrouwen: escrowbetalingen via Mollie, geverifieerde identiteiten en veilige verzending, zodat kopers en verkopers met een gerust hart handelen. Het is een cross-platform Flutter-app op Supabase (PostgreSQL) met een servicelaag in TypeScript, vanaf de basis ontworpen voor Europese regelgeving — de AVG, de Digital Services Act (DSA) en PSD2 — met een eigen design system en een roadmap van 8 epics. Momenteel in actieve ontwikkeling, op weg naar de publieke lancering.",
+      "metrics": [
+        "Escrowbetalingen (Mollie)",
+        "Geverifieerde Gebruikers & Veilige Verzending",
+        "AVG · DSA · PSD2 by Design",
+        "Cross-Platform Flutter-App"
+      ],
+      "challenge": "Gevestigde advertentieplatforms laten kopers en verkopers kwetsbaar — geen escrow, zwakke verificatie en oplichting die het vertrouwen in handel tussen particulieren aantast.",
+      "solution": "Een marktplaats ontworpen waarin escrowbetalingen, identiteitsverificatie en veilige verzending vanaf het begin zijn ingebouwd, niet achteraf toegevoegd. Een cross-platform Flutter-app op een Supabase-backend biedt een snelle, consistente ervaring, en de architectuur houdt vanaf dag één rekening met AVG, DSA en PSD2.",
+      "features": {
+        "escrow": {
+          "title": "Betalingen met Escrow",
+          "description": "Escrow via Mollie houdt het geld vast tot de levering is bevestigd, en neemt zo het grootste risico van handel tussen particulieren weg."
+        },
+        "verifiedUsers": {
+          "title": "Geverifieerde, Betrouwbare Gebruikers",
+          "description": "Identiteitsverificatie en vertrouwenssignalen houden de marktplaats veilig en verminderen fraude aan beide kanten van een deal."
+        },
+        "compliance": {
+          "title": "Compliance by Design",
+          "description": "Ontworpen voor Europese regelgeving — AVG, Digital Services Act (DSA) en PSD2 — vanaf de eerste regel code."
+        },
+        "flutterApp": {
+          "title": "Cross-Platform Flutter-App",
+          "description": "Eén Flutter-codebase op een Supabase-backend (PostgreSQL) biedt een consistente, snelle ervaring op elk apparaat."
+        }
+      }
+    },
+    "besync-trust-grade-ai": {
+      "title": "BeSync — Protocol voor sociale synchronisatie",
+      "description": "Een protocol voor sociale synchronisatie dat betekenisvolle verbindingen creëert met The Focus Pulse, Anti-Dopamine Engineering en een ontwerp waarin privacy voorop staat. Aangedreven door een Trust-Grade AI-platform met een cognitieve architectuur van meerdere agents.",
+      "detailedDescription": "BeSync is een protocol voor sociale synchronisatie dat betekenisvolle verbindingen creëert met vernieuwende functies: The Focus Pulse (een bioluminescente visualisatie van aandacht), Anti-Dopamine Engineering (geen eindeloos scrollen, geen verslavingslussen) en Privacy is Luxury (AVG+-compliance, Zero-Knowledge Proofs op de roadmap). De kernbeloften zijn automatische verlenging alleen na opt-in (standaard UIT), Nooit Advertenties, en Flex Premium (altijd te pauzeren). Het platform draait op een Trust-Grade AI-systeem dat ik heb ontworpen, met 5 gespecialiseerde agents (Persona, Matchmaking, Safety, UX, Growth + Alignment Engine), 3 cognitieve lagen (Intelligence, Audit, Emotion) en volledige naleving van de EU AI Act, de AVG, de OECD AI Principles, IEEE EAD en ISO/IEC 42001.",
+      "metrics": [
+        "The Focus Pulse — Kernfunctie",
+        "5 Gespecialiseerde AI-Agents",
+        "3 Cognitieve Lagen",
+        "Naleving van 5 Standaarden"
+      ],
+      "features": {
+        "focusPulse": {
+          "title": "The Focus Pulse",
+          "description": "Een bioluminescente visualisatie van aandacht — onze kernfunctie, die echte betrokkenheid laat zien zonder de privacy aan te tasten."
+        },
+        "antiDopamine": {
+          "title": "Anti-Dopamine Engineering",
+          "description": "Geen eindeloos scrollen, geen verslavingslussen. Ontworpen met respect voor de tijd en de mentale gezondheid van gebruikers."
+        },
+        "privacy": {
+          "title": "Privacy is Luxury",
+          "description": "AVG+-compliance, Zero-Knowledge Proofs op de roadmap. Nooit advertenties, nooit verkoop van data."
+        },
+        "trustGradeAi": {
+          "title": "Trust-Grade AI-Architectuur",
+          "description": "5 gespecialiseerde agents, 3 cognitieve lagen, ethische escalatie van L1 tot L5. Vertrouwen > Optimalisatie, Veiligheid > Groei."
+        }
+      },
+      "results": {
+        "promises": {
+          "metric": "Kernbeloften",
+          "value": "3 Onveranderlijk",
+          "description": "Automatische verlenging alleen na opt-in (standaard UIT), Nooit Advertenties, Flex Premium"
+        },
+        "agents": {
+          "metric": "AI-Agents",
+          "value": "5 Gespecialiseerd",
+          "description": "Persona, Matchmaking, Safety, UX, Growth + Alignment Engine"
+        },
+        "compliance": {
+          "metric": "Compliance",
+          "value": "5 Standaarden",
+          "description": "EU AI Act, AVG, OECD, IEEE EAD, ISO/IEC 42001"
+        },
+        "certification": {
+          "metric": "Trust-Grade-Certificering",
+          "value": "Zelfbeoordeling",
+          "description": "Certificaat-ID: BESYNC-TGAI-20260112-001"
+        }
+      }
+    },
+    "aegisqa": {
+      "title": "AegisQA — AI-gedreven full-stack testautomatisering",
+      "role": "Lead Automation Architect",
+      "team": "Solo Project",
+      "duration": "Doorlopend",
+      "description": "Een full-stack testautomatiseringsplatform in ontwikkeling: Playwright UI-tests en REST Assured API-tests tegen een demo-bankapplicatie in Docker, in één monorepo. Databasevalidatie, AI-ondersteunde testgeneratie en CI/CD staan als volgende op de roadmap.",
+      "detailedDescription": "AegisQA is een testautomatiseringsplatform in ontwikkeling, opgezet als monorepo. De UI-module gebruikt Playwright met TypeScript, page objects en fixtures; de API-module gebruikt REST Assured met Java en TestNG, getypeerde API-clients en centrale configuratie. Beide draaien tegen een lokale ParaBank-bankapplicatie in Docker. De roadmap voegt databasevalidatie op PostgreSQL toe, AI-ondersteunde testgeneratie met Google Gemini, en CI/CD met rapportage.",
+      "metrics": [
+        "23 Geautomatiseerde Tests (11 UI · 12 API)",
+        "Page Object Model & Gedeelde Configuratie",
+        "Draait tegen ParaBank in Docker",
+        "Roadmap: DB, AI-Generatie, CI/CD"
+      ],
+      "challenge": "UI-, API- en databasecontroles zitten meestal in aparte tools en repositories, waardoor één bedrijfsproces (inloggen, een rekening openen, geld overmaken) in stukjes wordt gecontroleerd, met dubbele configuratie en testdata.",
+      "solution": "De basis gebouwd als één monorepo met gedeelde configuratie en types: een UI-module in Playwright + TypeScript met page objects en fixtures, en een API-module in REST Assured + TestNG met getypeerde clients, beide tegen een lokale ParaBank in Docker. De bepaling van de base-URL en de wachtstrategie gerepareerd zodat de UI-suite betrouwbaar draait, en daarna de volgende sprints gepland: databasevalidatie, AI-ondersteunde testgeneratie en CI/CD.",
+      "features": {
+        "monorepo": {
+          "title": "UI en API in Eén Repository",
+          "description": "De suites in Playwright (TypeScript) en REST Assured (Java) delen configuratie en types, en testen dezelfde bankprocessen."
+        },
+        "cleanArch": {
+          "title": "Clean Architecture",
+          "description": "Page objects en fixtures voor de UI, getypeerde API-clients en een centrale configuratiemanager voor de API, en een gedeelde module voor beide."
+        },
+        "environment": {
+          "title": "Reproduceerbare Omgeving",
+          "description": "ParaBank en PostgreSQL draaien in Docker Compose, zodat elke testrun begint met hetzelfde lokale systeem onder test."
+        },
+        "roadmap": {
+          "title": "Gepland: AI en CI/CD",
+          "description": "Volgende sprints: databasevalidatie, AI-ondersteunde testgeneratie met Google Gemini, en GitHub Actions met rapportage in Allure."
+        }
+      },
+      "results": {
+        "tests": {
+          "metric": "Geautomatiseerde tests",
+          "value": "23",
+          "description": "11 UI-tests in Playwright en 12 API-tests in REST Assured"
+        },
+        "runtime": {
+          "metric": "Looptijd UI-suite",
+          "value": "13 s",
+          "description": "Alle actieve UI-tests slagen tegen de lokale Docker-omgeving"
+        },
+        "roadmap": {
+          "metric": "Roadmap",
+          "value": "4 sprints",
+          "description": "Databasevalidatie, AI-ondersteunde generatie, CI/CD met rapportage, documentatie"
         }
       }
     }

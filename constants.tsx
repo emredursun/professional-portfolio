@@ -41,6 +41,12 @@ export const PROJECT_TRANSLATION_KEYS: Record<string, string> = {
   'banking-payment-automation': 'banking-payment-automation',
   'hospital-portal-testing': 'hospital-portal-testing',
   'ecommerce-sales-optimization': 'ecommerce-sales-optimization',
+  'quilyn-exam-prep': 'quilyn-exam-prep',
+  'pathforge-career-intelligence': 'pathforge-career-intelligence',
+  'devran-ai-kit': 'devran-ai-kit',
+  'deelmarkt-marketplace': 'deelmarkt-marketplace',
+  'besync-trust-grade-ai': 'besync-trust-grade-ai',
+  aegisqa: 'aegisqa',
 };
 
 // Status Badge Configuration

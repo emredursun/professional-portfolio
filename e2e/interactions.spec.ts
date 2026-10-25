@@ -219,10 +219,13 @@ test.describe('projects', () => {
     }).toPass();
   });
 
+  // The Dutch title: the card used to show the English one on /nl.
+  const quilynNl = copy('nl', 'projects').projects['quilyn-exam-prep'].title;
+
   test('a project card opens from the keyboard, keeping the language', async ({ page }) => {
     // The cards were clickable divs: no tab stop, so Enter did nothing.
     await page.goto('/nl/projects');
-    const card = page.getByRole('link', { name: 'Quilyn — Certification Exam Prep', exact: true });
+    const card = page.getByRole('link', { name: quilynNl, exact: true });
     await card.focus();
     await expect(card).toBeFocused();
     await page.keyboard.press('Enter');
@@ -258,7 +261,7 @@ test.describe('projects', () => {
 
   test('opening and closing a project on /nl/projects stays in Dutch', async ({ page }) => {
     await page.goto('/nl/projects');
-    await page.getByText('Quilyn — Certification Exam Prep').first().click();
+    await page.getByText(quilynNl).first().click();
     await expect(page).toHaveURL(/\/nl\/projects\/quilyn-exam-prep$/);
 
     await expect(async () => {
