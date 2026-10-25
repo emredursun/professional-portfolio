@@ -16,7 +16,7 @@ const NotFound: React.FC = () => {
   const prefix = localePrefix(pathname);
 
   return (
-    <section className="flex flex-col items-center justify-center text-center min-h-[60vh] px-6 animate-fade-in">
+    <section className="flex flex-col items-center justify-center text-center min-h-[60vh] px-6 animate-page-enter">
       <SEO title={t('notFound.title')} noindex />
       <p className="font-mono text-sm text-gray-600 dark:text-gray-400 mb-4" aria-hidden="true">
         404 · {pathname}

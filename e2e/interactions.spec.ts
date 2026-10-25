@@ -105,6 +105,56 @@ test.describe('command palette search', () => {
   });
 });
 
+test.describe('entrance animations keep text at full contrast', () => {
+  // The suite runs with reduced motion; these pages are checked as most
+  // visitors see them, with the entrance animations running.
+  test.use({ reducedMotion: 'no-preference', colorScheme: 'dark' });
+
+  /** True when no running animation on the matched elements changes opacity. */
+  const noOpacityAnimation = (page: import('@playwright/test').Page, selector: string) =>
+    page.$$eval(
+      selector,
+      (els) =>
+        els.length > 0 &&
+        els.every((el) =>
+          el
+            .getAnimations()
+            .every((a) =>
+              (a.effect as KeyframeEffect).getKeyframes().every((k) => !('opacity' in k)),
+            ),
+        ),
+    );
+
+  for (const { path, selector } of [
+    { path: '/about', selector: '[data-entrance="service"]' },
+    { path: '/projects', selector: '[data-entrance="project"]' },
+  ]) {
+    test(`${path} cards slide in without fading their text`, async ({ page }) => {
+      await page.goto(path);
+      await page.locator(selector).first().waitFor();
+      // Semi-transparent text in the animation's middle frames failed axe
+      // color-contrast; moving the card, not fading it, keeps the contrast.
+      expect(await noOpacityAnimation(page, selector)).toBe(true);
+      // Nor may a wrapper fade them: the whole About grid used to.
+      const effectiveOpacities = await page.$$eval(selector, (els) =>
+        els.map((el) => {
+          let opacity = 1;
+          for (let node: Element | null = el; node; node = node.parentElement) {
+            opacity *= Number(getComputedStyle(node).opacity);
+          }
+          return opacity;
+        }),
+      );
+      expect(effectiveOpacities.every((o) => o === 1)).toBe(true);
+      const results = await new AxeBuilder({ page })
+        .withRules(['color-contrast'])
+        .include(selector)
+        .analyze();
+      expect(results.violations.map((v) => v.nodes.length)).toEqual([]);
+    });
+  }
+});
+
 test.describe('localised controls', () => {
   test('buttons, the palette and service cards speak the page language', async ({
     page,

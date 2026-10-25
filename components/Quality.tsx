@@ -99,7 +99,7 @@ const Quality: React.FC = () => {
   }, []);
 
   return (
-    <section className="animate-fade-in">
+    <section className="animate-page-enter">
       <SEO title={t('quality.title')} description={t('quality.meta.description')} />
       <header className="mb-10">
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
@@ -185,7 +185,7 @@ const TerminalLines: React.FC<{ report: QualityReport }> = ({ report }) => {
 
   // Lines tick in one after another; with reduced motion they are simply there.
   const reveal = (index: number) => ({
-    className: 'motion-safe:opacity-0 motion-safe:animate-fade-in',
+    className: 'motion-safe:animate-reveal-line',
     style: { animationDelay: `${index * 120}ms` },
   });
   const summary = reveal(LINES.length + 1);

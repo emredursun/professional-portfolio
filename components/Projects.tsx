@@ -272,7 +272,7 @@ const Projects: React.FC = () => {
   if (isUnknownSlug) return <NotFound />;
 
   return (
-    <section className="animate-fade-in h-full flex flex-col">
+    <section className="animate-page-enter h-full flex flex-col">
       <SEO
         title={selectedProject ? translatedSelectedProject.title : t('title')}
         description={
@@ -471,7 +471,8 @@ const Projects: React.FC = () => {
           {filteredProjects.map((project, index) => (
             <div
               key={`${project.title}-${index}`}
-              className="animate-fade-in-up"
+              data-entrance="project"
+              className="animate-slide-in-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <ProjectCard

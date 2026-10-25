@@ -101,7 +101,12 @@ export default {
       animation: {
         blob: 'blob 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1)',
         'fade-in': 'fadeIn 0.8s ease-out forwards',
-        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+        // Entrances for content with text: they move or uncover it but never
+        // fade it, so text is never shown at reduced contrast (axe
+        // color-contrast failed on the middle frames of the former fade-in-up).
+        'slide-in-up': 'slideInUp 0.8s ease-out both',
+        'page-enter': 'pageEnter 0.5s ease-out both',
+        'reveal-line': 'revealLine 0.6s ease-out both',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         shimmer: 'shimmer 2s linear infinite',
         'bounce-custom': 'bounceCustom 1s infinite',
@@ -132,9 +137,17 @@ export default {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        fadeInUp: {
-          '0%': { opacity: '0', transform: 'translateY(30px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+        pageEnter: {
+          '0%': { transform: 'translateY(12px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+        slideInUp: {
+          '0%': { transform: 'translateY(30px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+        revealLine: {
+          '0%': { clipPath: 'inset(0 100% 0 0)' },
+          '100%': { clipPath: 'inset(0 0 0 0)' },
         },
         shimmer: {
           '0%': { transform: 'translateX(-100%)' },

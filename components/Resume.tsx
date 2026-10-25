@@ -122,7 +122,7 @@ const Resume: React.FC = () => {
   }, [t]);
 
   return (
-    <section className="animate-fade-in">
+    <section className="animate-page-enter">
       <SEO
         title={t('title')}
         description={t(
