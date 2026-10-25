@@ -102,7 +102,7 @@ A few decisions worth knowing about:
 
 ## Deployment and operations
 
-Pushes to `main` deploy to Firebase Hosting through [`deploy.yml`](.github/workflows/deploy.yml) after the quality gates pass. The workflow then smoke-tests the live site against `/version.json`. Pull requests get a preview channel.
+Pushes to `main` deploy to Firebase Hosting through [`deploy.yml`](.github/workflows/deploy.yml) after the quality gates pass. The workflow then smoke-tests the live site against `/version.json`. Pull requests run the same quality gates; a Firebase preview channel is deployed only for a PR labelled `preview`.
 
 How to deploy, check what is live, roll back, and respond to an alert: **[docs/RUNBOOK.md](docs/RUNBOOK.md)**. Release history: **[CHANGELOG.md](CHANGELOG.md)**.
 

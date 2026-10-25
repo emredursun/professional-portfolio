@@ -1,9 +1,13 @@
-# Pull requests: run every quality gate, then publish a Firebase preview
-# channel and comment its URL on the PR.
+# Pull requests: run every quality gate. A Firebase preview channel is
+# published (and its URL commented on the PR) only for a PR labelled
+# "preview" - deploying stays an explicit choice, not a side effect of
+# opening a PR.
 name: Preview
 
 on:
   pull_request:
+    # Defaults plus "labeled", so adding the label starts the preview.
+    types: [opened, synchronize, reopened, labeled]
 
 concurrency:
   group: preview-${{ github.event.pull_request.number }}
@@ -19,8 +23,11 @@ jobs:
   deploy-preview:
     name: Deploy preview channel
     needs: quality
-    # Secrets are not available to pull requests from forks.
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    # Opt-in through the "preview" label. Secrets are not available to pull
+    # requests from forks.
+    if: >-
+      ${{ contains(github.event.pull_request.labels.*.name, 'preview')
+      && github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
