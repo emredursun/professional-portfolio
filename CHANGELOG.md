@@ -4,6 +4,10 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 
 ## [Unreleased]
 
+### Added
+- Dutch and Turkish text for Quilyn, PathForge, Devran AI Kit, DeelMarkt, BeSync and AegisQA. Their cards, detail pages and shared-link previews were English on the Dutch and Turkish pages. A unit test fails if a project has no translation, or a list that differs in length from the English one.
+- Each project page describes its project in structured data (`SoftwareSourceCode` with its repository, or `CreativeWork`), generated from the same data as the page. The site-wide graph had a hand-kept list of three projects from 2020–2023 instead.
+
 ### Changed
 - Font Awesome ships only the 110 icons the site uses: 16 KB of fonts and 10 KB of CSS instead of 300 KB and 74 KB. `npm run generate:icons` rebuilds the subset, and a unit test fails if a new icon is not in it.
 - Plus Jakarta Sans is one variable font (27 KB for Latin) instead of six static weights a page loaded four or five of.
@@ -15,6 +19,9 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 
 ### Fixed
 - The mobile navigation labels were dimmed to 2.3:1 (light) and 3.3:1 (dark) contrast; they are now full contrast.
+- The service panel and the project modal stay on screen again: opened further down a page they showed their empty bottom, and their previous, next, share and close buttons scrolled away. The page entrances introduced in the post-launch hardening left a transform on each page section, and a transformed ancestor captures `position: fixed`. Both now open in a layer of their own over the content card (the whole screen on mobile), always at their top, and the entrances leave no transform behind.
+- With the command palette open over a project, Escape closed the project too and the arrow keys in the search field paged it; the service panel listened for Escape even while closed. An overlay's shortcuts now act only when it is on top. After the window crossed the desktop breakpoint, Tab no longer moved inside an open project.
+- The Medunna project showed four of its five highlights in Dutch and Turkish; "Full Agile Lifecycle" was missing.
 
 ## 2026-10-25 — post-launch hardening
 

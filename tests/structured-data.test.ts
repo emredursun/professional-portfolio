@@ -45,6 +45,10 @@ describe('site-wide structured data', () => {
     });
   });
 
+  it('leaves projects to their own pages instead of a hand-kept list', () => {
+    expect(graph.filter((node) => node['@type'] === 'CreativeWork')).toEqual([]);
+  });
+
   it('resolves every @id reference to a node in the graph', () => {
     const missing = references(graph).filter((id) => !byId.has(id));
     expect(missing).toEqual([]);
