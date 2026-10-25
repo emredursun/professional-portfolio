@@ -655,6 +655,63 @@ test.describe('overlays stay on screen', () => {
   });
 });
 
+test.describe('the page keeps its place behind an overlay', () => {
+  const pageScroll = (page: import('@playwright/test').Page) =>
+    page.evaluate(() =>
+      Math.max(document.getElementById('page-content')?.scrollTop ?? 0, window.scrollY),
+    );
+  const scrollPage = (page: import('@playwright/test').Page, top: number) =>
+    page.evaluate((y) => {
+      document.getElementById('page-content')?.scrollTo({ top: y });
+      window.scrollTo({ top: y });
+    }, top);
+
+  // Behind an open service the page scrolls to its top on the route change;
+  // closing hands focus back to the card, which brings the visitor back to
+  // it. These guard that round trip.
+  test('closing a service panel returns to where the visitor was', async ({ page }) => {
+    await page.goto('/about');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    const card = page.getByRole('link', {
+      name: copy('en', 'about').services.pegaPlatform.title,
+      exact: true,
+    });
+    await card.scrollIntoViewIfNeeded();
+    const before = await pageScroll(page);
+    expect(before).toBeGreaterThan(300);
+    await card.click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toBeHidden();
+    await expect.poll(() => pageScroll(page)).toBeGreaterThan(before - 50);
+  });
+
+  test('the next service opens at the top of the panel', async ({ page }) => {
+    await page.goto('/about/pega-platform-architecture');
+    const panel = page.getByRole('dialog');
+    await expect(panel).toBeVisible();
+    await panel.evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
+    await panel.getByRole('button', { name: copy('en', 'common').labels.nextService }).click();
+    await expect(page).not.toHaveURL(/pega-platform-architecture$/);
+    await expect.poll(() => panel.evaluate((el) => el.scrollTop)).toBe(0);
+  });
+
+  test('closing a project returns to where the visitor was', async ({ page }) => {
+    await page.goto('/projects');
+    await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
+    await scrollPage(page, 1200);
+    const card = page.getByRole('link', { name: 'QASmartTestLab', exact: true });
+    await card.scrollIntoViewIfNeeded();
+    const before = await pageScroll(page);
+    expect(before).toBeGreaterThan(300);
+    await card.click();
+    await expect(page.locator('[data-modal-content]')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('[data-modal-content]')).toBeHidden();
+    await expect.poll(() => pageScroll(page)).toBeGreaterThan(before - 50);
+  });
+});
+
 test.describe('focus trap across layout changes', () => {
   // Crossing the 1024px breakpoint moves an open overlay between the content
   // card's layer and <body>, so React rebuilds its DOM. The trap stayed bound
