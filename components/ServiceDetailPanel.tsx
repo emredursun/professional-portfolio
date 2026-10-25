@@ -346,6 +346,55 @@ const ServiceDetailPanel: React.FC<ServiceDetailPanelProps> = ({
                     </div>
                   </div>
 
+                  {/* Further credentials on the same card (Testim next to Tosca) */}
+                  {service.additionalCertificates?.map((cert) => (
+                    <div
+                      key={cert.certificateId}
+                      className="mt-6 pt-5 border-t border-amber-300/60 dark:border-amber-700/40 flex flex-col sm:flex-row gap-4 items-start"
+                    >
+                      <div className="flex-shrink-0 w-32 h-24 rounded-lg overflow-hidden border-2 border-amber-400 dark:border-amber-600 shadow-[0_0_15px_rgba(251,191,36,0.3)] dark:shadow-[0_0_20px_rgba(251,191,36,0.2)]">
+                        <img
+                          src={cert.image}
+                          alt={`${cert.name} certificate`}
+                          loading="lazy"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 space-y-2">
+                        <p className="text-sm font-bold text-gray-900 dark:text-white">
+                          {cert.name}
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <i aria-hidden="true" className="fas fa-check-circle text-green-500"></i>
+                          <span className="text-sm font-mono text-gray-700 dark:text-gray-300">
+                            {cert.certificateId}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <i
+                            aria-hidden="true"
+                            className="fas fa-calendar-check text-amber-500"
+                          ></i>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                            {t('services.details.certifiedOn', { date: cert.date })}
+                            {cert.validUntil &&
+                              ` · ${t('services.details.validUntil', { date: cert.validUntil })}`}
+                          </span>
+                        </div>
+                        <a
+                          href={cert.image}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300 inline-flex items-center gap-2"
+                        >
+                          <i aria-hidden="true" className="fas fa-external-link-alt text-xs"></i>
+                          <span>{t('services.details.viewCertificate')}</span>
+                          <span className="sr-only">{t('services.details.opensInNewTab')}</span>
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+
                   {/* Supporting Course Badges */}
                   {service.certificateBadges && service.certificateBadges.length > 0 && (
                     <div className="mt-6 pt-5 border-t border-amber-300/60 dark:border-amber-700/40">

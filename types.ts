@@ -23,11 +23,21 @@ export interface Service {
   certificateImage?: string; // Path to certificate image
   certificateUrl?: string; // Issuer's public verification page
   certificateBadges?: CertificateBadge[]; // Supporting course/module badges
+  additionalCertificates?: AdditionalCertificate[]; // Further credentials shown on the same card
 }
 
 export interface CertificateBadge {
   image: string;
   label: string;
+}
+
+/** A second credential on a service card (Testim next to Tosca). */
+export interface AdditionalCertificate {
+  name: string;
+  certificateId: string;
+  date: string; // e.g. "September 2026", like certificationDate
+  validUntil?: string;
+  image: string;
 }
 
 export interface TimelineItem {

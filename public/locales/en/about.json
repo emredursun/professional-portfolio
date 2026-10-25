@@ -128,7 +128,8 @@
         "Stateful test data management across distributed test runs (TDS)",
         "Risk-weighted, requirements-driven TestCase design",
         "Mobile automation on the Tricentis Mobile Agent, including image-based cases",
-        "Product Consultant certification exam passed at 93.3%"
+        "Product Consultant certification exam passed at 93.3%",
+        "Tricentis Testim Product Consultant (Advanced, September 2026): AI-driven web testing with smart locators and visual validation"
       ]
     },
     "details": {
@@ -143,6 +144,7 @@
       "provenExpertise": "Proven expertise in production environments",
       "certification": "Certification",
       "certifiedOn": "Certified: {{date}}",
+      "validUntil": "Valid until {{date}}",
       "viewCertificate": "View certificate"
     }
   },

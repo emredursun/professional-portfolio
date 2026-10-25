@@ -128,7 +128,8 @@
         "Stateful testdatabeheer over gedistribueerde testruns (TDS)",
         "Risicogewogen, requirements-gedreven TestCase-ontwerp",
         "Mobiele automatisering op de Tricentis Mobile Agent, inclusief image-based cases",
-        "Product Consultant-certificeringsexamen behaald op 93,3%"
+        "Product Consultant-certificeringsexamen behaald op 93,3%",
+        "Tricentis Testim Product Consultant (Advanced, september 2026): AI-gedreven webtesten met slimme locators en visuele validatie"
       ]
     },
     "details": {
@@ -143,6 +144,7 @@
       "provenExpertise": "Bewezen expertise in productieomgevingen",
       "certification": "Certificering",
       "certifiedOn": "Gecertificeerd: {{date}}",
+      "validUntil": "Geldig tot {{date}}",
       "viewCertificate": "Certificaat bekijken"
     }
   },

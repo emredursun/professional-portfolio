@@ -168,6 +168,16 @@ test.describe('services', () => {
     await expect(page).toHaveURL(/\/nl\/about\/tricentis-tosca-automation$/);
   });
 
+  test('the Tosca card also shows the Testim certificate', async ({ page }) => {
+    await page.goto('/about/tricentis-tosca-automation');
+    await expect(page.getByText('C26857')).toBeVisible();
+    await expect(
+      page.getByRole('link', {
+        name: new RegExp(copy('en', 'about').services.details.viewCertificate),
+      }),
+    ).toHaveAttribute('href', '/images/tricentis-testim-product-consultant-certificate.webp');
+  });
+
   test('a certification links to the issuer-hosted proof', async ({ page }) => {
     await page.goto('/about/test-automation-architecture');
     const verify = page.getByRole('link', {
