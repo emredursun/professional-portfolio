@@ -9,6 +9,11 @@ const FOCUSABLE = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(',');
 
+// Open traps, newest last. Only the newest handles Tab: with the command
+// palette open over a project modal, both traps pulled focus to themselves
+// on every Tab and it never moved on.
+let openTraps: readonly HTMLElement[] = [];
+
 /**
  * Keeps keyboard focus inside a modal while it is open (WCAG 2.4.3).
  *
@@ -16,7 +21,8 @@ const FOCUSABLE = [
  * already has it, such as the command palette's search field); Tab and
  * Shift+Tab then cycle through its focusable elements only. On closing,
  * focus returns to the element that had it before - usually the card or
- * button that opened the modal.
+ * button that opened the modal. When modals stack, the newest one owns Tab
+ * until it closes.
  */
 export function useFocusTrap(containerRef: RefObject<HTMLElement | null>, active: boolean): void {
   useEffect(() => {
@@ -35,8 +41,10 @@ export function useFocusTrap(containerRef: RefObject<HTMLElement | null>, active
       (focusables()[0] ?? container).focus();
     }
 
+    openTraps = [...openTraps, container];
+
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return;
+      if (e.key !== 'Tab' || openTraps[openTraps.length - 1] !== container) return;
       const items = focusables();
       if (items.length === 0) {
         e.preventDefault();
@@ -58,6 +66,7 @@ export function useFocusTrap(containerRef: RefObject<HTMLElement | null>, active
     document.addEventListener('keydown', onKeyDown);
     return () => {
       document.removeEventListener('keydown', onKeyDown);
+      openTraps = openTraps.filter((trap) => trap !== container);
       // Back to where the visitor was, if that element is still on the page.
       if (previouslyFocused?.isConnected) previouslyFocused.focus();
     };

@@ -521,6 +521,33 @@ test.describe('accessibility of overlays (WCAG 2.1 AA)', () => {
     expect(await tabStaysInside(page, '[role="dialog"]', 12)).toBe(true);
   });
 
+  test('the palette opened over a project modal moves Tab through its own controls', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, 'The palette opens with a keyboard shortcut.');
+    await page.goto('/projects/aegisqa');
+    await expect(page.locator('[data-modal-content]')).toBeVisible();
+    await page.keyboard.press('Control+k');
+    const palette = page.getByRole('dialog', { name: 'Command palette' });
+    const search = palette.getByRole('combobox', { name: 'Search commands' });
+    await expect(search).toBeFocused();
+    await search.fill('contact');
+    // Both traps handled every Tab: the modal pulled focus to itself and the
+    // palette pulled it back to the search field, so Tab never moved on.
+    await page.keyboard.press('Tab');
+    await expect(search).not.toBeFocused();
+    await expect(palette.locator(':focus')).toHaveCount(1);
+    await page.keyboard.press('Shift+Tab');
+    await expect(search).toBeFocused();
+    // Closing the palette hands Tab back to the project modal's trap.
+    await page.keyboard.press('Escape');
+    await expect(palette).toBeHidden();
+    const modal = page.getByRole('dialog');
+    expect(await tabStaysInside(page, '[role="dialog"]', 6)).toBe(true);
+    await expect(modal.locator(':focus')).toHaveCount(1);
+  });
+
   test('an open project modal has no axe violations', async ({ page }) => {
     await page.goto('/projects/aegisqa');
     const modal = page.locator('[data-modal-content]');
