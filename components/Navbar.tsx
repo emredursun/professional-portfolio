@@ -100,10 +100,12 @@ const NavButton: React.FC<{
               {page.icon}
             </span>
 
-            {/* Label with improved typography */}
+            {/* Full opacity: at 8px the dimmed labels fell to 2.3:1 (light)
+                and 3.3:1 (dark) against WCAG's 4.5:1. The active one stands
+                out by weight and colour instead. */}
             <span
               className={`text-[8px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap ${
-                isActive ? 'opacity-100 font-bold' : 'opacity-60 group-hover:opacity-80'
+                isActive ? 'font-bold' : ''
               }`}
             >
               {translatedLabel}
@@ -160,7 +162,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent
                   <span className="text-[16px] mb-[2px] z-10 transition-all duration-300 ease-out group-hover:scale-105 group-active:scale-95">
                     <i aria-hidden="true" className="fas fa-search" />
                   </span>
-                  <span className="text-[8px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap opacity-60 group-hover:opacity-80">
+                  <span className="text-[8px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap">
                     {t('nav.search')}
                   </span>
                 </button>
