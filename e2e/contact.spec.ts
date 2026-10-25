@@ -59,7 +59,7 @@ test.describe('contact form', () => {
     problems.splice(0, problems.length, ...problems.filter((p) => !p.includes('status of 500')));
   });
 
-  test('a rejected message reports a fixed code, never the provider text', async ({ page }) => {
+  test('a rejected message shows the error and keeps the message', async ({ page }) => {
     await page.route(WEB3FORMS, (route) =>
       route.fulfill({
         json: { success: false, message: 'Blocked sender ada@example.com token=abc123' },
@@ -69,19 +69,25 @@ test.describe('contact form', () => {
     await fillValidForm(page);
     await sendButton(page).click();
     await expect(page.getByRole('alert')).toContainText(contact.messages.error.title);
-
-    // The empty test stub of Plausible leaves every call on its queue.
-    const errors = await page.evaluate(() =>
-      (window.plausible?.q ?? [])
-        .filter((call) => Array.isArray(call) && call[0] === 'JS Error')
-        .map((call) => JSON.stringify(call)),
+    await expect(page.getByRole('textbox', { name: contact.form.message.label })).toHaveValue(
+      /Tosca assignment/,
     );
-    expect(errors).toEqual([
-      JSON.stringify([
-        'JS Error',
-        { props: { message: 'ContactSubmitError: rejected', source: 'promise' } },
-      ]),
-    ]);
+  });
+
+  test('the page loads nothing from third parties, analytics included', async ({
+    page,
+    baseURL,
+  }) => {
+    const own = new URL(baseURL ?? '').origin;
+    const thirdParty: string[] = [];
+    page.on('request', (request) => {
+      const url = new URL(request.url());
+      if (url.protocol.startsWith('http') && url.origin !== own) thirdParty.push(request.url());
+    });
+    await page.goto('/contact');
+    await page.waitForLoadState('networkidle');
+    // Plausible ran here without an account, so every visit called it for nothing.
+    expect(thirdParty).toEqual([]);
   });
 
   test('a request that never answers times out and keeps the message', async ({ page }) => {

@@ -23,7 +23,7 @@ const strictFirebase = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' https://plausible.io",
+            value: "default-src 'self'; script-src 'self'",
           },
         ],
       },
