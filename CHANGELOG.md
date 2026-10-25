@@ -4,7 +4,28 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 
 ## [Unreleased]
 
-The result of a production-readiness review (preflight score 36/100). On branch `feat/preflight-remediation`, not yet deployed.
+Post-launch hardening from the follow-up reviews. Branch `fix/post-launch-hardening`, not yet deployed.
+
+### Added
+- The Tricentis Testim Product Consultant certificate (Advanced, C26857, valid until September 2028) on the Tosca card, next to the Tosca certificate; its line in the Tosca benefits now shows in all three languages.
+
+### Fixed
+- The service detail panel is a named dialog; its previous, next, share and close buttons have names, and related projects, "Get in touch", certificates and course badges are real links.
+- Command palette: project commands open the project, "Scroll to Top" works on desktop, category filters filter (`/projects?category=…`), and with recent commands shown only one option is selected and Enter runs it.
+- Focus stays inside open modals (palette, project, service panel) and returns to where it was when they close.
+- Page, card and quality-report entrances move or uncover text but no longer fade it, so text is never shown at reduced contrast while they play.
+- The Resume skill bars and the contact success icon animate; their animations were referenced but never defined.
+- "Certification path" and "Certified <date>" are translated; dead props and an invisible, untranslated tooltip are gone.
+- Every text file is checked out with LF; on a Windows checkout with `core.autocrlf` the unit tests that load build scripts failed.
+
+### Changed
+- The portrait loads eagerly with high priority; the service worker no longer precaches the 110 KB social image.
+- `main` is protected (pull request with a green quality check, no force push) and production deploys wait for the owner's approval; pull requests deploy a preview only with the `preview` label. The runbook describes both and the rollback through a revert pull request.
+- Uptime also checks `/quality`, `/llms.txt` and `/resume.json`.
+
+## 2026-10-25 — production-readiness release
+
+The result of a production-readiness review (preflight score 36/100), merged in pull request #8 and deployed on 25 October 2026.
 
 ### Performance
 - Removed an unused, render-blocking `@babel/standalone` (2.8 MB) and the AI Studio import map from `<head>`.
@@ -82,7 +103,7 @@ The result of a production-readiness review (preflight score 36/100). On branch 
 ### Engineering
 - Strict TypeScript (React type definitions had never been installed).
 - Vitest unit tests: 129 tests, 86% line coverage on logic modules.
-- Playwright end-to-end suite: 166 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
+- Playwright end-to-end suite: 190 tests, desktop and mobile, with axe WCAG 2.1 AA checks in both themes, on open overlays and on the 404 page.
 - `knip` in CI: unused files, exports and dependencies fail the build.
 - ESLint (typescript-eslint, react-hooks with the React Compiler rules, jsx-a11y) and Prettier formatting in CI; any lint warning fails. Their first run found and fixed: project cards and gallery screenshots that the keyboard could not open, a conditionally called hook, a custom cursor 20 px off the pointer, particles retargeted on every render, and state that mirrored the URL.
 - CI quality gates in front of every deploy, Lighthouse budgets on desktop and mobile (median of 5 runs each), a production smoke test, uptime monitoring every 30 minutes, and `/version.json`.
