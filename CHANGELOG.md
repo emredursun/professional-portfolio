@@ -21,6 +21,7 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 - The mobile navigation labels were dimmed to 2.3:1 (light) and 3.3:1 (dark) contrast; they are now full contrast.
 - The service panel and the project modal stay on screen again: opened further down a page they showed their empty bottom, and their previous, next, share and close buttons scrolled away. The page entrances introduced in the post-launch hardening left a transform on each page section, and a transformed ancestor captures `position: fixed`. Both now open in a layer of their own over the content card (the whole screen on mobile), always at their top, and the entrances leave no transform behind.
 - With the command palette open over a project, Escape closed the project too and the arrow keys in the search field paged it; the service panel listened for Escape even while closed. An overlay's shortcuts now act only when it is on top. After the window crossed the desktop breakpoint, Tab no longer moved inside an open project.
+- Opening a service or a project no longer scrolls the page behind it, so closing it returns to the card that opened it; on a slow device the page could stay near the top. Closing a project from a filtered list (`/projects?category=…`) keeps the filter; it showed every project again.
 - The Medunna project showed four of its five highlights in Dutch and Turkish; "Full Agile Lifecycle" was missing.
 
 ## 2026-10-25 — post-launch hardening

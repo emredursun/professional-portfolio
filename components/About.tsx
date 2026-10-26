@@ -145,6 +145,9 @@ const ServiceItem: React.FC<{ service: ExtendedService; to: string }> = ({ servi
       <h4 className="min-h-[3.5rem] text-xl font-bold tracking-tight text-gray-900 dark:text-neon-text-primary mb-3 line-clamp-2 leading-7 group-hover:text-accent-yellow dark:group-hover:text-neon-cyan transition-all duration-300">
         <Link
           to={to}
+          // The panel opens over the page; the page stays where it is, so
+          // closing the panel returns to this card.
+          state={{ preserveScroll: true }}
           className="focus-visible:outline-none after:absolute after:inset-0 after:z-20 after:rounded-2xl focus-visible:after:ring-4 focus-visible:after:ring-inset focus-visible:after:ring-accent-yellow dark:focus-visible:after:ring-neon-cyan"
         >
           {service.title}
@@ -586,7 +589,7 @@ const AboutPage: React.FC = () => {
 
           // Use the index to find the service in the translatedServices array since we need the translated content
           const nextService = translatedServices[nextIndex];
-          navigate(`/about/${nextService.slug}`);
+          navigate(`/about/${nextService.slug}`, { state: { preserveScroll: true } });
         }}
       />
     </section>

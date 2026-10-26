@@ -134,6 +134,8 @@ const ProjectCard: React.FC<{ project: Project; to: string }> = ({ project, to }
         <h3 className="h-[3rem] text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-3 leading-tight line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-yellow-500 group-hover:to-orange-500 dark:group-hover:from-yellow-400 dark:group-hover:to-orange-500 transition-all duration-300">
           <Link
             to={to}
+            // The modal opens over the grid; the grid stays where it is.
+            state={{ preserveScroll: true }}
             className="focus-visible:outline-none after:absolute after:inset-0 after:z-30 after:rounded-3xl focus-visible:after:ring-4 focus-visible:after:ring-inset focus-visible:after:ring-yellow-400 dark:focus-visible:after:ring-neon-cyan"
           >
             {project.title}
@@ -183,7 +185,9 @@ const Projects: React.FC = () => {
   // Locale-aware: a plain useNavigate() sent /nl and /tr visitors who opened
   // or closed a project back to the English URLs.
   const navigate = useLanguageNavigate();
-  const { pathname } = useLocation();
+  // The query (?category=...) travels with a project's URL: dropping it on
+  // the way in cleared a filtered list behind the modal.
+  const { pathname, search } = useLocation();
   const isUnknownSlug = Boolean(slug) && !PROJECTS.some((p) => p.slug === slug);
 
   // Get translated projects
@@ -193,8 +197,10 @@ const Projects: React.FC = () => {
   const categoryRef = useRef<HTMLDivElement>(null);
   const technologyRef = useRef<HTMLDivElement>(null);
 
+  // Back to the same list at the same place: without preserveScroll the
+  // route change scrolled the grid to its top once the modal was gone.
   const handleCloseModal = () => {
-    navigate('/projects');
+    navigate(`/projects${search}`, { state: { preserveScroll: true } });
   };
 
   // Navigate to previous or next project
@@ -211,7 +217,7 @@ const Projects: React.FC = () => {
     }
 
     const newProject = PROJECTS[newIndex];
-    navigate(`/projects/${newProject.slug}`);
+    navigate(`/projects/${newProject.slug}${search}`);
   };
 
   // Extract unique categories and technologies
@@ -479,7 +485,7 @@ const Projects: React.FC = () => {
             >
               <ProjectCard
                 project={project}
-                to={`${localePrefix(pathname)}/projects/${project.slug}`}
+                to={`${localePrefix(pathname)}/projects/${project.slug}${search}`}
               />
             </div>
           ))}
