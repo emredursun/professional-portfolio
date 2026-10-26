@@ -28,6 +28,7 @@
     "generate:sitemap": "node scripts/generate-sitemap.js",
     "generate:profile-readme": "node scripts/generate-profile-readme.js",
     "generate:cv": "node scripts/generate-cv.js",
+    "generate:icons": "node scripts/subset-icons.js",
     "publish:profile-readme": "npm run generate:profile-readme && node scripts/publish-profile-readme.js",
     "optimize:images": "node scripts/optimize-images.js",
     "prebuild": "npm run generate:sitemap && npm run generate:profile-readme",
@@ -44,12 +45,10 @@
     "postbuild": "node scripts/write-version.js && node scripts/prerender-routes.js && node scripts/generate-agent-profile.js"
   },
   "dependencies": {
-    "@fontsource/plus-jakarta-sans": "^5.3.0",
+    "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
     "@fontsource/space-mono": "^5.3.0",
-    "@fortawesome/fontawesome-free": "^6.7.2",
     "framer-motion": "^12.23.24",
     "fuse.js": "^7.1.0",
-    "gsap": "^3.13.0",
     "i18next": "^25.7.3",
     "i18next-browser-languagedetector": "^8.2.0",
     "i18next-http-backend": "^4.0.4",
@@ -62,6 +61,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^9.39.5",
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "@jsonresume/schema": "^1.7.0",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/container-queries": "^0.1.1",
@@ -86,6 +86,7 @@
     "postcss": "^8.5.6",
     "prettier": "^3.9.10",
     "sharp": "^0.35.5",
+    "subset-font": "2.9.0",
     "tailwindcss": "^3.4.18",
     "typescript": "~5.8.2",
     "typescript-eslint": "^8.72.0",
@@ -94,5 +95,8 @@
   },
   "engines": {
     "node": ">=22"
+  },
+  "overrides": {
+    "harfbuzzjs": "1.6.2"
   }
 }

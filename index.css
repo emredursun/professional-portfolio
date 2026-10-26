@@ -80,8 +80,9 @@ html.dark ::-webkit-scrollbar-thumb {
 
 /*
  * Respect "reduce motion" (vestibular disorders, motion sensitivity).
- * CSS animations and transitions complete immediately; GSAP and framer-motion
- * are handled in src/bootstrap.ts and App.tsx respectively.
+ * CSS animations and transitions complete immediately; framer-motion is
+ * handled in src/bootstrap.ts and App.tsx, the site's own tweens in
+ * src/utils/tween.ts.
  */
 @media (prefers-reduced-motion: reduce) {
   *,

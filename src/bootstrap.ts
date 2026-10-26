@@ -9,27 +9,24 @@
  *     script-src 'self' without 'unsafe-inline' or per-script hashes
  */
 
-// Self-hosted fonts. Each weight ships one CSS file whose @font-face rules use
-// unicode-range, so browsers only download the subsets a page actually needs
-// (latin-ext is required for Turkish and Dutch diacritics).
-import '@fontsource/plus-jakarta-sans/300.css';
-import '@fontsource/plus-jakarta-sans/400.css';
-import '@fontsource/plus-jakarta-sans/500.css';
-import '@fontsource/plus-jakarta-sans/600.css';
-import '@fontsource/plus-jakarta-sans/700.css';
-import '@fontsource/plus-jakarta-sans/800.css';
+// Self-hosted fonts. The @font-face rules use unicode-range, so browsers only
+// download the subsets a page actually needs (latin-ext is required for
+// Turkish and Dutch diacritics). Plus Jakarta Sans is the variable font: one
+// 27 KB file covers weights 200-800, where the six static weights were
+// 12 KB each and a page needed four or five of them.
+import '@fontsource-variable/plus-jakarta-sans/wght.css';
 import '@fontsource/space-mono/400.css';
 import '@fontsource/space-mono/700.css';
 
-// Font Awesome Free 6.x - same major as the previous CDN copy (6.5.1), so
-// every `fas` / `far` / `fab` class name in the codebase keeps resolving.
+// Font Awesome Free 6.x, cut down to the icons the site uses (about 11 KB of
+// CSS and 16 KB of fonts instead of 74 KB and 300 KB): see
+// scripts/subset-icons.js. Every `fas` / `far` / `fab` class keeps working.
 // Loaded as a dynamic import so Vite emits it as its own stylesheet, injected
-// after start-up instead of blocking first paint (~100 KB of CSS). Icon fonts
-// use font-display: block, so icons were never visible before their font
-// arrived anyway - nothing is lost by not waiting for this file.
-void import('@fortawesome/fontawesome-free/css/all.min.css');
+// after start-up instead of blocking first paint. Icon fonts use
+// font-display: block, so icons were never visible before their font arrived
+// anyway - nothing is lost by not waiting for this file.
+void import('./styles/icons/icons.css');
 
-import gsap from 'gsap';
 import { MotionGlobalConfig } from 'framer-motion';
 
 /**
@@ -76,15 +73,13 @@ function recoverFromStaleChunks(): void {
 }
 
 /**
- * With "reduce motion" on, every animation lands on its end state at once:
- * GSAP timelines run 1000x faster (so onComplete callbacks such as the
- * preloader's still fire) and framer-motion skips animations entirely.
+ * With "reduce motion" on, framer-motion skips animations entirely (the
+ * site's own tweens in src/utils/tween.ts check the setting themselves).
  */
 function respectReducedMotion(): void {
   const query = window.matchMedia?.('(prefers-reduced-motion: reduce)');
   if (!query) return;
   const apply = () => {
-    gsap.globalTimeline.timeScale(query.matches ? 1000 : 1);
     // MotionConfig reducedMotion="user" (App.tsx) only drops transform and
     // layout animations; opacity fades still play. Skip them all.
     MotionGlobalConfig.skipAnimations = query.matches;

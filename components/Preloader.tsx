@@ -1,6 +1,5 @@
-import React, { useRef, useState } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from './hooks/useGSAP.tsx';
+import React, { useEffect, useEffectEvent, useRef, useState } from 'react';
+import { play, tween } from '../src/utils/tween.ts';
 
 interface PreloaderProps {
   /** Fired as the curtain starts lifting - mount the page behind it now. */
@@ -41,33 +40,45 @@ const Preloader: React.FC<PreloaderProps> = ({ onReveal, onComplete }) => {
   const textRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
 
-  useGSAP(() => {
-    const tl = gsap.timeline({ onComplete });
+  // The sequence starts once; the callbacks are read when each step ends.
+  const reveal = useEffectEvent(onReveal);
+  const complete = useEffectEvent(onComplete);
 
+  useEffect(() => {
+    let cancelled = false;
     // No fade-in: index.html ships an identical static copy of this screen
     // inside #root, painted before any JavaScript runs. Starting from the
     // same visible state lets React take over without a flicker.
-    tl.to(
-      {},
-      {
-        duration: 0.5,
-        onUpdate: function () {
-          setProgress(Math.round(this.progress() * 100));
-        },
+    const stopCounting = tween({
+      from: 0,
+      to: 100,
+      duration: 500,
+      onUpdate: (value) => setProgress(Math.round(value)),
+      onComplete: async () => {
+        await play(
+          textRef.current,
+          [
+            { transform: 'scale(1)', opacity: 1 },
+            { transform: 'scale(1.1)', opacity: 0 },
+          ],
+          // Cubic ease-in, then quintic ease-in-out below: GSAP's power2.in
+          // and power4.inOut, as the intro had them.
+          { duration: 300, easing: 'cubic-bezier(0.55, 0.055, 0.675, 0.19)' },
+        );
+        if (cancelled) return;
+        reveal();
+        await play(
+          containerRef.current,
+          [{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }],
+          { duration: 500, easing: 'cubic-bezier(0.86, 0, 0.07, 1)' },
+        );
+        if (!cancelled) complete();
       },
-    )
-      .to(textRef.current, {
-        scale: 1.1,
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power2.in',
-      })
-      .call(onReveal)
-      .to(containerRef.current, {
-        y: '-100%',
-        duration: 0.5,
-        ease: 'power4.inOut',
-      });
+    });
+    return () => {
+      cancelled = true;
+      stopCounting();
+    };
   }, []);
 
   return (

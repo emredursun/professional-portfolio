@@ -1,6 +1,5 @@
 import React from 'react';
 import { act, render, renderHook, screen, waitFor } from '@testing-library/react';
-import gsap from 'gsap';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import ErrorBoundary from '../components/ErrorBoundary.tsx';
 import Preloader, { shouldShowPreloader } from '../components/Preloader.tsx';
@@ -42,12 +41,7 @@ describe('shouldShowPreloader', () => {
 });
 
 describe('Preloader', () => {
-  afterEach(() => {
-    gsap.globalTimeline.timeScale(1);
-  });
-
   it('mounts the page as the curtain lifts, then removes itself', async () => {
-    gsap.globalTimeline.timeScale(20);
     const order: string[] = [];
     const { container } = render(
       <Preloader onReveal={() => order.push('reveal')} onComplete={() => order.push('complete')} />,

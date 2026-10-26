@@ -12,7 +12,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans Variable"', 'sans-serif'],
         mono: ['"Space Mono"', 'monospace'],
       },
       colors: {

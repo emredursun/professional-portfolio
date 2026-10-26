@@ -103,4 +103,7 @@ jobs:
             .lighthouseci
             .lighthouseci-mobile
             reports
+          # .lighthouseci* are hidden folders, which upload-artifact skips by
+          # default: the Lighthouse reports were never uploaded.
+          include-hidden-files: true
           retention-days: 14

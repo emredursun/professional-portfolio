@@ -8,9 +8,9 @@ afterEach(() => {
   cleanup();
 });
 
-// jsdom has no matchMedia, and GSAP's ScrollTrigger calls it while the module
-// registers itself - before any test can install a mock. Provide a neutral
-// default; individual tests still override it where the answer matters.
+// jsdom has no matchMedia, and modules read it while they load - before any
+// test can install a mock. Provide a neutral default; individual tests still
+// override it where the answer matters.
 if (typeof window !== 'undefined' && !window.matchMedia) {
   window.matchMedia = (query: string) =>
     ({

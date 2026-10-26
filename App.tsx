@@ -3,9 +3,6 @@ import { MotionConfig } from 'framer-motion';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getLanguageFromUrl } from './i18n.ts';
-import { useGSAP } from './components/hooks/useGSAP.tsx';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Sidebar from './components/Sidebar.tsx';
 import MainContent from './components/MainContent.tsx';
 import { OverlayHostContext } from './components/Portal.tsx';
@@ -302,42 +299,14 @@ const AppContent: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // GSAP Parallax Effects
-  const bgOrbsRef = useRef<HTMLDivElement>(null);
-  const floatingRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    const scroller = isMobileView ? window : contentRef.current;
-
-    if (bgOrbsRef.current) {
-      gsap.to(bgOrbsRef.current, {
-        y: 100,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: document.body,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 1,
-          scroller: scroller,
-        },
-      });
-    }
-
-    if (floatingRef.current) {
-      gsap.to(floatingRef.current, {
-        y: -150,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: document.body,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 1.5,
-          scroller: scroller,
-        },
-      });
-    }
-    ScrollTrigger.refresh();
-  }, [isMobileView]);
+  // Parallax for the two decorative layers, from the scroll progress the
+  // reading bar already tracks (window on mobile, the content panel on
+  // desktop): the orbs drift down 100px over the page, the floating shapes
+  // up 150px. The transition smooths it like GSAP's scrub did; reduced
+  // motion keeps both still.
+  const parallax = (distance: number) => ({
+    transform: `translate3d(0, ${(distance * readingProgress) / 100}px, 0)`,
+  });
 
   const scrollToTopAction = useCallback(() => {
     // Re-implement the exact logic but manually callable for the button
@@ -448,7 +417,10 @@ const AppContent: React.FC = () => {
                 </React.Suspense>
               )}
 
-              <div ref={floatingRef} className="absolute inset-0 pointer-events-none z-[1]">
+              <div
+                className="absolute inset-0 pointer-events-none z-[1] transition-transform duration-[1500ms] ease-out motion-reduce:!transform-none"
+                style={parallax(-150)}
+              >
                 {decorReady && (
                   <React.Suspense fallback={null}>
                     <FloatingElements />
@@ -457,8 +429,8 @@ const AppContent: React.FC = () => {
               </div>
 
               <div
-                ref={bgOrbsRef}
-                className="fixed inset-0 z-0 pointer-events-none overflow-hidden"
+                className="fixed inset-0 z-0 pointer-events-none overflow-hidden transition-transform duration-1000 ease-out motion-reduce:!transform-none"
+                style={parallax(100)}
               >
                 <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-yellow-400/10 dark:bg-yellow-600/5 blur-[130px] animate-blob"></div>
                 <div className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-400/10 dark:bg-blue-900/5 blur-[130px] animate-blob animation-delay-4000"></div>
