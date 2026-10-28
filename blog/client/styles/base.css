@@ -102,6 +102,12 @@ a:hover {
 .blog-name {
   color: var(--ink-2);
   font-size: 15px;
+  text-decoration-color: transparent;
+}
+
+.blog-name:hover,
+.blog-name:focus-visible {
+  text-decoration-color: var(--underline);
 }
 
 .site-nav {

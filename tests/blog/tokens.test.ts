@@ -83,3 +83,12 @@ describe('blog colour tokens', () => {
     expect(css).not.toContain('light-dark(');
   });
 });
+
+describe('closing band tokens', () => {
+  it.each([
+    ['light', light],
+    ['dark', dark],
+  ])('keeps the closing text and button at 4.5:1 or more (%s)', (_name, theme) => {
+    expect(contrast(theme['--closing-ink'], theme['--closing-bg'])).toBeGreaterThanOrEqual(4.5);
+  });
+});

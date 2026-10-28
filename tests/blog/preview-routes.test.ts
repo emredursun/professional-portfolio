@@ -91,3 +91,30 @@ describe('blog preview routes: cleanUrls', () => {
     expect(handle('/blog/nope.html').res.statusCode).toBe(404);
   });
 });
+
+describe('blog preview routes: other files', () => {
+  it('serves the feed and 404s a missing file', () => {
+    fs.writeFileSync(path.join(dist, 'blog', 'feed.xml'), '<feed/>');
+    expect(handle('/blog/feed.xml').next).toHaveBeenCalled();
+    expect(handle('/blog/missing.xml').res.statusCode).toBe(404);
+  });
+});
+
+describe('blog preview routes: the index', () => {
+  it('serves /blog from blog.html and redirects /blog/feed.xml/', () => {
+    fs.writeFileSync(path.join(dist, 'blog.html'), '<h1>Index</h1>');
+    expect(handle('/blog').next).toHaveBeenCalled();
+    const { res } = handle('/blog/feed.xml/');
+    expect(res.statusCode).toBe(301);
+    expect(res.headers.Location).toBe('/blog/feed.xml');
+  });
+});
+
+describe('blog preview routes: index trailing slash', () => {
+  it('redirects /blog/ to /blog and keeps the query, as Firebase does', () => {
+    const { res, next } = handle('/blog/?ref=feed');
+    expect(next).not.toHaveBeenCalled();
+    expect(res.statusCode).toBe(301);
+    expect(res.headers.Location).toBe('/blog?ref=feed');
+  });
+});

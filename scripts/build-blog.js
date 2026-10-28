@@ -23,27 +23,52 @@ import { loadPosts } from './blog/content.js';
 import { createHighlight } from './blog/highlight.js';
 import { readBlogAssets } from './blog/manifest.js';
 import { renderMarkdown } from './blog/markdown.js';
+import { renderFeed } from './blog/feed.js';
 import { renderArticlePage } from './blog/templates/article.js';
+import { byNewest } from './blog/templates/format.js';
+import { renderIndexPage } from './blog/templates/index.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-// The reading font's regular Latin woff2, the one the first paragraph needs.
-const LCP_FONT = /\/newsreader-latin-400-normal-[\w-]+\.woff2$/;
+// The Latin woff2 of each face a page's largest text uses (measured with
+// Lighthouse: the index's intro paragraph is Newsreader, an article's title
+// Bricolage). Each page preloads the one its LCP element needs.
+const PRELOAD_FONTS = {
+  reading: /\/newsreader-latin-400-normal-[\w-]+\.woff2$/,
+  display: /\/bricolage-grotesque-latin-wght-normal-[\w-]+\.woff2$/,
+};
 
-/** Writes inside dist/blog only; a slug is validated, this is the second guard. */
-export function writePage(distDir, slug, html) {
-  const blogDir = path.join(distDir, 'blog');
-  const target = path.resolve(blogDir, `${slug}.html`);
-  if (path.dirname(target) !== path.resolve(blogDir)) {
-    throw new Error(`blog: refusing to write outside dist/blog (${slug})`);
+// The only files the blog writes: dist/blog.html and dist/blog/<name>.html|xml.
+const OUTPUT = /^blog(?:\.html|\/[a-z0-9]+(?:-[a-z0-9]+)*\.(?:html|xml))$/;
+
+/**
+ * Writes one blog file. Slugs are validated when posts load; this is the
+ * second guard, so nothing can land outside dist/blog whatever the input.
+ * @param {string} distDir
+ * @param {string} file     POSIX path relative to distDir.
+ * @param {string} content
+ * @returns {string} file
+ */
+export function writeOutput(distDir, file, content) {
+  const target = path.resolve(distDir, file);
+  if (!OUTPUT.test(file) || !target.startsWith(path.resolve(distDir) + path.sep)) {
+    throw new Error(`blog: refusing to write "${file}" (only blog.html and blog/<name>)`);
   }
-  fs.mkdirSync(blogDir, { recursive: true });
-  fs.writeFileSync(target, html, 'utf8');
-  return `blog/${slug}.html`;
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.writeFileSync(target, content, 'utf8');
+  return file;
+}
+
+/** The two newest other posts, for the end of an article. */
+function relatedTo(post, posts) {
+  return [...posts]
+    .sort(byNewest)
+    .filter((other) => other.slug !== post.slug)
+    .slice(0, 2);
 }
 
 /**
  * @param {{ distDir: string, contentDir: string, themeInitPath: string, launched?: boolean }} options
- * @returns {Promise<string[]>} Written pages, relative to distDir, POSIX paths.
+ * @returns {Promise<string[]>} Written files, relative to distDir, POSIX paths.
  */
 export async function buildBlog({ distDir, contentDir, themeInitPath, launched = BLOG_LAUNCHED }) {
   const posts = loadPosts(contentDir);
@@ -61,12 +86,27 @@ export async function buildBlog({ distDir, contentDir, themeInitPath, launched =
     ...vite,
     themeInit: emitAsset(distDir, 'theme-init', 'js', fs.readFileSync(themeInitPath, 'utf8')),
     codeCss: codeRules ? emitAsset(distDir, 'code', 'css', codeRules) : undefined,
-    fontPreload: vite.fonts.find((font) => LCP_FONT.test(font)),
+    preload: Object.fromEntries(
+      Object.entries(PRELOAD_FONTS).map(([face, pattern]) => [
+        face,
+        vite.fonts.find((font) => pattern.test(font)),
+      ]),
+    ),
   });
 
-  return rendered.map((post) =>
-    writePage(distDir, post.slug, renderArticlePage({ post, assets, launched })),
+  const articles = rendered.map((post) =>
+    writeOutput(
+      distDir,
+      `blog/${post.slug}.html`,
+      renderArticlePage({ post, related: relatedTo(post, rendered), assets, launched }),
+    ),
   );
+  return [
+    writeOutput(distDir, 'blog.html', renderIndexPage({ posts: rendered, assets, launched })),
+    // The feed only after launch: noindex cannot reach XML (see head.js).
+    ...(launched ? [writeOutput(distDir, 'blog/feed.xml', renderFeed(rendered))] : []),
+    ...articles,
+  ];
 }
 
 /**
@@ -82,7 +122,7 @@ export async function main(root = ROOT) {
       themeInitPath: path.join(root, 'blog', 'client', 'theme-init.js'),
     });
     process.stdout.write(
-      `blog: ${written.length} page(s)${written.map((f) => `\n  ${f}`).join('')}\n`,
+      `blog: ${written.length} file(s)${written.map((f) => `\n  ${f}`).join('')}\n`,
     );
     return 0;
   } catch (error) {

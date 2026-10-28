@@ -29,6 +29,7 @@ jobs:
       ${{ contains(github.event.pull_request.labels.*.name, 'preview')
       && github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: read
       checks: write
@@ -59,11 +60,32 @@ jobs:
           set -euo pipefail
           base="${PREVIEW_URL%/}"
           for path in /about /nl /about/tricentis-tosca-automation /tr/projects/aegisqa /quality; do
-            html="$(curl -fsS "$base$path")"
+            html="$(curl -fsS --max-time 30 --retry 3 --retry-all-errors "$base$path")"
             grep -qF "<link rel=\"canonical\" href=\"https://emredursun.nl$path\"" <<<"$html" \
               || [ "$path" = "/nl" ] \
               || { echo "::error::$path is not served its prerendered head"; exit 1; }
           done
-          grep -qF '<html lang="nl"' <<<"$(curl -fsS "$base/nl")" || { echo "::error::/nl is not served nl.html"; exit 1; }
-          status="$(curl -sS -o /dev/null -w '%{http_code}' "$base/no-such-page-preview-check")"
+          grep -qF '<html lang="nl"' <<<"$(curl -fsS --max-time 30 --retry 3 --retry-all-errors "$base/nl")" || { echo "::error::/nl is not served nl.html"; exit 1; }
+          status="$(curl -sS --max-time 30 --retry 3 --retry-all-errors -o /dev/null -w '%{http_code}' "$base/no-such-page-preview-check")"
           [ "$status" = "404" ] || { echo "::error::Unknown URL returned $status, expected 404"; exit 1; }
+
+          # Blog (static pages beside the SPA; docs/adr/0001-static-blog-build.md).
+          # /blog must resolve to blog.html even with a blog/ folder next to it.
+          code() { curl -sS --max-time 30 --retry 3 --retry-all-errors -o /dev/null -w '%{http_code}' "$base$1"; }
+          shopt -s nullglob
+          pages=(dist/blog/*.html)
+          [ ${#pages[@]} -gt 0 ] || { echo "::error::No blog pages in dist/blog"; exit 1; }
+          post="/blog/$(basename "${pages[0]}" .html)"
+          for path in /blog "$post"; do
+            html="$(curl -fsS --max-time 30 --retry 3 --retry-all-errors "$base$path")"
+            grep -qF "<link rel=\"canonical\" href=\"https://emredursun.nl$path\"" <<<"$html" \
+              || { echo "::error::$path is not served its blog page"; exit 1; }
+            grep -qF 'content="noindex, nofollow"' <<<"$html" \
+              || { echo "::error::$path is indexable before launch"; exit 1; }
+          done
+          [ "$(code /blog/no-such-post-preview-check)" = "404" ] || { echo "::error::Unknown blog post is not a 404"; exit 1; }
+          [ "$(code "$post/")" = "301" ] || { echo "::error::$post/ does not redirect"; exit 1; }
+          [ "$(code /blog/)" = "301" ] || { echo "::error::/blog/ does not redirect"; exit 1; }
+          [ "$(code /blog/feed.xml)" = "404" ] || { echo "::error::The feed exists before launch"; exit 1; }
+          curl -sSI --max-time 30 --retry 3 --retry-all-errors "$base/blog/feed.xml" | grep -qi '^content-type: text/html' \
+            || { echo "::error::The pre-launch 404 for the feed is not served as HTML"; exit 1; }

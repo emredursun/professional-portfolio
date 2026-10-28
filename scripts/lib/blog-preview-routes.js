@@ -34,17 +34,27 @@ export function createBlogRouteHandler({ distDir, headers }) {
     };
     if (pathname.endsWith('/')) return redirect(pathname.replace(/\/+$/, ''));
 
-    // cleanUrls: /blog/x.html for an existing page redirects to /blog/x.
-    const clean = pathname.replace(/\.html$/, '');
-    let file;
-    try {
-      file = path.resolve(root, `.${decodeURIComponent(clean)}.html`);
-    } catch {
-      file = '';
+    /** A file inside dist, or '' for anything that would leave it or does not decode. */
+    const inDist = (relative) => {
+      try {
+        const file = path.resolve(root, `.${decodeURIComponent(relative)}`);
+        return file.startsWith(root + path.sep) && fs.existsSync(file) ? file : '';
+      } catch {
+        return '';
+      }
+    };
+
+    // Other files (the feed) are served as they are.
+    const extension = path.posix.extname(pathname);
+    if (extension && extension !== '.html') {
+      if (inDist(pathname)) return next();
+    } else {
+      // cleanUrls: /blog/x.html for an existing page redirects to /blog/x.
+      const clean = pathname.replace(/\.html$/, '');
+      const exists = Boolean(inDist(`${clean}.html`));
+      if (exists && clean !== pathname) return redirect(clean);
+      if (exists) return next();
     }
-    const exists = file.startsWith(root + path.sep) && fs.existsSync(file);
-    if (exists && clean !== pathname) return redirect(clean);
-    if (exists) return next();
 
     res.statusCode = 404;
     Object.entries(headers).forEach(([name, value]) => res.setHeader(name, value));

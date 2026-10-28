@@ -65,7 +65,7 @@ test.describe('blog article', () => {
     await expect(page.locator('script[type="module"]')).toHaveCount(1);
   });
 
-  test('passes axe in the light and dark themes', async ({ page }) => {
+  test('has no axe violations in the light and dark themes', async ({ page }) => {
     for (const colorScheme of ['light', 'dark'] as const) {
       await page.emulateMedia({ colorScheme });
       await page.goto(POST);
@@ -76,7 +76,7 @@ test.describe('blog article', () => {
     }
   });
 
-  test('passes axe with dark pinned while the system is light', async ({ page }) => {
+  test('has no axe violations with dark pinned while the system is light', async ({ page }) => {
     await page.emulateMedia({ colorScheme: 'light' });
     await page.addInitScript(() => {
       localStorage.setItem('theme', 'dark');
@@ -178,5 +178,111 @@ test.describe('blog paths behave like Firebase', () => {
     const slashed = await request.get(`${POST}/`, { maxRedirects: 0 });
     expect(slashed.status()).toBe(301);
     expect(slashed.headers().location).toBe(POST);
+  });
+});
+
+test.describe('blog index and feed', () => {
+  test('the index lists the posts and links to them', async ({ page }) => {
+    const response = await page.goto('/blog');
+    expect(response?.status()).toBe(200);
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      'content',
+      'noindex, nofollow',
+    );
+    await page.locator(`a[href="${POST}"]`).first().click();
+    await expect(page).toHaveURL(new RegExp(`${POST}$`));
+  });
+
+  test('the index has no axe violations in any theme and fits the screen', async ({ page }) => {
+    for (const colorScheme of ['light', 'dark'] as const) {
+      await page.emulateMedia({ colorScheme });
+      await page.goto('/blog');
+      const results = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+        .analyze();
+      expect(results.violations, colorScheme).toEqual([]);
+    }
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.evaluate(() => {
+      localStorage.setItem('theme', 'dark');
+      localStorage.setItem('userToggledTheme', 'true');
+    });
+    await page.reload();
+    await expect(page.locator('html')).toHaveClass(/\bdark\b/);
+    const pinned = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    expect(pinned.violations, 'pinned dark').toEqual([]);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
+  test('there is no feed before launch, and no page links to one', async ({ page, request }) => {
+    expect((await request.get('/blog/feed.xml')).status()).toBe(404);
+    await page.goto('/blog');
+    await expect(page.locator('link[type="application/atom+xml"]')).toHaveCount(0);
+    await expect(page.locator('a[href="/blog/feed.xml"]')).toHaveCount(0);
+  });
+});
+
+test.describe('stale evidence', () => {
+  test('is flagged on the index and the article once the re-check date passes', async ({
+    page,
+  }) => {
+    await page.clock.setFixedTime(new Date('2030-01-01T12:00:00Z'));
+    for (const url of ['/blog', POST]) {
+      await page.goto(url);
+      await expect(page.locator('.stale-note').first(), url).toBeVisible();
+    }
+  });
+
+  test('is not flagged while the evidence is current', async ({ page }) => {
+    await page.clock.setFixedTime(new Date('2026-11-01T12:00:00Z'));
+    for (const url of ['/blog', POST]) {
+      await page.goto(url);
+      await expect(page.locator('.stale-note').first(), url).toBeHidden();
+    }
+  });
+});
+
+test.describe('with more than one post', () => {
+  test('the index lists short notes with their status icon', async ({ page }) => {
+    await page.goto('/blog');
+    const notes = page.getByRole('region', { name: 'Short notes' });
+    await expect(notes.getByRole('link')).not.toHaveCount(0);
+    await expect(notes.locator('svg.status-icon-hypothesis')).not.toHaveCount(0);
+  });
+
+  test('articles end with links to other posts, and the hero links the newest', async ({
+    page,
+  }) => {
+    await page.goto(POST);
+    const more = page.getByRole('region', { name: 'Keep reading' });
+    await expect(more.getByRole('link')).not.toHaveCount(0);
+    await page.goto('/blog');
+    await page.getByRole('link', { name: 'Read the latest' }).click();
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page).toHaveURL(/\/blog\/[a-z0-9-]+$/);
+  });
+});
+
+test.describe('table of contents placement', () => {
+  test('stays in view while reading on wide screens, and sits above the text on phones', async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto(POST);
+    const toc = page.getByRole('navigation', { name: 'On this page' });
+    await page.locator('.ai-note').scrollIntoViewIfNeeded();
+    const position = await toc.evaluate((el) => getComputedStyle(el).position);
+    if (isMobile) {
+      expect(position).toBe('static');
+    } else {
+      expect(position).toBe('sticky');
+      await expect(toc).toBeInViewport();
+    }
   });
 });

@@ -1,5 +1,5 @@
 /**
- * The <head> of a blog page: metadata, structured data and assets.
+ * The <head> shared by every blog page: metadata, structured data, assets.
  *
  * Order matters. The theme bootstrap is a small blocking classic script and
  * comes before the stylesheets, so the right theme class is on <html> before
@@ -8,31 +8,13 @@
  */
 
 import { markup, raw } from '../html.js';
-import { PERSON_ID, SOCIAL_IMAGE, WEBSITE_ID } from '../../lib/route-meta.js';
+import { SOCIAL_IMAGE } from '../../lib/route-meta.js';
 import { BLOG_NAME } from '../config.js';
-import { postUrl } from './format.js';
+import { FEED_PATH } from './format.js';
 
 /** JSON for a <script> block: "<" escaped so text can never close the element. */
 function jsonForScript(data) {
   return JSON.stringify(data).replace(/</g, '\\' + 'u003c');
-}
-
-function structuredData(post) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    '@id': `${postUrl(post)}#article`,
-    headline: post.title,
-    description: post.description,
-    datePublished: post.publishedAt,
-    dateModified: post.updatedAt ?? post.publishedAt,
-    inLanguage: post.lang,
-    mainEntityOfPage: postUrl(post),
-    image: SOCIAL_IMAGE.url,
-    author: { '@id': PERSON_ID },
-    publisher: { '@id': PERSON_ID },
-    isPartOf: { '@id': WEBSITE_ID },
-  };
 }
 
 /**
@@ -42,31 +24,70 @@ function structuredData(post) {
 const line = (condition, content) => (condition ? markup`${content()}\n` : '');
 
 /**
- * @param {{ post: object, assets: object, launched: boolean }} options
+ * @typedef {object} PageMeta
+ * @property {string} title         Full <title>, already including the blog name.
+ * @property {string} heading       Title for sharing (og:title).
+ * @property {string} description
+ * @property {string} url           Canonical URL.
+ * @property {'article' | 'website'} ogType
+ * @property {string} [published]   YYYY-MM-DD, articles only.
+ * @property {string} [modified]    YYYY-MM-DD, articles only.
+ * @property {boolean} [hasCode]
+ * @property {'reading' | 'display'} lcpFont  The face of the page's largest text, preloaded.
+ * @property {object} jsonLd
  */
-export function renderHead({ post, assets, launched }) {
-  const url = postUrl(post);
-  const robots = line(!launched, () => markup`<meta name="robots" content="noindex, nofollow">`);
-  const styles = assets.styles.map((href) =>
-    line(true, () => markup`<link rel="stylesheet" href="${href}">`),
-  );
-  const codeStyles = line(
-    Boolean(post.hasCode && assets.codeCss),
-    () => markup`<link rel="stylesheet" href="${assets.codeCss}">`,
-  );
-  const fontPreload = line(
-    Boolean(assets.fontPreload),
-    () =>
-      markup`<link rel="preload" href="${assets.fontPreload}" as="font" type="font/woff2" crossorigin>`,
-  );
+
+/** The lines that depend on the page, its assets or the launch flag. */
+function optionalLines({ meta, assets, launched }) {
+  return {
+    robots: line(!launched, () => markup`<meta name="robots" content="noindex, nofollow">`),
+    // The feed exists only after launch: noindex cannot reach XML, and feed
+    // services cache what they find.
+    feedLink: line(
+      launched,
+      () =>
+        markup`<link rel="alternate" type="application/atom+xml" title="${BLOG_NAME}" href="${FEED_PATH}">`,
+    ),
+    articleTimes: line(
+      meta.ogType === 'article',
+      () => markup`<meta property="article:published_time" content="${meta.published}">
+<meta property="article:modified_time" content="${meta.modified}">`,
+    ),
+    styles: assets.styles.map((href) =>
+      line(true, () => markup`<link rel="stylesheet" href="${href}">`),
+    ),
+    codeStyles: line(
+      Boolean(meta.hasCode && assets.codeCss),
+      () => markup`<link rel="stylesheet" href="${assets.codeCss}">`,
+    ),
+    fontPreload: line(
+      Boolean(assets.preload?.[meta.lcpFont]),
+      () =>
+        markup`<link rel="preload" href="${assets.preload[meta.lcpFont]}" as="font" type="font/woff2" crossorigin>`,
+    ),
+  };
+}
+
+/**
+ * @param {{ meta: PageMeta, assets: object, launched: boolean }} options
+ */
+export function renderHead({ meta, assets, launched }) {
+  if (!['reading', 'display'].includes(meta.lcpFont)) {
+    throw new Error(`blog: unknown lcpFont "${meta.lcpFont}"`);
+  }
+  const { robots, feedLink, articleTimes, styles, codeStyles, fontPreload } = optionalLines({
+    meta,
+    assets,
+    launched,
+  });
 
   return markup`<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${post.title} · ${BLOG_NAME}</title>
-<meta name="description" content="${post.description}">
-${robots}<link rel="canonical" href="${url}">
-<meta name="color-scheme" content="light dark">
+<title>${meta.title}</title>
+<meta name="description" content="${meta.description}">
+${robots}<link rel="canonical" href="${meta.url}">
+${feedLink}<meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#faf7f0" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1c1b18" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
@@ -74,20 +95,18 @@ ${robots}<link rel="canonical" href="${url}">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta property="og:type" content="article">
+<meta property="og:type" content="${meta.ogType}">
 <meta property="og:site_name" content="${BLOG_NAME} · Emre Dursun">
-<meta property="og:title" content="${post.title}">
-<meta property="og:description" content="${post.description}">
-<meta property="og:url" content="${url}">
+<meta property="og:title" content="${meta.heading}">
+<meta property="og:description" content="${meta.description}">
+<meta property="og:url" content="${meta.url}">
 <meta property="og:image" content="${SOCIAL_IMAGE.url}">
 <meta property="og:image:width" content="${SOCIAL_IMAGE.width}">
 <meta property="og:image:height" content="${SOCIAL_IMAGE.height}">
 <meta property="og:image:alt" content="${SOCIAL_IMAGE.alt}">
-<meta property="article:published_time" content="${post.publishedAt}">
-<meta property="article:modified_time" content="${post.updatedAt ?? post.publishedAt}">
-<meta name="twitter:card" content="summary_large_image">
+${articleTimes}<meta name="twitter:card" content="summary_large_image">
 <script src="${assets.themeInit}"></script>
 ${styles}${codeStyles}${fontPreload}<script type="module" src="${assets.script}"></script>
-<script type="application/ld+json">${raw(jsonForScript(structuredData(post)))}</script>
+<script type="application/ld+json">${raw(jsonForScript(meta.jsonLd))}</script>
 </head>`;
 }

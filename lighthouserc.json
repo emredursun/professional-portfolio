@@ -7,7 +7,9 @@
         "http://localhost:4181/about",
         "http://localhost:4181/projects",
         "http://localhost:4181/contact",
-        "http://localhost:4181/blog/sample-a-green-test"
+        "http://localhost:4181/blog",
+        "http://localhost:4181/blog/sample-a-green-test",
+        "http://localhost:4181/blog/sample-hypothesis-note"
       ],
       "numberOfRuns": 5,
       "settings": {
@@ -18,7 +20,7 @@
     "assert": {
       "assertMatrix": [
         {
-          "matchingUrlPattern": "^(?!.*/(?:projects$|blog/)).*$",
+          "matchingUrlPattern": "^(?!.*/(?:projects$|blog(?:/|$))).*$",
           "assertions": {
             "categories:performance": [
               "error",
@@ -152,7 +154,7 @@
           }
         },
         {
-          "matchingUrlPattern": ".*/blog/.*",
+          "matchingUrlPattern": ".*/blog(?:/.*)?$",
           "assertions": {
             "categories:performance": [
               "error",

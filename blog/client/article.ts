@@ -14,11 +14,14 @@ import '@fontsource/jetbrains-mono/400.css';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/article.css';
+import './styles/index.css';
 import './styles/code.css';
 import './styles/extras.css';
+import { markStaleEvidence } from './stale';
 import { bindThemeToggle } from './theme-toggle';
 
 const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
 bindThemeToggle(document, () => darkQuery.matches, {
   onSystemChange: (listener) => darkQuery.addEventListener('change', listener),
 });
+markStaleEvidence(document, new Date());

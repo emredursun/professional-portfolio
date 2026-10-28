@@ -2,8 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { renderArticlePage } from '../../scripts/blog/templates/article.js';
 import { nextRecheck } from '../../scripts/blog/templates/sections.js';
-import { PERSON_ID, WEBSITE_ID } from '../../scripts/lib/route-meta.js';
-import { RESERVED_IDS } from '../../scripts/blog/config.js';
+import { PERSON_ID } from '../../scripts/lib/route-meta.js';
 
 const post = Object.freeze({
   slug: 'a-green-test',
@@ -40,7 +39,10 @@ const assets = Object.freeze({
   script: '/assets/article-abc.js',
   styles: ['/assets/article-def.css'],
   codeCss: '/assets/blog-code-87654321.css',
-  fontPreload: '/assets/newsreader-latin-400-normal.woff2',
+  preload: {
+    reading: '/assets/newsreader-latin-400-normal.woff2',
+    display: '/assets/bricolage-grotesque-latin-wght-normal.woff2',
+  },
 });
 
 function page(overrides: Record<string, unknown> = {}, launched = false) {
@@ -159,7 +161,7 @@ describe('renderArticlePage: search and sharing', () => {
     expect(data['@type']).toBe('BlogPosting');
     expect(data.headline).toBe(post.title);
     expect(data.author['@id']).toBe(PERSON_ID);
-    expect(data.isPartOf['@id']).toBe(WEBSITE_ID);
+    expect(data.isPartOf['@id']).toBe('https://emredursun.nl/blog#blog');
     expect(data.datePublished).toBe('2026-12-09');
     expect(data.dateModified).toBe('2026-12-12');
     expect(data.inLanguage).toBe('en');
@@ -223,10 +225,24 @@ describe('nextRecheck', () => {
   });
 });
 
-describe('reserved ids', () => {
-  it('lists every id the template itself uses, so headings can avoid them', () => {
-    const { doc } = page({ html: '<p>No headings.</p>', toc: [] });
-    const used = [...doc.querySelectorAll('[id]')].map((el) => el.id).sort();
-    expect(used).toEqual([...RESERVED_IDS].sort());
+describe('renderHead', () => {
+  it('fails on an unknown LCP face rather than silently skipping the preload', async () => {
+    const { renderHead } = await import('../../scripts/blog/templates/head.js');
+    expect(() =>
+      renderHead({
+        meta: {
+          // @ts-expect-error -- checks the runtime guard against a value the types forbid
+          lcpFont: 'serif',
+          ogType: 'website',
+          title: 't',
+          heading: 't',
+          description: 'd',
+          url: 'u',
+          jsonLd: {},
+        },
+        assets,
+        launched: false,
+      }),
+    ).toThrow(/lcpFont/);
   });
 });
