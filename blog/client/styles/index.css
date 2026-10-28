@@ -190,6 +190,14 @@
   display: none;
 }
 
+.note-item .stale-note {
+  grid-column: 2;
+  justify-self: start;
+  margin: 6px 0 0;
+}
+
+.card.is-stale,
+.note-item.is-stale,
 .evidence.is-stale {
   box-shadow: inset 0 0 0 2px var(--chip-revised);
 }

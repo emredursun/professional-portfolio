@@ -236,3 +236,14 @@ describe('renderFeed: entries', () => {
     expect(doc.querySelector('feed > author > name')?.textContent).toBe('Emre Dursun');
   });
 });
+
+describe('index cards: stale evidence', () => {
+  it('carries the re-check date and a hidden note, like the article', () => {
+    const doc = index();
+    const card = doc.querySelector('.card')!;
+    expect(card.getAttribute('data-recheck-by')).toBe('2027-10-01');
+    expect(card.querySelector('.stale-note')?.hasAttribute('hidden')).toBe(true);
+    const note = doc.querySelector('.note-item')!;
+    expect(note.getAttribute('data-recheck-by')).toBe('2027-10-01');
+  });
+});

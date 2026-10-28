@@ -9,6 +9,7 @@ import { PERSON_ID, WEBSITE_ID } from '../../lib/route-meta.js';
 import { BLOG_NAME, BLOG_TAGLINE, TOPIC_LABELS } from '../config.js';
 import { BLOG_URL, FEED_PATH, byNewest, formatDate, postPath, postUrl } from './format.js';
 import { renderPage } from './layout.js';
+import { nextRecheck } from './sections.js';
 import { statusChip } from './status.js';
 
 const DESCRIPTION =
@@ -48,20 +49,26 @@ function postMeta(post) {
   return markup`<p class="card-meta">${TOPIC_LABELS[post.topic]} · ${post.minutes} min · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt)}</time></p>`;
 }
 
+// Revealed in the browser by blog/client/stale.ts once the re-check date has
+// passed, as on the article's evidence card.
+const staleNote = () => markup`<p class="stale-note" hidden>Needs a re-run</p>`;
+
 function essayCard(post) {
-  return markup`<li class="card">
+  return markup`<li class="card" data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
 <p class="card-status">${statusChip(post.status)}</p>
 <h3 class="card-title"><a href="${postPath(post)}">${post.title}</a></h3>
 <p class="card-dek">${post.description}</p>
 ${postMeta(post)}
+${staleNote()}
 </li>`;
 }
 
 function noteItem(post) {
-  return markup`<li class="note-item">
+  return markup`<li class="note-item" data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
 ${statusChip(post.status)}
 <a href="${postPath(post)}">${post.title}</a>
 ${postMeta(post)}
+${staleNote()}
 </li>`;
 }
 

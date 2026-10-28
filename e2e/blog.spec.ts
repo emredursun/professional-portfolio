@@ -227,3 +227,23 @@ test.describe('blog index and feed', () => {
     await expect(page.locator('a[href="/blog/feed.xml"]')).toHaveCount(0);
   });
 });
+
+test.describe('stale evidence', () => {
+  test('is flagged on the index and the article once the re-check date passes', async ({
+    page,
+  }) => {
+    await page.clock.setFixedTime(new Date('2030-01-01T12:00:00Z'));
+    for (const url of ['/blog', POST]) {
+      await page.goto(url);
+      await expect(page.locator('.stale-note').first(), url).toBeVisible();
+    }
+  });
+
+  test('is not flagged while the evidence is current', async ({ page }) => {
+    await page.clock.setFixedTime(new Date('2026-11-01T12:00:00Z'));
+    for (const url of ['/blog', POST]) {
+      await page.goto(url);
+      await expect(page.locator('.stale-note').first(), url).toBeHidden();
+    }
+  });
+});
