@@ -102,8 +102,55 @@ Measured on 709b1c4 in the `pp-blog` worktree, Windows, Node 22.
 - `dist`: 175 files (hashes kept outside the repo for the before/after diff).
 - Unit tests: 15 files, 124 tests. Coverage: statements 86.49 %, branches
   87.95 %, functions 91.37 %, lines 85.41 %.
-- Lighthouse medians: recorded in the Phase 1 results below.
+- Lighthouse medians (5 runs, this machine): see the table below.
 
 ## Phase 1 results
 
-To be filled in when the spike finishes.
+**Decision: go.** Every must criterion is met; the Astro fallback is not
+needed.
+
+| # | Criterion | Result |
+| --- | --- | --- |
+| 1 | Page built; 200 / unknown 404 / trailing slash 301 | Met (e2e and preview plugin match Firebase; hosting test proves no rewrite) |
+| 2 | No CSP violations, inline style or script | Met (0 violations across the e2e suite; template test) |
+| 3 | Markdown, frontmatter, slug security tests | Met (two security reviews; no bypass found; findings fixed with tests) |
+| 4 | Deterministic output | Met (byte-identical builds under two clocks) |
+| 5 | Portfolio output unchanged | Met (dist identical to T0 apart from version.json and resume.json's build time, which already change on every build) |
+| 6 | Blog budget | Met (table below) |
+| 7 | axe clean in both themes | Met (system light, system dark, dark pinned on a light system) |
+| 8 | No theme flash; shared choice | Met (client script held back in e2e; choice carries to /about) |
+| 9 | noindex until launch | Met |
+| 10 | Coverage | Met (overall 90.4 % lines; every new module ≥ 80 %) |
+
+All 15 CI gates passed locally in CI order. Unit tests: 124 → 328.
+
+Lighthouse medians on this Windows machine (CI runners are faster; mobile
+numbers here sit well below what CI reports for the same pages):
+
+| Page | Form factor | Perf | LCP | CLS | TBT | Transfer |
+| --- | --- | --- | --- | --- | --- | --- |
+| /about (T0) | mobile | 0.85 | 3.26 s | 0 | 184 ms | 306 KB |
+| /about (T1) | mobile | 0.88 | 3.11 s | 0 | 104 ms | 306 KB |
+| /blog/sample (T1) | mobile | 0.99 | 1.82 s | 0.031 | 0 ms | 149 KB |
+| /about (T1) | desktop | 0.98 | 0.77 s | 0 | 0 ms | 306 KB |
+| /blog/sample (T1) | desktop | 1.00 | 0.42 s | 0.001 | 0 ms | 149 KB, of which 4 KB script and 111 KB fonts |
+
+Choices made during the spike:
+
+- Fonts: Bricolage Grotesque as one variable file (41 KB Latin) instead of
+  three static weights; Newsreader 400 and italic; JetBrains Mono 400.
+  Browsers fetch only the faces and subsets a page uses.
+- Code theme: Shiki's github-dark-high-contrast on the dark code
+  background, in both site themes; colours come from classes.
+- Colours are written out per theme rather than with light-dark(), so
+  Safari before 17.5 and Chrome before 123 keep colours and focus rings.
+- Content loading is strict: every folder under blog/content must be a
+  valid slug and every post, drafts included, must validate.
+
+Follow-ups, not blocking:
+
+- Small CLS (0.031) from the font swap: a metric-matched fallback face
+  would bring it to zero.
+- The service worker's offline fallback for an uncached blog page is the
+  SPA shell; a plain offline page for /blog would be clearer.
+- The browser theme-color follows the system setting, not a pinned theme.
