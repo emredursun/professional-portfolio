@@ -68,3 +68,15 @@ describe('markup', () => {
     expect(Object.isFrozen(result)).toBe(true);
   });
 });
+
+describe('review findings', () => {
+  it('refuses to mark anything but a string as raw', () => {
+    // @ts-expect-error -- checks the runtime guard
+    expect(() => raw(undefined)).toThrow(TypeError);
+  });
+
+  it('refuses NaN and Infinity', () => {
+    expect(() => markup`${NaN}`).toThrow(/NaN/);
+    expect(() => markup`${Infinity}`).toThrow(/Infinity/);
+  });
+});

@@ -18,7 +18,7 @@ const FONT = /\.(woff2?|ttf|otf)$/i;
 
 /** @param {string} file */
 function toUrl(file) {
-  if (!/^assets\/[\w.-]+$/.test(file)) {
+  if (!/^assets\/[\w-][\w.-]*$/.test(file)) {
     throw new Error(`blog: unexpected asset path "${file}" (expected assets/<file>)`);
   }
   return `/${file}`;
@@ -33,11 +33,18 @@ export function readBlogAssets(distDir) {
   if (!fs.existsSync(manifestPath)) {
     throw new Error(`blog: ${manifestPath} not found; run vite build first`);
   }
-  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  let manifest;
+  try {
+    manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  } catch (error) {
+    throw new Error(`blog: ${manifestPath} is not valid JSON (${error.message})`);
+  }
   const entry = manifest[BLOG_ENTRY];
   if (!entry) throw new Error(`blog: the Vite manifest has no entry for ${BLOG_ENTRY}`);
-  if ((entry.imports ?? []).length > 0) {
-    throw new Error(`blog: ${BLOG_ENTRY} imports a shared chunk (${entry.imports.join(', ')})`);
+  // Lazy imports count too: they would still fetch the shared chunk.
+  const shared = [...(entry.imports ?? []), ...(entry.dynamicImports ?? [])];
+  if (shared.length > 0) {
+    throw new Error(`blog: ${BLOG_ENTRY} imports a shared chunk (${shared.join(', ')})`);
   }
   return {
     script: toUrl(entry.file),

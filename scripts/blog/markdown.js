@@ -5,15 +5,23 @@
  * untrusted: raw HTML is printed as text, every link and image URL goes
  * through an allowlist, and anything outside it fails the build instead of
  * being silently dropped (a quietly missing link is a bug nobody notices).
+ * Whether a URL is external is decided the way a browser decides it, by
+ * resolving it against the site, so "http:cdn.example/x.png" counts as
+ * external even without the two slashes.
  *
- * Headings get stable ids and feed the table of contents. The page title is
- * the only h1, so the body starts at h2 and may not skip a level.
+ * Headings get unique ids that cannot clash with the ids the page template
+ * uses, and feed the table of contents. The page title is the only h1, so the
+ * body starts at h2 and may not skip a level. Setting the ids mutates
+ * markdown-it's tokens; that is the library's intended API, and the tokens
+ * never leave renderMarkdown.
  */
 
 import MarkdownIt from 'markdown-it';
 import { escapeHtml } from './html.js';
+import { RESERVED_IDS } from './config.js';
 
 const SITE_HOST = 'emredursun.nl';
+const SITE = new URL(`https://${SITE_HOST}/`);
 const SCHEMES = new Set(['http', 'https', 'mailto']);
 const LANGUAGES = new Set([
   'ts',
@@ -27,25 +35,24 @@ const LANGUAGES = new Set([
   'yml',
   'text',
 ]);
-
-/** @param {string} url */
-function decode(url) {
-  try {
-    return decodeURIComponent(url);
-  } catch {
-    return url;
-  }
-}
+// Letters NFKD does not decompose into a base letter plus a mark.
+const FOLD = { ß: 'ss', æ: 'ae', œ: 'oe', ø: 'o', đ: 'd', ł: 'l', ı: 'i' };
 
 /**
  * Why a URL is not allowed, or null when it is.
  * @param {string} url  As markdown-it hands it over: entities decoded, percent-encoded.
  */
 function rejectReason(url) {
+  let decoded;
+  try {
+    decoded = decodeURIComponent(url);
+  } catch {
+    return 'malformed percent-encoding';
+  }
   // Browsers ignore tabs, newlines and other control characters inside a
   // scheme and read a backslash as a slash, so "java\tscript:" and "/\host"
   // are as dangerous as their clean forms.
-  const cleaned = decode(url)
+  const cleaned = decoded
     // eslint-disable-next-line no-control-regex -- matching control characters is the point
     .replace(/[\x00-\x20\x7f]/g, '')
     .replace(/\\/g, '/')
@@ -56,17 +63,25 @@ function rejectReason(url) {
   return null;
 }
 
-/** @param {string} url */
-function isExternal(url) {
-  if (!/^https?:\/\//i.test(url)) return false;
-  return new URL(url).hostname.toLowerCase() !== SITE_HOST;
+/**
+ * @param {string} url
+ * @param {string} file
+ */
+function isExternal(url, file) {
+  let resolved;
+  try {
+    resolved = new URL(url, SITE);
+  } catch {
+    throw new Error(`${file}: "${url}" is not a valid URL`);
+  }
+  return /^https?:$/.test(resolved.protocol) && resolved.hostname !== SITE_HOST;
 }
 
 /** @param {string} text */
 function slugify(text) {
   return text
     .toLocaleLowerCase('tr')
-    .replace(/ı/g, 'i')
+    .replace(/[ßæœøđłı]/g, (char) => FOLD[char])
     .normalize('NFKD')
     .replace(/\p{M}/gu, '')
     .replace(/[^a-z0-9]+/g, '-')
@@ -94,7 +109,7 @@ function createRenderer(file, highlight) {
   const renderToken = (tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options);
 
   md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
-    if (isExternal(tokens[idx].attrGet('href') ?? '')) {
+    if (isExternal(tokens[idx].attrGet('href') ?? '', file)) {
       tokens[idx].attrSet('rel', 'noopener noreferrer');
     }
     return renderToken(tokens, idx, options, env, self);
@@ -104,7 +119,7 @@ function createRenderer(file, highlight) {
   md.renderer.rules.image = (tokens, idx, options, env, self) => {
     const token = tokens[idx];
     const src = token.attrGet('src') ?? '';
-    if (/^https?:\/\//i.test(src)) {
+    if (isExternal(src, file)) {
       throw new Error(`${file}: image "${src}": images must be served from this site`);
     }
     if (inlineText(token).trim() === '') {
@@ -124,7 +139,18 @@ function createRenderer(file, highlight) {
       : `<pre><code>${escapeHtml(token.content)}</code></pre>\n`;
   };
 
+  md.renderer.rules.code_block = () => {
+    throw new Error(`${file}: indented code blocks are not supported; use a fenced block`);
+  };
+
   return md;
+}
+
+/** The first of base, base-2, base-3, ... that is not taken yet. */
+function uniqueId(base, used) {
+  let id = base;
+  for (let n = 2; used.has(id); n += 1) id = `${base}-${n}`;
+  return id;
 }
 
 /**
@@ -132,7 +158,7 @@ function createRenderer(file, highlight) {
  * @returns {Array<{ level: number, id: string, text: string }>}
  */
 function outline(tokens, file) {
-  const seen = new Map();
+  const used = new Set(RESERVED_IDS);
   let previous = 1;
   return tokens.flatMap((token, idx) => {
     if (token.type !== 'heading_open') return [];
@@ -146,10 +172,8 @@ function outline(tokens, file) {
     previous = level;
 
     const text = inlineText(tokens[idx + 1]);
-    const base = slugify(text) || 'section';
-    const count = (seen.get(base) ?? 0) + 1;
-    seen.set(base, count);
-    const id = count === 1 ? base : `${base}-${count}`;
+    const id = uniqueId(slugify(text) || 'section', used);
+    used.add(id);
     token.attrSet('id', id);
     return level <= 3 ? [{ level, id, text }] : [];
   });
@@ -164,6 +188,6 @@ export function renderMarkdown(source, { file, highlight }) {
   const md = createRenderer(file, highlight);
   const tokens = md.parse(source, {});
   const toc = outline(tokens, file);
-  const hasCode = tokens.some((token) => token.type === 'fence' || token.type === 'code_block');
+  const hasCode = tokens.some((token) => token.type === 'fence');
   return { html: md.renderer.render(tokens, md.options, {}), toc, hasCode };
 }

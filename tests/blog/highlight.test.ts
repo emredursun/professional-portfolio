@@ -63,3 +63,10 @@ describe('createHighlight', () => {
     expect(fresh.css()).toBe('');
   });
 });
+
+describe('createHighlight: review findings', () => {
+  it('does not add an empty last line for the newline every fence ends with', () => {
+    const lines = hl.highlight('a\nb\n', 'text').match(/class="line"/g) ?? [];
+    expect(lines).toHaveLength(2);
+  });
+});

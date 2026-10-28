@@ -140,3 +140,50 @@ describe('renderMarkdown: code', () => {
     expect(render('Just text.').hasCode).toBe(false);
   });
 });
+
+describe('renderMarkdown: review findings', () => {
+  it.each([
+    '![a](http:cdn.example/x.png)',
+    '![a](HTTP:cdn.example/x.png)',
+    '![a](http:/cdn.example/x.png)',
+  ])('treats the scheme-only image %s as external and fails', (source) => {
+    expect(() => render(source)).toThrow(/served from this site/);
+  });
+
+  it('accepts https: without slashes, which a browser resolves on this site', () => {
+    // On an https page, "https:/x" and "https:x" are relative, like "/x" and "x".
+    expect(render('![a](https:/images/x.png)').html).toContain('<img');
+  });
+
+  it('marks a scheme-only external link with rel', () => {
+    expect(render('[a](http:evil.example/x)').html).toContain('rel="noopener noreferrer"');
+  });
+
+  it('names the file when a link is not a valid URL', () => {
+    expect(() => render('[a](http://[x)')).toThrow(/sample\/en\.md.*not a valid URL/);
+  });
+
+  it('fails closed on malformed percent-encoding', () => {
+    expect(() => render('[a](java%09script:alert(1)%E0)')).toThrow(/percent-encoding/);
+  });
+
+  it('never repeats a heading id, even when a heading looks like a suffix', () => {
+    const { toc } = render('## Notes\n\n## Notes\n\n## Notes 2\n');
+    const ids = toc.map((entry) => entry.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('keeps clear of the ids the page template uses', () => {
+    const { toc } = render('## Main\n\n## Evidence title\n');
+    expect(toc.map((entry) => entry.id)).toEqual(['main-2', 'evidence-title-2']);
+  });
+
+  it('folds letters that have no accent to strip', () => {
+    const { toc } = render('## Straße, Æble, Øl, Łódź\n');
+    expect(toc[0].id).toBe('strasse-aeble-ol-lodz');
+  });
+
+  it('rejects indented code blocks, which would skip highlighting and focus', () => {
+    expect(() => render('Text\n\n    indented code\n')).toThrow(/fenced block/);
+  });
+});

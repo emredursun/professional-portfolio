@@ -103,3 +103,22 @@ describe('validatePost', () => {
     expect(() => validatePost(valid({ title: '  ' }), FILE)).toThrow(/title/);
   });
 });
+
+describe('validatePost: review findings', () => {
+  it.each([
+    'https:evil.example',
+    'https://user:pw@example.com',
+    'https://localhost/x',
+    'HTTPS://example.com',
+  ])('rejects the prompts link %s', (promptsUrl) => {
+    const aiAssistance = { ...valid().aiAssistance, promptsUrl };
+    expect(() => validatePost(valid({ aiAssistance }), FILE)).toThrow(/promptsUrl/);
+  });
+
+  it('returns the prompts link in normalised form', () => {
+    const aiAssistance = { ...valid().aiAssistance, promptsUrl: 'https://Example.com/a b' };
+    expect(validatePost(valid({ aiAssistance }), FILE).aiAssistance.promptsUrl).toBe(
+      'https://example.com/a%20b',
+    );
+  });
+});

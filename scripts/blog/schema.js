@@ -20,6 +20,24 @@ const isoDate = z.string().refine((value) => {
 
 const correction = z.object({ date: isoDate, text }).strict();
 
+/**
+ * An absolute https link to another site, returned in normalised form. zod's
+ * own url() also accepts "https:host" (a relative path in a browser),
+ * credentials and localhost.
+ */
+const httpsUrl = z
+  .string()
+  .refine((value) => {
+    if (!/^https:\/\//.test(value)) return false;
+    try {
+      const url = new URL(value);
+      return !url.username && !url.password && url.hostname.includes('.');
+    } catch {
+      return false;
+    }
+  }, 'must be an absolute https:// link to a public host, without credentials')
+  .transform((value) => new URL(value).href);
+
 const postSchema = z
   .object({
     title: text.max(110),
@@ -40,7 +58,7 @@ const postSchema = z
       .object({
         mine: z.array(text).min(1),
         assisted: z.array(text),
-        promptsUrl: z.url({ protocol: /^https$/ }).optional(),
+        promptsUrl: httpsUrl.optional(),
       })
       .strict(),
     corrections: z.array(correction).default([]),

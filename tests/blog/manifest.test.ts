@@ -64,3 +64,23 @@ describe('readBlogAssets', () => {
     expect(() => readBlogAssets(dist)).toThrow(/assets/);
   });
 });
+
+describe('readBlogAssets: review findings', () => {
+  it('also fails for a lazily imported shared chunk', () => {
+    writeManifest({
+      [BLOG_ENTRY]: { file: 'assets/a.js', isEntry: true, dynamicImports: ['_vendor-react.js'] },
+    });
+    expect(() => readBlogAssets(dist)).toThrow(/shared chunk/);
+  });
+
+  it('names the manifest when it is not valid JSON', () => {
+    fs.mkdirSync(path.join(dist, '.vite'), { recursive: true });
+    fs.writeFileSync(path.join(dist, '.vite', 'manifest.json'), '{oops');
+    expect(() => readBlogAssets(dist)).toThrow(/manifest\.json is not valid JSON/);
+  });
+
+  it('rejects an asset path made only of dots', () => {
+    writeManifest({ [BLOG_ENTRY]: { file: 'assets/..', isEntry: true } });
+    expect(() => readBlogAssets(dist)).toThrow(/assets/);
+  });
+});

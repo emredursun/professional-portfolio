@@ -28,9 +28,13 @@ class SafeHtml {
   }
 }
 
-/** Marks trusted markup (already-rendered Markdown, inline SVG) as safe. */
+/**
+ * Marks trusted markup (already-rendered Markdown, inline SVG) as safe.
+ * @param {string} value
+ */
 export function raw(value) {
-  return new SafeHtml(String(value));
+  if (typeof value !== 'string') throw new TypeError(`raw: expected a string, got ${typeof value}`);
+  return new SafeHtml(value);
 }
 
 /** @param {unknown} value */
@@ -42,8 +46,10 @@ export function isSafeHtml(value) {
 function render(value) {
   if (value instanceof SafeHtml) return value.value;
   if (Array.isArray(value)) return value.map(render).join('');
-  if (typeof value === 'string' || typeof value === 'number') return escapeHtml(value);
-  throw new TypeError(`markup: cannot interpolate ${value === null ? 'null' : typeof value}`);
+  if (typeof value === 'string') return escapeHtml(value);
+  if (typeof value === 'number' && Number.isFinite(value)) return escapeHtml(value);
+  const kind = value === null ? 'null' : typeof value === 'number' ? String(value) : typeof value;
+  throw new TypeError(`markup: cannot interpolate ${kind}`);
 }
 
 /**

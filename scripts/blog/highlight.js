@@ -51,7 +51,8 @@ export async function createHighlight() {
      * @param {string} lang  One of the languages the Markdown renderer accepts.
      */
     highlight(code, lang) {
-      return highlighter.codeToHtml(code, {
+      // Fenced code always ends in a newline; without trimming it Shiki adds an empty last line.
+      return highlighter.codeToHtml(code.endsWith('\n') ? code.slice(0, -1) : code, {
         lang: ALIASES[lang] ?? lang,
         themes: { dark: THEME },
         defaultColor: false,

@@ -64,3 +64,18 @@ describe('parseFrontmatter', () => {
     expect(body).toBe('One\n\n---\n\nTwo\n');
   });
 });
+
+describe('parseFrontmatter: review findings', () => {
+  it('reports a closing fence with trailing spaces instead of a confusing YAML error', () => {
+    expect(() => parseFrontmatter('---\ntitle: a\n---  \nBody\n\n---\n', FILE)).toThrow(
+      /trailing whitespace \(line 3\)/,
+    );
+  });
+
+  it('allows an anchor that is never used, and says aliases are the problem', () => {
+    expect(parseFrontmatter('---\na: &x 1\n---\n', FILE).data).toEqual({ a: 1 });
+    expect(() => parseFrontmatter('---\na: &x 1\nb: *x\n---\n', FILE)).toThrow(
+      /aliases \(\*name\)/,
+    );
+  });
+});
