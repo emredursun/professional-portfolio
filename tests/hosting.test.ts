@@ -57,3 +57,34 @@ describe('firebase.json rewrites', () => {
     expect(firebase.hosting.predeploy).toContain('node scripts/generate-cv.js --check');
   });
 });
+
+describe('firebase.json for the blog', () => {
+  const headerRules: Array<{ source: string; headers: Array<{ key: string; value: string }> }> =
+    firebase.hosting.headers;
+  const cacheControlFor = (url: string) =>
+    headerRules
+      .filter((rule) => picomatch(rule.source)(url))
+      .flatMap((rule) => rule.headers)
+      .filter((header) => header.key === 'Cache-Control')
+      .map((header) => header.value);
+
+  it('never rewrites a blog path, so unknown posts get a real 404', () => {
+    for (const url of ['/blog', '/blog/a-post', '/blog/a/b', '/tr/blog/a-post', '/nl/blog']) {
+      expect(isRewritten(url), url).toBe(false);
+    }
+  });
+
+  it('serves blog pages without caching, like every other page', () => {
+    // Header globs match the request path, not the file, so the **/*.html
+    // rule never applies to the clean URL /blog/<slug>.
+    for (const url of ['/blog', '/blog/a-post', '/tr/blog/a-post']) {
+      expect(cacheControlFor(url), url).toContain('public, max-age=0, must-revalidate');
+    }
+  });
+
+  it('never deploys the Vite build manifest', () => {
+    const ignored = (file: string) =>
+      (firebase.hosting.ignore as string[]).some((glob) => picomatch(glob, { dot: true })(file));
+    expect(ignored('.vite/manifest.json') || ignored('.vite')).toBe(true);
+  });
+});

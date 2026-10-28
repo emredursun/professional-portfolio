@@ -67,3 +67,18 @@ describe('service worker', () => {
     expect(deleted).toEqual(['ed-portfolio-v1']);
   });
 });
+
+describe('service worker and the blog', () => {
+  it('fetches blog pages from the network first, so a fix is never hidden by a cached copy', async () => {
+    const { listeners } = loadWorker();
+    for (const url of [`${ORIGIN}/blog/a-post`, `${ORIGIN}/tr/blog/a-post`]) {
+      const event = fetchEvent(url);
+      listeners.fetch(event);
+      expect(event.respondWith, url).toHaveBeenCalled();
+      const response = await event.respondWith.mock.calls[0][0];
+      // The fake network answers 404; a cache-first strategy would not reach it
+      // first for an HTML page, and a static-asset route would not match.
+      expect(response.status, url).toBe(404);
+    }
+  });
+});
