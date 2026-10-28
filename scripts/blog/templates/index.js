@@ -12,6 +12,27 @@ import { renderPage } from './layout.js';
 import { nextRecheck } from './sections.js';
 import { statusChip } from './status.js';
 
+const TOPICS = [
+  'Testing, honestly',
+  'Working with AI',
+  'Pega and Tosca',
+  'Life in three languages',
+];
+
+/** The canvas's band of topics: static, so there is nothing to pause (WCAG 2.2.2). */
+function topicsBand() {
+  return markup`<ul class="band" aria-label="Topics">${TOPICS.map(
+    (topic, index) =>
+      markup`<li>${index > 0 ? markup`<span class="band-mark" aria-hidden="true">✳</span>` : ''}${topic}</li>`,
+  )}</ul>`;
+}
+
+function heroActions(newest, launched) {
+  return markup`<p class="index-actions"><a class="button button-solid" href="${postPath(newest)}">Read the latest</a>${
+    launched ? markup`<a class="button" href="${FEED_PATH}">Follow with a feed reader</a>` : ''
+  }</p>`;
+}
+
 const DESCRIPTION =
   'Notes on software quality, test automation and working with AI, by Emre Dursun, QA consultant in the Netherlands.';
 
@@ -94,12 +115,9 @@ export function renderIndexPage({ posts, assets, launched }) {
 <h1>${BLOG_NAME}</h1>
 <p class="index-lede">${BLOG_TAGLINE}</p>
 <p class="index-intro">I test software for a living, in the Netherlands, in three languages. This is where I write down what I learn: at work, with AI, and in between.</p>
-${
-  launched
-    ? markup`<p><a class="button" href="${FEED_PATH}">Follow with a feed reader</a></p>
-`
-    : ''
-}</header>
+${heroActions(sorted[0], launched)}
+</header>
+${topicsBand()}
 ${section({ id: 'essays-title', title: 'Essays', intro: 'Longer pieces, rewritten until they hold.', items: essays.map(essayCard), listClass: 'cards' })}
 ${section({ id: 'notes-title', title: 'Short notes', intro: 'Smaller thoughts, still being tested.', items: notes.map(noteItem), listClass: 'notes' })}
 </div>`;

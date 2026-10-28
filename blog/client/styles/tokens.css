@@ -23,6 +23,8 @@
   --underline: #9a6f0a;
   --focus: #1e3a2f;
   --code-bg: #1b2b23;
+  --closing-bg: #1e3a2f;
+  --closing-ink: #faf7f0;
 
   --mustard: #f2cf63;
   --code-ink: #f0f3f6;
@@ -56,6 +58,8 @@
     --underline: #f2c94c;
     --focus: #f2c94c;
     --code-bg: #141a16;
+    --closing-bg: #27322b;
+    --closing-ink: #efe9dd;
   }
 }
 
@@ -74,4 +78,6 @@
   --underline: #f2c94c;
   --focus: #f2c94c;
   --code-bg: #141a16;
+  --closing-bg: #27322b;
+  --closing-ink: #efe9dd;
 }

@@ -247,3 +247,47 @@ describe('index cards: stale evidence', () => {
     expect(note.getAttribute('data-recheck-by')).toBe('2027-10-01');
   });
 });
+
+describe('calls to action and the author', () => {
+  it('points "Read the latest" at the newest post', () => {
+    const link = [...index().querySelectorAll('a')].find(
+      (a) => a.textContent === 'Read the latest',
+    );
+    expect(link?.getAttribute('href')).toBe('/blog/a-note');
+  });
+
+  it('shows the topics band as a plain list', () => {
+    // The text a screen reader hears: the decorative separators are aria-hidden.
+    const items = [...index().querySelectorAll('ul.band li')].map((li) => {
+      const copy = li.cloneNode(true) as Element;
+      copy.querySelectorAll('[aria-hidden="true"]').forEach((el) => el.remove());
+      return copy.textContent?.trim();
+    });
+    expect(items).toEqual([
+      'Testing, honestly',
+      'Working with AI',
+      'Pega and Tosca',
+      'Life in three languages',
+    ]);
+  });
+
+  it('ends every page with an invitation to get in touch', () => {
+    const article = parse(renderArticlePage({ post: posts[0], assets, launched: false }));
+    for (const doc of [index(), article]) {
+      const link = doc.querySelector('.closing a');
+      expect(link?.getAttribute('href')).toBe('/contact');
+      expect(link?.textContent?.replace('↗', '').trim()).toBe('Say hello');
+      expect(doc.querySelector('.closing [aria-hidden="true"]')?.textContent).toBe('↗');
+    }
+  });
+
+  it('introduces the author on articles, with a sized portrait', () => {
+    const doc = parse(renderArticlePage({ post: posts[0], assets, launched: false }));
+    const img = doc.querySelector('.author img')!;
+    expect(img.getAttribute('src')).toBe('/images/emre-dursun-qa-consultant-400.webp');
+    expect(img.getAttribute('alt')).toBe('Emre Dursun');
+    expect(img.getAttribute('width')).toBe('64');
+    expect(img.getAttribute('height')).toBe('64');
+    expect(doc.querySelector('.author a')?.getAttribute('href')).toBe('/about');
+  });
+});

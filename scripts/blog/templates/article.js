@@ -50,6 +50,17 @@ function articleHeader(post) {
 </header>`;
 }
 
+function authorCard() {
+  return markup`<section class="author" aria-label="About the author">
+<img src="/images/emre-dursun-qa-consultant-400.webp" alt="Emre Dursun" width="64" height="64" loading="lazy" decoding="async">
+<div>
+<p class="author-name">Written by Emre Dursun</p>
+<p class="author-bio">QA consultant for Pega and Tricentis Tosca in the Netherlands. I write here to think more clearly about my work.</p>
+<p><a href="/about">More about me</a></p>
+</div>
+</section>`;
+}
+
 /**
  * Up to two other posts, so a reader who finished has somewhere to go. It sits
  * after the article: links to other posts are not part of this one.
@@ -79,6 +90,7 @@ ${raw(post.html)}
 </div>
 ${aiPanel(post)}
 ${corrections(post)}
+${authorCard()}
 </article>
 ${keepReading(related)}`;
   return renderPage({

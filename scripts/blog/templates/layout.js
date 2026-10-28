@@ -22,6 +22,15 @@ function siteHeader() {
 </header>`;
 }
 
+/** The canvas's closing band: one invitation to talk, at the end of every page. */
+function closing() {
+  return markup`<section class="closing" aria-label="Get in touch">
+<p class="closing-kicker">Working on test strategy for a Pega or Tosca project?</p>
+<p class="closing-title">Let’s compare notes.</p>
+<a class="closing-link" href="/contact">Say hello <span aria-hidden="true">↗</span></a>
+</section>`;
+}
+
 function siteFooter(launched) {
   return markup`<footer class="site-footer">
 <p><span class="brand-name">emre<span class="brand-dot">.</span></span> Written by a person, checked twice.</p>
@@ -42,6 +51,7 @@ ${renderHead({ meta, assets, launched })}
 ${progress ? markup`<div class="progress" aria-hidden="true"></div>\n` : ''}${siteHeader()}
 <main id="main">
 ${content}
+${closing()}
 </main>
 ${siteFooter(launched)}
 </body>
