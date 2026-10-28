@@ -109,3 +109,12 @@ describe('blog preview routes: the index', () => {
     expect(res.headers.Location).toBe('/blog/feed.xml');
   });
 });
+
+describe('blog preview routes: index trailing slash', () => {
+  it('redirects /blog/ to /blog and keeps the query, as Firebase does', () => {
+    const { res, next } = handle('/blog/?ref=feed');
+    expect(next).not.toHaveBeenCalled();
+    expect(res.statusCode).toBe(301);
+    expect(res.headers.Location).toBe('/blog?ref=feed');
+  });
+});
