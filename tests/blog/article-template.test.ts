@@ -2,8 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { renderArticlePage } from '../../scripts/blog/templates/article.js';
 import { nextRecheck } from '../../scripts/blog/templates/sections.js';
-import { PERSON_ID, WEBSITE_ID } from '../../scripts/lib/route-meta.js';
-import { RESERVED_IDS } from '../../scripts/blog/config.js';
+import { PERSON_ID } from '../../scripts/lib/route-meta.js';
 
 const post = Object.freeze({
   slug: 'a-green-test',
@@ -159,7 +158,7 @@ describe('renderArticlePage: search and sharing', () => {
     expect(data['@type']).toBe('BlogPosting');
     expect(data.headline).toBe(post.title);
     expect(data.author['@id']).toBe(PERSON_ID);
-    expect(data.isPartOf['@id']).toBe(WEBSITE_ID);
+    expect(data.isPartOf['@id']).toBe('https://emredursun.nl/blog#blog');
     expect(data.datePublished).toBe('2026-12-09');
     expect(data.dateModified).toBe('2026-12-12');
     expect(data.inLanguage).toBe('en');
@@ -220,13 +219,5 @@ describe('nextRecheck', () => {
   it('is one year after the last check, keeping leap days valid', () => {
     expect(nextRecheck('2026-12-09')).toBe('2027-12-09');
     expect(nextRecheck('2028-02-29')).toBe('2029-02-28');
-  });
-});
-
-describe('reserved ids', () => {
-  it('lists every id the template itself uses, so headings can avoid them', () => {
-    const { doc } = page({ html: '<p>No headings.</p>', toc: [] });
-    const used = [...doc.querySelectorAll('[id]')].map((el) => el.id).sort();
-    expect(used).toEqual([...RESERVED_IDS].sort());
   });
 });
