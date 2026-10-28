@@ -45,6 +45,7 @@
 .status {
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   padding: 5px 12px;
   border-radius: 999px;
   color: var(--on-chip);

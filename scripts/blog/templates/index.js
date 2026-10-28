@@ -6,9 +6,10 @@
 
 import { markup } from '../html.js';
 import { PERSON_ID, WEBSITE_ID } from '../../lib/route-meta.js';
-import { BLOG_NAME, BLOG_TAGLINE, STATUS_LABELS, TOPIC_LABELS } from '../config.js';
+import { BLOG_NAME, BLOG_TAGLINE, TOPIC_LABELS } from '../config.js';
 import { BLOG_URL, FEED_PATH, byNewest, formatDate, postPath, postUrl } from './format.js';
 import { renderPage } from './layout.js';
+import { statusChip } from './status.js';
 
 const DESCRIPTION =
   'Notes on software quality, test automation and working with AI, by Emre Dursun, QA consultant in the Netherlands.';
@@ -49,7 +50,7 @@ function postMeta(post) {
 
 function essayCard(post) {
   return markup`<li class="card">
-<p class="card-status"><span class="status status-${post.status}">${STATUS_LABELS[post.status]}</span></p>
+<p class="card-status">${statusChip(post.status)}</p>
 <h3 class="card-title"><a href="${postPath(post)}">${post.title}</a></h3>
 <p class="card-dek">${post.description}</p>
 ${postMeta(post)}
@@ -58,7 +59,7 @@ ${postMeta(post)}
 
 function noteItem(post) {
   return markup`<li class="note-item">
-<span class="status status-${post.status}">${STATUS_LABELS[post.status]}</span>
+${statusChip(post.status)}
 <a href="${postPath(post)}">${post.title}</a>
 ${postMeta(post)}
 </li>`;

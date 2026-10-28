@@ -5,9 +5,10 @@
 
 import { markup, raw } from '../html.js';
 import { PERSON_ID, SOCIAL_IMAGE } from '../../lib/route-meta.js';
-import { BLOG_NAME, STATUS_LABELS, TOPIC_LABELS } from '../config.js';
+import { BLOG_NAME, TOPIC_LABELS } from '../config.js';
 import { BLOG_URL, formatDate, lastChange, postPath, postUrl } from './format.js';
 import { renderPage } from './layout.js';
+import { statusChip } from './status.js';
 import { aiPanel, corrections, evidenceCard, tableOfContents } from './sections.js';
 
 function articleMeta(post) {
@@ -42,7 +43,7 @@ function articleMeta(post) {
 
 function articleHeader(post) {
   return markup`<header class="article-header">
-<p class="article-kicker"><span class="status status-${post.status}">${STATUS_LABELS[post.status]}</span> ${TOPIC_LABELS[post.topic]} · ${post.minutes} min read</p>
+<p class="article-kicker">${statusChip(post.status)} ${TOPIC_LABELS[post.topic]} · ${post.minutes} min read</p>
 <h1>${post.title}</h1>
 <p class="article-dek">${post.description}</p>
 <p class="byline">Emre Dursun · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt)}</time>${post.updatedAt ? markup` · updated <time datetime="${post.updatedAt}">${formatDate(post.updatedAt)}</time>` : ''}</p>
