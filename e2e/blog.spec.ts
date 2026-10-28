@@ -65,7 +65,7 @@ test.describe('blog article', () => {
     await expect(page.locator('script[type="module"]')).toHaveCount(1);
   });
 
-  test('passes axe in the light and dark themes', async ({ page }) => {
+  test('has no axe violations in the light and dark themes', async ({ page }) => {
     for (const colorScheme of ['light', 'dark'] as const) {
       await page.emulateMedia({ colorScheme });
       await page.goto(POST);
@@ -76,7 +76,7 @@ test.describe('blog article', () => {
     }
   });
 
-  test('passes axe with dark pinned while the system is light', async ({ page }) => {
+  test('has no axe violations with dark pinned while the system is light', async ({ page }) => {
     await page.emulateMedia({ colorScheme: 'light' });
     await page.addInitScript(() => {
       localStorage.setItem('theme', 'dark');
@@ -194,7 +194,7 @@ test.describe('blog index and feed', () => {
     await expect(page).toHaveURL(new RegExp(`${POST}$`));
   });
 
-  test('the index passes axe in every theme and fits the screen', async ({ page }) => {
+  test('the index has no axe violations in any theme and fits the screen', async ({ page }) => {
     for (const colorScheme of ['light', 'dark'] as const) {
       await page.emulateMedia({ colorScheme });
       await page.goto('/blog');
