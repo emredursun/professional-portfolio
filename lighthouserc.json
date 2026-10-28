@@ -6,7 +6,8 @@
       "url": [
         "http://localhost:4181/about",
         "http://localhost:4181/projects",
-        "http://localhost:4181/contact"
+        "http://localhost:4181/contact",
+        "http://localhost:4181/blog/sample-a-green-test"
       ],
       "numberOfRuns": 5,
       "settings": {
@@ -17,7 +18,7 @@
     "assert": {
       "assertMatrix": [
         {
-          "matchingUrlPattern": "^(?!.*/projects$).*$",
+          "matchingUrlPattern": "^(?!.*/(?:projects$|blog/)).*$",
           "assertions": {
             "categories:performance": [
               "error",
@@ -148,6 +149,35 @@
                 "maxNumericValue": 7
               }
             ]
+          }
+        },
+        {
+          "matchingUrlPattern": ".*/blog/.*",
+          "assertions": {
+            "categories:performance": [
+              "error",
+              { "minScore": 0.95, "aggregationMethod": "median-run" }
+            ],
+            "categories:accessibility": ["error", { "minScore": 1 }],
+            "categories:best-practices": ["error", { "minScore": 1 }],
+            "document-title": ["error", { "minScore": 1 }],
+            "meta-description": ["error", { "minScore": 1 }],
+            "http-status-code": ["error", { "minScore": 1 }],
+            "link-text": ["error", { "minScore": 1 }],
+            "crawlable-anchors": ["error", { "minScore": 1 }],
+            "canonical": ["error", { "minScore": 1 }],
+            "largest-contentful-paint": [
+              "error",
+              { "maxNumericValue": 2000, "aggregationMethod": "median-run" }
+            ],
+            "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }],
+            "total-blocking-time": [
+              "error",
+              { "maxNumericValue": 100, "aggregationMethod": "median-run" }
+            ],
+            "resource-summary:script:size": ["error", { "maxNumericValue": 20000 }],
+            "resource-summary:total:size": ["error", { "maxNumericValue": 300000 }],
+            "resource-summary:third-party:count": ["error", { "maxNumericValue": 0 }]
           }
         }
       ]

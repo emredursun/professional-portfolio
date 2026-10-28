@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
+import { blogPreviewRoutes } from './scripts/lib/blog-preview-routes.js';
 
 /**
  * Security headers declared once in firebase.json (production) and replayed by
@@ -64,6 +65,10 @@ export default defineConfig(() => {
           'scripts/write-version.js',
           'scripts/write-quality.js',
           'scripts/generate-agent-profile.js',
+          'scripts/build-blog.js',
+          'scripts/blog/**/*.js',
+          'scripts/lib/blog-preview-routes.js',
+          'blog/client/theme-toggle.ts',
           'src/utils/decor.ts',
           'src/utils/tween.ts',
           'src/bootstrap.ts',
@@ -78,10 +83,15 @@ export default defineConfig(() => {
       port: 3000,
       host: '0.0.0.0',
     },
-    plugins: [react(), notFoundPage()],
+    plugins: [react(), notFoundPage(), blogPreviewRoutes(productionSecurityHeaders())],
     publicDir: 'public',
     build: {
       copyPublicDir: true,
+      // dist/.vite/manifest.json maps the blog entry to its hashed files for
+      // scripts/build-blog.js. firebase.json's "**/.*/**" ignore keeps it off
+      // the live site ("**/.*" alone would only skip the folder entry, not the
+      // file in it); tests/hosting.test.ts checks the file itself.
+      manifest: true,
       // Never inline fonts as data: URIs. Small @fontsource subsets fell under
       // the 4 KB default and were embedded in CSS, which the CSP's
       // font-src 'self' rightly refuses. Other small assets keep the default.
@@ -90,6 +100,9 @@ export default defineConfig(() => {
       rollupOptions: {
         input: {
           main: path.resolve(__dirname, 'index.html'),
+          // Fonts, styles and the theme toggle for the static blog pages
+          // (docs/adr/0001-static-blog-build.md).
+          article: path.resolve(__dirname, 'blog/client/article.ts'),
         },
         output: {
           // Matched on the resolved path, not the package entry: the object

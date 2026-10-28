@@ -1,0 +1,25 @@
+/*
+ * Code blocks. Token colours arrive as --shiki-dark on generated classes
+ * (scripts/blog/highlight.js); a token without one inherits the block colour.
+ * Blocks are dark in both themes, as on the canvas.
+ */
+.prose pre {
+  overflow-x: auto;
+  margin: 0 0 1.4em;
+  padding: 20px 22px;
+  border-radius: 20px;
+  background: var(--code-bg);
+  color: var(--code-ink);
+  font-family: var(--font-code);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  tab-size: 2;
+}
+
+.prose pre code {
+  font: inherit;
+}
+
+.prose .shiki span {
+  color: var(--shiki-dark);
+}
