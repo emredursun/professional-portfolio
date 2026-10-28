@@ -91,3 +91,24 @@ describe('firebase.json for the blog', () => {
     expect(ignored('blog/a-post.html')).toBe(false);
   });
 });
+
+describe('firebase.json: the blog feed', () => {
+  const headerRules: Array<{ source: string; headers: Array<{ key: string; value: string }> }> =
+    firebase.hosting.headers;
+  const contentTypeFor = (url: string) =>
+    headerRules
+      .filter((rule) => picomatch(rule.source)(url))
+      .flatMap((rule) => rule.headers)
+      .filter((header) => header.key === 'Content-Type')
+      .map((header) => header.value);
+
+  it('serves the Atom feed as Atom, not generic XML', () => {
+    expect(contentTypeFor('/blog/feed.xml')).toEqual(['application/atom+xml; charset=utf-8']);
+  });
+
+  it('sets no content type anywhere else', () => {
+    for (const url of ['/blog', '/blog/a-post', '/sitemap.xml', '/about']) {
+      expect(contentTypeFor(url), url).toEqual([]);
+    }
+  });
+});
