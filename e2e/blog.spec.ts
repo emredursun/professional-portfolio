@@ -268,3 +268,21 @@ test.describe('with more than one post', () => {
     await expect(page).toHaveURL(/\/blog\/[a-z0-9-]+$/);
   });
 });
+
+test.describe('table of contents placement', () => {
+  test('stays in view while reading on wide screens, and sits above the text on phones', async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto(POST);
+    const toc = page.getByRole('navigation', { name: 'On this page' });
+    await page.locator('.ai-note').scrollIntoViewIfNeeded();
+    const position = await toc.evaluate((el) => getComputedStyle(el).position);
+    if (isMobile) {
+      expect(position).toBe('static');
+    } else {
+      expect(position).toBe('sticky');
+      await expect(toc).toBeInViewport();
+    }
+  });
+});

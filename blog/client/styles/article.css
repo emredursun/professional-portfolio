@@ -284,3 +284,30 @@
   background: var(--ink);
   color: var(--paper);
 }
+
+/*
+ * Wide screens: the table of contents moves to a sticky column beside the
+ * text. Narrower screens keep it as a box above the text.
+ */
+@media (min-width: 1180px) {
+  .article {
+    display: grid;
+    grid-template-columns: 220px minmax(0, var(--measure));
+    column-gap: 56px;
+    justify-content: center;
+    max-width: 1120px;
+  }
+
+  .article > * {
+    grid-column: 2;
+  }
+
+  .article > .toc {
+    position: sticky;
+    top: 24px;
+    grid-column: 1;
+    grid-row: 1 / span 9;
+    align-self: start;
+    margin: 0;
+  }
+}
