@@ -36,35 +36,46 @@ const line = (condition, content) => (condition ? markup`${content()}\n` : '');
  * @property {object} jsonLd
  */
 
+/** The lines that depend on the page, its assets or the launch flag. */
+function optionalLines({ meta, assets, launched }) {
+  return {
+    robots: line(!launched, () => markup`<meta name="robots" content="noindex, nofollow">`),
+    // The feed exists only after launch: noindex cannot reach XML, and feed
+    // services cache what they find.
+    feedLink: line(
+      launched,
+      () =>
+        markup`<link rel="alternate" type="application/atom+xml" title="${BLOG_NAME}" href="${FEED_PATH}">`,
+    ),
+    articleTimes: line(
+      meta.ogType === 'article',
+      () => markup`<meta property="article:published_time" content="${meta.published}">
+<meta property="article:modified_time" content="${meta.modified}">`,
+    ),
+    styles: assets.styles.map((href) =>
+      line(true, () => markup`<link rel="stylesheet" href="${href}">`),
+    ),
+    codeStyles: line(
+      Boolean(meta.hasCode && assets.codeCss),
+      () => markup`<link rel="stylesheet" href="${assets.codeCss}">`,
+    ),
+    fontPreload: line(
+      Boolean(assets.fontPreload),
+      () =>
+        markup`<link rel="preload" href="${assets.fontPreload}" as="font" type="font/woff2" crossorigin>`,
+    ),
+  };
+}
+
 /**
  * @param {{ meta: PageMeta, assets: object, launched: boolean }} options
  */
 export function renderHead({ meta, assets, launched }) {
-  const robots = line(!launched, () => markup`<meta name="robots" content="noindex, nofollow">`);
-  // The feed exists only after launch: noindex cannot reach XML, and feed
-  // services cache what they find.
-  const feedLink = line(
+  const { robots, feedLink, articleTimes, styles, codeStyles, fontPreload } = optionalLines({
+    meta,
+    assets,
     launched,
-    () =>
-      markup`<link rel="alternate" type="application/atom+xml" title="${BLOG_NAME}" href="${FEED_PATH}">`,
-  );
-  const articleTimes = line(
-    meta.ogType === 'article',
-    () => markup`<meta property="article:published_time" content="${meta.published}">
-<meta property="article:modified_time" content="${meta.modified}">`,
-  );
-  const styles = assets.styles.map((href) =>
-    line(true, () => markup`<link rel="stylesheet" href="${href}">`),
-  );
-  const codeStyles = line(
-    Boolean(meta.hasCode && assets.codeCss),
-    () => markup`<link rel="stylesheet" href="${assets.codeCss}">`,
-  );
-  const fontPreload = line(
-    Boolean(assets.fontPreload),
-    () =>
-      markup`<link rel="preload" href="${assets.fontPreload}" as="font" type="font/woff2" crossorigin>`,
-  );
+  });
 
   return markup`<head>
 <meta charset="utf-8">
