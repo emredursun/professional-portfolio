@@ -1,0 +1,285 @@
+.article {
+  max-width: calc(var(--measure) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 48px var(--gutter) 88px;
+}
+
+/* Header */
+.article-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+  color: var(--ink-2);
+  font-size: 14px;
+}
+
+.article-header h1 {
+  margin: 0;
+  font-size: clamp(2.25rem, 1.4rem + 3.6vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.article-dek {
+  margin: 20px 0 0;
+  color: var(--ink-2);
+  font-family: var(--font-reading);
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.byline {
+  margin: 24px 0 0;
+  padding: 14px 0;
+  border-block: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 14px;
+}
+
+/* Status chips */
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  color: var(--on-chip);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.status-verified {
+  background: var(--verified);
+}
+
+.status-testing {
+  background: var(--mustard);
+}
+
+.status-hypothesis {
+  background: #e7e0f0;
+}
+
+.status-revised {
+  background: #f6dfcd;
+}
+
+/* Evidence card */
+.evidence {
+  margin: 20px 0 32px;
+  padding: 20px 24px;
+  border-radius: 22px;
+  background: var(--sage);
+}
+
+.evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px 24px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.evidence-grid dt {
+  color: var(--ink-2);
+}
+
+.evidence-grid dd {
+  margin: 4px 0 0;
+  font-weight: 600;
+}
+
+/* Table of contents */
+.toc {
+  margin: 0 0 32px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: var(--butter);
+  font-size: 15px;
+}
+
+.toc-title {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toc li {
+  padding: 4px 0;
+}
+
+.toc .toc-level-3 {
+  padding-left: 18px;
+}
+
+/* Reading text */
+.prose {
+  font-family: var(--font-reading);
+  font-size: 1.25rem;
+  line-height: 1.7;
+}
+
+.prose > * {
+  margin: 0 0 1.1em;
+}
+
+.prose h2,
+.prose h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  scroll-margin-top: 24px;
+}
+
+.prose h2 {
+  margin-top: 1.8em;
+  font-size: clamp(1.6rem, 1.3rem + 1vw, 2.125rem);
+}
+
+.prose h3 {
+  margin-top: 1.5em;
+  font-size: 1.4rem;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.2em;
+}
+
+.prose li {
+  margin-bottom: 0.4em;
+}
+
+.prose blockquote {
+  margin-inline: 0;
+  padding: 4px 0 4px 20px;
+  border-left: 3px solid var(--underline);
+  color: var(--ink-2);
+  font-style: italic;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+.prose :not(pre) > code {
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--sage);
+  font-family: var(--font-code);
+  font-size: 0.85em;
+}
+
+/* How this was written */
+.ai-note {
+  margin: 48px 0 0;
+  padding: 26px 28px;
+  border: 1.5px solid var(--line);
+  border-radius: 28px;
+}
+
+.ai-note h2 {
+  margin: 0 0 16px;
+  font-size: 1.375rem;
+  letter-spacing: -0.02em;
+}
+
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.ai-grid section {
+  padding: 16px 20px;
+  border-radius: 20px;
+}
+
+.ai-mine {
+  background: var(--sage);
+}
+
+.ai-assisted {
+  background: var(--lavender);
+}
+
+.ai-grid h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.ai-grid ul,
+.ai-grid p {
+  margin: 0;
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+.ai-grid ul {
+  padding-left: 1.1em;
+}
+
+.ai-footer {
+  margin: 16px 0 0;
+  color: var(--ink-2);
+  font-size: 15px;
+}
+
+/* Corrections and reporting */
+.corrections {
+  margin: 24px 0 0;
+  padding: 24px 28px;
+  border-radius: 28px;
+  background: var(--peach);
+}
+
+.corrections h2 {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+}
+
+.corrections h3 {
+  margin: 20px 0 6px;
+  font-size: 1rem;
+}
+
+.corrections p,
+.corrections ol {
+  margin: 0;
+  font-size: 15px;
+}
+
+.corrections ol {
+  padding-left: 1.2em;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 12px;
+  padding: 0 20px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: var(--ink);
+  color: var(--paper);
+}

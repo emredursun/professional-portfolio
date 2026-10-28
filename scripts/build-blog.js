@@ -26,7 +26,8 @@ import { renderMarkdown } from './blog/markdown.js';
 import { renderArticlePage } from './blog/templates/article.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const LCP_FONT = /newsreader-latin-400-normal/;
+// The reading font's regular Latin woff2, the one the first paragraph needs.
+const LCP_FONT = /\/newsreader-latin-400-normal-[\w-]+\.woff2$/;
 
 /** Writes inside dist/blog only; a slug is validated, this is the second guard. */
 export function writePage(distDir, slug, html) {

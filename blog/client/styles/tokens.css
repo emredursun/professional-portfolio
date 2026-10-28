@@ -1,0 +1,43 @@
+/*
+ * Field Notes design tokens (the approved canvas, "Spec" board).
+ *
+ * Every colour is a light-dark() pair. :root follows the system setting;
+ * theme-init.js adds .light or .dark when the visitor pinned a theme, which
+ * fixes color-scheme and so picks one side of every pair. Mustard is never
+ * used for text: it is a background, an underline or decoration only.
+ */
+:root {
+  color-scheme: light dark;
+
+  --paper: light-dark(#faf7f0, #1c1b18);
+  --ink: light-dark(#1e3a2f, #efe9dd);
+  --ink-2: light-dark(#4d5e55, #bdb5a6);
+  --line: light-dark(rgb(30 58 47 / 0.16), rgb(239 233 221 / 0.14));
+  --sage: light-dark(#dfe7d8, #27322b);
+  --lavender: light-dark(#e7e0f0, #2e2a3b);
+  --peach: light-dark(#f6dfcd, #3a2d25);
+  --butter: light-dark(#f5e3a1, #3a3320);
+  --check: light-dark(#3f6b52, #9cc8a0);
+  --mustard: #f2cf63;
+  --underline: light-dark(#e2b33c, #f2c94c);
+  --code-bg: light-dark(#1b2b23, #141a16);
+  --code-ink: #f0f3f6;
+  --verified: #9cc8a0;
+  --on-chip: #1e3a2f;
+
+  --font-display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  --font-reading: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-code: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  --measure: 680px;
+  --radius: 24px;
+  --gutter: clamp(18px, 4vw, 40px);
+}
+
+:root.light {
+  color-scheme: light;
+}
+
+:root.dark {
+  color-scheme: dark;
+}

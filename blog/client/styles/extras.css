@@ -1,0 +1,55 @@
+/* Reading progress: pure CSS, only where scroll-driven animations exist. */
+.progress {
+  display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .progress {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 10;
+    height: 3px;
+    background: var(--mustard);
+    transform-origin: 0 50%;
+    animation: reading-progress linear both;
+    animation-timeline: scroll(root);
+  }
+
+  @keyframes reading-progress {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress {
+    display: none;
+  }
+}
+
+/* Print: the article and its sources, without the page furniture. */
+@media print {
+  .site-nav,
+  .progress,
+  .skip-link,
+  .toc,
+  .corrections .button {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .prose a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.85em;
+  }
+}
