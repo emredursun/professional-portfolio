@@ -65,6 +65,27 @@ CI fails if the regenerated sitemap or profile README differs from what is commi
 
 The CV PDFs (`/cv/Emre-Dursun-CV-<lang>.pdf`) are not committed: CI renders them from the build on every deploy, so a content change reaches the PDF automatically. To check one locally: `npm run build && npm run generate:cv`, then open `dist/cv/`.
 
+## Blog (Field Notes)
+
+Static pages built after the app by `scripts/build-blog.js`; the design and
+the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
+
+- **Write a post:** `blog/content/<slug>/en.md`. The folder name is the URL
+  (`/blog/<slug>`): lowercase words and dashes, fixed once published.
+  Frontmatter is validated strictly (`scripts/blog/schema.js`): title,
+  description (160 characters at most), publishedAt, optional updatedAt,
+  topic, kind (essay or note), status, evidence, aiAssistance, corrections.
+- **Drafts:** `draft: true` keeps a post out of the build, but the repository
+  is public: keep unfinished text out of Git until it is ready.
+- **Corrections:** add an entry to `corrections` with its date; the page,
+  the feed and the structured data all pick up the new date.
+- **Build and look:** `npm run build`, then `npx vite preview` and open
+  `/blog`. `npm run build:blog` rebuilds only the blog after a full build.
+- **Preview on Firebase:** label the PR `preview`; `preview.yml` also checks
+  the blog paths on real Hosting.
+- **Launch:** follow the checklist in the ADR. Until then every blog page is
+  noindex and there is no feed.
+
 ## Quality report
 
 `/quality` reads `dist/quality.json`, which the last step of `quality.yml` writes from that run's Vitest, Playwright, Lighthouse and audit reports. If the page says the report isn't available, the deployed build has no complete `quality.json`: check that step in the deploy run. Locally: run the unit tests with coverage, the e2e suite and Lighthouse, write `reports/audit.json` with `npm audit --omit=dev --json`, then `node scripts/write-quality.js`.

@@ -1,6 +1,6 @@
 # ADR 0001: Build the Field Notes blog as static HTML with our own script
 
-- Status: Accepted (Phase 1 spike in progress)
+- Status: Accepted; Phase 1 and Phase 2 complete, not launched
 - Date: 2026-10-28
 - Deciders: Emre Dursun (owner), with Claude as implementer
 
@@ -93,13 +93,36 @@ time-boxed Astro spike against the same criteria and record the outcome here.
 - Set `BLOG_LAUNCHED = true`. This also writes `/blog/feed.xml` and adds
   the feed links, which stay out before launch because `noindex` cannot
   reach XML and feed services cache what they find.
-- Serve the feed as `application/atom+xml; charset=utf-8` (a `firebase.json`
-  header); Firebase's default for `.xml` is `application/xml`.
+- ~~Serve the feed as `application/atom+xml; charset=utf-8`~~ Done in
+  Phase 2 (`firebase.json` header, pinned by `tests/hosting.test.ts`).
 - Re-enable the Lighthouse `is-crawlable` audit for blog pages.
 - Add blog routes to the sitemap and the deploy smoke test.
 - Add the blog link to the portfolio navigation.
-- Check once on a preview channel or the Firebase emulator that `/blog`
-  resolves to `blog.html` next to the `blog/` folder under `cleanUrls`.
+- ~~Check that `/blog` resolves to `blog.html` next to the `blog/` folder~~
+  Checked on every labelled PR by `preview.yml` from Phase 2 on.
+- Remove the two placeholder posts and point the Lighthouse URLs in
+  `lighthouserc*.json` at real posts.
+- Merge `feat/blog` into `main` only in the launch PR (see Branches below).
+
+### Branches
+
+`feat/blog` does not merge into `main` before launch. `deploy.yml` ships
+every push to `main`, so an early merge would publish the blog and its
+placeholder posts on emredursun.nl (noindex, but reachable). Keeping the
+branch apart is simpler and safer than a build switch. Each phase is a PR
+into `feat/blog`; the launch PR is the one into `main`.
+
+### Languages and URLs (decided before launch)
+
+- English at `/blog/<slug>`, Turkish at `/tr/blog/<slug>`, Dutch at
+  `/nl/blog/<slug>`, matching the portfolio's `/tr` and `/nl` prefixes.
+- One slug per post folder, shared by every language
+  (`blog/content/<slug>/{en,tr,nl}.md`); slugs are not translated.
+- The launch post set is in all three languages; later posts may exist in
+  fewer. hreflang links only the languages a post actually has, plus
+  `x-default` to English.
+- Each language gets its own index and feed. Phase 3 implements this;
+  today only `en.md` is accepted.
 
 Fixed from launch on: post slugs and the domain. Atom entry ids are the post
 URLs, so changing either would make every reader show every post as new.
@@ -159,8 +182,42 @@ Choices made during the spike:
 
 Follow-ups, not blocking:
 
-- Small CLS (0.031) from the font swap: a metric-matched fallback face
-  would bring it to zero.
+- ~~Small CLS (0.031) from the font swap~~ Fixed in Phase 2: each page
+  preloads the face its largest text uses; article CLS is now 0.000.
 - The service worker's offline fallback for an uncached blog page is the
   SPA shell; a plain offline page for /blog would be clearer.
 - The browser theme-color follows the system setting, not a pinned theme.
+
+## Phase 2 results
+
+Discoverability while still noindex.
+
+- `/blog` index (essays as cards, short notes as a list, newest first),
+  Blog JSON-LD with inline BlogPosting nodes, "Keep reading" after each
+  article, an author card and a closing invitation on every page.
+- Status icons (hypothesis, testing, verified, revised); stale evidence is
+  flagged on the article and the index, in the browser, so the build never
+  reads the clock.
+- The last-change date counts corrections (feed, dateModified).
+- The Atom feed is built but written only after launch: noindex cannot
+  reach XML and feed services cache what they find.
+- A second, clearly marked placeholder post makes the notes list and the
+  related links part of every e2e and Lighthouse run.
+- CI rebuilds the blog after the build and compares hashes; labelled PRs
+  check blog paths on real Firebase Hosting.
+
+Lighthouse medians on this machine (mobile): `/blog` LCP 1.84 s, CLS 0.001,
+perf 0.99; article LCP 1.82 s, CLS 0.000 (was 0.031), perf 0.99. Desktop
+article: LCP 0.45 s, CLS 0.001, perf 1.00.
+
+Deferred, with the reason:
+
+| Item | Phase |
+| --- | --- |
+| Topic filter (as crawlable topic pages) | 3, once there are posts to filter |
+| "Now" log, illustrations | 3, content and artwork |
+| Turkish and Dutch | 3 (URL scheme above) |
+| Per-post link preview images | Before launch |
+| Navigation link, sitemap, smoke test, path-aware 404 | Launch |
+| "This site tests itself" strip | Later; it is a site-wide claim, not a blog one |
+| Offline page for /blog, theme-color for a pinned theme | Later |
