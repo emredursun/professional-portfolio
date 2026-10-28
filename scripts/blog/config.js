@@ -30,3 +30,11 @@ export const TOPIC_LABELS = Object.freeze({
   ai: 'Working with AI',
   life: 'Life',
 });
+
+/**
+ * Stays false until the launch PR. While false, every blog page is marked
+ * noindex, nofollow: pull requests labelled "preview" deploy to a public
+ * Firebase channel, and a placeholder post must never be indexed. Flipping
+ * it is on the launch checklist in docs/adr/0001-static-blog-build.md.
+ */
+export const BLOG_LAUNCHED = false;

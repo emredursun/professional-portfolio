@@ -35,22 +35,29 @@ function structuredData(post) {
   };
 }
 
-/** One line of <head>, or nothing. */
-const line = (condition, content) => (condition ? markup`${content}\n` : '');
+/**
+ * One line of <head>, or nothing. The content is a function so a line whose
+ * condition is false is never built (its values may not exist).
+ */
+const line = (condition, content) => (condition ? markup`${content()}\n` : '');
 
 /**
  * @param {{ post: object, assets: object, launched: boolean }} options
  */
 export function renderHead({ post, assets, launched }) {
   const url = postUrl(post);
-  const robots = line(!launched, markup`<meta name="robots" content="noindex, nofollow">`);
+  const robots = line(!launched, () => markup`<meta name="robots" content="noindex, nofollow">`);
   const styles = assets.styles.map((href) =>
-    line(true, markup`<link rel="stylesheet" href="${href}">`),
+    line(true, () => markup`<link rel="stylesheet" href="${href}">`),
   );
-  const codeStyles = line(post.hasCode, markup`<link rel="stylesheet" href="${assets.codeCss}">`);
+  const codeStyles = line(
+    Boolean(post.hasCode && assets.codeCss),
+    () => markup`<link rel="stylesheet" href="${assets.codeCss}">`,
+  );
   const fontPreload = line(
     Boolean(assets.fontPreload),
-    markup`<link rel="preload" href="${assets.fontPreload ?? ''}" as="font" type="font/woff2" crossorigin>`,
+    () =>
+      markup`<link rel="preload" href="${assets.fontPreload}" as="font" type="font/woff2" crossorigin>`,
   );
 
   return markup`<head>
