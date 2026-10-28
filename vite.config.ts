@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
+import { blogPreviewRoutes } from './scripts/lib/blog-preview-routes.js';
 
 /**
  * Security headers declared once in firebase.json (production) and replayed by
@@ -66,6 +67,8 @@ export default defineConfig(() => {
           'scripts/generate-agent-profile.js',
           'scripts/build-blog.js',
           'scripts/blog/**/*.js',
+          'scripts/lib/blog-preview-routes.js',
+          'blog/client/theme-toggle.ts',
           'src/utils/decor.ts',
           'src/utils/tween.ts',
           'src/bootstrap.ts',
@@ -80,7 +83,7 @@ export default defineConfig(() => {
       port: 3000,
       host: '0.0.0.0',
     },
-    plugins: [react(), notFoundPage()],
+    plugins: [react(), notFoundPage(), blogPreviewRoutes(productionSecurityHeaders())],
     publicDir: 'public',
     build: {
       copyPublicDir: true,
