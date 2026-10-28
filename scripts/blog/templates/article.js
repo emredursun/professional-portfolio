@@ -6,13 +6,13 @@
 import { markup, raw } from '../html.js';
 import { PERSON_ID, SOCIAL_IMAGE } from '../../lib/route-meta.js';
 import { BLOG_NAME, STATUS_LABELS, TOPIC_LABELS } from '../config.js';
-import { BLOG_URL, formatDate, postPath, postUrl } from './format.js';
+import { BLOG_URL, formatDate, lastChange, postPath, postUrl } from './format.js';
 import { renderPage } from './layout.js';
 import { aiPanel, corrections, evidenceCard, tableOfContents } from './sections.js';
 
 function articleMeta(post) {
   const url = postUrl(post);
-  const modified = post.updatedAt ?? post.publishedAt;
+  const modified = lastChange(post);
   return {
     title: `${post.title} · ${BLOG_NAME}`,
     heading: post.title,
@@ -49,7 +49,10 @@ function articleHeader(post) {
 </header>`;
 }
 
-/** Up to two other posts, so a reader who finished has somewhere to go. */
+/**
+ * Up to two other posts, so a reader who finished has somewhere to go. It sits
+ * after the article: links to other posts are not part of this one.
+ */
 function keepReading(related) {
   if (related.length === 0) return '';
   return markup`<section class="more" aria-labelledby="more-title">
@@ -75,8 +78,8 @@ ${raw(post.html)}
 </div>
 ${aiPanel(post)}
 ${corrections(post)}
-${keepReading(related)}
-</article>`;
+</article>
+${keepReading(related)}`;
   return renderPage({
     lang: post.lang,
     meta: articleMeta(post),

@@ -99,3 +99,13 @@ describe('blog preview routes: other files', () => {
     expect(handle('/blog/missing.xml').res.statusCode).toBe(404);
   });
 });
+
+describe('blog preview routes: the index', () => {
+  it('serves /blog from blog.html and redirects /blog/feed.xml/', () => {
+    fs.writeFileSync(path.join(dist, 'blog.html'), '<h1>Index</h1>');
+    expect(handle('/blog').next).toHaveBeenCalled();
+    const { res } = handle('/blog/feed.xml/');
+    expect(res.statusCode).toBe(301);
+    expect(res.headers.Location).toBe('/blog/feed.xml');
+  });
+});

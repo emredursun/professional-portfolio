@@ -85,6 +85,11 @@
   margin: 0;
 }
 
+/* A chip can share its colour with the card behind it: the border keeps it visible. */
+.card .status {
+  box-shadow: inset 0 0 0 1.5px var(--line);
+}
+
 .card-title {
   margin: 0;
   font-size: 1.5rem;
@@ -136,9 +141,11 @@
   font-weight: 400;
 }
 
-/* End of an article */
+/* After an article */
 .more {
-  margin: 40px 0 0;
+  max-width: calc(var(--measure) + 2 * var(--gutter));
+  margin: -40px auto 0;
+  padding: 0 var(--gutter) 88px;
 }
 
 .more h2 {
@@ -183,10 +190,6 @@
   display: none;
 }
 
-.blog-name {
-  text-decoration-color: transparent;
-}
-
-.blog-name:hover {
-  text-decoration-color: var(--underline);
+.evidence.is-stale {
+  box-shadow: inset 0 0 0 2px var(--chip-revised);
 }

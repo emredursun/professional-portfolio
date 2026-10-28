@@ -125,7 +125,7 @@ describe('buildBlog', () => {
     writePost('a-green-test', '## Part\n\nText.\n');
     const dist = makeDist('dist');
     const written = await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
-    expect(written).toEqual(['blog.html', 'blog/feed.xml', 'blog/a-green-test.html']);
+    expect(written).toEqual(['blog.html', 'blog/a-green-test.html']);
     const html = fs.readFileSync(path.join(dist, 'blog', 'a-green-test.html'), 'utf8');
     expect(html).toContain('<h1>A green test</h1>');
     expect(html).toContain('<h2 id="part">Part</h2>');
@@ -216,9 +216,7 @@ describe('main', () => {
     makeDist('dist');
     const out = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
     expect(await main(root)).toBe(0);
-    expect(out).toHaveBeenCalledWith(
-      'blog: 3 file(s)\n  blog.html\n  blog/feed.xml\n  blog/one.html\n',
-    );
+    expect(out).toHaveBeenCalledWith('blog: 2 file(s)\n  blog.html\n  blog/one.html\n');
   });
 
   it('prints the error and returns 1 when the build fails', async () => {
@@ -237,5 +235,47 @@ describe('loadPosts: reading time', () => {
     const code = 'token '.repeat(2000);
     writePost('fenced', `${words}\n\n\`\`\`\`text\n${code}\n\`\`\`\`\n`);
     expect(loadPosts(contentDir)[0].minutes).toBe(1);
+  });
+});
+
+describe('buildBlog: launch and related posts', () => {
+  it('writes the feed only once the blog has launched', async () => {
+    writePost('one', 'Body\n');
+    const before = makeDist('before');
+    await buildBlog({ distDir: before, contentDir, themeInitPath, launched: false });
+    expect(fs.existsSync(path.join(before, 'blog', 'feed.xml'))).toBe(false);
+
+    const after = makeDist('after');
+    const written = await buildBlog({ distDir: after, contentDir, themeInitPath, launched: true });
+    expect(written).toContain('blog/feed.xml');
+    expect(fs.readFileSync(path.join(after, 'blog', 'one.html'), 'utf8')).not.toContain('noindex');
+  });
+
+  it('ends each article with the two newest other posts', async () => {
+    const date = (day: string) => `\npublishedAt: 2026-10-${day}\n`;
+    writePost('first', 'Body\n');
+    writePost('second', 'Body\n');
+    writePost('third', 'Body\n');
+    for (const [slug, day] of [
+      ['first', '01'],
+      ['second', '02'],
+      ['third', '03'],
+    ]) {
+      const file = path.join(contentDir, slug, 'en.md');
+      fs.writeFileSync(
+        file,
+        fs.readFileSync(file, 'utf8').replace(/\npublishedAt: [\d-]+\n/, date(day)),
+      );
+    }
+    const dist = makeDist('dist');
+    await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
+    const related = (slug: string) =>
+      [
+        ...fs
+          .readFileSync(path.join(dist, 'blog', `${slug}.html`), 'utf8')
+          .matchAll(/<section class="more"[\s\S]*?<\/section>/g),
+      ].flatMap((m) => [...m[0].matchAll(/href="\/blog\/([a-z-]+)"/g)].map((h) => h[1]));
+    expect(related('first')).toEqual(['third', 'second']);
+    expect(related('third')).toEqual(['second', 'first']);
   });
 });

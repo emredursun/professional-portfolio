@@ -9,14 +9,11 @@
 
 import { markup } from './html.js';
 import { SITE_URL } from '../lib/route-meta.js';
-import { BLOG_NAME, TOPIC_LABELS } from './config.js';
-import { BLOG_URL, FEED_PATH, byNewest, postUrl } from './templates/format.js';
-
-const SUBTITLE = 'Notes on quality, and the rest of life.';
+import { BLOG_NAME, BLOG_TAGLINE, TOPIC_LABELS } from './config.js';
+import { BLOG_URL, FEED_PATH, byNewest, lastChange, postUrl } from './templates/format.js';
 
 /** Atom wants full timestamps; posts have dates, so midnight UTC. */
 const timestamp = (isoDate) => `${isoDate}T00:00:00Z`;
-const lastChange = (post) => post.updatedAt ?? post.publishedAt;
 
 function entry(post) {
   const url = postUrl(post);
@@ -42,7 +39,7 @@ export function renderFeed(posts) {
   const feed = markup`<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title>${BLOG_NAME}</title>
-<subtitle>${SUBTITLE}</subtitle>
+<subtitle>${BLOG_TAGLINE}</subtitle>
 <id>${BLOG_URL}</id>
 <link rel="alternate" type="text/html" href="${BLOG_URL}"/>
 <link rel="self" type="application/atom+xml" href="${SITE_URL}${FEED_PATH}"/>

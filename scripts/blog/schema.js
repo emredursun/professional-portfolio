@@ -9,7 +9,22 @@
 
 import { z } from 'zod';
 
-const text = z.string().trim().min(1);
+// Characters XML 1.0 forbids (C0 controls other than tab and newline, and the
+// noncharacters FFFE and FFFF). Built from code points so the source stays
+// readable ASCII. They would make the Atom feed unparseable while the HTML
+// pages still rendered, so a feed reader would silently stop updating.
+const XML_INVALID = new RegExp(
+  `[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f${String.fromCharCode(0xfffe, 0xffff)}]`,
+);
+
+const text = z
+  .string()
+  .trim()
+  .min(1)
+  .refine(
+    (value) => !XML_INVALID.test(value) && value.isWellFormed(),
+    'contains a control character or an unpaired surrogate',
+  );
 
 /** Calendar date as YYYY-MM-DD that actually exists (no 2026-02-30). */
 const isoDate = z.string().refine((value) => {

@@ -4,6 +4,8 @@
 
 export const BLOG_NAME = 'Field Notes';
 
+export const BLOG_TAGLINE = 'Notes on quality, and the rest of life.';
+
 /**
  * Element ids the page template uses. Heading ids never take these, so a
  * section called "Main" cannot hijack the skip link or a panel's label.

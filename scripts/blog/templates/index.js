@@ -6,7 +6,7 @@
 
 import { markup } from '../html.js';
 import { PERSON_ID, WEBSITE_ID } from '../../lib/route-meta.js';
-import { BLOG_NAME, STATUS_LABELS, TOPIC_LABELS } from '../config.js';
+import { BLOG_NAME, BLOG_TAGLINE, STATUS_LABELS, TOPIC_LABELS } from '../config.js';
 import { BLOG_URL, FEED_PATH, byNewest, formatDate, postPath, postUrl } from './format.js';
 import { renderPage } from './layout.js';
 
@@ -30,7 +30,15 @@ function indexMeta(posts) {
       inLanguage: 'en',
       author: { '@id': PERSON_ID },
       isPartOf: { '@id': WEBSITE_ID },
-      blogPost: posts.map((post) => ({ '@id': `${postUrl(post)}#article` })),
+      publisher: { '@id': PERSON_ID },
+      // Minimal nodes inline: search engines do not follow @id across pages.
+      blogPost: posts.map((post) => ({
+        '@type': 'BlogPosting',
+        '@id': `${postUrl(post)}#article`,
+        headline: post.title,
+        url: postUrl(post),
+        datePublished: post.publishedAt,
+      })),
     },
   };
 }
@@ -76,10 +84,14 @@ export function renderIndexPage({ posts, assets, launched }) {
   const content = markup`<div class="index">
 <header class="index-header">
 <h1>${BLOG_NAME}</h1>
-<p class="index-lede">Notes on quality, and the rest of life.</p>
+<p class="index-lede">${BLOG_TAGLINE}</p>
 <p class="index-intro">I test software for a living, in the Netherlands, in three languages. This is where I write down what I learn: at work, with AI, and in between.</p>
-<p><a class="button" href="${FEED_PATH}">Follow with a feed reader</a></p>
-</header>
+${
+  launched
+    ? markup`<p><a class="button" href="${FEED_PATH}">Follow with a feed reader</a></p>
+`
+    : ''
+}</header>
 ${section({ id: 'essays-title', title: 'Essays', intro: 'Longer pieces, rewritten until they hold.', items: essays.map(essayCard), listClass: 'cards' })}
 ${section({ id: 'notes-title', title: 'Short notes', intro: 'Smaller thoughts, still being tested.', items: notes.map(noteItem), listClass: 'notes' })}
 </div>`;

@@ -41,6 +41,13 @@ const line = (condition, content) => (condition ? markup`${content()}\n` : '');
  */
 export function renderHead({ meta, assets, launched }) {
   const robots = line(!launched, () => markup`<meta name="robots" content="noindex, nofollow">`);
+  // The feed exists only after launch: noindex cannot reach XML, and feed
+  // services cache what they find.
+  const feedLink = line(
+    launched,
+    () =>
+      markup`<link rel="alternate" type="application/atom+xml" title="${BLOG_NAME}" href="${FEED_PATH}">`,
+  );
   const articleTimes = line(
     meta.ogType === 'article',
     () => markup`<meta property="article:published_time" content="${meta.published}">
@@ -65,8 +72,7 @@ export function renderHead({ meta, assets, launched }) {
 <title>${meta.title}</title>
 <meta name="description" content="${meta.description}">
 ${robots}<link rel="canonical" href="${meta.url}">
-<link rel="alternate" type="application/atom+xml" title="${BLOG_NAME}" href="${FEED_PATH}">
-<meta name="color-scheme" content="light dark">
+${feedLink}<meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#faf7f0" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1c1b18" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">

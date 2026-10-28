@@ -99,14 +99,40 @@ describe('renderIndexPage', () => {
     expect(data.blogPost).toHaveLength(3);
   });
 
-  it('is noindex until launch and offers the feed', () => {
+  it('is noindex and offers no feed before launch', () => {
     const doc = index();
     expect(doc.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe(
       'noindex, nofollow',
     );
-    expect(
-      doc.querySelector('link[rel="alternate"][type="application/atom+xml"]')?.getAttribute('href'),
-    ).toBe('/blog/feed.xml');
+    expect(doc.querySelector('link[type="application/atom+xml"]')).toBeNull();
+    expect(doc.querySelector('a[href="/blog/feed.xml"]')).toBeNull();
+  });
+
+  it('is indexable and offers the feed after launch', () => {
+    const doc = parse(renderIndexPage({ posts, assets, launched: true }));
+    expect(doc.querySelector('meta[name="robots"]')).toBeNull();
+    expect(doc.querySelector('link[type="application/atom+xml"]')?.getAttribute('href')).toBe(
+      '/blog/feed.xml',
+    );
+    expect(doc.querySelectorAll('a[href="/blog/feed.xml"]').length).toBeGreaterThan(0);
+  });
+
+  it('lists the posts in the structured data, newest first, with their own data', () => {
+    const doc = index();
+    const data = JSON.parse(
+      doc.querySelector('script[type="application/ld+json"]')?.textContent ?? '{}',
+    );
+    expect(data.blogPost.map((post: { url: string }) => post.url)).toEqual([
+      'https://emredursun.nl/blog/a-note',
+      'https://emredursun.nl/blog/newer-essay',
+      'https://emredursun.nl/blog/older-essay',
+    ]);
+    expect(data.blogPost[1]).toMatchObject({
+      '@type': 'BlogPosting',
+      '@id': 'https://emredursun.nl/blog/newer-essay#article',
+      headline: 'Newer <essay>',
+      datePublished: '2026-10-01',
+    });
   });
 });
 
@@ -169,5 +195,44 @@ describe('renderFeed', () => {
     const doc = xml();
     expect(doc.querySelector('feed > updated')?.textContent).toBe('2026-10-20T00:00:00Z');
     expect(feed()).toBe(feed());
+  });
+});
+
+describe('last change', () => {
+  const corrected = {
+    ...posts[1],
+    corrections: [{ date: '2026-11-03', text: 'Fixed a number.' }],
+  };
+
+  it('counts a correction made after the last update, in the feed and the page', () => {
+    const feed = new DOMParser().parseFromString(renderFeed([corrected]), 'application/xml');
+    expect(feed.querySelector('feed > updated')?.textContent).toBe('2026-11-03T00:00:00Z');
+    expect(feed.querySelector('entry > updated')?.textContent).toBe('2026-11-03T00:00:00Z');
+    const page = parse(renderArticlePage({ post: corrected, assets, launched: false }));
+    expect(
+      page.querySelector('meta[property="article:modified_time"]')?.getAttribute('content'),
+    ).toBe('2026-11-03');
+    const data = JSON.parse(
+      page.querySelector('script[type="application/ld+json"]')?.textContent ?? '{}',
+    );
+    expect(data.dateModified).toBe('2026-11-03');
+  });
+});
+
+describe('renderFeed: entries', () => {
+  it('gives each entry its dates, link, summary, category and the feed an author', () => {
+    const doc = new DOMParser().parseFromString(renderFeed(posts), 'application/xml');
+    const newer = [...doc.querySelectorAll('entry')].find(
+      (entry) =>
+        entry.querySelector('id')?.textContent === 'https://emredursun.nl/blog/newer-essay',
+    )!;
+    expect(newer.querySelector('published')?.textContent).toBe('2026-10-01T00:00:00Z');
+    expect(newer.querySelector('updated')?.textContent).toBe('2026-10-20T00:00:00Z');
+    expect(newer.querySelector('link[rel="alternate"]')?.getAttribute('href')).toBe(
+      'https://emredursun.nl/blog/newer-essay',
+    );
+    expect(newer.querySelector('summary')?.textContent).toBe('Second & last.');
+    expect(newer.querySelector('category')?.getAttribute('term')).toBe('testing');
+    expect(doc.querySelector('feed > author > name')?.textContent).toBe('Emre Dursun');
   });
 });

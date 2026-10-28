@@ -28,6 +28,18 @@ export function postUrl(post) {
   return `${SITE_URL}${postPath(post)}`;
 }
 
+/**
+ * The date of a post's latest change: publication, update or correction,
+ * whichever is latest. Corrections count: a reader following the feed should
+ * hear about them, and so should search engines (dateModified).
+ */
+export function lastChange(post) {
+  return [post.publishedAt, post.updatedAt, ...(post.corrections ?? []).map((c) => c.date)]
+    .filter(Boolean)
+    .sort()
+    .at(-1);
+}
+
 /** Newest first; ties broken by slug so the order never depends on input order. */
 export function byNewest(a, b) {
   if (a.publishedAt !== b.publishedAt) return a.publishedAt < b.publishedAt ? 1 : -1;

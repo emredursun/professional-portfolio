@@ -22,10 +22,10 @@ function siteHeader() {
 </header>`;
 }
 
-function siteFooter() {
+function siteFooter(launched) {
   return markup`<footer class="site-footer">
 <p><span class="brand-name">emre<span class="brand-dot">.</span></span> Written by a person, checked twice.</p>
-<p><a href="${BLOG_PATH}">All notes</a> · <a href="${FEED_PATH}">Feed</a> · <a href="/">Portfolio</a> · <a href="/contact">Contact</a></p>
+<p><a href="${BLOG_PATH}">All posts</a> · ${launched ? markup`<a href="${FEED_PATH}">Feed</a> · ` : ''}<a href="/">Portfolio</a> · <a href="/contact">Contact</a></p>
 </footer>`;
 }
 
@@ -43,7 +43,7 @@ ${progress ? markup`<div class="progress" aria-hidden="true"></div>\n` : ''}${si
 <main id="main">
 ${content}
 </main>
-${siteFooter()}
+${siteFooter(launched)}
 </body>
 </html>
 `;

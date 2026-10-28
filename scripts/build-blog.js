@@ -93,7 +93,8 @@ export async function buildBlog({ distDir, contentDir, themeInitPath, launched =
   );
   return [
     writeOutput(distDir, 'blog.html', renderIndexPage({ posts: rendered, assets, launched })),
-    writeOutput(distDir, 'blog/feed.xml', renderFeed(rendered)),
+    // The feed only after launch: noindex cannot reach XML (see head.js).
+    ...(launched ? [writeOutput(distDir, 'blog/feed.xml', renderFeed(rendered))] : []),
     ...articles,
   ];
 }

@@ -90,9 +90,19 @@ time-boxed Astro spike against the same criteria and record the outcome here.
 
 ## Launch checklist (later phases)
 
-- Set `BLOG_LAUNCHED = true`.
+- Set `BLOG_LAUNCHED = true`. This also writes `/blog/feed.xml` and adds
+  the feed links, which stay out before launch because `noindex` cannot
+  reach XML and feed services cache what they find.
+- Serve the feed as `application/atom+xml; charset=utf-8` (a `firebase.json`
+  header); Firebase's default for `.xml` is `application/xml`.
 - Re-enable the Lighthouse `is-crawlable` audit for blog pages.
 - Add blog routes to the sitemap and the deploy smoke test.
+- Add the blog link to the portfolio navigation.
+- Check once on a preview channel or the Firebase emulator that `/blog`
+  resolves to `blog.html` next to the `blog/` folder under `cleanUrls`.
+
+Fixed from launch on: post slugs and the domain. Atom entry ids are the post
+URLs, so changing either would make every reader show every post as new.
 
 ## Baseline (T0, before any blog code)
 

@@ -122,3 +122,21 @@ describe('validatePost: review findings', () => {
     );
   });
 });
+
+describe('validatePost: text that would break the feed', () => {
+  it.each([
+    ['a C0 control', `Title ${String.fromCharCode(1)} here`],
+    ['NUL', `A${String.fromCharCode(0)}B`],
+    ['a vertical tab', `A${String.fromCharCode(11)}B`],
+    ['the noncharacter FFFE', `A${String.fromCharCode(0xfffe)}B`],
+    ['an unpaired surrogate', `A${String.fromCharCode(0xd800)}B`],
+  ])('rejects %s in the title', (_name, title) => {
+    expect(() => validatePost(valid({ title }), FILE)).toThrow(/title.*control character/);
+  });
+
+  it('accepts ordinary punctuation, emoji pairs and Turkish letters', () => {
+    expect(validatePost(valid({ title: 'Çalışma — “notes” & ğüşİ ✓' }), FILE).title).toBe(
+      'Çalışma — “notes” & ğüşİ ✓',
+    );
+  });
+});

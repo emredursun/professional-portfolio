@@ -194,23 +194,36 @@ test.describe('blog index and feed', () => {
     await expect(page).toHaveURL(new RegExp(`${POST}$`));
   });
 
-  test('the index passes axe and fits the screen', async ({ page }) => {
-    await page.goto('/blog');
-    const results = await new AxeBuilder({ page })
+  test('the index passes axe in every theme and fits the screen', async ({ page }) => {
+    for (const colorScheme of ['light', 'dark'] as const) {
+      await page.emulateMedia({ colorScheme });
+      await page.goto('/blog');
+      const results = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+        .analyze();
+      expect(results.violations, colorScheme).toEqual([]);
+    }
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.evaluate(() => {
+      localStorage.setItem('theme', 'dark');
+      localStorage.setItem('userToggledTheme', 'true');
+    });
+    await page.reload();
+    await expect(page.locator('html')).toHaveClass(/\bdark\b/);
+    const pinned = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
       .analyze();
-    expect(results.violations).toEqual([]);
+    expect(pinned.violations, 'pinned dark').toEqual([]);
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
     expect(overflow).toBeLessThanOrEqual(0);
   });
 
-  test('the Atom feed is served and lists the post', async ({ request }) => {
-    const response = await request.get('/blog/feed.xml');
-    expect(response.status()).toBe(200);
-    const body = await response.text();
-    expect(body).toContain('xmlns="http://www.w3.org/2005/Atom"');
-    expect(body).toContain(`https://emredursun.nl${POST}`);
+  test('there is no feed before launch, and no page links to one', async ({ page, request }) => {
+    expect((await request.get('/blog/feed.xml')).status()).toBe(404);
+    await page.goto('/blog');
+    await expect(page.locator('link[type="application/atom+xml"]')).toHaveCount(0);
+    await expect(page.locator('a[href="/blog/feed.xml"]')).toHaveCount(0);
   });
 });
