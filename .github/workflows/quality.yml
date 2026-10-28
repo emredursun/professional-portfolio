@@ -57,6 +57,18 @@ jobs:
       - name: Generated files are committed
         run: git diff --exit-code -- public/sitemap.xml scripts/sitemap-state.json profile/README.md
 
+      # The blog build must not depend on the clock or on file-system order
+      # (docs/adr/0001-static-blog-build.md). Unit tests check this with a
+      # fake manifest; this checks the real build on the runner.
+      - name: Blog build is deterministic
+        run: |
+          set -euo pipefail
+          snapshot() { (cd dist && find blog blog.html assets -type f \( -path 'blog/*' -o -name 'blog.html' -o -name 'blog-*' \) | sort | xargs sha256sum); }
+          before="$(snapshot)"
+          node scripts/build-blog.js > /dev/null
+          after="$(snapshot)"
+          [ "$before" = "$after" ] || { diff <(echo "$before") <(echo "$after"); echo "::error::Rebuilding the blog changed its output"; exit 1; }
+
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 
