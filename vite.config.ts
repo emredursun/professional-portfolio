@@ -64,6 +64,7 @@ export default defineConfig(() => {
           'scripts/write-version.js',
           'scripts/write-quality.js',
           'scripts/generate-agent-profile.js',
+          'scripts/blog/**/*.js',
           'src/utils/decor.ts',
           'src/utils/tween.ts',
           'src/bootstrap.ts',
