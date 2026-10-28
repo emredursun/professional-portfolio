@@ -305,3 +305,15 @@ describe('font preload', () => {
     expect(preloaded(article)).toBe('/assets/bricolage-grotesque-latin-wght-normal.woff2');
   });
 });
+
+describe('index headline', () => {
+  it('makes the headline the h1, with the blog name as a label above it', () => {
+    const doc = index();
+    expect(doc.querySelector('h1')?.textContent).toBe('Notes on quality, and the rest of life.');
+    const eyebrow = doc.querySelector('.index-eyebrow');
+    expect(eyebrow?.textContent).toBe('Field Notes');
+    expect(eyebrow?.compareDocumentPosition(doc.querySelector('h1')!)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+  });
+});

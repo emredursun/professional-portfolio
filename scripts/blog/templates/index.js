@@ -113,8 +113,8 @@ export function renderIndexPage({ posts, assets, launched }) {
   const notes = sorted.filter((post) => post.kind === 'note');
   const content = markup`<div class="index">
 <header class="index-header">
-<h1>${BLOG_NAME}</h1>
-<p class="index-lede">${BLOG_TAGLINE}</p>
+<p class="index-eyebrow">${BLOG_NAME}</p>
+<h1 class="index-lede">${BLOG_TAGLINE}</h1>
 <p class="index-intro">I test software for a living, in the Netherlands, in three languages. This is where I write down what I learn: at work, with AI, and in between.</p>
 ${heroActions(sorted[0], launched)}
 </header>
