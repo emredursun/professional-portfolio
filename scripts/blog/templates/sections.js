@@ -16,7 +16,7 @@ export function nextRecheck(isoDate) {
 
 export function evidenceCard(post) {
   const { evidence } = post;
-  return markup`<aside class="evidence" aria-labelledby="evidence-title">
+  return markup`<aside class="evidence" aria-labelledby="evidence-title" data-recheck-by="${nextRecheck(evidence.recheckedAt)}">
 <h2 id="evidence-title" class="visually-hidden">Evidence for this note</h2>
 <dl class="evidence-grid">
 <div><dt>Status</dt><dd class="status status-${post.status}">${STATUS_LABELS[post.status]}</dd></div>
@@ -24,6 +24,7 @@ export function evidenceCard(post) {
 <div><dt>Based on</dt><dd>${evidence.basedOn.join('; ')}</dd></div>
 <div><dt>Re-checked</dt><dd><time datetime="${evidence.recheckedAt}">${formatDate(evidence.recheckedAt)}</time>, next by <time datetime="${nextRecheck(evidence.recheckedAt)}">${formatDate(nextRecheck(evidence.recheckedAt))}</time></dd></div>
 </dl>
+<p class="stale-note" hidden>Needs a re-run: this evidence is more than a year old.</p>
 </aside>`;
 }
 

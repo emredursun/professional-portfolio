@@ -7,6 +7,7 @@
         "http://localhost:4181/about",
         "http://localhost:4181/projects",
         "http://localhost:4181/contact",
+        "http://localhost:4181/blog",
         "http://localhost:4181/blog/sample-a-green-test"
       ],
       "numberOfRuns": 5,
@@ -17,7 +18,7 @@
     "assert": {
       "assertMatrix": [
         {
-          "matchingUrlPattern": "^(?!.*/(?:projects$|blog/)).*$",
+          "matchingUrlPattern": "^(?!.*/(?:projects$|blog(?:/|$))).*$",
           "assertions": {
             "categories:performance": [
               "error",
@@ -59,7 +60,7 @@
           }
         },
         {
-          "matchingUrlPattern": ".*/blog/.*",
+          "matchingUrlPattern": ".*/blog(?:/.*)?$",
           "assertions": {
             "categories:performance": [
               "error",

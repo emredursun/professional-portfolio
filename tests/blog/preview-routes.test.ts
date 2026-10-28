@@ -91,3 +91,11 @@ describe('blog preview routes: cleanUrls', () => {
     expect(handle('/blog/nope.html').res.statusCode).toBe(404);
   });
 });
+
+describe('blog preview routes: other files', () => {
+  it('serves the feed and 404s a missing file', () => {
+    fs.writeFileSync(path.join(dist, 'blog', 'feed.xml'), '<feed/>');
+    expect(handle('/blog/feed.xml').next).toHaveBeenCalled();
+    expect(handle('/blog/missing.xml').res.statusCode).toBe(404);
+  });
+});

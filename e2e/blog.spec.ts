@@ -180,3 +180,37 @@ test.describe('blog paths behave like Firebase', () => {
     expect(slashed.headers().location).toBe(POST);
   });
 });
+
+test.describe('blog index and feed', () => {
+  test('the index lists the posts and links to them', async ({ page }) => {
+    const response = await page.goto('/blog');
+    expect(response?.status()).toBe(200);
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      'content',
+      'noindex, nofollow',
+    );
+    await page.locator(`a[href="${POST}"]`).first().click();
+    await expect(page).toHaveURL(new RegExp(`${POST}$`));
+  });
+
+  test('the index passes axe and fits the screen', async ({ page }) => {
+    await page.goto('/blog');
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    expect(results.violations).toEqual([]);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
+  test('the Atom feed is served and lists the post', async ({ request }) => {
+    const response = await request.get('/blog/feed.xml');
+    expect(response.status()).toBe(200);
+    const body = await response.text();
+    expect(body).toContain('xmlns="http://www.w3.org/2005/Atom"');
+    expect(body).toContain(`https://emredursun.nl${POST}`);
+  });
+});

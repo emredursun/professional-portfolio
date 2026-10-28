@@ -16,6 +16,9 @@ export const RESERVED_IDS = Object.freeze([
   'ai-mine',
   'ai-assisted',
   'corrections-title',
+  'more-title',
+  'essays-title',
+  'notes-title',
 ]);
 
 export const STATUS_LABELS = Object.freeze({

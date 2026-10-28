@@ -4,7 +4,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { buildBlog, main, writePage } from '../../scripts/build-blog.js';
+import { buildBlog, main, writeOutput } from '../../scripts/build-blog.js';
 import { loadPosts } from '../../scripts/blog/content.js';
 import { BLOG_ENTRY } from '../../scripts/blog/manifest.js';
 
@@ -125,7 +125,7 @@ describe('buildBlog', () => {
     writePost('a-green-test', '## Part\n\nText.\n');
     const dist = makeDist('dist');
     const written = await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
-    expect(written).toEqual(['blog/a-green-test.html']);
+    expect(written).toEqual(['blog.html', 'blog/feed.xml', 'blog/a-green-test.html']);
     const html = fs.readFileSync(path.join(dist, 'blog', 'a-green-test.html'), 'utf8');
     expect(html).toContain('<h1>A green test</h1>');
     expect(html).toContain('<h2 id="part">Part</h2>');
@@ -191,10 +191,18 @@ describe('buildBlog', () => {
   });
 });
 
-describe('writePage', () => {
-  it('refuses to write outside dist/blog', () => {
-    expect(() => writePage(root, '../escape', '<p>x</p>')).toThrow(/outside dist\/blog/);
-    expect(fs.existsSync(path.join(root, 'escape.html'))).toBe(false);
+describe('writeOutput', () => {
+  it.each(['../escape.html', 'blog/../../escape.html', 'blog/a/b.html', 'other.html', 'blog/x.js'])(
+    'refuses %s',
+    (file) => {
+      expect(() => writeOutput(root, file, 'x')).toThrow(/refusing/);
+    },
+  );
+
+  it('writes the index, the feed and posts', () => {
+    expect(writeOutput(root, 'blog.html', 'i')).toBe('blog.html');
+    expect(writeOutput(root, 'blog/feed.xml', 'f')).toBe('blog/feed.xml');
+    expect(fs.readFileSync(path.join(root, 'blog', 'feed.xml'), 'utf8')).toBe('f');
   });
 });
 
@@ -208,7 +216,9 @@ describe('main', () => {
     makeDist('dist');
     const out = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
     expect(await main(root)).toBe(0);
-    expect(out).toHaveBeenCalledWith('blog: 1 page(s)\n  blog/one.html\n');
+    expect(out).toHaveBeenCalledWith(
+      'blog: 3 file(s)\n  blog.html\n  blog/feed.xml\n  blog/one.html\n',
+    );
   });
 
   it('prints the error and returns 1 when the build fails', async () => {
