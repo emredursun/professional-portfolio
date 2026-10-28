@@ -22,7 +22,8 @@ const byName = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 
 /** Reading time from prose only: code is skimmed, not read. */
 function readingMinutes(body) {
-  const prose = body.replace(/^(```|~~~)[^\n]*\n[\s\S]*?^\1[^\n]*$/gm, '');
+  // A fence is three or more backticks or tildes, closed by the same run.
+  const prose = body.replace(/^(`{3,}|~{3,})[^\n]*\n[\s\S]*?^\1[^\n]*$/gm, '');
   const words = prose.split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / WORDS_PER_MINUTE));
 }

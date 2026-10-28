@@ -88,8 +88,9 @@ export default defineConfig(() => {
     build: {
       copyPublicDir: true,
       // dist/.vite/manifest.json maps the blog entry to its hashed files for
-      // scripts/build-blog.js. firebase.json's "**/.*" ignore keeps it off
-      // the live site (tests/hosting.test.ts checks).
+      // scripts/build-blog.js. firebase.json's "**/.*/**" ignore keeps it off
+      // the live site ("**/.*" alone would only skip the folder entry, not the
+      // file in it); tests/hosting.test.ts checks the file itself.
       manifest: true,
       // Never inline fonts as data: URIs. Small @fontsource subsets fell under
       // the 4 KB default and were embedded in CSS, which the CSP's

@@ -9,12 +9,13 @@ import { expect, test } from './fixtures';
  * error or CSP violation, so each test here also proves the page is clean.
  */
 const blogDir = path.join(process.cwd(), 'dist', 'blog');
-const slug = fs
-  .readdirSync(blogDir)
-  .filter((file) => file.endsWith('.html'))
-  .sort()[0]
-  .replace(/\.html$/, '');
-const POST = `/blog/${slug}`;
+const pages = fs.existsSync(blogDir)
+  ? fs.readdirSync(blogDir).filter((file) => file.endsWith('.html'))
+  : [];
+if (pages.length === 0) {
+  throw new Error('e2e/blog.spec.ts: no pages in dist/blog; run `npm run build` first');
+}
+const POST = `/blog/${pages.sort()[0].replace(/\.html$/, '')}`;
 const DARK_PAPER = 'rgb(28, 27, 24)';
 const LIGHT_PAPER = 'rgb(250, 247, 240)';
 
@@ -43,7 +44,9 @@ test.describe('blog article', () => {
     const target = (await first.getAttribute('href'))!;
     await first.click();
     await expect(page).toHaveURL(new RegExp(`${target}$`));
-    await expect(page.locator(target)).toBeInViewport();
+    // [id="..."] rather than #id: a heading such as "3 questions" gives an id
+    // that is not a valid CSS id selector.
+    await expect(page.locator(`[id="${target.slice(1)}"]`)).toBeInViewport();
   });
 
   test('loads nothing from third parties and none of the portfolio app', async ({
@@ -71,6 +74,28 @@ test.describe('blog article', () => {
         .analyze();
       expect(results.violations, colorScheme).toEqual([]);
     }
+  });
+
+  test('passes axe with dark pinned while the system is light', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.addInitScript(() => {
+      localStorage.setItem('theme', 'dark');
+      localStorage.setItem('userToggledTheme', 'true');
+    });
+    await page.goto(POST);
+    await expect(page.locator('html')).toHaveClass(/\bdark\b/);
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  });
+
+  test('shows a visible focus ring on keyboard focus', async ({ page }) => {
+    await page.goto(POST);
+    await page.keyboard.press('Tab');
+    const skip = page.getByRole('link', { name: 'Skip to content' });
+    await expect(skip).toBeFocused();
+    expect(await skip.evaluate((el) => getComputedStyle(el).outlineStyle)).toBe('solid');
   });
 
   test('fits the screen without horizontal scrolling', async ({ page }) => {

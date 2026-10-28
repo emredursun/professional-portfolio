@@ -4,7 +4,8 @@
  * The blog's CSS, fonts and small script go through the normal Vite build as
  * a second entry (vite.config.ts), so they get content-hashed names and the
  * immutable cache headers /assets/** already has. The manifest maps the entry
- * to those names. It lives in dist/.vite/, which firebase.json never deploys.
+ * to those names. It lives in dist/.vite/, which firebase.json's ignore rule
+ * for files inside dot-folders keeps off the live site.
  *
  * The blog entry must not import shared chunks: if it did, an article page
  * would download part of the portfolio's React bundle.

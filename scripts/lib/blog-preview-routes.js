@@ -27,19 +27,24 @@ export function createBlogRouteHandler({ distDir, headers }) {
     const { pathname } = url;
     if (!BLOG_PATH.test(pathname)) return next();
 
-    if (pathname.endsWith('/')) {
+    const redirect = (location) => {
       res.statusCode = 301;
-      res.setHeader('Location', `${pathname.replace(/\/+$/, '')}${url.search}`);
+      res.setHeader('Location', `${location}${url.search}`);
       return res.end();
-    }
+    };
+    if (pathname.endsWith('/')) return redirect(pathname.replace(/\/+$/, ''));
 
+    // cleanUrls: /blog/x.html for an existing page redirects to /blog/x.
+    const clean = pathname.replace(/\.html$/, '');
     let file;
     try {
-      file = path.resolve(root, `.${decodeURIComponent(pathname)}.html`);
+      file = path.resolve(root, `.${decodeURIComponent(clean)}.html`);
     } catch {
       file = '';
     }
-    if (file.startsWith(root + path.sep) && fs.existsSync(file)) return next();
+    const exists = file.startsWith(root + path.sep) && fs.existsSync(file);
+    if (exists && clean !== pathname) return redirect(clean);
+    if (exists) return next();
 
     res.statusCode = 404;
     Object.entries(headers).forEach(([name, value]) => res.setHeader(name, value));

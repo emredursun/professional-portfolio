@@ -53,19 +53,19 @@
 }
 
 .status-verified {
-  background: var(--verified);
+  background: var(--chip-verified);
 }
 
 .status-testing {
-  background: var(--mustard);
+  background: var(--chip-testing);
 }
 
 .status-hypothesis {
-  background: #e7e0f0;
+  background: var(--chip-hypothesis);
 }
 
 .status-revised {
-  background: #f6dfcd;
+  background: var(--chip-revised);
 }
 
 /* Evidence card */

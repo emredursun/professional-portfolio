@@ -33,8 +33,30 @@
   }
 }
 
-/* Print: the article and its sources, without the page furniture. */
+/*
+ * Print: the article and its sources, without the page furniture. Printers
+ * drop backgrounds, so the page prints in the light palette whatever theme is
+ * on screen, and code blocks print as dark text instead of their light-on-dark
+ * screen colours.
+ */
 @media print {
+  :root,
+  :root.dark,
+  :root:not(.light) {
+    color-scheme: light;
+
+    --paper: #fff;
+    --ink: #000;
+    --ink-2: #333;
+    --line: #999;
+    --sage: #fff;
+    --lavender: #fff;
+    --peach: #fff;
+    --butter: #fff;
+    --check: #000;
+    --underline: #000;
+  }
+
   .site-nav,
   .progress,
   .skip-link,
@@ -43,9 +65,14 @@
     display: none;
   }
 
-  body {
+  .prose pre {
+    border: 1px solid #999;
     background: #fff;
     color: #000;
+  }
+
+  .prose .shiki span {
+    color: inherit;
   }
 
   .prose a[href^='http']::after {

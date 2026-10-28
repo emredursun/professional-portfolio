@@ -85,6 +85,9 @@ describe('firebase.json for the blog', () => {
   it('never deploys the Vite build manifest', () => {
     const ignored = (file: string) =>
       (firebase.hosting.ignore as string[]).some((glob) => picomatch(glob, { dot: true })(file));
-    expect(ignored('.vite/manifest.json') || ignored('.vite')).toBe(true);
+    // firebase-tools lists files with glob, where **/.* matches the .vite folder
+    // entry but not the files in it; the file itself must match an ignore rule.
+    expect(ignored('.vite/manifest.json')).toBe(true);
+    expect(ignored('blog/a-post.html')).toBe(false);
   });
 });

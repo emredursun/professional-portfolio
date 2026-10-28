@@ -19,4 +19,6 @@ import './styles/extras.css';
 import { bindThemeToggle } from './theme-toggle';
 
 const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-bindThemeToggle(document, () => darkQuery.matches);
+bindThemeToggle(document, () => darkQuery.matches, {
+  onSystemChange: (listener) => darkQuery.addEventListener('change', listener),
+});

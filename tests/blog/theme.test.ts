@@ -97,8 +97,35 @@ describe('theme-toggle', () => {
         throw new Error('QuotaExceeded');
       },
     } as unknown as Storage;
-    bindThemeToggle(document, () => false, blocked);
+    bindThemeToggle(document, () => false, { getStorage: () => blocked });
     document.querySelector('button')!.click();
     expect(document.documentElement.classList.contains('dark')).toBe(true);
+  });
+
+  it('still switches when even reading localStorage throws (cookies blocked)', () => {
+    document.body.innerHTML = '<button type="button" data-theme-toggle>Dark theme</button>';
+    bindThemeToggle(document, () => false, {
+      getStorage: () => {
+        throw new Error('SecurityError');
+      },
+    });
+    document.querySelector('button')!.click();
+    expect(document.documentElement.classList.contains('dark')).toBe(true);
+  });
+
+  it('keeps aria-pressed true to the screen when the OS theme changes', () => {
+    document.body.innerHTML = '<button type="button" data-theme-toggle>Dark theme</button>';
+    let systemDark = false;
+    let notify = () => {};
+    bindThemeToggle(document, () => systemDark, {
+      onSystemChange: (listener) => {
+        notify = listener;
+      },
+    });
+    const button = document.querySelector('button')!;
+    expect(button.getAttribute('aria-pressed')).toBe('false');
+    systemDark = true;
+    notify();
+    expect(button.getAttribute('aria-pressed')).toBe('true');
   });
 });

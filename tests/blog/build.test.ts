@@ -220,3 +220,12 @@ describe('main', () => {
     expect(err).toHaveBeenCalledWith(expect.stringMatching(/vite build/));
   });
 });
+
+describe('loadPosts: reading time', () => {
+  it('skips code in fences of four or more backticks too', () => {
+    const words = Array.from({ length: 220 }, () => 'word').join(' ');
+    const code = 'token '.repeat(2000);
+    writePost('fenced', `${words}\n\n\`\`\`\`text\n${code}\n\`\`\`\`\n`);
+    expect(loadPosts(contentDir)[0].minutes).toBe(1);
+  });
+});

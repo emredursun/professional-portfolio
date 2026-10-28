@@ -78,3 +78,16 @@ describe('blog preview routes', () => {
     expect(res.statusCode).toBe(404);
   });
 });
+
+describe('blog preview routes: cleanUrls', () => {
+  it('redirects /blog/x.html to /blog/x when the page exists, as Firebase cleanUrls does', () => {
+    const { res, next } = handle('/blog/known.html?ref=a');
+    expect(next).not.toHaveBeenCalled();
+    expect(res.statusCode).toBe(301);
+    expect(res.headers.Location).toBe('/blog/known?ref=a');
+  });
+
+  it('answers a missing .html page with 404', () => {
+    expect(handle('/blog/nope.html').res.statusCode).toBe(404);
+  });
+});

@@ -20,8 +20,13 @@ export function nextTheme(theme: Theme): Theme {
   return theme === 'dark' ? 'light' : 'dark';
 }
 
-function remember(storage: Storage, theme: Theme): void {
+/**
+ * Storage is looked up only when needed and inside the try: with cookies
+ * blocked, merely reading window.localStorage throws.
+ */
+function remember(getStorage: () => Storage, theme: Theme): void {
   try {
+    const storage = getStorage();
     storage.setItem('theme', theme);
     storage.setItem('userToggledTheme', 'true');
   } catch {
@@ -29,10 +34,20 @@ function remember(storage: Storage, theme: Theme): void {
   }
 }
 
+interface ToggleOptions {
+  /** Where the choice is stored; defaults to the window's localStorage. */
+  getStorage?: () => Storage;
+  /** Subscribes to OS theme changes, so the button state stays true. */
+  onSystemChange?: (listener: () => void) => void;
+}
+
 export function bindThemeToggle(
   doc: Document,
   prefersDark: () => boolean,
-  storage: Storage = doc.defaultView!.localStorage,
+  {
+    getStorage = () => doc.defaultView!.localStorage,
+    onSystemChange = () => {},
+  }: ToggleOptions = {},
 ): void {
   const root = doc.documentElement;
   const buttons = [...doc.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')];
@@ -46,9 +61,10 @@ export function bindThemeToggle(
       const theme = nextTheme(currentTheme(root, prefersDark()));
       root.classList.remove(...THEMES);
       root.classList.add(theme);
-      remember(storage, theme);
+      remember(getStorage, theme);
       sync();
     }),
   );
+  onSystemChange(sync);
   sync();
 }
