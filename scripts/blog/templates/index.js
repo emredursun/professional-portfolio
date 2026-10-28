@@ -43,6 +43,7 @@ function indexMeta(posts) {
     description: DESCRIPTION,
     url: BLOG_URL,
     ogType: 'website',
+    lcpFont: 'reading',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Blog',

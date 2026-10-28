@@ -39,7 +39,10 @@ const assets = Object.freeze({
   script: '/assets/article-abc.js',
   styles: ['/assets/article-def.css'],
   codeCss: '/assets/blog-code-87654321.css',
-  fontPreload: '/assets/newsreader-latin-400-normal.woff2',
+  preload: {
+    reading: '/assets/newsreader-latin-400-normal.woff2',
+    display: '/assets/bricolage-grotesque-latin-wght-normal.woff2',
+  },
 });
 
 function page(overrides: Record<string, unknown> = {}, launched = false) {

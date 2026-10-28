@@ -33,6 +33,7 @@ const line = (condition, content) => (condition ? markup`${content()}\n` : '');
  * @property {string} [published]   YYYY-MM-DD, articles only.
  * @property {string} [modified]    YYYY-MM-DD, articles only.
  * @property {boolean} [hasCode]
+ * @property {'reading' | 'display'} lcpFont  The face of the page's largest text, preloaded.
  * @property {object} jsonLd
  */
 
@@ -60,9 +61,9 @@ function optionalLines({ meta, assets, launched }) {
       () => markup`<link rel="stylesheet" href="${assets.codeCss}">`,
     ),
     fontPreload: line(
-      Boolean(assets.fontPreload),
+      Boolean(assets.preload?.[meta.lcpFont]),
       () =>
-        markup`<link rel="preload" href="${assets.fontPreload}" as="font" type="font/woff2" crossorigin>`,
+        markup`<link rel="preload" href="${assets.preload[meta.lcpFont]}" as="font" type="font/woff2" crossorigin>`,
     ),
   };
 }

@@ -29,8 +29,13 @@ import { byNewest } from './blog/templates/format.js';
 import { renderIndexPage } from './blog/templates/index.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-// The reading font's regular Latin woff2, the one the first paragraph needs.
-const LCP_FONT = /\/newsreader-latin-400-normal-[\w-]+\.woff2$/;
+// The Latin woff2 of each face a page's largest text uses (measured with
+// Lighthouse: the index's intro paragraph is Newsreader, an article's title
+// Bricolage). Each page preloads the one its LCP element needs.
+const PRELOAD_FONTS = {
+  reading: /\/newsreader-latin-400-normal-[\w-]+\.woff2$/,
+  display: /\/bricolage-grotesque-latin-wght-normal-[\w-]+\.woff2$/,
+};
 
 // The only files the blog writes: dist/blog.html and dist/blog/<name>.html|xml.
 const OUTPUT = /^blog(?:\.html|\/[a-z0-9]+(?:-[a-z0-9]+)*\.(?:html|xml))$/;
@@ -81,7 +86,12 @@ export async function buildBlog({ distDir, contentDir, themeInitPath, launched =
     ...vite,
     themeInit: emitAsset(distDir, 'theme-init', 'js', fs.readFileSync(themeInitPath, 'utf8')),
     codeCss: codeRules ? emitAsset(distDir, 'code', 'css', codeRules) : undefined,
-    fontPreload: vite.fonts.find((font) => LCP_FONT.test(font)),
+    preload: Object.fromEntries(
+      Object.entries(PRELOAD_FONTS).map(([face, pattern]) => [
+        face,
+        vite.fonts.find((font) => pattern.test(font)),
+      ]),
+    ),
   });
 
   const articles = rendered.map((post) =>

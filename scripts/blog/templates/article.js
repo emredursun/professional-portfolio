@@ -20,6 +20,7 @@ function articleMeta(post) {
     description: post.description,
     url,
     ogType: 'article',
+    lcpFont: 'display',
     published: post.publishedAt,
     modified,
     hasCode: post.hasCode,

@@ -48,7 +48,10 @@ function makeDist(name: string) {
         file: 'assets/article-abc.js',
         isEntry: true,
         css: ['assets/article-def.css'],
-        assets: ['assets/newsreader-latin-400-normal-x1.woff2'],
+        assets: [
+          'assets/newsreader-latin-400-normal-x1.woff2',
+          'assets/bricolage-grotesque-latin-wght-normal-y2.woff2',
+        ],
       },
     }),
   );
@@ -131,7 +134,9 @@ describe('buildBlog', () => {
     expect(html).toContain('<h2 id="part">Part</h2>');
     expect(html).toContain('noindex, nofollow');
     expect(html).toMatch(/\/assets\/blog-theme-init-[0-9a-f]{8}\.js/);
-    expect(html).toContain('/assets/newsreader-latin-400-normal-x1.woff2');
+    expect(html).toContain('/assets/bricolage-grotesque-latin-wght-normal-y2.woff2');
+    const index = fs.readFileSync(path.join(dist, 'blog.html'), 'utf8');
+    expect(index).toContain('/assets/newsreader-latin-400-normal-x1.woff2');
   });
 
   it('emits the code colours only when a post has code', async () => {

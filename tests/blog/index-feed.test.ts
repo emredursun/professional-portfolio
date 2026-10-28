@@ -53,7 +53,10 @@ const assets = {
   script: '/assets/article-1.js',
   styles: ['/assets/article-1.css'],
   codeCss: undefined,
-  fontPreload: undefined,
+  preload: {
+    reading: '/assets/newsreader-latin-400-normal.woff2',
+    display: '/assets/bricolage-grotesque-latin-wght-normal.woff2',
+  },
 };
 
 const parse = (html: string) => new DOMParser().parseFromString(html, 'text/html');
@@ -289,5 +292,16 @@ describe('calls to action and the author', () => {
     expect(img.getAttribute('width')).toBe('64');
     expect(img.getAttribute('height')).toBe('64');
     expect(doc.querySelector('.author a')?.getAttribute('href')).toBe('/about');
+  });
+});
+
+describe('font preload', () => {
+  const preloaded = (doc: Document) =>
+    doc.querySelector('link[rel="preload"][as="font"]')?.getAttribute('href');
+
+  it('preloads the face of each page’s largest text', () => {
+    expect(preloaded(index())).toBe('/assets/newsreader-latin-400-normal.woff2');
+    const article = parse(renderArticlePage({ post: posts[0], assets, launched: false }));
+    expect(preloaded(article)).toBe('/assets/bricolage-grotesque-latin-wght-normal.woff2');
   });
 });
