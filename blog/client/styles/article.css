@@ -289,8 +289,8 @@
  * Wide screens: the table of contents moves to a sticky column beside the
  * text. Narrower screens keep it as a box above the text.
  */
-@media (min-width: 1180px) {
-  .article {
+@media screen and (min-width: 1180px) {
+  .article.has-toc {
     display: grid;
     grid-template-columns: 220px minmax(0, var(--measure));
     column-gap: 56px;
@@ -298,16 +298,23 @@
     max-width: 1120px;
   }
 
-  .article > * {
+  .article.has-toc > * {
     grid-column: 2;
   }
 
-  .article > .toc {
+  /* Spans more rows than the article has children (7 today), so the sticky
+     range covers the whole article; empty implicit rows have no height. */
+  .article.has-toc > .toc {
     position: sticky;
     top: 24px;
     grid-column: 1;
-    grid-row: 1 / span 9;
+    grid-row: 1 / span 20;
     align-self: start;
     margin: 0;
   }
+}
+
+/* The last paragraph's margin does not add to the next section's. */
+.prose > :last-child {
+  margin-bottom: 0;
 }

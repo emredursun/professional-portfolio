@@ -19,16 +19,19 @@ const TOPICS = [
   'Life in three languages',
 ];
 
-/** The canvas's band of topics: static, so there is nothing to pause (WCAG 2.2.2). */
+/**
+ * The canvas's band of themes (not the topic taxonomy, which is testing, ai
+ * and life): static, so there is nothing to pause (WCAG 2.2.2). */
 function topicsBand() {
-  return markup`<ul class="band" aria-label="Topics">${TOPICS.map(
+  return markup`<ul class="band" aria-label="What I write about">${TOPICS.map(
     (topic, index) =>
       markup`<li>${index > 0 ? markup`<span class="band-mark" aria-hidden="true">✳</span>` : ''}${topic}</li>`,
   )}</ul>`;
 }
 
 function heroActions(newest, launched) {
-  return markup`<p class="index-actions"><a class="button button-solid" href="${postPath(newest)}">Read the latest</a>${
+  if (!newest) throw new Error('blog: the index needs at least one post');
+  return markup`<p class="index-actions"><a class="button button-solid" href="${postPath(newest)}">Read the latest<span class="visually-hidden">: ${newest.title}</span></a>${
     launched ? markup`<a class="button" href="${FEED_PATH}">Follow with a feed reader</a>` : ''
   }</p>`;
 }

@@ -21,6 +21,7 @@ export const RESERVED_IDS = Object.freeze([
   'more-title',
   'essays-title',
   'notes-title',
+  'closing-title',
 ]);
 
 export const STATUS_LABELS = Object.freeze({

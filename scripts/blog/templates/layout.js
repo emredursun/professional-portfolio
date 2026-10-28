@@ -24,9 +24,9 @@ function siteHeader() {
 
 /** The canvas's closing band: one invitation to talk, at the end of every page. */
 function closing() {
-  return markup`<section class="closing" aria-label="Get in touch">
+  return markup`<section class="closing" aria-labelledby="closing-title">
 <p class="closing-kicker">Working on test strategy for a Pega or Tosca project?</p>
-<p class="closing-title">Let’s compare notes.</p>
+<h2 id="closing-title" class="closing-title">Let’s compare notes.</h2>
 <a class="closing-link" href="/contact">Say hello <span aria-hidden="true">↗</span></a>
 </section>`;
 }

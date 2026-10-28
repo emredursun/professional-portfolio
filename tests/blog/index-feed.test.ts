@@ -253,10 +253,13 @@ describe('index cards: stale evidence', () => {
 
 describe('calls to action and the author', () => {
   it('points "Read the latest" at the newest post', () => {
-    const link = [...index().querySelectorAll('a')].find(
-      (a) => a.textContent === 'Read the latest',
+    const link = [...index().querySelectorAll('a')].find((a) =>
+      a.textContent?.startsWith('Read the latest'),
     );
     expect(link?.getAttribute('href')).toBe('/blog/a-note');
+    // Screen readers hear which post: the title follows, visually hidden.
+    expect(link?.textContent).toBe('Read the latest: A note');
+    expect(link?.querySelector('.visually-hidden')?.textContent).toBe(': A note');
   });
 
   it('shows the topics band as a plain list', () => {
@@ -288,7 +291,8 @@ describe('calls to action and the author', () => {
     const doc = parse(renderArticlePage({ post: posts[0], assets, launched: false }));
     const img = doc.querySelector('.author img')!;
     expect(img.getAttribute('src')).toBe('/images/emre-dursun-qa-consultant-400.webp');
-    expect(img.getAttribute('alt')).toBe('Emre Dursun');
+    // Decorative: the name is in the text right beside it.
+    expect(img.getAttribute('alt')).toBe('');
     expect(img.getAttribute('width')).toBe('64');
     expect(img.getAttribute('height')).toBe('64');
     expect(doc.querySelector('.author a')?.getAttribute('href')).toBe('/about');
@@ -314,6 +318,31 @@ describe('index headline', () => {
     expect(eyebrow?.textContent).toBe('Field Notes');
     expect(eyebrow?.compareDocumentPosition(doc.querySelector('h1')!)).toBe(
       Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+  });
+});
+
+describe('code review fixes', () => {
+  it('uses the two-column grid only when the article has contents', () => {
+    const withToc = { ...posts[0], toc: [{ level: 2, id: 'part', text: 'Part' }] };
+    const has = (post: object) =>
+      parse(renderArticlePage({ post, assets, launched: false }))
+        .querySelector('article')
+        ?.classList.contains('has-toc');
+    expect(has(withToc)).toBe(true);
+    expect(has(posts[0])).toBe(false);
+  });
+
+  it('makes the closing headline an h2 that labels its section', () => {
+    const doc = index();
+    const heading = doc.querySelector('.closing h2');
+    expect(heading?.textContent).toBe('Let’s compare notes.');
+    expect(doc.querySelector('.closing')?.getAttribute('aria-labelledby')).toBe(heading?.id);
+  });
+
+  it('refuses an index without posts instead of linking nowhere', () => {
+    expect(() => renderIndexPage({ posts: [], assets, launched: false })).toThrow(
+      /at least one post/,
     );
   });
 });

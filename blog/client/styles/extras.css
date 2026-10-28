@@ -55,13 +55,18 @@
     --butter: #fff;
     --check: #000;
     --underline: #000;
+    --closing-bg: #fff;
+    --closing-ink: #000;
   }
 
   .site-nav,
   .progress,
   .skip-link,
   .toc,
-  .corrections .button {
+  .corrections .button,
+  .band,
+  .index-actions,
+  .closing {
     display: none;
   }
 

@@ -72,6 +72,9 @@ function optionalLines({ meta, assets, launched }) {
  * @param {{ meta: PageMeta, assets: object, launched: boolean }} options
  */
 export function renderHead({ meta, assets, launched }) {
+  if (!['reading', 'display'].includes(meta.lcpFont)) {
+    throw new Error(`blog: unknown lcpFont "${meta.lcpFont}"`);
+  }
   const { robots, feedLink, articleTimes, styles, codeStyles, fontPreload } = optionalLines({
     meta,
     assets,

@@ -95,6 +95,10 @@ time-boxed Astro spike against the same criteria and record the outcome here.
   reach XML and feed services cache what they find.
 - ~~Serve the feed as `application/atom+xml; charset=utf-8`~~ Done in
   Phase 2 (`firebase.json` header, pinned by `tests/hosting.test.ts`).
+- Extend the preview check: once the feed exists, assert on real Hosting
+  that `/blog/feed.xml` arrives as `application/atom+xml` with
+  `x-content-type-options: nosniff` (the header rule cannot be tested
+  offline).
 - Re-enable the Lighthouse `is-crawlable` audit for blog pages.
 - Add blog routes to the sitemap and the deploy smoke test.
 - Add the blog link to the portfolio navigation.

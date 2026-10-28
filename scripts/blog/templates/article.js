@@ -53,7 +53,7 @@ function articleHeader(post) {
 
 function authorCard() {
   return markup`<section class="author" aria-label="About the author">
-<img src="/images/emre-dursun-qa-consultant-400.webp" alt="Emre Dursun" width="64" height="64" loading="lazy" decoding="async">
+<img src="/images/emre-dursun-qa-consultant-400.webp" alt="" width="64" height="64" loading="lazy" decoding="async">
 <div>
 <p class="author-name">Written by Emre Dursun</p>
 <p class="author-bio">QA consultant for Pega and Tricentis Tosca in the Netherlands. I write here to think more clearly about my work.</p>
@@ -82,7 +82,7 @@ function keepReading(related) {
  * @returns {string}
  */
 export function renderArticlePage({ post, related = [], assets, launched }) {
-  const content = markup`<article class="article">
+  const content = markup`<article class="${post.toc.length > 0 ? 'article has-toc' : 'article'}">
 ${articleHeader(post)}
 ${evidenceCard(post)}
 ${tableOfContents(post)}

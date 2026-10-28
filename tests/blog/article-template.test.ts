@@ -224,3 +224,25 @@ describe('nextRecheck', () => {
     expect(nextRecheck('2028-02-29')).toBe('2029-02-28');
   });
 });
+
+describe('renderHead', () => {
+  it('fails on an unknown LCP face rather than silently skipping the preload', async () => {
+    const { renderHead } = await import('../../scripts/blog/templates/head.js');
+    expect(() =>
+      renderHead({
+        meta: {
+          // @ts-expect-error -- checks the runtime guard against a value the types forbid
+          lcpFont: 'serif',
+          ogType: 'website',
+          title: 't',
+          heading: 't',
+          description: 'd',
+          url: 'u',
+          jsonLd: {},
+        },
+        assets,
+        launched: false,
+      }),
+    ).toThrow(/lcpFont/);
+  });
+});
