@@ -247,3 +247,24 @@ test.describe('stale evidence', () => {
     }
   });
 });
+
+test.describe('with more than one post', () => {
+  test('the index lists short notes with their status icon', async ({ page }) => {
+    await page.goto('/blog');
+    const notes = page.getByRole('region', { name: 'Short notes' });
+    await expect(notes.getByRole('link')).not.toHaveCount(0);
+    await expect(notes.locator('svg.status-icon-hypothesis')).not.toHaveCount(0);
+  });
+
+  test('articles end with links to other posts, and the hero links the newest', async ({
+    page,
+  }) => {
+    await page.goto(POST);
+    const more = page.getByRole('region', { name: 'Keep reading' });
+    await expect(more.getByRole('link')).not.toHaveCount(0);
+    await page.goto('/blog');
+    await page.getByRole('link', { name: 'Read the latest' }).click();
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page).toHaveURL(/\/blog\/[a-z0-9-]+$/);
+  });
+});
