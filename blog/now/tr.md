@@ -1,9 +1,9 @@
 ---
 entries:
   - date: 2026-10-29
-    text: 'Field Notes’u yayına alıyorum: İngilizce, Türkçe ve Hollandaca yazıyor, yazıları kısa tutmayı öğreniyorum.'
+    text: 'Field Notes yayında: QA ve teslimat işlerinden kısa notlar; İngilizce, Türkçe ve Hollandaca.'
   - date: 2026-10-29
-    text: 'Boş zamanlarımda devran-ai/kit üzerinde çalışıyorum: yapay zekâ kodlama araçları için kalite kontrolleri ve oturumlar arasında kalıcı hafıza.'
+    text: 'Sopra Steria’da AI.Backbone için Tosca becerileri ve iş akışları geliştiriyorum; model tabanlı test, yapay zekâ destekli teslimatta yerini alsın diye. Temelinde açık kaynak projem devran-ai/kit var: yapay zekâ kodlama araçları için kalite kontrolleri ve kalıcı bağlam.'
   - date: 2026-10-29
-    text: 'Sopra Steria’da Pega uygulamalarını Tricentis Tosca ile test ediyor, test edilebilirliği daha case tasarımı aşamasında kurmayı öğreniyorum.'
+    text: 'Sopra Steria’da Pega uygulamaları için QA ve test otomasyonu; Tricentis Tosca ve Playwright ile. Hedef, üç sürüm sonra da ayakta kalan çatılar ve en baştan case tasarımına yerleştirilmiş test edilebilirlik.'
 ---

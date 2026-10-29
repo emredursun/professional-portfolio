@@ -190,11 +190,19 @@ describe('renderArticlePage: escaping', () => {
 });
 
 describe('renderArticlePage: trust sections', () => {
-  it('shows the evidence card with status, confidence, sources and the re-check date', () => {
-    const card = page().doc.querySelector('[aria-labelledby="evidence-title"]');
-    expect(card?.textContent).toContain('Verified');
+  it('lists the sources, confidence and re-check date after the text, without repeating the status', () => {
+    const { doc } = page();
+    const card = doc.querySelector('[aria-labelledby="evidence-title"]');
     expect(card?.textContent).toContain(post.evidence.confidence);
-    expect(card?.textContent).toContain(post.evidence.basedOn[0]);
+    expect([...card!.querySelectorAll('li')].map((li) => li.textContent)).toEqual(
+      post.evidence.basedOn,
+    );
+    expect(card?.querySelector('time')?.getAttribute('datetime')).toBe(post.evidence.recheckedAt);
+    expect(card?.textContent).not.toContain('Verified');
+    expect(doc.querySelector('.article-header')?.textContent).toContain('Verified');
+    expect(card?.compareDocumentPosition(doc.querySelector('.prose')!)).toBe(
+      Node.DOCUMENT_POSITION_PRECEDING,
+    );
   });
 
   it('shows how AI was used, with the prompts link when there is one', () => {

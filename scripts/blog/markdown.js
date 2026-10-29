@@ -117,6 +117,16 @@ function createRenderer(file, highlight, image) {
     return renderToken(tokens, idx, options, env, self);
   };
 
+  // A post that opens with an image shows it above the fold: it is the page's
+  // largest paint, so it loads at once instead of lazily.
+  md.core.ruler.push('lead_image', (state) => {
+    const [first, inline] = state.tokens;
+    const image = inline?.children?.[0];
+    if (first?.type === 'paragraph_open' && image?.type === 'image') {
+      image.meta = { ...image.meta, lead: true };
+    }
+  });
+
   md.renderer.rules.image = (tokens, idx) => {
     const token = tokens[idx];
     const src = token.attrGet('src') ?? '';
@@ -133,7 +143,10 @@ function createRenderer(file, highlight, image) {
     // Width and height reserve the space, so the text does not jump as it loads.
     return (
       `<img src="${escapeHtml(found.src)}" alt="${escapeHtml(alt)}" ` +
-      `width="${found.width}" height="${found.height}" loading="lazy" decoding="async">`
+      `width="${found.width}" height="${found.height}" ` +
+      (token.meta?.lead
+        ? 'fetchpriority="high" decoding="async">'
+        : 'loading="lazy" decoding="async">')
     );
   };
 

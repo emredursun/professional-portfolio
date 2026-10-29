@@ -69,58 +69,83 @@
   background: var(--chip-revised);
 }
 
-/* Evidence card */
+/* Sources: a quiet footnote after the text */
 .evidence {
-  margin: 20px 0 32px;
-  padding: 20px 24px;
-  border-radius: 22px;
-  background: var(--sage);
-}
-
-.evidence-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 16px 24px;
-  margin: 0;
+  margin: 40px 0 32px;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--line);
   font-size: 14px;
-  line-height: 1.45;
-}
-
-.evidence-grid dt {
+  line-height: 1.5;
   color: var(--ink-2);
 }
 
-.evidence-grid dd {
-  margin: 4px 0 0;
+.evidence h2 {
+  margin: 0 0 8px;
+  font-size: 13px;
   font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-/* Table of contents */
+.evidence-sources {
+  margin: 0 0 10px;
+  padding-left: 1.1em;
+}
+
+.evidence-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 0;
+}
+
+/* Table of contents: a quiet list with a rail, the current section marked */
 .toc {
   margin: 0 0 32px;
-  padding: 18px 22px;
-  border-radius: 18px;
-  background: var(--butter);
-  font-size: 15px;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 .toc-title {
-  margin: 0 0 8px;
+  margin: 0 0 12px;
+  color: var(--ink-2);
+  font-size: 12px;
   font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .toc ol {
   margin: 0;
   padding: 0;
+  border-left: 1px solid var(--line);
   list-style: none;
 }
 
-.toc li {
-  padding: 4px 0;
+.toc a {
+  display: block;
+  margin-left: -1px;
+  padding: 6px 0 6px 14px;
+  border-left: 2px solid transparent;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
 }
 
-.toc .toc-level-3 {
-  padding-left: 18px;
+.toc a:hover {
+  color: var(--ink);
+}
+
+.toc a[aria-current='location'] {
+  border-left-color: var(--underline);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.toc .toc-level-3 a {
+  padding-left: 28px;
 }
 
 /* Reading text */
@@ -174,6 +199,13 @@
   max-width: 100%;
   height: auto;
   border-radius: 16px;
+}
+
+/* A credit line right under an image, written as one italic line */
+.prose p:has(> img) + p:has(> em:only-child) {
+  margin-top: -12px;
+  font-size: 13px;
+  color: var(--ink-2);
 }
 
 .prose :not(pre) > code {

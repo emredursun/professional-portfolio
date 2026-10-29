@@ -17,7 +17,7 @@ const en = {
   description:
     'Notes on software quality, test automation and working with AI, by Emre Dursun, QA consultant in the Netherlands.',
   intro:
-    'I test software for a living, in the Netherlands, in three languages. This is where I write down what I learn: at work, with AI, and in between.',
+    'I am a QA consultant in the Netherlands, working on Pega, Tricentis Tosca and test automation. Here I write about what I see in practice: in projects, with AI, and in between.',
   bandLabel: 'What I write about',
   band: {
     honest: 'Testing, honestly',
@@ -53,7 +53,7 @@ const en = {
     'QA consultant for Pega and Tricentis Tosca in the Netherlands. I write here to think more clearly about my work.',
   moreAboutMe: 'More about me',
   keepReading: 'Keep reading',
-  evidenceTitle: 'Evidence for this note',
+  evidenceTitle: 'Sources',
   status: 'Status',
   confidence: 'Confidence',
   basedOn: 'Based on',
@@ -73,7 +73,7 @@ const en = {
   correctionsNone: 'None yet.',
   toc: 'On this page',
   nowTitle: 'Now',
-  nowIntro: 'What I am working on and learning at the moment, newest first.',
+  nowIntro: 'What I am working on right now, newest first.',
   nowMore: 'What I’m doing now',
   topicEyebrow: 'Topic',
   topicDescriptions: {
@@ -112,7 +112,7 @@ const tr = {
   description:
     'Yazılım kalitesi, test otomasyonu ve yapay zekâyla çalışmak üzerine notlar. Yazan: Hollanda’da QA danışmanı Emre Dursun.',
   intro:
-    'Hollanda’da, üç dilde yazılım test ederek hayatımı kazanıyorum. Öğrendiklerimi burada yazıyorum: işte, yapay zekâyla ve ikisinin arasında.',
+    'Hollanda’da Pega, Tricentis Tosca ve test otomasyonu üzerine çalışan bir QA danışmanıyım. Burada sahada gördüklerimi yazıyorum: projelerde, yapay zekâyla ve ikisinin arasında.',
   bandLabel: 'Ne hakkında yazıyorum',
   band: {
     honest: 'Dürüstçe test',
@@ -148,7 +148,7 @@ const tr = {
     'Hollanda’da Pega ve Tricentis Tosca için QA danışmanıyım. İşim hakkında daha net düşünmek için burada yazıyorum.',
   moreAboutMe: 'Hakkımda daha fazlası',
   keepReading: 'Okumaya devam edin',
-  evidenceTitle: 'Bu notun kanıtları',
+  evidenceTitle: 'Kaynaklar',
   status: 'Durum',
   confidence: 'Güven',
   basedOn: 'Dayanak',
@@ -168,7 +168,7 @@ const tr = {
   correctionsNone: 'Henüz yok.',
   toc: 'Bu sayfada',
   nowTitle: 'Şu sıralar',
-  nowIntro: 'Şu anda üzerinde çalıştığım ve öğrendiğim şeyler, en yenisi önce.',
+  nowIntro: 'Şu anda üzerinde çalıştığım işler, en yenisi önce.',
   nowMore: 'Şu sıralar ne yapıyorum',
   topicEyebrow: 'Konu',
   topicDescriptions: {
@@ -208,7 +208,7 @@ const nl = {
   description:
     'Notities over softwarekwaliteit, testautomatisering en werken met AI, door Emre Dursun, QA-consultant in Nederland.',
   intro:
-    'Ik test software voor mijn werk, in Nederland, in drie talen. Hier schrijf ik op wat ik leer: op het werk, met AI en alles daartussen.',
+    'Ik ben QA-consultant in Nederland en werk met Pega, Tricentis Tosca en testautomatisering. Hier schrijf ik over wat ik in de praktijk zie: in projecten, met AI en alles daartussen.',
   bandLabel: 'Waar ik over schrijf',
   band: {
     honest: 'Eerlijk testen',
@@ -244,7 +244,7 @@ const nl = {
     'QA-consultant voor Pega en Tricentis Tosca in Nederland. Ik schrijf hier om helderder over mijn werk na te denken.',
   moreAboutMe: 'Meer over mij',
   keepReading: 'Lees verder',
-  evidenceTitle: 'Bewijs voor deze notitie',
+  evidenceTitle: 'Bronnen',
   status: 'Status',
   confidence: 'Zekerheid',
   basedOn: 'Gebaseerd op',
@@ -265,7 +265,7 @@ const nl = {
   correctionsNone: 'Nog geen.',
   toc: 'Op deze pagina',
   nowTitle: 'Nu',
-  nowIntro: 'Waar ik op dit moment aan werk en wat ik leer, het nieuwste eerst.',
+  nowIntro: 'Waar ik op dit moment aan werk, het nieuwste eerst.',
   nowMore: 'Waar ik nu mee bezig ben',
   topicEyebrow: 'Onderwerp',
   topicDescriptions: {

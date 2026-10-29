@@ -6,9 +6,9 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Orta: tek bir workshop’a ve her gün yapay zekâ agent’larıyla çalışan meslektaşlarımla yaptığım sohbetlere dayanıyor. Geniş ölçekte denenmedi.'
+  confidence: 'Orta: tek bir workshop ve her gün yapay zekâ agent’larıyla çalışan meslektaşlarımla yaptığım sohbetler.'
   basedOn:
-    - 'Şirket içi bir AI-driven development aracıyla yapılan uygulamalı bir workshop’taki kendi deneyimim (Eylül 2026)'
+    - 'Şirket içi bir AI-driven development aracıyla uygulamalı workshop, Eylül 2026'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'
   recheckedAt: 2026-10-29
 aiAssistance:
@@ -21,6 +21,10 @@ translation:
   assistedByAi: true
 ---
 
+![Masada iki kişi: biri bir belgeyi imzalıyor, diğeri kâğıtları inceliyor.](signing.webp)
+
+*Fotoğraf: [Gabrielle Henderson, Unsplash](https://unsplash.com/photos/woman-signing-on-white-printer-paper-beside-woman-about-to-touch-the-documents-HJckKnwCXxQ)*
+
 [Yeşil, bitti demek değil](/tr/blog/green-is-not-done) yazısında anlattığım workshop’tan sonra aklımda iki soru kaldı.
 
 ## Kim karar verdi?
@@ -32,6 +36,10 @@ Küçük bir ayrıntı gibi görünüyor, ama kararların izi ancak doğru kişi
 ## Kimin yetkileriyle?
 
 Her gün yapay zekâ agent’larıyla çalışan meslektaşlarım basit bir noktaya dikkat çekti: agent senin kimlik bilgilerinle çalışır. Senin yapabildiğin her şeyi o da yapabilir. Proje dosyasındaki kurallar işe yarar, ama bir sandbox değildir.
+
+![Açık bir kapının önünde bir tutam anahtar tutan bir el.](keys.webp)
+
+*Fotoğraf: [Maria Ziegler, Unsplash](https://unsplash.com/photos/keys-on-hand-jJnZg7vBfMs)*
 
 OWASP buna [excessive agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) diyor: bir agent’ın, işin gerektirdiğinden fazla yetkiye veya serbestliğe sahip olması. Tavsiyesi de yeni değil: verebildiğin en az yetkiyi ver ve gerçek etkisi olan her işte bir insanı sürecin içinde tut.
 

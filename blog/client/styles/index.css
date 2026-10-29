@@ -373,3 +373,44 @@
   margin: 4px 0 0;
   font-size: 1.125rem;
 }
+
+/* The index on a phone: calmer type, the Now line as a small note, and the
+   two actions the same width. */
+@media (max-width: 600px) {
+  .index {
+    padding-top: 32px;
+  }
+
+  .index-header {
+    margin-bottom: 40px;
+  }
+
+  .index-intro {
+    margin-top: 16px;
+    font-size: 1.125rem;
+  }
+
+  .now-line {
+    margin: 20px 0;
+    padding: 12px 14px;
+    border-left: 3px solid var(--underline);
+    border-radius: 0 12px 12px 0;
+    background: var(--sage);
+    font-size: 0.95rem;
+  }
+
+  .now-label {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .index-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .index-actions .button {
+    justify-content: center;
+  }
+}

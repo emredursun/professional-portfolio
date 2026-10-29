@@ -35,7 +35,7 @@ test.describe('blog article', () => {
 
     await expect(page.locator('h1')).toHaveCount(1);
     await expectIndexing(page);
-    await expect(page.getByRole('complementary', { name: 'Evidence for this note' })).toBeVisible();
+    await expect(page.getByRole('complementary', { name: 'Sources' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'How this was written' })).toBeVisible();
 
     const ld = await page.locator('script[type="application/ld+json"]').textContent();

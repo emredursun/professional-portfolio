@@ -6,9 +6,9 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Böyle yaşandığından eminim: oradaydım. Genel bir iddia olarak ise zayıf: bu bir araştırma değil, tek bir workshop ve tek bir feature.'
+  confidence: 'Yaşananlar için yüksek, oradaydım. Tek bir workshop ve tek bir feature: genel bir kural değil, bir gözlem.'
   basedOn:
-    - 'Sopra Steria’da, şirket içi bir AI-driven development aracıyla yapılan uygulamalı bir workshop’taki kendi deneyimim (Eylül 2026)'
+    - 'Şirket içi bir AI-driven development aracıyla uygulamalı workshop, Sopra Steria, Eylül 2026'
     - 'Martin Fowler, ContractTest (martinfowler.com)'
   recheckedAt: 2026-10-29
 aiAssistance:
@@ -21,6 +21,10 @@ translation:
   assistedByAi: true
 ---
 
+![Akşam gökyüzünde yeşil yanan bir trafik lambası.](green-light.webp)
+
+*Fotoğraf: [Tord Romundstad, Unsplash](https://unsplash.com/photos/a-traffic-light-on-a-pole-with-a-sky-background-JAT4Xx2UCEE)*
+
 Her test uzmanı o anı bilir. Pipeline yeşile döner, biri “tamam” der ve içinizde henüz kimsenin sormadığı küçük bir soru belirir.
 
 Eylül’de o soruyu hiç beklemediğim bir yerde hissettim: beni bir sonraki adıma geçirmeyen bir yapay zekâ aracının içinde.
@@ -29,17 +33,23 @@ Eylül’de o soruyu hiç beklemediğim bir yerde hissettim: beni bir sonraki ad
 
 Sopra Steria’da şirket içi bir AI-driven development aracını uygulamalı bir workshop’ta denedik. Fikri anlatması kolay: yapay zekâ kodu serbestçe yazmıyor, belirli adımlardan geçiyor ve her adımda bir insan sonucu kontrol edip karar veriyor.
 
+![Yukarıdan görülen ortak bir masa: dizüstü bilgisayarlar, defterler ve çay bardakları.](workshop-table.webp)
+
+*Fotoğraf: [Marvin Meyer, Unsplash](https://unsplash.com/photos/people-sitting-down-near-table-with-assorted-laptop-computers-SYTO3xs06fU)*
+
 Farklı rollerden oluşan küçük bir ekiple tek bir küçük feature’ın kapsamını birlikte belirledik. O gün ancak spesifikasyona kadar gelebildik. Sürecin commit’e kadar nasıl dayanacağını merak ettiğim için geri kalanını evde tamamladım.
 
 ## Yeşil, ama bitmedi
 
 İlk task’ın kodunu yapay zekâ yazdı. Testleri kendim çalıştırdım: 249 testin hepsi yeşildi, tıpkı değişiklikten önceki gibi.
 
+![Yakından bir ekranda renkli sözdizimi vurgulu kod.](code-screen.webp)
+
+*Fotoğraf: [Chris Ried, Unsplash](https://unsplash.com/photos/a-computer-screen-with-a-bunch-of-code-on-it-ieic5Tq8YMk)*
+
 Çoğu araç burada durur ve başarı bildirir. Dürüst olmak gerekirse birçok ekip de öyle yapar.
 
 Bu araç yapmadı. Yeni kodun bir veri sözleşmesi eklediğini ve 249 testin hiçbirinin bunu kontrol etmediğini fark etti. Test seti yeşildi, çünkü içinde o tarafa bakan hiçbir şey yoktu. Devam etmeden önce 11 yeni contract test istedi.
-
-![Diyagram: 249 mevcut test, hepsi yeşil, kalite kontrolüne geliyor. Yeni veri sözleşmesini hangi testin kontrol ettiği sorulduğunda cevap “hiçbiri”, bu yüzden devam etmeden önce 11 contract test ekleniyor.](green-gate.svg)
 
 Bunların hiçbiri test uzmanları için yeni değil. Yeşil bir test seti, sadece yazdığımız kontrollerin başarısız olmadığını söyler; [contract testler](https://martinfowler.com/bliki/ContractTest.html) tam da bu boşluk için vardır. Beni şaşırtan, aceleci birinin “yayınla gitsin” diyeceği anda bir aracın bu çizgiyi koruduğunu görmekti.
 
@@ -69,4 +79,4 @@ Kendime üç küçük alışkanlık çıkardım:
 
 Boş zamanlarımda çok daha küçük ölçekte benzer bir şey geliştiriyorum: yapay zekâ kodlama araçlarına kalite kontrolleri ekleyen açık kaynak bir kit, [devran-ai/kit](https://github.com/devran-ai/kit). Aynı fikirleri şirket ölçeğinde görmek, bu fikirlerin ne kadar ileri gidebileceğini gösterdi.
 
-Bu tür araçlarla nasıl çalışılacağını hâlâ öğreniyorum. Ama ilk kez bir yapay zekâ aracı yeşil bir sonuca biraz daha az güvenmemi sağladı ve bu bana ilerleme gibi geldi.
+İlk kez bir yapay zekâ aracı yeşil bir sonuca biraz daha az güvenmemi sağladı ve bu bana ilerleme gibi geldi.

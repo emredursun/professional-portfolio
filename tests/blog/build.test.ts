@@ -224,7 +224,7 @@ describe('buildBlog', () => {
     const dist = makeDist('dist');
     await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
     const pattern =
-      /<img src="(\/assets\/blog-img-one-chain-[0-9a-f]{8}\.svg)" alt="([^"]+)" width="800" height="400" loading="lazy" decoding="async">/;
+      /<img src="(\/assets\/blog-img-one-chain-[0-9a-f]{8}\.svg)" alt="([^"]+)" width="800" height="400" fetchpriority="high" decoding="async">/;
     const en = pattern.exec(fs.readFileSync(path.join(dist, 'blog', 'one.html'), 'utf8'))!;
     const tr = pattern.exec(fs.readFileSync(path.join(dist, 'tr', 'blog', 'one.html'), 'utf8'))!;
     expect([en[2], tr[2]]).toEqual(['The trace chain', 'İzlenebilirlik zinciri']);

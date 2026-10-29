@@ -6,9 +6,9 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Gemiddeld: op basis van één workshop en gesprekken met collega’s die dagelijks met AI-agents werken. Niet op grote schaal getest.'
+  confidence: 'Gemiddeld: één workshop en gesprekken met collega’s die dagelijks met AI-agents werken.'
   basedOn:
-    - 'Mijn eigen ervaring in een hands-on workshop met een interne AI-driven development tool (september 2026)'
+    - 'Hands-on workshop met een interne AI-driven development tool, september 2026'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'
   recheckedAt: 2026-10-29
 aiAssistance:
@@ -21,6 +21,10 @@ translation:
   assistedByAi: true
 ---
 
+![Twee mensen aan een tafel: de een tekent een document, de ander bekijkt de papieren.](signing.webp)
+
+*Foto: [Gabrielle Henderson op Unsplash](https://unsplash.com/photos/woman-signing-on-white-printer-paper-beside-woman-about-to-touch-the-documents-HJckKnwCXxQ)*
+
 Na de workshop waarover ik schreef in [Groen is nog niet klaar](/nl/blog/green-is-not-done), bleven er twee vragen hangen.
 
 ## Wie besliste?
@@ -32,6 +36,10 @@ Dat klinkt klein, maar een spoor van besluiten is alleen nuttig als het de juist
 ## Met wiens rechten?
 
 Collega’s die dagelijks met AI-agents werken, wezen op iets eenvoudigs: een agent werkt met jouw inloggegevens. Alles wat jij mag, mag hij ook. Regels in een projectbestand helpen, maar ze zijn geen sandbox.
+
+![Een hand met een bos sleutels voor een open deur.](keys.webp)
+
+*Foto: [Maria Ziegler op Unsplash](https://unsplash.com/photos/keys-on-hand-jJnZg7vBfMs)*
 
 OWASP noemt dit [excessive agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): meer rechten of vrijheid dan de taak nodig heeft. Het advies is niet nieuw: geef zo min mogelijk rechten, en houd een mens betrokken bij alles met echte impact.
 

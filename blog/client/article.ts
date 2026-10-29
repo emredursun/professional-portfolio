@@ -18,6 +18,7 @@ import './styles/index.css';
 import './styles/code.css';
 import './styles/extras.css';
 import { markStaleEvidence } from './stale';
+import { bindTableOfContents } from './toc';
 import { bindThemeToggle } from './theme-toggle';
 
 const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -25,3 +26,4 @@ bindThemeToggle(document, () => darkQuery.matches, {
   onSystemChange: (listener) => darkQuery.addEventListener('change', listener),
 });
 markStaleEvidence(document, new Date());
+bindTableOfContents(document, window);

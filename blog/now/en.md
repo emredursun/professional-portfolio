@@ -1,9 +1,9 @@
 ---
 entries:
   - date: 2026-10-29
-    text: 'Launching Field Notes: writing in English, Turkish and Dutch, and learning to keep posts short.'
+    text: 'Launched Field Notes: short notes from QA and delivery work, in English, Turkish and Dutch.'
   - date: 2026-10-29
-    text: 'Working on devran-ai/kit in my spare time: quality gates and memory that lasts across sessions for AI coding tools.'
+    text: 'At Sopra Steria, building Tosca skills and workflows for AI.Backbone, so model-based testing has a place in AI-assisted delivery. It builds on devran-ai/kit, my open-source project for quality gates and lasting context in AI coding tools.'
   - date: 2026-10-29
-    text: 'Testing Pega applications with Tricentis Tosca at Sopra Steria, and learning to build testability into the case design from the start.'
+    text: 'QA and test automation for Pega applications at Sopra Steria, with Tricentis Tosca and Playwright: frameworks that still hold three releases later, with testability designed into the case from the start.'
 ---
