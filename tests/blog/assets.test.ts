@@ -36,4 +36,16 @@ describe('emitAsset', () => {
     // @ts-expect-error -- checks the runtime guard against a value the types forbid
     expect(() => emitAsset(dist, 'code', 'html', 'a')).toThrow(/extension/);
   });
+
+  it('writes binary images byte for byte, named by their content', () => {
+    const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0xff, 0x00]);
+    const url = emitAsset(dist, 'og-hello-en', 'png', png);
+    expect(url).toMatch(/^\/assets\/blog-og-hello-en-[0-9a-f]{8}\.png$/);
+    expect(fs.readFileSync(path.join(dist, url)).equals(png)).toBe(true);
+  });
+
+  it('refuses text for an image and a buffer for a stylesheet', () => {
+    expect(() => emitAsset(dist, 'og', 'png', 'not an image')).toThrow(/Buffer/);
+    expect(() => emitAsset(dist, 'code', 'css', Buffer.from('a'))).toThrow(/string/);
+  });
 });

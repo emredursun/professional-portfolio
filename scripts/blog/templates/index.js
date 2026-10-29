@@ -8,6 +8,7 @@ import { markup } from '../html.js';
 import { PERSON_ID, WEBSITE_ID } from '../../lib/route-meta.js';
 import { blogUrl, byNewest, feedPath, postPath, postUrl } from './format.js';
 import { postSections } from './cards.js';
+import { previewImage } from './head.js';
 import { renderPage } from './layout.js';
 import { nowLine } from './now.js';
 import { strings } from '../strings.js';
@@ -29,7 +30,7 @@ function heroActions(newest, launched, s, lang) {
   }</p>`;
 }
 
-function indexMeta(posts, s, lang, languages) {
+function indexMeta(posts, s, lang, languages, assets) {
   const url = blogUrl(lang);
   return {
     title: `${s.blogName} · Emre Dursun`,
@@ -37,6 +38,7 @@ function indexMeta(posts, s, lang, languages) {
     description: s.description,
     url,
     alternates: languages.map((other) => ({ lang: other, url: blogUrl(other) })),
+    image: previewImage(assets, `_site.${lang}`, `${s.blogName}: ${s.tagline}`),
     ogType: 'website',
     lcpFont: 'reading',
     headingFont: 'display',
@@ -96,7 +98,7 @@ ${postSections({ posts, fallback, lang, topics })}
 </div>`;
   return renderPage({
     lang,
-    meta: indexMeta(sorted, s, lang, languages),
+    meta: indexMeta(sorted, s, lang, languages, assets),
     assets,
     launched,
     content,

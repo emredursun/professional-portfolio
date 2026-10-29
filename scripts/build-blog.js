@@ -20,6 +20,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { emitAsset } from './blog/assets.js';
+import { ogCards, readOgImages } from './blog/og.js';
 import { BLOG_LAUNCHED } from './blog/config.js';
 import { loadPosts } from './blog/content.js';
 import { loadNow } from './blog/now.js';
@@ -133,6 +134,26 @@ function writeTopics({ distDir, lang, posts, all, fallback, assets, launched }) 
   );
 }
 
+/**
+ * Copies every committed link-preview card into /assets/ under a content
+ * hash (immutable caching), after checking each is current.
+ * @returns {Record<string, string>} Card id to its /assets/ path.
+ */
+function emitOgImages(distDir, ogDir, cards) {
+  const images = readOgImages({ ogDir, cards });
+  return Object.fromEntries(
+    cards.map((card) => [
+      card.id,
+      emitAsset(
+        distDir,
+        `og-${card.id.replace(/^_/, '').replace('.', '-')}`,
+        'png',
+        images.get(card.id),
+      ),
+    ]),
+  );
+}
+
 /** One language's files: its index, its feed after launch, its articles and topic pages. */
 function writeLanguage({ distDir, lang, posts, all, languages, now, assets, launched }) {
   const dir = `${outputDir(lang)}blog`;
@@ -181,13 +202,17 @@ function writeLanguage({ distDir, lang, posts, all, languages, now, assets, laun
 }
 
 /**
- * @param {{ distDir: string, contentDir: string, nowDir?: string, themeInitPath: string, launched?: boolean }} options
+ * @param {{ distDir: string, contentDir: string, nowDir?: string, ogDir?: string, themeInitPath: string, launched?: boolean }} options
+ *   `ogDir`: the committed link-preview images (blog/og). Every published post
+ *   then needs a current card or the build fails; without it (unit tests) all
+ *   pages use the site's own image.
  * @returns {Promise<string[]>} Written files, relative to distDir, POSIX paths.
  */
 export async function buildBlog({
   distDir,
   contentDir,
   nowDir,
+  ogDir,
   themeInitPath,
   launched = BLOG_LAUNCHED,
 }) {
@@ -200,9 +225,11 @@ export async function buildBlog({
     ...post,
     ...renderMarkdown(post.body, { file: post.file, highlight }),
   }));
-  const assets = await prepareAssets(distDir, themeInitPath, css);
-
   const languages = BLOG_LANGUAGES.filter((lang) => rendered.some((post) => post.lang === lang));
+  const assets = Object.freeze({
+    ...(await prepareAssets(distDir, themeInitPath, css)),
+    og: ogDir ? emitOgImages(distDir, ogDir, ogCards(rendered, languages)) : {},
+  });
   return languages.flatMap((lang) =>
     writeLanguage({
       distDir,
@@ -228,6 +255,7 @@ export async function main(root = ROOT) {
       distDir: path.join(root, 'dist'),
       contentDir: path.join(root, 'blog', 'content'),
       nowDir: path.join(root, 'blog', 'now'),
+      ogDir: path.join(root, 'blog', 'og'),
       themeInitPath: path.join(root, 'blog', 'client', 'theme-init.js'),
     });
     process.stdout.write(

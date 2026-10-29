@@ -28,3 +28,6 @@ export const RESERVED_IDS = Object.freeze([
  * it is on the launch checklist in docs/adr/0001-static-blog-build.md.
  */
 export const BLOG_LAUNCHED = false;
+
+/** Link-preview card size (og:image), the size Facebook and LinkedIn crop to. */
+export const OG_SIZE = Object.freeze({ width: 1200, height: 630 });

@@ -10,9 +10,10 @@ import { PERSON_ID } from '../../lib/route-meta.js';
 import { strings } from '../strings.js';
 import { postSections } from './cards.js';
 import { blogPath, blogUrl, postUrl, topicUrl } from './format.js';
+import { previewImage } from './head.js';
 import { renderPage } from './layout.js';
 
-function topicMeta({ topic, posts, s, lang, languages }) {
+function topicMeta({ topic, posts, s, lang, languages, assets }) {
   const url = topicUrl(lang, topic);
   const label = s.topicLabels[topic];
   const description = s.topicDescriptions[topic];
@@ -22,6 +23,7 @@ function topicMeta({ topic, posts, s, lang, languages }) {
     description,
     url,
     alternates: languages.map((other) => ({ lang: other, url: topicUrl(other, topic) })),
+    image: previewImage(assets, `_site.${lang}`, `${s.blogName}: ${s.tagline}`),
     ogType: 'website',
     lcpFont: 'reading',
     headingFont: 'display',
@@ -79,7 +81,7 @@ ${postSections({ posts, fallback, lang, topics, currentTopic: topic })}
 </div>`;
   return renderPage({
     lang,
-    meta: topicMeta({ topic, posts, s, lang, languages }),
+    meta: topicMeta({ topic, posts, s, lang, languages, assets }),
     assets,
     launched,
     content,

@@ -8,6 +8,7 @@ import { markup } from '../html.js';
 import { PERSON_ID, SITE_URL } from '../../lib/route-meta.js';
 import { strings } from '../strings.js';
 import { blogPath, blogUrl, formatDate, nowPath } from './format.js';
+import { previewImage } from './head.js';
 import { renderPage } from './layout.js';
 
 /** The newest entry as one line for the index, with a link to the page. */
@@ -45,6 +46,7 @@ export function renderNowPage({ entries, assets, launched, lang, languages }) {
       description: s.nowIntro,
       url,
       alternates: languages.map((other) => ({ lang: other, url: `${SITE_URL}${nowPath(other)}` })),
+      image: previewImage(assets, `_site.${lang}`, `${s.blogName}: ${s.tagline}`),
       ogType: 'website',
       lcpFont: 'reading',
       headingFont: 'display',

@@ -7,6 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { buildBlog, main, writeOutput } from '../../scripts/build-blog.js';
 import { loadPosts } from '../../scripts/blog/content.js';
 import { BLOG_ENTRY } from '../../scripts/blog/manifest.js';
+import { ogCards, syncOgImages } from '../../scripts/blog/og.js';
 
 let root: string;
 let contentDir: string;
@@ -258,6 +259,14 @@ describe('main', () => {
     fs.renameSync(path.join(root, 'content-tmp'), path.join(root, 'blog', 'content'));
     fs.copyFileSync(themeInitPath, path.join(root, 'blog', 'client', 'theme-init.js'));
     makeDist('dist');
+    // main() always checks the committed link-preview images in blog/og.
+    const ogDir = path.join(root, 'blog', 'og');
+    const posts = loadPosts(path.join(root, 'blog', 'content'));
+    await syncOgImages({
+      ogDir,
+      cards: ogCards(posts, ['en']),
+      render: async (card) => Buffer.from(card.id),
+    });
     const out = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
     expect(await main(root)).toBe(0);
     expect(out).toHaveBeenCalledWith(
@@ -272,6 +281,17 @@ describe('main', () => {
     const err = vi.spyOn(console, 'error').mockImplementation(() => {});
     expect(await main(root)).toBe(1);
     expect(err).toHaveBeenCalledWith(expect.stringMatching(/vite build/));
+  });
+
+  it('fails when a post has no link-preview image yet', async () => {
+    writePost('one', 'Body\n');
+    fs.mkdirSync(path.join(root, 'blog', 'client'), { recursive: true });
+    fs.renameSync(contentDir, path.join(root, 'blog', 'content'));
+    fs.copyFileSync(themeInitPath, path.join(root, 'blog', 'client', 'theme-init.js'));
+    makeDist('dist');
+    const err = vi.spyOn(console, 'error').mockImplementation(() => {});
+    expect(await main(root)).toBe(1);
+    expect(err).toHaveBeenCalledWith(expect.stringMatching(/one\.en.*npm run blog:og/));
   });
 });
 
