@@ -68,8 +68,14 @@ for (const lang of ['tr', 'nl'] as const) {
           [...document.querySelectorAll('body *')]
             .filter((el) => getComputedStyle(el).textTransform === 'uppercase')
             .filter((el) => el.textContent?.trim())
-            .map((el) => [el.className, el.closest('[lang]')?.getAttribute('lang')])
-            .filter(([, own]) => own !== document.documentElement.lang && own !== 'en'),
+            .filter((el) => {
+              // Text in another language is right only where the page says
+              // so on purpose: a language menu link or an English-only card.
+              const owner = el.closest('[lang]');
+              if (owner?.getAttribute('lang') === document.documentElement.lang) return false;
+              return !owner?.matches('.lang-nav a, li.card[lang], li.note-item[lang]');
+            })
+            .map((el) => `${el.className}: ${el.closest('[lang]')?.getAttribute('lang')}`),
         );
         expect(wrong, url).toEqual([]);
       }

@@ -16,6 +16,10 @@ import fs from 'fs';
 import path from 'path';
 
 const BLOG_PATH = /^\/(?:(?:tr|nl)\/)?blog(?:\/|$)/;
+// firebase.json gives the feeds their Atom Content-Type whatever the status,
+// so before launch Hosting sends the 404 page labelled as Atom; so do we.
+const FEED_PATH = /^\/(?:(?:tr|nl)\/)?blog\/feed\.xml$/;
+const ATOM = 'application/atom+xml; charset=utf-8';
 
 /**
  * @param {{ distDir: string, headers: Record<string, string> }} options
@@ -58,7 +62,7 @@ export function createBlogRouteHandler({ distDir, headers }) {
 
     res.statusCode = 404;
     Object.entries(headers).forEach(([name, value]) => res.setHeader(name, value));
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Content-Type', FEED_PATH.test(pathname) ? ATOM : 'text/html; charset=utf-8');
     return res.end(fs.readFileSync(path.join(root, '404.html')));
   };
 }

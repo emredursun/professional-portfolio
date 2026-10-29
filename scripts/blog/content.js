@@ -99,7 +99,9 @@ function readPostFolder(dir) {
   if (!original) {
     throw new Error(`blog/content/${slug}/en.md: missing; every post needs its English version`);
   }
-  files.forEach((post) => checkTranslation(post, original));
+  // A draft translation is still being written and may lag the English;
+  // the schema checked it, the rest waits until it is published.
+  files.filter((post) => !post.draft).forEach((post) => checkTranslation(post, original));
   if (original.draft) return [];
 
   const published = files.filter((post) => !post.draft);

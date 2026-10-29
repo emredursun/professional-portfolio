@@ -71,6 +71,29 @@ describe('loadPosts: translations', () => {
     expect(posts[0].translations).toEqual(['en']);
   });
 
+  it('lets a draft translation differ while it is being written', () => {
+    // The English status moved on; the Turkish draft has not caught up yet.
+    write('hello', 'Body\n');
+    write('hello', 'Gövde\n', `${TRANSLATION}draft: true\n`, 'tr');
+    const file = path.join(contentDir, 'hello', 'tr.md');
+    fs.writeFileSync(
+      file,
+      fs.readFileSync(file, 'utf8').replace('status: verified', 'status: hypothesis'),
+    );
+    expect(loadPosts(contentDir).map((post) => post.lang)).toEqual(['en']);
+  });
+
+  it('checks a translation fully once it stops being a draft', () => {
+    write('hello', 'Body\n');
+    write('hello', 'Gövde\n', TRANSLATION, 'tr');
+    const file = path.join(contentDir, 'hello', 'tr.md');
+    fs.writeFileSync(
+      file,
+      fs.readFileSync(file, 'utf8').replace('status: verified', 'status: hypothesis'),
+    );
+    expect(() => loadPosts(contentDir)).toThrow(/tr\.md: status/);
+  });
+
   it.each([
     ['topic', 'topic: testing', 'topic: ai'],
     ['kind', 'kind: essay', 'kind: note'],
@@ -166,8 +189,14 @@ describe('buildBlog: languages', () => {
       );
       expect(html).not.toContain('hreflang="nl"');
     }
-    expect(read(dist, 'tr', 'blog', 'hello.html')).toContain(
-      '<meta property="og:locale" content="tr_TR">',
+    const tr = read(dist, 'tr', 'blog', 'hello.html');
+    expect(tr).toContain('<meta property="og:locale" content="tr_TR">');
+    // The other versions only: the page's own locale is og:locale.
+    expect(
+      [...tr.matchAll(/og:locale:alternate" content="([a-z_A-Z]+)"/g)].map((m) => m[1]),
+    ).toEqual(['en_US']);
+    expect(read(dist, 'blog', 'hello.html')).toContain(
+      '<meta property="og:locale:alternate" content="tr_TR">',
     );
   });
 
