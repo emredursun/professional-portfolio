@@ -6,6 +6,8 @@ import sharp from 'sharp';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { buildBlog } from '../../scripts/build-blog.js';
 import { OG_SIZE, ogCards, ogHash, readOgImages, syncOgImages } from '../../scripts/blog/og.js';
+import { loadPosts } from '../../scripts/blog/content.js';
+import { BLOG_LANGUAGES } from '../../scripts/blog/strings.js';
 import { renderOgCard } from '../../scripts/blog/templates/og-card.js';
 import { TRANSLATION, makeDist, writePost } from './fixtures';
 
@@ -202,6 +204,15 @@ describe('buildBlog with link-preview images', () => {
 describe('committed link-preview images', () => {
   const dir = path.join(__dirname, '..', '..', 'blog', 'og');
   const pngs = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith('.png')) : [];
+
+  it('are current for the real content, so a stale card fails here and not in the build', () => {
+    // Any change to a post or to a design file (template, renderer, fonts)
+    // needs `npm run blog:og`; without this test it first shows in CI's build.
+    const repo = path.join(__dirname, '..', '..');
+    const posts = loadPosts(path.join(repo, 'blog', 'content'));
+    const languages = BLOG_LANGUAGES.filter((lang) => posts.some((p) => p.lang === lang));
+    expect(() => readOgImages({ ogDir: dir, cards: ogCards(posts, languages) })).not.toThrow();
+  });
 
   it.each(pngs)('%s is 1200 × 630 and under 150 KB', async (file) => {
     const { width, height, format } = await sharp(path.join(dir, file)).metadata();
