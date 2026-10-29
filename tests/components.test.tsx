@@ -167,21 +167,48 @@ describe('useIdleReady', () => {
 });
 
 describe('bootstrap', () => {
-  it('registers the service worker after load in production builds only', async () => {
-    const register = vi.fn().mockResolvedValue({});
-    Object.defineProperty(navigator, 'serviceWorker', { value: { register }, configurable: true });
+  describe('service worker', () => {
+    // bootstrap.ts is re-imported after vi.resetModules(), which would also
+    // re-evaluate framer-motion and the font/icon CSS from scratch. That took
+    // over a second per import and timed the test out under a loaded parallel
+    // run. None of it matters here, so stub it out for these imports only.
+    beforeEach(() => {
+      vi.doMock('framer-motion', () => ({ MotionGlobalConfig: {} }));
+      vi.doMock('@fontsource-variable/plus-jakarta-sans/wght.css', () => ({}));
+      vi.doMock('@fontsource/space-mono/400.css', () => ({}));
+      vi.doMock('@fontsource/space-mono/700.css', () => ({}));
+      vi.doMock('../src/styles/icons/icons.css', () => ({}));
+    });
 
-    vi.resetModules();
-    await import('../src/bootstrap.ts');
-    window.dispatchEvent(new Event('load'));
-    expect(register).not.toHaveBeenCalled();
+    afterEach(() => {
+      vi.doUnmock('framer-motion');
+      vi.doUnmock('@fontsource-variable/plus-jakarta-sans/wght.css');
+      vi.doUnmock('@fontsource/space-mono/400.css');
+      vi.doUnmock('@fontsource/space-mono/700.css');
+      vi.doUnmock('../src/styles/icons/icons.css');
+      // Undo the stubs even when an assertion failed part-way.
+      vi.unstubAllEnvs();
+      Reflect.deleteProperty(navigator, 'serviceWorker');
+    });
 
-    vi.stubEnv('PROD', true);
-    vi.resetModules();
-    await import('../src/bootstrap.ts');
-    window.dispatchEvent(new Event('load'));
-    expect(register).toHaveBeenCalledWith('/sw.js');
-    vi.unstubAllEnvs();
+    it('registers the service worker after load in production builds only', async () => {
+      const register = vi.fn().mockResolvedValue({});
+      Object.defineProperty(navigator, 'serviceWorker', {
+        value: { register },
+        configurable: true,
+      });
+
+      vi.resetModules();
+      await import('../src/bootstrap.ts');
+      window.dispatchEvent(new Event('load'));
+      expect(register).not.toHaveBeenCalled();
+
+      vi.stubEnv('PROD', true);
+      vi.resetModules();
+      await import('../src/bootstrap.ts');
+      window.dispatchEvent(new Event('load'));
+      expect(register).toHaveBeenCalledWith('/sw.js');
+    });
   });
 
   it('reloads once when a lazy chunk from a previous deploy is gone, never in a loop', async () => {
