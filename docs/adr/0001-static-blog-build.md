@@ -1,6 +1,6 @@
 # ADR 0001: Build the Field Notes blog as static HTML with our own script
 
-- Status: Accepted; Phases 1–3, 4a and 4b complete, not launched
+- Status: Accepted; Phases 1–4 complete, not launched
 - Date: 2026-10-28
 - Deciders: Emre Dursun (owner), with Claude as implementer
 
@@ -110,8 +110,10 @@ time-boxed Astro spike against the same criteria and record the outcome here.
   with the launch merge, since `feat/blog` never deploys).
 - ~~Check that `/blog` resolves to `blog.html` next to the `blog/` folder~~
   Checked on every labelled PR by `preview.yml` from Phase 2 on.
-- Remove the two placeholder posts and point the Lighthouse URLs in
-  `lighthouserc*.json` at real posts.
+- Replace the samples (`placeholder: true`) with real posts: the build
+  refuses to launch while any placeholder remains (Phase 4c). Lighthouse,
+  e2e and the preview check take their pages from the build, so nothing
+  else changes.
 - Merge `feat/blog` into `main` only in the launch PR (see Branches below).
 
 ### Branches
@@ -350,3 +352,24 @@ Still to do in Phase 3: crawlable topic pages (3b) and the "Now" log
   comment added to the card renderer after rendering made every card stale.
   A unit test now runs the build's card check on the real content, so
   `npm test` catches it before a push.
+
+## Phase 4c results (content readiness, content-agnostic CI)
+
+- **Launch gate:** posts and Now entries take `placeholder: true`; the
+  samples carry it. With `BLOG_LAUNCHED`, the build lists every
+  placeholder and every translation the English version has outgrown, and
+  refuses to build, so launch cannot ship a sample or a stale translation.
+- **`npm run blog:new`:** starts a post as drafts in three languages with
+  valid frontmatter; refuses an invalid, reserved or existing slug.
+- **CI follows the content:**
+  - Lighthouse measures the pages the build wrote (`scripts/lighthouse-urls.js`
+    passes them as `--collect.url`, which replace the config's list).
+  - The e2e specs read their cases from `dist` (`e2e/blog-content.ts`) and
+    skip, with a reason, a case the content lacks. Checked by running them
+    on a reduced content set (English and Turkish, one post): 64 passed,
+    14 skipped, none failed.
+  - The rules behind each skipped case stay covered by fixture unit tests.
+
+Launch day is now: replace the samples with real posts, render their
+cards, flip `BLOG_LAUNCHED`, re-enable `is-crawlable`, update the
+CHANGELOG, merge `feat/blog` into `main`.

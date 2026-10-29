@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
-import fs from 'fs';
-import path from 'path';
+import { type Page } from '@playwright/test';
+import { BLOG_LAUNCHED } from '../scripts/blog/config.js';
+import { postPath, postWithToc, recheckRange, slugs } from './blog-content';
 import { expect, test } from './fixtures';
 
 /**
@@ -8,14 +9,19 @@ import { expect, test } from './fixtures';
  * with the production headers. The fixture fails every test on a console
  * error or CSP violation, so each test here also proves the page is clean.
  */
-const blogDir = path.join(process.cwd(), 'dist', 'blog');
-const pages = fs.existsSync(blogDir)
-  ? fs.readdirSync(blogDir).filter((file) => file.endsWith('.html') && file !== 'now.html')
-  : [];
-if (pages.length === 0) {
-  throw new Error('e2e/blog.spec.ts: no pages in dist/blog; run `npm run build` first');
+// Taken from dist (e2e/blog-content.ts), so real posts can replace the samples.
+const POST = postPath('en')!;
+const TOC_POST = postWithToc() && postPath('en', postWithToc());
+
+/** noindex until launch (BLOG_LAUNCHED), and no robots meta after it. */
+async function expectIndexing(page: Page) {
+  const robots = page.locator('meta[name="robots"]');
+  if (BLOG_LAUNCHED) await expect(robots).toHaveCount(0);
+  else await expect(robots).toHaveAttribute('content', 'noindex, nofollow');
 }
-const POST = `/blog/${pages.sort()[0].replace(/\.html$/, '')}`;
+
+/** One day after `date` (YYYY-MM-DD), at noon UTC. */
+const dayAfter = (date: string) => new Date(Date.parse(`${date}T12:00:00Z`) + 86_400_000);
 const DARK_PAPER = 'rgb(28, 27, 24)';
 const LIGHT_PAPER = 'rgb(250, 247, 240)';
 
@@ -26,10 +32,7 @@ test.describe('blog article', () => {
     expect(response?.headers()['content-security-policy']).toContain("script-src 'self'");
 
     await expect(page.locator('h1')).toHaveCount(1);
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-      'content',
-      'noindex, nofollow',
-    );
+    await expectIndexing(page);
     await expect(page.getByRole('complementary', { name: 'Evidence for this note' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'How this was written' })).toBeVisible();
 
@@ -38,7 +41,8 @@ test.describe('blog article', () => {
   });
 
   test('table of contents links land on their sections', async ({ page }) => {
-    await page.goto(POST);
+    test.skip(!TOC_POST, 'no post with headings yet');
+    await page.goto(TOC_POST!);
     const toc = page.getByRole('navigation', { name: 'On this page' });
     const first = toc.getByRole('link').first();
     const target = (await first.getAttribute('href'))!;
@@ -186,10 +190,7 @@ test.describe('blog index and feed', () => {
     const response = await page.goto('/blog');
     expect(response?.status()).toBe(200);
     await expect(page.locator('h1')).toHaveCount(1);
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-      'content',
-      'noindex, nofollow',
-    );
+    await expectIndexing(page);
     await page.locator(`a[href="${POST}"]`).first().click();
     await expect(page).toHaveURL(new RegExp(`${POST}$`));
   });
@@ -221,6 +222,7 @@ test.describe('blog index and feed', () => {
   });
 
   test('there is no feed before launch, and no page links to one', async ({ page, request }) => {
+    test.skip(BLOG_LAUNCHED, 'the blog has launched; check-blog-live.sh checks its feeds');
     expect((await request.get('/blog/feed.xml')).status()).toBe(404);
     await page.goto('/blog');
     await expect(page.locator('link[type="application/atom+xml"]')).toHaveCount(0);
@@ -232,7 +234,8 @@ test.describe('stale evidence', () => {
   test('is flagged on the index and the article once the re-check date passes', async ({
     page,
   }) => {
-    await page.clock.setFixedTime(new Date('2030-01-01T12:00:00Z'));
+    // After the latest re-check date in the content, everything is stale.
+    await page.clock.setFixedTime(dayAfter(recheckRange('/blog').last));
     for (const url of ['/blog', POST]) {
       await page.goto(url);
       await expect(page.locator('.stale-note').first(), url).toBeVisible();
@@ -240,7 +243,9 @@ test.describe('stale evidence', () => {
   });
 
   test('is not flagged while the evidence is current', async ({ page }) => {
-    await page.clock.setFixedTime(new Date('2026-11-01T12:00:00Z'));
+    // Before the earliest re-check date in the content, nothing is stale.
+    const { first } = recheckRange('/blog');
+    await page.clock.setFixedTime(new Date(Date.parse(`${first}T12:00:00Z`) - 2 * 86_400_000));
     for (const url of ['/blog', POST]) {
       await page.goto(url);
       await expect(page.locator('.stale-note').first(), url).toBeHidden();
@@ -252,13 +257,15 @@ test.describe('with more than one post', () => {
   test('the index lists short notes with their status icon', async ({ page }) => {
     await page.goto('/blog');
     const notes = page.getByRole('region', { name: 'Short notes' });
+    test.skip((await notes.count()) === 0, 'no short notes yet');
     await expect(notes.getByRole('link')).not.toHaveCount(0);
-    await expect(notes.locator('svg.status-icon-hypothesis')).not.toHaveCount(0);
+    await expect(notes.locator('svg.status-icon')).not.toHaveCount(0);
   });
 
   test('articles end with links to other posts, and the hero links the newest', async ({
     page,
   }) => {
+    test.skip(slugs('en').length < 2, 'one English post: nothing else to suggest');
     await page.goto(POST);
     const more = page.getByRole('region', { name: 'Keep reading' });
     await expect(more.getByRole('link')).not.toHaveCount(0);
@@ -274,7 +281,8 @@ test.describe('table of contents placement', () => {
     page,
     isMobile,
   }) => {
-    await page.goto(POST);
+    test.skip(!TOC_POST, 'no post with headings yet');
+    await page.goto(TOC_POST!);
     const toc = page.getByRole('navigation', { name: 'On this page' });
     await page.locator('.ai-note').scrollIntoViewIfNeeded();
     const position = await toc.evaluate((el) => getComputedStyle(el).position);
