@@ -13,6 +13,8 @@ const routes = [
   { path: '/resume', file: 'resume.html' },
   { path: '/nl/projects', file: 'nl/projects.html' },
   { path: '/contact', file: 'contact.html' },
+  { path: '/tr/contact', file: 'tr/contact.html' },
+  { path: '/nl/about', file: 'nl/about.html' },
   { path: '/tr/resume', file: 'tr/resume.html' },
   { path: '/quality', file: 'quality.html' },
   { path: '/about/tricentis-tosca-automation', file: 'about/tricentis-tosca-automation.html' },

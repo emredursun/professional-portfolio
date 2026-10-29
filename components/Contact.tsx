@@ -295,13 +295,7 @@ const Contact: React.FC = () => {
 
   return (
     <section>
-      <SEO
-        title={t('title')}
-        description={t(
-          'meta.description',
-          'Get in touch with me for automation engineering opportunities or collaboration.',
-        )}
-      />
+      <SEO title={t('meta.title')} description={t('meta.description')} />
       <header className="mb-12">
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple">

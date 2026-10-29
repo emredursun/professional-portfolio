@@ -528,6 +528,7 @@
     }
   },
   "meta": {
-    "description": "Testautomatiserings- en softwareprojecten van Emre Dursun, van regressiesuites voor bankbetalingen tot open-source AI-governance tooling."
+    "title": "Testautomatiseringsprojecten",
+    "description": "Testautomatiseringsprojecten van Emre Dursun: frameworks met Playwright, Selenium en REST Assured, betalingsregressie bij ING en open-source AI-gedreven tools."
   }
 }

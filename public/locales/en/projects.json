@@ -293,6 +293,7 @@
     }
   },
   "meta": {
-    "description": "Test automation and software projects by Emre Dursun, from banking payment regression suites to open-source AI governance tooling."
+    "title": "Test Automation Projects",
+    "description": "Test automation projects by Emre Dursun: Playwright, Selenium and REST Assured frameworks, ING payment regression, and open-source AI-driven development tools."
   }
 }
