@@ -90,9 +90,10 @@ time-boxed Astro spike against the same criteria and record the outcome here.
 
 ## Launch checklist (later phases)
 
-- Set `BLOG_LAUNCHED = true`. This also writes `/blog/feed.xml` and adds
-  the feed links, which stay out before launch because `noindex` cannot
-  reach XML and feed services cache what they find.
+- ~~Set `BLOG_LAUNCHED = true`~~ Done in the launch PR. This also writes
+  each language's feed and adds the feed links, which stayed out before
+  launch because `noindex` cannot reach XML and feed services cache what
+  they find.
 - ~~Serve the feed as `application/atom+xml; charset=utf-8`~~ Done in
   Phase 2 (`firebase.json` header, pinned by `tests/hosting.test.ts`).
 - ~~Extend the preview check to the feeds' headers~~ Done in 4b:
@@ -100,23 +101,23 @@ time-boxed Astro spike against the same criteria and record the outcome here.
   indexable, an unknown post 404) runs in the preview check, the deploy
   smoke test and the uptime check, and switches itself on once the feed
   exists.
-- Re-enable the Lighthouse `is-crawlable` audit for blog pages
-  (`"is-crawlable": ["error", { "minScore": 1 }]` in both lighthouserc
-  blog blocks); `tests/lighthouse-urls.test.ts` fails until you do.
+- ~~Re-enable the Lighthouse `is-crawlable` audit for blog pages~~ Done in
+  the launch PR, in both lighthouserc blog blocks
+  (`tests/lighthouse-urls.test.ts` ties it to the flag).
 - ~~Add blog routes to the sitemap and the deploy smoke test~~ Done in 4b,
   behind the flag (see Phase 4b results).
 - ~~Extend the path-aware 404 to `/tr/blog/*` and `/nl/blog/*`~~ Done in 4b.
-- Have the Turkish and Dutch sample text reviewed, or replaced by the real
-  posts, before launch.
+- ~~Have the Turkish and Dutch sample text reviewed, or replaced by the real
+  posts~~ Done in 5a: replaced, and Emre read every translation.
 - ~~Add the blog link to the portfolio navigation~~ Done in 4b (it ships
   with the launch merge, since `feat/blog` never deploys).
 - ~~Check that `/blog` resolves to `blog.html` next to the `blog/` folder~~
   Checked on every labelled PR by `preview.yml` from Phase 2 on.
-- Replace the samples (`placeholder: true`) with real posts: the build
-  refuses to launch while any placeholder remains (Phase 4c). Lighthouse,
-  e2e and the preview check take their pages from the build, so nothing
-  else changes.
+- ~~Replace the samples (`placeholder: true`) with real posts~~ Done in 5a
+  (#25).
 - Merge `feat/blog` into `main` only in the launch PR (see Branches below).
+  The launch PR's head is `feat/blog-launch` (`feat/blog` plus the flag),
+  so CI and the preview test exactly what ships.
 
 ### Branches
 
@@ -385,6 +386,28 @@ Still to do in Phase 3: crawlable topic pages (3b) and the "Now" log
     14 skipped, none failed.
   - The rules behind each skipped case stay covered by fixture unit tests.
 
-Launch day is now: replace the samples with real posts, render their
+Launch day was: replace the samples with real posts, render their
 cards, flip `BLOG_LAUNCHED`, re-enable `is-crawlable`, update the
 CHANGELOG, merge `feat/blog` into `main`.
+
+## Phase 5 results (launch)
+
+- **5a, content (#25):** two real posts, the essay `green-is-not-done` and
+  the note `whose-name-is-on-the-decision`, each in English, Turkish and
+  Dutch, plus real Now entries; the samples are gone. They describe an
+  internal company tool by experience only, without naming it or showing
+  its internals. Posts can carry their own images (`images.js`): sized,
+  fingerprinted into `/assets/`, and an SVG is checked for scripts,
+  outside references and encoding tricks before it ships.
+- **Launch dry run before the content merged:** the flag and `is-crawlable`
+  on locally, then the full e2e suite (including the launch-only cases,
+  which had never run) and Lighthouse on desktop and mobile. It found one
+  real bug: the feed `<link>` carried `hreflang`, which search engines read
+  as a language version of the page with no return link. The feed link no
+  longer has it; the feed states its language with `xml:lang`.
+- **5b, launch PR:** `BLOG_LAUNCHED = true`, `is-crawlable` in both
+  lighthouserc blog blocks, the sitemap regenerated (only blog entries
+  added), `llms.txt` gains its Field Notes section, CHANGELOG entry.
+- **Rollback:** first `BLOG_LAUNCHED = false` (pages stay reachable but
+  noindex, so indexed URLs keep working); reverting the merge is the last
+  resort (RUNBOOK).

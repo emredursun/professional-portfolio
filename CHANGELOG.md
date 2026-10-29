@@ -5,6 +5,7 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 ## [Unreleased]
 
 ### Added
+- **Field Notes**, a blog in English, Turkish and Dutch at `/blog`, `/tr/blog` and `/nl/blog`, linked from the navigation, the sidebar and the command palette. It launches with two posts: the essay "Green is not done" and the note "Whose name is on the decision?". Each post shows its status, the evidence behind it, when that evidence was last re-checked, and how it was written, including what AI helped with. There are topic pages, a "Now" log, an Atom feed per language and a link-preview card per post and language. The pages are static HTML with no app JavaScript, served under the site's strict Content-Security-Policy, and the sitemap and `llms.txt` list them. How it was built and checked: `docs/adr/0001-static-blog-build.md`.
 - Dutch and Turkish text for Quilyn, PathForge, Devran AI Kit, DeelMarkt, BeSync and AegisQA. Their cards, detail pages and shared-link previews were English on the Dutch and Turkish pages. A unit test fails if a project has no translation, or a list that differs in length from the English one.
 - Each project page describes its project in structured data (`SoftwareSourceCode` with its repository, or `CreativeWork`), generated from the same data as the page. The site-wide graph had a hand-kept list of three projects from 2020–2023 instead.
 

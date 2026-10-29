@@ -878,4 +878,202 @@
         <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/projects/aegisqa" />
         <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/projects/aegisqa" />
   </url>
+
+  <url>
+    <loc>https://emredursun.nl/blog</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/blog/green-is-not-done</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/green-is-not-done" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/green-is-not-done" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/green-is-not-done" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/green-is-not-done" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/blog/whose-name-is-on-the-decision</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/whose-name-is-on-the-decision" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/whose-name-is-on-the-decision" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/whose-name-is-on-the-decision" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/whose-name-is-on-the-decision" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/blog/topic/testing</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/testing" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/topic/testing" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/topic/testing" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/topic/testing" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/blog/topic/ai</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/ai" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/topic/ai" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/topic/ai" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/topic/ai" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/blog/now</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/now" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/now" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/now" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/now" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/tr/blog</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/tr/blog/green-is-not-done</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/green-is-not-done" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/green-is-not-done" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/green-is-not-done" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/green-is-not-done" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/tr/blog/whose-name-is-on-the-decision</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/whose-name-is-on-the-decision" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/whose-name-is-on-the-decision" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/whose-name-is-on-the-decision" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/whose-name-is-on-the-decision" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/tr/blog/topic/testing</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/testing" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/topic/testing" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/topic/testing" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/topic/testing" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/tr/blog/topic/ai</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/ai" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/topic/ai" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/topic/ai" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/topic/ai" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/tr/blog/now</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/now" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/now" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/now" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/now" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/nl/blog</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/nl/blog/green-is-not-done</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/green-is-not-done" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/green-is-not-done" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/green-is-not-done" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/green-is-not-done" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/nl/blog/whose-name-is-on-the-decision</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/whose-name-is-on-the-decision" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/whose-name-is-on-the-decision" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/whose-name-is-on-the-decision" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/whose-name-is-on-the-decision" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/nl/blog/topic/testing</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/testing" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/topic/testing" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/topic/testing" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/topic/testing" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/nl/blog/topic/ai</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/ai" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/topic/ai" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/topic/ai" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/topic/ai" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/nl/blog/now</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/now" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/now" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/now" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/now" />
+  </url>
 </urlset>

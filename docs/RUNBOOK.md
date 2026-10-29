@@ -130,8 +130,16 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
   `/blog`. `npm run build:blog` rebuilds only the blog after a full build.
 - **Preview on Firebase:** label the PR `preview`; `preview.yml` also checks
   the blog paths on real Hosting.
-- **Launch:** follow the checklist in the ADR. Until then every blog page is
-  noindex and there is no feed.
+- **Live since the launch PR** (`BLOG_LAUNCHED = true`): pages are
+  indexable, each language has its feed, and the sitemap and `llms.txt` list
+  the blog. The build refuses placeholders and a language without a post.
+- **Take the blog offline without breaking links:** set
+  `BLOG_LAUNCHED = false` and deploy. The nav links, sitemap entries and
+  feeds go, and the pages turn noindex but keep resolving, so indexed URLs
+  do not become 404s. Remove `is-crawlable` from both lighthouserc blog
+  blocks in the same change (`tests/lighthouse-urls.test.ts` insists).
+  Reverting the launch merge is the last resort: it turns every indexed blog
+  URL into a 404.
 
 ## Quality report
 
