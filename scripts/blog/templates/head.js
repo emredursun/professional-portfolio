@@ -36,6 +36,8 @@ const line = (condition, content) => (condition ? markup`${content()}\n` : '');
  * @property {boolean} [hasCode]
  * @property {'reading' | 'display'} lcpFont  The face of the page's largest text, preloaded
  *   (on Turkish pages its extended Latin file too: readingExt or displayExt).
+ * @property {'reading' | 'display'} [headingFont]  The h1's face when it differs from
+ *   lcpFont; preloaded too, so the heading does not re-wrap when fonts load.
  * @property {object} jsonLd
  */
 
@@ -43,12 +45,14 @@ const line = (condition, content) => (condition ? markup`${content()}\n` : '');
 function optionalLines({ meta, assets, launched, blogName, lang }) {
   const alternates = meta.alternates ?? [];
   const english = alternates.find((alternate) => alternate.lang === 'en');
-  const preloads = [
-    assets.preload?.[meta.lcpFont],
-    // Turkish needs ğ, ş and İ from the extended Latin file as soon as the
-    // largest text paints; without the preload it arrives late and swaps.
-    lang === 'tr' ? assets.preload?.[`${meta.lcpFont}Ext`] : undefined,
-  ].filter(Boolean);
+  // The largest text's face first, then the h1's if it differs, so neither
+  // swaps in after the first paint and moves the page. Turkish needs ğ, ş
+  // and İ from each face's extended Latin file as well.
+  const faces = [...new Set([meta.lcpFont, meta.headingFont ?? meta.lcpFont])];
+  const preloads = faces
+    .flatMap((face) => [face, lang === 'tr' ? `${face}Ext` : undefined])
+    .map((key) => key && assets.preload?.[key])
+    .filter(Boolean);
   return {
     robots: line(!launched, () => markup`<meta name="robots" content="noindex, nofollow">`),
     // Each version names the others and English as the default; only
