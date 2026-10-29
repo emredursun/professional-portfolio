@@ -1,6 +1,6 @@
 /**
  * Writes files the blog build generates itself (the theme bootstrap script,
- * the code-colour rules, the link-preview images) into dist/assets/ under a
+ * the code-colour rules, the link-preview images, the posts' own images) into dist/assets/ under a
  * content hash, so they share the immutable caching of Vite's own assets and
  * change name when they change.
  */
@@ -14,13 +14,16 @@ const EXTENSIONS = new Map([
   ['css', 'text'],
   ['js', 'text'],
   ['png', 'binary'],
+  ['svg', 'binary'],
+  ['jpg', 'binary'],
+  ['webp', 'binary'],
 ]);
 
 /**
  * @param {string} distDir
  * @param {string} name      Short lowercase name, e.g. "code" or "og-hello-en".
- * @param {'css' | 'js' | 'png'} ext
- * @param {string | Buffer} content  A string for css and js, a Buffer for png.
+ * @param {'css' | 'js' | 'png' | 'svg' | 'jpg' | 'webp'} ext
+ * @param {string | Buffer} content  A string for css and js, a Buffer for images.
  * @returns {string} The URL the page should reference.
  */
 export function emitAsset(distDir, name, ext, content) {

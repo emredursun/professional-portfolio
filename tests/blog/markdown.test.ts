@@ -63,12 +63,28 @@ describe('renderMarkdown: images', () => {
     expect(() => render('![chart](https://cdn.example/chart.png)')).toThrow(/image/);
   });
 
+  const chart = { src: '/assets/blog-img-sample-chart-0a1b2c3d.svg', width: 640, height: 320 };
+  const image = (name: string) => (name === 'chart.svg' ? chart : undefined);
+
   it('fails for an image without alternative text', () => {
-    expect(() => render('![](/images/chart.png)')).toThrow(/alt/);
+    expect(() => render('![](chart.svg)', { image })).toThrow(/alt/);
   });
 
-  it('accepts a local image with alt text', () => {
-    expect(render('![A chart](/images/chart.png)').html).toContain('alt="A chart"');
+  it('serves an image next to the post at its hashed URL, sized and lazy', () => {
+    expect(render('![A chart](chart.svg)', { image }).html).toContain(
+      `<img src="${chart.src}" alt="A chart" width="640" height="320" loading="lazy" decoding="async">`,
+    );
+  });
+
+  it.each(['/images/chart.png', 'images/chart.svg', '../other/chart.svg'])(
+    'fails for %s, which is not a file next to the post',
+    (src) => {
+      expect(() => render(`![A chart](${src})`, { image })).toThrow(/next to the post/);
+    },
+  );
+
+  it('fails for an image file that does not exist', () => {
+    expect(() => render('![A chart](missing.svg)', { image })).toThrow(/missing\.svg.*not found/);
   });
 });
 
@@ -150,9 +166,9 @@ describe('renderMarkdown: review findings', () => {
     expect(() => render(source)).toThrow(/served from this site/);
   });
 
-  it('accepts https: without slashes, which a browser resolves on this site', () => {
+  it('treats https: without slashes as this site, and still wants the file next to the post', () => {
     // On an https page, "https:/x" and "https:x" are relative, like "/x" and "x".
-    expect(render('![a](https:/images/x.png)').html).toContain('<img');
+    expect(() => render('![a](https:/images/x.png)')).toThrow(/next to the post/);
   });
 
   it('marks a scheme-only external link with rel', () => {

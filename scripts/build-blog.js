@@ -26,6 +26,7 @@ import { loadPosts } from './blog/content.js';
 import { assertLaunchable, launchWarnings } from './blog/launch-gate.js';
 import { loadNow } from './blog/now.js';
 import { createHighlight } from './blog/highlight.js';
+import { emitPostImages } from './blog/images.js';
 import { readBlogAssets } from './blog/manifest.js';
 import { renderMarkdown } from './blog/markdown.js';
 import { renderFeed } from './blog/feed.js';
@@ -223,9 +224,18 @@ export async function buildBlog({
   if (launched) assertLaunchable({ posts, now });
 
   const { highlight, css } = await createHighlight();
+  const images = await emitPostImages({
+    distDir,
+    contentDir,
+    slugs: posts.map((post) => post.slug),
+  });
   const rendered = posts.map((post) => ({
     ...post,
-    ...renderMarkdown(post.body, { file: post.file, highlight }),
+    ...renderMarkdown(post.body, {
+      file: post.file,
+      highlight,
+      image: (name) => images.get(`${post.slug}/${name}`),
+    }),
   }));
   const languages = BLOG_LANGUAGES.filter((lang) => rendered.some((post) => post.lang === lang));
   const assets = Object.freeze({

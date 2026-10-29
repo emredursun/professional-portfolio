@@ -44,6 +44,11 @@ describe('emitAsset', () => {
     expect(fs.readFileSync(path.join(dist, url)).equals(png)).toBe(true);
   });
 
+  it.each(['svg', 'jpg', 'webp'] as const)('writes a .%s post image as bytes', (ext) => {
+    const url = emitAsset(dist, 'img-hello-chart', ext, Buffer.from('bytes'));
+    expect(url).toMatch(new RegExp(`^/assets/blog-img-hello-chart-[0-9a-f]{8}\\.${ext}$`));
+  });
+
   it('refuses text for an image and a buffer for a stylesheet', () => {
     expect(() => emitAsset(dist, 'og', 'png', 'not an image')).toThrow(/Buffer/);
     expect(() => emitAsset(dist, 'code', 'css', Buffer.from('a'))).toThrow(/string/);

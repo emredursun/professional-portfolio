@@ -214,6 +214,31 @@ describe('buildBlog', () => {
     ).rejects.toThrow(/vite build/);
   });
 
+  it('serves a post’s image from /assets/, sized, in every language that shows it', async () => {
+    writePost('one', '![The trace chain](chain.svg)\n');
+    writePost('one', '![İzlenebilirlik zinciri](chain.svg)\n', TRANSLATION, 'tr');
+    fs.writeFileSync(
+      path.join(contentDir, 'one', 'chain.svg'),
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><rect width="8" height="4"/></svg>',
+    );
+    const dist = makeDist('dist');
+    await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
+    const pattern =
+      /<img src="(\/assets\/blog-img-one-chain-[0-9a-f]{8}\.svg)" alt="([^"]+)" width="800" height="400" loading="lazy" decoding="async">/;
+    const en = pattern.exec(fs.readFileSync(path.join(dist, 'blog', 'one.html'), 'utf8'))!;
+    const tr = pattern.exec(fs.readFileSync(path.join(dist, 'tr', 'blog', 'one.html'), 'utf8'))!;
+    expect([en[2], tr[2]]).toEqual(['The trace chain', 'İzlenebilirlik zinciri']);
+    expect(tr[1]).toBe(en[1]);
+    expect(fs.existsSync(path.join(dist, en[1]))).toBe(true);
+  });
+
+  it('fails on a post image that is not there', async () => {
+    writePost('one', '![The trace chain](chain.svg)\n');
+    await expect(
+      buildBlog({ distDir: makeDist('dist'), contentDir, themeInitPath, launched: false }),
+    ).rejects.toThrow(/one\/en\.md: image "chain\.svg" not found/);
+  });
+
   it('writes nothing when there are no posts', async () => {
     const dist = makeDist('dist');
     expect(await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false })).toEqual(
