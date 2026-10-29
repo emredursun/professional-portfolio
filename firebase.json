@@ -14,7 +14,7 @@
         "type": 301
       }
     ],
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": ["firebase.json", "**/.*", "**/.*/**", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "/",
@@ -157,6 +157,42 @@
           {
             "key": "Cache-Control",
             "value": "public, max-age=0, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/blog",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=0, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/blog/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=0, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/blog/feed.xml",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/atom+xml; charset=utf-8"
+          }
+        ]
+      },
+      {
+        "source": "/@(nl|tr)/blog/feed.xml",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/atom+xml; charset=utf-8"
           }
         ]
       },

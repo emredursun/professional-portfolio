@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import Magnetic from './Magnetic.tsx';
 import { Page } from '../types.ts';
+import { BLOG_IN_NAV, blogPathFor, withBlogBeforeContact } from '../src/utils/blog.ts';
 
 interface NavbarProps {
   onOpenCommandPalette?: () => void;
@@ -75,7 +76,7 @@ const NavButton: React.FC<{
           }
         }}
         className={({ isActive }) =>
-          `relative flex flex-col items-center justify-center w-full min-w-[54px] py-[3px] rounded-xl transition-all duration-300 group touch-manipulation ${
+          `relative flex flex-col items-center justify-center w-full min-w-[50px] py-[3px] rounded-xl transition-all duration-300 group touch-manipulation ${
             isActive
               ? 'text-yellow-600 dark:text-yellow-400'
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
@@ -117,6 +118,28 @@ const NavButton: React.FC<{
   </li>
 ));
 
+/**
+ * The blog, styled like the other entries but a plain link: Field Notes is
+ * static pages outside the router, so it is never the active route here.
+ */
+const BlogNavItem: React.FC<{ href: string; label: string }> = React.memo(({ href, label }) => (
+  <li className="flex-1 flex justify-center">
+    <Magnetic>
+      <a
+        href={href}
+        className="relative flex flex-col items-center justify-center w-full min-w-[50px] py-[3px] rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+      >
+        <span className="text-[16px] mb-[2px] z-10 transition-all duration-300 ease-out group-hover:scale-105 group-active:scale-95">
+          <i aria-hidden="true" className="fas fa-pen-nib"></i>
+        </span>
+        <span className="text-[8px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap">
+          {label}
+        </span>
+      </a>
+    </Magnetic>
+  </li>
+));
+
 const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent }) => {
   const { t, i18n } = useTranslation('common');
 
@@ -141,21 +164,25 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent
         <div className="max-w-[520px] mx-auto px-[14px] py-[3px]">
           <ul className="flex justify-between items-center gap-0.5">
             {/* Navigation buttons */}
-            {languageAwarePages.map((page) => (
-              <NavButton
-                key={page.id}
-                page={page}
-                translatedLabel={t(page.translationKey)}
-                onScrollToContent={onScrollToContent}
-              />
-            ))}
+            {withBlogBeforeContact(languageAwarePages, BLOG_IN_NAV).map((page) =>
+              page === 'blog' ? (
+                <BlogNavItem key="blog" href={blogPathFor(currentLang)} label={t('nav.blog')} />
+              ) : (
+                <NavButton
+                  key={page.id}
+                  page={page}
+                  translatedLabel={t(page.translationKey)}
+                  onScrollToContent={onScrollToContent}
+                />
+              ),
+            )}
 
             {/* Command Palette Button integrated as nav item */}
             {onOpenCommandPalette && (
               <li className="flex-1 flex justify-center">
                 <button
                   onClick={onOpenCommandPalette}
-                  className="relative flex flex-col items-center justify-center w-full min-w-[54px] py-[5px] rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                  className="relative flex flex-col items-center justify-center w-full min-w-[50px] py-[5px] rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                   aria-label={t('nav.search')}
                   title={t('labels.searchShortcut')}
                 >

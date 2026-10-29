@@ -100,6 +100,15 @@ A few decisions worth knowing about:
 - **Privacy by default.** No analytics or tracking scripts, and no cookies. Google Maps loads only when the visitor asks for it. An end-to-end test fails if a page loads anything from a third party.
 - **Errors are reported, never fatal by accident.** A real React error boundary catches render errors. Errors outside the tree stay in the browser console and do not take over the page.
 
+## Blog
+
+"Field Notes" lives at `/blog`: static pages generated after the app from
+Markdown in `blog/content/`, outside the React SPA, under the same strict
+CSP. Every post shows its evidence, how AI was used and a corrections log.
+It is not launched yet (pages are noindex). Why it is built this way:
+[ADR 0001](docs/adr/0001-static-blog-build.md); how to write a post:
+[RUNBOOK](docs/RUNBOOK.md#blog-field-notes).
+
 ## Deployment and operations
 
 Pushes to `main` deploy to Firebase Hosting through [`deploy.yml`](.github/workflows/deploy.yml) after the quality gates pass. The workflow then smoke-tests the live site against `/version.json`. Pull requests run the same quality gates; a Firebase preview channel is deployed only for a PR labelled `preview`.

@@ -65,6 +65,82 @@ CI fails if the regenerated sitemap or profile README differs from what is commi
 
 The CV PDFs (`/cv/Emre-Dursun-CV-<lang>.pdf`) are not committed: CI renders them from the build on every deploy, so a content change reaches the PDF automatically. To check one locally: `npm run build && npm run generate:cv`, then open `dist/cv/`.
 
+## Blog (Field Notes)
+
+Static pages built after the app by `scripts/build-blog.js`; the design and
+the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
+
+- **Write a post:** `npm run blog:new -- <slug> [--kind note] [--topic ai]`
+  starts `blog/content/<slug>/{en,tr,nl}.md` as drafts. The folder name is
+  the URL (`/blog/<slug>`): lowercase words and dashes, fixed once
+  published. Frontmatter is validated strictly (`scripts/blog/schema.js`):
+  title, description (160 characters at most), publishedAt, optional
+  updatedAt, topic, kind (essay or note), status, evidence, aiAssistance,
+  corrections.
+- **Before publishing a post, check:**
+  1. The evidence says how sure you are, what it rests on, and when you
+     re-checked it.
+  2. "How this was written" lists what is yours and what AI helped with.
+  3. Each translation has `translation.from` (the English version's date)
+     and `assistedByAi`, and you have read it yourself.
+  4. `draft: true` is gone from each version you publish.
+  5. `npm run blog:og` has rendered its link-preview cards, committed.
+  6. `npm run build` passes; with `BLOG_LAUNCHED` it also refuses any
+     `placeholder: true` content and a language with no published post
+     (the nav links /tr/blog and /nl/blog, so each must exist). After
+     launch, keep at least one published post per language: putting the
+     last Turkish or Dutch one back to `draft: true` fails every deploy.
+     A translation the English version has outgrown only prints
+     `blog: warning:` (before and after launch): its page already tells
+     readers, so update it soon.
+- **Add an image:** put it next to the post (`blog/content/<slug>/chart.svg`;
+  svg, png, jpg or webp, lowercase-with-dashes name) and write
+  `![What it shows](chart.svg)`; every language uses the same file with its
+  own alt text. The build serves it from `/assets/` with its width and height.
+  An SVG needs a viewBox and may hold no scripts, event handlers, embedded
+  HTML or outside references. Draw it about 560 wide with text of 18 or more,
+  so it stays readable on a phone, and give it its own light and dark colours
+  (`@media (prefers-color-scheme: dark)` inside the SVG follows the site's
+  theme toggle).
+- **Translate a post:** add `tr.md` or `nl.md` next to `en.md` (served at
+  `/tr/blog/<slug>` and `/nl/blog/<slug>`; the slug stays English). It must
+  keep the English publishedAt, kind, topic, status and evidence
+  recheckedAt, and needs
+  `translation: { from: <date of the English version you translated>,
+  assistedByAi: true|false }`; the AI panel says how it was translated.
+  When the English post changes later (updatedAt or a correction), the
+  translation shows "the English version has changed" until you update it
+  and move `from` forward. A post without a translation still appears on
+  that language's index, marked as English. UI text for all three languages
+  is in `scripts/blog/strings.js`.
+- **Link-preview images:** after adding or changing a post (title, status,
+  topic) run `npm run blog:og` and commit `blog/og/`. It renders each
+  missing or stale card in a local Chromium (`npx playwright install
+  chromium` once) and removes cards no post needs. The build never renders
+  cards: it fails with the list of cards to re-render until you do.
+- **Now log:** add an entry at the top of `blog/now/en.md` (and `tr.md`,
+  `nl.md`): `- date: YYYY-MM-DD` and `text:` (280 characters at most),
+  newest first, frontmatter only. The newest entry shows on that
+  language's index; all of them on `/blog/now`.
+- **Drafts:** `draft: true` keeps a post out of the build, but the repository
+  is public: keep unfinished text out of Git until it is ready.
+- **Corrections:** add an entry to `corrections` with its date; the page,
+  the feed and the structured data all pick up the new date.
+- **Build and look:** `npm run build`, then `npx vite preview` and open
+  `/blog`. `npm run build:blog` rebuilds only the blog after a full build.
+- **Preview on Firebase:** label the PR `preview`; `preview.yml` also checks
+  the blog paths on real Hosting.
+- **Live since the launch PR** (`BLOG_LAUNCHED = true`): pages are
+  indexable, each language has its feed, and the sitemap and `llms.txt` list
+  the blog. The build refuses placeholders and a language without a post.
+- **Take the blog offline without breaking links:** set
+  `BLOG_LAUNCHED = false` and deploy. The nav links, sitemap entries and
+  feeds go, and the pages turn noindex but keep resolving, so indexed URLs
+  do not become 404s. Remove `is-crawlable` from both lighthouserc blog
+  blocks in the same change (`tests/lighthouse-urls.test.ts` insists).
+  Reverting the launch merge is the last resort: it turns every indexed blog
+  URL into a 404.
+
 ## Quality report
 
 `/quality` reads `dist/quality.json`, which the last step of `quality.yml` writes from that run's Vitest, Playwright, Lighthouse and audit reports. If the page says the report isn't available, the deployed build has no complete `quality.json`: check that step in the deploy run. Locally: run the unit tests with coverage, the e2e suite and Lighthouse, write `reports/audit.json` with `npm audit --omit=dev --json`, then `node scripts/write-quality.js`.

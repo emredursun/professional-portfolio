@@ -7,7 +7,7 @@ const source = readFileSync(resolve(process.cwd(), 'public/sw.js'), 'utf8');
 const ORIGIN = 'https://emredursun.nl';
 
 /** Runs public/sw.js in a sandbox and returns the event listeners it registers. */
-function loadWorker(cacheNames: string[] = []) {
+function loadWorker(cacheNames: string[] = [], cached?: Response) {
   const listeners: Record<string, (event: unknown) => void> = {};
   const deleted: string[] = [];
   const caches = {
@@ -17,7 +17,7 @@ function loadWorker(cacheNames: string[] = []) {
       return true;
     },
     open: async () => ({ addAll: async () => {}, put: async () => {} }),
-    match: async () => undefined,
+    match: async () => cached?.clone(),
   };
   const self = {
     location: { origin: ORIGIN },
@@ -65,5 +65,26 @@ describe('service worker', () => {
     listeners.activate({ waitUntil: (p: Promise<unknown>) => (done = p) });
     await done;
     expect(deleted).toEqual(['ed-portfolio-v1']);
+  });
+});
+
+describe('service worker and the blog', () => {
+  it('fetches blog pages from the network first, so a fix is never hidden by a cached copy', async () => {
+    // A cached copy exists and the network answers 404: only network-first
+    // returns the network's answer.
+    const { listeners } = loadWorker([], new Response('cached', { status: 200 }));
+    for (const url of [`${ORIGIN}/blog/a-post`, `${ORIGIN}/tr/blog/a-post`]) {
+      const event = fetchEvent(url);
+      listeners.fetch(event);
+      const response = await event.respondWith.mock.calls[0][0];
+      expect(response.status, url).toBe(404);
+    }
+  });
+
+  it('serves hashed assets from the cache first (the control for the test above)', async () => {
+    const { listeners } = loadWorker([], new Response('cached', { status: 200 }));
+    const event = fetchEvent(`${ORIGIN}/assets/blog-code-12345678.css`);
+    listeners.fetch(event);
+    expect((await event.respondWith.mock.calls[0][0]).status).toBe(200);
   });
 });

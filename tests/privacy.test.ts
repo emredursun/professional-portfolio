@@ -10,7 +10,16 @@ import { describe, expect, it } from 'vitest';
  * that ships to visitors is scanned.
  */
 const ROOT = path.resolve(__dirname, '..');
-const SHIPPED = ['index.html', 'constants.tsx', 'components', 'src', 'public/locales', 'scripts'];
+const SHIPPED = [
+  'index.html',
+  'constants.tsx',
+  'components',
+  'src',
+  'public/locales',
+  'scripts',
+  // Blog posts, their client code and styles.
+  'blog',
+];
 const FORBIDDEN = [/Hoogkarspel/i, /\b1616\s?[A-Z]{2}\b/];
 
 function files(entry: string): string[] {
@@ -26,7 +35,7 @@ function files(entry: string): string[] {
 describe('privacy', () => {
   it('ships no home town or postcode in any source the site is built from', () => {
     const hits = SHIPPED.flatMap(files)
-      .filter((file) => /\.(tsx?|jsx?|json|html|css)$/.test(file))
+      .filter((file) => /\.(tsx?|jsx?|json|html|css|md)$/.test(file))
       .flatMap((file) => {
         const text = fs.readFileSync(file, 'utf8');
         return FORBIDDEN.filter((pattern) => pattern.test(text)).map(

@@ -31,6 +31,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath, pathToFileURL } from 'url';
+import { blogSitemapEntries } from './blog/sitemap.js';
 import { loadConstants } from './lib/load-constants.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -245,12 +246,37 @@ function priorityForRoute(route) {
 }
 
 /**
- * Generate sitemap XML content. Routes are emitted in the key order of lastMod.
+ * One blog page (scripts/blog/sitemap.js). Its alternates are its own: a post
+ * may exist in one or two languages only, unlike the portfolio's pages.
+ *
+ * @param {{ loc: string, lastmod: string, alternates: { lang: string, href: string }[] }} entry
+ */
+function generateBlogEntry({ loc, lastmod, alternates }) {
+  const links = alternates
+    .map(
+      ({ lang, href }) =>
+        `        <xhtml:link rel="alternate" hreflang="${lang}" href="${href}" />`,
+    )
+    .join('\n');
+  return `
+  <url>
+    <loc>${loc}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+${links}
+  </url>`;
+}
+
+/**
+ * Generate sitemap XML content. Routes are emitted in the key order of lastMod,
+ * then the blog's pages.
  *
  * @param {Record<string, string>} lastMod
  * @param {Record<string, string[]>} [images] image URLs per route
+ * @param {Parameters<typeof generateBlogEntry>[0][]} [blog] the blog's pages; none before launch
  */
-export function generateSitemap(lastMod, images = {}) {
+export function generateSitemap(lastMod, images = {}, blog = []) {
   const urls = [];
 
   // Generate URLs for each language and route
@@ -293,7 +319,7 @@ export function generateSitemap(lastMod, images = {}) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${urls.join('\n')}
+${[...urls, ...blog.map(generateBlogEntry)].join('\n')}
 </urlset>`;
 }
 
@@ -316,18 +342,19 @@ export function writeIfChanged(filePath, content) {
  * Regenerate the sitemap and its state file. Paths and clock are injectable,
  * so the whole flow can run against a temporary directory in tests.
  *
- * @param {{ routes?: string[], images?: Record<string, string[]>, outputPath?: string, statePath?: string, now?: string }} [options]
+ * @param {{ routes?: string[], images?: Record<string, string[]>, blog?: object[], outputPath?: string, statePath?: string, now?: string }} [options]
  * @returns {{ sitemapWritten: boolean, changed: string[], urls: number, alternates: number }}
  */
 export function writeSitemap({
   routes = STATIC_ROUTES,
   images = {},
+  blog = [],
   outputPath = OUTPUT_PATH,
   statePath = STATE_PATH,
   now = new Date().toISOString(),
 } = {}) {
   const { lastMod, nextState, changed } = resolveLastMod(routes, statePath, now);
-  const sitemapContent = generateSitemap(lastMod, images);
+  const sitemapContent = generateSitemap(lastMod, images, blog);
 
   const sitemapWritten = writeIfChanged(outputPath, sitemapContent);
   writeIfChanged(statePath, `${JSON.stringify(nextState, null, 2)}\n`);
@@ -346,6 +373,11 @@ async function main() {
     const { sitemapWritten, changed, urls, alternates } = writeSitemap({
       routes: listRoutes(constants),
       images: routeImages(constants),
+      // Empty until the blog launches (BLOG_LAUNCHED).
+      blog: blogSitemapEntries({
+        contentDir: path.join(ROOT, 'blog', 'content'),
+        nowDir: path.join(ROOT, 'blog', 'now'),
+      }),
     });
 
     console.log('✅ Sitemap generated successfully!');

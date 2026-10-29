@@ -1,5 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "ignore": ["public/sw.js"],
+  "entry": ["blog/client/article.ts"],
+  "ignore": ["public/sw.js", "blog/client/theme-init.js"],
   "ignoreDependencies": ["@fortawesome/fontawesome-free"]
 }

@@ -1,0 +1,298 @@
+import AxeBuilder from '@axe-core/playwright';
+import { type Page } from '@playwright/test';
+import { BLOG_LAUNCHED } from '../scripts/blog/config.js';
+import { hasNotes, postPath, postWithToc, recheckRange, slugs } from './blog-content';
+import { expect, test } from './fixtures';
+
+/**
+ * The static Field Notes pages (scripts/build-blog.js), served by vite preview
+ * with the production headers. The fixture fails every test on a console
+ * error or CSP violation, so each test here also proves the page is clean.
+ */
+// Taken from dist (e2e/blog-content.ts), so real posts can replace the samples.
+const POST = postPath('en')!;
+const TOC_POST = postWithToc() && postPath('en', postWithToc());
+
+/** noindex until launch (BLOG_LAUNCHED), and no robots meta after it. */
+async function expectIndexing(page: Page) {
+  const robots = page.locator('meta[name="robots"]');
+  if (BLOG_LAUNCHED) await expect(robots).toHaveCount(0);
+  else await expect(robots).toHaveAttribute('content', 'noindex, nofollow');
+}
+
+/** One day after `date` (YYYY-MM-DD), at noon UTC. */
+const dayAfter = (date: string) => new Date(Date.parse(`${date}T12:00:00Z`) + 86_400_000);
+/** The same day a year later (YYYY-MM-DD), as nextRecheck in sections.js counts. */
+const yearAfter = (date: string) => `${Number(date.slice(0, 4)) + 1}${date.slice(4)}`;
+const DARK_PAPER = 'rgb(28, 27, 24)';
+const LIGHT_PAPER = 'rgb(250, 247, 240)';
+
+test.describe('blog article', () => {
+  test('is a complete article page under the production CSP', async ({ page }) => {
+    const response = await page.goto(POST);
+    expect(response?.status()).toBe(200);
+    expect(response?.headers()['content-security-policy']).toContain("script-src 'self'");
+
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expectIndexing(page);
+    await expect(page.getByRole('complementary', { name: 'Evidence for this note' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'How this was written' })).toBeVisible();
+
+    const ld = await page.locator('script[type="application/ld+json"]').textContent();
+    expect(JSON.parse(ld ?? '{}')['@type']).toBe('BlogPosting');
+  });
+
+  test('table of contents links land on their sections', async ({ page }) => {
+    test.skip(!TOC_POST, 'no post with headings yet');
+    await page.goto(TOC_POST!);
+    const toc = page.getByRole('navigation', { name: 'On this page' });
+    const first = toc.getByRole('link').first();
+    const target = (await first.getAttribute('href'))!;
+    await first.click();
+    await expect(page).toHaveURL(new RegExp(`${target}$`));
+    // [id="..."] rather than #id: a heading such as "3 questions" gives an id
+    // that is not a valid CSS id selector.
+    await expect(page.locator(`[id="${target.slice(1)}"]`)).toBeInViewport();
+  });
+
+  test('loads nothing from third parties and none of the portfolio app', async ({
+    page,
+    baseURL,
+  }) => {
+    const own = new URL(baseURL ?? '').origin;
+    const requests: string[] = [];
+    page.on('request', (request) => requests.push(request.url()));
+    await page.goto(POST);
+    await page.waitForLoadState('networkidle');
+
+    const http = requests.filter((url) => url.startsWith('http'));
+    expect(http.filter((url) => new URL(url).origin !== own)).toEqual([]);
+    expect(http.filter((url) => /vendor-|\/main-/.test(url))).toEqual([]);
+    await expect(page.locator('script[type="module"]')).toHaveCount(1);
+  });
+
+  test('has no axe violations in the light and dark themes', async ({ page }) => {
+    for (const colorScheme of ['light', 'dark'] as const) {
+      await page.emulateMedia({ colorScheme });
+      await page.goto(POST);
+      const results = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+        .analyze();
+      expect(results.violations, colorScheme).toEqual([]);
+    }
+  });
+
+  test('has no axe violations with dark pinned while the system is light', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.addInitScript(() => {
+      localStorage.setItem('theme', 'dark');
+      localStorage.setItem('userToggledTheme', 'true');
+    });
+    await page.goto(POST);
+    await expect(page.locator('html')).toHaveClass(/\bdark\b/);
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  });
+
+  test('shows a visible focus ring on keyboard focus', async ({ page }) => {
+    await page.goto(POST);
+    await page.keyboard.press('Tab');
+    const skip = page.getByRole('link', { name: 'Skip to content' });
+    await expect(skip).toBeFocused();
+    expect(await skip.evaluate((el) => getComputedStyle(el).outlineStyle)).toBe('solid');
+  });
+
+  test('fits the screen without horizontal scrolling', async ({ page }) => {
+    await page.goto(POST);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+});
+
+test.describe('blog without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('is fully readable, and hides the toggle that would not work', async ({ page }) => {
+    await page.goto(POST);
+    await expect(page.locator('h1')).toBeVisible();
+    await expect(page.locator('.prose p').first()).toBeVisible();
+    await expect(page.locator('[data-theme-toggle]')).toBeHidden();
+  });
+});
+
+test.describe('blog theme', () => {
+  test('a theme pinned on the portfolio applies before the first paint', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.addInitScript(() => {
+      localStorage.setItem('theme', 'dark');
+      localStorage.setItem('userToggledTheme', 'true');
+    });
+    // Hold the client module: the colour must already be right without it.
+    let release: () => void = () => {};
+    const held = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    await page.route('**/assets/article-*.js', async (route) => {
+      await held;
+      await route.continue();
+    });
+
+    await page.goto(POST, { waitUntil: 'commit' });
+    await page.waitForFunction(
+      () =>
+        document.body !== null &&
+        getComputedStyle(document.body).backgroundColor !== 'rgba(0, 0, 0, 0)',
+    );
+    expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(
+      DARK_PAPER,
+    );
+    release();
+  });
+
+  test('follows the system setting when the visitor never chose', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.goto(POST);
+    expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(
+      DARK_PAPER,
+    );
+    await page.emulateMedia({ colorScheme: 'light' });
+    expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(
+      LIGHT_PAPER,
+    );
+  });
+
+  test('a choice made on the blog holds on the portfolio', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.goto(POST);
+    const toggle = page.getByRole('button', { name: 'Dark theme' });
+    await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+
+    await page.goto('/about');
+    await expect(page.locator('html')).toHaveClass(/\bdark\b/);
+  });
+});
+
+test.describe('blog paths behave like Firebase', () => {
+  test('an unknown post is a real 404, and a trailing slash redirects', async ({ request }) => {
+    expect((await request.get('/blog/no-such-post')).status()).toBe(404);
+    const slashed = await request.get(`${POST}/`, { maxRedirects: 0 });
+    expect(slashed.status()).toBe(301);
+    expect(slashed.headers().location).toBe(POST);
+  });
+});
+
+test.describe('blog index and feed', () => {
+  test('the index lists the posts and links to them', async ({ page }) => {
+    const response = await page.goto('/blog');
+    expect(response?.status()).toBe(200);
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expectIndexing(page);
+    await page.locator(`a[href="${POST}"]`).first().click();
+    await expect(page).toHaveURL(new RegExp(`${POST}$`));
+  });
+
+  test('the index has no axe violations in any theme and fits the screen', async ({ page }) => {
+    for (const colorScheme of ['light', 'dark'] as const) {
+      await page.emulateMedia({ colorScheme });
+      await page.goto('/blog');
+      const results = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+        .analyze();
+      expect(results.violations, colorScheme).toEqual([]);
+    }
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.evaluate(() => {
+      localStorage.setItem('theme', 'dark');
+      localStorage.setItem('userToggledTheme', 'true');
+    });
+    await page.reload();
+    await expect(page.locator('html')).toHaveClass(/\bdark\b/);
+    const pinned = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    expect(pinned.violations, 'pinned dark').toEqual([]);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
+  test('there is no feed before launch, and no page links to one', async ({ page, request }) => {
+    test.skip(BLOG_LAUNCHED, 'the blog has launched; check-blog-live.sh checks its feeds');
+    expect((await request.get('/blog/feed.xml')).status()).toBe(404);
+    await page.goto('/blog');
+    await expect(page.locator('link[type="application/atom+xml"]')).toHaveCount(0);
+    await expect(page.locator('a[href="/blog/feed.xml"]')).toHaveCount(0);
+  });
+});
+
+test.describe('stale evidence', () => {
+  test('is flagged on the index and the article once the re-check date passes', async ({
+    page,
+  }) => {
+    // Evidence goes stale a year after its re-check; a day past the latest
+    // such date in the content, everything is stale.
+    await page.clock.setFixedTime(dayAfter(yearAfter(recheckRange().last)));
+    for (const url of ['/blog', POST]) {
+      await page.goto(url);
+      await expect(page.locator('.stale-note').first(), url).toBeVisible();
+    }
+  });
+
+  test('is not flagged while the evidence is current', async ({ page }) => {
+    // The day after the earliest re-check, every post's evidence is current.
+    await page.clock.setFixedTime(dayAfter(recheckRange().first));
+    for (const url of ['/blog', POST]) {
+      await page.goto(url);
+      await expect(page.locator('.stale-note').first(), url).toBeHidden();
+    }
+  });
+});
+
+test.describe('with more than one post', () => {
+  test('the index lists short notes with their status icon', async ({ page }) => {
+    test.skip(!hasNotes, 'no short notes in the content yet');
+    await page.goto('/blog');
+    const notes = page.getByRole('region', { name: 'Short notes' });
+    await expect(notes.getByRole('link')).not.toHaveCount(0);
+    await expect(notes.locator('svg.status-icon')).not.toHaveCount(0);
+  });
+
+  test('articles end with links to other posts, and the hero links the newest', async ({
+    page,
+  }) => {
+    test.skip(slugs('en').length < 2, 'one English post: nothing else to suggest');
+    await page.goto(POST);
+    const more = page.getByRole('region', { name: 'Keep reading' });
+    await expect(more.getByRole('link')).not.toHaveCount(0);
+    await page.goto('/blog');
+    await page.getByRole('link', { name: 'Read the latest' }).click();
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page).toHaveURL(/\/blog\/[a-z0-9-]+$/);
+  });
+});
+
+test.describe('table of contents placement', () => {
+  test('stays in view while reading on wide screens, and sits above the text on phones', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(!TOC_POST, 'no post with headings yet');
+    await page.goto(TOC_POST!);
+    const toc = page.getByRole('navigation', { name: 'On this page' });
+    await page.locator('.ai-note').scrollIntoViewIfNeeded();
+    const position = await toc.evaluate((el) => getComputedStyle(el).position);
+    if (isMobile) {
+      expect(position).toBe('static');
+    } else {
+      expect(position).toBe('sticky');
+      await expect(toc).toBeInViewport();
+    }
+  });
+});

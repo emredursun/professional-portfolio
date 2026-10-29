@@ -16,17 +16,17 @@
 import fs from 'fs';
 import path from 'path';
 
-const SITE_URL = 'https://emredursun.nl';
+export const SITE_URL = 'https://emredursun.nl';
 const SITE_TITLE = 'Emre Dursun — QA Consultant, Pega & Tricentis Tosca';
 export const PERSON_ID = `${SITE_URL}/#person`;
-const WEBSITE_ID = `${SITE_URL}/#website`;
+export const WEBSITE_ID = `${SITE_URL}/#website`;
 const PORTRAIT_ID = `${SITE_URL}/#portrait`;
 
 export const LANGUAGES = ['en', 'nl', 'tr'];
 const NAMESPACES = ['common', 'about', 'resume', 'projects', 'contact'];
-const OG_LOCALES = { en: 'en_US', nl: 'nl_NL', tr: 'tr_TR' };
+export const OG_LOCALES = { en: 'en_US', nl: 'nl_NL', tr: 'tr_TR' };
 const SITE_NAME = 'Emre Dursun Portfolio';
-const SOCIAL_IMAGE = {
+export const SOCIAL_IMAGE = {
   url: `${SITE_URL}/images/social-share.png`,
   width: 1200,
   height: 630,

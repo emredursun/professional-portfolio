@@ -1,0 +1,88 @@
+/* Reading progress: pure CSS, only where scroll-driven animations exist. */
+.progress {
+  display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .progress {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 10;
+    height: 3px;
+    background: var(--mustard);
+    transform-origin: 0 50%;
+    animation: reading-progress linear both;
+    animation-timeline: scroll(root);
+  }
+
+  @keyframes reading-progress {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress {
+    display: none;
+  }
+}
+
+/*
+ * Print: the article and its sources, without the page furniture. Printers
+ * drop backgrounds, so the page prints in the light palette whatever theme is
+ * on screen, and code blocks print as dark text instead of their light-on-dark
+ * screen colours.
+ */
+@media print {
+  :root,
+  :root.dark,
+  :root:not(.light) {
+    color-scheme: light;
+
+    --paper: #fff;
+    --ink: #000;
+    --ink-2: #333;
+    --line: #999;
+    --sage: #fff;
+    --lavender: #fff;
+    --peach: #fff;
+    --butter: #fff;
+    --check: #000;
+    --underline: #000;
+    --closing-bg: #fff;
+    --closing-ink: #000;
+  }
+
+  .site-nav,
+  .lang-nav,
+  .progress,
+  .skip-link,
+  .toc,
+  .corrections .button,
+  .band,
+  .index-actions,
+  .closing {
+    display: none;
+  }
+
+  .prose pre {
+    border: 1px solid #999;
+    background: #fff;
+    color: #000;
+  }
+
+  .prose .shiki span {
+    color: inherit;
+  }
+
+  .prose a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.85em;
+  }
+}

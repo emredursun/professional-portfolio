@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { PERSONAL_INFO, SOCIAL_LINKS, STATUS_BADGE } from '../constants.tsx';
+import { BLOG_IN_NAV, blogPathFor, withBlogBeforeContact } from '../src/utils/blog.ts';
 import { cvFileName } from '../src/utils/cv.ts';
 import ThemeSwitcher from './ThemeSwitcher.tsx';
 import Magnetic from './Magnetic.tsx';
@@ -70,6 +71,29 @@ const NavButton: React.FC<{
             </>
           )}
         </NavLink>
+      </Magnetic>
+    </li>
+  );
+});
+
+/**
+ * The blog, styled like the other entries but a plain link: Field Notes is
+ * static pages outside the router, so it is never the active route here.
+ */
+const BlogNavButton: React.FC<{ language: string }> = React.memo(({ language }) => {
+  const { t } = useTranslation('common');
+  return (
+    <li>
+      <Magnetic>
+        <a
+          href={blogPathFor(language)}
+          className="w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all duration-300 font-semibold group relative overflow-hidden text-gray-500 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white hover:shadow-[0_0_15px_rgba(234,179,8,0.3)] dark:hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] border border-transparent hover:border-yellow-400/50 dark:hover:border-neon-cyan/50"
+        >
+          <span className="text-xl w-6 flex justify-center transition-transform duration-300 group-hover:scale-110">
+            <i aria-hidden="true" className="fas fa-pen-nib"></i>
+          </span>
+          <span className="relative z-10 tracking-wide text-sm">{t('nav.blog')}</span>
+        </a>
       </Magnetic>
     </li>
   );
@@ -464,9 +488,13 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
         {!isMobileView && (
           <nav className="flex-1 mb-8">
             <ul className="space-y-2">
-              {languageAwarePages.map((page) => (
-                <NavButton key={page.label} page={page} />
-              ))}
+              {withBlogBeforeContact(languageAwarePages, BLOG_IN_NAV).map((page) =>
+                page === 'blog' ? (
+                  <BlogNavButton key="blog" language={currentLang} />
+                ) : (
+                  <NavButton key={page.label} page={page} />
+                ),
+              )}
             </ul>
           </nav>
         )}

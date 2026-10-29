@@ -3,6 +3,7 @@ import Fuse from 'fuse.js';
 import { useTranslation } from 'react-i18next';
 import { Command, Page } from '../../types';
 import { PROJECTS } from '../../constants.tsx';
+import { BLOG_IN_NAV, blogPathFor } from '../../src/utils/blog.ts';
 import { cvFileName } from '../../src/utils/cv.ts';
 import { useLanguageNavigate } from './useLanguageNavigate.tsx';
 
@@ -46,7 +47,7 @@ export const useCommandPalette = ({
 }: UseCommandPaletteProps): UseCommandPaletteReturn => {
   // Labels and descriptions follow the page language and are what Fuse
   // searches first; the English keywords below still match in every language.
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const navigate = useLanguageNavigate();
   const [recentCommandIds, setRecentCommandIds] = useState<string[]>(() => {
     try {
@@ -124,6 +125,25 @@ export const useCommandPalette = ({
           onClose();
         },
       },
+      // Only once the blog has launched (BLOG_IN_NAV), like the nav links,
+      // and before Contact, as in the nav.
+      ...(BLOG_IN_NAV
+        ? [
+            {
+              id: 'nav-blog',
+              label: t('palette.commands.navBlog.label'),
+              description: t('palette.commands.navBlog.description'),
+              icon: <i aria-hidden="true" className="fas fa-pen-nib" />,
+              category: 'Navigation' as const,
+              keywords: ['blog', 'field notes', 'notes', 'articles', 'posts', 'writing'],
+              action: () => {
+                onClose();
+                // The blog is static pages outside the router: a full page load.
+                window.location.assign(blogPathFor(i18n.language));
+              },
+            },
+          ]
+        : []),
       {
         id: 'nav-contact',
         label: t('palette.commands.navContact.label'),
@@ -293,7 +313,17 @@ export const useCommandPalette = ({
     });
 
     return [...searchableInEnglish, ...projectCommands, ...categoryCommands];
-  }, [t, navigate, onNavigate, theme, toggleTheme, onClose, scrollToTop, copyToClipboard]);
+  }, [
+    t,
+    i18n.language,
+    navigate,
+    onNavigate,
+    theme,
+    toggleTheme,
+    onClose,
+    scrollToTop,
+    copyToClipboard,
+  ]);
 
   // Get recent commands based on stored IDs
   const recentCommands = useMemo(() => {
