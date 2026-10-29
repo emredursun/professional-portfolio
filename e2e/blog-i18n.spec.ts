@@ -279,10 +279,14 @@ test.describe('the portfolio links to the blog', () => {
 
   test('the mobile bar still fits a 360 px screen with the blog in it', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 780 });
-    for (const path of languages.map(aboutPath)) {
+    for (const lang of languages) {
+      const path = aboutPath(lang);
       await page.goto(path);
       const bar = page.locator('nav.fixed ul');
       await expect(bar.locator('a[href$="/blog"]')).toHaveCount(1);
+      // Measure the real labels: until the translations load, the bar shows
+      // the keys (nav.projects, nav.contact), which are wider.
+      await expect(bar).not.toContainText('nav.');
       const { scroll, client } = await bar.evaluate((ul) => ({
         scroll: ul.scrollWidth,
         client: ul.clientWidth,
@@ -304,6 +308,28 @@ test.describe('the portfolio links to the blog', () => {
       await expect(page).toHaveURL(new RegExp(`${to}$`));
       await expect(page.locator('html')).toHaveAttribute('lang', lang);
     }
+  });
+
+  test('the nav and the palette list the blog right before Contact, which stays last', async ({
+    page,
+  }) => {
+    for (const lang of languages) {
+      await page.goto(aboutPath(lang));
+      // Whichever nav this viewport shows: the sidebar or the bottom bar.
+      const hrefs = await page
+        .locator('nav a:visible')
+        .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+      const blog = hrefs.indexOf(blogPath(lang));
+      expect(blog, lang).toBeGreaterThan(0);
+      expect(hrefs[blog + 1], lang).toBe(aboutPath(lang).replace(/about$/, 'contact'));
+    }
+    // The palette on the last page visited, in that page's language.
+    await page.keyboard.press('Control+k');
+    const commands = copy(languages.at(-1)!, 'common').palette.commands;
+    await expect(page.getByRole('option', { name: commands.navContact.label })).toBeVisible();
+    const names = await page.getByRole('option').allTextContents();
+    const at = (label: string) => names.findIndex((name) => name.includes(label));
+    expect(at(commands.navBlog.label)).toBe(at(commands.navContact.label) - 1);
   });
 
   test('the command palette has a Field Notes command', async ({ page }) => {

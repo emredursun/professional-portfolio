@@ -125,20 +125,8 @@ export const useCommandPalette = ({
           onClose();
         },
       },
-      {
-        id: 'nav-contact',
-        label: t('palette.commands.navContact.label'),
-        description: t('palette.commands.navContact.description'),
-        icon: <i aria-hidden="true" className="far fa-envelope" />,
-        category: 'Navigation',
-        keywords: ['contact', 'email', 'message', 'reach'],
-        shortcut: '⌘4',
-        action: () => {
-          onNavigate('Contact');
-          onClose();
-        },
-      },
-      // Only once the blog has launched (BLOG_IN_NAV), like the nav links.
+      // Only once the blog has launched (BLOG_IN_NAV), like the nav links,
+      // and before Contact, as in the nav.
       ...(BLOG_IN_NAV
         ? [
             {
@@ -156,6 +144,19 @@ export const useCommandPalette = ({
             },
           ]
         : []),
+      {
+        id: 'nav-contact',
+        label: t('palette.commands.navContact.label'),
+        description: t('palette.commands.navContact.description'),
+        icon: <i aria-hidden="true" className="far fa-envelope" />,
+        category: 'Navigation',
+        keywords: ['contact', 'email', 'message', 'reach'],
+        shortcut: '⌘4',
+        action: () => {
+          onNavigate('Contact');
+          onClose();
+        },
+      },
       {
         id: 'action-download-resume',
         label: t('palette.commands.downloadResume.label'),

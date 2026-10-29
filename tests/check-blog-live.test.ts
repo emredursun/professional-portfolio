@@ -76,7 +76,10 @@ afterAll(() => {
   server.close();
 });
 
-describe('check-blog-live.sh', () => {
+// Each case runs the real script: bash, then curl several times (eight at a
+// time). Under a full parallel test run, process start-up alone can pass
+// Vitest's default 5 s, so these cases get more.
+describe('check-blog-live.sh', { timeout: 30_000 }, () => {
   it('passes without checking anything while this checkout is not launched', async () => {
     routes = {};
     const { code, out } = await run(false);

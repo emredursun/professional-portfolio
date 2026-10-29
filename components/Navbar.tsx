@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import Magnetic from './Magnetic.tsx';
 import { Page } from '../types.ts';
-import { BLOG_IN_NAV, blogPathFor } from '../src/utils/blog.ts';
+import { BLOG_IN_NAV, blogPathFor, withBlogBeforeContact } from '../src/utils/blog.ts';
 
 interface NavbarProps {
   onOpenCommandPalette?: () => void;
@@ -164,16 +164,18 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent
         <div className="max-w-[520px] mx-auto px-[14px] py-[3px]">
           <ul className="flex justify-between items-center gap-0.5">
             {/* Navigation buttons */}
-            {languageAwarePages.map((page) => (
-              <NavButton
-                key={page.id}
-                page={page}
-                translatedLabel={t(page.translationKey)}
-                onScrollToContent={onScrollToContent}
-              />
-            ))}
-
-            {BLOG_IN_NAV && <BlogNavItem href={blogPathFor(currentLang)} label={t('nav.blog')} />}
+            {withBlogBeforeContact(languageAwarePages, BLOG_IN_NAV).map((page) =>
+              page === 'blog' ? (
+                <BlogNavItem key="blog" href={blogPathFor(currentLang)} label={t('nav.blog')} />
+              ) : (
+                <NavButton
+                  key={page.id}
+                  page={page}
+                  translatedLabel={t(page.translationKey)}
+                  onScrollToContent={onScrollToContent}
+                />
+              ),
+            )}
 
             {/* Command Palette Button integrated as nav item */}
             {onOpenCommandPalette && (

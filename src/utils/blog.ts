@@ -16,3 +16,18 @@ export const BLOG_IN_NAV: boolean = BLOG_LAUNCHED;
 export function blogPathFor(language: string): string {
   return ['nl', 'tr'].includes(language) ? `/${language}/blog` : '/blog';
 }
+
+/**
+ * The nav order with the blog in it: after the content pages and before
+ * Contact, which stays last as the step a visitor ends on. 'blog' marks
+ * where the blog link goes; without `showBlog` the pages come back as they are.
+ */
+export function withBlogBeforeContact<T extends { path: string }>(
+  pages: readonly T[],
+  showBlog: boolean,
+): Array<T | 'blog'> {
+  if (!showBlog) return [...pages];
+  const contact = pages.findIndex((page) => page.path.endsWith('/contact'));
+  const at = contact === -1 ? pages.length : contact;
+  return [...pages.slice(0, at), 'blog', ...pages.slice(at)];
+}
