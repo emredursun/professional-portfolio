@@ -204,13 +204,65 @@ a:hover {
 }
 
 /*
- * On a phone the language menu always takes its own row, right-aligned.
- * Letting it wrap on its own made the row it lands on depend on font
- * metrics, so the web-font swap moved it and shifted the page (CLS 0.12).
+ * On a phone the header is one bar (mark, languages, theme) with a slim row
+ * of links under it. A fixed grid, not wrapping, so the web-font swap cannot
+ * move anything between rows (that shifted the page before: CLS 0.12).
  */
 @media (max-width: 600px) {
-  .lang-nav {
-    flex-basis: 100%;
+  .site-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-areas:
+      'brand . lang theme'
+      'blog nav nav nav';
+    gap: 6px 8px;
+    padding-block: 10px 6px;
+  }
+
+  .brand {
+    grid-area: brand;
+  }
+
+  .blog-name {
+    grid-area: blog;
+    font-size: 14px;
+  }
+
+  .site-nav {
+    grid-area: nav;
     justify-content: flex-end;
+    gap: 16px;
+    font-size: 14px;
+  }
+
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+  }
+
+  .lang-nav {
+    grid-area: lang;
+    padding: 2px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 12px;
+  }
+
+  .lang-nav a {
+    min-width: 34px;
+    min-height: 32px;
+  }
+
+  .lang-nav a[aria-current='page'] {
+    background: var(--ink);
+    box-shadow: none;
+    color: var(--paper);
+  }
+
+  .theme-toggle {
+    grid-area: theme;
+    width: 38px;
+    height: 38px;
   }
 }

@@ -17,7 +17,7 @@ const en = {
   description:
     'Notes on software quality, test automation and working with AI, by Emre Dursun, QA consultant in the Netherlands.',
   intro:
-    'I test software for a living, in the Netherlands, in three languages. This is where I write down what I learn: at work, with AI, and in between.',
+    'I am a QA consultant in the Netherlands, working on Pega, Tricentis Tosca and test automation. Here I write about what I see in practice: in projects, with AI, and in between.',
   bandLabel: 'What I write about',
   band: {
     honest: 'Testing, honestly',
@@ -112,7 +112,7 @@ const tr = {
   description:
     'Yazılım kalitesi, test otomasyonu ve yapay zekâyla çalışmak üzerine notlar. Yazan: Hollanda’da QA danışmanı Emre Dursun.',
   intro:
-    'Hollanda’da, üç dilde yazılım test ederek hayatımı kazanıyorum. Öğrendiklerimi burada yazıyorum: işte, yapay zekâyla ve ikisinin arasında.',
+    'Hollanda’da Pega, Tricentis Tosca ve test otomasyonu üzerine çalışan bir QA danışmanıyım. Burada sahada gördüklerimi yazıyorum: projelerde, yapay zekâyla ve ikisinin arasında.',
   bandLabel: 'Ne hakkında yazıyorum',
   band: {
     honest: 'Dürüstçe test',
@@ -208,7 +208,7 @@ const nl = {
   description:
     'Notities over softwarekwaliteit, testautomatisering en werken met AI, door Emre Dursun, QA-consultant in Nederland.',
   intro:
-    'Ik test software voor mijn werk, in Nederland, in drie talen. Hier schrijf ik op wat ik leer: op het werk, met AI en alles daartussen.',
+    'Ik ben QA-consultant in Nederland en werk met Pega, Tricentis Tosca en testautomatisering. Hier schrijf ik over wat ik in de praktijk zie: in projecten, met AI en alles daartussen.',
   bandLabel: 'Waar ik over schrijf',
   band: {
     honest: 'Eerlijk testen',

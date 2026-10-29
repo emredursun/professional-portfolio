@@ -30,9 +30,9 @@ function siteHeader(s, lang, alternates) {
 <nav class="site-nav" aria-label="${s.siteNav}">
 <a href="${portfolioPath(lang, '/')}">${s.navPortfolio}</a>
 <a href="${portfolioPath(lang, '/contact')}">${s.navContact}</a>
-<button type="button" class="theme-toggle" data-theme-toggle aria-label="${s.darkTheme}" aria-pressed="false"><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 </nav>
-${languageNav(s, lang, alternates)}</header>`;
+${languageNav(s, lang, alternates)}<button type="button" class="theme-toggle" data-theme-toggle aria-label="${s.darkTheme}" aria-pressed="false"><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</header>`;
 }
 
 /** The canvas's closing band: one invitation to talk, at the end of every page. */
