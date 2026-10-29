@@ -32,15 +32,16 @@ const PNG_SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0
 const CARD_FILE = /^(?:_site|[a-z0-9]+(?:-[a-z0-9]+)*)\.[a-z]{2}\.png$/;
 
 // Everything the card's look depends on besides its text: the template and
-// what it renders, the renderer (fonts, size, compression) and the size.
-const DESIGN_FILES = [
+// what it renders, and the renderer (fonts, compression). Not config.js: it
+// also holds BLOG_LAUNCHED, and flipping that must not make every card stale;
+// the card size from it is hashed as a value instead (design()).
+export const OG_DESIGN_FILES = Object.freeze([
   'templates/og-card.js',
   'templates/status.js',
   'templates/mark.js',
   'html.js',
-  'config.js',
   '../blog-og.js',
-];
+]);
 const FONT_PACKAGES = ['@fontsource-variable/bricolage-grotesque'];
 
 function sha256(value) {
@@ -62,10 +63,11 @@ function design() {
   designKey ??= sha256(
     JSON.stringify({
       // LF only, so a Windows checkout with CRLF would hash the same as CI.
-      files: DESIGN_FILES.map((file) =>
+      files: OG_DESIGN_FILES.map((file) =>
         fs.readFileSync(path.join(HERE, file), 'utf8').split('\r\n').join('\n'),
       ),
       fonts: FONT_PACKAGES.map(fontVersion),
+      size: OG_SIZE,
     }),
   );
   return designKey;
@@ -99,7 +101,17 @@ export function ogCards(posts, languages) {
 /** The hash of what a card shows; the manifest must carry it for the card to be current. */
 export function ogHash(card) {
   const { id, ...content } = card;
-  return sha256(JSON.stringify({ id, content, strings: strings(card.lang), design: design() }));
+  return sha256(JSON.stringify({ id, content, strings: cardStrings(card.lang), design: design() }));
+}
+
+/**
+ * The words a card shows in a language (og-card.js): changing any other UI
+ * text, such as a footer label, leaves the cards current.
+ * @param {string} lang
+ */
+export function cardStrings(lang) {
+  const { blogName, tagline, statusLabels, topicLabels } = strings(lang);
+  return { blogName, tagline, statusLabels, topicLabels };
 }
 
 function readManifest(ogDir) {

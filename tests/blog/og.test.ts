@@ -5,9 +5,17 @@ import path from 'path';
 import sharp from 'sharp';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { buildBlog } from '../../scripts/build-blog.js';
-import { OG_SIZE, ogCards, ogHash, readOgImages, syncOgImages } from '../../scripts/blog/og.js';
+import {
+  OG_DESIGN_FILES,
+  OG_SIZE,
+  cardStrings,
+  ogCards,
+  ogHash,
+  readOgImages,
+  syncOgImages,
+} from '../../scripts/blog/og.js';
 import { loadPosts } from '../../scripts/blog/content.js';
-import { BLOG_LANGUAGES } from '../../scripts/blog/strings.js';
+import { BLOG_LANGUAGES, strings } from '../../scripts/blog/strings.js';
 import { renderOgCard } from '../../scripts/blog/templates/og-card.js';
 import { TRANSLATION, makeDist, writePost } from './fixtures';
 
@@ -52,6 +60,19 @@ describe('ogCards and ogHash', () => {
     expect(ogHash({ ...card, title: 'Hello!' })).not.toBe(ogHash(card));
     expect(ogHash({ ...card, status: 'revised' })).not.toBe(ogHash(card));
     expect(ogHash({ ...card, lang: 'nl' })).not.toBe(ogHash(card));
+  });
+
+  it('hashes only what the card shows, so flipping the launch flag keeps every card', () => {
+    // config.js holds BLOG_LAUNCHED; hashing the whole file made launch day
+    // turn every committed card stale. The card depends on OG_SIZE only.
+    expect(OG_DESIGN_FILES).not.toContain('config.js');
+    // Likewise only the strings the card renders, not a footer label.
+    expect(cardStrings('tr')).toEqual({
+      blogName: 'Field Notes',
+      tagline: strings('tr').tagline,
+      statusLabels: strings('tr').statusLabels,
+      topicLabels: strings('tr').topicLabels,
+    });
   });
 });
 
