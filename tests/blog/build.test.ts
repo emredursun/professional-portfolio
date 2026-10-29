@@ -140,6 +140,28 @@ describe('buildBlog', () => {
     expect(index).toContain('/assets/newsreader-latin-400-normal-x1.woff2');
   });
 
+  it('preloads the index heading’s face too, so the h1 does not re-wrap when fonts load', async () => {
+    // CI's mobile Lighthouse measured CLS 0.108 on /blog: the Bricolage h1
+    // swapped in after first paint and pushed the intro paragraph down.
+    writePost('one', 'Body\n');
+    const dist = makeDist('dist');
+    await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
+    const preloads = (file: string) =>
+      [
+        ...fs
+          .readFileSync(path.join(dist, file), 'utf8')
+          .matchAll(/<link rel="preload" href="([^"]+)" as="font"/g),
+      ].map((m) => m[1]);
+    expect(preloads('blog.html')).toEqual([
+      '/assets/newsreader-latin-400-normal-x1.woff2',
+      '/assets/bricolage-grotesque-latin-wght-normal-y2.woff2',
+    ]);
+    // The article's title is its largest text and its heading: one face.
+    expect(preloads('blog/one.html')).toEqual([
+      '/assets/bricolage-grotesque-latin-wght-normal-y2.woff2',
+    ]);
+  });
+
   it('emits the code colours only when a post has code', async () => {
     writePost('plain', 'No code.\n');
     const plain = makeDist('plain');

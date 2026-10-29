@@ -39,6 +39,7 @@ function indexMeta(posts, s, lang, languages) {
     alternates: languages.map((other) => ({ lang: other, url: blogUrl(other) })),
     ogType: 'website',
     lcpFont: 'reading',
+    headingFont: 'display',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Blog',
