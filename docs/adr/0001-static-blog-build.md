@@ -1,6 +1,6 @@
 # ADR 0001: Build the Field Notes blog as static HTML with our own script
 
-- Status: Accepted; Phases 1, 2 and 3 (a, b, c) complete, not launched
+- Status: Accepted; Phases 1–3 and 4a complete, not launched
 - Date: 2026-10-28
 - Deciders: Emre Dursun (owner), with Claude as implementer
 
@@ -239,7 +239,7 @@ Deferred, with the reason:
 | "Now" log | Done in 3c (see below) |
 | Illustrations | When there is real artwork |
 | Turkish and Dutch | Done in 3a (see below) |
-| Per-post link preview images | Before launch |
+| Per-post link preview images | Done in 4a (see below) |
 | Navigation link, sitemap, smoke test, path-aware 404 | Launch |
 | "This site tests itself" strip | Later; it is a site-wide claim, not a blog one |
 | Offline page for /blog, theme-color for a pinned theme | Later |
@@ -298,3 +298,20 @@ Still to do in Phase 3: crawlable topic pages (3b) and the "Now" log
   the newest one with a link. The page's `dateModified` is the newest
   entry's date, never the build's.
 - Illustrations stay deferred until there is real artwork.
+
+## Phase 4a results (link-preview images)
+
+- One card per post and language, and one per language for the index,
+  topic and Now pages, 1200 × 630, rendered by `npm run blog:og` in a local
+  Chromium with the site's own Fontsource files (inlined as data URIs) and
+  committed to `blog/og/`.
+- The build never renders: it checks `blog/og/manifest.json` (a hash of
+  each card's text, the language's strings, the template files and the font
+  versions) and fails with the list of cards to re-render. It then copies
+  each card to `/assets/blog-og-<id>-<hash>.png`, cached `immutable`, not
+  under `/blog/**`, which is served `no-cache`.
+- Pages carry `og:image` (with type, size and alt), `twitter:image` and the
+  article's JSON-LD `image`. The blog build is still byte-deterministic
+  (26 files, 8 of them images, identical over two builds).
+- Cards are 14–22 KB each; a test keeps every committed card at 1200 × 630
+  and under 150 KB.

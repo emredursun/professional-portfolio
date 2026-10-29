@@ -8,7 +8,8 @@
  */
 
 import { markup, raw } from '../html.js';
-import { OG_LOCALES, SOCIAL_IMAGE } from '../../lib/route-meta.js';
+import { OG_LOCALES, SITE_URL, SOCIAL_IMAGE } from '../../lib/route-meta.js';
+import { OG_SIZE } from '../config.js';
 import { strings } from '../strings.js';
 import { feedPath } from './format.js';
 
@@ -38,8 +39,29 @@ const line = (condition, content) => (condition ? markup`${content()}\n` : '');
  *   (on Turkish pages its extended Latin file too: readingExt or displayExt).
  * @property {'reading' | 'display'} [headingFont]  The h1's face when it differs from
  *   lcpFont; preloaded too, so the heading does not re-wrap when fonts load.
+ * @property {{ url: string, width: number, height: number, alt: string }} [image]
+ *   The link-preview image (previewImage); the site's own card when absent.
  * @property {object} jsonLd
  */
+
+/**
+ * The link-preview image for a page: its committed card (blog/og/, copied to
+ * /assets/ by the build) or, when the build has none (unit tests), the site's.
+ * @param {{ og?: Record<string, string> }} assets
+ * @param {string} cardId  "<slug>.<lang>" for an article, "_site.<lang>" otherwise.
+ * @param {string} alt
+ */
+export function previewImage(assets, cardId, alt) {
+  const file = assets.og?.[cardId];
+  if (!file)
+    return {
+      url: SOCIAL_IMAGE.url,
+      width: SOCIAL_IMAGE.width,
+      height: SOCIAL_IMAGE.height,
+      alt: SOCIAL_IMAGE.alt,
+    };
+  return { url: `${SITE_URL}${file}`, ...OG_SIZE, alt };
+}
 
 /** The lines that depend on the page, its assets or the launch flag. */
 function optionalLines({ meta, assets, launched, blogName, lang }) {
@@ -108,6 +130,7 @@ export function renderHead({ meta, assets, launched, lang = 'en' }) {
     throw new Error(`blog: unknown lcpFont "${meta.lcpFont}"`);
   }
   const { blogName } = strings(lang);
+  const image = meta.image ?? previewImage({}, '', '');
   const {
     robots,
     alternates,
@@ -140,11 +163,14 @@ ${alternates}${xDefault}${feedLink}<meta name="color-scheme" content="light dark
 <meta property="og:description" content="${meta.description}">
 <meta property="og:url" content="${meta.url}">
 <meta property="og:locale" content="${OG_LOCALES[lang]}">
-${localeAlternates}<meta property="og:image" content="${SOCIAL_IMAGE.url}">
-<meta property="og:image:width" content="${SOCIAL_IMAGE.width}">
-<meta property="og:image:height" content="${SOCIAL_IMAGE.height}">
-<meta property="og:image:alt" content="${SOCIAL_IMAGE.alt}">
+${localeAlternates}<meta property="og:image" content="${image.url}">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="${image.width}">
+<meta property="og:image:height" content="${image.height}">
+<meta property="og:image:alt" content="${image.alt}">
 ${articleTimes}<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${image.url}">
+<meta name="twitter:image:alt" content="${image.alt}">
 <script src="${assets.themeInit}"></script>
 ${styles}${codeStyles}${fontPreload}<script type="module" src="${assets.script}"></script>
 <script type="application/ld+json">${raw(jsonForScript(meta.jsonLd))}</script>

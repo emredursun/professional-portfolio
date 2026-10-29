@@ -4,7 +4,8 @@
  */
 
 import { markup, raw } from '../html.js';
-import { PERSON_ID, SOCIAL_IMAGE } from '../../lib/route-meta.js';
+import { PERSON_ID } from '../../lib/route-meta.js';
+import { previewImage } from './head.js';
 import {
   blogUrl,
   formatDate,
@@ -27,9 +28,10 @@ function translationLinks(post) {
   return others.length > 0 ? { workTranslation: others.map(link) } : {};
 }
 
-function articleMeta(post) {
+function articleMeta(post, assets) {
   const url = postUrl(post);
   const modified = lastChange(post);
+  const image = previewImage(assets, `${post.slug}.${post.lang}`, post.title);
   return {
     title: `${post.title} · ${strings(post.lang).blogName}`,
     heading: post.title,
@@ -39,6 +41,7 @@ function articleMeta(post) {
       lang,
       url: postUrl({ ...post, lang }),
     })),
+    image,
     ogType: 'article',
     lcpFont: 'display',
     published: post.publishedAt,
@@ -54,7 +57,7 @@ function articleMeta(post) {
       dateModified: modified,
       inLanguage: post.lang,
       mainEntityOfPage: url,
-      image: SOCIAL_IMAGE.url,
+      image: image.url,
       author: { '@id': PERSON_ID },
       publisher: { '@id': PERSON_ID },
       isPartOf: { '@id': `${blogUrl(post.lang)}#blog` },
@@ -125,7 +128,7 @@ ${authorCard(s, post.lang)}
 ${keepReading(related, s)}`;
   return renderPage({
     lang: post.lang,
-    meta: articleMeta(post),
+    meta: articleMeta(post, assets),
     assets,
     launched,
     content,

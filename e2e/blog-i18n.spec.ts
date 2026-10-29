@@ -186,3 +186,20 @@ test.describe('the Now page', () => {
     expect((await request.get('/blog/now/', { maxRedirects: 0 })).status()).toBe(301);
   });
 });
+
+test.describe('link previews', () => {
+  test('each page names its own card, served as an immutable PNG', async ({ page, request }) => {
+    for (const url of [TR_POST, '/blog', '/nl/blog']) {
+      await page.goto(url);
+      const image = await page.locator('meta[property="og:image"]').getAttribute('content');
+      expect(image, url).toMatch(/^https:\/\/emredursun\.nl\/assets\/blog-og-[a-z0-9-]+\.png$/);
+      await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', image!);
+      const response = await request.get(new URL(image!).pathname);
+      expect(response.status(), url).toBe(200);
+      expect(response.headers()['content-type']).toBe('image/png');
+    }
+    await page.goto(TR_POST);
+    const alt = await page.locator('meta[property="og:image:alt"]').getAttribute('content');
+    await expect(page.locator('h1')).toHaveText(alt!);
+  });
+});

@@ -1,0 +1,34 @@
+{
+  "_site.en": {
+    "card": "64743f89c536ead6dadf43145eb269add7193751079f75e8cef80d4d648f49da",
+    "png": "150d8f7d1d4c26f73f76d2e402e0327c33daf2f2174ac4ce81f490e8395a62d9"
+  },
+  "_site.nl": {
+    "card": "0e57a7a100067d382c2a6eb261e4f227363b4719466024b10d8792e6fd22fce4",
+    "png": "bcf4c3a2c1810f491666345c202d9768a47d6aa3455ade54548aa8da1782a40e"
+  },
+  "_site.tr": {
+    "card": "21cba6ebe63471701df4782fb463eb52c3e429cb4439473e46896dadd9b4c0d0",
+    "png": "ffca5cd5757b7d75153bb3ce98fe4f1746150b0c3dbb9b77083e80da0ba15bbe"
+  },
+  "sample-a-green-test.en": {
+    "card": "d14aa2f36fe4e0b7de98919542330f162bbb7f0511de02e128856ba577364969",
+    "png": "3aa6a9ead9bbb4e831254d3b28edaa2e4bb1fa8db8c0c01f125fba7bba584f54"
+  },
+  "sample-a-green-test.nl": {
+    "card": "ec11c0391098de3cb51f53f4d1c1d68fe63d4535823bb64f5f9a27098976bfbc",
+    "png": "b580127da3206ef2cb5687c7adafe52ba53ca94fbf4ecd60ca5c9208ad4338d6"
+  },
+  "sample-a-green-test.tr": {
+    "card": "9177773b377481579eb34e276f3cb073a268bdcfb7ba6768be1e574e517bd029",
+    "png": "89207463bbfec275e58b8ce8fead5643cccf83fd6a365d4efce3514a69c85f5d"
+  },
+  "sample-hypothesis-note.en": {
+    "card": "2bfad4b440812a826b821b4165981fa6646b8ac2cb58220a984f23afa145063b",
+    "png": "6f4e31fbbae1394e8cb331fccadb5682391ef686d858812f144667e92d21a1d6"
+  },
+  "sample-hypothesis-note.tr": {
+    "card": "71f052a9d63e7234138075627d7702f99a39a4d0e72a3072df9064bf4566e881",
+    "png": "f1705ea061e6c849f29cb886a6c8af3712d313165d3f3ffb81473e59a101d92a"
+  }
+}
