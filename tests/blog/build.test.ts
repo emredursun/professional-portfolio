@@ -6,9 +6,11 @@ import path from 'path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { buildBlog, main, writeOutput } from '../../scripts/build-blog.js';
 import { loadPosts } from '../../scripts/blog/content.js';
+import { launchWarnings } from '../../scripts/blog/launch-gate.js';
 import { BLOG_ENTRY } from '../../scripts/blog/manifest.js';
 import sharp from 'sharp';
 import { OG_SIZE, ogCards, syncOgImages } from '../../scripts/blog/og.js';
+import { TRANSLATION, writeInAllLanguages } from './fixtures';
 
 let root: string;
 let contentDir: string;
@@ -278,6 +280,54 @@ describe('main', () => {
     );
   });
 
+  it('warns about a translation the English version has outgrown, without failing', async () => {
+    writePost('one', 'Body\n', 'updatedAt: 2026-12-20\n');
+    writePost('one', 'Gövde\n', TRANSLATION, 'tr');
+    fs.mkdirSync(path.join(root, 'blog', 'client'), { recursive: true });
+    fs.renameSync(contentDir, path.join(root, 'blog', 'content'));
+    fs.copyFileSync(themeInitPath, path.join(root, 'blog', 'client', 'theme-init.js'));
+    makeDist('dist');
+    const posts = loadPosts(path.join(root, 'blog', 'content'));
+    await syncOgImages({
+      ogDir: path.join(root, 'blog', 'og'),
+      cards: ogCards(posts, ['en', 'tr']),
+      render: () =>
+        sharp({ create: { ...OG_SIZE, channels: 3, background: '#faf7f0' } })
+          .png()
+          .toBuffer(),
+    });
+    const out = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
+    vi.stubEnv('GITHUB_ACTIONS', '');
+    expect(await main(root)).toBe(0);
+    expect(out).toHaveBeenCalledWith(
+      'blog: warning: blog/content/one/tr.md follows an older English version (update it and translation.from)\n',
+    );
+    // On GitHub Actions the line is an annotation, shown on the run summary.
+    vi.stubEnv('GITHUB_ACTIONS', 'true');
+    expect(await main(root)).toBe(0);
+    expect(out).toHaveBeenCalledWith(
+      '::warning::blog: warning: blog/content/one/tr.md follows an older English version (update it and translation.from)\n',
+    );
+    vi.unstubAllEnvs();
+  });
+
+  it('builds a launched blog whose translations the English version has outgrown', async () => {
+    // The case the warning exists for: after launch, an English edit must
+    // not fail the deploy until every translation catches up.
+    writeInAllLanguages(contentDir, 'one', 'updatedAt: 2026-12-20\n');
+    const written = await buildBlog({
+      distDir: makeDist('dist'),
+      contentDir,
+      themeInitPath,
+      launched: true,
+    });
+    expect(written).toEqual(expect.arrayContaining(['tr/blog/one.html', 'nl/blog/one.html']));
+    expect(launchWarnings({ posts: loadPosts(contentDir) })).toEqual([
+      'blog/content/one/nl.md follows an older English version (update it and translation.from)',
+      'blog/content/one/tr.md follows an older English version (update it and translation.from)',
+    ]);
+  });
+
   it('prints the error and returns 1 when the build fails', async () => {
     writePost('one', 'Body\n');
     fs.mkdirSync(path.join(root, 'blog'), { recursive: true });
@@ -310,7 +360,8 @@ describe('loadPosts: reading time', () => {
 
 describe('buildBlog: launch and related posts', () => {
   it('writes the feed only once the blog has launched', async () => {
-    writePost('one', 'Body\n');
+    // Launchable content: the launch gate wants every language.
+    writeInAllLanguages(contentDir, 'one');
     const before = makeDist('before');
     await buildBlog({ distDir: before, contentDir, themeInitPath, launched: false });
     expect(fs.existsSync(path.join(before, 'blog', 'feed.xml'))).toBe(false);

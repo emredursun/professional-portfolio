@@ -73,4 +73,6 @@ jobs:
           # Unknown URLs must be real 404s (404.html), not the app with a 200.
           status="$(curl -sS -o /dev/null -w '%{http_code}' https://emredursun.nl/no-such-page-smoke-test)"
           [ "$status" = "404" ] || { echo "::error::Unknown URL returned $status, expected 404"; exit 1; }
+          # Field Notes: checks itself once launched (no feed before then).
+          bash scripts/check-blog-live.sh https://emredursun.nl
           echo "Live: $live"

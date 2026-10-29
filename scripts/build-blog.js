@@ -23,6 +23,7 @@ import { emitAsset } from './blog/assets.js';
 import { ogCards, readOgImages } from './blog/og.js';
 import { BLOG_LAUNCHED } from './blog/config.js';
 import { loadPosts } from './blog/content.js';
+import { assertLaunchable, launchWarnings } from './blog/launch-gate.js';
 import { loadNow } from './blog/now.js';
 import { createHighlight } from './blog/highlight.js';
 import { readBlogAssets } from './blog/manifest.js';
@@ -219,6 +220,7 @@ export async function buildBlog({
   const posts = loadPosts(contentDir);
   if (posts.length === 0) return [];
   const now = loadNow(nowDir);
+  if (launched) assertLaunchable({ posts, now });
 
   const { highlight, css } = await createHighlight();
   const rendered = posts.map((post) => ({
@@ -261,6 +263,11 @@ export async function main(root = ROOT) {
     process.stdout.write(
       `blog: ${written.length} file(s)${written.map((f) => `\n  ${f}`).join('')}\n`,
     );
+    // Not errors: each such page already tells readers the English changed.
+    const warnings = launchWarnings({ posts: loadPosts(path.join(root, 'blog', 'content')) });
+    // GitHub Actions shows ::warning:: lines on the run's summary.
+    const tag = process.env.GITHUB_ACTIONS ? '::warning::' : '';
+    warnings.forEach((warning) => process.stdout.write(`${tag}blog: warning: ${warning}\n`));
     return 0;
   } catch (error) {
     console.error(error instanceof Error ? error.message : error);

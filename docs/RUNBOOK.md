@@ -70,11 +70,29 @@ The CV PDFs (`/cv/Emre-Dursun-CV-<lang>.pdf`) are not committed: CI renders them
 Static pages built after the app by `scripts/build-blog.js`; the design and
 the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
 
-- **Write a post:** `blog/content/<slug>/en.md`. The folder name is the URL
-  (`/blog/<slug>`): lowercase words and dashes, fixed once published.
-  Frontmatter is validated strictly (`scripts/blog/schema.js`): title,
-  description (160 characters at most), publishedAt, optional updatedAt,
-  topic, kind (essay or note), status, evidence, aiAssistance, corrections.
+- **Write a post:** `npm run blog:new -- <slug> [--kind note] [--topic ai]`
+  starts `blog/content/<slug>/{en,tr,nl}.md` as drafts. The folder name is
+  the URL (`/blog/<slug>`): lowercase words and dashes, fixed once
+  published. Frontmatter is validated strictly (`scripts/blog/schema.js`):
+  title, description (160 characters at most), publishedAt, optional
+  updatedAt, topic, kind (essay or note), status, evidence, aiAssistance,
+  corrections.
+- **Before publishing a post, check:**
+  1. The evidence says how sure you are, what it rests on, and when you
+     re-checked it.
+  2. "How this was written" lists what is yours and what AI helped with.
+  3. Each translation has `translation.from` (the English version's date)
+     and `assistedByAi`, and you have read it yourself.
+  4. `draft: true` is gone from each version you publish.
+  5. `npm run blog:og` has rendered its link-preview cards, committed.
+  6. `npm run build` passes; with `BLOG_LAUNCHED` it also refuses any
+     `placeholder: true` content and a language with no published post
+     (the nav links /tr/blog and /nl/blog, so each must exist). After
+     launch, keep at least one published post per language: putting the
+     last Turkish or Dutch one back to `draft: true` fails every deploy.
+     A translation the English version has outgrown only prints
+     `blog: warning:` (before and after launch): its page already tells
+     readers, so update it soon.
 - **Translate a post:** add `tr.md` or `nl.md` next to `en.md` (served at
   `/tr/blog/<slug>` and `/nl/blog/<slug>`; the slug stays English). It must
   keep the English publishedAt, kind, topic, status and evidence

@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      # Only for scripts/check-blog-live.sh; nothing is built here.
+      - uses: actions/checkout@v5
       - name: Pages respond
         run: |
           set -euo pipefail
@@ -38,6 +40,9 @@ jobs:
           curl -fsS --max-time 20 https://emredursun.nl/version.json | python3 -c "import json,sys; v=json.load(sys.stdin); print('live commit', v['shortCommit'], v['builtAt'])"
           locs="$(curl -fsS --max-time 20 https://emredursun.nl/sitemap.xml | grep -c '<loc>')"
           [ "$locs" -ge 15 ] || { echo "::error::sitemap.xml lists $locs URLs"; exit 1; }
+
+      - name: Field Notes blog (checks itself once launched)
+        run: bash scripts/check-blog-live.sh https://emredursun.nl
 
       - name: Social preview image stays under WhatsApp's limit
         run: |

@@ -11,6 +11,7 @@ evidence:
   basedOn:
     - 'Örnek: gerçek yazı kaynaklarını belirtecek'
   recheckedAt: 2026-10-28
+placeholder: true
 aiAssistance:
   mine:
     - 'Örnek: gerçek yazı neyin bana ait olduğunu söyleyecek'

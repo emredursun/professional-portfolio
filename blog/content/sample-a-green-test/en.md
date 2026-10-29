@@ -11,6 +11,7 @@ evidence:
   basedOn:
     - 'Placeholder: the real post will name its sources'
   recheckedAt: 2026-10-28
+placeholder: true
 aiAssistance:
   mine:
     - 'Placeholder: the real post will say what is mine'

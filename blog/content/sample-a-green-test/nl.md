@@ -11,6 +11,7 @@ evidence:
   basedOn:
     - 'Voorbeeld: het echte bericht noemt zijn bronnen'
   recheckedAt: 2026-10-28
+placeholder: true
 aiAssistance:
   mine:
     - 'Voorbeeld: het echte bericht zegt wat van mij is'

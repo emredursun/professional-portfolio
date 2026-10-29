@@ -55,6 +55,8 @@ const httpsUrl = z
 
 /** The topics a post can have, in the order the site lists them. */
 export const TOPICS = Object.freeze(['testing', 'ai', 'life']);
+/** Essays are longer pieces; notes are short, often still hypotheses. */
+export const KINDS = Object.freeze(['essay', 'note']);
 
 const postSchema = z
   .object({
@@ -63,7 +65,7 @@ const postSchema = z
     publishedAt: isoDate,
     updatedAt: isoDate.optional(),
     topic: z.enum(TOPICS),
-    kind: z.enum(['essay', 'note']),
+    kind: z.enum(KINDS),
     status: z.enum(['hypothesis', 'testing', 'verified', 'revised']),
     evidence: z
       .object({
@@ -84,6 +86,8 @@ const postSchema = z
     // date of the English version this one follows, and whether AI helped,
     // which the "How this was written" panel then says.
     translation: z.object({ from: isoDate, assistedByAi: z.boolean() }).strict().optional(),
+    // A sample or stand-in, never real content: the launch gate refuses it.
+    placeholder: z.literal(true).optional(),
     draft: z.boolean().default(false),
   })
   .strict()

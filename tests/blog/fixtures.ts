@@ -54,3 +54,10 @@ export function makeDist(root: string, name: string) {
   );
   return dist;
 }
+
+/** A post in English, Turkish and Dutch; `extraEn` goes into the English frontmatter. */
+export function writeInAllLanguages(contentDir: string, slug: string, extraEn = '') {
+  writePost(contentDir, slug, 'Body\n', extraEn, 'en');
+  writePost(contentDir, slug, 'Gövde\n', TRANSLATION, 'tr');
+  writePost(contentDir, slug, 'Tekst\n', TRANSLATION, 'nl');
+}

@@ -4,6 +4,7 @@
     "resume": "Resume",
     "projects": "Projects",
     "contact": "Contact",
+    "blog": "Blog",
     "search": "Search"
   },
   "buttons": {
@@ -56,7 +57,10 @@
     "title": "Page not found",
     "description": "This link doesn't lead anywhere on this site. It may have moved, or the address may contain a typo.",
     "home": "Go to About",
-    "projects": "Browse projects"
+    "projects": "Browse projects",
+    "blogTitle": "This note doesn’t exist (yet)",
+    "blogDescription": "There is no Field Notes post at this address. It may have been renamed, or it has not been written yet.",
+    "blogIndex": "All Field Notes"
   },
   "quality": {
     "title": "Quality report",
@@ -128,6 +132,10 @@
       "navContact": {
         "label": "Go to Contact",
         "description": "Get in touch"
+      },
+      "navBlog": {
+        "label": "Go to Field Notes",
+        "description": "Notes on testing, AI and the rest of life"
       },
       "downloadResume": {
         "label": "Download Resume",

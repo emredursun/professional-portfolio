@@ -159,8 +159,10 @@ describe('loadPosts: translations', () => {
 
 describe('buildBlog: languages', () => {
   it('writes each language under its own prefix, with its own index and feed', async () => {
+    // Launched builds need every language (the launch gate).
     write('hello', 'Body\n');
     write('hello', 'Gövde\n', TRANSLATION, 'tr');
+    write('hello', 'Tekst\n', TRANSLATION, 'nl');
     const dist = makeDist(root, 'dist');
     const written = await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: true });
     expect(written).toEqual([
@@ -172,6 +174,10 @@ describe('buildBlog: languages', () => {
       'tr/blog/feed.xml',
       'tr/blog/hello.html',
       'tr/blog/topic/testing.html',
+      'nl/blog.html',
+      'nl/blog/feed.xml',
+      'nl/blog/hello.html',
+      'nl/blog/topic/testing.html',
     ]);
     expect(read(dist, 'tr', 'blog', 'hello.html')).toContain('<html lang="tr">');
     expect(read(dist, 'tr', 'blog', 'feed.xml')).toContain('xml:lang="tr"');
