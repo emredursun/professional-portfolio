@@ -45,6 +45,8 @@ Most AI coding tools would stop here and report success. To be fair, many human 
 
 The test-generation gate did not. It noticed that the new code introduced a data contract (what the waitlist hands over when a seat is offered) and that **not one of the 249 tests asserted anything about it**. The suite was green because nothing in it was looking. The gate asked for 11 new contract tests before I could continue.
 
+![Diagram: 249 existing tests, all green, reach the quality gate. Asked which test asserts the new data contract, the answer is none, so 11 contract tests are added before work continues.](green-gate.svg)
+
 > A green suite says the assertions we wrote did not fail. It says nothing about the assertions we never wrote.
 
 None of this is new to anyone in testing. Martin Fowler wrote about [contract tests](https://martinfowler.com/bliki/ContractTest.html) years ago, and "coverage is not correctness" has been on conference slides for as long as I have worked in QA. What surprised me was seeing it enforced by the tool, at the exact moment when a hurried person would say "ship it".
@@ -63,7 +65,11 @@ As a tester, that is the kind of check I care about most: not the clever one, bu
 
 It would be easy to turn this into "the AI caught what humans miss". That is not what I saw.
 
-The workshop was built around three words: **Continue, Correct, Stop**. At each station the agent pauses and a person decides. The feature request we started from contained requirements that could not all be true at once, and the most important moment of the day was not a gate at all. The project rules still said this feature had been consciously deferred, and the AI was ready to carry on regardless. We chose Correct: the rule was changed, with a name and a reason next to it.
+The workshop was built around three words: **Continue, Correct, Stop**. At each station the agent pauses and a person decides.
+
+![Diagram: the agent finishes a station, a person opens the file and reads it, then chooses Continue (the file exists, I read it, it is right), Correct (something is missing, or nobody made this decision) or Stop (a blocker, or a doubt about security or rights).](continue-correct-stop.svg)
+
+The feature request we started from contained requirements that could not all be true at once, and the most important moment of the day was not a gate at all. The project rules still said this feature had been consciously deferred, and the AI was ready to carry on regardless. We chose Correct: the rule was changed, with a name and a reason next to it.
 
 That is the part I keep coming back to. The tool can notice that a contract is untested. It cannot decide which of two reasonable business rules wins, or who is allowed to undo an earlier decision. When it tries, the right answer is to stop it, and that only works if someone is actually reading.
 
@@ -72,6 +78,8 @@ There is research behind this unease. Parasuraman and Manzey's [review of automa
 ## A chain you can walk back
 
 At the end we walked the trace out loud, one link per person: the earlier deferral, the request, the conflict, the decision and who made it, the specification, the acceptance criterion, the task, the test, the spec quality gate and commit readiness. Ten links, and each one is a file you can open.
+
+![Diagram: the ten links of the trace, from the earlier deferral, request, conflict and the decision with a name, through specification, acceptance criterion, task and test, to the spec quality gate and commit readiness.](trace-chain.svg)
 
 It sounds bureaucratic, and honestly, sometimes it felt that way. For one small first change, the platform produced a lot of documentation, and not all of it was a pleasure to read. Quick hacks are not possible; every station is mandatory. But I have also sat in audits where nobody could explain why a rule existed. Months later, this chain would answer that question in minutes.
 
