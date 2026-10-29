@@ -6,9 +6,9 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Orta: tek bir workshop’a ve her gün yapay zekâ agent’larıyla çalışan meslektaşlarımla yaptığım sohbetlere dayanıyor. Geniş ölçekte denenmedi.'
+  confidence: 'Orta: tek bir workshop ve her gün yapay zekâ agent’larıyla çalışan meslektaşlarımla yaptığım sohbetler.'
   basedOn:
-    - 'Şirket içi bir AI-driven development aracıyla yapılan uygulamalı bir workshop’taki kendi deneyimim (Eylül 2026)'
+    - 'Şirket içi bir AI-driven development aracıyla uygulamalı workshop, Eylül 2026'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'
   recheckedAt: 2026-10-29
 aiAssistance:
@@ -20,6 +20,10 @@ translation:
   from: 2026-10-29
   assistedByAi: true
 ---
+
+![Masada iki kişi: biri bir belgeyi imzalıyor, diğeri kâğıtları inceliyor.](signing.webp)
+
+*Fotoğraf: [Gabrielle Henderson, Unsplash](https://unsplash.com/photos/woman-signing-on-white-printer-paper-beside-woman-about-to-touch-the-documents-HJckKnwCXxQ)*
 
 [Yeşil, bitti demek değil](/tr/blog/green-is-not-done) yazısında anlattığım workshop’tan sonra aklımda iki soru kaldı.
 

@@ -5,7 +5,6 @@
  */
 
 import { markup } from '../html.js';
-import { statusChip } from './status.js';
 import { formatDate, portfolioPath } from './format.js';
 import { strings } from '../strings.js';
 
@@ -15,17 +14,17 @@ export function nextRecheck(isoDate) {
   return `${Number(year) + 1}-${month}-${month === '02' && day === '29' ? '28' : day}`;
 }
 
+/**
+ * Sources and confidence, after the text: a quiet footnote rather than a
+ * banner. The status chip is already in the header, so it is not repeated.
+ */
 export function evidenceCard(post) {
   const { evidence } = post;
   const s = strings(post.lang);
   return markup`<aside class="evidence" aria-labelledby="evidence-title" data-recheck-by="${nextRecheck(evidence.recheckedAt)}">
-<h2 id="evidence-title" class="visually-hidden">${s.evidenceTitle}</h2>
-<dl class="evidence-grid">
-<div><dt>${s.status}</dt><dd>${statusChip(post.status, post.lang)}</dd></div>
-<div><dt>${s.confidence}</dt><dd>${evidence.confidence}</dd></div>
-<div><dt>${s.basedOn}</dt><dd>${evidence.basedOn.join('; ')}</dd></div>
-<div><dt>${s.rechecked}</dt><dd><time datetime="${evidence.recheckedAt}">${formatDate(evidence.recheckedAt, post.lang)}</time>, ${s.nextBy} <time datetime="${nextRecheck(evidence.recheckedAt)}">${formatDate(nextRecheck(evidence.recheckedAt), post.lang)}</time></dd></div>
-</dl>
+<h2 id="evidence-title">${s.evidenceTitle}</h2>
+<ul class="evidence-sources">${evidence.basedOn.map((source) => markup`<li>${source}</li>`)}</ul>
+<p class="evidence-meta"><span>${s.confidence}: ${evidence.confidence}</span> <span>${s.rechecked} <time datetime="${evidence.recheckedAt}">${formatDate(evidence.recheckedAt, post.lang)}</time></span></p>
 <p class="stale-note" hidden>${s.staleEvidence}</p>
 </aside>`;
 }

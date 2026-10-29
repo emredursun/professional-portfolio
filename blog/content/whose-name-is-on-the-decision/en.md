@@ -6,9 +6,9 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Medium: from one workshop and conversations with colleagues who use AI agents every day. Not tested at scale.'
+  confidence: 'Medium: one workshop and conversations with colleagues who use AI agents every day.'
   basedOn:
-    - 'My own experience in a hands-on workshop with an internal AI-driven development tool (September 2026)'
+    - 'Hands-on workshop with an internal AI-driven development tool, September 2026'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'
   recheckedAt: 2026-10-29
 aiAssistance:
@@ -17,6 +17,10 @@ aiAssistance:
   assisted:
     - 'Claude turned my notes into this text and suggested the OWASP source'
 ---
+
+![Two people at a table, one signing a document while the other reviews the papers.](signing.webp)
+
+*Photo: [Gabrielle Henderson on Unsplash](https://unsplash.com/photos/woman-signing-on-white-printer-paper-beside-woman-about-to-touch-the-documents-HJckKnwCXxQ)*
 
 After the workshop I wrote about in [Green is not done](/blog/green-is-not-done), two questions stayed with me.
 

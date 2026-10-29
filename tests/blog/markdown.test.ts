@@ -71,8 +71,14 @@ describe('renderMarkdown: images', () => {
   });
 
   it('serves an image next to the post at its hashed URL, sized and lazy', () => {
-    expect(render('![A chart](chart.svg)', { image }).html).toContain(
+    expect(render('Intro.\n\n![A chart](chart.svg)', { image }).html).toContain(
       `<img src="${chart.src}" alt="A chart" width="640" height="320" loading="lazy" decoding="async">`,
+    );
+  });
+
+  it('loads an image the post opens with at once, as the largest paint', () => {
+    expect(render('![A chart](chart.svg)\n\nIntro.', { image }).html).toContain(
+      `<img src="${chart.src}" alt="A chart" width="640" height="320" fetchpriority="high" decoding="async">`,
     );
   });
 

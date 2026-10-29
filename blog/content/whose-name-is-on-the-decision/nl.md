@@ -6,9 +6,9 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Gemiddeld: op basis van één workshop en gesprekken met collega’s die dagelijks met AI-agents werken. Niet op grote schaal getest.'
+  confidence: 'Gemiddeld: één workshop en gesprekken met collega’s die dagelijks met AI-agents werken.'
   basedOn:
-    - 'Mijn eigen ervaring in een hands-on workshop met een interne AI-driven development tool (september 2026)'
+    - 'Hands-on workshop met een interne AI-driven development tool, september 2026'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'
   recheckedAt: 2026-10-29
 aiAssistance:
@@ -20,6 +20,10 @@ translation:
   from: 2026-10-29
   assistedByAi: true
 ---
+
+![Twee mensen aan een tafel: de een tekent een document, de ander bekijkt de papieren.](signing.webp)
+
+*Foto: [Gabrielle Henderson op Unsplash](https://unsplash.com/photos/woman-signing-on-white-printer-paper-beside-woman-about-to-touch-the-documents-HJckKnwCXxQ)*
 
 Na de workshop waarover ik schreef in [Groen is nog niet klaar](/nl/blog/green-is-not-done), bleven er twee vragen hangen.
 

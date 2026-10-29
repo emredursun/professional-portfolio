@@ -6,9 +6,9 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Hoog dat het zo is gegaan: ik was erbij. Laag als algemene bewering: het is één workshop en één feature, geen onderzoek.'
+  confidence: 'Hoog voor wat er gebeurde: ik was erbij. Eén workshop en één feature, dus een observatie en geen algemene regel.'
   basedOn:
-    - 'Mijn eigen ervaring in een hands-on workshop met een interne AI-driven development tool bij Sopra Steria (september 2026)'
+    - 'Hands-on workshop met een interne AI-driven development tool, Sopra Steria, september 2026'
     - 'Martin Fowler, ContractTest (martinfowler.com)'
   recheckedAt: 2026-10-29
 aiAssistance:
@@ -20,6 +20,10 @@ translation:
   from: 2026-10-29
   assistedByAi: true
 ---
+
+![Een verkeerslicht dat groen geeft tegen een avondlucht.](green-light.webp)
+
+*Foto: [Tord Romundstad op Unsplash](https://unsplash.com/photos/a-traffic-light-on-a-pole-with-a-sky-background-JAT4Xx2UCEE)*
 
 Elke tester kent het moment. De pipeline wordt groen, iemand zegt “klaar”, en je voelt een kleine vraag die nog niemand heeft gesteld.
 
@@ -38,8 +42,6 @@ De AI schreef de code voor de eerste taak. Ik draaide de tests zelf: 249 tests, 
 De meeste tools stoppen hier en melden succes. Eerlijk gezegd doen veel teams dat ook.
 
 Deze niet. Hij zag dat de nieuwe code een datacontract toevoegde, en dat geen van de 249 tests dat controleerde. De testset was groen omdat niets erin keek. Voordat ik verder mocht, vroeg hij om 11 nieuwe contracttests.
-
-![Diagram: 249 bestaande tests, allemaal groen, komen bij de kwaliteitscontrole. Op de vraag welke test het nieuwe datacontract controleert is het antwoord geen, dus komen er 11 contracttests bij voordat het werk verdergaat.](green-gate.svg)
 
 Niets hiervan is nieuw voor testers. Een groene testset zegt alleen dat de controles die we schreven niet faalden, en [contracttests](https://martinfowler.com/bliki/ContractTest.html) bestaan precies voor dit gat. Wat mij verraste, was dat een tool die lijn vasthield op het moment dat iemand met haast zou zeggen: “zet het maar live”.
 
@@ -69,4 +71,4 @@ Dus, drie kleine gewoontes:
 
 In mijn vrije tijd bouw ik iets vergelijkbaars op veel kleinere schaal: [devran-ai/kit](https://github.com/devran-ai/kit), een open-source kit die kwaliteitscontroles toevoegt aan AI-codeertools. Dezelfde ideeën op bedrijfsschaal zien, liet me zien hoeveel verder ze kunnen gaan.
 
-Ik leer nog steeds hoe ik met zulke tools moet werken. Maar dit was de eerste keer dat een AI-tool me een groen resultaat iets minder deed vertrouwen, en dat voelde als vooruitgang.
+Dit was de eerste keer dat een AI-tool me een groen resultaat iets minder deed vertrouwen, en dat voelde als vooruitgang.

@@ -6,9 +6,9 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'High that it happened this way: I was there. Low as a general claim: it is one workshop and one feature, not a study.'
+  confidence: 'High for what happened, since I was there. One workshop and one feature, so an observation rather than a general rule.'
   basedOn:
-    - 'My own experience in a hands-on workshop with an internal AI-driven development tool at Sopra Steria (September 2026)'
+    - 'Hands-on workshop with an internal AI-driven development tool, Sopra Steria, September 2026'
     - 'Martin Fowler, ContractTest (martinfowler.com)'
   recheckedAt: 2026-10-29
 aiAssistance:
@@ -17,6 +17,10 @@ aiAssistance:
   assisted:
     - 'Claude turned my notes into this text and shortened it on my instructions'
 ---
+
+![A traffic light showing green against an evening sky.](green-light.webp)
+
+*Photo: [Tord Romundstad on Unsplash](https://unsplash.com/photos/a-traffic-light-on-a-pole-with-a-sky-background-JAT4Xx2UCEE)*
 
 Every tester knows the moment. The pipeline turns green, someone says "done", and you feel a small question that nobody has asked yet.
 
@@ -35,8 +39,6 @@ The AI wrote the code for the first task. I ran the tests myself: 249 tests, all
 Most tools would stop there and report success. Honestly, so would many teams.
 
 This one did not. It saw that the new code added a data contract, and that none of the 249 tests checked it. The suite was green because nothing in it was looking. Before I could continue, it asked for 11 new contract tests.
-
-![Diagram: 249 existing tests, all green, reach the quality check. Asked which test checks the new data contract, the answer is none, so 11 contract tests are added before work continues.](green-gate.svg)
 
 None of this is new to testers. A green suite only says that the checks we wrote did not fail, and [contract tests](https://martinfowler.com/bliki/ContractTest.html) exist for exactly this gap. What surprised me was seeing a tool hold that line at the moment when a person in a hurry would say "ship it".
 
@@ -66,4 +68,4 @@ So, three small habits:
 
 In my spare time I build something similar on a much smaller scale: [devran-ai/kit](https://github.com/devran-ai/kit), an open-source kit that adds quality gates to AI coding tools. Seeing the same ideas at company scale showed me how much further they can go.
 
-I am still learning how to work with tools like this. But this was the first time an AI tool made me trust a green result a little less, and that felt like progress.
+This was the first time an AI tool made me trust a green result a little less, and that felt like progress.

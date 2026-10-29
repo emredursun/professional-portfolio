@@ -116,11 +116,11 @@ export function renderArticlePage({ post, related = [], assets, launched }) {
   const s = strings(post.lang);
   const content = markup`<article class="${post.toc.length > 0 ? 'article has-toc' : 'article'}">
 ${articleHeader(post)}
-${evidenceCard(post)}
 ${tableOfContents(post)}
 <div class="prose">
 ${raw(post.html)}
 </div>
+${evidenceCard(post)}
 ${aiPanel(post)}
 ${corrections(post)}
 ${authorCard(s, post.lang)}
