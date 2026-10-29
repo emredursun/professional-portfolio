@@ -6,10 +6,9 @@
 
 import { markup } from '../html.js';
 import { PERSON_ID, WEBSITE_ID } from '../../lib/route-meta.js';
-import { blogUrl, byNewest, feedPath, formatDate, postPath, postUrl } from './format.js';
+import { blogUrl, byNewest, feedPath, postPath, postUrl } from './format.js';
+import { postSections } from './cards.js';
 import { renderPage } from './layout.js';
-import { nextRecheck } from './sections.js';
-import { statusChip } from './status.js';
 import { strings } from '../strings.js';
 
 /**
@@ -62,60 +61,6 @@ function indexMeta(posts, s, lang, languages) {
   };
 }
 
-function postMeta(post, chip = '') {
-  const s = strings(post.lang);
-  return markup`<p class="card-meta">${s.topicLabels[post.topic]} · ${post.minutes} ${s.minutesShort} · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt, post.lang)}</time>${chip}</p>`;
-}
-
-// Revealed in the browser by blog/client/stale.ts once the re-check date has
-// passed, as on the article's evidence card.
-const staleNote = (post) =>
-  markup`<p class="stale-note" hidden>${strings(post.lang).staleShort}</p>`;
-
-/**
- * A post shown on another language's index (no translation yet) keeps its
- * own language: the item says so with lang, the link with hreflang, and a
- * chip in the page's language tells the reader before they click.
- */
-function foreign(post, pageLang) {
-  if (post.lang === pageLang) return { lang: '', hreflang: '', chip: '' };
-  return {
-    lang: markup` lang="${post.lang}"`,
-    hreflang: markup` hreflang="${post.lang}"`,
-    chip: markup` <span class="lang-chip" lang="${pageLang}">${strings(pageLang).inEnglish}</span>`,
-  };
-}
-
-function essayCard(post, pageLang) {
-  const { lang, hreflang, chip } = foreign(post, pageLang);
-  return markup`<li class="card"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-<p class="card-status">${statusChip(post.status, post.lang)}${chip}</p>
-<h3 class="card-title"><a href="${postPath(post)}"${hreflang}>${post.title}</a></h3>
-<p class="card-dek">${post.description}</p>
-${postMeta(post)}
-${staleNote(post)}
-</li>`;
-}
-
-function noteItem(post, pageLang) {
-  const { lang, hreflang, chip } = foreign(post, pageLang);
-  return markup`<li class="note-item"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-${statusChip(post.status, post.lang)}
-<a href="${postPath(post)}"${hreflang}>${post.title}</a>
-${postMeta(post, chip)}
-${staleNote(post)}
-</li>`;
-}
-
-function section({ id, title, intro, items, listClass }) {
-  if (items.length === 0) return '';
-  return markup`<section class="index-section" aria-labelledby="${id}">
-<h2 id="${id}">${title}</h2>
-<p class="section-intro">${intro}</p>
-<ul class="${listClass}">${items}</ul>
-</section>`;
-}
-
 /**
  * @param {{ posts: object[], fallback?: object[], assets: object, launched: boolean, lang?: string, languages?: string[] }} options
  *   `posts`: the posts in `lang`. `fallback`: English posts with no `lang`
@@ -133,9 +78,6 @@ export function renderIndexPage({
 }) {
   const s = strings(lang);
   const sorted = [...posts].sort(byNewest);
-  const listed = [...posts, ...fallback].sort(byNewest);
-  const essays = listed.filter((post) => post.kind === 'essay');
-  const notes = listed.filter((post) => post.kind === 'note');
   const content = markup`<div class="index">
 <header class="index-header">
 <p class="index-eyebrow">${s.blogName}</p>
@@ -144,8 +86,7 @@ export function renderIndexPage({
 ${heroActions(sorted[0], launched, s, lang)}
 </header>
 ${topicsBand(s)}
-${section({ id: 'essays-title', title: s.essays, intro: s.essaysIntro, items: essays.map((post) => essayCard(post, lang)), listClass: 'cards' })}
-${section({ id: 'notes-title', title: s.notes, intro: s.notesIntro, items: notes.map((post) => noteItem(post, lang)), listClass: 'notes' })}
+${postSections({ posts, fallback, lang })}
 </div>`;
   return renderPage({
     lang,

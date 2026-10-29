@@ -135,3 +135,25 @@ test.describe('switching language', () => {
     await expect(page.locator('.notes .lang-chip')).toHaveText(strings('nl').inEnglish);
   });
 });
+
+test.describe('topic pages', () => {
+  test('an article’s topic link leads to a clean page of that topic only', async ({ page }) => {
+    await page.goto(TR_POST);
+    const link = page.locator('.article-kicker .topic-link');
+    const label = (await link.textContent())!;
+    await link.click();
+    await expect(page).toHaveURL(/\/tr\/blog\/topic\/[a-z]+$/);
+    await expect(page.locator('h1')).toHaveText(label);
+    const topics = await page.locator('.card-meta .topic-link').allTextContents();
+    expect(topics.length).toBeGreaterThan(0);
+    expect(new Set(topics)).toEqual(new Set([label]));
+    const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
+    expect(results.violations).toEqual([]);
+  });
+
+  test('a topic with no posts in a language has no page there', async ({ request }) => {
+    // The Dutch samples are on testing only; the ai note is English and Turkish.
+    expect((await request.get('/nl/blog/topic/ai')).status()).toBe(404);
+    expect((await request.get('/tr/blog/topic/ai')).status()).toBe(200);
+  });
+});

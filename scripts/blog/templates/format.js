@@ -66,6 +66,20 @@ export function blogUrl(lang) {
   return `${SITE_URL}${blogPath(lang)}`;
 }
 
+/**
+ * A topic's page: /blog/topic/testing, /tr/blog/topic/ai.
+ * @param {string} lang
+ * @param {string} topic  One of the schema's topics.
+ */
+export function topicPath(lang, topic) {
+  return `${blogPath(lang)}/topic/${topic}`;
+}
+
+/** @param {string} lang @param {string} topic */
+export function topicUrl(lang, topic) {
+  return `${SITE_URL}${topicPath(lang, topic)}`;
+}
+
 /** @param {string} lang */
 export function feedPath(lang) {
   return `${blogPath(lang)}/feed.xml`;
