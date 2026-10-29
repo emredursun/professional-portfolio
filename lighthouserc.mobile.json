@@ -12,7 +12,8 @@
         "http://localhost:4181/blog/sample-hypothesis-note",
         "http://localhost:4181/tr/blog",
         "http://localhost:4181/tr/blog/sample-a-green-test",
-        "http://localhost:4181/nl/blog/sample-a-green-test"
+        "http://localhost:4181/nl/blog/sample-a-green-test",
+        "http://localhost:4181/blog/now"
       ],
       "numberOfRuns": 5,
       "settings": {

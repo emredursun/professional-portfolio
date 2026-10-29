@@ -339,3 +339,37 @@
   font-size: 13px;
   vertical-align: middle;
 }
+
+/* The newest "Now" entry on the index, and the Now page's dated list. */
+.now-line {
+  margin: 0 0 24px;
+  color: var(--ink-2);
+  font-size: 1.05rem;
+}
+
+.now-label {
+  margin-right: 6px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.now-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.now-list li {
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+
+.now-list time {
+  color: var(--ink-2);
+  font-size: 14px;
+}
+
+.now-list p {
+  margin: 4px 0 0;
+  font-size: 1.125rem;
+}

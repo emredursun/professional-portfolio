@@ -5,7 +5,15 @@
 
 import { markup, raw } from '../html.js';
 import { PERSON_ID, SOCIAL_IMAGE } from '../../lib/route-meta.js';
-import { blogUrl, formatDate, lastChange, portfolioPath, postPath, postUrl } from './format.js';
+import {
+  blogUrl,
+  formatDate,
+  lastChange,
+  portfolioPath,
+  postPath,
+  postUrl,
+  topicPath,
+} from './format.js';
 import { renderPage } from './layout.js';
 import { statusChip } from './status.js';
 import { aiPanel, corrections, evidenceCard, tableOfContents } from './sections.js';
@@ -64,7 +72,7 @@ function translationNote(post, s) {
 function articleHeader(post) {
   const s = strings(post.lang);
   return markup`<header class="article-header">
-<p class="article-kicker">${statusChip(post.status, post.lang)} ${s.topicLabels[post.topic]} · ${post.minutes} ${s.minutesRead}</p>
+<p class="article-kicker">${statusChip(post.status, post.lang)} <a class="topic-link" href="${topicPath(post.lang, post.topic)}">${s.topicLabels[post.topic]}</a> · ${post.minutes} ${s.minutesRead}</p>
 <h1>${post.title}</h1>
 <p class="article-dek">${post.description}</p>
 ${translationNote(post, s)}<p class="byline">Emre Dursun · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt, post.lang)}</time>${post.updatedAt ? markup` · ${s.updated} <time datetime="${post.updatedAt}">${formatDate(post.updatedAt, post.lang)}</time>` : ''}</p>

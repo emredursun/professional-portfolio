@@ -1,6 +1,6 @@
 # ADR 0001: Build the Field Notes blog as static HTML with our own script
 
-- Status: Accepted; Phases 1, 2 and 3a complete, not launched
+- Status: Accepted; Phases 1, 2 and 3 (a, b, c) complete, not launched
 - Date: 2026-10-28
 - Deciders: Emre Dursun (owner), with Claude as implementer
 
@@ -235,8 +235,9 @@ Deferred, with the reason:
 
 | Item | Phase |
 | --- | --- |
-| Topic filter (as crawlable topic pages) | 3, once there are posts to filter |
-| "Now" log, illustrations | 3, content and artwork |
+| Topic filter (as crawlable topic pages) | Done in 3b (see below) |
+| "Now" log | Done in 3c (see below) |
+| Illustrations | When there is real artwork |
 | Turkish and Dutch | Done in 3a (see below) |
 | Per-post link preview images | Before launch |
 | Navigation link, sitemap, smoke test, path-aware 404 | Launch |
@@ -268,3 +269,32 @@ Deferred, with the reason:
 
 Still to do in Phase 3: crawlable topic pages (3b) and the "Now" log
 (3c). Illustrations wait for real artwork.
+
+## Phase 3b results (topic pages)
+
+- `/blog/topic/<topic>` and the same under `/tr` and `/nl`, written only
+  for a language that has posts on that topic, so there are no empty
+  pages to crawl. hreflang lists the languages that have the same topic
+  page; English always does, because every post has an English version on
+  the same topic.
+- The cards on the index and topic pages come from one module
+  (`templates/cards.js`); every card's topic and the article's kicker link
+  to the topic page, so each page is one plain link away.
+- JSON-LD: `CollectionPage` inside the language's blog, with
+  `BreadcrumbList`. The preview check also loads two topic pages on real
+  Hosting.
+- The front page's band of themes ("Pega and Tosca", "Life in three
+  languages") stays plain text: those are themes of the writing, not the
+  three-topic taxonomy, and linking them would promise pages that do not
+  exist.
+
+## Phase 3c results ("Now" log)
+
+- `blog/now/<lang>.md`, frontmatter only: `entries` of `{ date, text }`
+  (280 characters at most), newest first, strict schema; English is
+  required, like every post. A language gets a Now page only if it has a
+  blog, so its alternates never point at a missing page.
+- `/blog/now` (and under `/tr`, `/nl`) lists every entry; each index shows
+  the newest one with a link. The page's `dateModified` is the newest
+  entry's date, never the build's.
+- Illustrations stay deferred until there is real artwork.

@@ -16,7 +16,7 @@ const articles = (lang: string) => {
   return fs.existsSync(dir)
     ? fs
         .readdirSync(dir)
-        .filter((file) => file.endsWith('.html'))
+        .filter((file) => file.endsWith('.html') && file !== 'now.html')
         .sort()
         .map((file) => `/${lang}/blog/${file.replace(/\.html$/, '')}`)
     : [];
@@ -133,5 +133,56 @@ test.describe('switching language', () => {
     const english = page.locator('.notes [lang="en"] a[hreflang="en"]');
     await expect(english).toHaveCount(1);
     await expect(page.locator('.notes .lang-chip')).toHaveText(strings('nl').inEnglish);
+  });
+});
+
+test.describe('topic pages', () => {
+  test('an article’s topic link leads to a clean page of that topic only', async ({ page }) => {
+    await page.goto(TR_POST);
+    const link = page.locator('.article-kicker .topic-link');
+    const label = (await link.textContent())!;
+    await link.click();
+    await expect(page).toHaveURL(/\/tr\/blog\/topic\/[a-z]+$/);
+    await expect(page.locator('h1')).toHaveText(label);
+    const topics = await page.locator('.card-meta .topic-link').allTextContents();
+    expect(topics.length).toBeGreaterThan(0);
+    expect(new Set(topics)).toEqual(new Set([label]));
+    const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
+    expect(results.violations).toEqual([]);
+  });
+
+  test('a topic with no posts in a language has no page there', async ({ request }) => {
+    // The Dutch samples are on testing only; the ai note is English and Turkish.
+    expect((await request.get('/nl/blog/topic/ai')).status()).toBe(404);
+    expect((await request.get('/tr/blog/topic/ai')).status()).toBe(200);
+  });
+});
+
+test.describe('the Now page', () => {
+  test('the index’s Now line leads to a clean, accessible Now page', async ({ page }) => {
+    for (const lang of ['en', 'tr'] as const) {
+      const s = strings(lang);
+      const base = lang === 'en' ? '/blog' : `/${lang}/blog`;
+      await page.goto(base);
+      await page.locator('.now-line').getByRole('link', { name: s.nowMore }).click();
+      await expect(page).toHaveURL(new RegExp(`${base}/now$`));
+      await expect(page.locator('html')).toHaveAttribute('lang', lang);
+      await expect(page.locator('h1')).toHaveText(s.nowTitle);
+      await expect(page.locator('.now-list li').first()).toBeVisible();
+      const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
+      expect(results.violations, lang).toEqual([]);
+    }
+  });
+
+  test('fits the screen, and a trailing slash redirects like Firebase', async ({
+    page,
+    request,
+  }) => {
+    await page.goto('/nl/blog/now');
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+    expect((await request.get('/blog/now/', { maxRedirects: 0 })).status()).toBe(301);
   });
 });
