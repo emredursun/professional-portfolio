@@ -10,6 +10,7 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 - Each project page describes its project in structured data (`SoftwareSourceCode` with its repository, or `CreativeWork`), generated from the same data as the page. The site-wide graph had a hand-kept list of three projects from 2020–2023 instead.
 
 ### Changed
+- How the site reads in Google results. The landing title is now "Emre Dursun – QA Consultant: Pega, Tricentis Tosca, Playwright", and the profile pages have new descriptions in all three languages that name Pega testing, Tricentis Tosca, Playwright and Testim and the Pega CSA & CBA and ISTQB CTFL certifications. The resume, projects and contact titles describe their page. The Person in the structured data lists every certification on the CV, under its CV and LinkedIn names, and the WebSite gives the short name "Emre Dursun". The keywords meta tag is gone, because Google ignores it. A unit test checks that each title fits the width Google shows (580 px) and each description is 140–160 characters.
 - Font Awesome ships only the 110 icons the site uses: 16 KB of fonts and 10 KB of CSS instead of 300 KB and 74 KB. `npm run generate:icons` rebuilds the subset, and a unit test fails if a new icon is not in it.
 - Plus Jakarta Sans is one variable font (27 KB for Latin) instead of six static weights a page loaded four or five of.
 - GSAP (44 KB gzip, loaded at start-up) is gone. The intro, the "5+ years" counter and the background parallax use `requestAnimationFrame`, the Web Animations API and a CSS transition; the parallax now stays still with reduced motion.
@@ -19,6 +20,7 @@ All notable changes to emredursun.nl. Format: [Keep a Changelog](https://keepach
 - An unused `public/404.html` that loaded Google Fonts and the Tailwind CDN; the build always replaced it.
 
 ### Fixed
+- The Turkish contact page appeared in search results and browser tabs as "Bana | Emre Dursun": its title was the first half of the heading "Bana Ulaşın". Pages now take their title from a meta.title string of their own.
 - The mobile navigation labels were dimmed to 2.3:1 (light) and 3.3:1 (dark) contrast; they are now full contrast.
 - The service panel and the project modal stay on screen again: opened further down a page they showed their empty bottom, and their previous, next, share and close buttons scrolled away. The page entrances introduced in the post-launch hardening left a transform on each page section, and a transformed ancestor captures `position: fixed`. Both now open in a layer of their own over the content card (the whole screen on mobile), always at their top, and the entrances leave no transform behind.
 - With the command palette open over a project, Escape closed the project too and the arrow keys in the search field paged it; the service panel listened for Escape even while closed. An overlay's shortcuts now act only when it is on top. After the window crossed the desktop breakpoint, Tab no longer moved inside an open project.

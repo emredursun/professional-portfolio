@@ -49,7 +49,11 @@ const SEO: React.FC<SEOProps> = ({
   noindex = false,
 }) => {
   const location = useLocation();
-  const { t } = useTranslation();
+  // `ready` once every namespace a page title or description comes from has
+  // loaded. Until then t() returns the key itself ("meta.title"), and writing
+  // that over the prerendered head would show it in the tab and to any
+  // crawler that snapshots early. t() itself stays on the default `common`.
+  const { t, ready } = useTranslation(['common', 'about', 'resume', 'projects', 'contact']);
 
   // Derive the language from the path rather than useParams(). useParams() only
   // resolves for components rendered inside a matched <Route>, so any SEO usage
@@ -79,15 +83,11 @@ const SEO: React.FC<SEOProps> = ({
   );
 
   // Dynamic Metadata defaults
-  const siteTitle = 'Emre Dursun — QA Consultant, Pega & Tricentis Tosca';
+  // common.json's meta.title, the same string scripts/lib/route-meta.js uses.
+  const siteTitle = t('meta.title');
   const metaTitle = title ? (overrideTitle ? title : `${title} | Emre Dursun`) : siteTitle;
 
-  const metaDescription =
-    description ||
-    t(
-      'meta.description',
-      'QA Consultant specializing in Pega & Tricentis Tosca test automation, ISTQB® Certified.',
-    );
+  const metaDescription = description || t('meta.description');
 
   const enHref = `${baseUrl}${pathWithoutLang}`.replace(/\/$/, '') || baseUrl;
   const nlHref = `${baseUrl}/nl${pathWithoutLang}`.replace(/\/$/, '');
@@ -98,6 +98,9 @@ const SEO: React.FC<SEOProps> = ({
   // own ProfilePage/WebPage JSON-LD. Those come from the prerendered HTML of
   // each URL (scripts/prerender-routes.js), and crawlers load every URL fresh.
   useEffect(() => {
+    // The prerendered head is already right for this URL; keep it until the
+    // translations can say the same.
+    if (!ready) return;
     document.title = metaTitle;
 
     upsertMeta('meta[name="title"]', 'name', 'title', metaTitle);
@@ -118,7 +121,7 @@ const SEO: React.FC<SEOProps> = ({
     upsertMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
     upsertMeta('meta[name="twitter:title"]', 'name', 'twitter:title', metaTitle);
     upsertMeta('meta[name="twitter:description"]', 'name', 'twitter:description', metaDescription);
-  }, [metaTitle, metaDescription, canonicalUrl, enHref, nlHref, trHref]);
+  }, [ready, metaTitle, metaDescription, canonicalUrl, enHref, nlHref, trHref]);
 
   // Unknown top-level URLs get a real 404 from Firebase (404.html), but an
   // unknown slug under a real section (/about/<typo>) is still rewritten to

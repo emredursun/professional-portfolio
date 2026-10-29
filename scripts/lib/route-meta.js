@@ -17,7 +17,6 @@ import fs from 'fs';
 import path from 'path';
 
 export const SITE_URL = 'https://emredursun.nl';
-const SITE_TITLE = 'Emre Dursun — QA Consultant, Pega & Tricentis Tosca';
 export const PERSON_ID = `${SITE_URL}/#person`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 const PORTRAIT_ID = `${SITE_URL}/#portrait`;
@@ -25,12 +24,13 @@ const PORTRAIT_ID = `${SITE_URL}/#portrait`;
 export const LANGUAGES = ['en', 'nl', 'tr'];
 const NAMESPACES = ['common', 'about', 'resume', 'projects', 'contact'];
 export const OG_LOCALES = { en: 'en_US', nl: 'nl_NL', tr: 'tr_TR' };
-const SITE_NAME = 'Emre Dursun Portfolio';
+// The short name shown above a search result; WebSite.name in index.html matches.
+export const SITE_NAME = 'Emre Dursun';
 export const SOCIAL_IMAGE = {
   url: `${SITE_URL}/images/social-share.png`,
   width: 1200,
   height: 630,
-  alt: 'Emre Dursun - QA Consultant, Pega & Tricentis Tosca',
+  alt: 'Emre Dursun, QA Consultant: Pega, Tricentis Tosca and Playwright',
 };
 
 export const BLOCK_START = '<!-- route-meta:start -->';
@@ -98,13 +98,11 @@ function titleAndDescription({ route, lang, constants, locales }) {
   const [, section, slug] = route.split('/');
   const t = (ns, key) => lookup(locales, lang, ns, key);
 
-  if (route === '') {
-    // The home page keeps the description it ranks with in search results.
-    return { title: SITE_TITLE, description: `Emre Dursun — ${t('common', 'meta.description')}` };
-  }
-  if (section === 'about' && !slug) {
+  if (route === '' || (section === 'about' && !slug)) {
     // About is the landing page: full site title, no "| Emre Dursun" suffix.
-    return { title: SITE_TITLE, description: t('about', 'meta.description') };
+    // "/" renders About once JavaScript runs and Google shows the rendered
+    // description for the domain, so the static home head says the same.
+    return { title: t('common', 'meta.title'), description: t('about', 'meta.description') };
   }
   if (section === 'about') {
     const key = constants.SERVICE_TRANSLATION_KEYS[slug];
@@ -131,7 +129,9 @@ function titleAndDescription({ route, lang, constants, locales }) {
     };
   }
   return {
-    title: `${t(section, 'title')} | Emre Dursun`,
+    // meta.title, not the heading: headings are split in two for styling
+    // ("Bana" + "Ulaşın"), and half of one made a poor title link.
+    title: `${t(section, 'meta.title')} | Emre Dursun`,
     description: t(section, 'meta.description'),
   };
 }

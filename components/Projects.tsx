@@ -282,14 +282,9 @@ const Projects: React.FC = () => {
   return (
     <section className="animate-page-enter h-full flex flex-col">
       <SEO
-        title={selectedProject ? translatedSelectedProject.title : t('title')}
+        title={selectedProject ? translatedSelectedProject.title : t('meta.title')}
         description={
-          selectedProject
-            ? translatedSelectedProject.description
-            : t(
-                'meta.description',
-                'Explore my portfolio of automation projects, including test frameworks, CI/CD pipelines, and full-stack applications.',
-              )
+          selectedProject ? translatedSelectedProject.description : t('meta.description')
         }
       />
       <header className="mb-10">

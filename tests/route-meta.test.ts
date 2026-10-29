@@ -43,8 +43,10 @@ describe('routeMeta', () => {
   });
 
   it('mirrors the titles the pages set', () => {
-    expect(meta('/about').title).toBe('Emre Dursun — QA Consultant, Pega & Tricentis Tosca');
-    expect(meta('/resume').title).toBe('Resume | Emre Dursun');
+    expect(meta('/about').title).toBe(
+      'Emre Dursun – QA Consultant: Pega, Tricentis Tosca, Playwright',
+    );
+    expect(meta('/resume').title).toBe(`${locales.en.resume.meta.title} | Emre Dursun`);
     expect(meta('/about/pega-platform-architecture').title).toBe(
       'Pega Platform Architecture | Emre Dursun',
     );
@@ -126,7 +128,7 @@ describe('prerenderRoutes', () => {
   it('escapes the head values and sets the document language', () => {
     const html = renderRoutePage(indexHtml, meta('/about', 'nl'), null);
     expect(html).toMatch(/^<!DOCTYPE html>\s*<html lang="nl"/);
-    expect(html).toContain('Pega &amp; Tricentis Tosca');
+    expect(html).toContain('Pega CSA &amp; CBA');
     expect(html).toContain('<link rel="canonical" href="https://emredursun.nl/nl/about" />');
   });
 

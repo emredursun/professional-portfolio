@@ -285,13 +285,7 @@ const AboutPage: React.FC = () => {
           summary, so the eight of them are not duplicates of /about. */}
       <SEO
         title={activeService?.title}
-        description={
-          activeService?.description ??
-          t(
-            'meta.description',
-            'QA Consultant in the Sopra Steria Pega Practice, specializing in Pega platform architecture and Tricentis Tosca model-based test automation.',
-          )
-        }
+        description={activeService?.description ?? t('meta.description')}
       />
       <motion.header
         ref={headerRef}
