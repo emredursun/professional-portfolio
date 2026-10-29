@@ -1,7 +1,16 @@
 import AxeBuilder from '@axe-core/playwright';
 import { BLOG_LAUNCHED } from '../scripts/blog/config.js';
 import { strings } from '../scripts/blog/strings.js';
-import { blogPath, hasNow, languages, postPath, slugs, topics, untranslated } from './blog-content';
+import {
+  aboutPath,
+  blogPath,
+  hasNow,
+  languages,
+  postPath,
+  slugs,
+  topics,
+  untranslated,
+} from './blog-content';
 import { copy, expect, test } from './fixtures';
 
 /**
@@ -270,7 +279,7 @@ test.describe('the portfolio links to the blog', () => {
 
   test('the mobile bar still fits a 360 px screen with the blog in it', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 780 });
-    for (const path of ['/about', '/tr/about']) {
+    for (const path of languages.map(aboutPath)) {
       await page.goto(path);
       const bar = page.locator('nav.fixed ul');
       await expect(bar.locator('a[href$="/blog"]')).toHaveCount(1);
@@ -283,11 +292,10 @@ test.describe('the portfolio links to the blog', () => {
   });
 
   test('the nav opens the blog in the page’s language', async ({ page }) => {
-    for (const [from, to, lang] of [
-      ['/about', '/blog', 'en'],
-      ['/tr/about', '/tr/blog', 'tr'],
-    ] as const) {
-      await page.goto(from);
+    // Every language: the launch gate makes each have a blog to link to.
+    for (const lang of languages) {
+      const to = blogPath(lang);
+      await page.goto(aboutPath(lang));
       // The desktop sidebar and the mobile bottom bar each have the link;
       // only one of them is visible at a time.
       const link = page.locator(`a[href="${to}"]:visible`).first();

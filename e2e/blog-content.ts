@@ -20,6 +20,8 @@ const posts = loadPosts(path.join(ROOT, 'blog', 'content'));
 const now = loadNow(path.join(ROOT, 'blog', 'now'));
 const prefix = (lang: Lang) => (lang === 'en' ? '' : `${lang}/`);
 export const blogPath = (lang: Lang) => `/${prefix(lang)}blog`;
+/** The portfolio's About page in `lang`, where the nav links the blog. */
+export const aboutPath = (lang: Lang) => `/${prefix(lang)}about`;
 const postsIn = (lang: Lang) =>
   posts.filter((post) => post.lang === lang).sort((a, b) => (a.slug < b.slug ? -1 : 1));
 

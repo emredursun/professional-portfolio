@@ -100,7 +100,9 @@ time-boxed Astro spike against the same criteria and record the outcome here.
   indexable, an unknown post 404) runs in the preview check, the deploy
   smoke test and the uptime check, and switches itself on once the feed
   exists.
-- Re-enable the Lighthouse `is-crawlable` audit for blog pages.
+- Re-enable the Lighthouse `is-crawlable` audit for blog pages
+  (`"is-crawlable": ["error", { "minScore": 1 }]` in both lighthouserc
+  blog blocks); `tests/lighthouse-urls.test.ts` fails until you do.
 - ~~Add blog routes to the sitemap and the deploy smoke test~~ Done in 4b,
   behind the flag (see Phase 4b results).
 - ~~Extend the path-aware 404 to `/tr/blog/*` and `/nl/blog/*`~~ Done in 4b.
