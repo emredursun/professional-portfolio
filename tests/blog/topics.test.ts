@@ -149,6 +149,18 @@ describe('topic pages', () => {
     ]);
   });
 
+  it('preloads both faces, so its Bricolage h1 does not re-wrap when fonts load', async () => {
+    onTopic('agents', 'ai');
+    const { dist } = await build();
+    const hrefs = [
+      ...doc(dist, 'blog', 'topic', 'ai.html').querySelectorAll('link[rel="preload"][as="font"]'),
+    ].map((link) => link.getAttribute('href'));
+    expect(hrefs).toEqual([
+      '/assets/newsreader-latin-400-normal-x1.woff2',
+      '/assets/bricolage-grotesque-latin-wght-normal-y2.woff2',
+    ]);
+  });
+
   it('refuses to render an empty topic page', () => {
     expect(() =>
       renderTopicPage({

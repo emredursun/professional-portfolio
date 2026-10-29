@@ -24,6 +24,7 @@ function topicMeta({ topic, posts, s, lang, languages }) {
     alternates: languages.map((other) => ({ lang: other, url: topicUrl(other, topic) })),
     ogType: 'website',
     lcpFont: 'reading',
+    headingFont: 'display',
     jsonLd: {
       '@context': 'https://schema.org',
       '@graph': [
