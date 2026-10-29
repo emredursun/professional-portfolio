@@ -259,9 +259,10 @@ export async function buildBlog({
 /**
  * Command-line entry: builds from the repository's folders and reports.
  * @param {string} [root]  Repository root; tests pass a temporary one.
+ * @param {{ launched?: boolean }} [options]  Tests pin it, so they do not follow the flag.
  * @returns {Promise<number>} The process exit code.
  */
-export async function main(root = ROOT) {
+export async function main(root = ROOT, { launched = BLOG_LAUNCHED } = {}) {
   try {
     const written = await buildBlog({
       distDir: path.join(root, 'dist'),
@@ -269,6 +270,7 @@ export async function main(root = ROOT) {
       nowDir: path.join(root, 'blog', 'now'),
       ogDir: path.join(root, 'blog', 'og'),
       themeInitPath: path.join(root, 'blog', 'client', 'theme-init.js'),
+      launched,
     });
     process.stdout.write(
       `blog: ${written.length} file(s)${written.map((f) => `\n  ${f}`).join('')}\n`,

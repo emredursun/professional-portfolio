@@ -299,7 +299,7 @@ describe('main', () => {
           .toBuffer(),
     });
     const out = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
-    expect(await main(root)).toBe(0);
+    expect(await main(root, { launched: false })).toBe(0);
     expect(out).toHaveBeenCalledWith(
       'blog: 3 file(s)\n  blog.html\n  blog/one.html\n  blog/topic/testing.html\n',
     );
@@ -323,13 +323,13 @@ describe('main', () => {
     });
     const out = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
     vi.stubEnv('GITHUB_ACTIONS', '');
-    expect(await main(root)).toBe(0);
+    expect(await main(root, { launched: false })).toBe(0);
     expect(out).toHaveBeenCalledWith(
       'blog: warning: blog/content/one/tr.md follows an older English version (update it and translation.from)\n',
     );
     // On GitHub Actions the line is an annotation, shown on the run summary.
     vi.stubEnv('GITHUB_ACTIONS', 'true');
-    expect(await main(root)).toBe(0);
+    expect(await main(root, { launched: false })).toBe(0);
     expect(out).toHaveBeenCalledWith(
       '::warning::blog: warning: blog/content/one/tr.md follows an older English version (update it and translation.from)\n',
     );
@@ -358,7 +358,7 @@ describe('main', () => {
     fs.mkdirSync(path.join(root, 'blog'), { recursive: true });
     fs.renameSync(contentDir, path.join(root, 'blog', 'content'));
     const err = vi.spyOn(console, 'error').mockImplementation(() => {});
-    expect(await main(root)).toBe(1);
+    expect(await main(root, { launched: false })).toBe(1);
     expect(err).toHaveBeenCalledWith(expect.stringMatching(/vite build/));
   });
 
@@ -369,7 +369,7 @@ describe('main', () => {
     fs.copyFileSync(themeInitPath, path.join(root, 'blog', 'client', 'theme-init.js'));
     makeDist('dist');
     const err = vi.spyOn(console, 'error').mockImplementation(() => {});
-    expect(await main(root)).toBe(1);
+    expect(await main(root, { launched: false })).toBe(1);
     expect(err).toHaveBeenCalledWith(expect.stringMatching(/one\.en.*npm run blog:og/));
   });
 });

@@ -87,11 +87,13 @@ function optionalLines({ meta, assets, launched, blogName, lang }) {
       () => markup`<link rel="alternate" hreflang="x-default" href="${english.url}">`,
     ),
     // The feed exists only after launch: noindex cannot reach XML, and feed
-    // services cache what they find.
+    // services cache what they find. No hreflang: that would make the feed
+    // a language version of this page, one that never links back. The feed
+    // names its own language (xml:lang).
     feedLink: line(
       launched,
       () =>
-        markup`<link rel="alternate" type="application/atom+xml" hreflang="${lang}" title="${blogName}" href="${feedPath(lang)}">`,
+        markup`<link rel="alternate" type="application/atom+xml" title="${blogName}" href="${feedPath(lang)}">`,
     ),
     localeAlternates: alternates
       .filter((alternate) => alternate.lang !== lang)

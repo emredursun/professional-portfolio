@@ -72,10 +72,43 @@ describe('emitPostImages', () => {
     ['embedded HTML', '<foreignObject><div/></foreignObject>'],
     ['an outside reference', '<image href="https://cdn.example/x.png"/>'],
     ['an outside xlink reference', '<use xlink:href="other.svg#a"/>'],
+    ['an upper-case script', '<SCRIPT>alert(1)</SCRIPT>'],
+    ['a reference under another namespace prefix', '<use l:href="https://cdn.example/x.svg"/>'],
+    ['a DOCTYPE', '<!DOCTYPE svg [<!ENTITY x "y">]>'],
+    ['a stylesheet import', '<style>@import "https://cdn.example/x.css";</style>'],
+    ['an outside url()', '<rect fill="url(https://cdn.example/x.svg#p)"/>'],
+    ['an animated link', '<set attributeName="href" to="https://cdn.example"/>'],
   ])('refuses an SVG with %s', async (_label, body) => {
     put('hello', 'chart.svg', svg(body));
     await expect(emitPostImages({ distDir, contentDir, slugs: ['hello'] })).rejects.toThrow(
       /blog\/content\/hello\/chart\.svg/,
+    );
+  });
+
+  it('refuses an SVG that is not plain UTF-8, which the checks could not read', async () => {
+    // UTF-16 with its byte-order mark, as some editors save it.
+    put('hello', 'chart.svg', Buffer.from(String.fromCharCode(0xfeff) + svg(), 'utf16le'));
+    await expect(emitPostImages({ distDir, contentDir, slugs: ['hello'] })).rejects.toThrow(
+      /UTF-8/,
+    );
+  });
+
+  it('refuses a link or folder in place of an image file', async () => {
+    const outside = path.join(root, 'outside.svg');
+    fs.writeFileSync(outside, svg());
+    fs.mkdirSync(path.join(contentDir, 'hello'), { recursive: true });
+    fs.mkdirSync(path.join(contentDir, 'hello', 'folder.svg'));
+    await expect(emitPostImages({ distDir, contentDir, slugs: ['hello'] })).rejects.toThrow(
+      /folder\.svg: not a regular file/,
+    );
+    fs.rmdirSync(path.join(contentDir, 'hello', 'folder.svg'));
+    try {
+      fs.symlinkSync(outside, path.join(contentDir, 'hello', 'chart.svg'));
+    } catch {
+      return; // Creating links needs extra rights on Windows; the folder case covers the check.
+    }
+    await expect(emitPostImages({ distDir, contentDir, slugs: ['hello'] })).rejects.toThrow(
+      /chart\.svg: not a regular file/,
     );
   });
 
