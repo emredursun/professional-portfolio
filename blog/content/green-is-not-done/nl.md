@@ -33,11 +33,19 @@ In september voelde ik die vraag op een plek waar ik hem niet verwachtte: in een
 
 Bij Sopra Steria probeerden we in een hands-on workshop een interne AI-driven development tool uit. Het idee is eenvoudig uit te leggen: de AI schrijft niet vrij code, maar doorloopt vaste stappen, en bij elke stap controleert een mens het resultaat en beslist.
 
+![Een gedeelde tafel van bovenaf, met laptops, notitieboeken en kopjes thee.](workshop-table.webp)
+
+*Foto: [Marvin Meyer op Unsplash](https://unsplash.com/photos/people-sitting-down-near-table-with-assorted-laptop-computers-SYTO3xs06fU)*
+
 We werkten in een klein team met verschillende rollen en bakenden samen één kleine feature af. Op de dag zelf kwamen we tot de specificatie. Ik was benieuwd hoe het zich zou houden tot aan een commit, dus maakte ik de rest thuis af.
 
 ## Groen, en toch niet klaar
 
 De AI schreef de code voor de eerste taak. Ik draaide de tests zelf: 249 tests, allemaal groen, net als voor de wijziging.
+
+![Code op een scherm, van dichtbij, met kleurige syntax highlighting.](code-screen.webp)
+
+*Foto: [Chris Ried op Unsplash](https://unsplash.com/photos/a-computer-screen-with-a-bunch-of-code-on-it-ieic5Tq8YMk)*
 
 De meeste tools stoppen hier en melden succes. Eerlijk gezegd doen veel teams dat ook.
 

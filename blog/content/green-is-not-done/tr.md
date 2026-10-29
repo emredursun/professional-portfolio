@@ -33,11 +33,19 @@ Eylül’de o soruyu hiç beklemediğim bir yerde hissettim: beni bir sonraki ad
 
 Sopra Steria’da şirket içi bir AI-driven development aracını uygulamalı bir workshop’ta denedik. Fikri anlatması kolay: yapay zekâ kodu serbestçe yazmıyor, belirli adımlardan geçiyor ve her adımda bir insan sonucu kontrol edip karar veriyor.
 
+![Yukarıdan görülen ortak bir masa: dizüstü bilgisayarlar, defterler ve çay bardakları.](workshop-table.webp)
+
+*Fotoğraf: [Marvin Meyer, Unsplash](https://unsplash.com/photos/people-sitting-down-near-table-with-assorted-laptop-computers-SYTO3xs06fU)*
+
 Farklı rollerden oluşan küçük bir ekiple tek bir küçük feature’ın kapsamını birlikte belirledik. O gün ancak spesifikasyona kadar gelebildik. Sürecin commit’e kadar nasıl dayanacağını merak ettiğim için geri kalanını evde tamamladım.
 
 ## Yeşil, ama bitmedi
 
 İlk task’ın kodunu yapay zekâ yazdı. Testleri kendim çalıştırdım: 249 testin hepsi yeşildi, tıpkı değişiklikten önceki gibi.
+
+![Yakından bir ekranda renkli sözdizimi vurgulu kod.](code-screen.webp)
+
+*Fotoğraf: [Chris Ried, Unsplash](https://unsplash.com/photos/a-computer-screen-with-a-bunch-of-code-on-it-ieic5Tq8YMk)*
 
 Çoğu araç burada durur ve başarı bildirir. Dürüst olmak gerekirse birçok ekip de öyle yapar.
 

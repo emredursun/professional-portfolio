@@ -30,11 +30,19 @@ In September I felt that question somewhere I did not expect it: inside an AI to
 
 At Sopra Steria we tried an internal AI-driven development tool in a hands-on workshop. The idea is simple to say: the AI does not write code freely, it works through fixed steps, and at each step a person checks the result and decides.
 
+![A shared table seen from above, with laptops, notebooks and cups of tea.](workshop-table.webp)
+
+*Photo: [Marvin Meyer on Unsplash](https://unsplash.com/photos/people-sitting-down-near-table-with-assorted-laptop-computers-SYTO3xs06fU)*
+
 We worked in a small team with mixed roles and scoped one small feature together. On the day we only got as far as the specification. I was curious how it would hold up all the way to a commit, so I finished the rest at home.
 
 ## Green, and still not done
 
 The AI wrote the code for the first task. I ran the tests myself: 249 tests, all green, just like before the change.
+
+![Code on a screen, close up, with colourful syntax highlighting.](code-screen.webp)
+
+*Photo: [Chris Ried on Unsplash](https://unsplash.com/photos/a-computer-screen-with-a-bunch-of-code-on-it-ieic5Tq8YMk)*
 
 Most tools would stop there and report success. Honestly, so would many teams.
 

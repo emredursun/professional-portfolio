@@ -37,6 +37,10 @@ Dat klinkt klein, maar een spoor van besluiten is alleen nuttig als het de juist
 
 Collega’s die dagelijks met AI-agents werken, wezen op iets eenvoudigs: een agent werkt met jouw inloggegevens. Alles wat jij mag, mag hij ook. Regels in een projectbestand helpen, maar ze zijn geen sandbox.
 
+![Een hand met een bos sleutels voor een open deur.](keys.webp)
+
+*Foto: [Maria Ziegler op Unsplash](https://unsplash.com/photos/keys-on-hand-jJnZg7vBfMs)*
+
 OWASP noemt dit [excessive agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): meer rechten of vrijheid dan de taak nodig heeft. Het advies is niet nieuw: geef zo min mogelijk rechten, en houd een mens betrokken bij alles met echte impact.
 
 ## Wat ik nu vraag

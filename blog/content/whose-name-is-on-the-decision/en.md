@@ -34,6 +34,10 @@ That sounds small, but a trail of decisions is only useful if it names the right
 
 Colleagues who use AI agents every day pointed out something simple: an agent works with your credentials. Whatever you are allowed to do, it can do too. Rules in a project file help, but they are not a sandbox.
 
+![A hand holding a bunch of keys in front of an open door.](keys.webp)
+
+*Photo: [Maria Ziegler on Unsplash](https://unsplash.com/photos/keys-on-hand-jJnZg7vBfMs)*
+
 OWASP calls this [excessive agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): more rights or freedom than the task needs. The advice is not new: give the least rights you can, and keep a person in the loop for anything with real impact.
 
 ## What I ask now

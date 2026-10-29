@@ -37,6 +37,10 @@ Küçük bir ayrıntı gibi görünüyor, ama kararların izi ancak doğru kişi
 
 Her gün yapay zekâ agent’larıyla çalışan meslektaşlarım basit bir noktaya dikkat çekti: agent senin kimlik bilgilerinle çalışır. Senin yapabildiğin her şeyi o da yapabilir. Proje dosyasındaki kurallar işe yarar, ama bir sandbox değildir.
 
+![Açık bir kapının önünde bir tutam anahtar tutan bir el.](keys.webp)
+
+*Fotoğraf: [Maria Ziegler, Unsplash](https://unsplash.com/photos/keys-on-hand-jJnZg7vBfMs)*
+
 OWASP buna [excessive agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) diyor: bir agent’ın, işin gerektirdiğinden fazla yetkiye veya serbestliğe sahip olması. Tavsiyesi de yeni değil: verebildiğin en az yetkiyi ver ve gerçek etkisi olan her işte bir insanı sürecin içinde tut.
 
 ## Artık sorduklarım
