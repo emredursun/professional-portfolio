@@ -50,7 +50,7 @@ function readNow(dir, name) {
 /**
  * Each language's entries, newest first; {} when there is no log.
  * @param {string} nowDir
- * @returns {Record<string, readonly { date: string, text: string }[]>}
+ * @returns {Record<string, readonly { date: string, text: string, placeholder?: true }[]>}
  */
 export function loadNow(nowDir) {
   if (!nowDir || !fs.existsSync(nowDir)) return {};
