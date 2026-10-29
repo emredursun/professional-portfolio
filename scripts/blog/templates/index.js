@@ -65,12 +65,14 @@ function indexMeta(posts, s, lang, languages) {
  * @param {{ posts: object[], fallback?: object[], assets: object, launched: boolean, lang?: string, languages?: string[] }} options
  *   `posts`: the posts in `lang`. `fallback`: English posts with no `lang`
  *   version yet, listed so a reader still finds them. `languages`: every
- *   language that has an index, for the alternate links.
+ *   language that has an index, for the alternate links. `topics`: the
+ *   topics with a page in `lang`.
  * @returns {string}
  */
 export function renderIndexPage({
   posts,
   fallback = [],
+  topics,
   assets,
   launched,
   lang = 'en',
@@ -86,7 +88,7 @@ export function renderIndexPage({
 ${heroActions(sorted[0], launched, s, lang)}
 </header>
 ${topicsBand(s)}
-${postSections({ posts, fallback, lang })}
+${postSections({ posts, fallback, lang, topics })}
 </div>`;
   return renderPage({
     lang,

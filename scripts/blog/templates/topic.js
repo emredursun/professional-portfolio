@@ -60,6 +60,7 @@ export function renderTopicPage({
   topic,
   posts,
   fallback = [],
+  topics = new Set([topic]),
   assets,
   launched,
   lang,
@@ -73,7 +74,7 @@ export function renderTopicPage({
 <h1 class="index-lede">${s.topicLabels[topic]}</h1>
 <p class="index-intro">${s.topicDescriptions[topic]}</p>
 </header>
-${postSections({ posts, fallback, lang })}
+${postSections({ posts, fallback, lang, topics, currentTopic: topic })}
 </div>`;
   return renderPage({
     lang,

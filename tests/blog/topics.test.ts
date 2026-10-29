@@ -87,6 +87,52 @@ describe('topic pages', () => {
     );
   });
 
+  it('keeps an English card’s topic link in the page’s language when that page exists', async () => {
+    onTopic('green', 'testing');
+    onTopic('green', 'testing', 'tr');
+    onTopic('english-only', 'testing');
+    onTopic('agents', 'ai');
+    const { dist } = await build();
+    const topicPage = doc(dist, 'tr', 'blog', 'topic', 'testing.html');
+    const fallback = topicPage
+      .querySelector('a[href="/blog/english-only"]')!
+      .closest('li')!
+      .querySelector('.topic-link')!;
+    expect(fallback.getAttribute('href')).toBe('/tr/blog/topic/testing');
+    expect(fallback.textContent).toBe('Test');
+    expect(fallback.getAttribute('lang')).toBe('tr');
+    expect(fallback.getAttribute('aria-current')).toBe('page');
+    // No Turkish ai page: that card keeps its English topic link.
+    const index = doc(dist, 'tr', 'blog.html');
+    const agents = index.querySelector('a[href="/blog/agents"]')!.closest('li')!;
+    expect(agents.querySelector('.topic-link')!.getAttribute('href')).toBe('/blog/topic/ai');
+  });
+
+  it('links each topic page to the same topic in the languages that have it', async () => {
+    onTopic('green', 'testing');
+    onTopic('green', 'testing', 'tr');
+    onTopic('green', 'testing', 'nl');
+    onTopic('agents', 'ai');
+    onTopic('agents', 'ai', 'tr');
+    const { dist } = await build();
+    const alternates = (...parts: string[]) =>
+      [...doc(dist, ...parts).querySelectorAll('link[rel="alternate"][hreflang]')].map(
+        (link) => `${link.getAttribute('hreflang')} ${link.getAttribute('href')}`,
+      );
+    const site = 'https://emredursun.nl';
+    expect(alternates('nl', 'blog', 'topic', 'testing.html')).toEqual([
+      `en ${site}/blog/topic/testing`,
+      `tr ${site}/tr/blog/topic/testing`,
+      `nl ${site}/nl/blog/topic/testing`,
+      `x-default ${site}/blog/topic/testing`,
+    ]);
+    expect(alternates('tr', 'blog', 'topic', 'ai.html')).toEqual([
+      `en ${site}/blog/topic/ai`,
+      `tr ${site}/tr/blog/topic/ai`,
+      `x-default ${site}/blog/topic/ai`,
+    ]);
+  });
+
   it('describes itself as a collection inside the blog, with breadcrumbs', async () => {
     onTopic('agents', 'ai');
     const { dist } = await build();
