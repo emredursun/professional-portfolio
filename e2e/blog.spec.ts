@@ -10,7 +10,7 @@ import { expect, test } from './fixtures';
  */
 const blogDir = path.join(process.cwd(), 'dist', 'blog');
 const pages = fs.existsSync(blogDir)
-  ? fs.readdirSync(blogDir).filter((file) => file.endsWith('.html'))
+  ? fs.readdirSync(blogDir).filter((file) => file.endsWith('.html') && file !== 'now.html')
   : [];
 if (pages.length === 0) {
   throw new Error('e2e/blog.spec.ts: no pages in dist/blog; run `npm run build` first');

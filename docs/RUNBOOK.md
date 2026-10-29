@@ -86,6 +86,10 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
   and move `from` forward. A post without a translation still appears on
   that language's index, marked as English. UI text for all three languages
   is in `scripts/blog/strings.js`.
+- **Now log:** add an entry at the top of `blog/now/en.md` (and `tr.md`,
+  `nl.md`): `- date: YYYY-MM-DD` and `text:` (280 characters at most),
+  newest first, frontmatter only. The newest entry shows on that
+  language's index; all of them on `/blog/now`.
 - **Drafts:** `draft: true` keeps a post out of the build, but the repository
   is public: keep unfinished text out of Git until it is ready.
 - **Corrections:** add an entry to `corrections` with its date; the page,

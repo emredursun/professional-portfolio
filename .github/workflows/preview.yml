@@ -73,13 +73,13 @@ jobs:
           # /blog must resolve to blog.html even with a blog/ folder next to it.
           code() { curl -sS --max-time 30 --retry 3 --retry-all-errors -o /dev/null -w '%{http_code}' "$base$1"; }
           shopt -s nullglob
-          pages=(dist/blog/*.html)
+          pages=(); for f in dist/blog/*.html; do [ "$(basename "$f")" = now.html ] || pages+=("$f"); done
           [ ${#pages[@]} -gt 0 ] || { echo "::error::No blog pages in dist/blog"; exit 1; }
           post="/blog/$(basename "${pages[0]}" .html)"
-          tr_pages=(dist/tr/blog/*.html)
+          tr_pages=(); for f in dist/tr/blog/*.html; do [ "$(basename "$f")" = now.html ] || tr_pages+=("$f"); done
           [ ${#tr_pages[@]} -gt 0 ] || { echo "::error::No blog pages in dist/tr/blog"; exit 1; }
           tr_post="/tr/blog/$(basename "${tr_pages[0]}" .html)"
-          for path in /blog "$post" /tr/blog "$tr_post" /nl/blog /blog/topic/testing /tr/blog/topic/testing; do
+          for path in /blog "$post" /tr/blog "$tr_post" /nl/blog /blog/topic/testing /tr/blog/topic/testing /blog/now; do
             html="$(curl -fsS --max-time 30 --retry 3 --retry-all-errors "$base$path")"
             grep -qF "<link rel=\"canonical\" href=\"https://emredursun.nl$path\"" <<<"$html" \
               || { echo "::error::$path is not served its blog page"; exit 1; }

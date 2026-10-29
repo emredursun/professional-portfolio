@@ -80,6 +80,11 @@ export function topicUrl(lang, topic) {
   return `${SITE_URL}${topicPath(lang, topic)}`;
 }
 
+/** The "Now" page: /blog/now, /tr/blog/now. @param {string} lang */
+export function nowPath(lang) {
+  return `${blogPath(lang)}/now`;
+}
+
 /** @param {string} lang */
 export function feedPath(lang) {
   return `${blogPath(lang)}/feed.xml`;

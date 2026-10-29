@@ -22,6 +22,7 @@ import { fileURLToPath, pathToFileURL } from 'url';
 import { emitAsset } from './blog/assets.js';
 import { BLOG_LAUNCHED } from './blog/config.js';
 import { loadPosts } from './blog/content.js';
+import { loadNow } from './blog/now.js';
 import { createHighlight } from './blog/highlight.js';
 import { readBlogAssets } from './blog/manifest.js';
 import { renderMarkdown } from './blog/markdown.js';
@@ -32,6 +33,7 @@ import { renderArticlePage } from './blog/templates/article.js';
 import { byNewest, outputDir } from './blog/templates/format.js';
 import { renderIndexPage } from './blog/templates/index.js';
 import { renderTopicPage } from './blog/templates/topic.js';
+import { renderNowPage } from './blog/templates/now.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 // The woff2 of each face a page's largest text uses (measured with
@@ -132,7 +134,7 @@ function writeTopics({ distDir, lang, posts, all, fallback, assets, launched }) 
 }
 
 /** One language's files: its index, its feed after launch, its articles and topic pages. */
-function writeLanguage({ distDir, lang, posts, all, languages, assets, launched }) {
+function writeLanguage({ distDir, lang, posts, all, languages, now, assets, launched }) {
   const dir = `${outputDir(lang)}blog`;
   const fallback = untranslated(lang, all);
   return [
@@ -143,12 +145,28 @@ function writeLanguage({ distDir, lang, posts, all, languages, assets, launched 
         posts,
         fallback,
         topics: topicsIn(lang, all),
+        now: now[lang],
         assets,
         launched,
         lang,
         languages,
       }),
     ),
+    ...(now[lang]
+      ? [
+          writeOutput(
+            distDir,
+            `${dir}/now.html`,
+            renderNowPage({
+              entries: now[lang],
+              assets,
+              launched,
+              lang,
+              languages: languages.filter((language) => now[language]),
+            }),
+          ),
+        ]
+      : []),
     // The feed only after launch: noindex cannot reach XML (see head.js).
     ...(launched ? [writeOutput(distDir, `${dir}/feed.xml`, renderFeed(posts, lang))] : []),
     ...posts.map((post) =>
@@ -163,12 +181,19 @@ function writeLanguage({ distDir, lang, posts, all, languages, assets, launched 
 }
 
 /**
- * @param {{ distDir: string, contentDir: string, themeInitPath: string, launched?: boolean }} options
+ * @param {{ distDir: string, contentDir: string, nowDir?: string, themeInitPath: string, launched?: boolean }} options
  * @returns {Promise<string[]>} Written files, relative to distDir, POSIX paths.
  */
-export async function buildBlog({ distDir, contentDir, themeInitPath, launched = BLOG_LAUNCHED }) {
+export async function buildBlog({
+  distDir,
+  contentDir,
+  nowDir,
+  themeInitPath,
+  launched = BLOG_LAUNCHED,
+}) {
   const posts = loadPosts(contentDir);
   if (posts.length === 0) return [];
+  const now = loadNow(nowDir);
 
   const { highlight, css } = await createHighlight();
   const rendered = posts.map((post) => ({
@@ -185,6 +210,7 @@ export async function buildBlog({ distDir, contentDir, themeInitPath, launched =
       posts: rendered.filter((post) => post.lang === lang),
       all: rendered,
       languages,
+      now,
       assets,
       launched,
     }),
@@ -201,6 +227,7 @@ export async function main(root = ROOT) {
     const written = await buildBlog({
       distDir: path.join(root, 'dist'),
       contentDir: path.join(root, 'blog', 'content'),
+      nowDir: path.join(root, 'blog', 'now'),
       themeInitPath: path.join(root, 'blog', 'client', 'theme-init.js'),
     });
     process.stdout.write(

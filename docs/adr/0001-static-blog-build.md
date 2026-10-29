@@ -1,6 +1,6 @@
 # ADR 0001: Build the Field Notes blog as static HTML with our own script
 
-- Status: Accepted; Phases 1, 2, 3a and 3b complete, not launched
+- Status: Accepted; Phases 1, 2 and 3 (a, b, c) complete, not launched
 - Date: 2026-10-28
 - Deciders: Emre Dursun (owner), with Claude as implementer
 
@@ -236,7 +236,8 @@ Deferred, with the reason:
 | Item | Phase |
 | --- | --- |
 | Topic filter (as crawlable topic pages) | Done in 3b (see below) |
-| "Now" log, illustrations | 3, content and artwork |
+| "Now" log | Done in 3c (see below) |
+| Illustrations | When there is real artwork |
 | Turkish and Dutch | Done in 3a (see below) |
 | Per-post link preview images | Before launch |
 | Navigation link, sitemap, smoke test, path-aware 404 | Launch |
@@ -286,3 +287,14 @@ Still to do in Phase 3: crawlable topic pages (3b) and the "Now" log
   languages") stays plain text: those are themes of the writing, not the
   three-topic taxonomy, and linking them would promise pages that do not
   exist.
+
+## Phase 3c results ("Now" log)
+
+- `blog/now/<lang>.md`, frontmatter only: `entries` of `{ date, text }`
+  (280 characters at most), newest first, strict schema; English is
+  required, like every post. A language gets a Now page only if it has a
+  blog, so its alternates never point at a missing page.
+- `/blog/now` (and under `/tr`, `/nl`) lists every entry; each index shows
+  the newest one with a link. The page's `dateModified` is the newest
+  entry's date, never the build's.
+- Illustrations stay deferred until there is real artwork.

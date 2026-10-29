@@ -16,7 +16,7 @@ const articles = (lang: string) => {
   return fs.existsSync(dir)
     ? fs
         .readdirSync(dir)
-        .filter((file) => file.endsWith('.html'))
+        .filter((file) => file.endsWith('.html') && file !== 'now.html')
         .sort()
         .map((file) => `/${lang}/blog/${file.replace(/\.html$/, '')}`)
     : [];

@@ -17,7 +17,7 @@ const XML_INVALID = new RegExp(
   `[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f${String.fromCharCode(0xfffe, 0xffff)}]`,
 );
 
-const text = z
+export const text = z
   .string()
   .trim()
   .min(1)
@@ -27,7 +27,7 @@ const text = z
   );
 
 /** Calendar date as YYYY-MM-DD that actually exists (no 2026-02-30). */
-const isoDate = z.string().refine((value) => {
+export const isoDate = z.string().refine((value) => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const date = new Date(`${value}T00:00:00Z`);
   return !Number.isNaN(date.getTime()) && date.toISOString().startsWith(value);

@@ -9,6 +9,7 @@ import { PERSON_ID, WEBSITE_ID } from '../../lib/route-meta.js';
 import { blogUrl, byNewest, feedPath, postPath, postUrl } from './format.js';
 import { postSections } from './cards.js';
 import { renderPage } from './layout.js';
+import { nowLine } from './now.js';
 import { strings } from '../strings.js';
 
 /**
@@ -62,7 +63,8 @@ function indexMeta(posts, s, lang, languages) {
 }
 
 /**
- * @param {{ posts: object[], fallback?: object[], assets: object, launched: boolean, lang?: string, languages?: string[] }} options
+ * @param {{ posts: object[], fallback?: object[], now?: readonly object[], assets: object, launched: boolean, lang?: string, languages?: string[] }} options
+ *   `now`: this language's Now entries, newest first; the newest shows here.
  *   `posts`: the posts in `lang`. `fallback`: English posts with no `lang`
  *   version yet, listed so a reader still finds them. `languages`: every
  *   language that has an index, for the alternate links. `topics`: the
@@ -73,6 +75,7 @@ export function renderIndexPage({
   posts,
   fallback = [],
   topics,
+  now,
   assets,
   launched,
   lang = 'en',
@@ -85,7 +88,7 @@ export function renderIndexPage({
 <p class="index-eyebrow">${s.blogName}</p>
 <h1 class="index-lede">${s.tagline}</h1>
 <p class="index-intro">${s.intro}</p>
-${heroActions(sorted[0], launched, s, lang)}
+${nowLine(now, lang)}${heroActions(sorted[0], launched, s, lang)}
 </header>
 ${topicsBand(s)}
 ${postSections({ posts, fallback, lang, topics })}

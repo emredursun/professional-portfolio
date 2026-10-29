@@ -72,6 +72,9 @@ const en = {
   correctionsLog: 'Corrections',
   correctionsNone: 'None yet.',
   toc: 'On this page',
+  nowTitle: 'Now',
+  nowIntro: 'What I am working on and learning at the moment, newest first.',
+  nowMore: 'What I’m doing now',
   topicEyebrow: 'Topic',
   topicDescriptions: {
     testing: 'Notes on testing software honestly: what a result proves, and what it does not.',
@@ -164,6 +167,9 @@ const tr = {
   correctionsLog: 'Düzeltmeler',
   correctionsNone: 'Henüz yok.',
   toc: 'Bu sayfada',
+  nowTitle: 'Şu sıralar',
+  nowIntro: 'Şu anda üzerinde çalıştığım ve öğrendiğim şeyler, en yenisi önce.',
+  nowMore: 'Şu sıralar ne yapıyorum',
   topicEyebrow: 'Konu',
   topicDescriptions: {
     testing:
@@ -258,6 +264,9 @@ const nl = {
   correctionsLog: 'Correcties',
   correctionsNone: 'Nog geen.',
   toc: 'Op deze pagina',
+  nowTitle: 'Nu',
+  nowIntro: 'Waar ik op dit moment aan werk en wat ik leer, het nieuwste eerst.',
+  nowMore: 'Waar ik nu mee bezig ben',
   topicEyebrow: 'Onderwerp',
   topicDescriptions: {
     testing: 'Notities over eerlijk software testen: wat een resultaat bewijst, en wat niet.',
