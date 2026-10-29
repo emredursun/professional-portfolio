@@ -79,21 +79,31 @@ jobs:
           tr_pages=(); for f in dist/tr/blog/*.html; do [ "$(basename "$f")" = now.html ] || tr_pages+=("$f"); done
           [ ${#tr_pages[@]} -gt 0 ] || { echo "::error::No blog pages in dist/tr/blog"; exit 1; }
           tr_post="/tr/blog/$(basename "${tr_pages[0]}" .html)"
+          # Launched builds write the feeds (BLOG_LAUNCHED); until then every
+          # page must be noindex and the feeds must not exist.
+          launched=false; [ -f dist/blog/feed.xml ] && launched=true
           for path in /blog "$post" /tr/blog "$tr_post" /nl/blog /blog/topic/testing /tr/blog/topic/testing /blog/now; do
             html="$(curl -fsS --max-time 30 --retry 3 --retry-all-errors "$base$path")"
             grep -qF "<link rel=\"canonical\" href=\"https://emredursun.nl$path\"" <<<"$html" \
               || { echo "::error::$path is not served its blog page"; exit 1; }
-            grep -qF 'content="noindex, nofollow"' <<<"$html" \
-              || { echo "::error::$path is indexable before launch"; exit 1; }
+            if [ "$launched" = false ]; then
+              grep -qF 'content="noindex, nofollow"' <<<"$html" \
+                || { echo "::error::$path is indexable before launch"; exit 1; }
+            fi
           done
           for missing in /blog/no-such-post-preview-check /tr/blog/no-such-post-preview-check /nl/blog/no-such-post-preview-check; do
             [ "$(code "$missing")" = "404" ] || { echo "::error::$missing is not a 404"; exit 1; }
           done
           [ "$(code "$post/")" = "301" ] || { echo "::error::$post/ does not redirect"; exit 1; }
           [ "$(code /blog/)" = "301" ] || { echo "::error::/blog/ does not redirect"; exit 1; }
-          # Before launch there is no feed. Firebase applies header rules
-          # whatever the status, so this 404 carries the feed's Atom
-          # Content-Type; nothing links to it, so only the status matters.
-          for feed in /blog/feed.xml /tr/blog/feed.xml /nl/blog/feed.xml; do
-            [ "$(code "$feed")" = "404" ] || { echo "::error::$feed exists before launch"; exit 1; }
-          done
+          if [ "$launched" = true ]; then
+            # The live checks: feeds as Atom with nosniff, a post indexable.
+            bash scripts/check-blog-live.sh "$base"
+          else
+            # Before launch there is no feed. Firebase applies header rules
+            # whatever the status, so this 404 carries the feed's Atom
+            # Content-Type; nothing links to it, so only the status matters.
+            for feed in /blog/feed.xml /tr/blog/feed.xml /nl/blog/feed.xml; do
+              [ "$(code "$feed")" = "404" ] || { echo "::error::$feed exists before launch"; exit 1; }
+            done
+          fi
