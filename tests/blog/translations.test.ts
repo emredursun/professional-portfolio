@@ -51,6 +51,12 @@ describe('loadPosts: translations', () => {
     },
   );
 
+  it('keeps a post’s images next to its versions, which every language shares', () => {
+    write('hello', 'Body\n');
+    fs.writeFileSync(path.join(contentDir, 'hello', 'chart.svg'), '<svg/>');
+    expect(loadPosts(contentDir).map((post) => post.lang)).toEqual(['en']);
+  });
+
   it('ignores hidden files such as .DS_Store', () => {
     write('hello', 'Body\n');
     fs.writeFileSync(path.join(contentDir, 'hello', '.DS_Store'), 'x');

@@ -93,6 +93,15 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
      A translation the English version has outgrown only prints
      `blog: warning:` (before and after launch): its page already tells
      readers, so update it soon.
+- **Add an image:** put it next to the post (`blog/content/<slug>/chart.svg`;
+  svg, png, jpg or webp, lowercase-with-dashes name) and write
+  `![What it shows](chart.svg)`; every language uses the same file with its
+  own alt text. The build serves it from `/assets/` with its width and height.
+  An SVG needs a viewBox and may hold no scripts, event handlers, embedded
+  HTML or outside references. Draw it about 560 wide with text of 18 or more,
+  so it stays readable on a phone, and give it its own light and dark colours
+  (`@media (prefers-color-scheme: dark)` inside the SVG follows the site's
+  theme toggle).
 - **Translate a post:** add `tr.md` or `nl.md` next to `en.md` (served at
   `/tr/blog/<slug>` and `/nl/blog/<slug>`; the slug stays English). It must
   keep the English publishedAt, kind, topic, status and evidence

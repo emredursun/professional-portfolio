@@ -120,6 +120,21 @@ describe('renderIndexPage', () => {
     expect(doc.querySelectorAll('a[href="/blog/feed.xml"]').length).toBeGreaterThan(0);
   });
 
+  it('keeps the feed link out of the hreflang set, which must link back', () => {
+    // A feed with hreflang reads as a language version of the page that
+    // never returns the link; Search Console reports it as "no return tags".
+    // The feed names its own language (xml:lang) instead.
+    const doc = parse(renderIndexPage({ posts, assets, launched: true }));
+    expect(doc.querySelector('link[type="application/atom+xml"]')?.hasAttribute('hreflang')).toBe(
+      false,
+    );
+    expect(
+      [...doc.querySelectorAll('link[rel="alternate"][hreflang]')].map((link) =>
+        link.getAttribute('href'),
+      ),
+    ).not.toContain('/blog/feed.xml');
+  });
+
   it('lists the posts in the structured data, newest first, with their own data', () => {
     const doc = index();
     const data = JSON.parse(

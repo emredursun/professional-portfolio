@@ -19,6 +19,7 @@
 import MarkdownIt from 'markdown-it';
 import { escapeHtml } from './html.js';
 import { RESERVED_IDS } from './config.js';
+import { POST_IMAGE } from './images.js';
 
 const SITE_HOST = 'emredursun.nl';
 const SITE = new URL(`https://${SITE_HOST}/`);
@@ -96,8 +97,9 @@ function inlineText(token) {
 /**
  * @param {string} file
  * @param {(code: string, lang: string) => string} [highlight]
+ * @param {(name: string) => { src: string, width: number, height: number } | undefined} [image]
  */
-function createRenderer(file, highlight) {
+function createRenderer(file, highlight, image) {
   const md = new MarkdownIt({ html: false, linkify: false, typographer: false });
 
   md.validateLink = (url) => {
@@ -115,17 +117,24 @@ function createRenderer(file, highlight) {
     return renderToken(tokens, idx, options, env, self);
   };
 
-  const renderImage = md.renderer.rules.image;
-  md.renderer.rules.image = (tokens, idx, options, env, self) => {
+  md.renderer.rules.image = (tokens, idx) => {
     const token = tokens[idx];
     const src = token.attrGet('src') ?? '';
     if (isExternal(src, file)) {
       throw new Error(`${file}: image "${src}": images must be served from this site`);
     }
-    if (inlineText(token).trim() === '') {
-      throw new Error(`${file}: image "${src}" needs alt text`);
+    if (!POST_IMAGE.test(src)) {
+      throw new Error(`${file}: image "${src}": put it next to the post and use its bare name`);
     }
-    return renderImage(tokens, idx, options, env, self);
+    const alt = inlineText(token).trim();
+    if (alt === '') throw new Error(`${file}: image "${src}" needs alt text`);
+    const found = image?.(src);
+    if (!found) throw new Error(`${file}: image "${src}" not found next to the post`);
+    // Width and height reserve the space, so the text does not jump as it loads.
+    return (
+      `<img src="${escapeHtml(found.src)}" alt="${escapeHtml(alt)}" ` +
+      `width="${found.width}" height="${found.height}" loading="lazy" decoding="async">`
+    );
   };
 
   md.renderer.rules.fence = (tokens, idx) => {
@@ -181,11 +190,12 @@ function outline(tokens, file) {
 
 /**
  * @param {string} source
- * @param {{ file: string, highlight?: (code: string, lang: string) => string }} options
+ * @param {{ file: string, highlight?: (code: string, lang: string) => string, image?: (name: string) => { src: string, width: number, height: number } | undefined }} options
+ *   `image`: the post's own images by bare name (images.js), as served.
  * @returns {{ html: string, toc: Array<{ level: number, id: string, text: string }>, hasCode: boolean }}
  */
-export function renderMarkdown(source, { file, highlight }) {
-  const md = createRenderer(file, highlight);
+export function renderMarkdown(source, { file, highlight, image }) {
+  const md = createRenderer(file, highlight, image);
   const tokens = md.parse(source, {});
   const toc = outline(tokens, file);
   const hasCode = tokens.some((token) => token.type === 'fence');

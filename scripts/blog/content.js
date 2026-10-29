@@ -17,6 +17,7 @@
 import fs from 'fs';
 import path from 'path';
 import { parseFrontmatter } from './frontmatter.js';
+import { POST_IMAGE } from './images.js';
 import { validatePost } from './schema.js';
 import { BLOG_LANGUAGES } from './strings.js';
 import { lastChange } from './templates/format.js';
@@ -92,7 +93,8 @@ function readPostFolder(dir) {
   }
   const files = fs
     .readdirSync(dir)
-    .filter((name) => !name.startsWith('.'))
+    // Images sit next to the versions that share them (images.js).
+    .filter((name) => !name.startsWith('.') && !POST_IMAGE.test(name))
     .sort(byName)
     .map((name) => readFile(dir, slug, name));
 

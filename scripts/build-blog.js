@@ -26,6 +26,7 @@ import { loadPosts } from './blog/content.js';
 import { assertLaunchable, launchWarnings } from './blog/launch-gate.js';
 import { loadNow } from './blog/now.js';
 import { createHighlight } from './blog/highlight.js';
+import { emitPostImages } from './blog/images.js';
 import { readBlogAssets } from './blog/manifest.js';
 import { renderMarkdown } from './blog/markdown.js';
 import { renderFeed } from './blog/feed.js';
@@ -223,9 +224,18 @@ export async function buildBlog({
   if (launched) assertLaunchable({ posts, now });
 
   const { highlight, css } = await createHighlight();
+  const images = await emitPostImages({
+    distDir,
+    contentDir,
+    slugs: posts.map((post) => post.slug),
+  });
   const rendered = posts.map((post) => ({
     ...post,
-    ...renderMarkdown(post.body, { file: post.file, highlight }),
+    ...renderMarkdown(post.body, {
+      file: post.file,
+      highlight,
+      image: (name) => images.get(`${post.slug}/${name}`),
+    }),
   }));
   const languages = BLOG_LANGUAGES.filter((lang) => rendered.some((post) => post.lang === lang));
   const assets = Object.freeze({
@@ -249,9 +259,10 @@ export async function buildBlog({
 /**
  * Command-line entry: builds from the repository's folders and reports.
  * @param {string} [root]  Repository root; tests pass a temporary one.
+ * @param {{ launched?: boolean }} [options]  Tests pin it, so they do not follow the flag.
  * @returns {Promise<number>} The process exit code.
  */
-export async function main(root = ROOT) {
+export async function main(root = ROOT, { launched = BLOG_LAUNCHED } = {}) {
   try {
     const written = await buildBlog({
       distDir: path.join(root, 'dist'),
@@ -259,6 +270,7 @@ export async function main(root = ROOT) {
       nowDir: path.join(root, 'blog', 'now'),
       ogDir: path.join(root, 'blog', 'og'),
       themeInitPath: path.join(root, 'blog', 'client', 'theme-init.js'),
+      launched,
     });
     process.stdout.write(
       `blog: ${written.length} file(s)${written.map((f) => `\n  ${f}`).join('')}\n`,
