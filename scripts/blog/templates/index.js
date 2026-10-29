@@ -72,20 +72,36 @@ function postMeta(post) {
 const staleNote = (post) =>
   markup`<p class="stale-note" hidden>${strings(post.lang).staleShort}</p>`;
 
-function essayCard(post) {
-  return markup`<li class="card" data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-<p class="card-status">${statusChip(post.status, post.lang)}</p>
-<h3 class="card-title"><a href="${postPath(post)}">${post.title}</a></h3>
+/**
+ * A post shown on another language's index (no translation yet) keeps its
+ * own language: the item says so with lang, the link with hreflang, and a
+ * chip in the page's language tells the reader before they click.
+ */
+function foreign(post, pageLang) {
+  if (post.lang === pageLang) return { lang: '', hreflang: '', chip: '' };
+  return {
+    lang: markup` lang="${post.lang}"`,
+    hreflang: markup` hreflang="${post.lang}"`,
+    chip: markup` <span class="lang-chip" lang="${pageLang}">${strings(pageLang).inEnglish}</span>`,
+  };
+}
+
+function essayCard(post, pageLang) {
+  const { lang, hreflang, chip } = foreign(post, pageLang);
+  return markup`<li class="card"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
+<p class="card-status">${statusChip(post.status, post.lang)}${chip}</p>
+<h3 class="card-title"><a href="${postPath(post)}"${hreflang}>${post.title}</a></h3>
 <p class="card-dek">${post.description}</p>
 ${postMeta(post)}
 ${staleNote(post)}
 </li>`;
 }
 
-function noteItem(post) {
-  return markup`<li class="note-item" data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-${statusChip(post.status, post.lang)}
-<a href="${postPath(post)}">${post.title}</a>
+function noteItem(post, pageLang) {
+  const { lang, hreflang, chip } = foreign(post, pageLang);
+  return markup`<li class="note-item"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
+${statusChip(post.status, post.lang)}${chip}
+<a href="${postPath(post)}"${hreflang}>${post.title}</a>
 ${postMeta(post)}
 ${staleNote(post)}
 </li>`;
@@ -101,25 +117,35 @@ function section({ id, title, intro, items, listClass }) {
 }
 
 /**
- * @param {{ posts: object[], assets: object, launched: boolean, lang?: string, languages?: string[] }} options
- *   `languages`: every language that has an index, for the alternate links.
+ * @param {{ posts: object[], fallback?: object[], assets: object, launched: boolean, lang?: string, languages?: string[] }} options
+ *   `posts`: the posts in `lang`. `fallback`: English posts with no `lang`
+ *   version yet, listed so a reader still finds them. `languages`: every
+ *   language that has an index, for the alternate links.
  * @returns {string}
  */
-export function renderIndexPage({ posts, assets, launched, lang = 'en', languages = [lang] }) {
+export function renderIndexPage({
+  posts,
+  fallback = [],
+  assets,
+  launched,
+  lang = 'en',
+  languages = [lang],
+}) {
   const s = strings(lang);
   const sorted = [...posts].sort(byNewest);
-  const essays = sorted.filter((post) => post.kind === 'essay');
-  const notes = sorted.filter((post) => post.kind === 'note');
+  const listed = [...posts, ...fallback].sort(byNewest);
+  const essays = listed.filter((post) => post.kind === 'essay');
+  const notes = listed.filter((post) => post.kind === 'note');
   const content = markup`<div class="index">
 <header class="index-header">
 <p class="index-eyebrow">${s.blogName}</p>
 <h1 class="index-lede">${s.tagline}</h1>
 <p class="index-intro">${s.intro}</p>
-${heroActions(sorted[0], launched, s, lang)}
+${heroActions(sorted[0] ?? listed[0], launched, s, lang)}
 </header>
 ${topicsBand(s)}
-${section({ id: 'essays-title', title: s.essays, intro: s.essaysIntro, items: essays.map(essayCard), listClass: 'cards' })}
-${section({ id: 'notes-title', title: s.notes, intro: s.notesIntro, items: notes.map(noteItem), listClass: 'notes' })}
+${section({ id: 'essays-title', title: s.essays, intro: s.essaysIntro, items: essays.map((post) => essayCard(post, lang)), listClass: 'cards' })}
+${section({ id: 'notes-title', title: s.notes, intro: s.notesIntro, items: notes.map((post) => noteItem(post, lang)), listClass: 'notes' })}
 </div>`;
   return renderPage({
     lang,

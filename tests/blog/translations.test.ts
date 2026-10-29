@@ -1,4 +1,4 @@
-// @vitest-environment node
+// @vitest-environment jsdom
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -186,13 +186,17 @@ describe('buildBlog: languages', () => {
     write('hello', 'Gövde\n', TRANSLATION, 'tr');
     const dist = makeDist(root, 'dist');
     await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
-    const tr = read(dist, 'tr', 'blog', 'hello.html');
-    const hrefs = [...tr.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1]);
-    const local = hrefs.filter(
-      (href) => !href.startsWith('/assets/') && !/\.(png|webmanifest)$/.test(href),
+    const doc = new DOMParser().parseFromString(
+      read(dist, 'tr', 'blog', 'hello.html'),
+      'text/html',
     );
-    expect(local.length).toBeGreaterThan(0);
-    expect(local.filter((href) => !href.startsWith('/tr'))).toEqual([]);
+    // Links that say they lead to another language (hreflang) are the point
+    // of the language menu; every other link must stay in Turkish.
+    const local = [...doc.querySelectorAll('body a[href^="/"]:not([hreflang])')].map((a) =>
+      a.getAttribute('href'),
+    );
+    expect(local.length).toBeGreaterThan(5);
+    expect(local.filter((href) => !href!.startsWith('/tr'))).toEqual([]);
   });
 
   it('preloads the extended Latin face on Turkish pages, for ğ, ş and İ', async () => {
@@ -204,5 +208,107 @@ describe('buildBlog: languages', () => {
     expect(tr).toContain('bricolage-grotesque-latin-wght-normal-y2.woff2');
     expect(tr).toContain('bricolage-grotesque-latin-ext-wght-normal-y4.woff2');
     expect(read(dist, 'blog', 'hello.html')).not.toContain('latin-ext');
+  });
+});
+
+describe('buildBlog: hreflang across the whole build', () => {
+  it('points every alternate at a page that exists and links back', async () => {
+    write('all-three', 'Body\n');
+    write('all-three', 'Gövde\n', TRANSLATION, 'tr');
+    write('all-three', 'Tekst\n', TRANSLATION, 'nl');
+    write('en-and-tr', 'Body\n');
+    write('en-and-tr', 'Gövde\n', TRANSLATION, 'tr');
+    write('en-only', 'Body\n');
+    const dist = makeDist(root, 'dist');
+    const written = await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
+    const pages = written.filter((file) => file.endsWith('.html'));
+    const fileFor = (url: string) => `${new URL(url).pathname.slice(1)}.html`;
+    const alternates = (file: string) =>
+      new Map(
+        [
+          ...read(dist, file).matchAll(
+            /<link rel="alternate" hreflang="([a-z-]+)" href="([^"]+)">/g,
+          ),
+        ]
+          .filter((m) => m[1] !== 'x-default')
+          .map((m) => [m[1], fileFor(m[2])]),
+      );
+    for (const page of pages) {
+      const own = alternates(page);
+      expect([...own.values()], page).toContain(page);
+      for (const target of own.values()) {
+        expect(pages, `${page} -> ${target}`).toContain(target);
+        expect([...alternates(target).values()], `${target} -> ${page}`).toContain(page);
+      }
+    }
+  });
+});
+
+describe('buildBlog: what a reader sees in another language', () => {
+  async function build() {
+    const dist = makeDist(root, 'dist');
+    await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
+    const doc = (...parts: string[]) =>
+      new DOMParser().parseFromString(read(dist, ...parts), 'text/html');
+    return { dist, doc };
+  }
+
+  it('offers the other versions of this post in the header, marking the current one', async () => {
+    write('hello', 'Body\n');
+    write('hello', 'Gövde\n', TRANSLATION, 'tr');
+    const { doc } = await build();
+    const nav = doc('tr', 'blog', 'hello.html').querySelector('nav[aria-label="Dil"]')!;
+    const links = [...nav.querySelectorAll('a')];
+    expect(links.map((a) => [a.getAttribute('href'), a.lang, a.hreflang])).toEqual([
+      ['/blog/hello', 'en', 'en'],
+      ['/tr/blog/hello', 'tr', 'tr'],
+    ]);
+    expect(links[1].getAttribute('aria-current')).toBe('page');
+    expect(links[0].textContent).toContain('English');
+  });
+
+  it('shows no language menu on a post that exists in one language only', async () => {
+    write('hello', 'Body\n');
+    const { doc } = await build();
+    expect(doc('blog', 'hello.html').querySelector('nav[aria-label="Language"]')).toBeNull();
+  });
+
+  it('lists English-only posts on the Turkish index, marked and in English', async () => {
+    write('both', 'Body\n');
+    write('both', 'Gövde\n', TRANSLATION, 'tr');
+    write('only-en', 'Body\n');
+    const { doc } = await build();
+    const index = doc('tr', 'blog.html');
+    const english = index.querySelector('a[href="/blog/only-en"]')!;
+    expect(english.closest('[lang="en"]')).not.toBeNull();
+    expect(english.getAttribute('hreflang')).toBe('en');
+    expect(english.closest('li')!.textContent).toContain('İngilizce');
+    expect(index.querySelector('a[href="/tr/blog/both"]')!.closest('[lang="en"]')).toBeNull();
+    expect(index.querySelector('a[href="/blog/both"]')).toBeNull();
+  });
+
+  it('tells the reader when the English version has changed since the translation', async () => {
+    write('hello', 'Body\n', 'updatedAt: 2026-12-20\n');
+    write('hello', 'Gövde\n', TRANSLATION, 'tr');
+    write('hello', 'Tekst\n', TRANSLATION.replace('2026-12-09', '2026-12-20'), 'nl');
+    const { doc } = await build();
+    const note = doc('tr', 'blog', 'hello.html').querySelector('.translation-note')!;
+    expect(note.textContent).toContain('İngilizce sürüm bu çeviriden sonra değişti.');
+    expect(note.querySelector('a')!.getAttribute('href')).toBe('/blog/hello');
+    expect(doc('nl', 'blog', 'hello.html').querySelector('.translation-note')).toBeNull();
+  });
+
+  it('says how the translation was made in the "How this was written" panel', async () => {
+    write('hello', 'Body\n');
+    write('hello', 'Gövde\n', TRANSLATION, 'tr');
+    write('hello', 'Tekst\n', TRANSLATION.replace('true', 'false'), 'nl');
+    const { doc } = await build();
+    const footer = (lang: string) =>
+      doc(lang, 'blog', 'hello.html').querySelector('.ai-footer')!.textContent;
+    expect(footer('tr')).toContain('Yapay zekânın yardımıyla çevrildi');
+    expect(footer('nl')).toContain('Door mij vertaald.');
+    expect(doc('blog', 'hello.html').querySelector('.ai-footer')!.textContent).not.toMatch(
+      /Translated/,
+    );
   });
 });

@@ -55,13 +55,19 @@ function articleMeta(post) {
   };
 }
 
+/** On a translation the English version has outgrown: say so, and link to it. */
+function translationNote(post, s) {
+  if (!post.englishIsNewer) return '';
+  return markup`<p class="translation-note">${s.englishNewer} <a href="${postPath({ ...post, lang: 'en' })}" hreflang="en">${s.readEnglish}</a></p>\n`;
+}
+
 function articleHeader(post) {
   const s = strings(post.lang);
   return markup`<header class="article-header">
 <p class="article-kicker">${statusChip(post.status, post.lang)} ${s.topicLabels[post.topic]} · ${post.minutes} ${s.minutesRead}</p>
 <h1>${post.title}</h1>
 <p class="article-dek">${post.description}</p>
-<p class="byline">Emre Dursun · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt, post.lang)}</time>${post.updatedAt ? markup` · ${s.updated} <time datetime="${post.updatedAt}">${formatDate(post.updatedAt, post.lang)}</time>` : ''}</p>
+${translationNote(post, s)}<p class="byline">Emre Dursun · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt, post.lang)}</time>${post.updatedAt ? markup` · ${s.updated} <time datetime="${post.updatedAt}">${formatDate(post.updatedAt, post.lang)}</time>` : ''}</p>
 </header>`;
 }
 

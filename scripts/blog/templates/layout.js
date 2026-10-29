@@ -10,7 +10,20 @@ import { renderHead } from './head.js';
 import { verificationMark } from './mark.js';
 import { strings } from '../strings.js';
 
-function siteHeader(s, lang) {
+/**
+ * Links to this page in the other languages it exists in. Plain links, not
+ * the portfolio's React switcher: these pages run without the app. Each name
+ * is in its own language, so a screen reader pronounces it right.
+ */
+function languageNav(s, lang, alternates) {
+  if (alternates.length < 2) return '';
+  return markup`<nav class="lang-nav" aria-label="${s.languageNav}">${alternates.map(
+    ({ lang: other, url }) =>
+      markup`<a href="${new URL(url).pathname}" lang="${other}" hreflang="${other}"${other === lang ? markup` aria-current="page"` : ''}><span aria-hidden="true">${other.toUpperCase()}</span><span class="visually-hidden">${s.languageNames[other]}</span></a>`,
+  )}</nav>\n`;
+}
+
+function siteHeader(s, lang, alternates) {
   return markup`<header class="site-header">
 <a class="brand" href="${portfolioPath(lang, '/')}" aria-label="${s.brandHome}">${verificationMark({ size: 28 })}<span class="brand-name">emre<span class="brand-dot">.</span></span></a>
 <a class="blog-name" href="${blogPath(lang)}">${s.blogName}</a>
@@ -19,7 +32,7 @@ function siteHeader(s, lang) {
 <a href="${portfolioPath(lang, '/contact')}">${s.navContact}</a>
 <button type="button" class="theme-toggle" data-theme-toggle aria-label="${s.darkTheme}" aria-pressed="false"><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 </nav>
-</header>`;
+${languageNav(s, lang, alternates)}</header>`;
 }
 
 /** The canvas's closing band: one invitation to talk, at the end of every page. */
@@ -49,7 +62,7 @@ export function renderPage({ lang, meta, assets, launched, content, progress = f
 ${renderHead({ meta, assets, launched, lang })}
 <body>
 <a class="skip-link" href="#main">${s.skipLink}</a>
-${progress ? markup`<div class="progress" aria-hidden="true"></div>\n` : ''}${siteHeader(s, lang)}
+${progress ? markup`<div class="progress" aria-hidden="true"></div>\n` : ''}${siteHeader(s, lang, meta.alternates ?? [])}
 <main id="main">
 ${content}
 ${closing(s, lang)}

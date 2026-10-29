@@ -1,6 +1,6 @@
 # ADR 0001: Build the Field Notes blog as static HTML with our own script
 
-- Status: Accepted; Phase 1 and Phase 2 complete, not launched
+- Status: Accepted; Phases 1, 2 and 3a complete, not launched
 - Date: 2026-10-28
 - Deciders: Emre Dursun (owner), with Claude as implementer
 
@@ -100,7 +100,14 @@ time-boxed Astro spike against the same criteria and record the outcome here.
   `x-content-type-options: nosniff` (the header rule cannot be tested
   offline).
 - Re-enable the Lighthouse `is-crawlable` audit for blog pages.
-- Add blog routes to the sitemap and the deploy smoke test.
+- Add blog routes to the sitemap and the deploy smoke test. Blog entries
+  take their alternates from each post's `translations`, never the full
+  language list `generate-sitemap.js` uses for the portfolio: a post may
+  exist in one or two languages only.
+- Extend the path-aware 404 to `/tr/blog/*` and `/nl/blog/*` (today they
+  get the site's English 404 page).
+- Have the Turkish and Dutch sample text reviewed, or replaced by the real
+  posts, before launch.
 - Add the blog link to the portfolio navigation.
 - ~~Check that `/blog` resolves to `blog.html` next to the `blog/` folder~~
   Checked on every labelled PR by `preview.yml` from Phase 2 on.
@@ -125,8 +132,13 @@ into `feat/blog`; the launch PR is the one into `main`.
 - The launch post set is in all three languages; later posts may exist in
   fewer. hreflang links only the languages a post actually has, plus
   `x-default` to English.
-- Each language gets its own index and feed. Phase 3 implements this;
-  today only `en.md` is accepted.
+- Each language gets its own index and feed (Phase 3a).
+- A translation must share the original's publishedAt, kind, topic and
+  status, or the build fails. It records the English version it follows
+  (`translation.from`) and whether AI helped; when the English changes
+  later, the page says so and links to it. Until a post is translated, the
+  other indexes list it as English (`lang="en"`, `hreflang="en"`, a chip).
+- "Field Notes" stays the name in every language, like the mark.
 
 Fixed from launch on: post slugs and the domain. Atom entry ids are the post
 URLs, so changing either would make every reader show every post as new.

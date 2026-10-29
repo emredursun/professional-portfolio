@@ -102,12 +102,22 @@ describe('firebase.json: the blog feed', () => {
       .filter((header) => header.key === 'Content-Type')
       .map((header) => header.value);
 
-  it('serves the Atom feed as Atom, not generic XML', () => {
-    expect(contentTypeFor('/blog/feed.xml')).toEqual(['application/atom+xml; charset=utf-8']);
-  });
+  it.each(['/blog/feed.xml', '/tr/blog/feed.xml', '/nl/blog/feed.xml'])(
+    'serves the Atom feed %s as Atom, not generic XML',
+    (url) => {
+      expect(contentTypeFor(url)).toEqual(['application/atom+xml; charset=utf-8']);
+    },
+  );
 
   it('sets no content type anywhere else', () => {
-    for (const url of ['/blog', '/blog/a-post', '/sitemap.xml', '/about']) {
+    for (const url of [
+      '/blog',
+      '/blog/a-post',
+      '/tr/blog',
+      '/sitemap.xml',
+      '/about',
+      '/de/blog/feed.xml',
+    ]) {
       expect(contentTypeFor(url), url).toEqual([]);
     }
   });

@@ -175,3 +175,30 @@ a:hover {
 .mark-check {
   stroke: var(--check);
 }
+
+/* Language menu: this page in its other languages (layout.js). */
+.lang-nav {
+  display: flex;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.lang-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  text-decoration-color: transparent;
+}
+
+.lang-nav a:hover {
+  text-decoration-color: var(--underline);
+}
+
+.lang-nav a[aria-current='page'] {
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}

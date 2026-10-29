@@ -75,6 +75,16 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
   Frontmatter is validated strictly (`scripts/blog/schema.js`): title,
   description (160 characters at most), publishedAt, optional updatedAt,
   topic, kind (essay or note), status, evidence, aiAssistance, corrections.
+- **Translate a post:** add `tr.md` or `nl.md` next to `en.md` (served at
+  `/tr/blog/<slug>` and `/nl/blog/<slug>`; the slug stays English). It must
+  keep the English publishedAt, kind, topic and status, and needs
+  `translation: { from: <date of the English version you translated>,
+  assistedByAi: true|false }`; the AI panel says how it was translated.
+  When the English post changes later (updatedAt or a correction), the
+  translation shows "the English version has changed" until you update it
+  and move `from` forward. A post without a translation still appears on
+  that language's index, marked as English. UI text for all three languages
+  is in `scripts/blog/strings.js`.
 - **Drafts:** `draft: true` keeps a post out of the build, but the repository
   is public: keep unfinished text out of Git until it is ready.
 - **Corrections:** add an entry to `corrections` with its date; the page,

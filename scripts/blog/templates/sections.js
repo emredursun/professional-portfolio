@@ -33,6 +33,9 @@ export function evidenceCard(post) {
 export function aiPanel(post) {
   const { mine, assisted, promptsUrl } = post.aiAssistance;
   const s = strings(post.lang);
+  const translated = post.translation
+    ? `${post.translation.assistedByAi ? s.aiTranslatedWithAi : s.aiTranslatedByMe} `
+    : '';
   const list = (items) => markup`<ul>${items.map((item) => markup`<li>${item}</li>`)}</ul>`;
   return markup`<aside class="ai-note" aria-labelledby="ai-title">
 <h2 id="ai-title">${s.aiTitle}</h2>
@@ -40,7 +43,7 @@ export function aiPanel(post) {
 <section class="ai-mine" aria-labelledby="ai-mine"><h3 id="ai-mine">${s.aiMine}</h3>${list(mine)}</section>
 <section class="ai-assisted" aria-labelledby="ai-assisted"><h3 id="ai-assisted">${s.aiAssisted}</h3>${assisted.length > 0 ? list(assisted) : markup`<p>${s.aiNothing}</p>`}</section>
 </div>
-<p class="ai-footer">${s.aiChecked}${promptsUrl ? markup` <a href="${promptsUrl}" rel="noopener noreferrer">${s.aiPrompts}</a>` : ''}</p>
+<p class="ai-footer">${translated}${s.aiChecked}${promptsUrl ? markup` <a href="${promptsUrl}" rel="noopener noreferrer">${s.aiPrompts}</a>` : ''}</p>
 </aside>`;
 }
 

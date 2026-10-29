@@ -92,14 +92,21 @@ async function prepareAssets(distDir, themeInitPath, codeCss) {
   });
 }
 
+/** English posts that have no version in `lang` yet. */
+function untranslated(lang, all) {
+  if (lang === 'en') return [];
+  return all.filter((post) => post.lang === 'en' && !post.translations.includes(lang));
+}
+
 /** One language's files: its index, its feed after launch, and its articles. */
 function writeLanguage({ distDir, lang, posts, all, languages, assets, launched }) {
   const dir = `${outputDir(lang)}blog`;
+  const fallback = untranslated(lang, all);
   return [
     writeOutput(
       distDir,
       `${dir}.html`,
-      renderIndexPage({ posts, assets, launched, lang, languages }),
+      renderIndexPage({ posts, fallback, assets, launched, lang, languages }),
     ),
     // The feed only after launch: noindex cannot reach XML (see head.js).
     ...(launched ? [writeOutput(distDir, `${dir}/feed.xml`, renderFeed(posts, lang))] : []),
