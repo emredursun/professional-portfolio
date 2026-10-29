@@ -1,48 +1,45 @@
 ---
 title: 'Whose name is on the decision?'
-description: 'Traceability in AI-assisted delivery is only worth something if it records the right person, with the right rights.'
+description: 'A trail of AI-assisted work is only useful if it names the person who decided, and if we know whose rights the agent used.'
 publishedAt: 2026-10-29
 topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Medium: based on one workshop and conversations with colleagues who use agentic AI daily; I have not tested it at scale.'
+  confidence: 'Medium: from one workshop and conversations with colleagues who use AI agents every day. Not tested at scale.'
   basedOn:
-    - 'My own run of the AI Backbone workshop at Sopra Steria Nieuwegein (8 September 2026)'
+    - 'My own experience in a hands-on workshop with an internal AI-driven development tool (September 2026)'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'
   recheckedAt: 2026-10-29
 aiAssistance:
   mine:
-    - 'The observations and the questions'
-    - 'The final edit'
+    - 'The questions and what prompted them'
   assisted:
-    - 'Claude drafted the text from my presentation notes and suggested the OWASP source'
+    - 'Claude turned my notes into this text and suggested the OWASP source'
 # Remove both once this version is written: until then it cannot launch.
 placeholder: true
 draft: true
 ---
 
-AI-assisted delivery platforms are getting good at recording things. In the workshop I wrote about in [Green is not done](/blog/green-is-not-done), every step from request to commit left a file behind, and you could walk the whole chain back months later.
-
-Two questions came up that the chain alone does not answer.
+After the workshop I wrote about in [Green is not done](/blog/green-is-not-done), two questions stayed with me.
 
 ## Who decided?
 
-In a team session, one person usually drives the tool while the team discusses. The record then tends to name the person at the keyboard, not the person who made the call. An architecture decision taken by the architect can end up attributed to whoever happened to type it in.
+When a team works with an AI tool, usually one person drives it while the others discuss. It is then easy for the record to name the person at the keyboard instead of the person who made the call.
 
-That sounds like a detail. It is not. Traceability is only valuable if the name next to a decision is the name of the person who owns it. "The team" is not an owner, and neither is "the operator". If the record cannot tell those apart, it gives an audit a confident answer that is wrong, which is worse than no answer.
+That sounds small, but a trail of decisions is only useful if it names the right person. "The team" is not an owner, and neither is whoever happened to type.
 
 ## With whose rights?
 
-Colleagues who work with agentic AI every day added a second point. An agent acts with *your* credentials: whatever you are allowed to do, it can do too. Guardrails written as files in your project are useful, but they are not a sandbox, and a true sandbox for agents is not yet part of most setups.
+Colleagues who use AI agents every day pointed out something simple: an agent works with your credentials. Whatever you are allowed to do, it can do too. Rules in a project file help, but they are not a sandbox.
 
-The [OWASP Top 10 for LLM applications](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) calls this excessive agency: more functionality, permissions or autonomy than a task needs. Its advice is the old one: least privilege, authorisation checks in the systems the agent calls, and a human approval for actions with real impact.
+OWASP calls this [excessive agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): more rights or freedom than the task needs. The advice is not new: give the least rights you can, and keep a person in the loop for anything with real impact.
 
-## The question I now ask
+## What I ask now
 
-When a team tells me "we use AI, but everything is traceable", I want to ask two things before I relax:
+When I hear "we use AI, but everything is traceable", I want to ask two things:
 
 1. Does the record show who **decided**, or only who **typed**?
-2. With whose **rights** did the agent act, and what could it have done that it did not?
+2. Whose **rights** did the agent use?
 
-I do not have a complete answer yet. That is why this is a note and not an essay.
+I do not have full answers yet. That is why this is a note.

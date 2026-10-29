@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" role="img" aria-labelledby="t">
-  <title id="t">249 green tests reach the quality gate, which finds no test asserting the new data contract and asks for 11 contract tests before work continues</title>
+  <title id="t">249 green tests reach the quality check, which finds no test asserting the new data contract and asks for 11 contract tests before work continues</title>
   <style>
     .bg { fill: #faf7f0; }
     .ink { fill: #1e3a2f; }
@@ -35,7 +35,7 @@
   <line class="line" x1="190" y1="103" x2="216" y2="103" stroke-width="3" marker-end="url(#arrow)"/>
 
   <rect class="gate" x="222" y="16" width="174" height="174" rx="16"/>
-  <text class="soft" x="309" y="48" text-anchor="middle" font-size="15" font-weight="600" letter-spacing="1">QUALITY GATE</text>
+  <text class="soft" x="309" y="48" text-anchor="middle" font-size="15" font-weight="600" letter-spacing="1">QUALITY CHECK</text>
   <text class="ink" x="309" y="80" text-anchor="middle" font-size="19" font-weight="600">Which test</text>
   <text class="ink" x="309" y="104" text-anchor="middle" font-size="19" font-weight="600">asserts the new</text>
   <text class="ink" x="309" y="128" text-anchor="middle" font-size="19" font-weight="600">data contract?</text>
@@ -51,6 +51,6 @@
 
   <rect class="sage" x="24" y="226" width="512" height="148" rx="16"/>
   <text class="ink" x="280" y="272" text-anchor="middle" font-size="22" font-weight="700">Green said nothing had failed.</text>
-  <text class="ink" x="280" y="306" text-anchor="middle" font-size="22" font-weight="700">The gate asked what had been checked.</text>
+  <text class="ink" x="280" y="306" text-anchor="middle" font-size="22" font-weight="700">The check asked what had been tested.</text>
   <text class="soft" x="280" y="346" text-anchor="middle" font-size="18">Only then: continue.</text>
 </svg>
