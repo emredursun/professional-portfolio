@@ -73,7 +73,7 @@ const en = {
   correctionsNone: 'None yet.',
   toc: 'On this page',
   nowTitle: 'Now',
-  nowIntro: 'What I am working on and learning at the moment, newest first.',
+  nowIntro: 'What I am working on right now, newest first.',
   nowMore: 'What I’m doing now',
   topicEyebrow: 'Topic',
   topicDescriptions: {
@@ -168,7 +168,7 @@ const tr = {
   correctionsNone: 'Henüz yok.',
   toc: 'Bu sayfada',
   nowTitle: 'Şu sıralar',
-  nowIntro: 'Şu anda üzerinde çalıştığım ve öğrendiğim şeyler, en yenisi önce.',
+  nowIntro: 'Şu anda üzerinde çalıştığım işler, en yenisi önce.',
   nowMore: 'Şu sıralar ne yapıyorum',
   topicEyebrow: 'Konu',
   topicDescriptions: {
@@ -265,7 +265,7 @@ const nl = {
   correctionsNone: 'Nog geen.',
   toc: 'Op deze pagina',
   nowTitle: 'Nu',
-  nowIntro: 'Waar ik op dit moment aan werk en wat ik leer, het nieuwste eerst.',
+  nowIntro: 'Waar ik op dit moment aan werk, het nieuwste eerst.',
   nowMore: 'Waar ik nu mee bezig ben',
   topicEyebrow: 'Onderwerp',
   topicDescriptions: {
