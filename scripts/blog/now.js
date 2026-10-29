@@ -14,7 +14,13 @@ import { BLOG_LANGUAGES } from './strings.js';
 
 const nowSchema = z
   .object({
-    entries: z.array(z.object({ date: isoDate, text: text.max(280) }).strict()).min(1),
+    entries: z
+      .array(
+        z
+          .object({ date: isoDate, text: text.max(280), placeholder: z.literal(true).optional() })
+          .strict(),
+      )
+      .min(1),
   })
   .strict();
 

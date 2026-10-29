@@ -10,6 +10,7 @@ evidence:
   basedOn:
     - 'Placeholder: the real note will name what prompted it'
   recheckedAt: 2026-10-27
+placeholder: true
 aiAssistance:
   mine:
     - 'Placeholder: the real note will say what is mine'
