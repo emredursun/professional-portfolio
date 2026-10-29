@@ -1,6 +1,6 @@
 # ADR 0001: Build the Field Notes blog as static HTML with our own script
 
-- Status: Accepted; Phases 1–3 and 4a complete, not launched
+- Status: Accepted; Phases 1–3, 4a and 4b complete, not launched
 - Date: 2026-10-28
 - Deciders: Emre Dursun (owner), with Claude as implementer
 
@@ -95,21 +95,19 @@ time-boxed Astro spike against the same criteria and record the outcome here.
   reach XML and feed services cache what they find.
 - ~~Serve the feed as `application/atom+xml; charset=utf-8`~~ Done in
   Phase 2 (`firebase.json` header, pinned by `tests/hosting.test.ts`).
-- Extend the preview check: once the feeds exist, assert on real Hosting
-  that `/blog/feed.xml`, `/tr/blog/feed.xml` and `/nl/blog/feed.xml`
-  arrive as `application/atom+xml` with
-  `x-content-type-options: nosniff` (the header rule cannot be tested
-  offline).
+- ~~Extend the preview check to the feeds' headers~~ Done in 4b:
+  `scripts/check-blog-live.sh` (feeds as Atom with `nosniff`, a post
+  indexable, an unknown post 404) runs in the preview check, the deploy
+  smoke test and the uptime check, and switches itself on once the feed
+  exists.
 - Re-enable the Lighthouse `is-crawlable` audit for blog pages.
-- Add blog routes to the sitemap and the deploy smoke test. Blog entries
-  take their alternates from each post's `translations`, never the full
-  language list `generate-sitemap.js` uses for the portfolio: a post may
-  exist in one or two languages only.
-- Extend the path-aware 404 to `/tr/blog/*` and `/nl/blog/*` (today they
-  get the site's English 404 page).
+- ~~Add blog routes to the sitemap and the deploy smoke test~~ Done in 4b,
+  behind the flag (see Phase 4b results).
+- ~~Extend the path-aware 404 to `/tr/blog/*` and `/nl/blog/*`~~ Done in 4b.
 - Have the Turkish and Dutch sample text reviewed, or replaced by the real
   posts, before launch.
-- Add the blog link to the portfolio navigation.
+- ~~Add the blog link to the portfolio navigation~~ Done in 4b (it ships
+  with the launch merge, since `feat/blog` never deploys).
 - ~~Check that `/blog` resolves to `blog.html` next to the `blog/` folder~~
   Checked on every labelled PR by `preview.yml` from Phase 2 on.
 - Remove the two placeholder posts and point the Lighthouse URLs in
@@ -315,3 +313,40 @@ Still to do in Phase 3: crawlable topic pages (3b) and the "Now" log
   (26 files, 8 of them images, identical over two builds).
 - Cards are 14–22 KB each; a test keeps every committed card at 1200 × 630
   and under 150 KB.
+
+## Phase 4b results (launch wiring behind the flag)
+
+- **Sitemap:** `generate-sitemap.js` runs in prebuild, before the blog is
+  built, so `scripts/blog/sitemap.js` reads the content itself and lists
+  exactly the pages the build writes (indexes, posts, topic and Now pages).
+  `lastmod` is each page's last content change, including what an index or
+  topic page shows besides its own posts (untranslated English posts, the
+  newest Now entry); alternates name only the versions that exist. A test
+  builds the blog and checks the sitemap lists exactly the pages written. Empty before launch: the committed sitemap does not
+  change until the flag flips (a dry run lists the samples' 16 pages).
+- **404:** a missing page under `/blog`, `/tr/blog` or `/nl/blog` gets the
+  app's 404 (a real 404 status) with "This note doesn't exist (yet)" in its
+  language and a link back to that blog.
+- **Navigation:** the sidebar, the mobile bottom bar and the command
+  palette link to the blog in the page's language, as plain full-page
+  links (the blog is outside the router). They appear only when
+  `BLOG_LAUNCHED` is true (`BLOG_IN_NAV` in `src/utils/blog.ts` reads the
+  same flag), so this branch could never link visitors to sample pages. The
+  bottom bar's items went from a 54 px to a 50 px minimum: six items
+  overflowed a 360 px screen by 2–3 px.
+- **Monitoring:** one script, `scripts/check-blog-live.sh`, in the deploy
+  smoke test, the hourly uptime check and the preview check. Whether the
+  blog is launched comes from the checkout's `BLOG_LAUNCHED`, never from the
+  site, so a launched blog whose feed disappears fails instead of passing
+  as "not launched". The pages it checks come from the live sitemap, so it
+  follows the languages and topics the content has. A test runs it against
+  a local server, healthy and broken in six ways. The preview check takes
+  its pages from `dist` and applies its pre-launch assertions (noindex, no
+  feed) only while the build has no feed. Launch day needs no workflow
+  change.
+- **llms.txt:** a Field Notes section with the English posts, once launched.
+  The WebSite JSON-LD is unchanged: the Blog node already points to it.
+- **A stale-card test:** PR #21's first CI run failed in its build because a
+  comment added to the card renderer after rendering made every card stale.
+  A unit test now runs the build's card check on the real content, so
+  `npm test` catches it before a push.

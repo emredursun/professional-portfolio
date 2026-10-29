@@ -157,6 +157,11 @@ export function buildResume({ constants, resume, about, builtAt }) {
   };
 }
 
+/** Frontmatter text on one Markdown line: a line break would end the list item. */
+const oneLine = (text) => text.replace(/\s+/g, ' ').trim();
+/** Link text with its brackets escaped, so a title cannot close the link early. */
+const linkText = (text) => oneLine(text).replace(/[[\]]/g, '\\$&');
+
 /**
  * llms.txt: H1, summary blockquote, a few facts, then link lists.
  *
@@ -209,7 +214,7 @@ ${
     ? `## Field Notes
 
 - [Field Notes](${SITE_URL}/blog): ${strings('en').description}
-${blog.map((post) => `- [${post.title}](${post.url}): ${post.description}`).join('\n')}
+${blog.map((post) => `- [${linkText(post.title)}](${post.url}): ${oneLine(post.description)}`).join('\n')}
 
 `
     : ''

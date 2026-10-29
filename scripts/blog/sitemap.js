@@ -37,12 +37,25 @@ function entry(lang, lastmod, languages, urlFor) {
 
 function languageEntries(lang, { posts, languages, now }) {
   const own = posts.filter((post) => post.lang === lang).sort(bySlug);
+  // What a language's index and topic pages also show: English posts with no
+  // version in this language yet (build-blog.js lists them as English).
+  const fallback =
+    lang === 'en'
+      ? []
+      : posts.filter((post) => post.lang === 'en' && !post.translations.includes(lang));
+  const shown = [...own, ...fallback];
   const withTopic = (language, topic) =>
     posts.some((post) => post.lang === language && post.topic === topic);
   const topics = TOPICS.filter((topic) => withTopic(lang, topic));
   const nowLanguages = languages.filter((language) => now[language]);
   return [
-    entry(lang, newest(own.map(lastChange)), languages, blogUrl),
+    // The index also shows the newest Now entry.
+    entry(
+      lang,
+      newest([...shown.map(lastChange), ...(now[lang] ? [now[lang][0].date] : [])]),
+      languages,
+      blogUrl,
+    ),
     ...own.map((post) =>
       entry(lang, lastChange(post), post.translations, (language) =>
         postUrl({ ...post, lang: language }),
@@ -51,7 +64,7 @@ function languageEntries(lang, { posts, languages, now }) {
     ...topics.map((topic) =>
       entry(
         lang,
-        newest(own.filter((post) => post.topic === topic).map(lastChange)),
+        newest(shown.filter((post) => post.topic === topic).map(lastChange)),
         languages.filter((language) => withTopic(language, topic)),
         (language) => topicUrl(language, topic),
       ),

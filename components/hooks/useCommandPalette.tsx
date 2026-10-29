@@ -3,7 +3,7 @@ import Fuse from 'fuse.js';
 import { useTranslation } from 'react-i18next';
 import { Command, Page } from '../../types';
 import { PROJECTS } from '../../constants.tsx';
-import { blogPathFor } from '../../src/utils/blog.ts';
+import { BLOG_IN_NAV, blogPathFor } from '../../src/utils/blog.ts';
 import { cvFileName } from '../../src/utils/cv.ts';
 import { useLanguageNavigate } from './useLanguageNavigate.tsx';
 
@@ -138,19 +138,24 @@ export const useCommandPalette = ({
           onClose();
         },
       },
-      {
-        id: 'nav-blog',
-        label: t('palette.commands.navBlog.label'),
-        description: t('palette.commands.navBlog.description'),
-        icon: <i aria-hidden="true" className="fas fa-pen-nib" />,
-        category: 'Navigation',
-        keywords: ['blog', 'field notes', 'notes', 'articles', 'posts', 'writing'],
-        action: () => {
-          onClose();
-          // The blog is static pages outside the router: a full page load.
-          window.location.assign(blogPathFor(i18n.language));
-        },
-      },
+      // Only once the blog has launched (BLOG_IN_NAV), like the nav links.
+      ...(BLOG_IN_NAV
+        ? [
+            {
+              id: 'nav-blog',
+              label: t('palette.commands.navBlog.label'),
+              description: t('palette.commands.navBlog.description'),
+              icon: <i aria-hidden="true" className="fas fa-pen-nib" />,
+              category: 'Navigation' as const,
+              keywords: ['blog', 'field notes', 'notes', 'articles', 'posts', 'writing'],
+              action: () => {
+                onClose();
+                // The blog is static pages outside the router: a full page load.
+                window.location.assign(blogPathFor(i18n.language));
+              },
+            },
+          ]
+        : []),
       {
         id: 'action-download-resume',
         label: t('palette.commands.downloadResume.label'),

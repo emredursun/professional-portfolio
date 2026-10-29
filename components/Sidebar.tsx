@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { PERSONAL_INFO, SOCIAL_LINKS, STATUS_BADGE } from '../constants.tsx';
-import { blogPathFor } from '../src/utils/blog.ts';
+import { BLOG_IN_NAV, blogPathFor } from '../src/utils/blog.ts';
 import { cvFileName } from '../src/utils/cv.ts';
 import ThemeSwitcher from './ThemeSwitcher.tsx';
 import Magnetic from './Magnetic.tsx';
@@ -491,7 +491,7 @@ const Sidebar: React.FC<SidebarProps> = ({ theme, toggleTheme, isMobileView }) =
               {languageAwarePages.map((page) => (
                 <NavButton key={page.label} page={page} />
               ))}
-              <BlogNavButton language={currentLang} />
+              {BLOG_IN_NAV && <BlogNavButton language={currentLang} />}
             </ul>
           </nav>
         )}

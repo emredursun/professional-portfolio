@@ -5,7 +5,8 @@ import path from 'path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { blogSitemapEntries } from '../../scripts/blog/sitemap.js';
 import { generateSitemap } from '../../scripts/generate-sitemap.js';
-import { TRANSLATION, writePost } from './fixtures';
+import { buildBlog } from '../../scripts/build-blog.js';
+import { TRANSLATION, makeDist, writePost } from './fixtures';
 
 let root: string;
 let contentDir: string;
@@ -71,6 +72,54 @@ describe('blogSitemapEntries', () => {
       { lang: 'en', href: `${SITE}/blog/only-en` },
       { lang: 'x-default', href: `${SITE}/blog/only-en` },
     ]);
+  });
+
+  it('dates an index and a topic page by everything they show', () => {
+    // /tr/blog also lists English posts with no Turkish version and the
+    // newest Now entry, so either changing must move its lastmod.
+    writePost(contentDir, 'hello', 'Body\n');
+    writePost(contentDir, 'hello', 'Gövde\n', TRANSLATION, 'tr');
+    writePost(contentDir, 'newer', 'Body\n', 'updatedAt: 2026-12-18\n');
+    fs.mkdirSync(nowDir);
+    for (const lang of ['en', 'tr']) {
+      fs.writeFileSync(
+        path.join(nowDir, `${lang}.md`),
+        '---\nentries:\n  - date: 2026-12-22\n    text: Writing.\n---\n',
+      );
+    }
+    expect(byLoc('/tr/blog')!.lastmod).toBe('2026-12-22');
+    expect(byLoc('/tr/blog/topic/testing')!.lastmod).toBe('2026-12-18');
+  });
+
+  it('lists exactly the pages the blog build writes', async () => {
+    writePost(contentDir, 'hello', 'Body\n');
+    writePost(contentDir, 'hello', 'Gövde\n', TRANSLATION, 'tr');
+    writePost(contentDir, 'only-en', 'Body\n');
+    const file = path.join(contentDir, 'only-en', 'en.md');
+    fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('topic: testing', 'topic: ai'));
+    fs.mkdirSync(nowDir);
+    fs.writeFileSync(
+      path.join(nowDir, 'en.md'),
+      '---\nentries:\n  - date: 2026-12-22\n    text: Writing.\n---\n',
+    );
+    const themeInitPath = path.join(root, 'theme-init.js');
+    fs.writeFileSync(themeInitPath, '');
+    const written = await buildBlog({
+      distDir: makeDist(root, 'dist'),
+      contentDir,
+      nowDir,
+      themeInitPath,
+      launched: true,
+    });
+    const pages = written
+      .filter((file) => file.endsWith('.html'))
+      .map((file) => `${SITE}/${file.slice(0, -'.html'.length)}`)
+      .sort();
+    expect(
+      entries()
+        .map((entry) => entry.loc)
+        .sort(),
+    ).toEqual(pages);
   });
 });
 

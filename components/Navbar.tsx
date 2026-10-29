@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import Magnetic from './Magnetic.tsx';
 import { Page } from '../types.ts';
-import { blogPathFor } from '../src/utils/blog.ts';
+import { BLOG_IN_NAV, blogPathFor } from '../src/utils/blog.ts';
 
 interface NavbarProps {
   onOpenCommandPalette?: () => void;
@@ -76,7 +76,7 @@ const NavButton: React.FC<{
           }
         }}
         className={({ isActive }) =>
-          `relative flex flex-col items-center justify-center w-full min-w-[54px] py-[3px] rounded-xl transition-all duration-300 group touch-manipulation ${
+          `relative flex flex-col items-center justify-center w-full min-w-[50px] py-[3px] rounded-xl transition-all duration-300 group touch-manipulation ${
             isActive
               ? 'text-yellow-600 dark:text-yellow-400'
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
@@ -127,7 +127,7 @@ const BlogNavItem: React.FC<{ href: string; label: string }> = React.memo(({ hre
     <Magnetic>
       <a
         href={href}
-        className="relative flex flex-col items-center justify-center w-full min-w-[54px] py-[3px] rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+        className="relative flex flex-col items-center justify-center w-full min-w-[50px] py-[3px] rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
       >
         <span className="text-[16px] mb-[2px] z-10 transition-all duration-300 ease-out group-hover:scale-105 group-active:scale-95">
           <i aria-hidden="true" className="fas fa-pen-nib"></i>
@@ -173,14 +173,14 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent
               />
             ))}
 
-            <BlogNavItem href={blogPathFor(currentLang)} label={t('nav.blog')} />
+            {BLOG_IN_NAV && <BlogNavItem href={blogPathFor(currentLang)} label={t('nav.blog')} />}
 
             {/* Command Palette Button integrated as nav item */}
             {onOpenCommandPalette && (
               <li className="flex-1 flex justify-center">
                 <button
                   onClick={onOpenCommandPalette}
-                  className="relative flex flex-col items-center justify-center w-full min-w-[54px] py-[5px] rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                  className="relative flex flex-col items-center justify-center w-full min-w-[50px] py-[5px] rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                   aria-label={t('nav.search')}
                   title={t('labels.searchShortcut')}
                 >

@@ -112,6 +112,22 @@ describe('llms.txt', () => {
     );
     expect(launched.indexOf('## Field Notes')).toBeLessThan(launched.indexOf('## Optional'));
   });
+
+  it('keeps a post with brackets or line breaks on one valid Markdown line', async () => {
+    const constants = await loadConstants();
+    const about = read('public/locales/en/about.json');
+    const blog = [
+      {
+        title: 'Arrays [and] lists',
+        url: 'https://emredursun.nl/blog/arrays',
+        description: 'Line one\nline two.',
+      },
+    ];
+    const launched = buildLlmsTxt({ constants, about, resumeJson, blog });
+    expect(launched).toContain(
+      '- [Arrays \\[and\\] lists](https://emredursun.nl/blog/arrays): Line one line two.',
+    );
+  });
 });
 
 describe('blogForAgents', () => {

@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'fs';
 import path from 'path';
+import { BLOG_LAUNCHED } from '../scripts/blog/config.js';
 import { strings } from '../scripts/blog/strings.js';
 import { copy, expect, test } from './fixtures';
 
@@ -208,10 +209,14 @@ test.describe('a missing blog page', () => {
   for (const lang of ['en', 'tr', 'nl'] as const) {
     const base = lang === 'en' ? '/blog' : `/${lang}/blog`;
 
-    test(`under ${base} is a real 404 that leads back to that blog`, async ({ page }) => {
+    test(`under ${base} is a real 404 that leads back to that blog`, async ({ page, problems }) => {
       const notFound = copy(lang, 'common').notFound;
       const response = await page.goto(`${base}/no-such-post`);
       expect(response?.status()).toBe(404);
+      // The browser logs the document's own 404 status; that one is expected.
+      const own = problems.findIndex((problem) => /status of 404/.test(problem));
+      expect(own).toBeGreaterThanOrEqual(0);
+      problems.splice(own, 1);
       await expect(page.getByRole('heading', { name: notFound.blogTitle })).toBeVisible();
       const back = page.getByRole('link', { name: notFound.blogIndex });
       await expect(back).toHaveAttribute('href', base);
@@ -222,7 +227,41 @@ test.describe('a missing blog page', () => {
   }
 });
 
+test.describe('before launch, the portfolio does not link to the blog', () => {
+  test.skip(BLOG_LAUNCHED, 'the blog has launched');
+
+  test('no nav entry and no palette command point at it', async ({ page }) => {
+    await page.goto('/about');
+    await expect(page.locator('a[href="/blog"]')).toHaveCount(0);
+    await page.keyboard.press('Control+k');
+    await page
+      .getByRole('combobox', { name: copy('en', 'common').palette.search })
+      .fill('Field Notes');
+    await expect(
+      page.getByRole('option', {
+        name: new RegExp(copy('en', 'common').palette.commands.navBlog.label),
+      }),
+    ).toHaveCount(0);
+  });
+});
+
 test.describe('the portfolio links to the blog', () => {
+  test.skip(!BLOG_LAUNCHED, 'the nav links to the blog only once it has launched');
+
+  test('the mobile bar still fits a 360 px screen with the blog in it', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 780 });
+    for (const path of ['/about', '/tr/about']) {
+      await page.goto(path);
+      const bar = page.locator('nav.fixed ul');
+      await expect(bar.locator('a[href$="/blog"]')).toHaveCount(1);
+      const { scroll, client } = await bar.evaluate((ul) => ({
+        scroll: ul.scrollWidth,
+        client: ul.clientWidth,
+      }));
+      expect(scroll, path).toBeLessThanOrEqual(client);
+    }
+  });
+
   test('the nav opens the blog in the page’s language', async ({ page, isMobile }) => {
     for (const [from, to] of [
       ['/about', '/blog'],
@@ -247,7 +286,7 @@ test.describe('the portfolio links to the blog', () => {
     await page.goto('/nl/about');
     await page.keyboard.press('Control+k');
     const command = copy('nl', 'common').palette.commands.navBlog.label;
-    await page.getByRole('dialog').getByRole('textbox').fill('blog');
+    await page.getByRole('combobox', { name: copy('nl', 'common').palette.search }).fill('blog');
     await page.getByRole('option', { name: new RegExp(command) }).click();
     await expect(page).toHaveURL(/\/nl\/blog$/);
   });
