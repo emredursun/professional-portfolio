@@ -26,10 +26,12 @@ import { createHighlight } from './blog/highlight.js';
 import { readBlogAssets } from './blog/manifest.js';
 import { renderMarkdown } from './blog/markdown.js';
 import { renderFeed } from './blog/feed.js';
+import { TOPICS } from './blog/schema.js';
 import { BLOG_LANGUAGES } from './blog/strings.js';
 import { renderArticlePage } from './blog/templates/article.js';
 import { byNewest, outputDir } from './blog/templates/format.js';
 import { renderIndexPage } from './blog/templates/index.js';
+import { renderTopicPage } from './blog/templates/topic.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 // The woff2 of each face a page's largest text uses (measured with
@@ -98,7 +100,38 @@ function untranslated(lang, all) {
   return all.filter((post) => post.lang === 'en' && !post.translations.includes(lang));
 }
 
-/** One language's files: its index, its feed after launch, and its articles. */
+/** The topics that have posts, and so a topic page, in `lang`. */
+function topicsIn(lang, all) {
+  return new Set(all.filter((post) => post.lang === lang).map((post) => post.topic));
+}
+
+/**
+ * One page per topic that has posts in `lang`. Its alternates are the
+ * languages that have the same topic page; English always does, because
+ * every post has an English version on the same topic (content.js).
+ */
+function writeTopics({ distDir, lang, posts, all, fallback, assets, launched }) {
+  const dir = `${outputDir(lang)}blog/topic`;
+  const topics = topicsIn(lang, all);
+  return TOPICS.filter((topic) => topics.has(topic)).map((topic) =>
+    writeOutput(
+      distDir,
+      `${dir}/${topic}.html`,
+      renderTopicPage({
+        topic,
+        posts: posts.filter((post) => post.topic === topic),
+        fallback: fallback.filter((post) => post.topic === topic),
+        assets,
+        launched,
+        lang,
+        languages: BLOG_LANGUAGES.filter((language) => topicsIn(language, all).has(topic)),
+        topics,
+      }),
+    ),
+  );
+}
+
+/** One language's files: its index, its feed after launch, its articles and topic pages. */
 function writeLanguage({ distDir, lang, posts, all, languages, assets, launched }) {
   const dir = `${outputDir(lang)}blog`;
   const fallback = untranslated(lang, all);
@@ -106,7 +139,15 @@ function writeLanguage({ distDir, lang, posts, all, languages, assets, launched 
     writeOutput(
       distDir,
       `${dir}.html`,
-      renderIndexPage({ posts, fallback, assets, launched, lang, languages }),
+      renderIndexPage({
+        posts,
+        fallback,
+        topics: topicsIn(lang, all),
+        assets,
+        launched,
+        lang,
+        languages,
+      }),
     ),
     // The feed only after launch: noindex cannot reach XML (see head.js).
     ...(launched ? [writeOutput(distDir, `${dir}/feed.xml`, renderFeed(posts, lang))] : []),
@@ -117,6 +158,7 @@ function writeLanguage({ distDir, lang, posts, all, languages, assets, launched 
         renderArticlePage({ post, related: relatedTo(post, all), assets, launched }),
       ),
     ),
+    ...writeTopics({ distDir, lang, posts, all, fallback, assets, launched }),
   ];
 }
 

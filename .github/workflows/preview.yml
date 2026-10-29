@@ -79,7 +79,7 @@ jobs:
           tr_pages=(dist/tr/blog/*.html)
           [ ${#tr_pages[@]} -gt 0 ] || { echo "::error::No blog pages in dist/tr/blog"; exit 1; }
           tr_post="/tr/blog/$(basename "${tr_pages[0]}" .html)"
-          for path in /blog "$post" /tr/blog "$tr_post" /nl/blog; do
+          for path in /blog "$post" /tr/blog "$tr_post" /nl/blog /blog/topic/testing /tr/blog/topic/testing; do
             html="$(curl -fsS --max-time 30 --retry 3 --retry-all-errors "$base$path")"
             grep -qF "<link rel=\"canonical\" href=\"https://emredursun.nl$path\"" <<<"$html" \
               || { echo "::error::$path is not served its blog page"; exit 1; }

@@ -129,7 +129,7 @@ describe('buildBlog', () => {
     writePost('a-green-test', '## Part\n\nText.\n');
     const dist = makeDist('dist');
     const written = await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
-    expect(written).toEqual(['blog.html', 'blog/a-green-test.html']);
+    expect(written).toEqual(['blog.html', 'blog/a-green-test.html', 'blog/topic/testing.html']);
     const html = fs.readFileSync(path.join(dist, 'blog', 'a-green-test.html'), 'utf8');
     expect(html).toContain('<h1>A green test</h1>');
     expect(html).toContain('<h2 id="part">Part</h2>');
@@ -260,7 +260,9 @@ describe('main', () => {
     makeDist('dist');
     const out = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
     expect(await main(root)).toBe(0);
-    expect(out).toHaveBeenCalledWith('blog: 2 file(s)\n  blog.html\n  blog/one.html\n');
+    expect(out).toHaveBeenCalledWith(
+      'blog: 3 file(s)\n  blog.html\n  blog/one.html\n  blog/topic/testing.html\n',
+    );
   });
 
   it('prints the error and returns 1 when the build fails', async () => {

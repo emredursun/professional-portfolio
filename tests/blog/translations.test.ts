@@ -164,9 +164,11 @@ describe('buildBlog: languages', () => {
       'blog.html',
       'blog/feed.xml',
       'blog/hello.html',
+      'blog/topic/testing.html',
       'tr/blog.html',
       'tr/blog/feed.xml',
       'tr/blog/hello.html',
+      'tr/blog/topic/testing.html',
     ]);
     expect(read(dist, 'tr', 'blog', 'hello.html')).toContain('<html lang="tr">');
     expect(read(dist, 'tr', 'blog', 'feed.xml')).toContain('xml:lang="tr"');

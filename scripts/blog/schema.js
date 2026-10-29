@@ -53,13 +53,16 @@ const httpsUrl = z
   }, 'must be an absolute https:// link to a public host, without credentials')
   .transform((value) => new URL(value).href);
 
+/** The topics a post can have, in the order the site lists them. */
+export const TOPICS = Object.freeze(['testing', 'ai', 'life']);
+
 const postSchema = z
   .object({
     title: text.max(110),
     description: text.max(160),
     publishedAt: isoDate,
     updatedAt: isoDate.optional(),
-    topic: z.enum(['testing', 'ai', 'life']),
+    topic: z.enum(TOPICS),
     kind: z.enum(['essay', 'note']),
     status: z.enum(['hypothesis', 'testing', 'verified', 'revised']),
     evidence: z

@@ -71,7 +71,7 @@ describe('renderIndexPage', () => {
       '/blog/newer-essay',
       '/blog/older-essay',
     ]);
-    const notes = [...doc.querySelectorAll('[aria-labelledby="notes-title"] a')];
+    const notes = [...doc.querySelectorAll('[aria-labelledby="notes-title"] .note-item > a')];
     expect(notes.map((a) => a.getAttribute('href'))).toEqual(['/blog/a-note']);
   });
 
