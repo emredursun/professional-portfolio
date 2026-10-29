@@ -30,9 +30,15 @@ paths="$(grep -oE '<loc>https://emredursun\.nl(/(tr|nl))?/blog[^<]*</loc>' <<<"$
 
 indexes="$(grep -E '^(/(tr|nl))?/blog$' <<<"$paths" || true)"
 [ -n "$indexes" ] || fail "sitemap.xml lists no blog index"
-while read -r path; do
-  [ "$(code "$path")" = "200" ] || fail "$path is not served"
-done <<<"$paths"
+# Eight at a time: the sitemap grows with every post and language.
+export base
+export -f fetch code
+unserved="$(xargs -P 8 -n 1 bash -c '[ "$(code "$1")" = "200" ] || echo "$1"' _ <<<"$paths" \
+  | sort)"
+if [ -n "$unserved" ]; then
+  while read -r path; do echo "::error::$path is not served"; done <<<"$unserved"
+  exit 1
+fi
 
 # One post: served its own page, and indexable.
 post="$(grep -vE '/blog(/(topic|now)(/|$)|$)' <<<"$paths" | head -1 || true)"
