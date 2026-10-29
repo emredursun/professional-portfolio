@@ -6,14 +6,7 @@
       "url": [
         "http://localhost:4181/about",
         "http://localhost:4181/projects",
-        "http://localhost:4181/contact",
-        "http://localhost:4181/blog",
-        "http://localhost:4181/blog/sample-a-green-test",
-        "http://localhost:4181/blog/sample-hypothesis-note",
-        "http://localhost:4181/tr/blog",
-        "http://localhost:4181/tr/blog/sample-a-green-test",
-        "http://localhost:4181/nl/blog/sample-a-green-test",
-        "http://localhost:4181/blog/now"
+        "http://localhost:4181/contact"
       ],
       "numberOfRuns": 5,
       "settings": {

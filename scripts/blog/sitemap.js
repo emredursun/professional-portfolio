@@ -14,6 +14,7 @@
 
 import { BLOG_LAUNCHED } from './config.js';
 import { loadPosts } from './content.js';
+import { assertLaunchable } from './launch-gate.js';
 import { loadNow } from './now.js';
 import { TOPICS } from './schema.js';
 import { BLOG_LANGUAGES } from './strings.js';
@@ -91,5 +92,7 @@ export function blogSitemapEntries({ contentDir, nowDir, launched = BLOG_LAUNCHE
   const posts = loadPosts(contentDir);
   const languages = BLOG_LANGUAGES.filter((lang) => posts.some((post) => post.lang === lang));
   const now = loadNow(nowDir);
+  // Runs in prebuild, before the blog build would refuse: refuse here too.
+  assertLaunchable({ posts, now });
   return languages.flatMap((lang) => languageEntries(lang, { posts, languages, now }));
 }

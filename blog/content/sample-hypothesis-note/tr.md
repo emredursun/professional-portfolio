@@ -10,6 +10,7 @@ evidence:
   basedOn:
     - 'Örnek: gerçek not, onu neyin tetiklediğini belirtecek'
   recheckedAt: 2026-10-27
+placeholder: true
 aiAssistance:
   mine:
     - 'Örnek: gerçek not neyin bana ait olduğunu söyleyecek'

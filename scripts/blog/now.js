@@ -14,7 +14,13 @@ import { BLOG_LANGUAGES } from './strings.js';
 
 const nowSchema = z
   .object({
-    entries: z.array(z.object({ date: isoDate, text: text.max(280) }).strict()).min(1),
+    entries: z
+      .array(
+        z
+          .object({ date: isoDate, text: text.max(280), placeholder: z.literal(true).optional() })
+          .strict(),
+      )
+      .min(1),
   })
   .strict();
 
@@ -44,7 +50,7 @@ function readNow(dir, name) {
 /**
  * Each language's entries, newest first; {} when there is no log.
  * @param {string} nowDir
- * @returns {Record<string, readonly { date: string, text: string }[]>}
+ * @returns {Record<string, readonly { date: string, text: string, placeholder?: true }[]>}
  */
 export function loadNow(nowDir) {
   if (!nowDir || !fs.existsSync(nowDir)) return {};

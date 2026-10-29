@@ -6,6 +6,7 @@
 
 import { BLOG_LAUNCHED } from './config.js';
 import { loadPosts } from './content.js';
+import { assertLaunchable } from './launch-gate.js';
 import { byNewest, postUrl } from './templates/format.js';
 
 /**
@@ -14,7 +15,10 @@ import { byNewest, postUrl } from './templates/format.js';
  */
 export function blogForAgents({ contentDir, launched = BLOG_LAUNCHED }) {
   if (!launched) return [];
-  return loadPosts(contentDir)
+  const posts = loadPosts(contentDir);
+  // llms.txt lists posts only, so the Now log does not concern it here.
+  assertLaunchable({ posts, now: {} });
+  return posts
     .filter((post) => post.lang === 'en')
     .sort(byNewest)
     .map((post) => ({ title: post.title, url: postUrl(post), description: post.description }));

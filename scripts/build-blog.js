@@ -23,6 +23,7 @@ import { emitAsset } from './blog/assets.js';
 import { ogCards, readOgImages } from './blog/og.js';
 import { BLOG_LAUNCHED } from './blog/config.js';
 import { loadPosts } from './blog/content.js';
+import { assertLaunchable } from './blog/launch-gate.js';
 import { loadNow } from './blog/now.js';
 import { createHighlight } from './blog/highlight.js';
 import { readBlogAssets } from './blog/manifest.js';
@@ -219,6 +220,7 @@ export async function buildBlog({
   const posts = loadPosts(contentDir);
   if (posts.length === 0) return [];
   const now = loadNow(nowDir);
+  if (launched) assertLaunchable({ posts, now });
 
   const { highlight, css } = await createHighlight();
   const rendered = posts.map((post) => ({

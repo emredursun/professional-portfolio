@@ -86,11 +86,24 @@ jobs:
       # Mobile first: every LHCI collect clears .lighthouseci, so the desktop
       # run below leaves only desktop results there for the quality report.
       # The mobile reports are kept in .lighthouseci-mobile.
+      # The portfolio pages come from the lighthouserc file, the blog pages
+      # from what the build wrote (scripts/lighthouse-urls.js), so real posts
+      # can replace the samples without a CI change.
       - name: Lighthouse budgets (mobile)
-        run: npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.mobile.json
+        # A plain assignment, so a failing script stops the step (inside the
+        # command's arguments its failure would be ignored).
+        run: |
+          set -euo pipefail
+          urls="$(node scripts/lighthouse-urls.js lighthouserc.mobile.json)"
+          npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.mobile.json $urls
 
       - name: Lighthouse budgets (desktop)
-        run: npx --yes @lhci/cli@0.15.1 autorun
+        # A plain assignment, so a failing script stops the step (inside the
+        # command's arguments its failure would be ignored).
+        run: |
+          set -euo pipefail
+          urls="$(node scripts/lighthouse-urls.js lighthouserc.json)"
+          npx --yes @lhci/cli@0.15.1 autorun $urls
 
       # dist/quality.json for the /quality page, from this run's reports.
       # After every gate, so it can only describe a run that passed them.
