@@ -260,8 +260,8 @@ Deferred, with the reason:
   (ğ, ş and İ live there); measured: both faces' latin-ext files load.
 - Firebase applies header rules whatever the status, so before launch
   the feed URLs' 404 carries the Atom Content-Type. The preview check
-  asserts only the 404 (the local preview server still answers it as
-  HTML). Nothing links to the feeds before launch.
+  asserts only the 404, and the local preview server answers it the same
+  way. Nothing links to the feeds before launch.
 - Checks: 443 unit tests (lines 91.9%), the blog build twice gives
   identical files, e2e 244 passed on desktop and mobile, code and
   security reviews with no critical or high findings.
