@@ -70,4 +70,6 @@ Kendime üç küçük alışkanlık çıkardım:
 - **Sıkıcı kontrolleri sürecin içine koy,** birinin atlayabileceği bir kontrol listesine değil.
 - **Yapay zekâ önersin, insanlar karar versin,** ve kimin karar verdiği yazılsın.
 
+Boş zamanlarımda çok daha küçük ölçekte benzer bir şey geliştiriyorum: yapay zekâ kodlama araçlarına kalite kontrolleri ekleyen açık kaynak bir kit, [devran-ai/kit](https://github.com/devran-ai/kit). Aynı fikirleri şirket ölçeğinde görmek, bu fikirlerin ne kadar ileri gidebileceğini gösterdi.
+
 Bu tür araçlarla nasıl çalışılacağını hâlâ öğreniyorum. Ama ilk kez bir yapay zekâ aracı yeşil bir sonuca biraz daha az güvenmemi sağladı ve bu bana ilerleme gibi geldi.

@@ -67,4 +67,6 @@ So, three small habits:
 - **Put the boring checks in the path,** not on a checklist someone may skip.
 - **Let the AI suggest and let people decide,** and write down who decided.
 
+In my spare time I build something similar on a much smaller scale: [devran-ai/kit](https://github.com/devran-ai/kit), an open-source kit that adds quality gates to AI coding tools. Seeing the same ideas at company scale showed me how much further they can go.
+
 I am still learning how to work with tools like this. But this was the first time an AI tool made me trust a green result a little less, and that felt like progress.

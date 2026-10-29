@@ -70,4 +70,6 @@ Dus, drie kleine gewoontes:
 - **Zet de saaie controles in het proces,** niet op een checklist die iemand kan overslaan.
 - **Laat de AI voorstellen en laat mensen beslissen,** en schrijf op wie besliste.
 
+In mijn vrije tijd bouw ik iets vergelijkbaars op veel kleinere schaal: [devran-ai/kit](https://github.com/devran-ai/kit), een open-source kit die kwaliteitscontroles toevoegt aan AI-codeertools. Dezelfde ideeën op bedrijfsschaal zien, liet me zien hoeveel verder ze kunnen gaan.
+
 Ik leer nog steeds hoe ik met zulke tools moet werken. Maar dit was de eerste keer dat een AI-tool me een groen resultaat iets minder deed vertrouwen, en dat voelde als vooruitgang.
