@@ -19,9 +19,6 @@ aiAssistance:
 translation:
   from: 2026-10-29
   assistedByAi: true
-# Remove both once this version is written: until then it cannot launch.
-placeholder: true
-draft: true
 ---
 
 Na de workshop waarover ik schreef in [Groen is nog niet klaar](/nl/blog/green-is-not-done), bleven er twee vragen hangen.

@@ -19,9 +19,6 @@ aiAssistance:
 translation:
   from: 2026-10-29
   assistedByAi: true
-# Remove both once this version is written: until then it cannot launch.
-placeholder: true
-draft: true
 ---
 
 Elke tester kent het moment. De pipeline wordt groen, iemand zegt “klaar”, en je voelt een kleine vraag die nog niemand heeft gesteld.

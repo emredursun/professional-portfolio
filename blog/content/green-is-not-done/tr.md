@@ -19,9 +19,6 @@ aiAssistance:
 translation:
   from: 2026-10-29
   assistedByAi: true
-# Remove both once this version is written: until then it cannot launch.
-placeholder: true
-draft: true
 ---
 
 Her test uzmanı o anı bilir. Pipeline yeşile döner, biri “tamam” der ve içinizde henüz kimsenin sormadığı küçük bir soru belirir.

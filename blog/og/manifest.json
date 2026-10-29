@@ -11,24 +11,28 @@
     "card": "e61d95c27a8056ed97f23ebde701791ec4b288498e92f28268eaf297d041c098",
     "png": "ffca5cd5757b7d75153bb3ce98fe4f1746150b0c3dbb9b77083e80da0ba15bbe"
   },
-  "sample-a-green-test.en": {
-    "card": "0bb662e2bc271efa912d8bb13c61e40342e54d8fdcbc1262c0b1a687ed2a7f19",
-    "png": "3aa6a9ead9bbb4e831254d3b28edaa2e4bb1fa8db8c0c01f125fba7bba584f54"
+  "green-is-not-done.en": {
+    "card": "c4874a4527e6a00a28411f860b5a761afab06d23a30c326dddc57e24865b1bfc",
+    "png": "f1341a41b641924e7fdb659f50c31c2e454225c6001a642ba45c5a02c92d9f19"
   },
-  "sample-a-green-test.nl": {
-    "card": "aa9c5f72fa29d0777715f03b980c5fb9cc5dca899d8e3b23a03e10975bf4df45",
-    "png": "b580127da3206ef2cb5687c7adafe52ba53ca94fbf4ecd60ca5c9208ad4338d6"
+  "green-is-not-done.nl": {
+    "card": "44af3fe0e8c21372ff624ffeab16f783684d504a4428d378c2d8c142a749e27d",
+    "png": "a9660aea4a8384a11c4ee1361db8508a3a082f2650f8acb62519adae65917a11"
   },
-  "sample-a-green-test.tr": {
-    "card": "cb51f182f8917ad934fc9a6a5d8c6ea58cdc70cb6b96c79742958414d41bcf3e",
-    "png": "89207463bbfec275e58b8ce8fead5643cccf83fd6a365d4efce3514a69c85f5d"
+  "green-is-not-done.tr": {
+    "card": "2a00dbb6c870ee0f89adefaacba89d49272479db3b200173904e9178bccdc081",
+    "png": "fc0704cf18087670f001325efee19f918c933da86509b1921554e8312e23fa81"
   },
-  "sample-hypothesis-note.en": {
-    "card": "a281e124cc4d52377d8cf687f9f9d67f421877979f3ac8387548e8e74021132a",
-    "png": "6f4e31fbbae1394e8cb331fccadb5682391ef686d858812f144667e92d21a1d6"
+  "whose-name-is-on-the-decision.en": {
+    "card": "0197bcbbb6f48248b71b9486035ff241c03f36a5eab66af1a5ebeab722dd3a13",
+    "png": "be5a5c4c6f512d466e2337a66c3be23903e1a6554949f68f1feabdfe1725a602"
   },
-  "sample-hypothesis-note.tr": {
-    "card": "048928a7ff4333259f1bb72bff59b2b734ac8813d31f9f4c465fbaf8ad914340",
-    "png": "f1705ea061e6c849f29cb886a6c8af3712d313165d3f3ffb81473e59a101d92a"
+  "whose-name-is-on-the-decision.nl": {
+    "card": "a18254f105f8f319f946be579f646b9b981eb02ef1f10226c3637e53029375d1",
+    "png": "868b94953fe86db40ce7c3c938fa5c6852c42ce0d18037ca2095c54be4b8d92d"
+  },
+  "whose-name-is-on-the-decision.tr": {
+    "card": "606468fd5bd9ea486c8e6157a334d3f979ae5f8cc19602c9eabc2196593cdd0e",
+    "png": "1bd1f51b6327e0dac70618cf1c461908b11c37bf50b959c328157a5bcd394b79"
   }
 }

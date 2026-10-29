@@ -16,9 +16,6 @@ aiAssistance:
     - 'The questions and what prompted them'
   assisted:
     - 'Claude turned my notes into this text and suggested the OWASP source'
-# Remove both once this version is written: until then it cannot launch.
-placeholder: true
-draft: true
 ---
 
 After the workshop I wrote about in [Green is not done](/blog/green-is-not-done), two questions stayed with me.

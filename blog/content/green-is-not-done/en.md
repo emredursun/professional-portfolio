@@ -16,9 +16,6 @@ aiAssistance:
     - 'The experience, what I noticed and what I took from it'
   assisted:
     - 'Claude turned my notes into this text and shortened it on my instructions'
-# Remove both once this version is written: until then it cannot launch.
-placeholder: true
-draft: true
 ---
 
 Every tester knows the moment. The pipeline turns green, someone says "done", and you feel a small question that nobody has asked yet.

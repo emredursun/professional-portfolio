@@ -110,13 +110,17 @@ describe('buildBlog and the launch gate', () => {
   });
 });
 
-describe('the repository samples', () => {
-  it('are marked as placeholders while they exist, so they can never launch', () => {
-    // No count: once real posts replace the samples, there are none left.
+describe('the repository content', () => {
+  it('is ready to launch: real posts and Now entries in every language', () => {
+    // Fails here, before a deploy, if a placeholder or a missing language
+    // creeps back in.
     const repo = path.join(__dirname, '..', '..');
-    const posts = loadPosts(path.join(repo, 'blog', 'content'));
-    const samples = posts.filter((post) => post.slug.startsWith('sample-'));
-    expect(samples.filter((post) => post.placeholder !== true)).toEqual([]);
+    expect(
+      launchProblems({
+        posts: loadPosts(path.join(repo, 'blog', 'content')),
+        now: loadNow(path.join(repo, 'blog', 'now')),
+      }),
+    ).toEqual([]);
   });
 });
 

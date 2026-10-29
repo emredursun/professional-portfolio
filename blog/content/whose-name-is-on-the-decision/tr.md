@@ -19,9 +19,6 @@ aiAssistance:
 translation:
   from: 2026-10-29
   assistedByAi: true
-# Remove both once this version is written: until then it cannot launch.
-placeholder: true
-draft: true
 ---
 
 [Yeşil, bitti demek değil](/tr/blog/green-is-not-done) yazısında anlattığım workshop’tan sonra aklımda iki soru kaldı.
