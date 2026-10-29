@@ -4,6 +4,7 @@
     "resume": "Özgeçmiş",
     "projects": "Projeler",
     "contact": "Bana Ulaşın",
+    "blog": "Blog",
     "search": "Ara"
   },
   "buttons": {
@@ -56,7 +57,10 @@
     "title": "Sayfa bulunamadı",
     "description": "Bu bağlantı sitede bir sayfaya çıkmıyor. Taşınmış olabilir ya da adreste bir yazım hatası olabilir.",
     "home": "Hakkımda sayfasına git",
-    "projects": "Projelere göz at"
+    "projects": "Projelere göz at",
+    "blogTitle": "Bu not (henüz) yok",
+    "blogDescription": "Bu adreste bir Field Notes yazısı yok. Adı değişmiş olabilir ya da henüz yazılmamış olabilir.",
+    "blogIndex": "Tüm Field Notes yazıları"
   },
   "quality": {
     "title": "Kalite raporu",
@@ -128,6 +132,10 @@
       "navContact": {
         "label": "İletişim sayfasına git",
         "description": "İletişime geç"
+      },
+      "navBlog": {
+        "label": "Field Notes'a git",
+        "description": "Test, yapay zekâ ve hayatın geri kalanı üzerine notlar"
       },
       "downloadResume": {
         "label": "Özgeçmişi indir",

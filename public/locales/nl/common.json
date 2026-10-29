@@ -4,6 +4,7 @@
     "resume": "CV",
     "projects": "Projecten",
     "contact": "Contact",
+    "blog": "Blog",
     "search": "Zoeken"
   },
   "buttons": {
@@ -56,7 +57,10 @@
     "title": "Pagina niet gevonden",
     "description": "Deze link leidt nergens naartoe op deze site. Hij is mogelijk verplaatst, of het adres bevat een typfout.",
     "home": "Naar Over mij",
-    "projects": "Projecten bekijken"
+    "projects": "Projecten bekijken",
+    "blogTitle": "Deze notitie bestaat (nog) niet",
+    "blogDescription": "Er staat geen Field Notes-bericht op dit adres. Het is misschien hernoemd, of het is nog niet geschreven.",
+    "blogIndex": "Alle Field Notes"
   },
   "quality": {
     "title": "Kwaliteitsrapport",
@@ -128,6 +132,10 @@
       "navContact": {
         "label": "Ga naar Contact",
         "description": "Neem contact op"
+      },
+      "navBlog": {
+        "label": "Ga naar Field Notes",
+        "description": "Notities over testen, AI en de rest van het leven"
       },
       "downloadResume": {
         "label": "Cv downloaden",

@@ -1,8 +1,9 @@
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'fs';
 import path from 'path';
+import { BLOG_LAUNCHED } from '../scripts/blog/config.js';
 import { strings } from '../scripts/blog/strings.js';
-import { expect, test } from './fixtures';
+import { copy, expect, test } from './fixtures';
 
 /**
  * Field Notes in Turkish and Dutch (scripts/build-blog.js). Accessible names
@@ -201,5 +202,92 @@ test.describe('link previews', () => {
     await page.goto(TR_POST);
     const alt = await page.locator('meta[property="og:image:alt"]').getAttribute('content');
     await expect(page.locator('h1')).toHaveText(alt!);
+  });
+});
+
+test.describe('a missing blog page', () => {
+  for (const lang of ['en', 'tr', 'nl'] as const) {
+    const base = lang === 'en' ? '/blog' : `/${lang}/blog`;
+
+    test(`under ${base} is a real 404 that leads back to that blog`, async ({ page, problems }) => {
+      const notFound = copy(lang, 'common').notFound;
+      const response = await page.goto(`${base}/no-such-post`);
+      expect(response?.status()).toBe(404);
+      // The browser logs the document's own 404 status; that one is expected.
+      const own = problems.findIndex((problem) => /status of 404/.test(problem));
+      expect(own).toBeGreaterThanOrEqual(0);
+      problems.splice(own, 1);
+      await expect(page.getByRole('heading', { name: notFound.blogTitle })).toBeVisible();
+      const back = page.getByRole('link', { name: notFound.blogIndex });
+      await expect(back).toHaveAttribute('href', base);
+      await back.click();
+      await expect(page).toHaveURL(new RegExp(`${base}$`));
+      await expect(page.locator('html')).toHaveAttribute('lang', lang);
+    });
+  }
+});
+
+test.describe('before launch, the portfolio does not link to the blog', () => {
+  test.skip(BLOG_LAUNCHED, 'the blog has launched');
+
+  test('no nav entry and no palette command point at it', async ({ page }) => {
+    await page.goto('/about');
+    await expect(page.locator('a[href="/blog"]')).toHaveCount(0);
+    await page.keyboard.press('Control+k');
+    await page
+      .getByRole('combobox', { name: copy('en', 'common').palette.search })
+      .fill('Field Notes');
+    await expect(
+      page.getByRole('option', {
+        name: new RegExp(copy('en', 'common').palette.commands.navBlog.label),
+      }),
+    ).toHaveCount(0);
+  });
+});
+
+test.describe('the portfolio links to the blog', () => {
+  test.skip(!BLOG_LAUNCHED, 'the nav links to the blog only once it has launched');
+
+  test('the mobile bar still fits a 360 px screen with the blog in it', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 780 });
+    for (const path of ['/about', '/tr/about']) {
+      await page.goto(path);
+      const bar = page.locator('nav.fixed ul');
+      await expect(bar.locator('a[href$="/blog"]')).toHaveCount(1);
+      const { scroll, client } = await bar.evaluate((ul) => ({
+        scroll: ul.scrollWidth,
+        client: ul.clientWidth,
+      }));
+      expect(scroll, path).toBeLessThanOrEqual(client);
+    }
+  });
+
+  test('the nav opens the blog in the page’s language', async ({ page, isMobile }) => {
+    for (const [from, to] of [
+      ['/about', '/blog'],
+      ['/tr/about', '/tr/blog'],
+    ] as const) {
+      await page.goto(from);
+      // The desktop sidebar and the mobile bottom bar each have the link;
+      // only one of them is visible at a time.
+      const link = page.locator(`a[href="${to}"]:visible`).first();
+      await expect(link).toHaveText(new RegExp(copy('en', 'common').nav.blog, 'i'));
+      await link.click();
+      await expect(page).toHaveURL(new RegExp(`${to}$`));
+      await expect(page.locator('html')).toHaveAttribute(
+        'lang',
+        from.startsWith('/tr') ? 'tr' : 'en',
+      );
+    }
+    expect(isMobile !== undefined).toBe(true);
+  });
+
+  test('the command palette has a Field Notes command', async ({ page }) => {
+    await page.goto('/nl/about');
+    await page.keyboard.press('Control+k');
+    const command = copy('nl', 'common').palette.commands.navBlog.label;
+    await page.getByRole('combobox', { name: copy('nl', 'common').palette.search }).fill('blog');
+    await page.getByRole('option', { name: new RegExp(command) }).click();
+    await expect(page).toHaveURL(/\/nl\/blog$/);
   });
 });

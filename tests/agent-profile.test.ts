@@ -4,6 +4,7 @@ import path from 'path';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { validate } from '@jsonresume/schema';
 import { loadConstants } from '../scripts/lib/load-constants.js';
+import { blogForAgents } from '../scripts/blog/agents.js';
 import {
   buildLlmsTxt,
   buildResume,
@@ -87,5 +88,56 @@ describe('llms.txt', () => {
     expect(llms.match(/\(https:\/\/emredursun\.nl\/projects\/[a-z-]+\)/g)).toHaveLength(12);
     expect(llms).not.toContain('github.com/emredursun/professional-portfolio');
     expect(llms).not.toMatch(/<[a-z]+>/);
+  });
+
+  it('has no blog section before launch', () => {
+    expect(llms).not.toContain('Field Notes');
+  });
+
+  it('lists the blog and its English posts once launched', async () => {
+    const constants = await loadConstants();
+    const about = read('public/locales/en/about.json');
+    const blog = [
+      {
+        title: 'A green test',
+        url: 'https://emredursun.nl/blog/a-green-test',
+        description: 'What a pass proves.',
+      },
+    ];
+    const launched = buildLlmsTxt({ constants, about, resumeJson, blog });
+    expect(launched).toContain('## Field Notes');
+    expect(launched).toContain('- [Field Notes](https://emredursun.nl/blog): ');
+    expect(launched).toContain(
+      '- [A green test](https://emredursun.nl/blog/a-green-test): What a pass proves.',
+    );
+    expect(launched.indexOf('## Field Notes')).toBeLessThan(launched.indexOf('## Optional'));
+  });
+
+  it('keeps a post with brackets or line breaks on one valid Markdown line', async () => {
+    const constants = await loadConstants();
+    const about = read('public/locales/en/about.json');
+    const blog = [
+      {
+        title: 'Arrays [and] lists',
+        url: 'https://emredursun.nl/blog/arrays',
+        description: 'Line one\nline two.',
+      },
+    ];
+    const launched = buildLlmsTxt({ constants, about, resumeJson, blog });
+    expect(launched).toContain(
+      '- [Arrays \\[and\\] lists](https://emredursun.nl/blog/arrays): Line one line two.',
+    );
+  });
+});
+
+describe('blogForAgents', () => {
+  it('lists English posts, newest first, only once the blog has launched', () => {
+    const contentDir = path.join(ROOT, 'blog', 'content');
+    expect(blogForAgents({ contentDir, launched: false })).toEqual([]);
+    const posts = blogForAgents({ contentDir, launched: true });
+    expect(posts.length).toBeGreaterThan(0);
+    expect(
+      posts.every((post) => /^https:\/\/emredursun\.nl\/blog\/[a-z0-9-]+$/.test(post.url)),
+    ).toBe(true);
   });
 });
