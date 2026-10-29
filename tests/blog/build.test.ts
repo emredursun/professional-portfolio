@@ -113,9 +113,10 @@ describe('loadPosts', () => {
     expect(() => loadPosts(contentDir)).toThrow(/Bad_Slug/);
   });
 
-  it('only accepts English posts in this phase', () => {
-    writePost('hello', 'Merhaba\n', '', 'tr');
-    expect(() => loadPosts(contentDir)).toThrow(/tr\.md/);
+  it('rejects a language the blog does not publish', () => {
+    writePost('hello', 'Body\n');
+    writePost('hello', 'Hallo\n', '', 'de');
+    expect(() => loadPosts(contentDir)).toThrow(/de\.md/);
   });
 
   it('returns nothing when there is no content folder yet', () => {
@@ -197,18 +198,34 @@ describe('buildBlog', () => {
 });
 
 describe('writeOutput', () => {
-  it.each(['../escape.html', 'blog/../../escape.html', 'blog/a/b.html', 'other.html', 'blog/x.js'])(
-    'refuses %s',
-    (file) => {
-      expect(() => writeOutput(root, file, 'x')).toThrow(/refusing/);
-    },
-  );
+  it.each([
+    '../escape.html',
+    'blog/../../escape.html',
+    'blog/a/b.html',
+    'other.html',
+    'blog/x.js',
+    'de/blog.html',
+    'tr/blog/../../x.html',
+    'blog/Upper.html',
+    'blog/topic/testing.xml',
+    'blog/topic/a/b.html',
+    'tr/other/blog.html',
+  ])('refuses %s', (file) => {
+    expect(() => writeOutput(root, file, 'x')).toThrow(/refusing/);
+  });
 
   it('writes the index, the feed and posts', () => {
     expect(writeOutput(root, 'blog.html', 'i')).toBe('blog.html');
     expect(writeOutput(root, 'blog/feed.xml', 'f')).toBe('blog/feed.xml');
     expect(fs.readFileSync(path.join(root, 'blog', 'feed.xml'), 'utf8')).toBe('f');
   });
+
+  it.each(['tr/blog.html', 'nl/blog/a-post.html', 'tr/blog/feed.xml', 'blog/topic/testing.html'])(
+    'writes the language and topic file %s',
+    (file) => {
+      expect(writeOutput(root, file, 'x')).toBe(file);
+    },
+  );
 });
 
 describe('main', () => {

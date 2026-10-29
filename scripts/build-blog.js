@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 
 /**
- * Builds the Field Notes blog: one static HTML file per post.
+ * Builds the Field Notes blog: one static HTML file per post and language.
  *
  * Runs in postbuild, after `vite build` has produced the blog's hashed CSS,
  * fonts and client script (the second entry in vite.config.ts) and after
- * prerender-routes, which never touches dist/blog. Pages are written to
- * dist/blog/<slug>.html; Firebase's cleanUrls serves them at /blog/<slug>,
- * and because firebase.json has no rewrite for /blog, any other blog path
- * gets the real 404 page. docs/adr/0001-static-blog-build.md has the why.
+ * prerender-routes, which never touches the blog's files. English pages are
+ * written to dist/blog/<slug>.html, Turkish and Dutch ones to
+ * dist/tr/blog/<slug>.html and dist/nl/blog/<slug>.html. Firebase's cleanUrls
+ * serves them at /blog/<slug> and /tr/blog/<slug>, and because firebase.json
+ * has no rewrite for those paths, any other blog path gets the real 404 page.
+ * docs/adr/0001-static-blog-build.md has the why.
  *
  * Output depends only on the content and the Vite manifest: no clock, no
  * file-system listing order, no platform path separators.
@@ -24,25 +26,33 @@ import { createHighlight } from './blog/highlight.js';
 import { readBlogAssets } from './blog/manifest.js';
 import { renderMarkdown } from './blog/markdown.js';
 import { renderFeed } from './blog/feed.js';
+import { BLOG_LANGUAGES } from './blog/strings.js';
 import { renderArticlePage } from './blog/templates/article.js';
-import { byNewest } from './blog/templates/format.js';
+import { byNewest, outputDir } from './blog/templates/format.js';
 import { renderIndexPage } from './blog/templates/index.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-// The Latin woff2 of each face a page's largest text uses (measured with
+// The woff2 of each face a page's largest text uses (measured with
 // Lighthouse: the index's intro paragraph is Newsreader, an article's title
-// Bricolage). Each page preloads the one its LCP element needs.
+// Bricolage). Each page preloads the one its LCP element needs; Turkish pages
+// also preload the extended Latin file, which holds ğ, ş and İ.
 const PRELOAD_FONTS = {
   reading: /\/newsreader-latin-400-normal-[\w-]+\.woff2$/,
   display: /\/bricolage-grotesque-latin-wght-normal-[\w-]+\.woff2$/,
+  readingExt: /\/newsreader-latin-ext-400-normal-[\w-]+\.woff2$/,
+  displayExt: /\/bricolage-grotesque-latin-ext-wght-normal-[\w-]+\.woff2$/,
 };
 
-// The only files the blog writes: dist/blog.html and dist/blog/<name>.html|xml.
-const OUTPUT = /^blog(?:\.html|\/[a-z0-9]+(?:-[a-z0-9]+)*\.(?:html|xml))$/;
+// The only files the blog writes, for each language prefix ('', tr/, nl/):
+// blog.html, blog/<slug>.html, blog/feed.xml and blog/topic/<topic>.html.
+const NAME = '[a-z0-9]+(?:-[a-z0-9]+)*';
+const OUTPUT = new RegExp(
+  `^(?:(?:tr|nl)/)?blog(?:\\.html|/${NAME}\\.html|/feed\\.xml|/topic/${NAME}\\.html)$`,
+);
 
 /**
  * Writes one blog file. Slugs are validated when posts load; this is the
- * second guard, so nothing can land outside dist/blog whatever the input.
+ * second guard, so nothing can land outside the blog's files whatever the input.
  * @param {string} distDir
  * @param {string} file     POSIX path relative to distDir.
  * @param {string} content
@@ -51,38 +61,25 @@ const OUTPUT = /^blog(?:\.html|\/[a-z0-9]+(?:-[a-z0-9]+)*\.(?:html|xml))$/;
 export function writeOutput(distDir, file, content) {
   const target = path.resolve(distDir, file);
   if (!OUTPUT.test(file) || !target.startsWith(path.resolve(distDir) + path.sep)) {
-    throw new Error(`blog: refusing to write "${file}" (only blog.html and blog/<name>)`);
+    throw new Error(`blog: refusing to write "${file}" (only the blog's pages and feeds)`);
   }
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, content, 'utf8');
   return file;
 }
 
-/** The two newest other posts, for the end of an article. */
+/** The two newest other posts in the same language, for the end of an article. */
 function relatedTo(post, posts) {
   return [...posts]
     .sort(byNewest)
-    .filter((other) => other.slug !== post.slug)
+    .filter((other) => other.lang === post.lang && other.slug !== post.slug)
     .slice(0, 2);
 }
 
-/**
- * @param {{ distDir: string, contentDir: string, themeInitPath: string, launched?: boolean }} options
- * @returns {Promise<string[]>} Written files, relative to distDir, POSIX paths.
- */
-export async function buildBlog({ distDir, contentDir, themeInitPath, launched = BLOG_LAUNCHED }) {
-  const posts = loadPosts(contentDir);
-  if (posts.length === 0) return [];
-
+async function prepareAssets(distDir, themeInitPath, codeCss) {
   const vite = readBlogAssets(distDir);
-  const { highlight, css } = await createHighlight();
-  const rendered = posts.map((post) => ({
-    ...post,
-    ...renderMarkdown(post.body, { file: post.file, highlight }),
-  }));
-
-  const codeRules = css();
-  const assets = Object.freeze({
+  const codeRules = codeCss();
+  return Object.freeze({
     ...vite,
     themeInit: emitAsset(distDir, 'theme-init', 'js', fs.readFileSync(themeInitPath, 'utf8')),
     codeCss: codeRules ? emitAsset(distDir, 'code', 'css', codeRules) : undefined,
@@ -93,20 +90,56 @@ export async function buildBlog({ distDir, contentDir, themeInitPath, launched =
       ]),
     ),
   });
+}
 
-  const articles = rendered.map((post) =>
+/** One language's files: its index, its feed after launch, and its articles. */
+function writeLanguage({ distDir, lang, posts, all, languages, assets, launched }) {
+  const dir = `${outputDir(lang)}blog`;
+  return [
     writeOutput(
       distDir,
-      `blog/${post.slug}.html`,
-      renderArticlePage({ post, related: relatedTo(post, rendered), assets, launched }),
+      `${dir}.html`,
+      renderIndexPage({ posts, assets, launched, lang, languages }),
     ),
-  );
-  return [
-    writeOutput(distDir, 'blog.html', renderIndexPage({ posts: rendered, assets, launched })),
     // The feed only after launch: noindex cannot reach XML (see head.js).
-    ...(launched ? [writeOutput(distDir, 'blog/feed.xml', renderFeed(rendered))] : []),
-    ...articles,
+    ...(launched ? [writeOutput(distDir, `${dir}/feed.xml`, renderFeed(posts, lang))] : []),
+    ...posts.map((post) =>
+      writeOutput(
+        distDir,
+        `${dir}/${post.slug}.html`,
+        renderArticlePage({ post, related: relatedTo(post, all), assets, launched }),
+      ),
+    ),
   ];
+}
+
+/**
+ * @param {{ distDir: string, contentDir: string, themeInitPath: string, launched?: boolean }} options
+ * @returns {Promise<string[]>} Written files, relative to distDir, POSIX paths.
+ */
+export async function buildBlog({ distDir, contentDir, themeInitPath, launched = BLOG_LAUNCHED }) {
+  const posts = loadPosts(contentDir);
+  if (posts.length === 0) return [];
+
+  const { highlight, css } = await createHighlight();
+  const rendered = posts.map((post) => ({
+    ...post,
+    ...renderMarkdown(post.body, { file: post.file, highlight }),
+  }));
+  const assets = await prepareAssets(distDir, themeInitPath, css);
+
+  const languages = BLOG_LANGUAGES.filter((lang) => rendered.some((post) => post.lang === lang));
+  return languages.flatMap((lang) =>
+    writeLanguage({
+      distDir,
+      lang,
+      posts: rendered.filter((post) => post.lang === lang),
+      all: rendered,
+      languages,
+      assets,
+      launched,
+    }),
+  );
 }
 
 /**

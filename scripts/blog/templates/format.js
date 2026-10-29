@@ -2,28 +2,101 @@
  * Date and URL helpers shared by the blog templates and the feed. Dates are
  * formatted by hand rather than with Intl so the output never depends on the
  * Node build's ICU data or the machine's locale.
+ *
+ * English lives at /blog, the others under the portfolio's language prefix
+ * (/tr/blog, /nl/blog), so a reader who switched language on the portfolio
+ * stays in it.
  */
 
 import { SITE_URL } from '../../lib/route-meta.js';
+import { BLOG_LANGUAGES } from '../strings.js';
 
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MONTHS = {
+  en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  tr: [
+    'Ocak',
+    'Şubat',
+    'Mart',
+    'Nisan',
+    'Mayıs',
+    'Haziran',
+    'Temmuz',
+    'Ağustos',
+    'Eylül',
+    'Ekim',
+    'Kasım',
+    'Aralık',
+  ],
+  nl: [
+    'januari',
+    'februari',
+    'maart',
+    'april',
+    'mei',
+    'juni',
+    'juli',
+    'augustus',
+    'september',
+    'oktober',
+    'november',
+    'december',
+  ],
+};
 
-export const BLOG_PATH = '/blog';
-export const FEED_PATH = '/blog/feed.xml';
-export const BLOG_URL = `${SITE_URL}${BLOG_PATH}`;
+function checkLanguage(lang) {
+  if (!BLOG_LANGUAGES.includes(lang)) throw new Error(`blog: unknown language "${lang}"`);
+  return lang;
+}
 
-/** @param {string} isoDate  YYYY-MM-DD */
-export function formatDate(isoDate) {
+/**
+ * The folder a language's files are written to, relative to dist: '' or 'tr/'.
+ * @param {string} lang
+ */
+export function outputDir(lang) {
+  return checkLanguage(lang) === 'en' ? '' : `${lang}/`;
+}
+
+/** @param {string} lang */
+export function blogPath(lang) {
+  return `/${outputDir(lang)}blog`;
+}
+
+/** @param {string} lang */
+export function blogUrl(lang) {
+  return `${SITE_URL}${blogPath(lang)}`;
+}
+
+/** @param {string} lang */
+export function feedPath(lang) {
+  return `${blogPath(lang)}/feed.xml`;
+}
+
+/**
+ * A portfolio page in the reader's language: ('tr', '/contact') gives
+ * /tr/contact, and ('en', '/') gives /.
+ * @param {string} lang
+ * @param {string} route  '/' or a path such as '/contact'.
+ */
+export function portfolioPath(lang, route) {
+  const prefix = outputDir(lang) ? `/${lang}` : '';
+  return route === '/' ? prefix || '/' : `${prefix}${route}`;
+}
+
+/**
+ * @param {string} isoDate  YYYY-MM-DD
+ * @param {string} [lang]
+ */
+export function formatDate(isoDate, lang = 'en') {
   const [year, month, day] = isoDate.split('-').map(Number);
-  return `${day} ${MONTHS[month - 1]} ${year}`;
+  return `${day} ${MONTHS[checkLanguage(lang)][month - 1]} ${year}`;
 }
 
-/** @param {{ slug: string }} post */
+/** @param {{ slug: string, lang?: string }} post */
 export function postPath(post) {
-  return `${BLOG_PATH}/${post.slug}`;
+  return `${blogPath(post.lang ?? 'en')}/${post.slug}`;
 }
 
-/** @param {{ slug: string }} post */
+/** @param {{ slug: string, lang?: string }} post */
 export function postUrl(post) {
   return `${SITE_URL}${postPath(post)}`;
 }

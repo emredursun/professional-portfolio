@@ -5,11 +5,19 @@
 
 import { markup, raw } from '../html.js';
 import { PERSON_ID, SOCIAL_IMAGE } from '../../lib/route-meta.js';
-import { BLOG_URL, formatDate, lastChange, postPath, postUrl } from './format.js';
+import { blogUrl, formatDate, lastChange, portfolioPath, postPath, postUrl } from './format.js';
 import { renderPage } from './layout.js';
 import { statusChip } from './status.js';
 import { aiPanel, corrections, evidenceCard, tableOfContents } from './sections.js';
 import { strings } from '../strings.js';
+
+/** The other language versions of a post, as JSON-LD links (schema.org translations). */
+function translationLinks(post) {
+  const link = (lang) => ({ '@id': `${postUrl({ ...post, lang })}#article` });
+  if (post.lang !== 'en') return { translationOfWork: link('en') };
+  const others = (post.translations ?? []).filter((lang) => lang !== 'en');
+  return others.length > 0 ? { workTranslation: others.map(link) } : {};
+}
 
 function articleMeta(post) {
   const url = postUrl(post);
@@ -19,6 +27,10 @@ function articleMeta(post) {
     heading: post.title,
     description: post.description,
     url,
+    alternates: (post.translations ?? [post.lang]).map((lang) => ({
+      lang,
+      url: postUrl({ ...post, lang }),
+    })),
     ogType: 'article',
     lcpFont: 'display',
     published: post.publishedAt,
@@ -37,7 +49,8 @@ function articleMeta(post) {
       image: SOCIAL_IMAGE.url,
       author: { '@id': PERSON_ID },
       publisher: { '@id': PERSON_ID },
-      isPartOf: { '@id': `${BLOG_URL}#blog` },
+      isPartOf: { '@id': `${blogUrl(post.lang)}#blog` },
+      ...translationLinks(post),
     },
   };
 }
@@ -48,17 +61,17 @@ function articleHeader(post) {
 <p class="article-kicker">${statusChip(post.status, post.lang)} ${s.topicLabels[post.topic]} · ${post.minutes} ${s.minutesRead}</p>
 <h1>${post.title}</h1>
 <p class="article-dek">${post.description}</p>
-<p class="byline">Emre Dursun · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt)}</time>${post.updatedAt ? markup` · ${s.updated} <time datetime="${post.updatedAt}">${formatDate(post.updatedAt)}</time>` : ''}</p>
+<p class="byline">Emre Dursun · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt, post.lang)}</time>${post.updatedAt ? markup` · ${s.updated} <time datetime="${post.updatedAt}">${formatDate(post.updatedAt, post.lang)}</time>` : ''}</p>
 </header>`;
 }
 
-function authorCard(s) {
+function authorCard(s, lang) {
   return markup`<section class="author" aria-label="${s.aboutAuthor}">
 <img src="/images/emre-dursun-qa-consultant-400.webp" alt="" width="64" height="64" loading="lazy" decoding="async">
 <div>
 <p class="author-name">${s.writtenBy}</p>
 <p class="author-bio">${s.authorBio}</p>
-<p><a href="/about">${s.moreAboutMe}</a></p>
+<p><a href="${portfolioPath(lang, '/about')}">${s.moreAboutMe}</a></p>
 </div>
 </section>`;
 }
@@ -93,7 +106,7 @@ ${raw(post.html)}
 </div>
 ${aiPanel(post)}
 ${corrections(post)}
-${authorCard(s)}
+${authorCard(s, post.lang)}
 </article>
 ${keepReading(related, s)}`;
   return renderPage({

@@ -6,7 +6,7 @@
 
 import { markup } from '../html.js';
 import { PERSON_ID, WEBSITE_ID } from '../../lib/route-meta.js';
-import { BLOG_URL, FEED_PATH, byNewest, formatDate, postPath, postUrl } from './format.js';
+import { blogUrl, byNewest, feedPath, formatDate, postPath, postUrl } from './format.js';
 import { renderPage } from './layout.js';
 import { nextRecheck } from './sections.js';
 import { statusChip } from './status.js';
@@ -22,28 +22,30 @@ function topicsBand(s) {
   )}</ul>`;
 }
 
-function heroActions(newest, launched, s) {
+function heroActions(newest, launched, s, lang) {
   if (!newest) throw new Error('blog: the index needs at least one post');
   return markup`<p class="index-actions"><a class="button button-solid" href="${postPath(newest)}">${s.readLatest}<span class="visually-hidden">: ${newest.title}</span></a>${
-    launched ? markup`<a class="button" href="${FEED_PATH}">${s.followFeed}</a>` : ''
+    launched ? markup`<a class="button" href="${feedPath(lang)}">${s.followFeed}</a>` : ''
   }</p>`;
 }
 
-function indexMeta(posts, s, lang) {
+function indexMeta(posts, s, lang, languages) {
+  const url = blogUrl(lang);
   return {
     title: `${s.blogName} · Emre Dursun`,
     heading: s.blogName,
     description: s.description,
-    url: BLOG_URL,
+    url,
+    alternates: languages.map((other) => ({ lang: other, url: blogUrl(other) })),
     ogType: 'website',
     lcpFont: 'reading',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Blog',
-      '@id': `${BLOG_URL}#blog`,
+      '@id': `${url}#blog`,
       name: s.blogName,
       description: s.description,
-      url: BLOG_URL,
+      url,
       inLanguage: lang,
       author: { '@id': PERSON_ID },
       isPartOf: { '@id': WEBSITE_ID },
@@ -62,7 +64,7 @@ function indexMeta(posts, s, lang) {
 
 function postMeta(post) {
   const s = strings(post.lang);
-  return markup`<p class="card-meta">${s.topicLabels[post.topic]} · ${post.minutes} ${s.minutesShort} · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt)}</time></p>`;
+  return markup`<p class="card-meta">${s.topicLabels[post.topic]} · ${post.minutes} ${s.minutesShort} · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt, post.lang)}</time></p>`;
 }
 
 // Revealed in the browser by blog/client/stale.ts once the re-check date has
@@ -99,10 +101,11 @@ function section({ id, title, intro, items, listClass }) {
 }
 
 /**
- * @param {{ posts: object[], assets: object, launched: boolean, lang?: string }} options
+ * @param {{ posts: object[], assets: object, launched: boolean, lang?: string, languages?: string[] }} options
+ *   `languages`: every language that has an index, for the alternate links.
  * @returns {string}
  */
-export function renderIndexPage({ posts, assets, launched, lang = 'en' }) {
+export function renderIndexPage({ posts, assets, launched, lang = 'en', languages = [lang] }) {
   const s = strings(lang);
   const sorted = [...posts].sort(byNewest);
   const essays = sorted.filter((post) => post.kind === 'essay');
@@ -112,11 +115,17 @@ export function renderIndexPage({ posts, assets, launched, lang = 'en' }) {
 <p class="index-eyebrow">${s.blogName}</p>
 <h1 class="index-lede">${s.tagline}</h1>
 <p class="index-intro">${s.intro}</p>
-${heroActions(sorted[0], launched, s)}
+${heroActions(sorted[0], launched, s, lang)}
 </header>
 ${topicsBand(s)}
 ${section({ id: 'essays-title', title: s.essays, intro: s.essaysIntro, items: essays.map(essayCard), listClass: 'cards' })}
 ${section({ id: 'notes-title', title: s.notes, intro: s.notesIntro, items: notes.map(noteItem), listClass: 'notes' })}
 </div>`;
-  return renderPage({ lang, meta: indexMeta(sorted, s, lang), assets, launched, content });
+  return renderPage({
+    lang,
+    meta: indexMeta(sorted, s, lang, languages),
+    assets,
+    launched,
+    content,
+  });
 }

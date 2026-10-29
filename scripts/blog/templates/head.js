@@ -8,9 +8,9 @@
  */
 
 import { markup, raw } from '../html.js';
-import { SOCIAL_IMAGE } from '../../lib/route-meta.js';
+import { OG_LOCALES, SOCIAL_IMAGE } from '../../lib/route-meta.js';
 import { strings } from '../strings.js';
-import { FEED_PATH } from './format.js';
+import { feedPath } from './format.js';
 
 /** JSON for a <script> block: "<" escaped so text can never close the element. */
 function jsonForScript(data) {
@@ -29,6 +29,7 @@ const line = (condition, content) => (condition ? markup`${content()}\n` : '');
  * @property {string} heading       Title for sharing (og:title).
  * @property {string} description
  * @property {string} url           Canonical URL.
+ * @property {{ lang: string, url: string }[]} [alternates]  Every language version, this one included.
  * @property {'article' | 'website'} ogType
  * @property {string} [published]   YYYY-MM-DD, articles only.
  * @property {string} [modified]    YYYY-MM-DD, articles only.
@@ -38,16 +39,41 @@ const line = (condition, content) => (condition ? markup`${content()}\n` : '');
  */
 
 /** The lines that depend on the page, its assets or the launch flag. */
-function optionalLines({ meta, assets, launched, blogName }) {
+function optionalLines({ meta, assets, launched, blogName, lang }) {
+  const alternates = meta.alternates ?? [];
+  const english = alternates.find((alternate) => alternate.lang === 'en');
+  const preloads = [
+    assets.preload?.[meta.lcpFont],
+    // Turkish needs ğ, ş and İ from the extended Latin file as soon as the
+    // largest text paints; without the preload it arrives late and swaps.
+    lang === 'tr' ? assets.preload?.[`${meta.lcpFont}Ext`] : undefined,
+  ].filter(Boolean);
   return {
     robots: line(!launched, () => markup`<meta name="robots" content="noindex, nofollow">`),
+    // Each version names the others and English as the default; only
+    // versions that exist are listed (content.js knows which).
+    alternates: alternates.map(({ lang: other, url }) =>
+      line(true, () => markup`<link rel="alternate" hreflang="${other}" href="${url}">`),
+    ),
+    xDefault: line(
+      Boolean(english),
+      () => markup`<link rel="alternate" hreflang="x-default" href="${english.url}">`,
+    ),
     // The feed exists only after launch: noindex cannot reach XML, and feed
     // services cache what they find.
     feedLink: line(
       launched,
       () =>
-        markup`<link rel="alternate" type="application/atom+xml" title="${blogName}" href="${FEED_PATH}">`,
+        markup`<link rel="alternate" type="application/atom+xml" hreflang="${lang}" title="${blogName}" href="${feedPath(lang)}">`,
     ),
+    localeAlternates: alternates
+      .filter((alternate) => alternate.lang !== lang)
+      .map(({ lang: other }) =>
+        line(
+          true,
+          () => markup`<meta property="og:locale:alternate" content="${OG_LOCALES[other]}">`,
+        ),
+      ),
     articleTimes: line(
       meta.ogType === 'article',
       () => markup`<meta property="article:published_time" content="${meta.published}">
@@ -60,10 +86,11 @@ function optionalLines({ meta, assets, launched, blogName }) {
       Boolean(meta.hasCode && assets.codeCss),
       () => markup`<link rel="stylesheet" href="${assets.codeCss}">`,
     ),
-    fontPreload: line(
-      Boolean(assets.preload?.[meta.lcpFont]),
-      () =>
-        markup`<link rel="preload" href="${assets.preload[meta.lcpFont]}" as="font" type="font/woff2" crossorigin>`,
+    fontPreload: preloads.map((href) =>
+      line(
+        true,
+        () => markup`<link rel="preload" href="${href}" as="font" type="font/woff2" crossorigin>`,
+      ),
     ),
   };
 }
@@ -76,12 +103,17 @@ export function renderHead({ meta, assets, launched, lang = 'en' }) {
     throw new Error(`blog: unknown lcpFont "${meta.lcpFont}"`);
   }
   const { blogName } = strings(lang);
-  const { robots, feedLink, articleTimes, styles, codeStyles, fontPreload } = optionalLines({
-    meta,
-    assets,
-    launched,
-    blogName,
-  });
+  const {
+    robots,
+    alternates,
+    xDefault,
+    feedLink,
+    localeAlternates,
+    articleTimes,
+    styles,
+    codeStyles,
+    fontPreload,
+  } = optionalLines({ meta, assets, launched, blogName, lang });
 
   return markup`<head>
 <meta charset="utf-8">
@@ -89,7 +121,7 @@ export function renderHead({ meta, assets, launched, lang = 'en' }) {
 <title>${meta.title}</title>
 <meta name="description" content="${meta.description}">
 ${robots}<link rel="canonical" href="${meta.url}">
-${feedLink}<meta name="color-scheme" content="light dark">
+${alternates}${xDefault}${feedLink}<meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#faf7f0" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1c1b18" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
@@ -102,7 +134,8 @@ ${feedLink}<meta name="color-scheme" content="light dark">
 <meta property="og:title" content="${meta.heading}">
 <meta property="og:description" content="${meta.description}">
 <meta property="og:url" content="${meta.url}">
-<meta property="og:image" content="${SOCIAL_IMAGE.url}">
+<meta property="og:locale" content="${OG_LOCALES[lang]}">
+${localeAlternates}<meta property="og:image" content="${SOCIAL_IMAGE.url}">
 <meta property="og:image:width" content="${SOCIAL_IMAGE.width}">
 <meta property="og:image:height" content="${SOCIAL_IMAGE.height}">
 <meta property="og:image:alt" content="${SOCIAL_IMAGE.alt}">

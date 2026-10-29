@@ -6,7 +6,7 @@
 
 import { markup } from '../html.js';
 import { statusChip } from './status.js';
-import { formatDate } from './format.js';
+import { formatDate, portfolioPath } from './format.js';
 import { strings } from '../strings.js';
 
 /** The date a post is due for a re-check: a year after the last one (29 Feb → 28 Feb). */
@@ -24,7 +24,7 @@ export function evidenceCard(post) {
 <div><dt>${s.status}</dt><dd>${statusChip(post.status, post.lang)}</dd></div>
 <div><dt>${s.confidence}</dt><dd>${evidence.confidence}</dd></div>
 <div><dt>${s.basedOn}</dt><dd>${evidence.basedOn.join('; ')}</dd></div>
-<div><dt>${s.rechecked}</dt><dd><time datetime="${evidence.recheckedAt}">${formatDate(evidence.recheckedAt)}</time>, ${s.nextBy} <time datetime="${nextRecheck(evidence.recheckedAt)}">${formatDate(nextRecheck(evidence.recheckedAt))}</time></dd></div>
+<div><dt>${s.rechecked}</dt><dd><time datetime="${evidence.recheckedAt}">${formatDate(evidence.recheckedAt, post.lang)}</time>, ${s.nextBy} <time datetime="${nextRecheck(evidence.recheckedAt)}">${formatDate(nextRecheck(evidence.recheckedAt), post.lang)}</time></dd></div>
 </dl>
 <p class="stale-note" hidden>${s.staleEvidence}</p>
 </aside>`;
@@ -48,12 +48,12 @@ export function corrections(post) {
   const s = strings(post.lang);
   const entries = post.corrections.map(
     (entry) =>
-      markup`<li><time datetime="${entry.date}">${formatDate(entry.date)}</time>: ${entry.text}</li>`,
+      markup`<li><time datetime="${entry.date}">${formatDate(entry.date, post.lang)}</time>: ${entry.text}</li>`,
   );
   return markup`<section class="corrections" aria-labelledby="corrections-title">
 <h2 id="corrections-title">${s.correctionsTitle}</h2>
 <p>${s.correctionsIntro}</p>
-<p><a class="button" href="/contact">${s.reportBug}</a></p>
+<p><a class="button" href="${portfolioPath(post.lang, '/contact')}">${s.reportBug}</a></p>
 <h3>${s.correctionsLog}</h3>
 ${entries.length > 0 ? markup`<ol class="corrections-log">${entries}</ol>` : markup`<p>${s.correctionsNone}</p>`}
 </section>`;
