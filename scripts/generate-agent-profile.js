@@ -19,6 +19,8 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
+import { blogForAgents } from './blog/agents.js';
+import { strings } from './blog/strings.js';
 import { loadConstants } from './lib/load-constants.js';
 import { CERTIFICATIONS, splitCompany } from './generate-profile-readme.js';
 
@@ -158,9 +160,10 @@ export function buildResume({ constants, resume, about, builtAt }) {
 /**
  * llms.txt: H1, summary blockquote, a few facts, then link lists.
  *
- * @param {{ constants: any, about: any, resumeJson: ReturnType<typeof buildResume> }} input
+ * @param {{ constants: any, about: any, resumeJson: ReturnType<typeof buildResume>, blog?: ReturnType<typeof blogForAgents> }} input
+ *   `blog`: the Field Notes posts; empty (no section) until the blog launches.
  */
-export function buildLlmsTxt({ constants, about, resumeJson }) {
+export function buildLlmsTxt({ constants, about, resumeJson, blog = [] }) {
   const { PERSONAL_INFO, SERVICES, PROJECTS } = constants;
   const serviceKeys = constants.SERVICE_TRANSLATION_KEYS;
   const linkedin = resumeJson.basics.profiles.find((profile) => profile.network === 'LinkedIn');
@@ -201,7 +204,16 @@ ${certificates}
 
 ${PROJECTS.map((project) => `- [${project.title}](${SITE_URL}/projects/${project.slug}): ${plain(project.description)}`).join('\n')}
 
-## Optional
+${
+  blog.length > 0
+    ? `## Field Notes
+
+- [Field Notes](${SITE_URL}/blog): ${strings('en').description}
+${blog.map((post) => `- [${post.title}](${post.url}): ${post.description}`).join('\n')}
+
+`
+    : ''
+}## Optional
 
 - [Quality report](${SITE_URL}/quality): test, accessibility, performance and security results for the live build
 `;
@@ -232,7 +244,12 @@ export async function writeAgentProfile({ distDir = DIST } = {}) {
   );
   fs.writeFileSync(
     path.join(distDir, 'llms.txt'),
-    buildLlmsTxt({ constants, about, resumeJson }),
+    buildLlmsTxt({
+      constants,
+      about,
+      resumeJson,
+      blog: blogForAgents({ contentDir: path.join(ROOT, 'blog', 'content') }),
+    }),
     'utf8',
   );
   return resumeJson;
