@@ -114,6 +114,15 @@ describe('the Now page', () => {
     expect(page.querySelectorAll('link[rel="alternate"][hreflang]')).toHaveLength(3);
   });
 
+  it('preloads its heading font, so the Bricolage h1 does not re-wrap when fonts load', async () => {
+    writeNow('en');
+    const { dist } = await build();
+    const hrefs = [
+      ...doc(dist, 'blog', 'now.html').querySelectorAll('link[rel="preload"][as="font"]'),
+    ].map((link) => link.getAttribute('href'));
+    expect(hrefs).toContain('/assets/bricolage-grotesque-latin-wght-normal-y2.woff2');
+  });
+
   it('puts the newest entry on the index, linking to the page', async () => {
     writeNow('en');
     const { dist } = await build();

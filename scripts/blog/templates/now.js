@@ -47,6 +47,7 @@ export function renderNowPage({ entries, assets, launched, lang, languages }) {
       alternates: languages.map((other) => ({ lang: other, url: `${SITE_URL}${nowPath(other)}` })),
       ogType: 'website',
       lcpFont: 'reading',
+      headingFont: 'display',
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'WebPage',
