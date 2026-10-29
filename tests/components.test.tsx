@@ -193,7 +193,10 @@ describe('bootstrap', () => {
 
     it('registers the service worker after load in production builds only', async () => {
       const register = vi.fn().mockResolvedValue({});
-      Object.defineProperty(navigator, 'serviceWorker', { value: { register }, configurable: true });
+      Object.defineProperty(navigator, 'serviceWorker', {
+        value: { register },
+        configurable: true,
+      });
 
       vi.resetModules();
       await import('../src/bootstrap.ts');
