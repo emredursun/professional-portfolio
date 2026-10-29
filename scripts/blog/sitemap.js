@@ -84,15 +84,24 @@ function languageEntries(lang, { posts, languages, now }) {
 }
 
 /**
- * @param {{ contentDir: string, nowDir?: string, launched?: boolean }} options
+ * The entries for loaded content: the pages build-blog.js writes for it.
+ * @param {{ posts: object[], now: Record<string, readonly { date: string }[]> }} content
  * @returns {{ loc: string, lastmod: string, alternates: { lang: string, href: string }[] }[]}
+ */
+export function entriesFor({ posts, now }) {
+  const languages = BLOG_LANGUAGES.filter((lang) => posts.some((post) => post.lang === lang));
+  return languages.flatMap((lang) => languageEntries(lang, { posts, languages, now }));
+}
+
+/**
+ * The sitemap's blog entries: none before launch; once launched, the
+ * content's pages, after the launch gate.
+ * @param {{ contentDir: string, nowDir?: string, launched?: boolean }} options
  */
 export function blogSitemapEntries({ contentDir, nowDir, launched = BLOG_LAUNCHED }) {
   if (!launched) return [];
-  const posts = loadPosts(contentDir);
-  const languages = BLOG_LANGUAGES.filter((lang) => posts.some((post) => post.lang === lang));
-  const now = loadNow(nowDir);
+  const content = { posts: loadPosts(contentDir), now: loadNow(nowDir) };
   // Runs in prebuild, before the blog build would refuse: refuse here too.
-  assertLaunchable({ posts, now });
-  return languages.flatMap((lang) => languageEntries(lang, { posts, languages, now }));
+  assertLaunchable(content);
+  return entriesFor(content);
 }

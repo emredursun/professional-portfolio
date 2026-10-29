@@ -3,7 +3,9 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { blogSitemapEntries } from '../../scripts/blog/sitemap.js';
+import { blogSitemapEntries, entriesFor } from '../../scripts/blog/sitemap.js';
+import { loadPosts } from '../../scripts/blog/content.js';
+import { loadNow } from '../../scripts/blog/now.js';
 import { generateSitemap } from '../../scripts/generate-sitemap.js';
 import { buildBlog } from '../../scripts/build-blog.js';
 import { TRANSLATION, makeDist, writePost } from './fixtures';
@@ -23,7 +25,12 @@ afterEach(() => {
   fs.rmSync(root, { recursive: true, force: true });
 });
 
-const entries = (launched = true) => blogSitemapEntries({ contentDir, nowDir, launched });
+// The page logic on loaded content; the launch gate has its own tests
+// (launch-gate.test.ts), so these fixtures need not cover every language.
+const entries = (launched = true) =>
+  launched
+    ? entriesFor({ posts: loadPosts(contentDir), now: loadNow(nowDir) })
+    : blogSitemapEntries({ contentDir, nowDir, launched });
 const byLoc = (loc: string) => entries().find((entry) => entry.loc === `${SITE}${loc}`);
 
 describe('blogSitemapEntries', () => {
@@ -92,8 +99,10 @@ describe('blogSitemapEntries', () => {
   });
 
   it('lists exactly the pages the blog build writes', async () => {
+    // A launchable set (every language), through the real entry point.
     writePost(contentDir, 'hello', 'Body\n');
     writePost(contentDir, 'hello', 'Gövde\n', TRANSLATION, 'tr');
+    writePost(contentDir, 'hello', 'Tekst\n', TRANSLATION, 'nl');
     writePost(contentDir, 'only-en', 'Body\n');
     const file = path.join(contentDir, 'only-en', 'en.md');
     fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('topic: testing', 'topic: ai'));
@@ -116,7 +125,7 @@ describe('blogSitemapEntries', () => {
       .map((file) => `${SITE}/${file.slice(0, -'.html'.length)}`)
       .sort();
     expect(
-      entries()
+      blogSitemapEntries({ contentDir, nowDir, launched: true })
         .map((entry) => entry.loc)
         .sort(),
     ).toEqual(pages);

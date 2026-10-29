@@ -6,7 +6,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { validate } from '@jsonresume/schema';
 import { loadConstants } from '../scripts/lib/load-constants.js';
 import { blogForAgents } from '../scripts/blog/agents.js';
-import { writePost } from './blog/fixtures';
+import { writeInAllLanguages, writePost } from './blog/fixtures';
 import {
   buildLlmsTxt,
   buildResume,
@@ -136,7 +136,8 @@ describe('blogForAgents', () => {
   it('lists English posts, newest first, only once the blog has launched', () => {
     // Real, launchable content: the repository's samples refuse to launch.
     const contentDir = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'llms-')), 'content');
-    writePost(contentDir, 'older', 'Body\n');
+    // Every language, as the launch gate requires; llms.txt lists English only.
+    writeInAllLanguages(contentDir, 'older');
     writePost(contentDir, 'newer', 'Body\n', 'updatedAt: 2026-12-20\n');
     const file = path.join(contentDir, 'newer', 'en.md');
     fs.writeFileSync(

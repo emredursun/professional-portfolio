@@ -23,7 +23,7 @@ import { emitAsset } from './blog/assets.js';
 import { ogCards, readOgImages } from './blog/og.js';
 import { BLOG_LAUNCHED } from './blog/config.js';
 import { loadPosts } from './blog/content.js';
-import { assertLaunchable } from './blog/launch-gate.js';
+import { assertLaunchable, launchWarnings } from './blog/launch-gate.js';
 import { loadNow } from './blog/now.js';
 import { createHighlight } from './blog/highlight.js';
 import { readBlogAssets } from './blog/manifest.js';
@@ -263,6 +263,9 @@ export async function main(root = ROOT) {
     process.stdout.write(
       `blog: ${written.length} file(s)${written.map((f) => `\n  ${f}`).join('')}\n`,
     );
+    // Not errors: each such page already tells readers the English changed.
+    const warnings = launchWarnings({ posts: loadPosts(path.join(root, 'blog', 'content')) });
+    warnings.forEach((warning) => process.stdout.write(`blog: warning: ${warning}\n`));
     return 0;
   } catch (error) {
     console.error(error instanceof Error ? error.message : error);

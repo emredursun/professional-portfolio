@@ -357,8 +357,12 @@ Still to do in Phase 3: crawlable topic pages (3b) and the "Now" log
 
 - **Launch gate:** posts and Now entries take `placeholder: true`; the
   samples carry it. With `BLOG_LAUNCHED`, the build lists every
-  placeholder and every translation the English version has outgrown, and
-  refuses to build, so launch cannot ship a sample or a stale translation.
+  placeholder and every language without a published post, and refuses to
+  build, so launch cannot ship a sample or a nav link to a 404 (the nav
+  links the blog in all three languages). A translation the English
+  version has outgrown is a warning, not an error: its page already shows
+  readers a notice, and blocking would fail every deploy after an English
+  edit until all translations caught up.
 - **`npm run blog:new`:** starts a post as drafts in three languages with
   valid frontmatter, each marked `placeholder: true` until written, so an
   unwritten translation published by removing only `draft` still cannot
