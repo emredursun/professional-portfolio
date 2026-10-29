@@ -6,7 +6,8 @@
 
 import { markup } from '../html.js';
 import { statusChip } from './status.js';
-import { formatDate } from './format.js';
+import { formatDate, portfolioPath } from './format.js';
+import { strings } from '../strings.js';
 
 /** The date a post is due for a re-check: a year after the last one (29 Feb → 28 Feb). */
 export function nextRecheck(isoDate) {
@@ -16,49 +17,56 @@ export function nextRecheck(isoDate) {
 
 export function evidenceCard(post) {
   const { evidence } = post;
+  const s = strings(post.lang);
   return markup`<aside class="evidence" aria-labelledby="evidence-title" data-recheck-by="${nextRecheck(evidence.recheckedAt)}">
-<h2 id="evidence-title" class="visually-hidden">Evidence for this note</h2>
+<h2 id="evidence-title" class="visually-hidden">${s.evidenceTitle}</h2>
 <dl class="evidence-grid">
-<div><dt>Status</dt><dd>${statusChip(post.status)}</dd></div>
-<div><dt>Confidence</dt><dd>${evidence.confidence}</dd></div>
-<div><dt>Based on</dt><dd>${evidence.basedOn.join('; ')}</dd></div>
-<div><dt>Re-checked</dt><dd><time datetime="${evidence.recheckedAt}">${formatDate(evidence.recheckedAt)}</time>, next by <time datetime="${nextRecheck(evidence.recheckedAt)}">${formatDate(nextRecheck(evidence.recheckedAt))}</time></dd></div>
+<div><dt>${s.status}</dt><dd>${statusChip(post.status, post.lang)}</dd></div>
+<div><dt>${s.confidence}</dt><dd>${evidence.confidence}</dd></div>
+<div><dt>${s.basedOn}</dt><dd>${evidence.basedOn.join('; ')}</dd></div>
+<div><dt>${s.rechecked}</dt><dd><time datetime="${evidence.recheckedAt}">${formatDate(evidence.recheckedAt, post.lang)}</time>, ${s.nextBy} <time datetime="${nextRecheck(evidence.recheckedAt)}">${formatDate(nextRecheck(evidence.recheckedAt), post.lang)}</time></dd></div>
 </dl>
-<p class="stale-note" hidden>Needs a re-run: this evidence is more than a year old.</p>
+<p class="stale-note" hidden>${s.staleEvidence}</p>
 </aside>`;
 }
 
 export function aiPanel(post) {
   const { mine, assisted, promptsUrl } = post.aiAssistance;
+  const s = strings(post.lang);
+  const translated = post.translation
+    ? `${post.translation.assistedByAi ? s.aiTranslatedWithAi : s.aiTranslatedByMe} `
+    : '';
   const list = (items) => markup`<ul>${items.map((item) => markup`<li>${item}</li>`)}</ul>`;
   return markup`<aside class="ai-note" aria-labelledby="ai-title">
-<h2 id="ai-title">How this was written</h2>
+<h2 id="ai-title">${s.aiTitle}</h2>
 <div class="ai-grid">
-<section class="ai-mine" aria-labelledby="ai-mine"><h3 id="ai-mine">Mine</h3>${list(mine)}</section>
-<section class="ai-assisted" aria-labelledby="ai-assisted"><h3 id="ai-assisted">With AI’s help</h3>${assisted.length > 0 ? list(assisted) : markup`<p>Nothing.</p>`}</section>
+<section class="ai-mine" aria-labelledby="ai-mine"><h3 id="ai-mine">${s.aiMine}</h3>${list(mine)}</section>
+<section class="ai-assisted" aria-labelledby="ai-assisted"><h3 id="ai-assisted">${s.aiAssisted}</h3>${assisted.length > 0 ? list(assisted) : markup`<p>${s.aiNothing}</p>`}</section>
 </div>
-<p class="ai-footer">I checked every claim myself before publishing.${promptsUrl ? markup` <a href="${promptsUrl}" rel="noopener noreferrer">See the prompts I used</a>` : ''}</p>
+<p class="ai-footer">${translated}${s.aiChecked}${promptsUrl ? markup` <a href="${promptsUrl}" rel="noopener noreferrer">${s.aiPrompts}</a>` : ''}</p>
 </aside>`;
 }
 
 export function corrections(post) {
+  const s = strings(post.lang);
   const entries = post.corrections.map(
     (entry) =>
-      markup`<li><time datetime="${entry.date}">${formatDate(entry.date)}</time>: ${entry.text}</li>`,
+      markup`<li><time datetime="${entry.date}">${formatDate(entry.date, post.lang)}</time>: ${entry.text}</li>`,
   );
   return markup`<section class="corrections" aria-labelledby="corrections-title">
-<h2 id="corrections-title">Found a mistake?</h2>
-<p>Report it the way you would in a sprint. Fixes are logged here.</p>
-<p><a class="button" href="/contact">Report a bug</a></p>
-<h3>Corrections</h3>
-${entries.length > 0 ? markup`<ol class="corrections-log">${entries}</ol>` : markup`<p>None yet.</p>`}
+<h2 id="corrections-title">${s.correctionsTitle}</h2>
+<p>${s.correctionsIntro}</p>
+<p><a class="button" href="${portfolioPath(post.lang, '/contact')}">${s.reportBug}</a></p>
+<h3>${s.correctionsLog}</h3>
+${entries.length > 0 ? markup`<ol class="corrections-log">${entries}</ol>` : markup`<p>${s.correctionsNone}</p>`}
 </section>`;
 }
 
 export function tableOfContents(post) {
   if (post.toc.length === 0) return '';
-  return markup`<nav class="toc" aria-label="On this page">
-<p class="toc-title">On this page</p>
+  const s = strings(post.lang);
+  return markup`<nav class="toc" aria-label="${s.toc}">
+<p class="toc-title">${s.toc}</p>
 <ol>${post.toc.map((entry) => markup`<li class="toc-level-${entry.level}"><a href="#${entry.id}">${entry.text}</a></li>`)}</ol>
 </nav>`;
 }

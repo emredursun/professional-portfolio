@@ -56,6 +56,11 @@ export async function createHighlight() {
         lang: ALIASES[lang] ?? lang,
         themes: { dark: THEME },
         defaultColor: false,
+        // No per-line time limit. Shiki's default (500 ms) prints a slow line
+        // plain, and a cold regex engine can hit it on the first line, so two
+        // builds of the same post could differ. Content is our own, so there
+        // is no hostile input to bound.
+        tokenizeTimeLimit: 0,
         transformers: [plainPre, styleToClass],
       });
     },

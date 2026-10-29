@@ -98,6 +98,17 @@ describe('blog preview routes: other files', () => {
     expect(handle('/blog/feed.xml').next).toHaveBeenCalled();
     expect(handle('/blog/missing.xml').res.statusCode).toBe(404);
   });
+
+  it.each(['/blog/feed.xml', '/tr/blog/feed.xml', '/nl/blog/feed.xml'])(
+    'answers a missing feed %s as Firebase does: 404, with the Atom content type',
+    (url) => {
+      // firebase.json sets the feed's Content-Type whatever the status, so
+      // before launch real Hosting sends its 404 page labelled as Atom.
+      const { res } = handle(url);
+      expect(res.statusCode).toBe(404);
+      expect(res.headers['Content-Type']).toBe('application/atom+xml; charset=utf-8');
+    },
+  );
 });
 
 describe('blog preview routes: the index', () => {

@@ -113,9 +113,10 @@ describe('loadPosts', () => {
     expect(() => loadPosts(contentDir)).toThrow(/Bad_Slug/);
   });
 
-  it('only accepts English posts in this phase', () => {
-    writePost('hello', 'Merhaba\n', '', 'tr');
-    expect(() => loadPosts(contentDir)).toThrow(/tr\.md/);
+  it('rejects a language the blog does not publish', () => {
+    writePost('hello', 'Body\n');
+    writePost('hello', 'Hallo\n', '', 'de');
+    expect(() => loadPosts(contentDir)).toThrow(/de\.md/);
   });
 
   it('returns nothing when there is no content folder yet', () => {
@@ -137,6 +138,28 @@ describe('buildBlog', () => {
     expect(html).toContain('/assets/bricolage-grotesque-latin-wght-normal-y2.woff2');
     const index = fs.readFileSync(path.join(dist, 'blog.html'), 'utf8');
     expect(index).toContain('/assets/newsreader-latin-400-normal-x1.woff2');
+  });
+
+  it('preloads the index heading’s face too, so the h1 does not re-wrap when fonts load', async () => {
+    // CI's mobile Lighthouse measured CLS 0.108 on /blog: the Bricolage h1
+    // swapped in after first paint and pushed the intro paragraph down.
+    writePost('one', 'Body\n');
+    const dist = makeDist('dist');
+    await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
+    const preloads = (file: string) =>
+      [
+        ...fs
+          .readFileSync(path.join(dist, file), 'utf8')
+          .matchAll(/<link rel="preload" href="([^"]+)" as="font"/g),
+      ].map((m) => m[1]);
+    expect(preloads('blog.html')).toEqual([
+      '/assets/newsreader-latin-400-normal-x1.woff2',
+      '/assets/bricolage-grotesque-latin-wght-normal-y2.woff2',
+    ]);
+    // The article's title is its largest text and its heading: one face.
+    expect(preloads('blog/one.html')).toEqual([
+      '/assets/bricolage-grotesque-latin-wght-normal-y2.woff2',
+    ]);
   });
 
   it('emits the code colours only when a post has code', async () => {
@@ -197,18 +220,34 @@ describe('buildBlog', () => {
 });
 
 describe('writeOutput', () => {
-  it.each(['../escape.html', 'blog/../../escape.html', 'blog/a/b.html', 'other.html', 'blog/x.js'])(
-    'refuses %s',
-    (file) => {
-      expect(() => writeOutput(root, file, 'x')).toThrow(/refusing/);
-    },
-  );
+  it.each([
+    '../escape.html',
+    'blog/../../escape.html',
+    'blog/a/b.html',
+    'other.html',
+    'blog/x.js',
+    'de/blog.html',
+    'tr/blog/../../x.html',
+    'blog/Upper.html',
+    'blog/topic/testing.xml',
+    'blog/topic/a/b.html',
+    'tr/other/blog.html',
+  ])('refuses %s', (file) => {
+    expect(() => writeOutput(root, file, 'x')).toThrow(/refusing/);
+  });
 
   it('writes the index, the feed and posts', () => {
     expect(writeOutput(root, 'blog.html', 'i')).toBe('blog.html');
     expect(writeOutput(root, 'blog/feed.xml', 'f')).toBe('blog/feed.xml');
     expect(fs.readFileSync(path.join(root, 'blog', 'feed.xml'), 'utf8')).toBe('f');
   });
+
+  it.each(['tr/blog.html', 'nl/blog/a-post.html', 'tr/blog/feed.xml', 'blog/topic/testing.html'])(
+    'writes the language and topic file %s',
+    (file) => {
+      expect(writeOutput(root, file, 'x')).toBe(file);
+    },
+  );
 });
 
 describe('main', () => {

@@ -77,6 +77,10 @@ const postSchema = z
       })
       .strict(),
     corrections: z.array(correction).default([]),
+    // Only on tr.md and nl.md (content.js checks which file has it): the
+    // date of the English version this one follows, and whether AI helped,
+    // which the "How this was written" panel then says.
+    translation: z.object({ from: isoDate, assistedByAi: z.boolean() }).strict().optional(),
     draft: z.boolean().default(false),
   })
   .strict()

@@ -24,7 +24,7 @@ const PORTRAIT_ID = `${SITE_URL}/#portrait`;
 
 export const LANGUAGES = ['en', 'nl', 'tr'];
 const NAMESPACES = ['common', 'about', 'resume', 'projects', 'contact'];
-const OG_LOCALES = { en: 'en_US', nl: 'nl_NL', tr: 'tr_TR' };
+export const OG_LOCALES = { en: 'en_US', nl: 'nl_NL', tr: 'tr_TR' };
 const SITE_NAME = 'Emre Dursun Portfolio';
 export const SOCIAL_IMAGE = {
   url: `${SITE_URL}/images/social-share.png`,

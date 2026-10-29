@@ -1,10 +1,7 @@
 /**
  * Blog-wide settings shared by the Markdown renderer and the page templates.
+ * The words the pages show are in strings.js, per language.
  */
-
-export const BLOG_NAME = 'Field Notes';
-
-export const BLOG_TAGLINE = 'Notes on quality, and the rest of life.';
 
 /**
  * Element ids the page template uses. Heading ids never take these, so a
@@ -23,19 +20,6 @@ export const RESERVED_IDS = Object.freeze([
   'notes-title',
   'closing-title',
 ]);
-
-export const STATUS_LABELS = Object.freeze({
-  hypothesis: 'Hypothesis',
-  testing: 'Testing',
-  verified: 'Verified',
-  revised: 'Revised',
-});
-
-export const TOPIC_LABELS = Object.freeze({
-  testing: 'Testing',
-  ai: 'Working with AI',
-  life: 'Life',
-});
 
 /**
  * Stays false until the launch PR. While false, every blog page is marked

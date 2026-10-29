@@ -1,6 +1,6 @@
 # ADR 0001: Build the Field Notes blog as static HTML with our own script
 
-- Status: Accepted; Phase 1 and Phase 2 complete, not launched
+- Status: Accepted; Phases 1, 2 and 3a complete, not launched
 - Date: 2026-10-28
 - Deciders: Emre Dursun (owner), with Claude as implementer
 
@@ -95,12 +95,20 @@ time-boxed Astro spike against the same criteria and record the outcome here.
   reach XML and feed services cache what they find.
 - ~~Serve the feed as `application/atom+xml; charset=utf-8`~~ Done in
   Phase 2 (`firebase.json` header, pinned by `tests/hosting.test.ts`).
-- Extend the preview check: once the feed exists, assert on real Hosting
-  that `/blog/feed.xml` arrives as `application/atom+xml` with
+- Extend the preview check: once the feeds exist, assert on real Hosting
+  that `/blog/feed.xml`, `/tr/blog/feed.xml` and `/nl/blog/feed.xml`
+  arrive as `application/atom+xml` with
   `x-content-type-options: nosniff` (the header rule cannot be tested
   offline).
 - Re-enable the Lighthouse `is-crawlable` audit for blog pages.
-- Add blog routes to the sitemap and the deploy smoke test.
+- Add blog routes to the sitemap and the deploy smoke test. Blog entries
+  take their alternates from each post's `translations`, never the full
+  language list `generate-sitemap.js` uses for the portfolio: a post may
+  exist in one or two languages only.
+- Extend the path-aware 404 to `/tr/blog/*` and `/nl/blog/*` (today they
+  get the site's English 404 page).
+- Have the Turkish and Dutch sample text reviewed, or replaced by the real
+  posts, before launch.
 - Add the blog link to the portfolio navigation.
 - ~~Check that `/blog` resolves to `blog.html` next to the `blog/` folder~~
   Checked on every labelled PR by `preview.yml` from Phase 2 on.
@@ -125,8 +133,17 @@ into `feat/blog`; the launch PR is the one into `main`.
 - The launch post set is in all three languages; later posts may exist in
   fewer. hreflang links only the languages a post actually has, plus
   `x-default` to English.
-- Each language gets its own index and feed. Phase 3 implements this;
-  today only `en.md` is accepted.
+- Each language gets its own index and feed (Phase 3a).
+- A translation must share the original's publishedAt, kind, topic,
+  status and evidence re-check date, or the build fails. It records the
+  English version it follows
+  (`translation.from`) and whether AI helped; when the English changes
+  later, the page says so and links to it. Until a post is translated, the
+  other indexes list it as English (`lang="en"`, `hreflang="en"`, a chip).
+- "Field Notes" stays the name in every language, like the mark.
+- "Keep reading" at the end of an article suggests posts in the same
+  language only: an article is not the place to switch language, and the
+  index and the language menu already offer English posts.
 
 Fixed from launch on: post slugs and the domain. Atom entry ids are the post
 URLs, so changing either would make every reader show every post as new.
@@ -220,8 +237,34 @@ Deferred, with the reason:
 | --- | --- |
 | Topic filter (as crawlable topic pages) | 3, once there are posts to filter |
 | "Now" log, illustrations | 3, content and artwork |
-| Turkish and Dutch | 3 (URL scheme above) |
+| Turkish and Dutch | Done in 3a (see below) |
 | Per-post link preview images | Before launch |
 | Navigation link, sitemap, smoke test, path-aware 404 | Launch |
 | "This site tests itself" strip | Later; it is a site-wide claim, not a blog one |
 | Offline page for /blog, theme-color for a pinned theme | Later |
+
+## Phase 3a results (Turkish and Dutch)
+
+- UI text moved to `scripts/blog/strings.js` first; the English pages
+  were byte-identical before and after (sha256 of `dist/blog*`).
+- That gate found a real determinism bug: Shiki prints a line plain once
+  tokenizing it takes over 500 ms, and a cold regex engine hit that on the
+  first TypeScript line. `tokenizeTimeLimit: 0` fixes it; content is our
+  own, so there is no hostile input to bound.
+- Pages for all three languages, one index and feed each, hreflang only
+  for versions that exist (a build test and an e2e test check that every
+  alternate exists and links back), a static language menu, English
+  fallbacks on the other indexes, and a note when the English version is
+  newer than its translation.
+- Turkish pages preload the latin-ext file of their largest text's face
+  (ğ, ş and İ live there); measured: both faces' latin-ext files load.
+- Firebase applies header rules whatever the status, so before launch
+  the feed URLs' 404 carries the Atom Content-Type. The preview check
+  asserts only the 404, and the local preview server answers it the same
+  way. Nothing links to the feeds before launch.
+- Checks: 443 unit tests (lines 91.9%), the blog build twice gives
+  identical files, e2e 244 passed on desktop and mobile, code and
+  security reviews with no critical or high findings.
+
+Still to do in Phase 3: crawlable topic pages (3b) and the "Now" log
+(3c). Illustrations wait for real artwork.

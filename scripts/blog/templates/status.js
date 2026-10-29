@@ -8,7 +8,7 @@
  */
 
 import { markup, raw } from '../html.js';
-import { STATUS_LABELS } from '../config.js';
+import { strings } from '../strings.js';
 
 const INK = '#1e3a2f';
 
@@ -19,8 +19,11 @@ const ICONS = {
   revised: `<circle cx="12" cy="12" r="8.5" fill="#f6dfcd" stroke="${INK}" stroke-width="1.6"/><path d="M16 11.5a4 4 0 1 1-1.2-2.8" stroke="${INK}" stroke-width="1.6" stroke-linecap="round" fill="none"/><path d="M15.1 6.9v2.1H13" stroke="${INK}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
 };
 
-/** @param {string} status  One of hypothesis, testing, verified, revised. */
-export function statusChip(status) {
+/**
+ * @param {string} status  One of hypothesis, testing, verified, revised.
+ * @param {string} [lang]
+ */
+export function statusChip(status, lang = 'en') {
   if (!Object.hasOwn(ICONS, status)) throw new Error(`blog: unknown status "${status}"`);
-  return markup`<span class="status status-${status}"><svg class="status-icon status-icon-${status}" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${raw(ICONS[status])}</svg>${STATUS_LABELS[status]}</span>`;
+  return markup`<span class="status status-${status}"><svg class="status-icon status-icon-${status}" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${raw(ICONS[status])}</svg>${strings(lang).statusLabels[status]}</span>`;
 }

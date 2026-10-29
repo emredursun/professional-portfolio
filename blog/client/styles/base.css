@@ -175,3 +175,42 @@ a:hover {
 .mark-check {
   stroke: var(--check);
 }
+
+/* Language menu: this page in its other languages (layout.js). */
+.lang-nav {
+  display: flex;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.lang-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  text-decoration-color: transparent;
+}
+
+.lang-nav a:hover {
+  text-decoration-color: var(--underline);
+}
+
+.lang-nav a[aria-current='page'] {
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}
+
+/*
+ * On a phone the language menu always takes its own row, right-aligned.
+ * Letting it wrap on its own made the row it lands on depend on font
+ * metrics, so the web-font swap moved it and shifted the page (CLS 0.12).
+ */
+@media (max-width: 600px) {
+  .lang-nav {
+    flex-basis: 100%;
+    justify-content: flex-end;
+  }
+}
