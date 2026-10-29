@@ -202,3 +202,10 @@ a:hover {
 .lang-nav a[aria-current='page'] {
   box-shadow: inset 0 0 0 1.5px var(--ink);
 }
+
+/* On a phone the header wraps; keep the language menu under the theme toggle. */
+@media (max-width: 600px) {
+  .lang-nav {
+    margin-left: auto;
+  }
+}

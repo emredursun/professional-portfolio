@@ -42,6 +42,21 @@ describe('loadPosts: translations', () => {
     expect(() => loadPosts(contentDir)).toThrow(/hello\/en\.md/);
   });
 
+  it.each(['tr.MD', 'nl.markdown', 'notes.txt'])(
+    'fails on %s, which would otherwise drop a translation silently',
+    (name) => {
+      write('hello', 'Body\n');
+      fs.writeFileSync(path.join(contentDir, 'hello', name), 'x');
+      expect(() => loadPosts(contentDir)).toThrow(new RegExp(`${name}: not a post file`));
+    },
+  );
+
+  it('ignores hidden files such as .DS_Store', () => {
+    write('hello', 'Body\n');
+    fs.writeFileSync(path.join(contentDir, 'hello', '.DS_Store'), 'x');
+    expect(loadPosts(contentDir)).toHaveLength(1);
+  });
+
   it('drops every translation when the English version is a draft', () => {
     write('hello', 'Body\n', 'draft: true\n');
     write('hello', 'Gövde\n', TRANSLATION, 'tr');
@@ -61,6 +76,7 @@ describe('loadPosts: translations', () => {
     ['kind', 'kind: essay', 'kind: note'],
     ['status', 'status: verified', 'status: hypothesis'],
     ['publishedAt', 'publishedAt: 2026-12-09', 'publishedAt: 2026-12-10'],
+    ['evidence.recheckedAt', 'recheckedAt: 2026-12-09', 'recheckedAt: 2026-12-08'],
   ])('fails when a translation disagrees on %s, naming both files', (key, from, to) => {
     write('hello', 'Body\n');
     write('hello', 'Gövde\n', TRANSLATION, 'tr');

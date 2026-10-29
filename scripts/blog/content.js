@@ -27,8 +27,15 @@ const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const RESERVED_SLUGS = new Set(['feed', 'now', 'topic']);
 // Turkish and Dutch words run longer than English ones, so fewer per minute.
 const WORDS_PER_MINUTE = { en: 220, nl: 200, tr: 180 };
-// What a translation must share with the English original.
-const SHARED_KEYS = ['publishedAt', 'kind', 'topic', 'status'];
+// What a translation must share with the English original. The re-check
+// date too: it is the same evidence, so every version must age together.
+const SHARED = {
+  publishedAt: (post) => post.publishedAt,
+  kind: (post) => post.kind,
+  topic: (post) => post.topic,
+  status: (post) => post.status,
+  'evidence.recheckedAt': (post) => post.evidence.recheckedAt,
+};
 
 const byName = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 
@@ -43,8 +50,10 @@ function readingMinutes(body, lang) {
 function readFile(dir, slug, name) {
   const file = `blog/content/${slug}/${name}`;
   const lang = name.slice(0, -'.md'.length);
-  if (!BLOG_LANGUAGES.includes(lang)) {
-    throw new Error(`${file}: unknown language (use ${BLOG_LANGUAGES.join('.md, ')}.md)`);
+  // Anything but <lang>.md fails, so tr.MD or nl.markdown cannot drop a
+  // translation silently.
+  if (!name.endsWith('.md') || !BLOG_LANGUAGES.includes(lang)) {
+    throw new Error(`${file}: not a post file (use ${BLOG_LANGUAGES.join('.md, ')}.md)`);
   }
   const { data, body } = parseFrontmatter(fs.readFileSync(path.join(dir, name), 'utf8'), file);
   return { ...validatePost(data, file), slug, lang, file, body };
@@ -59,9 +68,9 @@ function checkTranslation(post, original) {
   if (!post.translation) {
     throw new Error(`${post.file}: translation is required (from, assistedByAi)`);
   }
-  for (const key of SHARED_KEYS) {
-    if (post[key] !== original[key]) {
-      throw new Error(`${post.file}: ${key} must match ${original.file} (${original[key]})`);
+  for (const [key, read] of Object.entries(SHARED)) {
+    if (read(post) !== read(original)) {
+      throw new Error(`${post.file}: ${key} must match ${original.file} (${read(original)})`);
     }
   }
   if (post.translation.from > lastChange(original)) {
@@ -82,7 +91,7 @@ function readPostFolder(dir) {
   }
   const files = fs
     .readdirSync(dir)
-    .filter((name) => name.endsWith('.md'))
+    .filter((name) => !name.startsWith('.'))
     .sort(byName)
     .map((name) => readFile(dir, slug, name));
 

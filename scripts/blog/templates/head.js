@@ -34,7 +34,8 @@ const line = (condition, content) => (condition ? markup`${content()}\n` : '');
  * @property {string} [published]   YYYY-MM-DD, articles only.
  * @property {string} [modified]    YYYY-MM-DD, articles only.
  * @property {boolean} [hasCode]
- * @property {'reading' | 'display'} lcpFont  The face of the page's largest text, preloaded.
+ * @property {'reading' | 'display'} lcpFont  The face of the page's largest text, preloaded
+ *   (on Turkish pages its extended Latin file too: readingExt or displayExt).
  * @property {object} jsonLd
  */
 

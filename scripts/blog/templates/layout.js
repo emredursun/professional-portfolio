@@ -19,7 +19,7 @@ function languageNav(s, lang, alternates) {
   if (alternates.length < 2) return '';
   return markup`<nav class="lang-nav" aria-label="${s.languageNav}">${alternates.map(
     ({ lang: other, url }) =>
-      markup`<a href="${new URL(url).pathname}" lang="${other}" hreflang="${other}"${other === lang ? markup` aria-current="page"` : ''}><span aria-hidden="true">${other.toUpperCase()}</span><span class="visually-hidden">${s.languageNames[other]}</span></a>`,
+      markup`<a href="${new URL(url).pathname}" lang="${other}" hreflang="${other}"${other === lang ? markup` aria-current="page"` : ''}><span>${other.toUpperCase()}</span><span class="visually-hidden"> ${s.languageNames[other]}</span></a>`,
   )}</nav>\n`;
 }
 

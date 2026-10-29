@@ -77,7 +77,8 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
   topic, kind (essay or note), status, evidence, aiAssistance, corrections.
 - **Translate a post:** add `tr.md` or `nl.md` next to `en.md` (served at
   `/tr/blog/<slug>` and `/nl/blog/<slug>`; the slug stays English). It must
-  keep the English publishedAt, kind, topic and status, and needs
+  keep the English publishedAt, kind, topic, status and evidence
+  recheckedAt, and needs
   `translation: { from: <date of the English version you translated>,
   assistedByAi: true|false }`; the AI panel says how it was translated.
   When the English post changes later (updatedAt or a correction), the

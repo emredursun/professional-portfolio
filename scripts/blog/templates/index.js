@@ -62,9 +62,9 @@ function indexMeta(posts, s, lang, languages) {
   };
 }
 
-function postMeta(post) {
+function postMeta(post, chip = '') {
   const s = strings(post.lang);
-  return markup`<p class="card-meta">${s.topicLabels[post.topic]} · ${post.minutes} ${s.minutesShort} · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt, post.lang)}</time></p>`;
+  return markup`<p class="card-meta">${s.topicLabels[post.topic]} · ${post.minutes} ${s.minutesShort} · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt, post.lang)}</time>${chip}</p>`;
 }
 
 // Revealed in the browser by blog/client/stale.ts once the re-check date has
@@ -100,9 +100,9 @@ ${staleNote(post)}
 function noteItem(post, pageLang) {
   const { lang, hreflang, chip } = foreign(post, pageLang);
   return markup`<li class="note-item"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-${statusChip(post.status, post.lang)}${chip}
+${statusChip(post.status, post.lang)}
 <a href="${postPath(post)}"${hreflang}>${post.title}</a>
-${postMeta(post)}
+${postMeta(post, chip)}
 ${staleNote(post)}
 </li>`;
 }
@@ -141,7 +141,7 @@ export function renderIndexPage({
 <p class="index-eyebrow">${s.blogName}</p>
 <h1 class="index-lede">${s.tagline}</h1>
 <p class="index-intro">${s.intro}</p>
-${heroActions(sorted[0] ?? listed[0], launched, s, lang)}
+${heroActions(sorted[0], launched, s, lang)}
 </header>
 ${topicsBand(s)}
 ${section({ id: 'essays-title', title: s.essays, intro: s.essaysIntro, items: essays.map((post) => essayCard(post, lang)), listClass: 'cards' })}

@@ -95,6 +95,14 @@ test.describe('switching language', () => {
     ).toHaveAttribute('aria-current', 'page');
   });
 
+  test('each language link is named by the code it shows, for voice control', async ({ page }) => {
+    await page.goto(TR_POST);
+    const nav = page.getByRole('navigation', { name: strings('tr').languageNav });
+    for (const code of ['EN', 'TR']) {
+      await expect(nav.getByRole('link', { name: new RegExp(`^${code}\\b`) })).toHaveCount(1);
+    }
+  });
+
   test('every hreflang alternate exists and links back', async ({ page, request }) => {
     const alternatesOf = async (url: string) => {
       await page.goto(url);

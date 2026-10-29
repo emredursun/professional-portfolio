@@ -133,12 +133,16 @@ into `feat/blog`; the launch PR is the one into `main`.
   fewer. hreflang links only the languages a post actually has, plus
   `x-default` to English.
 - Each language gets its own index and feed (Phase 3a).
-- A translation must share the original's publishedAt, kind, topic and
-  status, or the build fails. It records the English version it follows
+- A translation must share the original's publishedAt, kind, topic,
+  status and evidence re-check date, or the build fails. It records the
+  English version it follows
   (`translation.from`) and whether AI helped; when the English changes
   later, the page says so and links to it. Until a post is translated, the
   other indexes list it as English (`lang="en"`, `hreflang="en"`, a chip).
 - "Field Notes" stays the name in every language, like the mark.
+- "Keep reading" at the end of an article suggests posts in the same
+  language only: an article is not the place to switch language, and the
+  index and the language menu already offer English posts.
 
 Fixed from launch on: post slugs and the domain. Atom entry ids are the post
 URLs, so changing either would make every reader show every post as new.
