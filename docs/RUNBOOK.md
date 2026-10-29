@@ -87,9 +87,12 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
   5. `npm run blog:og` has rendered its link-preview cards, committed.
   6. `npm run build` passes; with `BLOG_LAUNCHED` it also refuses any
      `placeholder: true` content and a language with no published post
-     (the nav links /tr/blog and /nl/blog, so each must exist). A
-     translation the English version has outgrown only prints
-     `blog: warning:`: its page already tells readers, so update it soon.
+     (the nav links /tr/blog and /nl/blog, so each must exist). After
+     launch, keep at least one published post per language: putting the
+     last Turkish or Dutch one back to `draft: true` fails every deploy.
+     A translation the English version has outgrown only prints
+     `blog: warning:` (before and after launch): its page already tells
+     readers, so update it soon.
 - **Translate a post:** add `tr.md` or `nl.md` next to `en.md` (served at
   `/tr/blog/<slug>` and `/nl/blog/<slug>`; the slug stays English). It must
   keep the English publishedAt, kind, topic, status and evidence

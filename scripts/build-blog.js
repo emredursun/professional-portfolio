@@ -265,7 +265,9 @@ export async function main(root = ROOT) {
     );
     // Not errors: each such page already tells readers the English changed.
     const warnings = launchWarnings({ posts: loadPosts(path.join(root, 'blog', 'content')) });
-    warnings.forEach((warning) => process.stdout.write(`blog: warning: ${warning}\n`));
+    // GitHub Actions shows ::warning:: lines on the run's summary.
+    const tag = process.env.GITHUB_ACTIONS ? '::warning::' : '';
+    warnings.forEach((warning) => process.stdout.write(`${tag}blog: warning: ${warning}\n`));
     return 0;
   } catch (error) {
     console.error(error instanceof Error ? error.message : error);

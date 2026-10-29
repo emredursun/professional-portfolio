@@ -34,7 +34,7 @@ indexes="$(grep -E '^(/(tr|nl))?/blog$' <<<"$paths" || true)"
 export base
 export -f fetch code
 unserved="$(xargs -P 8 -n 1 bash -c '[ "$(code "$1")" = "200" ] || echo "$1"' _ <<<"$paths" \
-  | sort)"
+  | sort)" || fail "the page checks could not run"
 if [ -n "$unserved" ]; then
   while read -r path; do echo "::error::$path is not served"; done <<<"$unserved"
   exit 1

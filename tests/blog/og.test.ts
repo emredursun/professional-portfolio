@@ -65,7 +65,9 @@ describe('ogCards and ogHash', () => {
   it('hashes only what the card shows, so flipping the launch flag keeps every card', () => {
     // config.js holds BLOG_LAUNCHED; hashing the whole file made launch day
     // turn every committed card stale. The card depends on OG_SIZE only.
-    expect(OG_DESIGN_FILES).not.toContain('config.js');
+    expect(OG_DESIGN_FILES.filter((file) => file.endsWith('config.js'))).toEqual([]);
+    const blogDir = path.join(__dirname, '..', '..', 'scripts', 'blog');
+    expect(OG_DESIGN_FILES.filter((file) => !fs.existsSync(path.join(blogDir, file)))).toEqual([]);
     // Likewise only the strings the card renders, not a footer label.
     expect(cardStrings('tr')).toEqual({
       blogName: 'Field Notes',

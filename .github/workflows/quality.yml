@@ -64,7 +64,7 @@ jobs:
         run: |
           set -euo pipefail
           # Every language's blog files (blog, tr/blog, nl/blog) and its assets.
-          snapshot() { (cd dist && find . -type f \( -path './blog/*' -o -path './blog.html' -o -path './tr/blog*' -o -path './nl/blog*' -o -path './assets/blog-*' \) -print0 | sort -z | xargs -0 sha256sum); }
+          snapshot() { (cd dist && find . -type f \( -path './blog/*' -o -path './blog.html' -o -path './tr/blog.html' -o -path './tr/blog/*' -o -path './nl/blog.html' -o -path './nl/blog/*' -o -path './assets/blog-*' \) -print0 | sort -z | xargs -0 sha256sum); }
           before="$(snapshot)"
           node scripts/build-blog.js > /dev/null
           after="$(snapshot)"

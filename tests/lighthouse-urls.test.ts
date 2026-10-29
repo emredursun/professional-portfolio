@@ -74,6 +74,7 @@ describe('lighthouseUrls', () => {
       ).ci.assert.assertMatrix.find((entry: { matchingUrlPattern: string }) =>
         entry.matchingUrlPattern.includes('blog(?:/.*)?$'),
       );
+      expect(blog, `${file} has a blog assertion block`).toBeDefined();
       expect(blog.assertions['is-crawlable'], file).toEqual(
         BLOG_LAUNCHED ? ['error', { minScore: 1 }] : undefined,
       );

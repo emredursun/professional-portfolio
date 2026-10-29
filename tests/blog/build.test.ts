@@ -6,6 +6,7 @@ import path from 'path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { buildBlog, main, writeOutput } from '../../scripts/build-blog.js';
 import { loadPosts } from '../../scripts/blog/content.js';
+import { launchWarnings } from '../../scripts/blog/launch-gate.js';
 import { BLOG_ENTRY } from '../../scripts/blog/manifest.js';
 import sharp from 'sharp';
 import { OG_SIZE, ogCards, syncOgImages } from '../../scripts/blog/og.js';
@@ -296,10 +297,35 @@ describe('main', () => {
           .toBuffer(),
     });
     const out = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
+    vi.stubEnv('GITHUB_ACTIONS', '');
     expect(await main(root)).toBe(0);
     expect(out).toHaveBeenCalledWith(
       'blog: warning: blog/content/one/tr.md follows an older English version (update it and translation.from)\n',
     );
+    // On GitHub Actions the line is an annotation, shown on the run summary.
+    vi.stubEnv('GITHUB_ACTIONS', 'true');
+    expect(await main(root)).toBe(0);
+    expect(out).toHaveBeenCalledWith(
+      '::warning::blog: warning: blog/content/one/tr.md follows an older English version (update it and translation.from)\n',
+    );
+    vi.unstubAllEnvs();
+  });
+
+  it('builds a launched blog whose translations the English version has outgrown', async () => {
+    // The case the warning exists for: after launch, an English edit must
+    // not fail the deploy until every translation catches up.
+    writeInAllLanguages(contentDir, 'one', 'updatedAt: 2026-12-20\n');
+    const written = await buildBlog({
+      distDir: makeDist('dist'),
+      contentDir,
+      themeInitPath,
+      launched: true,
+    });
+    expect(written).toEqual(expect.arrayContaining(['tr/blog/one.html', 'nl/blog/one.html']));
+    expect(launchWarnings({ posts: loadPosts(contentDir) })).toEqual([
+      'blog/content/one/nl.md follows an older English version (update it and translation.from)',
+      'blog/content/one/tr.md follows an older English version (update it and translation.from)',
+    ]);
   });
 
   it('prints the error and returns 1 when the build fails', async () => {
