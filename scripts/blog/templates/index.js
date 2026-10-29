@@ -6,44 +6,34 @@
 
 import { markup } from '../html.js';
 import { PERSON_ID, WEBSITE_ID } from '../../lib/route-meta.js';
-import { BLOG_NAME, BLOG_TAGLINE, TOPIC_LABELS } from '../config.js';
 import { BLOG_URL, FEED_PATH, byNewest, formatDate, postPath, postUrl } from './format.js';
 import { renderPage } from './layout.js';
 import { nextRecheck } from './sections.js';
 import { statusChip } from './status.js';
-
-const TOPICS = [
-  'Testing, honestly',
-  'Working with AI',
-  'Pega and Tosca',
-  'Life in three languages',
-];
+import { strings } from '../strings.js';
 
 /**
  * The canvas's band of themes (not the topic taxonomy, which is testing, ai
  * and life): static, so there is nothing to pause (WCAG 2.2.2). */
-function topicsBand() {
-  return markup`<ul class="band" aria-label="What I write about">${TOPICS.map(
+function topicsBand(s) {
+  return markup`<ul class="band" aria-label="${s.bandLabel}">${Object.values(s.band).map(
     (topic, index) =>
       markup`<li>${index > 0 ? markup`<span class="band-mark" aria-hidden="true">✳</span>` : ''}${topic}</li>`,
   )}</ul>`;
 }
 
-function heroActions(newest, launched) {
+function heroActions(newest, launched, s) {
   if (!newest) throw new Error('blog: the index needs at least one post');
-  return markup`<p class="index-actions"><a class="button button-solid" href="${postPath(newest)}">Read the latest<span class="visually-hidden">: ${newest.title}</span></a>${
-    launched ? markup`<a class="button" href="${FEED_PATH}">Follow with a feed reader</a>` : ''
+  return markup`<p class="index-actions"><a class="button button-solid" href="${postPath(newest)}">${s.readLatest}<span class="visually-hidden">: ${newest.title}</span></a>${
+    launched ? markup`<a class="button" href="${FEED_PATH}">${s.followFeed}</a>` : ''
   }</p>`;
 }
 
-const DESCRIPTION =
-  'Notes on software quality, test automation and working with AI, by Emre Dursun, QA consultant in the Netherlands.';
-
-function indexMeta(posts) {
+function indexMeta(posts, s, lang) {
   return {
-    title: `${BLOG_NAME} · Emre Dursun`,
-    heading: BLOG_NAME,
-    description: DESCRIPTION,
+    title: `${s.blogName} · Emre Dursun`,
+    heading: s.blogName,
+    description: s.description,
     url: BLOG_URL,
     ogType: 'website',
     lcpFont: 'reading',
@@ -51,10 +41,10 @@ function indexMeta(posts) {
       '@context': 'https://schema.org',
       '@type': 'Blog',
       '@id': `${BLOG_URL}#blog`,
-      name: BLOG_NAME,
-      description: DESCRIPTION,
+      name: s.blogName,
+      description: s.description,
       url: BLOG_URL,
-      inLanguage: 'en',
+      inLanguage: lang,
       author: { '@id': PERSON_ID },
       isPartOf: { '@id': WEBSITE_ID },
       publisher: { '@id': PERSON_ID },
@@ -71,29 +61,31 @@ function indexMeta(posts) {
 }
 
 function postMeta(post) {
-  return markup`<p class="card-meta">${TOPIC_LABELS[post.topic]} · ${post.minutes} min · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt)}</time></p>`;
+  const s = strings(post.lang);
+  return markup`<p class="card-meta">${s.topicLabels[post.topic]} · ${post.minutes} ${s.minutesShort} · <time datetime="${post.publishedAt}">${formatDate(post.publishedAt)}</time></p>`;
 }
 
 // Revealed in the browser by blog/client/stale.ts once the re-check date has
 // passed, as on the article's evidence card.
-const staleNote = () => markup`<p class="stale-note" hidden>Needs a re-run</p>`;
+const staleNote = (post) =>
+  markup`<p class="stale-note" hidden>${strings(post.lang).staleShort}</p>`;
 
 function essayCard(post) {
   return markup`<li class="card" data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-<p class="card-status">${statusChip(post.status)}</p>
+<p class="card-status">${statusChip(post.status, post.lang)}</p>
 <h3 class="card-title"><a href="${postPath(post)}">${post.title}</a></h3>
 <p class="card-dek">${post.description}</p>
 ${postMeta(post)}
-${staleNote()}
+${staleNote(post)}
 </li>`;
 }
 
 function noteItem(post) {
   return markup`<li class="note-item" data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-${statusChip(post.status)}
+${statusChip(post.status, post.lang)}
 <a href="${postPath(post)}">${post.title}</a>
 ${postMeta(post)}
-${staleNote()}
+${staleNote(post)}
 </li>`;
 }
 
@@ -107,23 +99,24 @@ function section({ id, title, intro, items, listClass }) {
 }
 
 /**
- * @param {{ posts: object[], assets: object, launched: boolean }} options
+ * @param {{ posts: object[], assets: object, launched: boolean, lang?: string }} options
  * @returns {string}
  */
-export function renderIndexPage({ posts, assets, launched }) {
+export function renderIndexPage({ posts, assets, launched, lang = 'en' }) {
+  const s = strings(lang);
   const sorted = [...posts].sort(byNewest);
   const essays = sorted.filter((post) => post.kind === 'essay');
   const notes = sorted.filter((post) => post.kind === 'note');
   const content = markup`<div class="index">
 <header class="index-header">
-<p class="index-eyebrow">${BLOG_NAME}</p>
-<h1 class="index-lede">${BLOG_TAGLINE}</h1>
-<p class="index-intro">I test software for a living, in the Netherlands, in three languages. This is where I write down what I learn: at work, with AI, and in between.</p>
-${heroActions(sorted[0], launched)}
+<p class="index-eyebrow">${s.blogName}</p>
+<h1 class="index-lede">${s.tagline}</h1>
+<p class="index-intro">${s.intro}</p>
+${heroActions(sorted[0], launched, s)}
 </header>
-${topicsBand()}
-${section({ id: 'essays-title', title: 'Essays', intro: 'Longer pieces, rewritten until they hold.', items: essays.map(essayCard), listClass: 'cards' })}
-${section({ id: 'notes-title', title: 'Short notes', intro: 'Smaller thoughts, still being tested.', items: notes.map(noteItem), listClass: 'notes' })}
+${topicsBand(s)}
+${section({ id: 'essays-title', title: s.essays, intro: s.essaysIntro, items: essays.map(essayCard), listClass: 'cards' })}
+${section({ id: 'notes-title', title: s.notes, intro: s.notesIntro, items: notes.map(noteItem), listClass: 'notes' })}
 </div>`;
-  return renderPage({ lang: 'en', meta: indexMeta(sorted), assets, launched, content });
+  return renderPage({ lang, meta: indexMeta(sorted, s, lang), assets, launched, content });
 }

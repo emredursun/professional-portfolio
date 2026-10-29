@@ -9,7 +9,7 @@
 
 import { markup } from './html.js';
 import { SITE_URL } from '../lib/route-meta.js';
-import { BLOG_NAME, BLOG_TAGLINE, TOPIC_LABELS } from './config.js';
+import { strings } from './strings.js';
 import { BLOG_URL, FEED_PATH, byNewest, lastChange, postUrl } from './templates/format.js';
 
 /** Atom wants full timestamps; posts have dates, so midnight UTC. */
@@ -24,7 +24,7 @@ function entry(post) {
 <published>${timestamp(post.publishedAt)}</published>
 <updated>${timestamp(lastChange(post))}</updated>
 <summary>${post.description}</summary>
-<category term="${post.topic}" label="${TOPIC_LABELS[post.topic]}"/>
+<category term="${post.topic}" label="${strings(post.lang).topicLabels[post.topic]}"/>
 </entry>
 `;
 }
@@ -36,10 +36,11 @@ function entry(post) {
 export function renderFeed(posts) {
   const sorted = [...posts].sort(byNewest);
   const updated = sorted.map(lastChange).sort().at(-1);
+  const s = strings('en');
   const feed = markup`<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-<title>${BLOG_NAME}</title>
-<subtitle>${BLOG_TAGLINE}</subtitle>
+<title>${s.blogName}</title>
+<subtitle>${s.tagline}</subtitle>
 <id>${BLOG_URL}</id>
 <link rel="alternate" type="text/html" href="${BLOG_URL}"/>
 <link rel="self" type="application/atom+xml" href="${SITE_URL}${FEED_PATH}"/>

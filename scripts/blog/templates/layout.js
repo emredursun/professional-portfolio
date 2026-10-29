@@ -5,36 +5,36 @@
  */
 
 import { markup } from '../html.js';
-import { BLOG_NAME } from '../config.js';
 import { BLOG_PATH, FEED_PATH } from './format.js';
 import { renderHead } from './head.js';
 import { verificationMark } from './mark.js';
+import { strings } from '../strings.js';
 
-function siteHeader() {
+function siteHeader(s) {
   return markup`<header class="site-header">
-<a class="brand" href="/" aria-label="Emre Dursun, portfolio home">${verificationMark({ size: 28 })}<span class="brand-name">emre<span class="brand-dot">.</span></span></a>
-<a class="blog-name" href="${BLOG_PATH}">${BLOG_NAME}</a>
-<nav class="site-nav" aria-label="Site">
-<a href="/">Portfolio</a>
-<a href="/contact">Contact</a>
-<button type="button" class="theme-toggle" data-theme-toggle aria-label="Dark theme" aria-pressed="false"><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<a class="brand" href="/" aria-label="${s.brandHome}">${verificationMark({ size: 28 })}<span class="brand-name">emre<span class="brand-dot">.</span></span></a>
+<a class="blog-name" href="${BLOG_PATH}">${s.blogName}</a>
+<nav class="site-nav" aria-label="${s.siteNav}">
+<a href="/">${s.navPortfolio}</a>
+<a href="/contact">${s.navContact}</a>
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="${s.darkTheme}" aria-pressed="false"><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 </nav>
 </header>`;
 }
 
 /** The canvas's closing band: one invitation to talk, at the end of every page. */
-function closing() {
+function closing(s) {
   return markup`<section class="closing" aria-labelledby="closing-title">
-<p class="closing-kicker">Working on test strategy for a Pega or Tosca project?</p>
-<h2 id="closing-title" class="closing-title">Let’s compare notes.</h2>
-<a class="closing-link" href="/contact">Say hello <span aria-hidden="true">↗</span></a>
+<p class="closing-kicker">${s.closingKicker}</p>
+<h2 id="closing-title" class="closing-title">${s.closingTitle}</h2>
+<a class="closing-link" href="/contact">${s.closingLink} <span aria-hidden="true">↗</span></a>
 </section>`;
 }
 
-function siteFooter(launched) {
+function siteFooter(s, launched) {
   return markup`<footer class="site-footer">
-<p><span class="brand-name">emre<span class="brand-dot">.</span></span> Written by a person, checked twice.</p>
-<p><a href="${BLOG_PATH}">All posts</a> · ${launched ? markup`<a href="${FEED_PATH}">Feed</a> · ` : ''}<a href="/">Portfolio</a> · <a href="/contact">Contact</a></p>
+<p><span class="brand-name">emre<span class="brand-dot">.</span></span> ${s.footerLine}</p>
+<p><a href="${BLOG_PATH}">${s.allPosts}</a> · ${launched ? markup`<a href="${FEED_PATH}">${s.feed}</a> · ` : ''}<a href="/">${s.navPortfolio}</a> · <a href="/contact">${s.navContact}</a></p>
 </footer>`;
 }
 
@@ -43,17 +43,18 @@ function siteFooter(launched) {
  * @returns {string}
  */
 export function renderPage({ lang, meta, assets, launched, content, progress = false }) {
+  const s = strings(lang);
   const page = markup`<!doctype html>
 <html lang="${lang}">
-${renderHead({ meta, assets, launched })}
+${renderHead({ meta, assets, launched, lang })}
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
-${progress ? markup`<div class="progress" aria-hidden="true"></div>\n` : ''}${siteHeader()}
+<a class="skip-link" href="#main">${s.skipLink}</a>
+${progress ? markup`<div class="progress" aria-hidden="true"></div>\n` : ''}${siteHeader(s)}
 <main id="main">
 ${content}
-${closing()}
+${closing(s)}
 </main>
-${siteFooter(launched)}
+${siteFooter(s, launched)}
 </body>
 </html>
 `;

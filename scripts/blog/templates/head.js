@@ -9,7 +9,7 @@
 
 import { markup, raw } from '../html.js';
 import { SOCIAL_IMAGE } from '../../lib/route-meta.js';
-import { BLOG_NAME } from '../config.js';
+import { strings } from '../strings.js';
 import { FEED_PATH } from './format.js';
 
 /** JSON for a <script> block: "<" escaped so text can never close the element. */
@@ -38,7 +38,7 @@ const line = (condition, content) => (condition ? markup`${content()}\n` : '');
  */
 
 /** The lines that depend on the page, its assets or the launch flag. */
-function optionalLines({ meta, assets, launched }) {
+function optionalLines({ meta, assets, launched, blogName }) {
   return {
     robots: line(!launched, () => markup`<meta name="robots" content="noindex, nofollow">`),
     // The feed exists only after launch: noindex cannot reach XML, and feed
@@ -46,7 +46,7 @@ function optionalLines({ meta, assets, launched }) {
     feedLink: line(
       launched,
       () =>
-        markup`<link rel="alternate" type="application/atom+xml" title="${BLOG_NAME}" href="${FEED_PATH}">`,
+        markup`<link rel="alternate" type="application/atom+xml" title="${blogName}" href="${FEED_PATH}">`,
     ),
     articleTimes: line(
       meta.ogType === 'article',
@@ -69,16 +69,18 @@ function optionalLines({ meta, assets, launched }) {
 }
 
 /**
- * @param {{ meta: PageMeta, assets: object, launched: boolean }} options
+ * @param {{ meta: PageMeta, assets: object, launched: boolean, lang?: string }} options
  */
-export function renderHead({ meta, assets, launched }) {
+export function renderHead({ meta, assets, launched, lang = 'en' }) {
   if (!['reading', 'display'].includes(meta.lcpFont)) {
     throw new Error(`blog: unknown lcpFont "${meta.lcpFont}"`);
   }
+  const { blogName } = strings(lang);
   const { robots, feedLink, articleTimes, styles, codeStyles, fontPreload } = optionalLines({
     meta,
     assets,
     launched,
+    blogName,
   });
 
   return markup`<head>
@@ -96,7 +98,7 @@ ${feedLink}<meta name="color-scheme" content="light dark">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta property="og:type" content="${meta.ogType}">
-<meta property="og:site_name" content="${BLOG_NAME} · Emre Dursun">
+<meta property="og:site_name" content="${blogName} · Emre Dursun">
 <meta property="og:title" content="${meta.heading}">
 <meta property="og:description" content="${meta.description}">
 <meta property="og:url" content="${meta.url}">
