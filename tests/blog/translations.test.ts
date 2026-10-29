@@ -139,10 +139,13 @@ describe('loadPosts: translations', () => {
     expect(() => loadPosts(contentDir)).toThrow(/tr\.md: translation\.from/);
   });
 
-  it.each(['feed', 'now', 'topic'])('refuses the slug "%s", which a blog file uses', (slug) => {
-    write(slug, 'Body\n');
-    expect(() => loadPosts(contentDir)).toThrow(new RegExp(`"${slug}" is reserved`));
-  });
+  it.each(['feed', 'now', 'topic', 'site'])(
+    'refuses the slug "%s", which a blog file uses',
+    (slug) => {
+      write(slug, 'Body\n');
+      expect(() => loadPosts(contentDir)).toThrow(new RegExp(`"${slug}" is reserved`));
+    },
+  );
 
   it('reads Turkish and Dutch at their own pace', () => {
     const words = Array.from({ length: 1800 }, () => 'word').join(' ');

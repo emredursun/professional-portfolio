@@ -170,6 +170,7 @@ ${localeAlternates}<meta property="og:image" content="${image.url}">
 <meta property="og:image:alt" content="${image.alt}">
 ${articleTimes}<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="${image.url}">
+<meta name="twitter:image:alt" content="${image.alt}">
 <script src="${assets.themeInit}"></script>
 ${styles}${codeStyles}${fontPreload}<script type="module" src="${assets.script}"></script>
 <script type="application/ld+json">${raw(jsonForScript(meta.jsonLd))}</script>

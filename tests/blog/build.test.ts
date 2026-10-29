@@ -7,7 +7,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { buildBlog, main, writeOutput } from '../../scripts/build-blog.js';
 import { loadPosts } from '../../scripts/blog/content.js';
 import { BLOG_ENTRY } from '../../scripts/blog/manifest.js';
-import { ogCards, syncOgImages } from '../../scripts/blog/og.js';
+import sharp from 'sharp';
+import { OG_SIZE, ogCards, syncOgImages } from '../../scripts/blog/og.js';
 
 let root: string;
 let contentDir: string;
@@ -265,7 +266,10 @@ describe('main', () => {
     await syncOgImages({
       ogDir,
       cards: ogCards(posts, ['en']),
-      render: async (card) => Buffer.from(card.id),
+      render: () =>
+        sharp({ create: { ...OG_SIZE, channels: 3, background: '#faf7f0' } })
+          .png()
+          .toBuffer(),
     });
     const out = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
     expect(await main(root)).toBe(0);

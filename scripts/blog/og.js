@@ -26,29 +26,50 @@ export { OG_SIZE };
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, '..', '..');
 const MANIFEST = 'manifest.json';
+const MAX_BYTES = 150 * 1024;
+const PNG_SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+// Only files named like a card are the generator's to remove.
+const CARD_FILE = /^(?:_site|[a-z0-9]+(?:-[a-z0-9]+)*)\.[a-z]{2}\.png$/;
 
-// Everything the card's look depends on besides its text.
-const TEMPLATE_FILES = ['templates/og-card.js', 'templates/status.js', 'templates/mark.js'];
-const FONT_PACKAGES = ['@fontsource-variable/bricolage-grotesque', '@fontsource/newsreader'];
+// Everything the card's look depends on besides its text: the template and
+// what it renders, the renderer (fonts, size, compression) and the size.
+const DESIGN_FILES = [
+  'templates/og-card.js',
+  'templates/status.js',
+  'templates/mark.js',
+  'html.js',
+  'config.js',
+  '../blog-og.js',
+];
+const FONT_PACKAGES = ['@fontsource-variable/bricolage-grotesque'];
 
 function sha256(value) {
   return crypto.createHash('sha256').update(value).digest('hex');
 }
 
-/** Computed once per process: the template sources and the font versions. */
-const DESIGN_KEY = sha256(
-  JSON.stringify({
-    // LF only, so a Windows checkout with CRLF would hash the same as CI.
-    templates: TEMPLATE_FILES.map((file) =>
-      fs.readFileSync(path.join(HERE, file), 'utf8').split('\r\n').join('\n'),
-    ),
-    fonts: FONT_PACKAGES.map(
-      (name) =>
-        JSON.parse(fs.readFileSync(path.join(ROOT, 'node_modules', name, 'package.json'), 'utf8'))
-          .version,
-    ),
-  }),
-);
+function fontVersion(name) {
+  const file = path.join(ROOT, 'node_modules', name, 'package.json');
+  try {
+    return JSON.parse(fs.readFileSync(file, 'utf8')).version;
+  } catch {
+    throw new Error(`blog: cannot read ${name}'s version (${file}); run npm ci`);
+  }
+}
+
+let designKey;
+/** The design files' sources and the font versions, read once and only when needed. */
+function design() {
+  designKey ??= sha256(
+    JSON.stringify({
+      // LF only, so a Windows checkout with CRLF would hash the same as CI.
+      files: DESIGN_FILES.map((file) =>
+        fs.readFileSync(path.join(HERE, file), 'utf8').split('\r\n').join('\n'),
+      ),
+      fonts: FONT_PACKAGES.map(fontVersion),
+    }),
+  );
+  return designKey;
+}
 
 /**
  * The cards the blog needs: one per published post, one per language.
@@ -75,44 +96,68 @@ export function ogCards(posts, languages) {
   ];
 }
 
-/** The hash a committed card must carry to count as current. */
+/** The hash of what a card shows; the manifest must carry it for the card to be current. */
 export function ogHash(card) {
   const { id, ...content } = card;
-  return sha256(JSON.stringify({ id, content, strings: strings(card.lang), design: DESIGN_KEY }));
+  return sha256(JSON.stringify({ id, content, strings: strings(card.lang), design: design() }));
 }
 
 function readManifest(ogDir) {
   const file = path.join(ogDir, MANIFEST);
   if (!fs.existsSync(file)) return {};
-  return JSON.parse(fs.readFileSync(file, 'utf8'));
+  try {
+    return JSON.parse(fs.readFileSync(file, 'utf8'));
+  } catch {
+    throw new Error('blog: blog/og/manifest.json is not valid JSON; run `npm run blog:og`');
+  }
+}
+
+/** Why a committed card cannot ship, or '' when it can. */
+function pngProblem(png) {
+  if (png.length < 24 || !png.subarray(0, 8).equals(PNG_SIGNATURE)) return 'not a PNG';
+  // IHDR, the first chunk: width and height as big-endian 32-bit integers.
+  const [width, height] = [png.readUInt32BE(16), png.readUInt32BE(20)];
+  if (width !== OG_SIZE.width || height !== OG_SIZE.height) {
+    return `${width} × ${height}, not ${OG_SIZE.width} × ${OG_SIZE.height}`;
+  }
+  return png.length > MAX_BYTES ? `${Math.round(png.length / 1024)} KB, over 150 KB` : '';
 }
 
 /**
  * The committed card for every id, or a build error naming every card that
- * is missing or out of date.
+ * is missing, out of date, replaced by hand or not a 1200 × 630 PNG.
  * @param {{ ogDir: string, cards: ReturnType<typeof ogCards> }} options
  * @returns {Map<string, Buffer>}
  */
 export function readOgImages({ ogDir, cards }) {
   const manifest = readManifest(ogDir);
-  const problems = cards.filter(
-    (card) =>
-      manifest[card.id] !== ogHash(card) || !fs.existsSync(path.join(ogDir, `${card.id}.png`)),
-  );
+  const images = new Map();
+  const problems = [];
+  for (const card of cards) {
+    const file = path.join(ogDir, `${card.id}.png`);
+    const entry = manifest[card.id];
+    if (!fs.existsSync(file) || entry?.card !== ogHash(card)) {
+      problems.push(`${card.id} (missing or out of date)`);
+      continue;
+    }
+    const png = fs.readFileSync(file);
+    const problem = entry.png === sha256(png) ? pngProblem(png) : 'not the rendered image';
+    if (problem) problems.push(`${card.id} (${problem})`);
+    else images.set(card.id, png);
+  }
   if (problems.length > 0) {
     throw new Error(
-      `blog: link-preview images missing or out of date: ${problems.map((card) => card.id).join(', ')}. Run \`npm run blog:og\`.`,
+      `blog: link-preview images to fix: ${problems.join(', ')}. Run \`npm run blog:og\`.`,
     );
   }
-  return new Map(
-    cards.map((card) => [card.id, fs.readFileSync(path.join(ogDir, `${card.id}.png`))]),
-  );
+  return images;
 }
 
 /**
  * Brings blog/og/ in line with `cards`: renders the missing and stale ones
- * with `render(card)`, removes images no card needs, and rewrites the
- * manifest (sorted, so it diffs cleanly).
+ * with `render(card)`, removes card files no card needs, and rewrites the
+ * manifest (sorted, so it diffs cleanly) with each card's text hash and the
+ * hash of its PNG.
  * @param {{ ogDir: string, cards: ReturnType<typeof ogCards>, render: (card: ReturnType<typeof ogCards>[number]) => Promise<Buffer> }} options
  * @returns {Promise<{ rendered: string[], removed: string[] }>}
  */
@@ -121,20 +166,29 @@ export async function syncOgImages({ ogDir, cards, render }) {
   const manifest = readManifest(ogDir);
   const wanted = new Set(cards.map((card) => card.id));
   const rendered = [];
-  for (const card of cards) {
+  const next = {};
+  for (const card of [...cards].sort((a, b) => (a.id < b.id ? -1 : 1))) {
     const file = path.join(ogDir, `${card.id}.png`);
-    if (manifest[card.id] === ogHash(card) && fs.existsSync(file)) continue;
-    fs.writeFileSync(file, await render(card));
-    rendered.push(card.id);
+    const entry = manifest[card.id];
+    const current =
+      entry?.card === ogHash(card) &&
+      fs.existsSync(file) &&
+      entry.png === sha256(fs.readFileSync(file));
+    if (!current) {
+      fs.writeFileSync(file, await render(card));
+      rendered.push(card.id);
+    }
+    next[card.id] = { card: ogHash(card), png: sha256(fs.readFileSync(file)) };
   }
   const removed = fs
     .readdirSync(ogDir)
-    .filter((name) => name.endsWith('.png') && !wanted.has(name.slice(0, -'.png'.length)))
+    .filter((name) => CARD_FILE.test(name) && !wanted.has(name.slice(0, -'.png'.length)))
     .sort();
   removed.forEach((name) => fs.rmSync(path.join(ogDir, name)));
-  const next = Object.fromEntries(
-    [...cards].sort((a, b) => (a.id < b.id ? -1 : 1)).map((card) => [card.id, ogHash(card)]),
-  );
   fs.writeFileSync(path.join(ogDir, MANIFEST), `${JSON.stringify(next, null, 2)}\n`);
-  return { rendered, removed: removed.map((name) => name.slice(0, -'.png'.length)) };
+  const order = cards.map((card) => card.id);
+  return {
+    rendered: rendered.sort((a, b) => order.indexOf(a) - order.indexOf(b)),
+    removed: removed.map((name) => name.slice(0, -'.png'.length)),
+  };
 }

@@ -23,8 +23,9 @@ import { lastChange } from './templates/format.js';
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 // Names the blog's own files use next to the posts: blog/feed.xml,
-// blog/now.html and blog/topic/.
-const RESERVED_SLUGS = new Set(['feed', 'now', 'topic']);
+// blog/now.html and blog/topic/; "site" would share the asset name of the
+// blog pages' own link-preview card (og-site-<lang>).
+const RESERVED_SLUGS = new Set(['feed', 'now', 'topic', 'site']);
 // Turkish and Dutch words run longer than English ones, so fewer per minute.
 const WORDS_PER_MINUTE = { en: 220, nl: 200, tr: 180 };
 // What a translation must share with the English original. The re-check

@@ -15,8 +15,15 @@ let ogDir: string;
 let themeInitPath: string;
 
 const post = { slug: 'hello', lang: 'en', title: 'Hello', status: 'verified', topic: 'testing' };
-const fakePng = (id: string) => Buffer.from(`png:${id}`);
+/** A real 1200 × 630 PNG whose colour depends on the card id. */
+const fakePng = (id: string) =>
+  sharp({
+    create: { ...OG_SIZE, channels: 3, background: { r: (id.length * 37) % 256, g: 90, b: 60 } },
+  })
+    .png()
+    .toBuffer();
 const render = async (card: { id: string }) => fakePng(card.id);
+const committed = (id: string) => fs.readFileSync(path.join(ogDir, `${id}.png`));
 
 beforeEach(() => {
   root = fs.mkdtempSync(path.join(os.tmpdir(), 'blog-og-'));
@@ -63,7 +70,57 @@ describe('syncOgImages and readOgImages', () => {
     const cards = ogCards([post], ['en']);
     await syncOgImages({ ogDir, cards, render });
     const images = readOgImages({ ogDir, cards });
-    expect(images.get('hello.en')!.equals(fakePng('hello.en'))).toBe(true);
+    expect(images.get('hello.en')!.equals(committed('hello.en'))).toBe(true);
+  });
+
+  it('fails when a committed PNG is not the one the manifest recorded', async () => {
+    const cards = ogCards([post], ['en']);
+    await syncOgImages({ ogDir, cards, render });
+    fs.writeFileSync(path.join(ogDir, 'hello.en.png'), await fakePng('swapped in by hand'));
+    expect(() => readOgImages({ ogDir, cards })).toThrow(/hello\.en/);
+  });
+
+  it('fails when a card is not a 1200 × 630 PNG under 150 KB', async () => {
+    const cards = ogCards([post], []);
+    const wrong = await sharp({
+      create: { width: 1200, height: 675, channels: 3, background: '#fff' },
+    })
+      .png()
+      .toBuffer();
+    await syncOgImages({ ogDir, cards, render: async () => wrong });
+    expect(() => readOgImages({ ogDir, cards })).toThrow(/hello\.en.*1200 × 630/);
+    await syncOgImages({
+      ogDir,
+      cards: ogCards([{ ...post, title: 'x' }], []),
+      render: async () => Buffer.from('GIF89a'),
+    });
+    expect(() => readOgImages({ ogDir, cards: ogCards([{ ...post, title: 'x' }], []) })).toThrow(
+      /not a PNG/,
+    );
+  });
+
+  it('leaves PNGs that are not card files alone', async () => {
+    fs.mkdirSync(ogDir);
+    fs.writeFileSync(path.join(ogDir, 'design-reference.png'), 'keep me');
+    const { removed } = await syncOgImages({ ogDir, cards: ogCards([post], []), render });
+    expect(removed).toEqual([]);
+    expect(fs.existsSync(path.join(ogDir, 'design-reference.png'))).toBe(true);
+  });
+
+  it('rewrites the manifest when the only change is a removed card', async () => {
+    await syncOgImages({ ogDir, cards: ogCards([post], ['en']), render });
+    const result = await syncOgImages({ ogDir, cards: ogCards([], ['en']), render });
+    expect(result).toEqual({ rendered: [], removed: ['hello.en'] });
+    const manifest = JSON.parse(fs.readFileSync(path.join(ogDir, 'manifest.json'), 'utf8'));
+    expect(Object.keys(manifest)).toEqual(['_site.en']);
+  });
+
+  it('names the manifest when it is not valid JSON', () => {
+    fs.mkdirSync(ogDir);
+    fs.writeFileSync(path.join(ogDir, 'manifest.json'), '<<<<<<< HEAD\n{}');
+    expect(() => readOgImages({ ogDir, cards: ogCards([post], []) })).toThrow(
+      /blog\/og\/manifest\.json is not valid JSON/,
+    );
   });
 
   it('fails the build, naming each card, when one is missing or out of date', async () => {
@@ -77,7 +134,7 @@ describe('syncOgImages and readOgImages', () => {
       ['en'],
     );
     expect(() => readOgImages({ ogDir, cards: renamed })).toThrow(
-      /hello\.en, new\.en.*npm run blog:og/,
+      /hello\.en \(missing or out of date\), new\.en.*npm run blog:og/,
     );
   });
 });
@@ -125,12 +182,14 @@ describe('buildBlog with link-preview images', () => {
     const image = meta(article, 'og:image')!;
     expect(image).toMatch(/^https:\/\/emredursun\.nl\/assets\/blog-og-hello-tr-[0-9a-f]{8}\.png$/);
     expect(
-      fs.readFileSync(path.join(dist, new URL(image).pathname)).equals(fakePng('hello.tr')),
+      fs.readFileSync(path.join(dist, new URL(image).pathname)).equals(committed('hello.tr')),
     ).toBe(true);
     expect(meta(article, 'twitter:image')).toBe(image);
     expect(meta(article, 'og:image:type')).toBe('image/png');
     expect(meta(article, 'og:image:width')).toBe(String(OG_SIZE.width));
     expect(meta(article, 'og:image:alt')).toBe('A green test');
+    // X reads its own alt tag, not og:image:alt.
+    expect(meta(article, 'twitter:image:alt')).toBe('A green test');
     const ld = JSON.parse(
       article.match(/<script type="application\/ld\+json">(.*?)<\/script>/)![1],
     );
