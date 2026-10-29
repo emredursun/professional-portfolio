@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { type Page } from '@playwright/test';
 import { BLOG_LAUNCHED } from '../scripts/blog/config.js';
-import { postPath, postWithToc, recheckRange, slugs } from './blog-content';
+import { hasNotes, postPath, postWithToc, recheckRange, slugs } from './blog-content';
 import { expect, test } from './fixtures';
 
 /**
@@ -22,6 +22,8 @@ async function expectIndexing(page: Page) {
 
 /** One day after `date` (YYYY-MM-DD), at noon UTC. */
 const dayAfter = (date: string) => new Date(Date.parse(`${date}T12:00:00Z`) + 86_400_000);
+/** The same day a year later (YYYY-MM-DD), as nextRecheck in sections.js counts. */
+const yearAfter = (date: string) => `${Number(date.slice(0, 4)) + 1}${date.slice(4)}`;
 const DARK_PAPER = 'rgb(28, 27, 24)';
 const LIGHT_PAPER = 'rgb(250, 247, 240)';
 
@@ -234,8 +236,9 @@ test.describe('stale evidence', () => {
   test('is flagged on the index and the article once the re-check date passes', async ({
     page,
   }) => {
-    // After the latest re-check date in the content, everything is stale.
-    await page.clock.setFixedTime(dayAfter(recheckRange('/blog').last));
+    // Evidence goes stale a year after its re-check; a day past the latest
+    // such date in the content, everything is stale.
+    await page.clock.setFixedTime(dayAfter(yearAfter(recheckRange().last)));
     for (const url of ['/blog', POST]) {
       await page.goto(url);
       await expect(page.locator('.stale-note').first(), url).toBeVisible();
@@ -243,9 +246,8 @@ test.describe('stale evidence', () => {
   });
 
   test('is not flagged while the evidence is current', async ({ page }) => {
-    // Before the earliest re-check date in the content, nothing is stale.
-    const { first } = recheckRange('/blog');
-    await page.clock.setFixedTime(new Date(Date.parse(`${first}T12:00:00Z`) - 2 * 86_400_000));
+    // The day after the earliest re-check, every post's evidence is current.
+    await page.clock.setFixedTime(dayAfter(recheckRange().first));
     for (const url of ['/blog', POST]) {
       await page.goto(url);
       await expect(page.locator('.stale-note').first(), url).toBeHidden();
@@ -255,9 +257,9 @@ test.describe('stale evidence', () => {
 
 test.describe('with more than one post', () => {
   test('the index lists short notes with their status icon', async ({ page }) => {
+    test.skip(!hasNotes, 'no short notes in the content yet');
     await page.goto('/blog');
     const notes = page.getByRole('region', { name: 'Short notes' });
-    test.skip((await notes.count()) === 0, 'no short notes yet');
     await expect(notes.getByRole('link')).not.toHaveCount(0);
     await expect(notes.locator('svg.status-icon')).not.toHaveCount(0);
   });

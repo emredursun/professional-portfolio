@@ -360,12 +360,21 @@ Still to do in Phase 3: crawlable topic pages (3b) and the "Now" log
   placeholder and every translation the English version has outgrown, and
   refuses to build, so launch cannot ship a sample or a stale translation.
 - **`npm run blog:new`:** starts a post as drafts in three languages with
-  valid frontmatter; refuses an invalid, reserved or existing slug.
+  valid frontmatter, each marked `placeholder: true` until written, so an
+  unwritten translation published by removing only `draft` still cannot
+  launch; refuses an invalid, reserved or existing slug.
+- **One gate for every reader:** the sitemap and `llms.txt` read the content
+  before the blog is built (prebuild), so they call the same
+  `assertLaunchable` as the build; a launched sitemap can never list a
+  sample page. A failing `lighthouse-urls.js` stops the Lighthouse step
+  instead of quietly measuring only the portfolio.
 - **CI follows the content:**
   - Lighthouse measures the pages the build wrote (`scripts/lighthouse-urls.js`
     passes them as `--collect.url`, which replace the config's list).
-  - The e2e specs read their cases from `dist` (`e2e/blog-content.ts`) and
-    skip, with a reason, a case the content lacks. Checked by running them
+  - The e2e specs take what to expect from the source content
+    (`e2e/blog-content.ts`, via `loadPosts` and `loadNow`) and check `dist`
+    against it, so a rendering bug fails a test instead of skipping it; a
+    case the content lacks is skipped with its reason. Checked by running them
     on a reduced content set (English and Turkish, one post): 64 passed,
     14 skipped, none failed.
   - The rules behind each skipped case stay covered by fixture unit tests.

@@ -14,7 +14,9 @@ import { BLOG_LANGUAGES } from './strings.js';
 /** Frontmatter for one language; English is the original, the others its translations. */
 function frontmatter({ lang, kind, topic, today }) {
   const translation =
-    lang === 'en' ? '' : `translation:\n  from: ${today}\n  assistedByAi: false\n`;
+    lang === 'en'
+      ? ''
+      : `translation:\n  from: ${today}\n  assistedByAi: false # true if AI helped translate\n`;
   return `---
 title: 'Working title (${lang})'
 description: 'One or two sentences for the index, search results and link previews.'
@@ -31,7 +33,9 @@ aiAssistance:
   mine:
     - 'What is yours'
   assisted: []
-${translation}draft: true
+${translation}# Remove both once this version is written: until then it cannot launch.
+placeholder: true
+draft: true
 ---
 
 Write here.
@@ -51,8 +55,17 @@ export function scaffoldPost({ contentDir, slug, kind = 'essay', topic = 'testin
   const dir = path.join(contentDir, slug);
   if (fs.existsSync(dir)) throw new Error(`blog:new: blog/content/${slug} already exists`);
   fs.mkdirSync(dir, { recursive: true });
-  return BLOG_LANGUAGES.map((lang) => {
-    fs.writeFileSync(path.join(dir, `${lang}.md`), frontmatter({ lang, kind, topic, today }));
-    return `blog/content/${slug}/${lang}.md`;
-  });
+  try {
+    return BLOG_LANGUAGES.map((lang) => {
+      // "wx": never overwrite, even if something appeared since the check.
+      fs.writeFileSync(path.join(dir, `${lang}.md`), frontmatter({ lang, kind, topic, today }), {
+        flag: 'wx',
+      });
+      return `blog/content/${slug}/${lang}.md`;
+    });
+  } catch (error) {
+    // No half-written post left behind to block a retry.
+    fs.rmSync(dir, { recursive: true, force: true });
+    throw error;
+  }
 }

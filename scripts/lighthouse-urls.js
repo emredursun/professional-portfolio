@@ -18,14 +18,17 @@ import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+const POST_FILE = /^[a-z0-9]+(?:-[a-z0-9]+)*\.html$/;
 
 /** The first post a language's blog folder holds (sorted, so stable). */
 function firstPost(distDir, prefix) {
   const dir = path.join(distDir, `${prefix}blog`);
   if (!fs.existsSync(dir)) return undefined;
+  // Only files named like a post slug: the output goes unquoted into a
+  // shell command line, so nothing else may reach it.
   const name = fs
     .readdirSync(dir)
-    .filter((file) => file.endsWith('.html') && file !== 'now.html')
+    .filter((file) => POST_FILE.test(file) && file !== 'now.html')
     .sort()[0];
   return name && `/${prefix}blog/${name.slice(0, -'.html'.length)}`;
 }

@@ -1,66 +1,69 @@
 import fs from 'fs';
 import path from 'path';
+import { loadPosts } from '../scripts/blog/content.js';
+import { loadNow } from '../scripts/blog/now.js';
 
 /**
- * What the built blog in dist/ actually contains, so the e2e specs test
- * whatever content is there (the samples today, real posts at launch) and
- * skip a case, with its reason, when the content has none. The rules behind
- * each case are covered with fixtures in the unit tests (tests/blog).
+ * What the blog's source content holds (the samples today, real posts at
+ * launch), so the e2e specs test whatever content there is and skip a case,
+ * with its reason, only when the content has none. Expectations come from
+ * the source, never from dist: a rendering bug that drops something must
+ * fail a test, not skip it. The rules behind each case are covered with
+ * fixtures in the unit tests (tests/blog).
  */
-const DIST = path.join(process.cwd(), 'dist');
+const ROOT = process.cwd();
+const DIST = path.join(ROOT, 'dist');
 const LANGUAGES = ['en', 'tr', 'nl'] as const;
-export type Lang = (typeof LANGUAGES)[number];
+type Lang = (typeof LANGUAGES)[number];
 
+const posts = loadPosts(path.join(ROOT, 'blog', 'content'));
+const now = loadNow(path.join(ROOT, 'blog', 'now'));
 const prefix = (lang: Lang) => (lang === 'en' ? '' : `${lang}/`);
 export const blogPath = (lang: Lang) => `/${prefix(lang)}blog`;
-const read = (file: string) => fs.readFileSync(path.join(DIST, file), 'utf8');
-const exists = (file: string) => fs.existsSync(path.join(DIST, file));
-const htmlIn = (dir: string) =>
-  exists(dir)
-    ? fs
-        .readdirSync(path.join(DIST, dir))
-        .filter((file) => file.endsWith('.html'))
-        .map((file) => file.slice(0, -'.html'.length))
-        .sort()
-    : [];
+const postsIn = (lang: Lang) =>
+  posts.filter((post) => post.lang === lang).sort((a, b) => (a.slug < b.slug ? -1 : 1));
 
-/** Languages that have a blog. */
-export const languages = LANGUAGES.filter((lang) => exists(`${prefix(lang)}blog.html`));
+/** Languages that have published posts, so a blog. */
+export const languages = LANGUAGES.filter((lang) => postsIn(lang).length > 0);
 
-/** Post slugs per language (not the Now page). */
-export function slugs(lang: Lang): string[] {
-  return htmlIn(`${prefix(lang)}blog`).filter((slug) => slug !== 'now');
-}
+/** Post slugs per language. */
+export const slugs = (lang: Lang): string[] => postsIn(lang).map((post) => post.slug);
 
 /** A post's path in a language, or undefined when it has none. */
 export const postPath = (lang: Lang, slug = slugs(lang)[0]) =>
   slug ? `${blogPath(lang)}/${slug}` : undefined;
 
-/** Topics with a page in a language. */
-export const topics = (lang: Lang) => htmlIn(`${prefix(lang)}blog/topic`);
+/** Topics with a page in a language: those its posts are on. */
+export const topics = (lang: Lang) => [...new Set(postsIn(lang).map((post) => post.topic))].sort();
 
-export const hasNow = (lang: Lang) => exists(`${prefix(lang)}blog/now.html`);
+export const hasNow = (lang: Lang) => Boolean(now[lang]) && languages.includes(lang);
 
 /** English posts with no version in `lang`: the index lists them as English. */
 export const untranslated = (lang: Lang) =>
   slugs('en').filter((slug) => !slugs(lang).includes(slug));
 
-/** The first English post whose article has a table of contents. */
-export const postWithToc = () =>
-  slugs('en').find((slug) => read(`blog/${slug}.html`).includes('class="toc"'));
+/** Whether the English blog has short notes. */
+export const hasNotes = postsIn('en').some((post) => post.kind === 'note');
 
-/** The earliest and latest re-check dates (YYYY-MM-DD) on a page. */
-export function recheckRange(urlPath: string): { first: string; last: string } {
-  const dates = [...read(`${urlPath.slice(1)}.html`).matchAll(/data-recheck-by="([\d-]+)"/g)]
-    .map((match) => match[1])
+/** The first English post with a section heading, which gets a table of contents. */
+export const postWithToc = () => postsIn('en').find((post) => /^##\s/m.test(post.body))?.slug;
+
+/** The earliest and latest re-check dates (YYYY-MM-DD) of the English posts. */
+export function recheckRange(): { first: string; last: string } {
+  const dates = postsIn('en')
+    .map((post) => post.evidence.recheckedAt)
     .sort();
+  if (dates.length === 0) throw new Error('e2e: no English post with evidence');
   return { first: dates[0], last: dates.at(-1)! };
 }
 
-/** Whether the English index lists a short note with this status. */
-export const hasNoteWithStatus = (status: string) =>
-  new RegExp(`class="note-item"[^]*?status-icon-${status}`).test(read('blog.html'));
-
-if (!languages.includes('en') || slugs('en').length === 0) {
-  throw new Error('e2e: no English blog in dist; run `npm run build` first');
+// The build must have written every language the content has; a missing one
+// is a failure here, never a silently skipped block of tests.
+for (const lang of languages) {
+  if (!fs.existsSync(path.join(DIST, `${prefix(lang)}blog.html`))) {
+    throw new Error(
+      `e2e: dist has no ${blogPath(lang)} although the content has ${lang} posts; run \`npm run build\``,
+    );
+  }
 }
+if (!languages.includes('en')) throw new Error('e2e: the content has no English post');

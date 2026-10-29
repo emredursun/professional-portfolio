@@ -22,3 +22,16 @@ export function launchProblems({ posts, now }) {
       .map(([lang]) => `blog/now/${lang}.md has a placeholder entry`),
   ];
 }
+
+/**
+ * Throws, listing every problem, unless the content can launch. Every
+ * reader of launched content calls it: the blog build, and the sitemap and
+ * llms.txt, which run before the build and would otherwise list samples.
+ * @param {Parameters<typeof launchProblems>[0]} content
+ */
+export function assertLaunchable(content) {
+  const problems = launchProblems(content);
+  if (problems.length > 0) {
+    throw new Error(`blog: not ready to launch:\n- ${problems.join('\n- ')}`);
+  }
+}

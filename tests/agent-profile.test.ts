@@ -1,10 +1,12 @@
 // @vitest-environment node
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { validate } from '@jsonresume/schema';
 import { loadConstants } from '../scripts/lib/load-constants.js';
 import { blogForAgents } from '../scripts/blog/agents.js';
+import { writePost } from './blog/fixtures';
 import {
   buildLlmsTxt,
   buildResume,
@@ -132,12 +134,20 @@ describe('llms.txt', () => {
 
 describe('blogForAgents', () => {
   it('lists English posts, newest first, only once the blog has launched', () => {
-    const contentDir = path.join(ROOT, 'blog', 'content');
+    // Real, launchable content: the repository's samples refuse to launch.
+    const contentDir = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'llms-')), 'content');
+    writePost(contentDir, 'older', 'Body\n');
+    writePost(contentDir, 'newer', 'Body\n', 'updatedAt: 2026-12-20\n');
+    const file = path.join(contentDir, 'newer', 'en.md');
+    fs.writeFileSync(
+      file,
+      fs.readFileSync(file, 'utf8').replace('publishedAt: 2026-12-09', 'publishedAt: 2026-12-10'),
+    );
     expect(blogForAgents({ contentDir, launched: false })).toEqual([]);
-    const posts = blogForAgents({ contentDir, launched: true });
-    expect(posts.length).toBeGreaterThan(0);
-    expect(
-      posts.every((post) => /^https:\/\/emredursun\.nl\/blog\/[a-z0-9-]+$/.test(post.url)),
-    ).toBe(true);
+    expect(blogForAgents({ contentDir, launched: true }).map((post) => post.url)).toEqual([
+      'https://emredursun.nl/blog/newer',
+      'https://emredursun.nl/blog/older',
+    ]);
+    fs.rmSync(path.dirname(contentDir), { recursive: true, force: true });
   });
 });

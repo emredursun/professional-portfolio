@@ -4,6 +4,7 @@ import os from 'os';
 import path from 'path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { loadPosts } from '../../scripts/blog/content.js';
+import { launchProblems } from '../../scripts/blog/launch-gate.js';
 import { scaffoldPost } from '../../scripts/blog/scaffold.js';
 
 let contentDir: string;
@@ -44,7 +45,17 @@ describe('scaffoldPost', () => {
       from: '2026-11-02',
       assistedByAi: false,
     });
-    expect(posts.every((post) => post.placeholder === undefined)).toBe(true);
+    // Still placeholders until written: publishing an unwritten version
+    // (only draft removed) cannot launch.
+    expect(posts.every((post) => post.placeholder === true)).toBe(true);
+    expect(launchProblems({ posts, now: {} })).toHaveLength(3);
+  });
+
+  it('leaves no partial folder behind when it cannot write', () => {
+    fs.mkdirSync(contentDir, { recursive: true });
+    fs.writeFileSync(path.join(contentDir, 'blocked'), 'a file where the folder would go');
+    expect(() => scaffoldPost({ contentDir, slug: 'blocked', today: '2026-11-02' })).toThrow();
+    expect(fs.statSync(path.join(contentDir, 'blocked')).isFile()).toBe(true);
   });
 
   it.each([

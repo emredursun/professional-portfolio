@@ -31,12 +31,13 @@ function main(argv = process.argv.slice(2)) {
     slug: positionals[0],
     kind: values.kind,
     topic: values.topic,
-    // The only clock read in the blog's tooling: the day writing starts.
-    today: new Date().toISOString().slice(0, 10),
+    // The only clock read in the blog's tooling: the day writing starts, in
+    // local time (toISOString is UTC, a day behind in the Dutch early hours).
+    today: new Date().toLocaleDateString('sv-SE'),
   });
   process.stdout.write(
     `blog:new wrote\n${files.map((file) => `  ${file}`).join('\n')}\n` +
-      'Next: write en.md, translate, remove "draft: true", run `npm run blog:og`.\n',
+      'Next: write each version, then remove its "placeholder" and "draft" lines; run `npm run blog:og`.\n',
   );
 }
 

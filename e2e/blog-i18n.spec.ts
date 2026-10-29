@@ -132,8 +132,14 @@ test.describe('switching language', () => {
     const lang = translated.find((other) => untranslated(other).length > 0);
     test.skip(!lang, 'every post exists in every language');
     await page.goto(blogPath(lang!));
-    await expect(page.locator('[lang="en"] a[hreflang="en"]')).toHaveCount(
-      untranslated(lang!).length,
+    // Each untranslated post once, as an English link, wherever it appears.
+    const hrefs = await page
+      .locator('[lang="en"] a[hreflang="en"]')
+      .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+    expect([...new Set(hrefs)].sort()).toEqual(
+      untranslated(lang!)
+        .map((slug) => postPath('en', slug))
+        .sort(),
     );
     await expect(page.locator('.lang-chip').first()).toHaveText(strings(lang!).inEnglish);
   });

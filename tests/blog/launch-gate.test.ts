@@ -7,6 +7,8 @@ import { buildBlog } from '../../scripts/build-blog.js';
 import { loadPosts } from '../../scripts/blog/content.js';
 import { launchProblems } from '../../scripts/blog/launch-gate.js';
 import { loadNow } from '../../scripts/blog/now.js';
+import { blogForAgents } from '../../scripts/blog/agents.js';
+import { blogSitemapEntries } from '../../scripts/blog/sitemap.js';
 import { TRANSLATION, makeDist, writePost } from './fixtures';
 
 let root: string;
@@ -101,5 +103,23 @@ describe('the repository samples', () => {
     const samples = posts.filter((post) => post.slug.startsWith('sample-'));
     expect(samples.length).toBeGreaterThan(0);
     expect(samples.every((post) => post.placeholder === true)).toBe(true);
+  });
+});
+
+describe('every launched reader of the content applies the gate', () => {
+  // The sitemap runs in prebuild, before the blog build would refuse, so it
+  // must refuse too, or a launched sitemap could list sample pages.
+  it.each([
+    ['the sitemap', () => blogSitemapEntries({ contentDir, nowDir, launched: true })],
+    ['llms.txt', () => blogForAgents({ contentDir, launched: true })],
+  ])('%s refuses placeholders once launched', (_, read) => {
+    writePost(contentDir, 'sample', 'Body\n', 'placeholder: true\n');
+    expect(read).toThrow(/not ready to launch:\n- blog\/content\/sample\/en\.md/);
+  });
+
+  it('and reads freely before launch', () => {
+    writePost(contentDir, 'sample', 'Body\n', 'placeholder: true\n');
+    expect(blogSitemapEntries({ contentDir, nowDir, launched: false })).toEqual([]);
+    expect(blogForAgents({ contentDir, launched: false })).toEqual([]);
   });
 });
