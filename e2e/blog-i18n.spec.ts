@@ -157,3 +157,32 @@ test.describe('topic pages', () => {
     expect((await request.get('/tr/blog/topic/ai')).status()).toBe(200);
   });
 });
+
+test.describe('the Now page', () => {
+  test('the index’s Now line leads to a clean, accessible Now page', async ({ page }) => {
+    for (const lang of ['en', 'tr'] as const) {
+      const s = strings(lang);
+      const base = lang === 'en' ? '/blog' : `/${lang}/blog`;
+      await page.goto(base);
+      await page.locator('.now-line').getByRole('link', { name: s.nowMore }).click();
+      await expect(page).toHaveURL(new RegExp(`${base}/now$`));
+      await expect(page.locator('html')).toHaveAttribute('lang', lang);
+      await expect(page.locator('h1')).toHaveText(s.nowTitle);
+      await expect(page.locator('.now-list li').first()).toBeVisible();
+      const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
+      expect(results.violations, lang).toEqual([]);
+    }
+  });
+
+  test('fits the screen, and a trailing slash redirects like Firebase', async ({
+    page,
+    request,
+  }) => {
+    await page.goto('/nl/blog/now');
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+    expect((await request.get('/blog/now/', { maxRedirects: 0 })).status()).toBe(301);
+  });
+});

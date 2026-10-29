@@ -266,9 +266,27 @@ describe('buildBlog: hreflang across the whole build', () => {
     write('en-and-tr', 'Body\n');
     write('en-and-tr', 'Gövde\n', TRANSLATION, 'tr');
     write('en-only', 'Body\n');
+    // Now logs in English and Turkish only, so the Now pages' alternates
+    // are a subset of the languages, like a post's.
+    const nowDir = path.join(root, 'now');
+    fs.mkdirSync(nowDir);
+    for (const lang of ['en', 'tr']) {
+      fs.writeFileSync(
+        path.join(nowDir, `${lang}.md`),
+        '---\nentries:\n  - date: 2026-10-29\n    text: Building the blog.\n---\n',
+      );
+    }
     const dist = makeDist(root, 'dist');
-    const written = await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
+    const written = await buildBlog({
+      distDir: dist,
+      contentDir,
+      nowDir,
+      themeInitPath,
+      launched: false,
+    });
     const pages = written.filter((file) => file.endsWith('.html'));
+    expect(pages).toEqual(expect.arrayContaining(['blog/now.html', 'tr/blog/now.html']));
+    expect(pages).not.toContain('nl/blog/now.html');
     const fileFor = (url: string) => `${new URL(url).pathname.slice(1)}.html`;
     const alternates = (file: string) =>
       new Map(
