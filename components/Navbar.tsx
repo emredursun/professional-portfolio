@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import Magnetic from './Magnetic.tsx';
 import { Page } from '../types.ts';
+import { blogPathFor } from '../src/utils/blog.ts';
 
 interface NavbarProps {
   onOpenCommandPalette?: () => void;
@@ -117,6 +118,28 @@ const NavButton: React.FC<{
   </li>
 ));
 
+/**
+ * The blog, styled like the other entries but a plain link: Field Notes is
+ * static pages outside the router, so it is never the active route here.
+ */
+const BlogNavItem: React.FC<{ href: string; label: string }> = React.memo(({ href, label }) => (
+  <li className="flex-1 flex justify-center">
+    <Magnetic>
+      <a
+        href={href}
+        className="relative flex flex-col items-center justify-center w-full min-w-[54px] py-[3px] rounded-xl transition-all duration-300 group touch-manipulation text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+      >
+        <span className="text-[16px] mb-[2px] z-10 transition-all duration-300 ease-out group-hover:scale-105 group-active:scale-95">
+          <i aria-hidden="true" className="fas fa-pen-nib"></i>
+        </span>
+        <span className="text-[8px] font-semibold uppercase tracking-wide z-10 transition-all duration-300 whitespace-nowrap">
+          {label}
+        </span>
+      </a>
+    </Magnetic>
+  </li>
+));
+
 const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent }) => {
   const { t, i18n } = useTranslation('common');
 
@@ -149,6 +172,8 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette, onScrollToContent
                 onScrollToContent={onScrollToContent}
               />
             ))}
+
+            <BlogNavItem href={blogPathFor(currentLang)} label={t('nav.blog')} />
 
             {/* Command Palette Button integrated as nav item */}
             {onOpenCommandPalette && (

@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import fs from 'fs';
 import path from 'path';
 import { strings } from '../scripts/blog/strings.js';
-import { expect, test } from './fixtures';
+import { copy, expect, test } from './fixtures';
 
 /**
  * Field Notes in Turkish and Dutch (scripts/build-blog.js). Accessible names
@@ -201,5 +201,54 @@ test.describe('link previews', () => {
     await page.goto(TR_POST);
     const alt = await page.locator('meta[property="og:image:alt"]').getAttribute('content');
     await expect(page.locator('h1')).toHaveText(alt!);
+  });
+});
+
+test.describe('a missing blog page', () => {
+  for (const lang of ['en', 'tr', 'nl'] as const) {
+    const base = lang === 'en' ? '/blog' : `/${lang}/blog`;
+
+    test(`under ${base} is a real 404 that leads back to that blog`, async ({ page }) => {
+      const notFound = copy(lang, 'common').notFound;
+      const response = await page.goto(`${base}/no-such-post`);
+      expect(response?.status()).toBe(404);
+      await expect(page.getByRole('heading', { name: notFound.blogTitle })).toBeVisible();
+      const back = page.getByRole('link', { name: notFound.blogIndex });
+      await expect(back).toHaveAttribute('href', base);
+      await back.click();
+      await expect(page).toHaveURL(new RegExp(`${base}$`));
+      await expect(page.locator('html')).toHaveAttribute('lang', lang);
+    });
+  }
+});
+
+test.describe('the portfolio links to the blog', () => {
+  test('the nav opens the blog in the page’s language', async ({ page, isMobile }) => {
+    for (const [from, to] of [
+      ['/about', '/blog'],
+      ['/tr/about', '/tr/blog'],
+    ] as const) {
+      await page.goto(from);
+      // The desktop sidebar and the mobile bottom bar each have the link;
+      // only one of them is visible at a time.
+      const link = page.locator(`a[href="${to}"]:visible`).first();
+      await expect(link).toHaveText(new RegExp(copy('en', 'common').nav.blog, 'i'));
+      await link.click();
+      await expect(page).toHaveURL(new RegExp(`${to}$`));
+      await expect(page.locator('html')).toHaveAttribute(
+        'lang',
+        from.startsWith('/tr') ? 'tr' : 'en',
+      );
+    }
+    expect(isMobile !== undefined).toBe(true);
+  });
+
+  test('the command palette has a Field Notes command', async ({ page }) => {
+    await page.goto('/nl/about');
+    await page.keyboard.press('Control+k');
+    const command = copy('nl', 'common').palette.commands.navBlog.label;
+    await page.getByRole('dialog').getByRole('textbox').fill('blog');
+    await page.getByRole('option', { name: new RegExp(command) }).click();
+    await expect(page).toHaveURL(/\/nl\/blog$/);
   });
 });
