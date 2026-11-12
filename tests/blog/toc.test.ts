@@ -93,6 +93,33 @@ describe('bindTocDisclosure', () => {
     expect(details().open).toBe(true);
   });
 
+  it('marks the disclosure so the list can drop down over the text', () => {
+    document.body.innerHTML = TOC_HTML;
+    bindTocDisclosure(document, fakeQuery(false));
+    expect(details().hasAttribute('data-folding')).toBe(true);
+  });
+
+  it('folds the open list on a tap outside it or on Escape, on narrow screens only', () => {
+    document.body.innerHTML = TOC_HTML;
+    const wide = fakeQuery(false);
+    bindTocDisclosure(document, wide);
+
+    details().open = true;
+    document.querySelector<HTMLElement>('h2')!.click();
+    expect(details().open).toBe(false);
+
+    details().open = true;
+    document
+      .querySelector('a[href="#one"]')!
+      .dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    expect(details().open).toBe(false);
+    expect(document.activeElement?.tagName).toBe('SUMMARY');
+
+    wide.flip(true);
+    document.querySelector<HTMLElement>('h2')!.click();
+    expect(details().open).toBe(true);
+  });
+
   it('leaves a page without a disclosure alone', () => {
     document.body.innerHTML = '<p>No list</p>';
     expect(() => bindTocDisclosure(document, fakeQuery(false))).not.toThrow();

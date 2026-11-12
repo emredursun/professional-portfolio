@@ -236,7 +236,7 @@ describe('renderArticlePage: table of contents', () => {
     expect(summary?.querySelector('.toc-title')?.textContent).toBe('On this page');
     expect(summary?.querySelector('.toc-count')?.textContent).toContain('2');
     expect(summary?.querySelector('.toc-current')).not.toBeNull();
-    expect(details?.querySelectorAll(':scope > ol a')).toHaveLength(2);
+    expect(details?.querySelectorAll(':scope > .toc-panel > ol a')).toHaveLength(2);
   });
 
   it('uses the post language for the title', () => {

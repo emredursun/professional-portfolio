@@ -164,18 +164,45 @@
 }
 
 /*
- * Narrow screens: a folded bar above the text (toc.ts closes it), showing the
- * section count and, while folded, the section being read. Rows are 44px
- * tall so they are easy to tap.
+ * Narrow screens: a folded bar (toc.ts closes it) that sticks to the top while
+ * reading, showing the section count and, while folded, the section being
+ * read. With JavaScript the list drops down over the text, so opening it
+ * never moves what is being read. Rows are 44px tall so they are easy to tap.
  */
 @media screen and (max-width: 1179.98px) {
   .toc {
-    margin-top: 24px;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    margin: 16px 0 24px;
+    padding: 8px 0;
+    background: var(--paper);
   }
 
   .toc-disclosure {
+    position: relative;
     border: 1px solid var(--line);
     border-radius: 16px;
+    background: var(--paper);
+  }
+
+  .toc-panel {
+    padding: 4px 16px 12px;
+  }
+
+  .toc-disclosure[data-folding] > .toc-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: -1px;
+    left: -1px;
+    max-height: min(60vh, 440px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-top: 8px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--paper);
+    box-shadow: 0 16px 40px rgb(0 0 0 / 18%);
   }
 
   .toc-summary {
@@ -229,14 +256,6 @@
     white-space: nowrap;
   }
 
-  .toc-disclosure[open] > .toc-summary {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-
-  .toc-disclosure > ol {
-    margin: 4px 16px 12px;
-  }
 
   .toc a {
     display: flex;
@@ -272,6 +291,14 @@
   line-height: 1.15;
   /* Room above a heading reached from the table of contents. */
   scroll-margin-top: 32px;
+}
+
+/* Narrow screens: clear of the sticky table of contents bar as well. */
+@media screen and (max-width: 1179.98px) {
+  .prose h2,
+  .prose h3 {
+    scroll-margin-top: 88px;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {

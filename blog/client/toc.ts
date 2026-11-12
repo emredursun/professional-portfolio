@@ -64,8 +64,8 @@ export interface WideQuery {
 /**
  * Keeps the table of contents open beside the text on wide screens (`wide`
  * is matchMedia('(min-width: 1180px)'), the breakpoint in article.css) and
- * folded above it on narrow ones, where it folds again once a section is
- * chosen so the reader lands on the text, not the list.
+ * folded in a bar that sticks to the top on narrow ones, where it folds
+ * again once a section is chosen so the reader lands on the text, not the list.
  */
 export function bindTocDisclosure(doc: Document, wide: WideQuery): void {
   const details = doc.querySelector<HTMLDetailsElement>('.toc-disclosure');
@@ -84,5 +84,19 @@ export function bindTocDisclosure(doc: Document, wide: WideQuery): void {
     const link = (event.target as Element | null)?.closest('a[href^="#"]');
     if (link && !wide.matches) details.open = false;
   });
+  // The open list covers the text on narrow screens: a tap outside it or
+  // Escape puts it away, as with any menu.
+  doc.addEventListener('click', (event) => {
+    if (!wide.matches && details.open && !details.contains(event.target as Node)) {
+      details.open = false;
+    }
+  });
+  details.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || wide.matches || !details.open) return;
+    details.open = false;
+    details.querySelector('summary')?.focus();
+  });
+  // Lets article.css drop the list down over the text instead of pushing it.
+  details.setAttribute('data-folding', '');
   fit(wide.matches);
 }
