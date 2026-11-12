@@ -64,8 +64,13 @@ ${entries.length > 0 ? markup`<ol class="corrections-log">${entries}</ol>` : mar
 export function tableOfContents(post) {
   if (post.toc.length === 0) return '';
   const s = strings(post.lang);
+  // Open in the HTML, so the list is there without JavaScript; toc.ts folds it
+  // on narrow screens. .toc-current is filled in by toc.ts with the section
+  // being read, and only shows while the list is folded.
   return markup`<nav class="toc" aria-label="${s.toc}">
-<p class="toc-title">${s.toc}</p>
+<details class="toc-disclosure" open>
+<summary class="toc-summary"><span class="toc-heading"><span class="toc-title">${s.toc}</span> <span class="toc-count" aria-hidden="true">· ${post.toc.length}</span></span><span class="toc-current" aria-hidden="true"></span></summary>
 <ol>${post.toc.map((entry) => markup`<li class="toc-level-${entry.level}"><a href="#${entry.id}">${entry.text}</a></li>`)}</ol>
+</details>
 </nav>`;
 }

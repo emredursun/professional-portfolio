@@ -226,6 +226,31 @@ describe('renderArticlePage: trust sections', () => {
   });
 });
 
+describe('renderArticlePage: table of contents', () => {
+  it('folds the list into a disclosure, open by default, titled with the section count', () => {
+    const { doc } = page();
+    const nav = doc.querySelector('nav.toc[aria-label="On this page"]');
+    const details = nav?.querySelector('details.toc-disclosure');
+    expect(details?.hasAttribute('open')).toBe(true);
+    const summary = details?.querySelector(':scope > summary');
+    expect(summary?.querySelector('.toc-title')?.textContent).toBe('On this page');
+    expect(summary?.querySelector('.toc-count')?.textContent).toContain('2');
+    expect(summary?.querySelector('.toc-current')).not.toBeNull();
+    expect(details?.querySelectorAll(':scope > ol a')).toHaveLength(2);
+  });
+
+  it('uses the post language for the title', () => {
+    const { doc } = page({ lang: 'nl' });
+    expect(doc.querySelector('.toc-disclosure summary .toc-title')?.textContent).toBe(
+      'Op deze pagina',
+    );
+  });
+
+  it('renders nothing for a post without headings', () => {
+    expect(page({ toc: [] }).doc.querySelector('.toc')).toBeNull();
+  });
+});
+
 describe('nextRecheck', () => {
   it('is one year after the last check, keeping leap days valid', () => {
     expect(nextRecheck('2026-12-09')).toBe('2027-12-09');

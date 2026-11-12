@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bindTableOfContents, currentSection } from '../../blog/client/toc';
+import { bindTableOfContents, bindTocDisclosure, currentSection } from '../../blog/client/toc';
 
 describe('currentSection', () => {
   const headings = [
@@ -33,5 +33,76 @@ describe('bindTableOfContents', () => {
 
     document.body.innerHTML = '<p>No list</p>';
     expect(() => bindTableOfContents(document, window)).not.toThrow();
+  });
+});
+
+/** A stand-in for matchMedia('(min-width: 1180px)') whose answer a test can flip. */
+function fakeQuery(matches: boolean) {
+  const listeners: ((event: { matches: boolean }) => void)[] = [];
+  return {
+    matches,
+    addEventListener: (_type: 'change', listener: (event: { matches: boolean }) => void) => {
+      listeners.push(listener);
+    },
+    flip(next: boolean) {
+      this.matches = next;
+      listeners.forEach((listener) => listener({ matches: next }));
+    },
+  };
+}
+
+const TOC_HTML = `<nav class="toc"><details class="toc-disclosure" open>
+<summary><span class="toc-title">On this page</span><span class="toc-current"></span></summary>
+<ol><li><a href="#one">One</a></li><li><a href="#two">Second part</a></li></ol></details></nav>
+<h2 id="one">One</h2><h2 id="two">Second part</h2>`;
+
+describe('bindTocDisclosure', () => {
+  const details = () => document.querySelector<HTMLDetailsElement>('.toc-disclosure')!;
+
+  it('folds the list on narrow screens and keeps it open on wide ones', () => {
+    document.body.innerHTML = TOC_HTML;
+    const wide = fakeQuery(false);
+    bindTocDisclosure(document, wide);
+    expect(details().open).toBe(false);
+
+    wide.flip(true);
+    expect(details().open).toBe(true);
+    wide.flip(false);
+    expect(details().open).toBe(false);
+  });
+
+  it('stays open on wide screens even when the summary is toggled', () => {
+    document.body.innerHTML = TOC_HTML;
+    bindTocDisclosure(document, fakeQuery(true));
+    expect(details().open).toBe(true);
+    details().open = false;
+    details().dispatchEvent(new Event('toggle'));
+    expect(details().open).toBe(true);
+  });
+
+  it('folds again after a link is chosen on a narrow screen, but not on a wide one', () => {
+    document.body.innerHTML = TOC_HTML;
+    const wide = fakeQuery(false);
+    bindTocDisclosure(document, wide);
+    details().open = true;
+    document.querySelector<HTMLAnchorElement>('a[href="#two"]')!.click();
+    expect(details().open).toBe(false);
+
+    wide.flip(true);
+    document.querySelector<HTMLAnchorElement>('a[href="#one"]')!.click();
+    expect(details().open).toBe(true);
+  });
+
+  it('leaves a page without a disclosure alone', () => {
+    document.body.innerHTML = '<p>No list</p>';
+    expect(() => bindTocDisclosure(document, fakeQuery(false))).not.toThrow();
+  });
+});
+
+describe('bindTableOfContents: current section in the summary', () => {
+  it('names the section being read next to the folded title', () => {
+    document.body.innerHTML = TOC_HTML;
+    bindTableOfContents(document, window);
+    expect(document.querySelector('.toc-current')?.textContent).toBe('Second part');
   });
 });

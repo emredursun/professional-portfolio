@@ -42,10 +42,12 @@ test.describe('blog article', () => {
     expect(JSON.parse(ld ?? '{}')['@type']).toBe('BlogPosting');
   });
 
-  test('table of contents links land on their sections', async ({ page }) => {
+  test('table of contents links land on their sections', async ({ page, isMobile }) => {
     test.skip(!TOC_POST, 'no post with headings yet');
     await page.goto(TOC_POST!);
     const toc = page.getByRole('navigation', { name: 'On this page' });
+    // Folded on phones (toc.ts): open it first.
+    if (isMobile) await toc.locator('summary').click();
     const first = toc.getByRole('link').first();
     const target = (await first.getAttribute('href'))!;
     await first.click();
@@ -113,6 +115,38 @@ test.describe('blog article', () => {
   });
 });
 
+test.describe('table of contents on a phone', () => {
+  // Motion on, as most phones have it: the jump must still land with smooth scrolling.
+  test.use({ viewport: { width: 375, height: 812 }, reducedMotion: 'no-preference' });
+
+  test('is a folded bar that opens on tap and folds again once a section is chosen', async ({
+    page,
+  }) => {
+    test.skip(!TOC_POST, 'no post with headings yet');
+    await page.goto(TOC_POST!);
+    const toc = page.getByRole('navigation', { name: 'On this page' });
+    const summary = toc.locator('summary');
+    const links = toc.getByRole('link');
+
+    await expect(toc.locator('details')).not.toHaveAttribute('open');
+    await expect(links.first()).toBeHidden();
+    expect((await summary.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+
+    await summary.click();
+    await expect(links.first()).toBeVisible();
+    for (const box of await Promise.all((await links.all()).map((link) => link.boundingBox()))) {
+      expect(box!.height).toBeGreaterThanOrEqual(44);
+    }
+
+    const last = links.last();
+    const target = (await last.getAttribute('href'))!;
+    await last.click();
+    await expect(page).toHaveURL(new RegExp(`${target}$`));
+    await expect(links.first()).toBeHidden();
+    await expect(page.locator(`[id="${target.slice(1)}"]`)).toBeInViewport();
+  });
+});
+
 test.describe('blog without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
@@ -121,6 +155,13 @@ test.describe('blog without JavaScript', () => {
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('.prose p').first()).toBeVisible();
     await expect(page.locator('[data-theme-toggle]')).toBeHidden();
+  });
+
+  test('keeps the table of contents open, since nothing could open it', async ({ page }) => {
+    test.skip(!TOC_POST, 'no post with headings yet');
+    await page.goto(TOC_POST!);
+    const toc = page.getByRole('navigation', { name: 'On this page' });
+    await expect(toc.getByRole('link').first()).toBeVisible();
   });
 });
 

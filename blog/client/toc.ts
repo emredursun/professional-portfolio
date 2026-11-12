@@ -1,7 +1,8 @@
 /**
  * Marks the table of contents entry for the section being read, with
- * aria-current="location". Without this script the list still works as plain
- * links; it only adds the highlight.
+ * aria-current="location", and folds the list into a closed disclosure on
+ * narrow screens. Without this script the list is open and still works as
+ * plain links; it only adds the highlight and the folding.
  */
 
 /** How far below the top of the window a heading counts as reached. */
@@ -25,6 +26,8 @@ export function bindTableOfContents(doc: Document, win: Window): void {
     .map((link) => doc.getElementById(decodeURIComponent(link.hash.slice(1))))
     .filter((target): target is HTMLElement => target !== null);
   if (targets.length === 0) return;
+  // Shown beside the folded title on narrow screens (article.css).
+  const label = doc.querySelector('.toc-current');
 
   let pending = false;
   const update = () => {
@@ -35,6 +38,7 @@ export function bindTableOfContents(doc: Document, win: Window): void {
     for (const link of links) {
       if (decodeURIComponent(link.hash.slice(1)) === id) {
         link.setAttribute('aria-current', 'location');
+        if (label && label.textContent !== link.textContent) label.textContent = link.textContent;
       } else {
         link.removeAttribute('aria-current');
       }
@@ -49,4 +53,36 @@ export function bindTableOfContents(doc: Document, win: Window): void {
   win.addEventListener('scroll', schedule, { passive: true });
   win.addEventListener('resize', schedule, { passive: true });
   update();
+}
+
+/** The part of MediaQueryList the disclosure needs, so tests can pass a stand-in. */
+export interface WideQuery {
+  readonly matches: boolean;
+  addEventListener(type: 'change', listener: (event: { matches: boolean }) => void): void;
+}
+
+/**
+ * Keeps the table of contents open beside the text on wide screens (`wide`
+ * is matchMedia('(min-width: 1180px)'), the breakpoint in article.css) and
+ * folded above it on narrow ones, where it folds again once a section is
+ * chosen so the reader lands on the text, not the list.
+ */
+export function bindTocDisclosure(doc: Document, wide: WideQuery): void {
+  const details = doc.querySelector<HTMLDetailsElement>('.toc-disclosure');
+  if (!details) return;
+
+  const fit = (isWide: boolean) => {
+    if (details.open !== isWide) details.open = isWide;
+  };
+  wide.addEventListener('change', (event) => fit(event.matches));
+  // The summary is a plain label on wide screens: undo a keyboard toggle.
+  details.addEventListener('toggle', () => {
+    if (wide.matches && !details.open) details.open = true;
+  });
+  // Fold again once a section is chosen; the browser still makes the jump.
+  details.addEventListener('click', (event) => {
+    const link = (event.target as Element | null)?.closest('a[href^="#"]');
+    if (link && !wide.matches) details.open = false;
+  });
+  fit(wide.matches);
 }
