@@ -10,14 +10,15 @@
 //     same filenames, so the old bytes must be purged.
 // v6: portrait renamed to emre-dursun-qa-consultant-400.webp (image SEO).
 // v7: social-share.png no longer precached (only link-preview bots read it).
+// v8: / and /index.html now 301 to /about (firebase.json). A cached redirected
+//     response cannot answer a navigation, so the offline page is /about.
 const CACHE_PREFIX = 'ed-portfolio-';
-const CACHE_NAME = `${CACHE_PREFIX}v7`;
-const OFFLINE_URL = '/';
+const CACHE_NAME = `${CACHE_PREFIX}v8`;
+const OFFLINE_URL = '/about';
 
 // Assets to cache immediately on install
 const PRECACHE_ASSETS = [
-  '/',
-  '/index.html',
+  OFFLINE_URL,
   '/site.webmanifest',
   '/favicon-32x32.png',
   '/favicon-96x96.png',
@@ -118,7 +119,7 @@ async function networkFirst(request) {
       return cachedResponse;
     }
 
-    // Fallback to cached homepage for navigation requests
+    // Fallback to the cached About page for navigation requests
     if (request.mode === 'navigate') {
       const cachedHome = await caches.match(OFFLINE_URL);
       if (cachedHome) {
