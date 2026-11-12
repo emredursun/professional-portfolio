@@ -106,8 +106,23 @@
   line-height: 1.4;
 }
 
-.toc-title {
+/* The summary is the list's title; toc.ts keeps it open on wide screens. */
+.toc-summary {
+  display: block;
   margin: 0 0 12px;
+  list-style: none;
+}
+
+.toc-summary::-webkit-details-marker {
+  display: none;
+}
+
+.toc-count,
+.toc-current {
+  display: none;
+}
+
+.toc-title {
   color: var(--ink-2);
   font-size: 12px;
   font-weight: 600;
@@ -148,6 +163,115 @@
   padding-left: 28px;
 }
 
+/*
+ * Narrow screens: a folded bar (toc.ts closes it) that sticks to the top while
+ * reading, showing the section count and, while folded, the section being
+ * read. With JavaScript the list drops down over the text, so opening it
+ * never moves what is being read. Rows are 44px tall so they are easy to tap.
+ */
+@media screen and (max-width: 1179.98px) {
+  .toc {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    margin: 16px 0 24px;
+    padding: 8px 0;
+    background: var(--paper);
+  }
+
+  .toc-disclosure {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--paper);
+  }
+
+  .toc-panel {
+    padding: 4px 16px 12px;
+  }
+
+  .toc-disclosure[data-folding] > .toc-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: -1px;
+    left: -1px;
+    max-height: min(60vh, 440px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-top: 8px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--paper);
+    box-shadow: 0 16px 40px rgb(0 0 0 / 18%);
+  }
+
+  .toc-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+    margin: 0;
+    padding: 4px 16px;
+    border-radius: 15px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .toc-summary::after {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    margin: 0 4px 4px auto;
+    border-right: 2px solid var(--ink-2);
+    border-bottom: 2px solid var(--ink-2);
+    content: '';
+    transform: rotate(45deg);
+    transition: transform 0.2s;
+  }
+
+  .toc-disclosure[open] > .toc-summary::after {
+    margin-bottom: -4px;
+    transform: rotate(-135deg);
+  }
+
+  .toc-heading {
+    flex: none;
+  }
+
+  .toc-count {
+    display: inline;
+    color: var(--ink-2);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .toc-disclosure:not([open]) .toc-current:not(:empty) {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--ink);
+    font-size: 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+
+  .toc a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+@media screen and (max-width: 1179.98px) and (prefers-reduced-motion: reduce) {
+  .toc-summary::after {
+    transition: none;
+  }
+}
+
 /* Reading text */
 .prose {
   font-family: var(--font-reading);
@@ -165,7 +289,22 @@
   font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.15;
-  scroll-margin-top: 24px;
+  /* Room above a heading reached from the table of contents. */
+  scroll-margin-top: 32px;
+}
+
+/* Narrow screens: clear of the sticky table of contents bar as well. */
+@media screen and (max-width: 1179.98px) {
+  .prose h2,
+  .prose h3 {
+    scroll-margin-top: 88px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 .prose h2 {
@@ -343,6 +482,11 @@
     grid-row: 1 / span 20;
     align-self: start;
     margin: 0;
+  }
+
+  /* Always open here (toc.ts): the summary is only the list's title. */
+  .toc-summary {
+    pointer-events: none;
   }
 }
 

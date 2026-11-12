@@ -42,10 +42,12 @@ test.describe('blog article', () => {
     expect(JSON.parse(ld ?? '{}')['@type']).toBe('BlogPosting');
   });
 
-  test('table of contents links land on their sections', async ({ page }) => {
+  test('table of contents links land on their sections', async ({ page, isMobile }) => {
     test.skip(!TOC_POST, 'no post with headings yet');
     await page.goto(TOC_POST!);
     const toc = page.getByRole('navigation', { name: 'On this page' });
+    // Folded on phones (toc.ts): open it first.
+    if (isMobile) await toc.locator('summary').click();
     const first = toc.getByRole('link').first();
     const target = (await first.getAttribute('href'))!;
     await first.click();
@@ -113,6 +115,54 @@ test.describe('blog article', () => {
   });
 });
 
+test.describe('table of contents on a phone', () => {
+  // Motion on, as most phones have it: the jump must still land with smooth scrolling.
+  test.use({ viewport: { width: 375, height: 812 }, reducedMotion: 'no-preference' });
+
+  test('is a folded bar that opens on tap and folds again once a section is chosen', async ({
+    page,
+  }) => {
+    test.skip(!TOC_POST, 'no post with headings yet');
+    await page.goto(TOC_POST!);
+    const toc = page.getByRole('navigation', { name: 'On this page' });
+    const summary = toc.locator('summary');
+    const links = toc.getByRole('link');
+
+    await expect(toc.locator('details')).not.toHaveAttribute('open');
+    await expect(links.first()).toBeHidden();
+    expect((await summary.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+
+    // Opening drops the list down over the text: the text does not move.
+    const text = page.locator('.prose p').first();
+    const before = (await text.boundingBox())!.y;
+    await summary.click();
+    await expect(links.first()).toBeVisible();
+    expect((await text.boundingBox())!.y).toBe(before);
+    for (const box of await Promise.all((await links.all()).map((link) => link.boundingBox()))) {
+      expect(box!.height).toBeGreaterThanOrEqual(44);
+    }
+
+    const last = links.last();
+    const target = (await last.getAttribute('href'))!;
+    await last.click();
+    await expect(page).toHaveURL(new RegExp(`${target}$`));
+    await expect(links.first()).toBeHidden();
+    const heading = page.locator(`[id="${target.slice(1)}"]`);
+    await expect(heading).toBeInViewport();
+    // Clear of the sticky bar, not hidden under it.
+    const bar = (await toc.boundingBox())!;
+    await expect
+      .poll(async () => (await heading.boundingBox())!.y)
+      .toBeGreaterThanOrEqual(bar.y + bar.height);
+
+    // Reachable from mid-article, and a tap outside puts the list away.
+    await summary.click();
+    await expect(links.first()).toBeVisible();
+    await page.mouse.click(4, 700); // the page gutter, away from any link
+    await expect(links.first()).toBeHidden();
+  });
+});
+
 test.describe('blog without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
@@ -121,6 +171,13 @@ test.describe('blog without JavaScript', () => {
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('.prose p').first()).toBeVisible();
     await expect(page.locator('[data-theme-toggle]')).toBeHidden();
+  });
+
+  test('keeps the table of contents open, since nothing could open it', async ({ page }) => {
+    test.skip(!TOC_POST, 'no post with headings yet');
+    await page.goto(TOC_POST!);
+    const toc = page.getByRole('navigation', { name: 'On this page' });
+    await expect(toc.getByRole('link').first()).toBeVisible();
   });
 });
 
@@ -279,7 +336,7 @@ test.describe('with more than one post', () => {
 });
 
 test.describe('table of contents placement', () => {
-  test('stays in view while reading on wide screens, and sits above the text on phones', async ({
+  test('stays in view while reading: a sidebar on wide screens, a bar on top on phones', async ({
     page,
     isMobile,
   }) => {
@@ -287,12 +344,12 @@ test.describe('table of contents placement', () => {
     await page.goto(TOC_POST!);
     const toc = page.getByRole('navigation', { name: 'On this page' });
     await page.locator('.ai-note').scrollIntoViewIfNeeded();
-    const position = await toc.evaluate((el) => getComputedStyle(el).position);
+    expect(await toc.evaluate((el) => getComputedStyle(el).position)).toBe('sticky');
+    await expect(toc).toBeInViewport();
     if (isMobile) {
-      expect(position).toBe('static');
-    } else {
-      expect(position).toBe('sticky');
-      await expect(toc).toBeInViewport();
+      // The folded bar, at the top of the screen.
+      expect((await toc.boundingBox())!.y).toBeLessThanOrEqual(1);
+      await expect(toc.getByRole('link').first()).toBeHidden();
     }
   });
 });
