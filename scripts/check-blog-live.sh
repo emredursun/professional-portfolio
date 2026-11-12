@@ -13,7 +13,10 @@ set -euo pipefail
 
 base="${1:?usage: check-blog-live.sh <base-url>}"
 root="$(cd "$(dirname "$0")/.." && pwd)"
-fetch() { curl -sS --max-time 15 --retry 2 --retry-all-errors "$@"; }
+# Right after a deploy the CDN can hold a request for tens of seconds
+# (production, 2026-11-12: three 15 s timeouts on one page, then 0.26 s). Four
+# retries, 5 s apart, ride that out; a page that is really down still fails.
+fetch() { curl -sS --max-time 15 --retry 4 --retry-delay 5 --retry-all-errors "$@"; }
 code() { fetch -o /dev/null -w '%{http_code}' "$base$1" || true; }
 fail() { echo "::error::$1"; exit 1; }
 
