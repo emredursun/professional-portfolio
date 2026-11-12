@@ -4,48 +4,6 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
   <url>
-    <loc>https://emredursun.nl/</loc>
-    <lastmod>2026-10-29T18:33:05.196Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/" />
-        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr" />
-        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl" />
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/" />
-    <image:image>
-      <image:loc>https://emredursun.nl/images/emre-dursun-qa-consultant.jpg</image:loc>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://emredursun.nl/tr</loc>
-    <lastmod>2026-10-29T18:33:05.196Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/" />
-        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr" />
-        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl" />
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/" />
-    <image:image>
-      <image:loc>https://emredursun.nl/images/emre-dursun-qa-consultant.jpg</image:loc>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://emredursun.nl/nl</loc>
-    <lastmod>2026-10-29T18:33:05.196Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/" />
-        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr" />
-        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl" />
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/" />
-    <image:image>
-      <image:loc>https://emredursun.nl/images/emre-dursun-qa-consultant.jpg</image:loc>
-    </image:image>
-  </url>
-
-  <url>
     <loc>https://emredursun.nl/about</loc>
     <lastmod>2026-10-29T18:33:05.196Z</lastmod>
     <changefreq>monthly</changefreq>
