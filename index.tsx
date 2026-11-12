@@ -22,9 +22,16 @@ const render = () => {
   );
 };
 
-/** Resolves after the browser has painted the page as it is now. */
+/**
+ * Resolves after the browser has painted the page as it is now. A background
+ * tab paints nothing and runs no animation frames, so there it resolves on a
+ * timer: React must not wait for the tab to be shown.
+ */
 const afterPaint = () =>
-  new Promise<void>((resolve) => requestAnimationFrame(() => setTimeout(resolve, 0)));
+  new Promise<void>((resolve) => {
+    if (document.visibilityState === 'hidden') setTimeout(resolve, 0);
+    else requestAnimationFrame(() => setTimeout(resolve, 0));
+  });
 
 /**
  * React's first render of a prerendered page shows what is already on screen,

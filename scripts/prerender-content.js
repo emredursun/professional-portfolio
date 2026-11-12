@@ -175,11 +175,12 @@ export async function prerenderContent({ distDir = DIST, port = PORT } = {}) {
   const server = await preview({
     root: ROOT,
     build: { outDir: distDir },
-    preview: { port, strictPort: true },
+    // Any free port from here up: two builds (worktrees) can run at once.
+    preview: { port, strictPort: false },
     logLevel: 'warn',
   });
   const browser = await chromium.launch();
-  const baseUrl = `http://localhost:${port}`;
+  const baseUrl = server.resolvedUrls.local[0].replace(/\/$/, '');
   try {
     const queue = [...jobs];
     const worker = async () => {
