@@ -26,7 +26,7 @@ import { loadPosts } from './blog/content.js';
 import { assertLaunchable, launchWarnings } from './blog/launch-gate.js';
 import { loadNow } from './blog/now.js';
 import { createHighlight } from './blog/highlight.js';
-import { emitPostImages } from './blog/images.js';
+import { emitCoverImages, emitPostImages } from './blog/images.js';
 import { readBlogAssets } from './blog/manifest.js';
 import { renderMarkdown } from './blog/markdown.js';
 import { renderFeed } from './blog/feed.js';
@@ -203,6 +203,12 @@ function writeLanguage({ distDir, lang, posts, all, languages, now, assets, laun
   ];
 }
 
+/** The card-size cover a post's cards show, with its alt text, if it has one. */
+function coverImage(post, covers) {
+  if (!post.coverSource) return undefined;
+  return { ...covers.get(`${post.slug}/${post.coverSource.name}`), alt: post.coverSource.alt };
+}
+
 /**
  * @param {{ distDir: string, contentDir: string, nowDir?: string, ogDir?: string, themeInitPath: string, launched?: boolean }} options
  *   `ogDir`: the committed link-preview images (blog/og). Every published post
@@ -229,8 +235,16 @@ export async function buildBlog({
     contentDir,
     slugs: posts.map((post) => post.slug),
   });
+  const covers = await emitCoverImages({
+    distDir,
+    contentDir,
+    covers: posts
+      .filter((post) => post.coverSource)
+      .map((post) => [post.slug, post.coverSource.name]),
+  });
   const rendered = posts.map((post) => ({
     ...post,
+    coverImage: coverImage(post, covers),
     ...renderMarkdown(post.body, {
       file: post.file,
       highlight,

@@ -117,6 +117,106 @@
   font-size: 14px;
 }
 
+/* A card with a cover photo (cards.js): the photo fills the card, the status
+   chip sits on it (the chip has its own background), and the text has a
+   dark scrim that is solid by the time the title starts, so it reads the
+   same over any photo and in either theme. */
+.card.has-cover {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 420px;
+  padding: 0;
+  gap: 0;
+  background: var(--cover-scrim);
+  color: var(--cover-ink);
+}
+
+.card-cover {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card.has-cover .card-status {
+  margin-bottom: auto;
+  padding: 20px 24px 0;
+}
+
+.card-body {
+  --scrim: rgb(14 22 18 / 0.86);
+  --scrim: color-mix(
+    in srgb,
+    var(--cover-scrim) calc(var(--cover-scrim-alpha) * 100%),
+    transparent
+  );
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 80px 28px 28px;
+  background: linear-gradient(to bottom, transparent 0, var(--scrim) 72px);
+}
+
+.card.has-cover .card-meta {
+  color: var(--cover-ink-2);
+}
+
+.card.has-cover a {
+  text-decoration-color: var(--cover-underline);
+}
+
+.card.has-cover .card-title a {
+  text-decoration-color: transparent;
+}
+
+.card.has-cover .card-title a:hover,
+.card.has-cover .card-title a:focus-visible {
+  text-decoration-color: var(--cover-underline);
+}
+
+.card.has-cover :focus-visible {
+  outline-color: var(--cover-underline);
+}
+
+/* The whole card opens the post; the topic link stays its own target. */
+.card.has-cover .card-title a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.card.has-cover .topic-link {
+  position: relative;
+  z-index: 1;
+}
+
+.card.has-cover .lang-chip {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* The photo covers the inset ring the plain cards use. */
+.card.has-cover.is-stale {
+  box-shadow: none;
+  outline: 2px solid var(--cover-underline);
+  outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card-cover {
+    transition: transform 0.5s ease;
+  }
+
+  .card.has-cover:hover .card-cover,
+  .card.has-cover:focus-within .card-cover {
+    transform: scale(1.04);
+  }
+}
+
 .notes {
   margin: 0;
   padding: 0;
@@ -139,6 +239,26 @@
   grid-column: 2;
   margin: 0;
   font-weight: 400;
+}
+
+/* A short note with a cover: a small square thumbnail beside the row. */
+.note-item.has-cover {
+  grid-template-columns: 72px auto 1fr;
+}
+
+.note-thumb {
+  grid-row: 1 / span 3;
+  align-self: start;
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  background: var(--sage);
+  object-fit: cover;
+}
+
+.note-item.has-cover .card-meta,
+.note-item.has-cover .stale-note {
+  grid-column: 3;
 }
 
 /* After an article */
@@ -412,5 +532,35 @@
 
   .index-actions .button {
     justify-content: center;
+  }
+
+  .card.has-cover {
+    min-height: 360px;
+  }
+
+  .card-body {
+    padding: 72px 22px 24px;
+  }
+
+  /* On a phone the chip gets its own line, so the title keeps its width. */
+  .note-item.has-cover {
+    grid-template-columns: 56px 1fr;
+    align-items: start;
+  }
+
+  .note-item.has-cover .status {
+    justify-self: start;
+  }
+
+  .note-item.has-cover > a,
+  .note-item.has-cover .card-meta,
+  .note-item.has-cover .stale-note {
+    grid-column: 2;
+  }
+
+  .note-thumb {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
   }
 }

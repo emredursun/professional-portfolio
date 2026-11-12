@@ -34,6 +34,16 @@
   --chip-hypothesis: #e7e0f0;
   --chip-revised: #f6dfcd;
 
+  /* Text on a cover photo (index cards): the same in both themes, because
+     the photo is. It sits on the scrim, which is never thinner than
+     --cover-scrim-alpha where text is (tokens.test.ts checks the worst
+     case, the scrim over a white photo). */
+  --cover-scrim: #0e1612;
+  --cover-scrim-alpha: 0.86;
+  --cover-ink: #faf7f0;
+  --cover-ink-2: #e2dccf;
+  --cover-underline: #f2c94c;
+
   --font-display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
   --font-reading: 'Newsreader', Georgia, 'Times New Roman', serif;
   --font-code: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;

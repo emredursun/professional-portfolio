@@ -46,21 +46,54 @@ function foreign(post, pageLang) {
   };
 }
 
+// The rendered width of a cover: the full card on a phone, a grid column
+// (at most about 380 px) from there up; a note's thumbnail is fixed.
+const CARD_SIZES = '(max-width: 720px) calc(100vw - 36px), 380px';
+const THUMB_SIZES = '72px';
+
+/**
+ * A post's cover (build-blog.js), lazy because the cards sit below the
+ * introduction, and sized so nothing shifts as it loads.
+ */
+function coverImg(cover, { className, sizes, alt }) {
+  return markup`<img class="${className}" src="${cover.src}" srcset="${cover.srcset}" sizes="${sizes}" width="${cover.width}" height="${cover.height}" alt="${alt}" loading="lazy" decoding="async">`;
+}
+
 function essayCard(post, page) {
   const { lang, hreflang, chip } = foreign(post, page.lang);
-  return markup`<li class="card"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-<p class="card-status">${statusChip(post.status, post.lang)}${chip}</p>
-<h3 class="card-title"><a href="${postPath(post)}"${hreflang}>${post.title}</a></h3>
+  const cover = post.coverImage;
+  const status = markup`<p class="card-status">${statusChip(post.status, post.lang)}${chip}</p>`;
+  const text = markup`<h3 class="card-title"><a href="${postPath(post)}"${hreflang}>${post.title}</a></h3>
 <p class="card-dek">${post.description}</p>
 ${postMeta(post, page)}
-${staleNote(post)}
+${staleNote(post)}`;
+  if (!cover) {
+    return markup`<li class="card"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
+${status}
+${text}
+</li>`;
+  }
+  // The photo fills the card; the text sits on its own dark scrim, so it
+  // reads the same whatever the photo and in either theme.
+  return markup`<li class="card has-cover"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
+${coverImg(cover, { className: 'card-cover', sizes: CARD_SIZES, alt: cover.alt })}
+${status}
+<div class="card-body">
+${text}
+</div>
 </li>`;
 }
 
 function noteItem(post, page) {
   const { lang, hreflang, chip } = foreign(post, page.lang);
-  return markup`<li class="note-item"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-${statusChip(post.status, post.lang)}
+  const cover = post.coverImage;
+  // The thumbnail is decoration: the title beside it names the post.
+  const thumb = cover
+    ? markup`${coverImg(cover, { className: 'note-thumb', sizes: THUMB_SIZES, alt: '' })}
+`
+    : '';
+  return markup`<li class="note-item${cover ? ' has-cover' : ''}"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
+${thumb}${statusChip(post.status, post.lang)}
 <a href="${postPath(post)}"${hreflang}>${post.title}</a>
 ${postMeta(post, page, chip)}
 ${staleNote(post)}

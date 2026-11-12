@@ -53,6 +53,13 @@ const httpsUrl = z
   }, 'must be an absolute https:// link to a public host, without credentials')
   .transform((value) => new URL(value).href);
 
+/**
+ * A cover for the post's card on the index and topic pages: a photo in the
+ * post's own folder, by its bare name (content.js checks it is there). Raster
+ * only, since the build scales it down to card size.
+ */
+export const COVER_IMAGE = /^[a-z0-9]+(?:-[a-z0-9]+)*\.(?:png|jpg|webp)$/;
+
 /** The topics a post can have, in the order the site lists them. */
 export const TOPICS = Object.freeze(['testing', 'ai', 'life']);
 /** Essays are longer pieces; notes are short, often still hypotheses. */
@@ -82,6 +89,13 @@ const postSchema = z
       })
       .strict(),
     corrections: z.array(correction).default([]),
+    cover: z
+      .string()
+      .regex(COVER_IMAGE, 'must be a .webp, .jpg or .png file in the post folder, by its bare name')
+      .optional(),
+    // Only when the photo says something the card's title does not; without
+    // it the cover is decoration (empty alt).
+    coverAlt: text.max(200).optional(),
     // Only on tr.md and nl.md (content.js checks which file has it): the
     // date of the English version this one follows, and whether AI helped,
     // which the "How this was written" panel then says.
@@ -92,6 +106,9 @@ const postSchema = z
   })
   .strict()
   .superRefine((post, ctx) => {
+    if (post.coverAlt && !post.cover) {
+      ctx.addIssue({ code: 'custom', path: ['coverAlt'], message: 'needs a cover' });
+    }
     if (post.updatedAt && post.updatedAt < post.publishedAt) {
       ctx.addIssue({ code: 'custom', path: ['updatedAt'], message: 'is before publishedAt' });
     }

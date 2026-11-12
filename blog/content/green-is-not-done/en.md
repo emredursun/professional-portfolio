@@ -5,6 +5,7 @@ publishedAt: 2026-10-29
 topic: testing
 kind: essay
 status: verified
+cover: green-light.webp
 evidence:
   confidence: 'High for what happened, since I was there. One workshop and one feature, so an observation rather than a general rule.'
   basedOn:
