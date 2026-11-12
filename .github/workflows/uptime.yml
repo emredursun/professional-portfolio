@@ -20,11 +20,14 @@ jobs:
       - name: Pages respond
         run: |
           set -euo pipefail
-          for path in / /about /resume /projects /contact /quality /nl/about /tr/about /sitemap.xml /robots.txt /llms.txt /resume.json; do
+          for path in /about /resume /projects /contact /quality /nl/about /tr/about /sitemap.xml /robots.txt /llms.txt /resume.json; do
             code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "https://emredursun.nl$path")"
             echo "$code $path"
             [ "$code" = "200" ] || { echo "::error::$path returned $code"; exit 1; }
           done
+          # / is a 301 to /about (firebase.json), not a page of its own.
+          code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://emredursun.nl/)"
+          [ "$code" = "301" ] || { echo "::error::/ returned $code, expected 301"; exit 1; }
 
       - name: Security headers present
         run: |

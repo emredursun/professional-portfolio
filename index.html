@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Before the first paint: the dark class for dark-theme visitors (public/theme-init.js). -->
+    <script src="/theme-init.js"></script>
     <!--
       Title, description, canonical, hreflang, Open Graph and Twitter tags.
       This block is the home page's; scripts/prerender-routes.js replaces it
@@ -363,8 +365,10 @@
       It paints as soon as the HTML and CSS arrive, before any JavaScript, so
       first paint no longer waits on the bundle. React replaces it on mount
       with the identical animated version. Keep the markup in sync.
+      On every route page, scripts/prerender-content.js replaces what sits
+      between the prerender markers with that page's own content.
     -->
-    <div id="root"><div data-testid="preloader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black text-white overflow-hidden" aria-hidden="true"><div class="relative z-10 flex flex-col items-center gap-4"><div class="flex flex-col items-center"><p class="text-6xl md:text-8xl font-black tracking-tighter mb-2"><span class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">EMRE</span><span class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-accent-yellow via-yellow-400 to-amber-600 ml-4">DURSUN</span></p><div class="h-1 w-24 bg-accent-yellow rounded-full mt-4"></div></div><div class="mt-8 font-mono text-sm text-gray-400">0%</div></div><div class="bg-noise absolute inset-0 opacity-[0.03]"></div></div></div>
+    <div id="root"><!--prerender:start--><div data-testid="preloader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black text-white overflow-hidden" aria-hidden="true"><div class="relative z-10 flex flex-col items-center gap-4"><div class="flex flex-col items-center"><p class="text-6xl md:text-8xl font-black tracking-tighter mb-2"><span class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">EMRE</span><span class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-accent-yellow via-yellow-400 to-amber-600 ml-4">DURSUN</span></p><div class="h-1 w-24 bg-accent-yellow rounded-full mt-4"></div></div><div class="mt-8 font-mono text-sm text-gray-400">0%</div></div><div class="bg-noise absolute inset-0 opacity-[0.03]"></div></div><!--prerender:end--></div>
     <script type="module" src="/index.tsx"></script>
     
   </body>

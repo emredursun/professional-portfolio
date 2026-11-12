@@ -20,6 +20,11 @@ const serveReport = (page: import('@playwright/test').Page, body: unknown, statu
 const { quality } = copy('en', 'common');
 
 test.describe('quality report', () => {
+  // page.route() does not see requests a service worker answers. The worker
+  // takes control (clients.claim) before the page fetches /quality.json, so
+  // the mocked report would never arrive.
+  test.use({ serviceWorkers: 'block' });
+
   test('shows every check from the CI report', async ({ page }) => {
     await serveReport(page, report);
     await page.goto('/quality');

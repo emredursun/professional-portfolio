@@ -47,7 +47,9 @@ const STATE_PATH = path.join(__dirname, 'sitemap-state.json');
 const LANGUAGES = ['en', 'tr', 'nl'];
 
 // Top-level routes, in sitemap order. Detail pages are appended by listRoutes().
-export const STATIC_ROUTES = ['', '/about', '/resume', '/projects', '/contact', '/quality'];
+// No '' (/, /nl, /tr): firebase.json 301-redirects those to About, and a
+// sitemap lists only final URLs.
+export const STATIC_ROUTES = ['/about', '/resume', '/projects', '/contact', '/quality'];
 
 /**
  * Every route to publish: the static pages, then one detail page per service

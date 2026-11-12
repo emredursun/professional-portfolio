@@ -11,10 +11,10 @@
  * before, and SEO.tsx then keeps the same tags up to date while navigating.
  *
  * Output follows firebase.json's cleanUrls: /about -> about.html,
- * /nl/projects/aegisqa -> nl/projects/aegisqa.html, / -> index.html. Firebase
- * serves an exact static file before any rewrite, so each URL gets its own
- * file; unknown slugs still fall through to the rewrite (and the app's
- * noindex NotFound view).
+ * /nl/projects/aegisqa -> nl/projects/aegisqa.html. Firebase serves these
+ * files directly and has no rewrites, so these files are the site's routes:
+ * an unknown URL gets 404.html with a 404 status. / and the language roots
+ * are 301 redirects to About (firebase.json).
  *
  * dist/404.html is copied from the untouched template earlier (vite.config.ts)
  * and keeps the generic head.

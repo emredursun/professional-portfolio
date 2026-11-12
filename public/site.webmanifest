@@ -2,7 +2,7 @@
   "name": "Emre Dursun - Professional Portfolio",
   "short_name": "ED Portfolio",
   "description": "Emre Dursun, QA Consultant in the Netherlands: Pega testing, Tricentis Tosca and Playwright test automation, and AI-driven development. ISTQB CTFL certified.",
-  "start_url": "/",
+  "start_url": "/about",
   "display": "standalone",
   "theme_color": "#0a0a0a",
   "background_color": "#0a0a0a",

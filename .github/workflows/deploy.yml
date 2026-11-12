@@ -57,7 +57,7 @@ jobs:
             echo "Live is ${live:-unreachable}, waiting for $expected ($attempt/6)"; sleep 10
           done
           [ "$live" = "$expected" ] || { echo "::error::Live site does not serve the deployed commit"; exit 1; }
-          for path in / /about /resume /projects /contact /nl/about /tr/about /projects/aegisqa /cv/Emre-Dursun-CV-en.pdf /quality.json /llms.txt /resume.json; do
+          for path in /about /resume /projects /contact /nl/about /tr/about /projects/aegisqa /cv/Emre-Dursun-CV-en.pdf /quality.json /llms.txt /resume.json; do
             curl -fsS -o /dev/null "https://emredursun.nl$path"
           done
           # Deep links must get their own prerendered head (link previews).
@@ -73,6 +73,14 @@ jobs:
           # Unknown URLs must be real 404s (404.html), not the app with a 200.
           status="$(curl -sS -o /dev/null -w '%{http_code}' https://emredursun.nl/no-such-page-smoke-test)"
           [ "$status" = "404" ] || { echo "::error::Unknown URL returned $status, expected 404"; exit 1; }
+          # An unknown detail slug too: a 200 there is what Google calls a soft 404.
+          status="$(curl -sS -o /dev/null -w '%{http_code}' https://emredursun.nl/about/no-such-service)"
+          [ "$status" = "404" ] || { echo "::error::Unknown detail URL returned $status, expected 404"; exit 1; }
+          # The site and language roots redirect to About with a 301.
+          for pair in /:/about /nl:/nl/about /tr:/tr/about; do
+            got="$(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' "https://emredursun.nl${pair%%:*}")"
+            [ "$got" = "301 https://emredursun.nl${pair#*:}" ] || { echo "::error::${pair%%:*} answered $got"; exit 1; }
+          done
           # Field Notes: checks itself once launched (no feed before then).
           bash scripts/check-blog-live.sh https://emredursun.nl
           echo "Live: $live"

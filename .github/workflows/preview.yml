@@ -59,15 +59,23 @@ jobs:
         run: |
           set -euo pipefail
           base="${PREVIEW_URL%/}"
-          for path in /about /nl /about/tricentis-tosca-automation /tr/projects/aegisqa /quality; do
+          for path in /about /nl/about /about/tricentis-tosca-automation /tr/projects/aegisqa /quality; do
             html="$(curl -fsS --max-time 30 --retry 3 --retry-all-errors "$base$path")"
             grep -qF "<link rel=\"canonical\" href=\"https://emredursun.nl$path\"" <<<"$html" \
-              || [ "$path" = "/nl" ] \
               || { echo "::error::$path is not served its prerendered head"; exit 1; }
           done
-          grep -qF '<html lang="nl"' <<<"$(curl -fsS --max-time 30 --retry 3 --retry-all-errors "$base/nl")" || { echo "::error::/nl is not served nl.html"; exit 1; }
-          status="$(curl -sS --max-time 30 --retry 3 --retry-all-errors -o /dev/null -w '%{http_code}' "$base/no-such-page-preview-check")"
-          [ "$status" = "404" ] || { echo "::error::Unknown URL returned $status, expected 404"; exit 1; }
+          grep -qF '<html lang="nl"' <<<"$(curl -fsS --max-time 30 --retry 3 --retry-all-errors "$base/nl/about")" || { echo "::error::/nl/about is not served in Dutch"; exit 1; }
+          # Unknown URLs, detail slugs included, are real 404s: a 200 with a
+          # "not found" view is what Google reports as a soft 404.
+          for path in /no-such-page-preview-check /about/no-such-service /nl/projects/no-such-project; do
+            status="$(curl -sS --max-time 30 --retry 3 --retry-all-errors -o /dev/null -w '%{http_code}' "$base$path")"
+            [ "$status" = "404" ] || { echo "::error::$path returned $status, expected 404"; exit 1; }
+          done
+          # The site and language roots redirect to About with a 301.
+          for pair in /:/about /nl:/nl/about /tr:/tr/about; do
+            got="$(curl -sS --max-time 30 --retry 3 --retry-all-errors -o /dev/null -w '%{http_code} %{redirect_url}' "$base${pair%%:*}")"
+            [ "$got" = "301 $base${pair#*:}" ] || { echo "::error::${pair%%:*} answered $got"; exit 1; }
+          done
 
           # Blog (static pages beside the SPA; docs/adr/0001-static-blog-build.md).
           # /blog must resolve to blog.html even with a blog/ folder next to it.

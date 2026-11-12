@@ -4,6 +4,21 @@
     "predeploy": ["node scripts/generate-cv.js --check"],
     "redirects": [
       {
+        "source": "/",
+        "destination": "/about",
+        "type": 301
+      },
+      {
+        "source": "/nl",
+        "destination": "/nl/about",
+        "type": 301
+      },
+      {
+        "source": "/tr",
+        "destination": "/tr/about",
+        "type": 301
+      },
+      {
         "source": "/images/portfolio-pic-1.jpeg",
         "destination": "/images/emre-dursun-qa-consultant.jpg",
         "type": 301
@@ -15,32 +30,6 @@
       }
     ],
     "ignore": ["firebase.json", "**/.*", "**/.*/**", "**/node_modules/**"],
-    "rewrites": [
-      {
-        "source": "/",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/@(about|resume|projects|contact|quality)",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/@(about|projects)/*",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/@(nl|tr)",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/@(nl|tr)/@(about|resume|projects|contact|quality)",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/@(nl|tr)/@(about|projects)/*",
-        "destination": "/index.html"
-      }
-    ],
     "headers": [
       {
         "source": "/**",

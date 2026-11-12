@@ -60,7 +60,7 @@ No environment variables are needed. The contact form posts to Web3Forms with a 
 | Script | Purpose |
 | --- | --- |
 | `npm run dev` | Development server with HMR |
-| `npm run build` | Production build. `prebuild` regenerates the sitemap and profile README; `postbuild` writes `dist/version.json` and the per-route HTML heads |
+| `npm run build` | Production build. `prebuild` regenerates the sitemap and profile README; `postbuild` writes `dist/version.json`, the per-route HTML heads and each page's content (needs `npx playwright install chromium`) |
 | `npm run preview` | Serve the build, replaying the production security headers from `firebase.json` |
 | `npm run typecheck` | Strict TypeScript check |
 | `npm run knip` | Find unused files, exports and dependencies |

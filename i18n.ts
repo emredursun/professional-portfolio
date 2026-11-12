@@ -22,7 +22,8 @@ const DEFAULT_LANGUAGE = 'en';
 const initialLanguage =
   window.location.pathname.match(/^\/(nl|tr)(?=\/|$)/)?.[1] ?? DEFAULT_LANGUAGE;
 
-i18n
+/** Resolves once the first language and its namespaces have loaded (index.tsx). */
+export const i18nReady = i18n
   // Load translations using http backend
   .use(HttpBackend)
   // Detect user language

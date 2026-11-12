@@ -7,50 +7,37 @@ import { loadConstants } from '../scripts/lib/load-constants.js';
 import { listRoutes } from '../scripts/generate-sitemap.js';
 
 /**
- * firebase.json rewrites only the app's real routes to index.html; anything
- * else gets dist/404.html with a 404 status. A route missing here would 404
- * in production while every local test (vite preview serves the SPA for all
- * paths) still passes, so the patterns are checked against the sitemap.
+ * Every real route has its own prerendered file (scripts/prerender-routes.js),
+ * and Firebase serves an exact file before anything else. So firebase.json
+ * has no rewrites: an unknown URL such as /about/typo gets dist/404.html with
+ * a real 404 status. A rewrite to the app shell would answer it with 200 and
+ * a "Page not found" view, which Google reports as a soft 404.
  */
 const firebase = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../firebase.json'), 'utf8'));
-const rewrites: Array<{ source: string; destination: string }> = firebase.hosting.rewrites;
-const matchers = rewrites.map((rule) => picomatch(rule.source));
-const isRewritten = (url: string) => matchers.some((matches) => matches(url));
+const redirects: Array<{ source: string; destination: string; type: number }> =
+  firebase.hosting.redirects;
+const redirectFor = (url: string) => redirects.find((rule) => picomatch(rule.source)(url));
+const isRewritten = (url: string) =>
+  (firebase.hosting.rewrites ?? []).some((rule: { source: string }) => picomatch(rule.source)(url));
 
-describe('firebase.json rewrites', () => {
-  it('only ever rewrite to the app shell', () => {
-    expect(rewrites.every((rule) => rule.destination === '/index.html')).toBe(true);
+describe('firebase.json routing', () => {
+  it('rewrites nothing to the app shell, so unknown paths get a real 404', () => {
+    expect(firebase.hosting.rewrites).toBeUndefined();
   });
 
-  it('cover every sitemap route in every language', async () => {
+  it.each([
+    ['/', '/about'],
+    ['/nl', '/nl/about'],
+    ['/tr', '/tr/about'],
+  ])('permanently redirects %s to %s, the page the app shows there', (from, to) => {
+    expect(redirectFor(from)).toMatchObject({ destination: to, type: 301 });
+  });
+
+  it('redirects no sitemap route, so the sitemap lists only final URLs', async () => {
     const routes = listRoutes(await loadConstants());
-    const urls = routes.flatMap((route) => [route || '/', `/nl${route}`, `/tr${route}`]);
-    expect(urls.filter((url) => !isRewritten(url))).toEqual([]);
-  });
-
-  it('leave unknown paths and static files to 404.html', () => {
-    for (const url of [
-      '/no-such-page',
-      '/blog',
-      '/nl/no-such-page',
-      '/de/about',
-      // Only About and Projects have one-level detail pages.
-      '/resume/anything',
-      '/contact/x',
-      '/about/a/b',
-      '/nl/projects/a/b',
-      // Firebase globs are case-sensitive (React Router is not). Accepted:
-      // every link the site, sitemap and CV publish is lowercase.
-      '/About',
-      '/NL/about',
-      '/images/missing.webp',
-      '/cv/missing.pdf',
-      '/sitemap.xml',
-      '/version.json',
-      '/assets/index.js',
-    ]) {
-      expect(isRewritten(url), url).toBe(false);
-    }
+    expect(routes).not.toContain('');
+    const urls = routes.flatMap((route) => [route, `/nl${route}`, `/tr${route}`]);
+    expect(urls.filter((url) => redirectFor(url))).toEqual([]);
   });
 
   it('refuse to deploy a build without the CV PDFs', () => {
