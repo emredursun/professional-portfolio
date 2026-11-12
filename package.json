@@ -45,7 +45,7 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "postbuild": "node scripts/write-version.js && node scripts/prerender-routes.js && node scripts/build-blog.js && node scripts/generate-agent-profile.js"
+    "postbuild": "node scripts/write-version.js && node scripts/prerender-routes.js && node scripts/prerender-content.js && node scripts/build-blog.js && node scripts/generate-agent-profile.js"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "5.3.0",

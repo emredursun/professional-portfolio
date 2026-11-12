@@ -3,6 +3,28 @@
 @tailwind utilities;
 
 /*
+ * A page's prerendered content (scripts/prerender-content.js): one snapshot
+ * per layout, each shown only at its width, until React replaces both.
+ * 1024 px is App.tsx's isMobileView breakpoint.
+ */
+.prerender-desktop,
+.prerender-mobile {
+  display: contents;
+}
+
+@media (max-width: 1023.98px) {
+  .prerender-desktop {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .prerender-mobile {
+    display: none;
+  }
+}
+
+/*
  * Global styles that used to live in an inline <style> block in index.html.
  * Moved here so they are bundled, cached with the hashed CSS, and do not
  * require an inline-style exception in the Content-Security-Policy.

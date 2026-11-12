@@ -22,6 +22,35 @@ type Fixtures = {
  * Content-Security-Policy - not only the tests that look for those things.
  */
 export const test = base.extend<Fixtures>({
+  /**
+   * Route pages arrive with their content in the HTML
+   * (scripts/prerender-content.js), a phone and a desktop copy, until React
+   * replaces them. Tests drive the live app, so a navigation waits for that
+   * hand-over; one that asks only for 'commit' sees the HTML as it arrives.
+   */
+  // Named `provide`, not `use`: react-hooks would read `use` here as a hook.
+  page: async ({ page }, provide) => {
+    const live = async () => {
+      await page.waitForFunction(() => !document.querySelector('.prerender-desktop'), undefined, {
+        timeout: 15_000,
+      });
+      // The app loads its idle-time parts (command palette, print CV) next.
+      await page.waitForLoadState('networkidle');
+    };
+    const goto = page.goto.bind(page);
+    const reload = page.reload.bind(page);
+    page.goto = async (url, options) => {
+      const response = await goto(url, options);
+      if (options?.waitUntil !== 'commit') await live();
+      return response;
+    };
+    page.reload = async (options) => {
+      const response = await reload(options);
+      if (options?.waitUntil !== 'commit') await live();
+      return response;
+    };
+    await provide(page);
+  },
   problems: [
     async ({ page }, use) => {
       const problems: string[] = [];

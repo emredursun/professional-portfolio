@@ -48,6 +48,11 @@ jobs:
       - name: Unit tests with coverage gate
         run: npm run test:coverage
 
+      # Before the build: postbuild renders every page in Chromium to put its
+      # content in the HTML (scripts/prerender-content.js).
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
       - name: Build
         run: npm run build
 
@@ -69,9 +74,6 @@ jobs:
           node scripts/build-blog.js > /dev/null
           after="$(snapshot)"
           [ "$before" = "$after" ] || { diff <(echo "$before") <(echo "$after") || true; echo "::error::Rebuilding the blog changed its output"; exit 1; }
-
-      - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
 
       # Renders dist/cv/Emre-Dursun-CV-<lang>.pdf from the built print layout.
       # Before the e2e step, which checks the files, and before the dist

@@ -13,11 +13,13 @@ const SESSION_KEY = 'preloaderShown';
 /**
  * Whether the branded intro should play on this page load.
  *
- * Skipped for visitors who asked for reduced motion, and after the first
+ * Skipped for visitors who asked for reduced motion, after the first
  * showing in a browser session, so in-session reloads and returning
- * navigations go straight to content.
+ * navigations go straight to content, and on a page that arrived with its
+ * content already in the HTML (index.tsx), which the curtain would only hide.
  */
 export function shouldShowPreloader(): boolean {
+  if (document.documentElement.hasAttribute('data-prerendered')) return false;
   if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return false;
   try {
     if (sessionStorage.getItem(SESSION_KEY)) return false;
