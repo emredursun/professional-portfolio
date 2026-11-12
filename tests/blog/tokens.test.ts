@@ -92,3 +92,26 @@ describe('closing band tokens', () => {
     expect(contrast(theme['--closing-ink'], theme['--closing-bg'])).toBeGreaterThanOrEqual(4.5);
   });
 });
+
+describe('cover card tokens', () => {
+  /** The scrim at its thinnest over a pure white photo, as an opaque colour. */
+  function scrimOverWhite() {
+    const alpha = Number(light['--cover-scrim-alpha']);
+    const channel = (i: number) =>
+      Math.round(alpha * parseInt(light['--cover-scrim'].slice(i, i + 2), 16) + (1 - alpha) * 255)
+        .toString(16)
+        .padStart(2, '0');
+    return `#${channel(1)}${channel(3)}${channel(5)}`;
+  }
+
+  it('keeps cover text at 4.5:1 or more, whatever the photo', () => {
+    const worst = scrimOverWhite();
+    for (const text of ['--cover-ink', '--cover-ink-2', '--cover-underline']) {
+      expect(contrast(light[text], worst), text).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+
+  it('is not redefined for dark mode, since the photo looks the same', () => {
+    expect(Object.keys(dark).filter((key) => key.startsWith('--cover'))).toEqual([]);
+  });
+});

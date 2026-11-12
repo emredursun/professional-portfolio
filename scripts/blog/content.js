@@ -18,7 +18,7 @@ import fs from 'fs';
 import path from 'path';
 import { parseFrontmatter } from './frontmatter.js';
 import { POST_IMAGE } from './images.js';
-import { validatePost } from './schema.js';
+import { COVER_IMAGE, validatePost } from './schema.js';
 import { BLOG_LANGUAGES } from './strings.js';
 import { lastChange } from './templates/format.js';
 
@@ -41,10 +41,12 @@ const SHARED = {
 
 const byName = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 
+// A fence is three or more backticks or tildes, closed by the same run.
+const withoutCode = (body) => body.replace(/^(`{3,}|~{3,})[^\n]*\n[\s\S]*?^\1[^\n]*$/gm, '');
+
 /** Reading time from prose only: code is skimmed, not read. */
 function readingMinutes(body, lang) {
-  // A fence is three or more backticks or tildes, closed by the same run.
-  const prose = body.replace(/^(`{3,}|~{3,})[^\n]*\n[\s\S]*?^\1[^\n]*$/gm, '');
+  const prose = withoutCode(body);
   const words = prose.split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / WORDS_PER_MINUTE[lang]));
 }
@@ -82,6 +84,29 @@ function checkTranslation(post, original) {
   }
 }
 
+/** The first photo the post shows by its bare name (an SVG chart makes a poor cover). */
+function firstPhoto(body) {
+  return [...withoutCode(body).matchAll(/!\[[^\]]*\]\(\s*<?([^)\s>]+)/g)]
+    .map((match) => match[1])
+    .find((name) => COVER_IMAGE.test(name));
+}
+
+/**
+ * The photo for a post's card: its own cover, else the English version's
+ * (its alt text is in English, so the translation shows it as decoration),
+ * else the first photo in its body, else none (the plain card).
+ * @returns {{ name: string, alt: string } | undefined}
+ */
+function coverSource(post, original, dir) {
+  if (post.cover && !fs.existsSync(path.join(dir, post.cover))) {
+    throw new Error(`${post.file}: cover "${post.cover}" is not in blog/content/${post.slug}/`);
+  }
+  if (post.cover) return { name: post.cover, alt: post.coverAlt ?? '' };
+  if (original.cover) return { name: original.cover, alt: '' };
+  const photo = firstPhoto(post.body);
+  return photo ? { name: photo, alt: '' } : undefined;
+}
+
 /** @param {string} dir  Absolute path of the post folder. */
 function readPostFolder(dir) {
   const slug = path.basename(dir);
@@ -117,6 +142,7 @@ function readPostFolder(dir) {
       translations,
       englishIsNewer: post.lang !== 'en' && lastChange(original) > post.translation.from,
       minutes: readingMinutes(post.body, post.lang),
+      coverSource: coverSource(post, original, dir),
     }),
   );
 }
