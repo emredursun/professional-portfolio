@@ -58,7 +58,7 @@ export function bindTableOfContents(doc: Document, win: Window): void {
 }
 
 /** The part of MediaQueryList the disclosure needs, so tests can pass a stand-in. */
-export interface WideQuery {
+interface WideQuery {
   readonly matches: boolean;
   addEventListener(type: 'change', listener: (event: { matches: boolean }) => void): void;
 }
