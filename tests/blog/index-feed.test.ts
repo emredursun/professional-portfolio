@@ -71,7 +71,9 @@ describe('renderIndexPage', () => {
       '/blog/newer-essay',
       '/blog/older-essay',
     ]);
-    const notes = [...doc.querySelectorAll('[aria-labelledby="notes-title"] .note-item > a')];
+    const notes = [
+      ...doc.querySelectorAll('[aria-labelledby="notes-title"] .note-card .note-title a'),
+    ];
     expect(notes.map((a) => a.getAttribute('href'))).toEqual(['/blog/a-note']);
   });
 
@@ -261,7 +263,7 @@ describe('index cards: stale evidence', () => {
     const card = doc.querySelector('.card')!;
     expect(card.getAttribute('data-recheck-by')).toBe('2027-10-01');
     expect(card.querySelector('.stale-note')?.hasAttribute('hidden')).toBe(true);
-    const note = doc.querySelector('.note-item')!;
+    const note = doc.querySelector('.note-card')!;
     expect(note.getAttribute('data-recheck-by')).toBe('2027-10-01');
   });
 });

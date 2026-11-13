@@ -76,7 +76,7 @@ for (const lang of translated) {
               // so on purpose: a language menu link or an English-only card.
               const owner = el.closest('[lang]');
               if (owner?.getAttribute('lang') === document.documentElement.lang) return false;
-              return !owner?.matches('.lang-nav a, li.card[lang], li.note-item[lang]');
+              return !owner?.matches('.lang-nav a, li.card[lang], li.note-card[lang]');
             })
             .map((el) => `${el.className}: ${el.closest('[lang]')?.getAttribute('lang')}`),
         );

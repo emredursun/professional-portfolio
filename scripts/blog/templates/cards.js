@@ -47,9 +47,10 @@ function foreign(post, pageLang) {
 }
 
 // The rendered width of a cover: the full card on a phone, a grid column
-// (at most about 380 px) from there up; a note's thumbnail is fixed.
+// (at most about 380 px) from there up; a note card is one of two columns
+// from 720 px up (at most about 560 px).
 const CARD_SIZES = '(max-width: 720px) calc(100vw - 36px), 380px';
-const THUMB_SIZES = '72px';
+const NOTE_SIZES = '(max-width: 720px) calc(100vw - 36px), 560px';
 
 /**
  * A post's cover (build-blog.js), lazy because the cards sit below the
@@ -84,19 +85,25 @@ ${text}
 </li>`;
 }
 
-function noteItem(post, page) {
+/**
+ * A short note as a card: its cover across the top (text never on the
+ * photo, so it stays lighter than an essay card), then the status, the
+ * title and the meta line. Without a cover it is the same card, text only.
+ */
+function noteCard(post, page) {
   const { lang, hreflang, chip } = foreign(post, page.lang);
   const cover = post.coverImage;
-  // The thumbnail is decoration: the title beside it names the post.
-  const thumb = cover
-    ? markup`${coverImg(cover, { className: 'note-thumb', sizes: THUMB_SIZES, alt: '' })}
+  const image = cover
+    ? markup`${coverImg(cover, { className: 'note-cover', sizes: NOTE_SIZES, alt: cover.alt })}
 `
     : '';
-  return markup`<li class="note-item${cover ? ' has-cover' : ''}"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-${thumb}${statusChip(post.status, post.lang)}
-<a href="${postPath(post)}"${hreflang}>${post.title}</a>
-${postMeta(post, page, chip)}
+  return markup`<li class="note-card${cover ? ' has-cover' : ''}"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
+${image}<div class="note-body">
+<p class="card-status">${statusChip(post.status, post.lang)}${chip}</p>
+<h3 class="note-title"><a href="${postPath(post)}"${hreflang}>${post.title}</a></h3>
+${postMeta(post, page)}
 ${staleNote(post)}
+</div>
 </li>`;
 }
 
@@ -123,5 +130,5 @@ export function postSections({ posts, fallback = [], lang, topics = new Set(), c
   const essays = listed.filter((post) => post.kind === 'essay');
   const notes = listed.filter((post) => post.kind === 'note');
   return markup`${section({ id: 'essays-title', title: s.essays, intro: s.essaysIntro, items: essays.map((post) => essayCard(post, page)), listClass: 'cards' })}
-${section({ id: 'notes-title', title: s.notes, intro: s.notesIntro, items: notes.map((post) => noteItem(post, page)), listClass: 'notes' })}`;
+${section({ id: 'notes-title', title: s.notes, intro: s.notesIntro, items: notes.map((post) => noteCard(post, page)), listClass: 'note-cards' })}`;
 }
