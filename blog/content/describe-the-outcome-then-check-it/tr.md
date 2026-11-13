@@ -38,11 +38,11 @@ Günüm daha erken başladı. Öğleden sonra başlayan ana programdan önce, sa
 
 ## 2030’dan geriye doğru düşünmek
 
-Son oturum, Human & Tech: Agentic Development: Teams Reimagined, 2030’da başladı ve oradan bugüne doğru geri geldi. Yaklaşık 200 Hollandalı meslektaşımız katıldı ve oturumun ana sorusu bizim, rollerimizin ve ekiplerimizin nasıl değişeceğiydi. Oturum bunu açıkça sordu: Hangi yeni becerilere ihtiyacın olacak, ekibin nasıl görünecek ve hâlâ bir işin olacak mı? Verdiği cevap, en büyük değişimin teknolojiden çok bizde, kendimizi yeniden keşfeden insanlarda olacağıydı.
+Son oturum, Human & Tech: Agentic Development: Teams Reimagined, 2030’da başladı ve oradan bugüne doğru geri geldi. Yaklaşık 200 Hollandalı meslektaşımız katıldı ve oturumun ana sorusu bizim, rollerimizin ve ekiplerimizin nasıl değişeceğiydi. Oturum bunu açıkça sordu: Hangi yeni becerilere ihtiyacın olacak, ekibin nasıl görünecek ve hâlâ bir işin olacak mı? Oturumun host’u bunu sonradan şöyle özetledi: en büyük değişim teknolojiden çok bizde, kendimizi yeniden keşfeden insanlarda olacak.
 
 Bitiş noktasından başlamak, değişimi benim için çok daha az soyut hâle getirdi.
 
-Bunun bir kısmı, 2030’un olası bir resmiydi. Bu bir varsayım, bir öngörü değil. Yine de bugünkü hıza bakınca bunun çok uzak olduğunu düşünmüyorum.
+Oturumun bir bölümü 2030’un olası bir resmini çizdi. Bu bir varsayım. Yine de bugünkü hıza bakınca bunun çok uzak olduğunu düşünmüyorum.
 
 En çok değer verdiğim şey, yapay zekânın işimizi kolaylaştırdığı mesajıydı. Ben de buna böyle bakıyorum.
 
@@ -50,7 +50,7 @@ En çok değer verdiğim şey, yapay zekânın işimizi kolaylaştırdığı mes
 
 Bana göre yapay zekâ, insanlarla teknoloji arasına yeni bir arayüz katmanı ekliyor. Yıllardır karmaşık sistemler, araçlar ve API’ler geliştiriyoruz. Araya bir agent girdiğinde bunları gündelik dille yönlendirebilir, genişletebilir ve bakımını yapabilirsin. İstediğin sonucu tarif edersin, somut eylemleri agent belirler.
 
-Gartner, agent’ların işin daha büyük bir kısmını üstleneceğini bekliyor, ama açık bir uyarıyla. [Öngörüsüne göre](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) 2028’e kadar günlük iş kararlarının en az %15’i agentic AI aracılığıyla otonom olarak verilecek; 2024’te bu oran %0’dı. Aynı açıklamada, artan maliyetler, belirsiz iş değeri veya yetersiz risk kontrolleri nedeniyle agentic AI projelerinin %40’ından fazlasının 2027 sonuna kadar iptal edilmesini bekliyor. Ayrıca “agent washing” konusunda uyarıyor: gerçek agentic yetenekleri olmadan agent diye yeniden paketlenen mevcut asistanlar, RPA araçları ve chatbot’lar. Bir testçi için bu, “agent” etiketinin bir aracın neler yapabildiğine dair kanıt olmadığına dair faydalı bir hatırlatma.
+Gartner, agent’ların işin daha büyük bir kısmını üstleneceğini bekliyor, ama açık bir uyarıyla. [Öngörüsüne göre](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) 2028’e kadar günlük iş kararlarının en az %15’i agentic AI aracılığıyla otonom olarak verilecek; 2024’te bu oran %0’dı. Aynı açıklamada, artan maliyetler, belirsiz iş değeri veya yetersiz risk kontrolleri nedeniyle agentic AI projelerinin %40’ından fazlasının 2027 sonuna kadar iptal edilmesini bekliyor. Ayrıca “agent washing” konusunda uyarıyor: kayda değer agentic yetenekleri olmadan agent diye yeniden paketlenen mevcut asistanlar, RPA araçları ve chatbot’lar. Bir testçi için bu, “agent” etiketinin bir aracın neler yapabildiğine dair kanıt olmadığına dair faydalı bir hatırlatma.
 
 Yani yön belli, ama senin adına iş yapan bir agent’ın yerini hâlâ hak etmesi gerekiyor.
 
@@ -70,10 +70,10 @@ SDLC boyunca rollerin, becerilerin, araçların ve sorumlulukların ciddi biçim
 
 Sonucu tarif edip eylemleri bir agent’a bırakabiliyorsan, testçinin sorusu da geri gelen şeyin doğru olup olmadığına kayıyor.
 
-Geliştiriciler de benzer bir noktaya varıyor gibi görünüyor. [Stack Overflow Developer Survey 2026](https://survey.stackoverflow.co/2026/ai)’da katılımcıların %48’i, yapay zekânın cevaplarını kolayca doğrulayabildiklerinde yapay zekâya güvendiklerini söylüyor; bu güveni önemli iş kararı olmayan çoğu göreve genişletenler ise yalnızca %16. [Anket duyurusu](https://stackoverflow.blog/2026/10/06/the-results-of-the-2026-developer-survey-are-here/) ayrıca katılımcıların %93’ünün, yapay zekânın verdiğine güvenmek için kaynak gösterilmesini gerekli gördüğünü ekliyor. Bana göre bu, güvenin, cevabı kontrol edebilmeye ve nereden geldiğini görebilmeye bağlı olduğu anlamına geliyor.
+Geliştiriciler de benzer bir noktaya varıyor gibi görünüyor. [Stack Overflow Developer Survey 2026](https://survey.stackoverflow.co/2026/ai)’da katılımcıların %48’i, yapay zekânın cevaplarını kolayca doğrulayabildiklerinde yapay zekâya güvendiklerini söylüyor; bu güveni önemli iş kararı olmayan çoğu göreve genişletenler ise yalnızca %16. [Anket duyurusu](https://stackoverflow.blog/2026/10/06/the-results-of-the-2026-developer-survey-are-here/) da %93’ün, yapay zekânın verdiğine güvenmek için kaynak gösterilmesini gerekli gördüğünü bildiriyor. Bana göre bu, güvenin, cevabı kontrol edebilmeye ve nereden geldiğini görebilmeye bağlı olduğu anlamına geliyor.
 
 Google Cloud’un yürüttüğü bir araştırma programı olan DORA da benzer bir noktaya değiniyor. [State of AI-assisted Software Development 2025](https://dora.dev/research/2025/dora-report/) raporu, yapay zekânın temel rolünü bir organizasyonun mevcut güçlü ve zayıf yönlerini büyüten bir güçlendirici olarak tanımlıyor. Test açısından benim yorumum: review ve test pratikleri zayıf bir ekip, yapay zekâyla bu zayıflıkların büyüdüğünü muhtemelen görecek.
 
-Kendi test işimde agentic AI’ı giderek daha fazla kullanıyorum. Nerede yardımcı olabileceğini şimdiden görüyorum: test stratejisi oluştururken bir sparring partner olarak, edge case’leri belirlemede ve test üretmede. Şimdilik bunlar gördüğüm olasılıklar, oturmuş bir çalışma biçimi değil; burada yazdıklarım da ölçülmüş sonuçlardan değil, tek bir etkinlikten ve erken kullanımdan geliyor.
+Kendi test işimde agentic AI’ı giderek daha fazla işin içine katmaya çalışıyorum. Nerede yardımcı olabileceğini şimdiden görüyorum: test stratejisi oluştururken bir sparring partner olarak, edge case’leri belirlemede ve test üretmede. Şimdilik bunlar gördüğüm olasılıklar, oturmuş bir çalışma biçimi değil; burada yazdıklarım da ölçülmüş sonuçlardan değil, tek bir etkinlikten ve erken kullanımdan geliyor.
 
 Her adımı net guardrail’ler içinde kendim review ediyor ve doğruluyorum. Üretilmiş bir test, ancak doğru olduğunu bildiğinde işe yarar. Testi bir agent yazmış olsa bile kalite bizim sorumluluğumuzda kalıyor.
