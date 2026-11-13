@@ -71,12 +71,15 @@ export function renderTopicPage({
 }) {
   if (posts.length === 0) throw new Error(`blog: no ${lang} posts on "${topic}"; skip the page`);
   const s = strings(lang);
-  const content = markup`<div class="index">
-<header class="index-header">
+  // The same header style as the index's hero (hero.css, .page-hero).
+  const content = markup`<div class="index-top">
+<header class="index-header page-hero">
 <p class="index-eyebrow"><a href="${blogPath(lang)}">${s.blogName}</a> · ${s.topicEyebrow}</p>
 <h1 class="index-lede">${s.topicLabels[topic]}</h1>
 <p class="index-intro">${s.topicDescriptions[topic]}</p>
 </header>
+</div>
+<div class="index index-posts">
 ${postSections({ posts, fallback, lang, topics, currentTopic: topic })}
 </div>`;
   return renderPage({

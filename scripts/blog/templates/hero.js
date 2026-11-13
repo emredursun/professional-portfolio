@@ -1,11 +1,13 @@
 /**
  * The top of the blog's index: the headline, the introduction, the newest
- * post as a large "Latest" card, the newest Now entry as a small status
- * chip, the two actions, and the topics as linked chips with their counts.
+ * Now entry as a small status chip, the actions, the newest post as a large
+ * "Latest" card, and the topics as linked chips with their counts.
  *
- * The blocks are in the order a phone shows them (title, intro, Latest,
- * Now, actions); on a wide screen the stylesheet moves the Latest card into
- * a column of its own beside the rest.
+ * The markup follows the desktop layout (the left column, then the card on
+ * the right), so keyboard focus moves left column first. On phones the
+ * stylesheet shows the card right after the intro (hero.css, order); there
+ * the card's link is reached after the actions, which is still a sensible
+ * order: the actions are short and come first in the source.
  */
 
 import { markup } from '../html.js';
@@ -15,9 +17,10 @@ import { feedPath, formatDate, postPath, topicPath } from './format.js';
 import { nowChip } from './now.js';
 import { statusChip } from './status.js';
 
-// The card is half the hero from 960 px up (at most about 540 px), the full
-// width below that.
-const LATEST_SIZES = '(max-width: 960px) calc(100vw - 36px), 540px';
+// The card is the right column from 960 px up (at most about 540 px), the
+// full width below that. Keep in step with hero.css (the 960 px breakpoint
+// and the equal columns).
+const LATEST_SIZES = '(max-width: 959px) calc(100vw - 36px), 540px';
 
 /**
  * The newest post as a feature card. Above the fold, so its cover loads
@@ -39,26 +42,38 @@ ${cover ? markup`<div class="card-body">\n${text}\n</div>` : text}
 </article>`;
 }
 
-function actions(newest, launched, s, lang) {
-  return markup`<p class="index-actions"><a class="button button-solid" href="${postPath(newest)}">${s.readLatest}<span class="visually-hidden">: ${newest.title}</span></a>${
-    launched
-      ? markup`<a class="text-link" href="${feedPath(lang)}">${s.followFeed} <span aria-hidden="true">→</span></a>`
-      : ''
-  }</p>`;
+/**
+ * The primary action leads to the rest of the posts (the Latest card already
+ * opens the newest), so it is left out when there are no others; the feed
+ * is a quiet text link.
+ */
+function actions({ hasMore, launched, s, lang }) {
+  const browse = hasMore
+    ? markup`<a class="button button-solid" href="#${ALL_POSTS_ID}">${s.browseAll}</a>`
+    : '';
+  const feed = launched
+    ? markup`<a class="text-link" href="${feedPath(lang)}">${s.followFeed}<span class="text-link-arrow" aria-hidden="true">→</span></a>`
+    : '';
+  if (!browse && !feed) return '';
+  return markup`<p class="index-actions">${browse}${feed}</p>`;
 }
 
+/** The id of the posts below the hero, which the browse action jumps to. */
+export const ALL_POSTS_ID = 'all-posts';
+
 /**
- * @param {{ newest: object, now?: readonly object[], launched: boolean, lang: string }} options
+ * @param {{ newest: object, hasMore: boolean, now?: readonly object[], launched: boolean, lang: string }} options
+ *   `hasMore`: whether any post is listed below the hero.
  * @returns {string}
  */
-export function indexHero({ newest, now, launched, lang }) {
+export function indexHero({ newest, hasMore, now, launched, lang }) {
   if (!newest) throw new Error('blog: the index needs at least one post');
   const s = strings(lang);
   return markup`<header class="index-hero">
 <h1 class="index-lede">${s.tagline}</h1>
 <p class="index-intro">${s.intro}</p>
+${nowChip(now, lang)}${actions({ hasMore, launched, s, lang })}
 ${latestCard(newest, s)}
-${nowChip(now, lang)}${actions(newest, launched, s, lang)}
 </header>`;
 }
 

@@ -77,11 +77,12 @@ async function emitImage(distDir, contentDir, slug, name) {
 }
 
 /**
- * Widths of the card-size copies of a cover: a short note's thumbnail, a
- * card on a phone or in the desktop grid, and a card on a wide or dense
- * screen. Never wider than the photo itself.
+ * Widths of the copies of a cover: small cards, a card on a phone or in the
+ * desktop grid, and the index's Latest card on a high-density screen (about
+ * 540 px wide at 2x). Never wider than the photo itself, so a sharp Latest
+ * card needs a source of 1200 px or more.
  */
-export const COVER_WIDTHS = Object.freeze([240, 480, 800]);
+export const COVER_WIDTHS = Object.freeze([240, 480, 800, 1200, 1600]);
 const COVER_QUALITY = 72;
 
 async function emitCover(distDir, contentDir, slug, name) {

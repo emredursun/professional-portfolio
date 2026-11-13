@@ -9,7 +9,7 @@ import { markup } from '../html.js';
 import { PERSON_ID, WEBSITE_ID } from '../../lib/route-meta.js';
 import { blogUrl, byNewest, postUrl } from './format.js';
 import { postSections } from './cards.js';
-import { indexHero, topicChips } from './hero.js';
+import { ALL_POSTS_ID, indexHero, topicChips } from './hero.js';
 import { previewImage } from './head.js';
 import { renderPage } from './layout.js';
 import { strings } from '../strings.js';
@@ -72,13 +72,22 @@ export function renderIndexPage({
   const sorted = [...posts].sort(byNewest);
   // Default: the topics of the posts in `lang`, each of which has a page.
   const pageTopics = topics ?? new Set(posts.map((post) => post.topic));
+  const newest = sorted[0];
+  // The newest post is the Latest card, so the lists below leave it out
+  // (a section left empty is not shown); the topic counts keep it.
+  const others = posts.filter((post) => post.slug !== newest?.slug);
+  const hasMore = others.length + fallback.length > 0;
   const content = markup`<div class="index-top">
-${indexHero({ newest: sorted[0], now, launched, lang })}
+${indexHero({ newest, hasMore, now, launched, lang })}
 ${topicChips({ listed: [...posts, ...fallback], topics: pageTopics, lang })}
 </div>
-<div class="index index-posts">
-${postSections({ posts, fallback, lang, topics: pageTopics })}
-</div>`;
+${
+  hasMore
+    ? markup`<div class="index index-posts" id="${ALL_POSTS_ID}">
+${postSections({ posts: others, fallback, lang, topics: pageTopics })}
+</div>`
+    : ''
+}`;
   return renderPage({
     lang,
     meta: indexMeta(sorted, s, lang, languages, assets),

@@ -119,7 +119,7 @@ describe('loadPosts: choosing the cover', () => {
 });
 
 describe('emitCoverImages', () => {
-  it('writes webp variants up to 800 px wide, never wider than the source', async () => {
+  it('writes webp variants up to 1600 px wide, never wider than the source', async () => {
     await putImage('hello', 'road.webp', 960, 540);
     await putImage('small', 'tiny.webp', 400, 300);
     const distDir = path.join(root, 'dist');
@@ -131,18 +131,20 @@ describe('emitCoverImages', () => {
         ['small', 'tiny.webp'],
       ],
     });
-    expect(COVER_WIDTHS).toEqual([240, 480, 800]);
+    expect(COVER_WIDTHS).toEqual([240, 480, 800, 1200, 1600]);
     const road = covers.get('hello/road.webp')!;
-    expect(road).toMatchObject({ width: 800, height: 450 });
-    expect(road.src).toMatch(/^\/assets\/blog-cover-hello-road-800-[0-9a-f]{8}\.webp$/);
+    // The source is 960 wide: the largest copy is the source's own width.
+    expect(road).toMatchObject({ width: 960, height: 540 });
+    expect(road.src).toMatch(/^\/assets\/blog-cover-hello-road-960-[0-9a-f]{8}\.webp$/);
     expect(road.srcset.split(', ').map((entry) => entry.split(' ')[1])).toEqual([
       '240w',
       '480w',
       '800w',
+      '960w',
     ]);
     // From a buffer: sharp keeps a file it opened by path locked on Windows.
     const written = await sharp(fs.readFileSync(path.join(distDir, road.src))).metadata();
-    expect([written.format, written.width]).toEqual(['webp', 800]);
+    expect([written.format, written.width]).toEqual(['webp', 960]);
 
     const tiny = covers.get('small/tiny.webp')!;
     expect(tiny).toMatchObject({ width: 400, height: 300 });
@@ -177,6 +179,16 @@ const assets = {
 const parse = (html: string) => new DOMParser().parseFromString(html, 'text/html');
 
 describe('index cards with covers', () => {
+  // The newest post is the Latest card and is not listed again, so the
+  // posts under test are older than this one.
+  const featured = {
+    ...base,
+    slug: 'featured',
+    kind: 'essay',
+    title: 'Featured',
+    description: 'F.',
+    publishedAt: '2026-10-09',
+  };
   const posts = [
     {
       ...base,
@@ -205,7 +217,8 @@ describe('index cards with covers', () => {
       coverImage: cover('Keys'),
     },
   ];
-  const doc = () => parse(renderIndexPage({ posts, assets, launched: false }));
+  const doc = () =>
+    parse(renderIndexPage({ posts: [featured, ...posts], assets, launched: false }));
 
   it('shows the cover behind an essay card, lazy, sized and responsive', () => {
     const card = doc().querySelector('.cards .card.has-cover')!;
@@ -237,7 +250,11 @@ describe('index cards with covers', () => {
     expect(img.getAttribute('alt')).toBe('Keys');
     expect(img.getAttribute('loading')).toBe('lazy');
     expect(img.getAttribute('decoding')).toBe('async');
-    expect(img.getAttribute('sizes')).toContain('560px');
+    // One column below 720 px (the grid's breakpoint), two up to the 1120 px
+    // content width, then a fixed column.
+    expect(img.getAttribute('sizes')).toBe(
+      '(max-width: 719px) calc(100vw - 36px), (max-width: 1179px) calc(50vw - 52px), 510px',
+    );
     expect([img.getAttribute('width'), img.getAttribute('height')]).toEqual(['800', '450']);
     // Text below the photo, never over it; one link to the post.
     const body = note.querySelector('.note-body')!;
@@ -250,7 +267,7 @@ describe('index cards with covers', () => {
   it('keeps a short note without a cover as a card, without an image', () => {
     const page = parse(
       renderIndexPage({
-        posts: [{ ...posts[2], coverImage: undefined }],
+        posts: [featured, { ...posts[2], coverImage: undefined }],
         assets,
         launched: false,
       }),
@@ -279,10 +296,14 @@ describe('buildBlog: covers', () => {
     fs.writeFileSync(themeInitPath, '');
     const dist = makeDist(root, 'dist');
     await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
-    for (const file of ['blog.html', 'blog/topic/testing.html']) {
+    // The only post: the Latest card on the index, a card on its topic page.
+    for (const [file, selector] of [
+      ['blog.html', '.latest-card img.card-cover'],
+      ['blog/topic/testing.html', '.cards .card img.card-cover'],
+    ]) {
       const page = parse(fs.readFileSync(path.join(dist, file), 'utf8'));
-      const src = page.querySelector('.cards .card img.card-cover')?.getAttribute('src');
-      expect(src, file).toMatch(/^\/assets\/blog-cover-hello-road-800-[0-9a-f]{8}\.webp$/);
+      const src = page.querySelector(selector)?.getAttribute('src');
+      expect(src, file).toMatch(/^\/assets\/blog-cover-hello-road-960-[0-9a-f]{8}\.webp$/);
       expect(fs.existsSync(path.join(dist, src!))).toBe(true);
     }
   });
