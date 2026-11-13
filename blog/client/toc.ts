@@ -9,15 +9,14 @@
 const REACHED_PX = 120;
 
 /**
- * The id of the last heading that has scrolled past the line, or the first
- * heading's id when none has yet.
+ * The id of the last heading that has scrolled past the line, or nothing while
+ * the reader is still above the first one (the title and introduction).
  */
 export function currentSection(
   headings: readonly { id: string; top: number }[],
   line: number = REACHED_PX,
 ): string | undefined {
-  const reached = headings.filter((heading) => heading.top <= line);
-  return (reached.at(-1) ?? headings[0])?.id;
+  return headings.filter((heading) => heading.top <= line).at(-1)?.id;
 }
 
 export function bindTableOfContents(doc: Document, win: Window): void {
@@ -35,14 +34,17 @@ export function bindTableOfContents(doc: Document, win: Window): void {
     const id = currentSection(
       targets.map((target) => ({ id: target.id, top: target.getBoundingClientRect().top })),
     );
+    let current = '';
     for (const link of links) {
       if (decodeURIComponent(link.hash.slice(1)) === id) {
         link.setAttribute('aria-current', 'location');
-        if (label && label.textContent !== link.textContent) label.textContent = link.textContent;
+        current = link.textContent ?? '';
       } else {
         link.removeAttribute('aria-current');
       }
     }
+    // Empty above the first heading, so the bar shows only its title and count.
+    if (label && label.textContent !== current) label.textContent = current;
   };
   const schedule = () => {
     if (pending) return;
@@ -69,34 +71,49 @@ export interface WideQuery {
  */
 export function bindTocDisclosure(doc: Document, wide: WideQuery): void {
   const details = doc.querySelector<HTMLDetailsElement>('.toc-disclosure');
-  if (!details) return;
+  const summary = details?.querySelector('summary');
+  if (!details || !summary) return;
 
   const fit = (isWide: boolean) => {
     if (details.open !== isWide) details.open = isWide;
+    // On wide screens the summary is only the list's title, not a control.
+    summary.tabIndex = isWide ? -1 : 0;
   };
   wide.addEventListener('change', (event) => fit(event.matches));
-  // The summary is a plain label on wide screens: undo a keyboard toggle.
+  // Undo a toggle on wide screens, where the list is always open.
   details.addEventListener('toggle', () => {
     if (wide.matches && !details.open) details.open = true;
   });
-  // Fold again once a section is chosen; the browser still makes the jump.
   details.addEventListener('click', (event) => {
-    const link = (event.target as Element | null)?.closest('a[href^="#"]');
-    if (link && !wide.matches) details.open = false;
+    // The chevron turns only for the reader, not for the fold on load.
+    details.setAttribute('data-animate', '');
+    const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[href^="#"]');
+    if (!link || wide.matches) return;
+    // Fold again once a section is chosen, and move focus to it, since the
+    // link is about to be hidden. The browser still makes the jump.
+    details.open = false;
+    const target = doc.getElementById(decodeURIComponent(link.hash.slice(1)));
+    if (target) {
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+    }
   });
   // The open list covers the text on narrow screens: a tap outside it or
-  // Escape puts it away, as with any menu.
+  // Escape puts it away, as with any menu. Escape is heard on the whole page,
+  // since Safari does not focus a tapped summary.
   doc.addEventListener('click', (event) => {
     if (!wide.matches && details.open && !details.contains(event.target as Node)) {
       details.open = false;
     }
   });
-  details.addEventListener('keydown', (event) => {
+  doc.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape' || wide.matches || !details.open) return;
+    const hadFocus = details.contains(doc.activeElement);
     details.open = false;
-    details.querySelector('summary')?.focus();
+    if (hadFocus) summary.focus();
   });
-  // Lets article.css drop the list down over the text instead of pushing it.
-  details.setAttribute('data-folding', '');
+  // Lets article.css stick the bar to the top and drop the list down over the
+  // text; without this script the list stays open and in the flow.
+  details.closest('.toc')?.setAttribute('data-folding', '');
   fit(wide.matches);
 }
