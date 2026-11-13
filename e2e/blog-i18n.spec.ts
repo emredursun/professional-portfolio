@@ -192,7 +192,7 @@ test.describe('the Now page', () => {
     for (const lang of withNow) {
       const s = strings(lang);
       await page.goto(blogPath(lang));
-      await page.locator('.now-line').getByRole('link', { name: s.nowMore }).click();
+      await page.locator('.now-chip').getByRole('link', { name: s.nowMore }).click();
       await expect(page).toHaveURL(new RegExp(`${blogPath(lang)}/now$`));
       await expect(page.locator('html')).toHaveAttribute('lang', lang);
       await expect(page.locator('h1')).toHaveText(s.nowTitle);

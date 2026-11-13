@@ -18,13 +18,14 @@ const en = {
     'Notes on software quality, test automation and working with AI, by Emre Dursun, QA consultant in the Netherlands.',
   intro:
     'I am a QA consultant in the Netherlands, working on Pega, Tricentis Tosca and test automation. Here I write about what I see in practice: in projects, with AI, and in between.',
-  bandLabel: 'What I write about',
-  band: {
-    honest: 'Testing, honestly',
-    ai: 'Working with AI',
-    tools: 'Pega and Tosca',
-    life: 'Life in three languages',
+  latest: 'Latest',
+  kindLabels: {
+    essay: 'Essay',
+    note: 'Short note',
   },
+  topicsNav: 'Browse by topic',
+  postOne: 'post',
+  postMany: 'posts',
   readLatest: 'Read the latest',
   followFeed: 'Follow with a feed reader',
   essays: 'Essays',
@@ -113,13 +114,14 @@ const tr = {
     'Yazılım kalitesi, test otomasyonu ve yapay zekâyla çalışmak üzerine notlar. Yazan: Hollanda’da QA danışmanı Emre Dursun.',
   intro:
     'Hollanda’da Pega, Tricentis Tosca ve test otomasyonu üzerine çalışan bir QA danışmanıyım. Burada sahada gördüklerimi yazıyorum: projelerde, yapay zekâyla ve ikisinin arasında.',
-  bandLabel: 'Ne hakkında yazıyorum',
-  band: {
-    honest: 'Dürüstçe test',
-    ai: 'Yapay zekâyla çalışmak',
-    tools: 'Pega ve Tosca',
-    life: 'Üç dilde hayat',
+  latest: 'En yeni',
+  kindLabels: {
+    essay: 'Deneme',
+    note: 'Kısa not',
   },
+  topicsNav: 'Konuya göre göz atın',
+  postOne: 'yazı',
+  postMany: 'yazı',
   readLatest: 'En yenisini okuyun',
   followFeed: 'Bir feed okuyucuyla takip edin',
   essays: 'Denemeler',
@@ -209,13 +211,14 @@ const nl = {
     'Notities over softwarekwaliteit, testautomatisering en werken met AI, door Emre Dursun, QA-consultant in Nederland.',
   intro:
     'Ik ben QA-consultant in Nederland en werk met Pega, Tricentis Tosca en testautomatisering. Hier schrijf ik over wat ik in de praktijk zie: in projecten, met AI en alles daartussen.',
-  bandLabel: 'Waar ik over schrijf',
-  band: {
-    honest: 'Eerlijk testen',
-    ai: 'Werken met AI',
-    tools: 'Pega en Tosca',
-    life: 'Leven in drie talen',
+  latest: 'Nieuwste',
+  kindLabels: {
+    essay: 'Essay',
+    note: 'Korte notitie',
   },
+  topicsNav: 'Bladeren per onderwerp',
+  postOne: 'stuk',
+  postMany: 'stukken',
   readLatest: 'Lees de nieuwste',
   followFeed: 'Volg met een feedreader',
   essays: 'Essays',

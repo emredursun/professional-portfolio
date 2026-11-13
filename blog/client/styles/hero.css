@@ -1,0 +1,336 @@
+/*
+ * The top of the blog's index (scripts/blog/templates/hero.js): headline,
+ * introduction, the Latest card, the Now chip, the actions and the topic
+ * chips. The markup is in phone order; from 960 px the Latest card moves
+ * into a column of its own beside the rest.
+ */
+
+/* A soft wash of the palette's own colours behind the hero, full width. */
+.index-top {
+  padding: 56px var(--gutter) 8px;
+  background:
+    radial-gradient(52rem 30rem at 96% -12%, var(--sage), transparent 72%),
+    radial-gradient(36rem 22rem at -8% 0%, var(--lavender), transparent 70%);
+}
+
+/* Lines up with the posts below, whose 1120 px includes the gutters. */
+.index-hero,
+.topic-nav {
+  max-width: calc(1120px - 2 * var(--gutter));
+  margin: 0 auto;
+}
+
+.index-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 22px;
+}
+
+.index-hero > * {
+  margin: 0;
+}
+
+.index-hero .index-lede {
+  max-width: 14ch;
+  font-size: clamp(2.5rem, 1.5rem + 3.2vw, 4.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.index-hero .index-intro {
+  max-width: 34rem;
+  color: var(--ink-2);
+  font-size: 1.25rem;
+  line-height: 1.55;
+}
+
+/* The Latest card: the essay card's cover treatment (index.css), larger. */
+.latest-card {
+  position: relative;
+  margin-top: 10px;
+}
+
+.latest-card.has-cover {
+  min-height: 460px;
+}
+
+.latest-card:not(.has-cover) {
+  padding: 32px;
+  background: var(--sage);
+}
+
+.latest-card .card-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.latest-label {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.latest-card .card-title {
+  font-size: clamp(1.625rem, 1.2rem + 1.2vw, 2.25rem);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.latest-card .card-dek {
+  max-width: 36rem;
+}
+
+/* One link, stretched over the card, with the focus ring round the card. */
+.latest-card .card-title a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+@supports selector(:has(a)) {
+  .latest-card:has(.card-title a:focus-visible) {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .latest-card .card-title a:focus-visible {
+    outline: none;
+  }
+}
+
+/* The newest Now entry as a small status chip. */
+.now-chip {
+  justify-self: start;
+  max-width: 34rem;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.now-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--check);
+  vertical-align: 0.1em;
+}
+
+.now-label {
+  margin-right: 4px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.now-chip time {
+  margin: 0 4px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.now-chip a {
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .now-dot {
+    animation: now-pulse 2.4s ease-out infinite;
+  }
+}
+
+@keyframes now-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--check) 45%, transparent);
+  }
+
+  70%,
+  100% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+/* A solid primary action and a quiet text link for the feed. */
+.index-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+}
+
+.index-actions .button {
+  min-height: 48px;
+  margin-top: 0;
+  padding: 0 26px;
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-weight: 600;
+  text-decoration-color: var(--line);
+}
+
+.text-link:hover,
+.text-link:focus-visible {
+  text-decoration-color: var(--underline);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .text-link span {
+    transition: transform 0.2s ease;
+  }
+
+  .text-link:hover span {
+    transform: translateX(3px);
+  }
+}
+
+/* The topics as linked chips, each with its post count. */
+.topic-nav {
+  margin-top: 44px;
+  padding: 22px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.topic-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topic-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 8px 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.topic-chip:hover {
+  border-color: var(--ink);
+}
+
+.topic-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--sage);
+  color: var(--ink);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.topic-chip:hover .topic-count {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .topic-chip,
+  .topic-count {
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+}
+
+/* The posts follow the hero closely. */
+.index.index-posts {
+  padding-top: 16px;
+}
+
+@media (min-width: 960px) {
+  .index-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-rows: auto auto auto auto 1fr;
+    grid-template-areas:
+      'lede latest'
+      'intro latest'
+      'now latest'
+      'actions latest'
+      '. latest';
+    column-gap: 64px;
+    align-items: start;
+  }
+
+  .index-hero .index-lede {
+    grid-area: lede;
+  }
+
+  .index-hero .index-intro {
+    grid-area: intro;
+  }
+
+  .latest-card {
+    grid-area: latest;
+    margin-top: 0;
+  }
+
+  .now-chip {
+    grid-area: now;
+  }
+
+  .index-actions {
+    grid-area: actions;
+  }
+}
+
+@media (max-width: 600px) {
+  .index-top {
+    padding-top: 32px;
+  }
+
+  .index-hero {
+    row-gap: 18px;
+  }
+
+  .index-hero .index-intro {
+    font-size: 1.125rem;
+  }
+
+  .latest-card.has-cover {
+    min-height: 400px;
+  }
+
+  .latest-card:not(.has-cover) {
+    padding: 24px;
+  }
+
+  .index-actions {
+    gap: 4px 20px;
+  }
+
+  .index-actions .button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .topic-nav {
+    margin-top: 32px;
+  }
+}

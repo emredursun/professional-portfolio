@@ -406,17 +406,6 @@
   outline-offset: -2px;
 }
 
-.index-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 8px 0 0;
-}
-
-.index-actions .button {
-  margin-top: 0;
-}
-
 .button-solid {
   background: var(--ink);
   color: var(--paper);
@@ -425,28 +414,6 @@
 .button-solid:hover {
   background: transparent;
   color: var(--ink);
-}
-
-/* Static topics band */
-.band {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 18px;
-  margin: 0 calc(-1 * var(--gutter));
-  padding: 16px var(--gutter);
-  background: var(--butter);
-  list-style: none;
-  font-size: 1rem;
-}
-
-.band li {
-  display: inline-flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.band-mark {
-  color: var(--ink-2);
 }
 
 /* Closing invitation, every page */
@@ -544,19 +511,7 @@
   vertical-align: middle;
 }
 
-/* The newest "Now" entry on the index, and the Now page's dated list. */
-.now-line {
-  margin: 0 0 24px;
-  color: var(--ink-2);
-  font-size: 1.05rem;
-}
-
-.now-label {
-  margin-right: 6px;
-  color: var(--ink);
-  font-weight: 700;
-}
-
+/* The Now page's dated list. */
 .now-list {
   margin: 0;
   padding: 0;
@@ -578,8 +533,8 @@
   font-size: 1.125rem;
 }
 
-/* The index on a phone: calmer type, the Now line as a small note, and the
-   two actions the same width. */
+/* The index on a phone: calmer type and roomier cards (the hero's own
+   phone rules are in hero.css). */
 @media (max-width: 600px) {
   .index {
     padding-top: 32px;
@@ -592,30 +547,6 @@
   .index-intro {
     margin-top: 16px;
     font-size: 1.125rem;
-  }
-
-  .now-line {
-    margin: 20px 0;
-    padding: 12px 14px;
-    border-left: 3px solid var(--underline);
-    border-radius: 0 12px 12px 0;
-    background: var(--sage);
-    font-size: 0.95rem;
-  }
-
-  .now-label {
-    display: block;
-    margin-bottom: 2px;
-  }
-
-  .index-actions {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .index-actions .button {
-    justify-content: center;
   }
 
   .card.has-cover {

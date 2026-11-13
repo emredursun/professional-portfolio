@@ -208,7 +208,7 @@ describe('index cards with covers', () => {
   const doc = () => parse(renderIndexPage({ posts, assets, launched: false }));
 
   it('shows the cover behind an essay card, lazy, sized and responsive', () => {
-    const card = doc().querySelector('.card.has-cover')!;
+    const card = doc().querySelector('.cards .card.has-cover')!;
     const img = card.querySelector('img.card-cover')!;
     expect(img.getAttribute('src')).toBe('/assets/blog-cover-x-800-1.webp');
     expect(img.getAttribute('srcset')).toContain('240w');
@@ -224,7 +224,7 @@ describe('index cards with covers', () => {
   });
 
   it('keeps the plain card when a post has no cover', () => {
-    const plain = doc().querySelectorAll('.card')[1];
+    const plain = doc().querySelectorAll('.cards .card')[1];
     expect(plain.classList.contains('has-cover')).toBe(false);
     expect(plain.querySelector('img')).toBeNull();
   });
@@ -281,7 +281,7 @@ describe('buildBlog: covers', () => {
     await buildBlog({ distDir: dist, contentDir, themeInitPath, launched: false });
     for (const file of ['blog.html', 'blog/topic/testing.html']) {
       const page = parse(fs.readFileSync(path.join(dist, file), 'utf8'));
-      const src = page.querySelector('.card img.card-cover')?.getAttribute('src');
+      const src = page.querySelector('.cards .card img.card-cover')?.getAttribute('src');
       expect(src, file).toMatch(/^\/assets\/blog-cover-hello-road-800-[0-9a-f]{8}\.webp$/);
       expect(fs.existsSync(path.join(dist, src!))).toBe(true);
     }

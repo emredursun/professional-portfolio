@@ -11,12 +11,17 @@ import { blogPath, blogUrl, formatDate, nowPath } from './format.js';
 import { previewImage } from './head.js';
 import { renderPage } from './layout.js';
 
-/** The newest entry as one line for the index, with a link to the page. */
-export function nowLine(entries, lang) {
+/**
+ * The newest entry as a small status chip for the index: a dot (it pulses
+ * unless the reader asked for less motion), the label, the text, its date
+ * and a link to the page.
+ */
+export function nowChip(entries, lang) {
   if (!entries) return '';
   const s = strings(lang);
   const [latest] = entries;
-  return markup`<p class="now-line"><span class="now-label">${s.nowTitle}</span> ${latest.text} <a href="${nowPath(lang)}">${s.nowMore}</a></p>\n`;
+  return markup`<p class="now-chip"><span class="now-dot" aria-hidden="true"></span><span class="now-label">${s.nowTitle}</span> <span class="now-text">${latest.text}</span> <time datetime="${latest.date}">${formatDate(latest.date, lang)}</time> <a href="${nowPath(lang)}">${s.nowMore}</a></p>
+`;
 }
 
 /**
