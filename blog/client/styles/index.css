@@ -217,48 +217,128 @@
   }
 }
 
-.notes {
+.note-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
   margin: 0;
   padding: 0;
   list-style: none;
-  max-width: 44rem;
 }
 
-.note-item {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 4px 14px;
-  align-items: baseline;
-  padding: 16px 0;
-  border-top: 1px solid var(--line);
-  font-size: 1.125rem;
-  font-weight: 600;
+@media (min-width: 720px) {
+  .note-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
-.note-item .card-meta {
-  grid-column: 2;
-  margin: 0;
-  font-weight: 400;
-}
-
-/* A short note with a cover: a small square thumbnail beside the row. */
-.note-item.has-cover {
-  grid-template-columns: 72px auto 1fr;
-}
-
-.note-thumb {
-  grid-row: 1 / span 3;
-  align-self: start;
-  width: 72px;
-  height: 72px;
-  border-radius: 16px;
+/* A short note as a card (cards.js): the cover across the top, the text
+   below it on the card's own surface, never on the photo. Same family as
+   the essay cards (radius, surface, chip), lighter (no scrim, smaller
+   title). The whole card opens the post. */
+.note-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 28px;
   background: var(--sage);
+}
+
+.note-card:nth-child(2n) {
+  background: var(--lavender);
+}
+
+.note-cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: var(--line);
   object-fit: cover;
 }
 
-.note-item.has-cover .card-meta,
-.note-item.has-cover .stale-note {
-  grid-column: 3;
+/* A note without a cover keeps the card's shape with a plain colour panel
+   (no text, so nothing for a screen reader), so a row stays even. */
+.note-card:not(.has-cover)::before {
+  content: '';
+  display: block;
+  aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(circle at 78% 30%, var(--butter) 0 18%, transparent 18.5%),
+    linear-gradient(135deg, var(--peach), var(--lavender));
+}
+
+.note-card:nth-child(2n):not(.has-cover)::before {
+  background:
+    radial-gradient(circle at 78% 30%, var(--butter) 0 18%, transparent 18.5%),
+    linear-gradient(135deg, var(--sage), var(--peach));
+}
+
+.note-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 24px 24px;
+}
+
+.note-body p {
+  margin: 0;
+}
+
+.note-card .status {
+  box-shadow: inset 0 0 0 1.5px var(--line);
+}
+
+.note-title {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.note-title a {
+  text-decoration-color: transparent;
+}
+
+.note-title a:hover,
+.note-title a:focus-visible {
+  text-decoration-color: var(--underline);
+}
+
+.note-title a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.note-card .topic-link {
+  position: relative;
+  z-index: 1;
+}
+
+/* The focus ring goes round the whole card the link covers. */
+@supports selector(:has(a)) {
+  .note-card:has(.note-title a:focus-visible) {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .note-title a:focus-visible {
+    outline: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .note-cover {
+    transition: transform 0.5s ease;
+  }
+
+  .note-card:hover .note-cover,
+  .note-card:focus-within .note-cover {
+    transform: scale(1.04);
+  }
 }
 
 /* After an article */
@@ -310,16 +390,20 @@
   display: none;
 }
 
-.note-item .stale-note {
-  grid-column: 2;
-  justify-self: start;
-  margin: 6px 0 0;
+.note-card .stale-note {
+  align-self: flex-start;
+  margin: 4px 0 0;
 }
 
 .card.is-stale,
-.note-item.is-stale,
 .evidence.is-stale {
   box-shadow: inset 0 0 0 2px var(--underline);
+}
+
+/* The photo would cover an inset ring. */
+.note-card.is-stale {
+  outline: 2px solid var(--underline);
+  outline-offset: -2px;
 }
 
 .index-actions {
@@ -542,25 +626,7 @@
     padding: 72px 22px 24px;
   }
 
-  /* On a phone the chip gets its own line, so the title keeps its width. */
-  .note-item.has-cover {
-    grid-template-columns: 56px 1fr;
-    align-items: start;
-  }
-
-  .note-item.has-cover .status {
-    justify-self: start;
-  }
-
-  .note-item.has-cover > a,
-  .note-item.has-cover .card-meta,
-  .note-item.has-cover .stale-note {
-    grid-column: 2;
-  }
-
-  .note-thumb {
-    width: 56px;
-    height: 56px;
-    border-radius: 14px;
+  .note-body {
+    padding: 18px 20px 22px;
   }
 }

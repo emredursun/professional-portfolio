@@ -104,7 +104,7 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
   theme toggle).
 - **Set a post's cover:** `cover: misty-road.webp` in `en.md` names a photo
   (webp, jpg or png) in the post's folder; the index and topic cards show it
-  behind the text (essays) or as a thumbnail (short notes), scaled to 800 px
+  behind the text (essays) or across the top of the card (short notes), scaled to 800 px
   and smaller webp copies. Translations use the English cover unless they set
   their own. Add `coverAlt: <text>` only when the photo says something the
   title does not; otherwise it is decoration with empty alt. Without `cover`

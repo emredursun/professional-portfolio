@@ -229,13 +229,38 @@ describe('index cards with covers', () => {
     expect(plain.querySelector('img')).toBeNull();
   });
 
-  it('gives a short note a small decorative thumbnail', () => {
-    const note = doc().querySelector('.note-item.has-cover')!;
-    const thumb = note.querySelector('img.note-thumb')!;
-    expect(thumb.getAttribute('alt')).toBe('');
-    expect(thumb.getAttribute('loading')).toBe('lazy');
-    expect(thumb.getAttribute('sizes')).toBe('72px');
-    expect(note.querySelector(':scope > a')?.getAttribute('href')).toBe('/blog/noted');
+  it('shows a short note as a card with its cover across the top', () => {
+    const list = doc().querySelector('[aria-labelledby="notes-title"] ul.note-cards')!;
+    const note = list.querySelector(':scope > li.note-card.has-cover')!;
+    const img = note.firstElementChild!;
+    expect(img.matches('img.note-cover')).toBe(true);
+    expect(img.getAttribute('alt')).toBe('Keys');
+    expect(img.getAttribute('loading')).toBe('lazy');
+    expect(img.getAttribute('decoding')).toBe('async');
+    expect(img.getAttribute('sizes')).toContain('560px');
+    expect([img.getAttribute('width'), img.getAttribute('height')]).toEqual(['800', '450']);
+    // Text below the photo, never over it; one link to the post.
+    const body = note.querySelector('.note-body')!;
+    expect(body.querySelector('.status')).not.toBeNull();
+    expect(body.querySelector('h3.note-title a')?.getAttribute('href')).toBe('/blog/noted');
+    expect(note.querySelectorAll('a[href="/blog/noted"]')).toHaveLength(1);
+    expect(body.querySelector('.card-meta time')).not.toBeNull();
+  });
+
+  it('keeps a short note without a cover as a card, without an image', () => {
+    const page = parse(
+      renderIndexPage({
+        posts: [{ ...posts[2], coverImage: undefined }],
+        assets,
+        launched: false,
+      }),
+    );
+    const note = page.querySelector('li.note-card')!;
+    expect(note.classList.contains('has-cover')).toBe(false);
+    expect(note.querySelector('img')).toBeNull();
+    expect(note.querySelector('.note-body h3.note-title a')?.getAttribute('href')).toBe(
+      '/blog/noted',
+    );
   });
 
   it('uses empty alt text when the post gives none', () => {
