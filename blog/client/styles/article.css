@@ -164,19 +164,24 @@
 }
 
 /*
- * Narrow screens: a folded bar (toc.ts closes it) that sticks to the top while
- * reading, showing the section count and, while folded, the section being
- * read. With JavaScript the list drops down over the text, so opening it
- * never moves what is being read. Rows are 44px tall so they are easy to tap.
+ * Narrow screens: with JavaScript (toc.ts sets data-folding), a folded bar
+ * that sticks to the top while reading, showing the section count and, once
+ * the first heading is reached, the section being read. The list drops down
+ * over the text, so opening it never moves what is being read. Without
+ * JavaScript the list stays open and in the flow, and does not stick, so it
+ * never covers the text. Rows are 44px tall so they are easy to tap.
  */
 @media screen and (max-width: 1179.98px) {
   .toc {
-    position: sticky;
-    top: 0;
-    z-index: 5;
     margin: 16px 0 24px;
     padding: 8px 0;
     background: var(--paper);
+  }
+
+  .toc[data-folding] {
+    position: sticky;
+    top: 0;
+    z-index: 5;
   }
 
   .toc-disclosure {
@@ -190,7 +195,7 @@
     padding: 4px 16px 12px;
   }
 
-  .toc-disclosure[data-folding] > .toc-panel {
+  .toc[data-folding] .toc-panel {
     position: absolute;
     top: calc(100% + 8px);
     right: -1px;
@@ -226,6 +231,10 @@
     border-bottom: 2px solid var(--ink-2);
     content: '';
     transform: rotate(45deg);
+  }
+
+  /* toc.ts sets data-animate on the first tap, so the fold on load is still. */
+  .toc-disclosure[data-animate] > .toc-summary::after {
     transition: transform 0.2s;
   }
 
@@ -256,7 +265,6 @@
     white-space: nowrap;
   }
 
-
   .toc a {
     display: flex;
     align-items: center;
@@ -267,7 +275,7 @@
 }
 
 @media screen and (max-width: 1179.98px) and (prefers-reduced-motion: reduce) {
-  .toc-summary::after {
+  .toc-disclosure[data-animate] > .toc-summary::after {
     transition: none;
   }
 }
@@ -293,12 +301,19 @@
   scroll-margin-top: 32px;
 }
 
-/* Narrow screens: clear of the sticky table of contents bar as well. */
+/* Narrow screens: clear of the sticky table of contents bar as well, when
+   there is one (toc.ts); without JavaScript nothing sticks. */
 @media screen and (max-width: 1179.98px) {
-  .prose h2,
-  .prose h3 {
+  .article:has(.toc[data-folding]) .prose h2,
+  .article:has(.toc[data-folding]) .prose h3 {
     scroll-margin-top: 88px;
   }
+}
+
+/* A heading toc.ts focuses after a jump is a landing point, not a control. */
+.prose h2[tabindex='-1']:focus,
+.prose h3[tabindex='-1']:focus {
+  outline: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {

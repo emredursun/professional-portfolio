@@ -12,8 +12,8 @@ describe('currentSection', () => {
     expect(currentSection(headings)).toBe('two');
   });
 
-  it('is the first heading before any has been reached', () => {
-    expect(currentSection(headings.map((h) => ({ ...h, top: h.top + 1000 })))).toBe('one');
+  it('is nothing while the reader is still above the first heading', () => {
+    expect(currentSection(headings.map((h) => ({ ...h, top: h.top + 1000 })))).toBeUndefined();
   });
 
   it('is nothing for a page without headings', () => {
@@ -93,31 +93,99 @@ describe('bindTocDisclosure', () => {
     expect(details().open).toBe(true);
   });
 
-  it('marks the disclosure so the list can drop down over the text', () => {
+  it('marks the nav, so only a page with this script gets the sticky bar', () => {
     document.body.innerHTML = TOC_HTML;
+    expect(document.querySelector('.toc')!.hasAttribute('data-folding')).toBe(false);
     bindTocDisclosure(document, fakeQuery(false));
-    expect(details().hasAttribute('data-folding')).toBe(true);
+    expect(document.querySelector('.toc')!.hasAttribute('data-folding')).toBe(true);
   });
 
-  it('folds the open list on a tap outside it or on Escape, on narrow screens only', () => {
+  it('takes the summary out of the tab order on wide screens, where it does nothing', () => {
+    document.body.innerHTML = TOC_HTML;
+    const wide = fakeQuery(true);
+    bindTocDisclosure(document, wide);
+    const summary = document.querySelector<HTMLElement>('summary')!;
+    expect(summary.tabIndex).toBe(-1);
+    wide.flip(false);
+    expect(summary.tabIndex).toBe(0);
+    wide.flip(true);
+    expect(summary.tabIndex).toBe(-1);
+  });
+
+  it('folds on a tap outside the list, but not on one inside it, on narrow screens only', () => {
     document.body.innerHTML = TOC_HTML;
     const wide = fakeQuery(false);
     bindTocDisclosure(document, wide);
 
     details().open = true;
+    document.querySelector<HTMLElement>('ol')!.click();
+    expect(details().open).toBe(true);
     document.querySelector<HTMLElement>('h2')!.click();
     expect(details().open).toBe(false);
-
-    details().open = true;
-    document
-      .querySelector('a[href="#one"]')!
-      .dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    expect(details().open).toBe(false);
-    expect(document.activeElement?.tagName).toBe('SUMMARY');
 
     wide.flip(true);
     document.querySelector<HTMLElement>('h2')!.click();
     expect(details().open).toBe(true);
+  });
+
+  const escape = (target: EventTarget) =>
+    target.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+
+  it('folds on Escape and gives focus back to the summary when it was in the list', () => {
+    document.body.innerHTML = TOC_HTML;
+    bindTocDisclosure(document, fakeQuery(false));
+    details().open = true;
+    const link = document.querySelector<HTMLElement>('a[href="#one"]')!;
+    link.focus();
+    escape(link);
+    expect(details().open).toBe(false);
+    expect(document.activeElement?.tagName).toBe('SUMMARY');
+  });
+
+  it('folds on Escape when focus is elsewhere, as after a tap in Safari, and leaves focus', () => {
+    document.body.innerHTML = TOC_HTML;
+    bindTocDisclosure(document, fakeQuery(false));
+    details().open = true;
+    escape(document.body);
+    expect(details().open).toBe(false);
+    expect(document.activeElement).toBe(document.body);
+  });
+
+  it('ignores Escape on wide screens and other keys', () => {
+    document.body.innerHTML = TOC_HTML;
+    const wide = fakeQuery(false);
+    bindTocDisclosure(document, wide);
+    details().open = true;
+    document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    expect(details().open).toBe(true);
+    wide.flip(true);
+    escape(document.body);
+    expect(details().open).toBe(true);
+  });
+
+  it('moves focus to the chosen section on a narrow screen, without scrolling itself', () => {
+    document.body.innerHTML = TOC_HTML;
+    bindTocDisclosure(document, fakeQuery(false));
+    details().open = true;
+    const heading = document.getElementById('two')!;
+    let options: FocusOptions | undefined;
+    const focus = heading.focus.bind(heading);
+    heading.focus = (opts?: FocusOptions) => {
+      options = opts;
+      focus(opts);
+    };
+    document.querySelector<HTMLAnchorElement>('a[href="#two"]')!.click();
+    expect(document.activeElement).toBe(heading);
+    expect(heading.getAttribute('tabindex')).toBe('-1');
+    expect(options).toEqual({ preventScroll: true });
+  });
+
+  it('lets the chevron turn only after the reader first taps, not on the fold at load', () => {
+    document.body.innerHTML = TOC_HTML;
+    bindTocDisclosure(document, fakeQuery(false));
+    expect(details().hasAttribute('data-animate')).toBe(false);
+    document.querySelector<HTMLElement>('summary')!.click();
+    expect(details().hasAttribute('data-animate')).toBe(true);
   });
 
   it('leaves a page without a disclosure alone', () => {
@@ -131,5 +199,15 @@ describe('bindTableOfContents: current section in the summary', () => {
     document.body.innerHTML = TOC_HTML;
     bindTableOfContents(document, window);
     expect(document.querySelector('.toc-current')?.textContent).toBe('Second part');
+  });
+
+  it('names no section and marks no link above the first heading', () => {
+    document.body.innerHTML = TOC_HTML;
+    for (const heading of document.querySelectorAll('h2')) {
+      heading.getBoundingClientRect = () => ({ top: 900 }) as DOMRect;
+    }
+    bindTableOfContents(document, window);
+    expect(document.querySelector('.toc-current')?.textContent).toBe('');
+    expect(document.querySelector('.toc a[aria-current]')).toBeNull();
   });
 });

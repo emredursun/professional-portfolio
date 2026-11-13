@@ -64,9 +64,9 @@ ${entries.length > 0 ? markup`<ol class="corrections-log">${entries}</ol>` : mar
 export function tableOfContents(post) {
   if (post.toc.length === 0) return '';
   const s = strings(post.lang);
-  // Open in the HTML, so the list is there without JavaScript; toc.ts folds it
-  // on narrow screens, where the bar sticks to the top and .toc-panel drops
-  // down over the text. .toc-current is filled in by toc.ts with the section
+  // Open in the HTML and in the flow, so the list is there without JavaScript;
+  // toc.ts marks the nav data-folding and folds it on narrow screens, where the
+  // bar then sticks to the top and .toc-panel drops down over the text. .toc-current is filled in by toc.ts with the section
   // being read, and only shows while the list is folded.
   return markup`<nav class="toc" aria-label="${s.toc}">
 <details class="toc-disclosure" open>

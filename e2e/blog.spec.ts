@@ -131,6 +131,8 @@ test.describe('table of contents on a phone', () => {
     await expect(toc.locator('details')).not.toHaveAttribute('open');
     await expect(links.first()).toBeHidden();
     expect((await summary.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    // Still above the first heading: the bar names no section yet.
+    await expect(toc.locator('.toc-current')).toBeEmpty();
 
     // Opening drops the list down over the text: the text does not move.
     const text = page.locator('.prose p').first();
@@ -149,6 +151,8 @@ test.describe('table of contents on a phone', () => {
     await expect(links.first()).toBeHidden();
     const heading = page.locator(`[id="${target.slice(1)}"]`);
     await expect(heading).toBeInViewport();
+    // Focus follows the reader to the section instead of falling to the page.
+    await expect(heading).toBeFocused();
     // Clear of the sticky bar, not hidden under it.
     const bar = (await toc.boundingBox())!;
     await expect
@@ -178,6 +182,36 @@ test.describe('blog without JavaScript', () => {
     await page.goto(TOC_POST!);
     const toc = page.getByRole('navigation', { name: 'On this page' });
     await expect(toc.getByRole('link').first()).toBeVisible();
+  });
+
+  test('on a phone the open list stays in the flow and never covers a heading', async ({
+    page,
+  }) => {
+    test.skip(!TOC_POST, 'no post with headings yet');
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto(TOC_POST!);
+    const toc = page.getByRole('navigation', { name: 'On this page' });
+    expect(await toc.evaluate((el) => getComputedStyle(el).position)).toBe('static');
+
+    // Mid-article, the list has scrolled away with the text.
+    await page.locator('.ai-note').scrollIntoViewIfNeeded();
+    await expect(toc).not.toBeInViewport();
+
+    // A jump lands the heading in view, and nothing is drawn over it.
+    await page.goto(TOC_POST!);
+    const last = toc.getByRole('link').last();
+    const target = (await last.getAttribute('href'))!;
+    await last.click();
+    await expect(page).toHaveURL(new RegExp(`${target}$`));
+    const heading = page.locator(`[id="${target.slice(1)}"]`);
+    await expect(heading).toBeInViewport();
+    const onTop = () =>
+      heading.evaluate((el) => {
+        const box = el.getBoundingClientRect();
+        const hit = document.elementFromPoint(box.left + 4, box.top + box.height / 2);
+        return hit !== null && el.contains(hit);
+      });
+    await expect.poll(onTop).toBe(true);
   });
 });
 
