@@ -10,7 +10,7 @@ evidence:
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 november 2026'
     - 'De sessie Human & Tech: Agentic Development: Teams Reimagined op hetzelfde event'
-    - 'Openbare LinkedIn-post van de host van de sessie, de dag na het event'
+    - 'Openbare LinkedIn-post van de host van de sessie'
     - 'Persbericht van Gartner over agentic AI, 25 juni 2025'
     - 'World Economic Forum, Future of Jobs Report 2025'
     - 'Stack Overflow Developer Survey 2026'
