@@ -839,13 +839,24 @@
 
   <url>
     <loc>https://emredursun.nl/blog</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog" />
         <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog" />
         <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog" />
         <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/blog/describe-the-outcome-then-check-it</loc>
+    <lastmod>2026-11-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/describe-the-outcome-then-check-it" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/describe-the-outcome-then-check-it" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/describe-the-outcome-then-check-it" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/describe-the-outcome-then-check-it" />
   </url>
 
   <url>
@@ -883,7 +894,7 @@
 
   <url>
     <loc>https://emredursun.nl/blog/topic/ai</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/ai" />
@@ -905,13 +916,24 @@
 
   <url>
     <loc>https://emredursun.nl/tr/blog</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog" />
         <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog" />
         <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog" />
         <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/tr/blog/describe-the-outcome-then-check-it</loc>
+    <lastmod>2026-11-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/describe-the-outcome-then-check-it" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/describe-the-outcome-then-check-it" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/describe-the-outcome-then-check-it" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/describe-the-outcome-then-check-it" />
   </url>
 
   <url>
@@ -949,7 +971,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/blog/topic/ai</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/ai" />
@@ -971,13 +993,24 @@
 
   <url>
     <loc>https://emredursun.nl/nl/blog</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog" />
         <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog" />
         <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog" />
         <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/nl/blog/describe-the-outcome-then-check-it</loc>
+    <lastmod>2026-11-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/describe-the-outcome-then-check-it" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/describe-the-outcome-then-check-it" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/describe-the-outcome-then-check-it" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/describe-the-outcome-then-check-it" />
   </url>
 
   <url>
@@ -1015,7 +1048,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/blog/topic/ai</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/ai" />
