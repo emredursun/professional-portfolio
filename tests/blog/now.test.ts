@@ -126,9 +126,15 @@ describe('the Now page', () => {
   it('puts the newest entry on the index, linking to the page', async () => {
     writeNow('en');
     const { dist } = await build();
-    const line = doc(dist, 'blog.html').querySelector('.now-line')!;
-    expect(line.textContent).toContain('Writing the first Field Notes posts.');
-    expect(line.querySelector('a')!.getAttribute('href')).toBe('/blog/now');
+    const page = doc(dist, 'blog.html');
+    const chip = page.querySelector('.index-hero .now-chip')!;
+    expect(chip.textContent).toContain('Writing the first Field Notes posts.');
+    expect(chip.querySelector('a')!.getAttribute('href')).toBe('/blog/now');
+    expect(chip.querySelector('time')!.getAttribute('datetime')).toBe('2026-10-28');
+    expect(chip.querySelector('.now-dot')!.getAttribute('aria-hidden')).toBe('true');
+    // On a phone it follows the Latest card, before the actions.
+    expect(chip.previousElementSibling?.classList.contains('latest-card')).toBe(true);
+    expect(chip.nextElementSibling?.classList.contains('index-actions')).toBe(true);
   });
 
   it('writes no Now page in a language that has no blog', async () => {
@@ -141,6 +147,6 @@ describe('the Now page', () => {
   it('writes no page and no index line without a log', async () => {
     const { dist, written } = await build();
     expect(written).not.toContain('blog/now.html');
-    expect(doc(dist, 'blog.html').querySelector('.now-line')).toBeNull();
+    expect(doc(dist, 'blog.html').querySelector('.now-chip')).toBeNull();
   });
 });

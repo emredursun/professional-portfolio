@@ -15,6 +15,7 @@ import './styles/tokens.css';
 import './styles/base.css';
 import './styles/article.css';
 import './styles/index.css';
+import './styles/hero.css';
 import './styles/code.css';
 import './styles/extras.css';
 import { markStaleEvidence } from './stale';
