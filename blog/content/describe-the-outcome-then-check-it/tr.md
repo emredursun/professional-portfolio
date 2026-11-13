@@ -36,8 +36,6 @@ translation:
 
 Günüm daha erken başladı. Öğleden sonra başlayan ana programdan önce, saat 10:30’dan itibaren bir workshop’un facilitator’larından biriydim ve katılımcılara workshop boyunca rehberlik ettim.
 
-![Sahne ekranındaki isim duvarının yakın çekimi; Emre adı daire içine alınmış.](collective26-name-wall-closeup-tight.webp)
-
 ## 2030’dan geriye doğru düşünmek
 
 Son oturum, Human & Tech: Agentic Development: Teams Reimagined, 2030’da başladı ve oradan bugüne doğru geri geldi. Yaklaşık 200 Hollandalı meslektaşımız katıldı ve oturumun ana sorusu bizim, rollerimizin ve ekiplerimizin nasıl değişeceğiydi. Oturum bunu açıkça sordu: Hangi yeni becerilere ihtiyacın olacak, ekibin nasıl görünecek ve hâlâ bir işin olacak mı? Verdiği cevap, en büyük değişimin teknolojiden çok bizde, kendimizi yeniden keşfeden insanlarda olacağıydı.

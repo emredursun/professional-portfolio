@@ -36,8 +36,6 @@ Als steeds meer van ons werk begint met een beschreven uitkomst die een agent om
 
 Mijn dag begon eerder. Vanaf 10:30, voordat het hoofdprogramma ’s middags begon, was ik een van de facilitators van een workshop en begeleidde ik de deelnemers erdoorheen.
 
-![Close-up van de namenwand op het podiumscherm, met de naam Emre omcirkeld.](collective26-name-wall-closeup-tight.webp)
-
 ## Terugredeneren vanuit 2030
 
 De laatste sessie, Human & Tech: Agentic Development: Teams Reimagined, begon in 2030 en redeneerde terug naar vandaag. Zo’n 200 Nederlandse collega’s deden mee, en de vraag die erdoorheen liep was hoe wij, onze rollen en onze teams gaan veranderen. De sessie stelde het helder: welke nieuwe vaardigheden heb je nodig, hoe ziet je team eruit, en heb je straks nog een baan? Het antwoord was dat de grootste verandering meer bij ons ligt, als mensen die zichzelf opnieuw uitvinden, dan bij de technologie.

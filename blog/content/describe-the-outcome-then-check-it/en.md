@@ -33,8 +33,6 @@ If more of our work starts as a described outcome that an agent turns into actio
 
 My day started earlier. From 10:30, before the main programme began in the afternoon, I was one of the facilitators of a workshop, guiding participants through it.
 
-![Close-up of the name wall on the stage screen, with the name Emre circled.](collective26-name-wall-closeup-tight.webp)
-
 ## Working back from 2030
 
 The last session, Human & Tech: Agentic Development: Teams Reimagined, began in 2030 and worked its way back to the present. Some 200 Dutch colleagues took part, and the question running through it was how we, our roles and our teams will change. The session put it in plain terms: which new skills will you need, what will your team look like, and will you still have a job? Its answer was that the biggest change will be in us, as people reinventing ourselves, more than in the technology.
