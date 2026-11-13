@@ -5,6 +5,7 @@ publishedAt: 2026-11-13
 topic: ai
 kind: note
 status: hypothesis
+cover: cover-misty-road.webp
 evidence:
   confidence: 'Medium: my own view about where our work is heading, after one company event. Not a prediction.'
   basedOn:
