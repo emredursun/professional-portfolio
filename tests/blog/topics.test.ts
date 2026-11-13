@@ -78,11 +78,13 @@ describe('topic pages', () => {
     expect(tr.querySelector('a[href="/blog/agents"]')).toBeNull();
   });
 
-  it('is reachable from every card through its topic link', async () => {
+  it('is reachable from the index through its topic chip', async () => {
+    // The only post is the Latest card (no topic link: one link per card),
+    // so the chips are how the index reaches its topic pages.
     onTopic('green', 'testing');
     onTopic('green', 'testing', 'nl');
     const { dist } = await build();
-    expect(doc(dist, 'nl', 'blog.html').querySelector('.topic-link')!.getAttribute('href')).toBe(
+    expect(doc(dist, 'nl', 'blog.html').querySelector('.topic-chip')!.getAttribute('href')).toBe(
       '/nl/blog/topic/testing',
     );
   });

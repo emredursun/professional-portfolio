@@ -50,6 +50,12 @@
 
   --measure: 680px;
   --gutter: clamp(18px, 4vw, 40px);
+  --content-max: 1120px;
+  --radius-card: 28px;
+  --radius-box: 16px;
+  --radius-pill: 999px;
+  --text-xs: 13px;
+  --text-sm: 14px;
 }
 
 @media (prefers-color-scheme: dark) {

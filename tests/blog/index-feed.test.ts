@@ -71,10 +71,8 @@ describe('renderIndexPage', () => {
       '/blog/newer-essay',
       '/blog/older-essay',
     ]);
-    const notes = [
-      ...doc.querySelectorAll('[aria-labelledby="notes-title"] .note-card .note-title a'),
-    ];
-    expect(notes.map((a) => a.getAttribute('href'))).toEqual(['/blog/a-note']);
+    // The newest post (a note) is the Latest card, so it is not listed again.
+    expect(doc.querySelector('[aria-labelledby="notes-title"]')).toBeNull();
   });
 
   it('escapes titles and descriptions', () => {
@@ -179,7 +177,17 @@ describe('reserved ids', () => {
       renderArticlePage({ post: posts[0], related: posts.slice(1), assets, launched: false }),
     );
     const used = new Set(
-      [...article.querySelectorAll('[id]'), ...index().querySelectorAll('[id]')].map((el) => el.id),
+      // A newer essay is featured, so the index also lists both sections.
+      [
+        ...article.querySelectorAll('[id]'),
+        ...parse(
+          renderIndexPage({
+            posts: [...posts, { ...posts[0], slug: 'newest', publishedAt: '2026-11-01' }],
+            assets,
+            launched: false,
+          }),
+        ).querySelectorAll('[id]'),
+      ].map((el) => el.id),
     );
     expect([...used].sort()).toEqual([...RESERVED_IDS].sort());
   });
@@ -259,7 +267,16 @@ describe('renderFeed: entries', () => {
 
 describe('index cards: stale evidence', () => {
   it('carries the re-check date and a hidden note, like the article', () => {
-    const doc = index();
+    // A newer essay is the Latest card, so the note stays in its list.
+    const newest = {
+      ...base,
+      slug: 'newest',
+      kind: 'essay',
+      title: 'Newest',
+      description: 'N.',
+      publishedAt: '2026-11-01',
+    };
+    const doc = parse(renderIndexPage({ posts: [...posts, newest], assets, launched: false }));
     const card = doc.querySelector('.cards .card')!;
     expect(card.getAttribute('data-recheck-by')).toBe('2027-10-01');
     expect(card.querySelector('.stale-note')?.hasAttribute('hidden')).toBe(true);
@@ -269,20 +286,24 @@ describe('index cards: stale evidence', () => {
 });
 
 describe('calls to action and the author', () => {
-  it('points "Read the latest" at the newest post', () => {
-    const link = [...index().querySelectorAll('a')].find((a) =>
-      a.textContent?.startsWith('Read the latest'),
-    );
-    expect(link?.getAttribute('href')).toBe('/blog/a-note');
-    // Screen readers hear which post: the title follows, visually hidden.
-    expect(link?.textContent).toBe('Read the latest: A note');
-    expect(link?.querySelector('.visually-hidden')?.textContent).toBe(': A note');
+  it('leads the primary action to the list of posts, not to the featured one again', () => {
+    const doc = index();
+    const link = doc.querySelector('.index-actions a.button-solid')!;
+    expect(link.textContent).toBe('Browse all posts');
+    expect(link.getAttribute('href')).toBe('#all-posts');
+    expect(doc.querySelector('#all-posts')?.querySelector('.index-section')).not.toBeNull();
+  });
+
+  it('offers no browse action when the featured post is the only one', () => {
+    const doc = parse(renderIndexPage({ posts: [posts[0]], assets, launched: false }));
+    expect(doc.querySelector('.index-actions a.button-solid')).toBeNull();
+    expect(doc.querySelector('#all-posts')).toBeNull();
   });
 
   it('makes the feed a quiet text link beside the solid primary action', () => {
     const doc = parse(renderIndexPage({ posts, assets, launched: true }));
     const actions = doc.querySelector('.index-actions')!;
-    expect(actions.querySelector('a.button-solid')?.getAttribute('href')).toBe('/blog/a-note');
+    expect(actions.querySelector('a.button-solid')?.getAttribute('href')).toBe('#all-posts');
     const feed = actions.querySelector('a.text-link')!;
     expect(feed.getAttribute('href')).toBe('/blog/feed.xml');
     expect(feed.querySelector('[aria-hidden="true"]')?.textContent).toBe('→');
@@ -383,13 +404,14 @@ describe('index hero', () => {
     expect([img.getAttribute('width'), img.getAttribute('height')]).toEqual(['800', '450']);
   });
 
-  it('puts the blocks in the phone reading order: title, intro, Latest, actions', () => {
+  it('puts the left column before the Latest card, so keyboard order follows the desktop layout', () => {
+    // The stylesheet moves the card up on phones (hero.css, order).
     const hero = index().querySelector('.index-hero')!;
     expect([...hero.children].map((el) => el.className.split(' ')[0])).toEqual([
       'index-lede',
       'index-intro',
-      'latest-card',
       'index-actions',
+      'latest-card',
     ]);
   });
 });
@@ -416,5 +438,46 @@ describe('code review fixes', () => {
     expect(() => renderIndexPage({ posts: [], assets, launched: false })).toThrow(
       /at least one post/,
     );
+  });
+});
+
+describe('index: the featured post is not listed twice', () => {
+  const essay = {
+    ...base,
+    slug: 'the-essay',
+    kind: 'essay',
+    title: 'The essay',
+    description: 'E.',
+    publishedAt: '2026-10-01',
+  };
+  const note = {
+    ...base,
+    slug: 'the-note',
+    kind: 'note',
+    title: 'The note',
+    description: 'N.',
+    publishedAt: '2026-10-02',
+  };
+  const listed = (doc: Document) =>
+    [...doc.querySelectorAll('#all-posts h3 a')].map((a) => a.getAttribute('href'));
+
+  it('leaves the newest note out of the notes, and drops the empty section', () => {
+    const doc = parse(renderIndexPage({ posts: [essay, note], assets, launched: false }));
+    expect(doc.querySelector('.latest-card a')?.getAttribute('href')).toBe('/blog/the-note');
+    expect(listed(doc)).toEqual(['/blog/the-essay']);
+    expect(doc.querySelector('#notes-title')).toBeNull();
+  });
+
+  it('leaves the newest essay out of the essays when it is newest', () => {
+    const newer = { ...essay, publishedAt: '2026-10-03' };
+    const doc = parse(renderIndexPage({ posts: [newer, note], assets, launched: false }));
+    expect(listed(doc)).toEqual(['/blog/the-note']);
+    expect(doc.querySelector('#essays-title')).toBeNull();
+  });
+
+  it('lists nothing below the hero with a single post, but still counts it on its topic', () => {
+    const doc = parse(renderIndexPage({ posts: [essay], assets, launched: false }));
+    expect(doc.querySelector('.index-section')).toBeNull();
+    expect(doc.querySelector('.topic-count')?.textContent).toBe('1');
   });
 });

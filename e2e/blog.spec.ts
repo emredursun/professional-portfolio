@@ -272,7 +272,7 @@ test.describe('with more than one post', () => {
     const more = page.getByRole('region', { name: 'Keep reading' });
     await expect(more.getByRole('link')).not.toHaveCount(0);
     await page.goto('/blog');
-    await page.getByRole('link', { name: 'Read the latest' }).click();
+    await page.locator('.latest-card .card-title a').click();
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page).toHaveURL(/\/blog\/[a-z0-9-]+$/);
   });

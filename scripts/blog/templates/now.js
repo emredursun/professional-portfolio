@@ -20,7 +20,7 @@ export function nowChip(entries, lang) {
   if (!entries) return '';
   const s = strings(lang);
   const [latest] = entries;
-  return markup`<p class="now-chip"><span class="now-dot" aria-hidden="true"></span><span class="now-label">${s.nowTitle}</span> <span class="now-text">${latest.text}</span> <time datetime="${latest.date}">${formatDate(latest.date, lang)}</time> <a href="${nowPath(lang)}">${s.nowMore}</a></p>
+  return markup`<p class="now-chip"><span class="now-head"><span class="now-dot" aria-hidden="true"></span><span class="now-label">${s.nowTitle}</span> <time datetime="${latest.date}">${formatDate(latest.date, lang)}</time></span> <span class="now-text">${latest.text}</span> <a href="${nowPath(lang)}">${s.nowMore}</a></p>
 `;
 }
 
@@ -32,12 +32,14 @@ export function nowChip(entries, lang) {
 export function renderNowPage({ entries, assets, launched, lang, languages }) {
   const s = strings(lang);
   const url = `${SITE_URL}${nowPath(lang)}`;
-  const content = markup`<div class="index">
-<header class="index-header">
+  const content = markup`<div class="index-top">
+<header class="index-header page-hero">
 <p class="index-eyebrow"><a href="${blogPath(lang)}">${s.blogName}</a></p>
 <h1 class="index-lede">${s.nowTitle}</h1>
 <p class="index-intro">${s.nowIntro}</p>
 </header>
+</div>
+<div class="index index-posts">
 <ol class="now-list">${entries.map(
     (entry) =>
       markup`<li><time datetime="${entry.date}">${formatDate(entry.date, lang)}</time><p>${entry.text}</p></li>`,

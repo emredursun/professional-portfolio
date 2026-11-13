@@ -19,6 +19,7 @@ export const RESERVED_IDS = Object.freeze([
   'essays-title',
   'notes-title',
   'latest-title',
+  'all-posts',
   'closing-title',
 ]);
 

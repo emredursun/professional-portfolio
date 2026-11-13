@@ -132,9 +132,14 @@ describe('the Now page', () => {
     expect(chip.querySelector('a')!.getAttribute('href')).toBe('/blog/now');
     expect(chip.querySelector('time')!.getAttribute('datetime')).toBe('2026-10-28');
     expect(chip.querySelector('.now-dot')!.getAttribute('aria-hidden')).toBe('true');
-    // On a phone it follows the Latest card, before the actions.
-    expect(chip.previousElementSibling?.classList.contains('latest-card')).toBe(true);
-    expect(chip.nextElementSibling?.classList.contains('index-actions')).toBe(true);
+    // In the left column, after the intro and before the actions; the date
+    // leads, beside the label, not in the middle of the text.
+    expect(chip.previousElementSibling?.classList.contains('index-intro')).toBe(true);
+    expect(
+      chip.compareDocumentPosition(page.querySelector('.index-hero .latest-card')!) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(chip.querySelector('.now-head time')).not.toBeNull();
   });
 
   it('writes no Now page in a language that has no blog', async () => {
