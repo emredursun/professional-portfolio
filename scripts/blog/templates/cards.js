@@ -46,24 +46,67 @@ function foreign(post, pageLang) {
   };
 }
 
+// The rendered width of a cover: the full card on a phone, a grid column
+// (at most about 380 px) from there up. A note card is one column below
+// 720 px (the grid's breakpoint in index.css), one of two from there: half
+// the width less a gutter (up to 40 px) and half the 24 px gap, until the
+// 1120 px content width caps it at about 510 px.
+const CARD_SIZES = '(max-width: 720px) calc(100vw - 36px), 380px';
+const NOTE_SIZES =
+  '(max-width: 719px) calc(100vw - 36px), (max-width: 1179px) calc(50vw - 52px), 510px';
+
+/**
+ * A post's cover (build-blog.js), lazy because the cards sit below the
+ * introduction, and sized so nothing shifts as it loads.
+ */
+function coverImg(cover, { className, sizes, alt }) {
+  return markup`<img class="${className}" src="${cover.src}" srcset="${cover.srcset}" sizes="${sizes}" width="${cover.width}" height="${cover.height}" alt="${alt}" loading="lazy" decoding="async">`;
+}
+
 function essayCard(post, page) {
   const { lang, hreflang, chip } = foreign(post, page.lang);
-  return markup`<li class="card"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-<p class="card-status">${statusChip(post.status, post.lang)}${chip}</p>
-<h3 class="card-title"><a href="${postPath(post)}"${hreflang}>${post.title}</a></h3>
+  const cover = post.coverImage;
+  const status = markup`<p class="card-status">${statusChip(post.status, post.lang)}${chip}</p>`;
+  const text = markup`<h3 class="card-title"><a href="${postPath(post)}"${hreflang}>${post.title}</a></h3>
 <p class="card-dek">${post.description}</p>
 ${postMeta(post, page)}
-${staleNote(post)}
+${staleNote(post)}`;
+  if (!cover) {
+    return markup`<li class="card"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
+${status}
+${text}
+</li>`;
+  }
+  // The photo fills the card; the text sits on its own dark scrim, so it
+  // reads the same whatever the photo and in either theme.
+  return markup`<li class="card has-cover"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
+${coverImg(cover, { className: 'card-cover', sizes: CARD_SIZES, alt: cover.alt })}
+${status}
+<div class="card-body">
+${text}
+</div>
 </li>`;
 }
 
-function noteItem(post, page) {
+/**
+ * A short note as a card: its cover across the top (text never on the
+ * photo, so it stays lighter than an essay card), then the status, the
+ * title and the meta line. Without a cover it is the same card, text only.
+ */
+function noteCard(post, page) {
   const { lang, hreflang, chip } = foreign(post, page.lang);
-  return markup`<li class="note-item"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
-${statusChip(post.status, post.lang)}
-<a href="${postPath(post)}"${hreflang}>${post.title}</a>
-${postMeta(post, page, chip)}
+  const cover = post.coverImage;
+  const image = cover
+    ? markup`${coverImg(cover, { className: 'note-cover', sizes: NOTE_SIZES, alt: cover.alt })}
+`
+    : '';
+  return markup`<li class="note-card${cover ? ' has-cover' : ''}"${lang} data-recheck-by="${nextRecheck(post.evidence.recheckedAt)}">
+${image}<div class="note-body">
+<p class="card-status">${statusChip(post.status, post.lang)}${chip}</p>
+<h3 class="note-title"><a href="${postPath(post)}"${hreflang}>${post.title}</a></h3>
+${postMeta(post, page)}
 ${staleNote(post)}
+</div>
 </li>`;
 }
 
@@ -90,5 +133,5 @@ export function postSections({ posts, fallback = [], lang, topics = new Set(), c
   const essays = listed.filter((post) => post.kind === 'essay');
   const notes = listed.filter((post) => post.kind === 'note');
   return markup`${section({ id: 'essays-title', title: s.essays, intro: s.essaysIntro, items: essays.map((post) => essayCard(post, page)), listClass: 'cards' })}
-${section({ id: 'notes-title', title: s.notes, intro: s.notesIntro, items: notes.map((post) => noteItem(post, page)), listClass: 'notes' })}`;
+${section({ id: 'notes-title', title: s.notes, intro: s.notesIntro, items: notes.map((post) => noteCard(post, page)), listClass: 'note-cards' })}`;
 }

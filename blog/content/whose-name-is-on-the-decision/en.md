@@ -5,6 +5,7 @@ publishedAt: 2026-10-29
 topic: ai
 kind: note
 status: hypothesis
+cover: keys.webp
 evidence:
   confidence: 'Medium: one workshop and conversations with colleagues who use AI agents every day.'
   basedOn:

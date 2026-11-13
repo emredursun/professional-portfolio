@@ -77,6 +77,69 @@ async function emitImage(distDir, contentDir, slug, name) {
 }
 
 /**
+ * Widths of the copies of a cover: small cards, a card on a phone or in the
+ * desktop grid, and the index's Latest card on a high-density screen (about
+ * 540 px wide at 2x). Never wider than the photo itself, so a sharp Latest
+ * card needs a source of 1200 px or more.
+ */
+export const COVER_WIDTHS = Object.freeze([240, 480, 800, 1200, 1600]);
+const COVER_QUALITY = 72;
+
+async function emitCover(distDir, contentDir, slug, name) {
+  const file = `blog/content/${slug}/${name}`;
+  const source = path.join(contentDir, slug, name);
+  if (!fs.lstatSync(source).isFile()) throw new Error(`${file}: not a regular file`);
+  const bytes = fs.readFileSync(source);
+  let size;
+  try {
+    size = await sharp(bytes).metadata();
+  } catch (error) {
+    throw new Error(`${file}: not a readable image (${error.message})`);
+  }
+  const largest = Math.min(size.width, COVER_WIDTHS.at(-1));
+  const widths = [...COVER_WIDTHS.filter((width) => width < largest), largest];
+  const base = name.slice(0, name.lastIndexOf('.'));
+  const variants = await Promise.all(
+    widths.map(async (width) => {
+      const { data, info } = await sharp(bytes)
+        .resize({ width })
+        .webp({ quality: COVER_QUALITY })
+        .toBuffer({ resolveWithObject: true });
+      return {
+        src: emitAsset(distDir, `cover-${slug}-${base}-${width}`, 'webp', data),
+        width: info.width,
+        height: info.height,
+      };
+    }),
+  );
+  const biggest = variants.at(-1);
+  return {
+    src: biggest.src,
+    srcset: variants.map((variant) => `${variant.src} ${variant.width}w`).join(', '),
+    width: biggest.width,
+    height: biggest.height,
+  };
+}
+
+/**
+ * Card-size webp copies of each post's cover (content.js picks it).
+ * @param {{ distDir: string, contentDir: string, covers: Array<[string, string]> }} options
+ *   `covers`: [slug, file name] pairs; repeats are written once.
+ * @returns {Promise<Map<string, { src: string, srcset: string, width: number, height: number }>>}
+ *   Keyed by "<slug>/<name>".
+ */
+export async function emitCoverImages({ distDir, contentDir, covers }) {
+  const unique = [...new Set(covers.map(([slug, name]) => `${slug}/${name}`))].sort();
+  const emitted = await Promise.all(
+    unique.map(async (key) => {
+      const [slug, name] = key.split('/');
+      return [key, await emitCover(distDir, contentDir, slug, name)];
+    }),
+  );
+  return new Map(emitted);
+}
+
+/**
  * @param {{ distDir: string, contentDir: string, slugs: string[] }} options
  * @returns {Promise<Map<string, { src: string, width: number, height: number }>>}
  *   Keyed by "<slug>/<name>".

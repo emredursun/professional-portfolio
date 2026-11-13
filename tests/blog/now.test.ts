@@ -126,9 +126,20 @@ describe('the Now page', () => {
   it('puts the newest entry on the index, linking to the page', async () => {
     writeNow('en');
     const { dist } = await build();
-    const line = doc(dist, 'blog.html').querySelector('.now-line')!;
-    expect(line.textContent).toContain('Writing the first Field Notes posts.');
-    expect(line.querySelector('a')!.getAttribute('href')).toBe('/blog/now');
+    const page = doc(dist, 'blog.html');
+    const chip = page.querySelector('.index-hero .now-chip')!;
+    expect(chip.textContent).toContain('Writing the first Field Notes posts.');
+    expect(chip.querySelector('a')!.getAttribute('href')).toBe('/blog/now');
+    expect(chip.querySelector('time')!.getAttribute('datetime')).toBe('2026-10-28');
+    expect(chip.querySelector('.now-dot')!.getAttribute('aria-hidden')).toBe('true');
+    // In the left column, after the intro and before the actions; the date
+    // leads, beside the label, not in the middle of the text.
+    expect(chip.previousElementSibling?.classList.contains('index-intro')).toBe(true);
+    expect(
+      chip.compareDocumentPosition(page.querySelector('.index-hero .latest-card')!) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(chip.querySelector('.now-head time')).not.toBeNull();
   });
 
   it('writes no Now page in a language that has no blog', async () => {
@@ -141,6 +152,6 @@ describe('the Now page', () => {
   it('writes no page and no index line without a log', async () => {
     const { dist, written } = await build();
     expect(written).not.toContain('blog/now.html');
-    expect(doc(dist, 'blog.html').querySelector('.now-line')).toBeNull();
+    expect(doc(dist, 'blog.html').querySelector('.now-chip')).toBeNull();
   });
 });

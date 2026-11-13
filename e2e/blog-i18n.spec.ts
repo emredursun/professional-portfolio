@@ -76,7 +76,7 @@ for (const lang of translated) {
               // so on purpose: a language menu link or an English-only card.
               const owner = el.closest('[lang]');
               if (owner?.getAttribute('lang') === document.documentElement.lang) return false;
-              return !owner?.matches('.lang-nav a, li.card[lang], li.note-item[lang]');
+              return !owner?.matches('.lang-nav a, li.card[lang], li.note-card[lang]');
             })
             .map((el) => `${el.className}: ${el.closest('[lang]')?.getAttribute('lang')}`),
         );
@@ -192,7 +192,7 @@ test.describe('the Now page', () => {
     for (const lang of withNow) {
       const s = strings(lang);
       await page.goto(blogPath(lang));
-      await page.locator('.now-line').getByRole('link', { name: s.nowMore }).click();
+      await page.locator('.now-chip').getByRole('link', { name: s.nowMore }).click();
       await expect(page).toHaveURL(new RegExp(`${blogPath(lang)}/now$`));
       await expect(page.locator('html')).toHaveAttribute('lang', lang);
       await expect(page.locator('h1')).toHaveText(s.nowTitle);
@@ -340,4 +340,47 @@ test.describe('the portfolio links to the blog', () => {
     await page.getByRole('option', { name: new RegExp(command) }).click();
     await expect(page).toHaveURL(/\/nl\/blog$/);
   });
+});
+
+test.describe('index hero layout', () => {
+  for (const lang of languages) {
+    test(`balances its two columns at 1280 px and stacks on phones (${lang})`, async ({
+      page,
+    }, testInfo) => {
+      const mobile = testInfo.project.name === 'mobile';
+      if (!mobile) await page.setViewportSize({ width: 1280, height: 900 });
+      await page.goto(blogPath(lang));
+      const box = async (selector: string) => (await page.locator(selector).boundingBox())!;
+      const lede = await box('.index-hero .index-lede');
+      const intro = await box('.index-hero .index-intro');
+      const card = await box('.latest-card');
+      const actions = await box('.index-actions');
+      if (mobile) {
+        // Title, intro, Latest, then the actions.
+        expect(card.y).toBeGreaterThan(intro.y + intro.height - 1);
+        expect(actions.y).toBeGreaterThan(card.y + card.height - 1);
+        return;
+      }
+      // Side by side, top-aligned, the card at least as tall as the text.
+      expect(card.x).toBeGreaterThan(lede.x + lede.width - 1);
+      expect(Math.abs(card.y - lede.y)).toBeLessThanOrEqual(4);
+      expect(card.y + card.height).toBeGreaterThanOrEqual(actions.y + actions.height - 1);
+      // The headline keeps to three lines in every language.
+      const lineHeight = await page
+        .locator('.index-hero .index-lede')
+        .evaluate((el) => parseFloat(getComputedStyle(el).lineHeight));
+      expect(Math.round(lede.height / lineHeight)).toBeLessThanOrEqual(3);
+      // The feed link stays beside the primary action.
+      const links = page.locator('.index-actions a');
+      if ((await links.count()) === 2) {
+        const [first, second] = [
+          await links.nth(0).boundingBox(),
+          await links.nth(1).boundingBox(),
+        ];
+        expect(
+          Math.abs(first!.y + first!.height / 2 - (second!.y + second!.height / 2)),
+        ).toBeLessThan(4);
+      }
+    });
+  }
 });

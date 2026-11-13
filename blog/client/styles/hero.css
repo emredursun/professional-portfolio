@@ -1,0 +1,385 @@
+/*
+ * The top of the blog's index (scripts/blog/templates/hero.js): headline,
+ * introduction, the Now chip, the actions, the Latest card and the topic
+ * chips; and the same header style on the topic and Now pages (.page-hero).
+ *
+ * The markup follows the desktop layout: the left column, then the card.
+ * From 960 px the card is a column of its own; below that `order` shows it
+ * right after the intro. hero.js (LATEST_SIZES) assumes the 960 px
+ * breakpoint and the equal column split; change them together.
+ */
+
+/* A soft wash of the palette's own colours behind the header, full width. */
+.index-top {
+  padding: 56px var(--gutter) 8px;
+  background:
+    radial-gradient(52rem 30rem at 96% -12%, var(--sage), transparent 72%),
+    radial-gradient(36rem 22rem at -8% 0%, var(--lavender), transparent 70%);
+}
+
+/* Lines up with the posts below, whose max width includes the gutters. */
+.index-hero,
+.topic-nav,
+.page-hero {
+  max-width: calc(var(--content-max) - 2 * var(--gutter));
+  margin: 0 auto;
+}
+
+.index-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 22px;
+}
+
+.index-hero > * {
+  margin: 0;
+}
+
+.index-hero .index-lede,
+.page-hero .index-lede {
+  max-width: 18ch;
+  font-size: clamp(2.5rem, 1.6rem + 2.6vw, 3.875rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.index-hero .index-intro,
+.page-hero .index-intro {
+  max-width: 34rem;
+  color: var(--ink-2);
+  font-size: 1.25rem;
+  line-height: 1.55;
+}
+
+/* Topic and Now pages: the hero's type and wash, without the card. */
+.page-hero {
+  margin-bottom: 0;
+  padding-bottom: 32px;
+}
+
+.page-hero .index-eyebrow {
+  margin-bottom: 14px;
+}
+
+/* The Latest card: the essay card's cover treatment (index.css), larger,
+   with more of the photo showing: the scrim starts lower and is solid by
+   the time the title starts, so cover text keeps its contrast. */
+.latest-card {
+  position: relative;
+}
+
+.latest-card.has-cover {
+  min-height: 460px;
+}
+
+.latest-card.has-cover .card-body {
+  padding-top: 56px;
+  background: linear-gradient(to bottom, transparent 0, var(--scrim) 48px);
+}
+
+.latest-card:not(.has-cover) {
+  padding: 32px;
+  background: var(--sage);
+}
+
+.latest-card .card-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.latest-label {
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* On the photo it keeps the cover colours, the same in both themes. */
+.latest-card.has-cover .latest-label {
+  background: var(--cover-scrim);
+  color: var(--cover-ink);
+}
+
+.latest-card .card-title {
+  font-size: clamp(1.625rem, 1.2rem + 1.2vw, 2.25rem);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.latest-card .card-dek {
+  max-width: 36rem;
+}
+
+/* One link, stretched over the card, with the focus ring round the card:
+   the shared whole-card link rules in index.css. */
+
+/* The newest Now entry as a small status chip: the label and date on top,
+   then the text and the link. */
+.now-chip {
+  justify-self: start;
+  max-width: 34rem;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-box);
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.now-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.now-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--check);
+}
+
+.now-label {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.now-head time {
+  font-size: var(--text-xs);
+}
+
+.now-chip a {
+  margin-left: 4px;
+  white-space: nowrap;
+}
+
+@keyframes now-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--check) 45%, transparent);
+  }
+
+  70%,
+  100% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+/* A solid primary action and a quiet text link for the feed, underlined
+   at rest; the arrow sits outside the underline. */
+.index-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 22px;
+}
+
+.index-actions .button {
+  min-height: 48px;
+  margin-top: 0;
+  padding: 0 22px;
+}
+
+.text-link {
+  display: inline-block;
+  padding: 10px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration-color: var(--underline);
+  text-decoration-thickness: 1.5px;
+}
+
+.text-link:hover {
+  text-decoration-thickness: 2.5px;
+}
+
+.text-link-arrow {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+/* The topics as linked chips, each with its post count. */
+.topic-nav {
+  margin-top: 44px;
+  padding: 22px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.topic-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topic-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 8px 0 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.topic-chip:hover {
+  border-color: var(--ink);
+}
+
+.topic-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  background: var(--sage);
+  color: var(--ink);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.topic-chip:hover .topic-count {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* The posts follow the header closely. */
+.index.index-posts {
+  padding-top: 8px;
+}
+
+.index-posts .index-section:first-child {
+  margin-top: 40px;
+}
+
+/* Motion only for readers who did not ask for less. */
+@media (prefers-reduced-motion: no-preference) {
+  .now-dot {
+    animation: now-pulse 2.4s ease-out infinite;
+  }
+
+  .text-link-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .text-link:hover .text-link-arrow {
+    transform: translateX(3px);
+  }
+
+  .topic-chip,
+  .topic-count {
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+}
+
+@media (min-width: 960px) {
+  .index-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto 1fr;
+    grid-template-areas:
+      'lede latest'
+      'intro latest'
+      'now latest'
+      'actions latest'
+      '. latest';
+    column-gap: 56px;
+    align-items: start;
+  }
+
+  .index-hero .index-lede {
+    grid-area: lede;
+  }
+
+  .index-hero .index-intro {
+    grid-area: intro;
+  }
+
+  .now-chip {
+    grid-area: now;
+  }
+
+  .index-actions {
+    grid-area: actions;
+  }
+
+  .latest-card {
+    grid-area: latest;
+    align-self: stretch;
+  }
+}
+
+/* Phones and tablets: one column, the card right after the intro. */
+@media (max-width: 959px) {
+  .latest-card {
+    order: 1;
+  }
+
+  .now-chip {
+    order: 2;
+  }
+
+  .index-actions {
+    order: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .index-top {
+    padding-top: 32px;
+  }
+
+  .index-hero {
+    row-gap: 18px;
+  }
+
+  .index-hero .index-intro,
+  .page-hero .index-intro {
+    font-size: 1.125rem;
+  }
+
+  .page-hero {
+    padding-bottom: 24px;
+  }
+
+  .latest-card.has-cover {
+    min-height: 400px;
+  }
+
+  .latest-card:not(.has-cover) {
+    padding: 24px;
+  }
+
+  .index-actions {
+    gap: 4px 20px;
+  }
+
+  .index-actions .button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .topic-nav {
+    margin-top: 32px;
+  }
+
+  .index-posts .index-section:first-child {
+    margin-top: 32px;
+  }
+}

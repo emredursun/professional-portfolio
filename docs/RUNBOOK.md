@@ -102,6 +102,16 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
   so it stays readable on a phone, and give it its own light and dark colours
   (`@media (prefers-color-scheme: dark)` inside the SVG follows the site's
   theme toggle).
+- **Set a post's cover:** `cover: misty-road.webp` in `en.md` names a photo
+  (webp, jpg or png) in the post's folder; the index and topic cards show it
+  behind the text (essays), across the top of the card (short notes), and
+  as the index's Latest card when the post is the newest. The build writes
+  webp copies from 240 up to 1600 px, never wider than the source, so use a
+  source of 1200 px or more for a sharp Latest card. Translations use the
+  English cover unless they set their own. Add `coverAlt: <text>` only when
+  the photo says something the title does not; otherwise it is decoration
+  with empty alt. Without `cover` the card uses the post's first photo, or
+  stays plain if it has none. Keep the photo's credit line in the post.
 - **Translate a post:** add `tr.md` or `nl.md` next to `en.md` (served at
   `/tr/blog/<slug>` and `/nl/blog/<slug>`; the slug stays English). It must
   keep the English publishedAt, kind, topic, status and evidence
