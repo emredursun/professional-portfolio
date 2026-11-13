@@ -116,23 +116,8 @@
   max-width: 36rem;
 }
 
-/* One link, stretched over the card, with the focus ring round the card. */
-.latest-card .card-title a::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-}
-
-@supports selector(:has(a)) {
-  .latest-card:has(.card-title a:focus-visible) {
-    outline: 3px solid var(--focus);
-    outline-offset: 3px;
-  }
-
-  .latest-card .card-title a:focus-visible {
-    outline: none;
-  }
-}
+/* One link, stretched over the card, with the focus ring round the card:
+   the shared whole-card link rules in index.css. */
 
 /* The newest Now entry as a small status chip: the label and date on top,
    then the text and the link. */

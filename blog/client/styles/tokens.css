@@ -44,6 +44,11 @@
   --cover-ink-2: #e2dccf;
   --cover-underline: #f2c94c;
 
+  /* The no-cover note card's decorative panel (index.css). */
+  --placeholder-from: #f6dfcd;
+  --placeholder-to: #e7e0f0;
+  --placeholder-disc: #f5e3a1;
+
   --font-display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
   --font-reading: 'Newsreader', Georgia, 'Times New Roman', serif;
   --font-code: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
@@ -76,6 +81,9 @@
     --code-bg: #141a16;
     --closing-bg: #27322b;
     --closing-ink: #efe9dd;
+    --placeholder-from: #2f4a3c;
+    --placeholder-to: #3d3459;
+    --placeholder-disc: #c9a54a;
   }
 }
 
@@ -96,4 +104,7 @@
   --code-bg: #141a16;
   --closing-bg: #27322b;
   --closing-ink: #efe9dd;
+  --placeholder-from: #2f4a3c;
+  --placeholder-to: #3d3459;
+  --placeholder-disc: #c9a54a;
 }

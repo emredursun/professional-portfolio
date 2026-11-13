@@ -250,7 +250,11 @@ describe('index cards with covers', () => {
     expect(img.getAttribute('alt')).toBe('Keys');
     expect(img.getAttribute('loading')).toBe('lazy');
     expect(img.getAttribute('decoding')).toBe('async');
-    expect(img.getAttribute('sizes')).toContain('560px');
+    // One column below 720 px (the grid's breakpoint), two up to the 1120 px
+    // content width, then a fixed column.
+    expect(img.getAttribute('sizes')).toBe(
+      '(max-width: 719px) calc(100vw - 36px), (max-width: 1179px) calc(50vw - 52px), 510px',
+    );
     expect([img.getAttribute('width'), img.getAttribute('height')]).toEqual(['800', '450']);
     // Text below the photo, never over it; one link to the post.
     const body = note.querySelector('.note-body')!;

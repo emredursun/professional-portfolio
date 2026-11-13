@@ -47,10 +47,13 @@ function foreign(post, pageLang) {
 }
 
 // The rendered width of a cover: the full card on a phone, a grid column
-// (at most about 380 px) from there up; a note card is one of two columns
-// from 720 px up (at most about 560 px).
+// (at most about 380 px) from there up. A note card is one column below
+// 720 px (the grid's breakpoint in index.css), one of two from there: half
+// the width less a gutter (up to 40 px) and half the 24 px gap, until the
+// 1120 px content width caps it at about 510 px.
 const CARD_SIZES = '(max-width: 720px) calc(100vw - 36px), 380px';
-const NOTE_SIZES = '(max-width: 720px) calc(100vw - 36px), 560px';
+const NOTE_SIZES =
+  '(max-width: 719px) calc(100vw - 36px), (max-width: 1179px) calc(50vw - 52px), 510px';
 
 /**
  * A post's cover (build-blog.js), lazy because the cards sit below the
