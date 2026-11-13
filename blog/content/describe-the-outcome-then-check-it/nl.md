@@ -10,7 +10,7 @@ evidence:
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 november 2026'
     - 'De sessie Human & Tech: Agentic Development: Teams Reimagined op hetzelfde event'
-    - 'Openbare LinkedIn-post van de host van de sessie, de dag na het event'
+    - 'Openbare LinkedIn-post van de host van de sessie'
     - 'Persbericht van Gartner over agentic AI, 25 juni 2025'
     - 'World Economic Forum, Future of Jobs Report 2025'
     - 'Stack Overflow Developer Survey 2026'
@@ -38,11 +38,11 @@ Mijn dag begon eerder. Vanaf 10:30, voordat het hoofdprogramma ’s middags bego
 
 ## Terugredeneren vanuit 2030
 
-De laatste sessie, Human & Tech: Agentic Development: Teams Reimagined, begon in 2030 en redeneerde terug naar vandaag. Zo’n 200 Nederlandse collega’s deden mee, en de vraag die erdoorheen liep was hoe wij, onze rollen en onze teams gaan veranderen. De sessie stelde het helder: welke nieuwe vaardigheden heb je nodig, hoe ziet je team eruit, en heb je straks nog een baan? Het antwoord was dat de grootste verandering meer bij ons ligt, als mensen die zichzelf opnieuw uitvinden, dan bij de technologie.
+De laatste sessie, Human & Tech: Agentic Development: Teams Reimagined, begon in 2030 en redeneerde terug naar vandaag. Zo’n 200 Nederlandse collega’s deden mee, en de vraag die erdoorheen liep was hoe wij, onze rollen en onze teams gaan veranderen. De sessie stelde het helder: welke nieuwe vaardigheden heb je nodig, hoe ziet je team eruit, en heb je straks nog een baan? De host vatte het achteraf samen als: de grootste verandering ligt meer bij ons, als mensen die zichzelf opnieuw uitvinden, dan bij de technologie.
 
 Vanuit het eindpunt beginnen maakte de verandering voor mij een stuk minder abstract.
 
-Een deel ervan was een mogelijk beeld van 2030. Dat blijft een aanname, geen voorspelling. Maar als ik zie hoe snel alles nu gaat, lijkt het me niet eens zo ver weg.
+Een deel van de sessie schetste een mogelijk beeld van 2030. Dat blijft een aanname. Maar als ik zie hoe snel alles nu gaat, lijkt het me niet eens zo ver weg.
 
 Wat ik het mooiste vond, was de boodschap dat AI ons werk juist makkelijker maakt. Zo kijk ik er zelf ook naar.
 
@@ -50,7 +50,7 @@ Wat ik het mooiste vond, was de boodschap dat AI ons werk juist makkelijker maak
 
 Voor mij is AI eigenlijk een nieuwe interfacelaag tussen mens en technologie. We hebben jarenlang complexe systemen, tools en API’s gebouwd. Met een agent ertussen kun je die in gewone taal aansturen, uitbreiden en onderhouden. Je beschrijft wat je wilt bereiken, en de agent zet dat om in concrete acties.
 
-Gartner verwacht dat agents meer van het werk overnemen, met een duidelijke kanttekening. [Gartner voorspelt](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) dat tegen 2028 minstens 15% van de dagelijkse werkbeslissingen autonoom wordt genomen via agentic AI, tegen 0% in 2024. In hetzelfde persbericht verwacht Gartner dat meer dan 40% van de agentic-AI-projecten uiterlijk eind 2027 is stopgezet, door stijgende kosten, onduidelijke bedrijfswaarde of onvoldoende risicobeheersing. Het waarschuwt ook voor “agent washing”: bestaande assistenten, RPA-tools en chatbots die als agent worden gepresenteerd zonder echte agentic mogelijkheden. Voor een tester is dat een nuttige herinnering dat het label “agent” niets bewijst over wat een tool kan.
+Gartner verwacht dat agents meer van het werk overnemen, met een duidelijke kanttekening. [Gartner voorspelt](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) dat tegen 2028 minstens 15% van de dagelijkse werkbeslissingen autonoom wordt genomen via agentic AI, tegen 0% in 2024. In hetzelfde persbericht verwacht Gartner dat meer dan 40% van de agentic-AI-projecten uiterlijk eind 2027 is stopgezet, door stijgende kosten, onduidelijke bedrijfswaarde of onvoldoende risicobeheersing. Het waarschuwt ook voor “agent washing”: bestaande assistenten, RPA-tools en chatbots die als agent worden gepresenteerd zonder wezenlijke agentic mogelijkheden. Voor een tester is dat een nuttige herinnering dat het label “agent” niets bewijst over wat een tool kan.
 
 De richting is er dus, maar een agent die namens jou handelt, moet zijn plek nog verdienen.
 
@@ -70,10 +70,10 @@ Ik denk dat rollen, vaardigheden, tools en verantwoordelijkheden binnen de SDLC 
 
 Als je de uitkomst kunt beschrijven en een agent de acties laat uitwerken, verschuift de vraag voor een tester naar: klopt wat er terugkomt?
 
-Ontwikkelaars lijken op hetzelfde punt uit te komen. In de [Stack Overflow Developer Survey 2026](https://survey.stackoverflow.co/2026/ai) zegt 48% van de respondenten AI te vertrouwen als ze de antwoorden makkelijk kunnen controleren, terwijl maar 16% dat vertrouwen uitbreidt naar de meeste taken die geen belangrijke werkbeslissingen zijn. De [aankondiging van de survey](https://stackoverflow.blog/2026/10/06/the-results-of-the-2026-developer-survey-are-here/) voegt toe dat 93% bronvermelding nodig vindt om te vertrouwen wat AI geeft. Voor mij betekent dat: vertrouwen volgt de mogelijkheid om het antwoord te controleren en te zien waar het vandaan komt.
+Ontwikkelaars lijken op hetzelfde punt uit te komen. In de [Stack Overflow Developer Survey 2026](https://survey.stackoverflow.co/2026/ai) zegt 48% van de respondenten AI te vertrouwen als ze de antwoorden makkelijk kunnen controleren, terwijl maar 16% dat vertrouwen uitbreidt naar de meeste taken die geen belangrijke werkbeslissingen zijn. De [aankondiging van de survey](https://stackoverflow.blog/2026/10/06/the-results-of-the-2026-developer-survey-are-here/) meldt dat 93% bronvermelding nodig vindt om te vertrouwen wat AI geeft. Voor mij betekent dat: vertrouwen volgt de mogelijkheid om het antwoord te controleren en te zien waar het vandaan komt.
 
 DORA, een onderzoeksprogramma van Google Cloud, maakt een vergelijkbaar punt. Het rapport [State of AI-assisted Software Development 2025](https://dora.dev/research/2025/dora-report/) beschrijft de belangrijkste rol van AI als versterker van de bestaande sterke en zwakke punten van een organisatie. Mijn interpretatie voor testen: een team met zwakke review- en testpraktijken ziet die zwaktes met AI waarschijnlijk groter worden.
 
-In mijn eigen testwerk neem ik agentic AI steeds meer mee. Ik zie nu al waar het kan helpen: als sparringpartner bij het opzetten van een teststrategie, bij het vinden van edge cases en bij het genereren van tests. Voor nu zijn dit mogelijkheden die ik zie, geen vaste werkwijze, en wat ik hier schrijf komt uit één event en vroeg gebruik, niet uit gemeten resultaten.
+In mijn eigen testwerk probeer ik agentic AI steeds meer mee te nemen. Ik zie nu al waar het kan helpen: als sparringpartner bij het opzetten van een teststrategie, bij het vinden van edge cases en bij het genereren van tests. Voor nu zijn dit mogelijkheden die ik zie, geen vaste werkwijze, en wat ik hier schrijf komt uit één event en vroeg gebruik, niet uit gemeten resultaten.
 
 Ik review en valideer elke stap zelf, met duidelijke guardrails. Een gegenereerde test is pas waardevol als je zeker weet dat hij klopt. Kwaliteit blijft uiteindelijk onze verantwoordelijkheid, ook als een agent de test schreef.
