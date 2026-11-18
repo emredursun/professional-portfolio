@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { type Page } from '@playwright/test';
 import { BLOG_LAUNCHED } from '../scripts/blog/config.js';
-import { hasNotes, postPath, postWithToc, recheckRange, slugs } from './blog-content';
+import { hasNotes, postPath, postsWithToc, postWithToc, recheckRange, slugs } from './blog-content';
 import { expect, test } from './fixtures';
 
 /**
@@ -384,6 +384,36 @@ test.describe('table of contents placement', () => {
       // The folded bar, at the top of the screen.
       expect((await toc.boundingBox())!.y).toBeLessThanOrEqual(1);
       await expect(toc.getByRole('link').first()).toBeHidden();
+    }
+  });
+
+  // A phone pins sticky and fixed elements to its layout viewport. When
+  // anything is wider than the screen (a long bare URL once was), the layout
+  // viewport grows past the visible area and the bar sticks above the screen,
+  // where the reader cannot see it. Checked on the visual viewport, scrolled
+  // the way a reader scrolls, on every post that has a table of contents.
+  test('the bar stays on screen while a reader scrolls any post', async ({ page, isMobile }) => {
+    test.skip(!isMobile, 'the bar is for phones');
+    const paths = postsWithToc();
+    test.skip(paths.length === 0, 'no post with headings yet');
+    test.slow(); // one page per post and language
+    for (const path of paths) {
+      await page.goto(path);
+      // Named in the page's language, so found by its class.
+      const toc = page.locator('nav.toc');
+      await page.mouse.move(200, 400);
+      for (let i = 0; i < 12; i++) await page.mouse.wheel(0, 250);
+      await expect
+        .poll(() => page.evaluate(() => scrollY), { message: path })
+        .toBeGreaterThan(2000);
+      const onScreen = await toc.evaluate((el) => {
+        const box = el.getBoundingClientRect();
+        return {
+          top: Math.round(box.top - visualViewport!.offsetTop),
+          overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        };
+      });
+      expect(onScreen, path).toEqual({ top: 0, overflow: 0 });
     }
   });
 });

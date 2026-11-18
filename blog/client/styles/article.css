@@ -2,6 +2,11 @@
   max-width: calc(var(--measure) + 2 * var(--gutter));
   margin: 0 auto;
   padding: 48px var(--gutter) 88px;
+  /* A word longer than the line, such as a bare URL in a source list, wraps
+     instead of widening the page. On a phone a wider page grows the layout
+     viewport past the screen, and the sticky table of contents bar then
+     sticks above what the reader sees (e2e/blog.spec.ts). */
+  overflow-wrap: break-word;
 }
 
 /* Header */
