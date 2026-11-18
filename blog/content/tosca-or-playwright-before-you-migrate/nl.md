@@ -6,14 +6,14 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Hoog voor de feiten over de tools, die ik in november 2026 op de eigen pagina’s van de leveranciers heb gecontroleerd. Het cijfer “200+ technologies” is de eigen bewering van de leverancier, niet iets wat ik heb geverifieerd. De lab is één kleine applicatie, dus mijn antwoorden zijn een waarneming en geen algemene regel.'
+  confidence: 'Hoog voor de feiten over de tools, die ik in november 2026 op de eigen pagina’s van de leveranciers heb gecontroleerd. Het cijfer “200+ technologies” is de eigen bewering van de leverancier, niet iets wat ik heb geverifieerd. Het lab is één kleine applicatie, dus mijn antwoorden zijn een waarneming en geen algemene regel.'
   basedOn:
     - 'Leveranciers- en projectpagina’s van Tosca en Playwright, gelezen op 2026-11-17 en 2026-11-18'
     - 'Een eigen lab: een fictieve applicatie voor persoonlijke leningaanvragen op Pega Infinity 26.1 Constellation, getest met Tosca 26.1.2 en gemigreerd naar Playwright 1.65.0'
   recheckedAt: 2026-11-18
 aiAssistance:
   mine:
-    - 'De ervaring, de lab, de vragen en de antwoorden'
+    - 'De ervaring, het lab, de vragen en de antwoorden'
   assisted:
     - 'Claude splitste mijn eigen concept in twee aparte posts en maakte de formuleringen strakker'
     - 'Claude controleerde beweringen tegen de aangehaalde pagina’s en corrigeerde drie details (timing van Airbnb, formulering over Node.js 20, ondersteunde talen)'
@@ -63,7 +63,7 @@ Deze vraag kan de discussie vroeg beëindigen.
 - Moderne webfrontends, waaronder Pega Constellation: Playwright past goed. In mijn PLR-lab werd de Constellation-UI geautomatiseerd met test-ids afgeleid van veldlabels en een gedeelde Pega-laag (inloggen, caseweergave, tabellen) die elke test hergebruikt.
 - Verpakte bedrijfsapplicaties zoals SAP GUI, desktopclients en gemengde end-to-end-flows over meerdere systemen: hier is Tosca voor gebouwd. Tricentis stelt dat Tosca “200+ technologies” standaard dekt ([productpagina](https://www.tricentis.com/products/automate-continuous-testing-tosca)). Voor zover ik weet stuurt Playwright browsers aan en geen SAP GUI of dikke client, dus controleer dat tegen je eigen systemen.
 
-Veel landschappen zijn gemengd. Dan is het eerlijke antwoord vaak allebei: Playwright voor de webkanalen die ontwikkelaars bezitten, Tosca voor de processen op verpakte applicaties die business testers bezitten.
+Veel omgevingen zijn gemengd. Dan is het eerlijke antwoord vaak allebei: Playwright voor de webkanalen die ontwikkelaars bezitten, Tosca voor de processen op verpakte applicaties die business testers bezitten.
 
 ## Wanneer migreren we niet?
 
@@ -77,7 +77,7 @@ Een migratie is de verkeerde keuze, of een deel van de suite moet in Tosca blijv
 
 De omgekeerde migratie, van code naar Tosca, is zinvol in het spiegelbeeld: een code-first suite die de ontwikkelaars hebben achtergelaten, business testers die hem nu moeten beheren en verpakte applicaties die in scope komen.
 
-## Een korte beslischecklist
+## Een korte checklist voor de beslissing
 
 - [ ] Het probleem is opgeschreven en structureel (eigenaarschap, feedbacksnelheid, kosten, vaardigheden), niet alleen het ontwerp van de suite.
 - [ ] We weten wie de tests over drie jaar schrijft en onderhoudt, en zij kunnen in de doeltool werken.

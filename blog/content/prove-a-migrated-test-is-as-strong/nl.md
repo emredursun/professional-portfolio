@@ -9,12 +9,12 @@ evidence:
   confidence: 'Hoog voor de labresultaten, die uit de laatste run van 2026-11-17 komen. Eén kleine labapplicatie, dus een waarneming en geen algemene regel.'
   basedOn:
     - 'Een eigen lab: een fictieve applicatie voor persoonlijke leningaanvragen op Pega Infinity 26.1 Constellation, getest met Tosca 26.1.2 en gemigreerd naar Playwright 1.65.0'
-    - 'Mijn eerdere LinkedIn-post over dezelfde lab en de converterplugin die ik schreef'
+    - 'Mijn eerdere LinkedIn-post over hetzelfde lab en de converterplugin die ik schreef'
     - 'Pagina’s van Playwright, Tosca, Google en Airbnb en artikelen van martinfowler.com (Vocke; Cartwright, Horn en Lewis), onderaan vermeld, gelezen op 2026-11-17'
   recheckedAt: 2026-11-18
 aiAssistance:
   mine:
-    - 'De ervaring, de lab, de converterplugin, de methode en de resultaten'
+    - 'De ervaring, het lab, de converterplugin, de methode en de resultaten'
   assisted:
     - 'Claude splitste mijn eigen concept in twee aparte posts en maakte de formuleringen strakker'
     - 'Claude controleerde beweringen tegen de aangehaalde pagina’s en corrigeerde drie details (timing van Airbnb, formulering over Node.js 20, ondersteunde talen)'
@@ -27,7 +27,7 @@ translation:
 
 Als een team heeft besloten een testsuite van Tricentis Tosca naar Playwright te verplaatsen, is het onderdeel waar ik het kritiekst naar kijk: weten dat elke geconverteerde test nog steeds vangt wat het origineel ving. De beslissing zelf, of je überhaupt moet migreren, staat in [een bijbehorende post](/nl/blog/tosca-or-playwright-before-you-migrate).
 
-Mijn voorbeelden komen uit een lab die ik hiervoor heb gebouwd: een fictieve applicatie voor persoonlijke leningaanvragen (PLR) die ik in een Pega Academy-labomgeving met een Pega Blueprint heb gebouwd. De applicatie draait op Pega Infinity '26.1 Constellation, is getest met Tosca 26.1.2 (de [2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm)-releaselijn) en gemigreerd naar Playwright 1.65.0.
+Mijn voorbeelden komen uit een lab dat ik hiervoor heb gebouwd: een fictieve applicatie voor persoonlijke leningaanvragen (PLR) die ik in een Pega Academy-labomgeving met een Pega Blueprint heb gebouwd. De applicatie draait op Pega Infinity '26.1 Constellation, is getest met Tosca 26.1.2 (de [2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm)-releaselijn) en gemigreerd naar Playwright 1.65.0.
 
 ## Een slagende test bewijst weinig
 
@@ -68,7 +68,7 @@ De gegenereerde code behoudt bewust de vorm van Tosca: één klasse per Module, 
 
 L3 leent van mutation testing, dat Google op grote schaal in code review draait ([Petrovic en Ivankovic, State of Mutation Testing at Google](https://research.google/pubs/state-of-mutation-testing-at-google/)). L5 en L6 lenen van parallel draaien bij het vervangen van legacy, waarmee wordt gecontroleerd dat “key numbers match up” tussen oud en nieuw ([Cartwright, Horn en Lewis, Patterns of Legacy Displacement, 2022](https://martinfowler.com/articles/patterns-legacy-displacement/divert-the-flow.html)).
 
-## Wat de lab liet zien
+## Wat het lab liet zien
 
 In de laatste run, op 2026-11-17, vielen 20 TestCases binnen de scope. Eén werd gedekt door de gedeelde inlog- en omgevingscheck, één was een templatedefinitie en één een sandbox-TestCase, dus 17 werden gemigreerd. De onderstaande cijfers gelden voor deze gemigreerde Playwright-tests, die elk precies dezelfde bedrijfsvereisten testen als hun Tosca-origineel. De run gebruikte twee doelarchitecturen, een gelaagde en een BDD-architectuur op playwright-bdd, en alle 105 mutanten van de checks werden in beide gedood. De cijfers verschillen van [mijn eerdere LinkedIn-post](https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi), omdat de laatste run de hieronder beschreven TestCase voor een ongeldig wachtwoord toevoegde. Die eerdere run had 16 TestCases en 104 mutanten.
 
@@ -76,7 +76,7 @@ Eén test liep één keer op een time-out in zijn herhaalde stabiliteitsruns; op
 
 16 van de 17 gemigreerde tests gaven hetzelfde oordeel als Tosca op dezelfde build. De 17e is de leerzame. De naam zegt dat hij een login met een ongeldig wachtwoord test. De check verwacht echter dat het inloggen wordt geaccepteerd. In Tosca voert de stap een fout wachtwoord in, Pega wijst het inloggen af en de TestCase faalt op zijn eigen check. De gemigreerde test logt in met het wachtwoord van het testaccount en slaagt. De twee oordelen verschillen en omdat check en naam elkaar tegenspreken, ging de case naar de testeigenaar.
 
-Een migratie kan de bedoeling van een test omkeren zonder dat iemand het merkt. In de lab maakte de vergelijking per test dat zichtbaar.
+Een migratie kan de bedoeling van een test omkeren zonder dat iemand het merkt. In het lab maakte de vergelijking per test dat zichtbaar.
 
 De scope was één applicatie, één lab en alleen Chromium, zonder snelheidsvergelijking met Tosca.
 
@@ -103,4 +103,4 @@ Allemaal gelezen op 2026-11-17, tenzij een publicatiedatum is genoemd.
 - Ian Cartwright, Rob Horn, James Lewis, Patterns of Legacy Displacement: Divert the Flow (2022-01-20): https://martinfowler.com/articles/patterns-legacy-displacement/divert-the-flow.html
 - Goran Petrovic, Marko Ivankovic, State of Mutation Testing at Google (ICSE SEIP 2018): https://research.google/pubs/state-of-mutation-testing-at-google/
 - Airbnb Tech Blog, Accelerating Large-Scale Test Migration with LLMs: https://airbnb.tech/?p=366
-- Mijn eerdere LinkedIn-post over de Tosca-naar-Playwright-lab (16 TestCases, 104 mutanten): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
+- Mijn eerdere LinkedIn-post over het Tosca-naar-Playwright-lab (16 TestCases, 104 mutanten): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
