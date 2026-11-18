@@ -839,7 +839,7 @@
 
   <url>
     <loc>https://emredursun.nl/blog</loc>
-    <lastmod>2026-11-13</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog" />
@@ -871,6 +871,28 @@
   </url>
 
   <url>
+    <loc>https://emredursun.nl/blog/prove-a-migrated-test-is-as-strong</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/prove-a-migrated-test-is-as-strong" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/prove-a-migrated-test-is-as-strong" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/prove-a-migrated-test-is-as-strong" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/prove-a-migrated-test-is-as-strong" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/blog/tosca-or-playwright-before-you-migrate</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/tosca-or-playwright-before-you-migrate" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/tosca-or-playwright-before-you-migrate" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/tosca-or-playwright-before-you-migrate" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/tosca-or-playwright-before-you-migrate" />
+  </url>
+
+  <url>
     <loc>https://emredursun.nl/blog/whose-name-is-on-the-decision</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
@@ -883,7 +905,7 @@
 
   <url>
     <loc>https://emredursun.nl/blog/topic/testing</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/testing" />
@@ -916,7 +938,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/blog</loc>
-    <lastmod>2026-11-13</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog" />
@@ -948,6 +970,28 @@
   </url>
 
   <url>
+    <loc>https://emredursun.nl/tr/blog/prove-a-migrated-test-is-as-strong</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/prove-a-migrated-test-is-as-strong" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/prove-a-migrated-test-is-as-strong" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/prove-a-migrated-test-is-as-strong" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/prove-a-migrated-test-is-as-strong" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/tr/blog/tosca-or-playwright-before-you-migrate</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/tosca-or-playwright-before-you-migrate" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/tosca-or-playwright-before-you-migrate" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/tosca-or-playwright-before-you-migrate" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/tosca-or-playwright-before-you-migrate" />
+  </url>
+
+  <url>
     <loc>https://emredursun.nl/tr/blog/whose-name-is-on-the-decision</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
@@ -960,7 +1004,7 @@
 
   <url>
     <loc>https://emredursun.nl/tr/blog/topic/testing</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/testing" />
@@ -993,7 +1037,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/blog</loc>
-    <lastmod>2026-11-13</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog" />
@@ -1025,6 +1069,28 @@
   </url>
 
   <url>
+    <loc>https://emredursun.nl/nl/blog/prove-a-migrated-test-is-as-strong</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/prove-a-migrated-test-is-as-strong" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/prove-a-migrated-test-is-as-strong" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/prove-a-migrated-test-is-as-strong" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/prove-a-migrated-test-is-as-strong" />
+  </url>
+
+  <url>
+    <loc>https://emredursun.nl/nl/blog/tosca-or-playwright-before-you-migrate</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/tosca-or-playwright-before-you-migrate" />
+        <xhtml:link rel="alternate" hreflang="tr" href="https://emredursun.nl/tr/blog/tosca-or-playwright-before-you-migrate" />
+        <xhtml:link rel="alternate" hreflang="nl" href="https://emredursun.nl/nl/blog/tosca-or-playwright-before-you-migrate" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://emredursun.nl/blog/tosca-or-playwright-before-you-migrate" />
+  </url>
+
+  <url>
     <loc>https://emredursun.nl/nl/blog/whose-name-is-on-the-decision</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
@@ -1037,7 +1103,7 @@
 
   <url>
     <loc>https://emredursun.nl/nl/blog/topic/testing</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://emredursun.nl/blog/topic/testing" />

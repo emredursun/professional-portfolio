@@ -35,6 +35,30 @@
     "card": "2a00dbb6c870ee0f89adefaacba89d49272479db3b200173904e9178bccdc081",
     "png": "fc0704cf18087670f001325efee19f918c933da86509b1921554e8312e23fa81"
   },
+  "prove-a-migrated-test-is-as-strong.en": {
+    "card": "4089d7f4cfba3095d6fe2ffb668d025182ecbee51124048b03b4f0de0db94f58",
+    "png": "e8a11b178caac327e362273ec228ed4e931776f6a76b97dfdfed077a05c6c6ee"
+  },
+  "prove-a-migrated-test-is-as-strong.nl": {
+    "card": "d2091a44933ea506c5020e3024407dd44fc55634fc0d7d5549858be1d50b8fab",
+    "png": "43f13844fffc683236d5a234e0249f92c1b4c759844e23a4c2e95d4d81284dcd"
+  },
+  "prove-a-migrated-test-is-as-strong.tr": {
+    "card": "b7068f97ee546552ef98c93c890550254a78d4152ba9e8ab53fc4869e09ec383",
+    "png": "e1b2a0be0a3a9cc5cdec1f7800b31ad5487a147dcc38d13b17f275ddf9f36039"
+  },
+  "tosca-or-playwright-before-you-migrate.en": {
+    "card": "0bcd6164ec6b40845e25e4997bb5cbefb424d324351049a2f39ff373725a0f7d",
+    "png": "4ff14277e4c87687f6d3c93e4a41eb9689631cd640aefb5d25ec6488ffef8386"
+  },
+  "tosca-or-playwright-before-you-migrate.nl": {
+    "card": "f27c24c6a5d68d3793321a41dae7f8acd21e55231760a1c0ee9356d3da555e7c",
+    "png": "78a33dddc836a01e1ae8eca1e649010d3c057673d06efef8bbb5df793dead712"
+  },
+  "tosca-or-playwright-before-you-migrate.tr": {
+    "card": "7ab10ab06e29e3d9cb6ecfde6cdee85bddb843537534fc3ad125f76186da4799",
+    "png": "8c440b6d3b34fb5b9b8753f310a433aec3724f58dc8384a23d25f706174c4d09"
+  },
   "whose-name-is-on-the-decision.en": {
     "card": "0197bcbbb6f48248b71b9486035ff241c03f36a5eab66af1a5ebeab722dd3a13",
     "png": "be5a5c4c6f512d466e2337a66c3be23903e1a6554949f68f1feabdfe1725a602"
