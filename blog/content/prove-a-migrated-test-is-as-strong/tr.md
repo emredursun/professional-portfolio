@@ -77,6 +77,8 @@ Aynı gün yapılan daha önceki bir çalıştırmada bir test, tekrarlanan kara
 
 17. TestCase öğretici olanı ve hâlâ açık. Adı, geçersiz parolayla bir oturum açmayı test ettiğini söylüyor. Ancak kontrolü oturum açmanın kabul edilmesini bekliyor. Tosca’da adım yanlış bir parola giriyor, Pega oturum açmayı reddediyor ve TestCase kendi kontrolünde başarısız oluyor. O önceki çalıştırmada taşınan test yine de test hesabının parolasını kullanıyor, oturum açıyor ve geçiyordu. İki sonuç farklıydı ve kontrol ile ad birbirine ters düştüğü için vaka test sahibine gitti. Yayımlanan dönüştürücü artık böyle bir teste hesap parolası vermiyor: test, sahibi testin yazacağı yanlış parolayı verene kadar bloke kalıyor.
 
+![17. TestCase’in diyagramı: adı geçersiz parolayla bir oturum açmayı söylüyor, ancak kontrolü oturum açmanın kabul edilmesini bekliyor. Tosca yanlış bir parola giriyor, Pega oturum açmayı reddediyor ve test kendi kontrolünde başarısız oluyor. Önceki bir çalıştırmada taşınan test, test hesabının parolasını kullandı, oturum açtı ve geçti. Vaka test sahibine gitti ve hâlâ açık.](invalid-password-case.webp)
+
 Bir geçiş, kimse fark etmeden bir testin amacını tersine çevirebilir. Labda bunu görünür kılan, test başına yapılan karşılaştırma oldu.
 
 Kapsam tek bir uygulama, tek bir lab ve yalnızca Chromium’du; Tosca ile hız karşılaştırması yapılmadı.

@@ -76,6 +76,8 @@ In an earlier run that day, one test timed out once in its repeated stability ru
 
 The 17th TestCase is the instructive one, and it is still open. Its name says it tests a login with an invalid password. Its check, however, expects the sign-in to be accepted. In Tosca the step enters a wrong password, Pega rejects the sign-in, so the TestCase fails at its own check. In that earlier run, the migrated test still fell back to the test account's password, signed in and passed. The two verdicts differed, and because the check and the name contradict each other, the case went to the test owner. The released converter no longer gives such a test an account's password: it stays blocked until its owner supplies the wrong password it is meant to type.
 
+![Diagram of the 17th TestCase: its name says a login with an invalid password, but its check expects the sign-in to be accepted. Tosca enters a wrong password, Pega rejects the sign-in and the test fails at its own check. In an earlier run the migrated test fell back to the test account's password, signed in and passed. The case went to the test owner and is still open.](invalid-password-case.webp)
+
 A migration can turn a test's intent around without anyone noticing. In the lab, the per-test comparison is what made it visible.
 
 The scope was one application, one lab and Chromium only, with no speed comparison against Tosca.

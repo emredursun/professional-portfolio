@@ -77,6 +77,8 @@ In een eerdere run die dag liep één test één keer op een time-out in zijn he
 
 De 17e TestCase is de leerzame, en die staat nog open. De naam zegt dat hij een login met een ongeldig wachtwoord test. De check verwacht echter dat het inloggen wordt geaccepteerd. In Tosca voert de stap een fout wachtwoord in, Pega wijst het inloggen af en de TestCase faalt op zijn eigen check. In die eerdere run viel de gemigreerde test nog terug op het wachtwoord van het testaccount, logde in en slaagde. De twee oordelen verschilden en omdat check en naam elkaar tegenspreken, ging de case naar de testeigenaar. De uitgebrachte converter geeft zo’n test geen accountwachtwoord meer: hij blijft geblokkeerd tot de eigenaar het foute wachtwoord aanlevert dat de test hoort te typen.
 
+![Schema van de 17e TestCase: de naam zegt een login met een ongeldig wachtwoord, maar de check verwacht dat het inloggen wordt geaccepteerd. Tosca voert een fout wachtwoord in, Pega wijst het inloggen af en de test faalt op zijn eigen check. In een eerdere run viel de gemigreerde test terug op het wachtwoord van het testaccount, logde in en slaagde. De case ging naar de testeigenaar en staat nog open.](invalid-password-case.webp)
+
 Een migratie kan de bedoeling van een test omkeren zonder dat iemand het merkt. In het lab maakte de vergelijking per test dat zichtbaar.
 
 De scope was één applicatie, één lab en alleen Chromium, zonder snelheidsvergelijking met Tosca.
