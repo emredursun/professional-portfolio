@@ -53,7 +53,7 @@ De gegenereerde code behoudt bewust de vorm van Tosca: één klasse per Module, 
 2. Analyse: breng gebruikersflows in kaart, besluit per TestCase zoals hierboven, benoem de levelschuld en stem de doelarchitectuur met het team af voordat er code bestaat.
 3. Eerst de gedeelde laag, in het Playwright-native herontwerp: schermen, flows, data en inloggen, daarna de tests. Anders krijgt elke test zijn eigen helpers. De gegenereerde bridge spiegelt Tosca; de gedeelde laag hoort bij het herontwerp.
 4. Bewijs per test, op zes niveaus (volgende sectie). Een test telt pas als gemigreerd wanneer zijn bewijs is vastgelegd tegen de code waarop het draaide.
-5. Parallelle run en uitfasering: draai beide suites op dezelfde builds, vergelijk de oordelen per test en fase Tosca-TestCases plak voor plak uit. Een cutover in één keer zou de vergelijking wegnemen die het bewijs mogelijk maakt.
+5. Parallelle run en uitfasering: draai beide suites op dezelfde builds, vergelijk de oordelen per test en fase Tosca-TestCases stap voor stap uit. Een cutover in één keer zou de vergelijking wegnemen die het bewijs mogelijk maakt.
 
 ## Zes niveaus van bewijs
 
@@ -90,7 +90,7 @@ Automatisering helpt bij volume. Airbnb meldde dat het met een LLM-pipeline 75% 
 - [ ] De volledige workspace zit in de inventaris, inclusief parameters op rootniveau.
 - [ ] Elke gemigreerde test heeft vastgelegd bewijs: bouwt, elke check aanwezig, gemuteerd en gedood, stabiel, hetzelfde oordeel als Tosca.
 - [ ] Verschillen in oordeel gaan naar een benoemde testeigenaar.
-- [ ] Tosca-TestCases worden plak voor plak uitgefaseerd, na pariteit.
+- [ ] Tosca-TestCases worden stap voor stap uitgefaseerd, na pariteit.
 
 ## Bronnen
 
