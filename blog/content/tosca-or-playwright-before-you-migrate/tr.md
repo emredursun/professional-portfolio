@@ -26,6 +26,8 @@ Bir test paketini taşıma talebi çoğu zaman bir araç sorusu gibi duyulur: �
 
 Aşağıda böyle bir ekibe sırasıyla soracağım soruları veriyorum. Araçlarla ilgili bilgileri Kasım 2026’da üreticilerin kendi sayfalarından kontrol ettim. Kendi deneyimim bir labdan geliyor: bir Pega Academy lab ortamında Pega Blueprint ile oluşturduğum kurgusal bir kişisel kredi talebi uygulaması (PLR). Uygulama Pega Infinity '26.1 Constellation üzerinde çalışıyor, Tosca 26.1.2 ile ([2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm) sürüm hattı) test edildi ve Playwright 1.65.0’a taşındı.
 
+![Karar akışı: sorun paket tasarımıysa paketi yerinde düzeltin. Testleri geliştiriciler yazıyorsa kod tabanlı yaklaşım doğal evdir; kalacak iş testçileri yazıyorsa ya Tosca ya da bütçeli bir eğitim programı gerekir. Tarayıcı uygulamaları Playwright’a uyar, SAP GUI ve masaüstü Tosca’da kalır, karma ortamlarda çoğu zaman ikisi birden kullanılır.](decision-flow.webp)
+
 ## Hangi sorunu çözüyoruz?
 
 “Tosca pahalı” ya da “geliştiriciler Tosca’yı sevmiyor” birer belirtidir. Bunların ardındaki somut sorunu sorarım:

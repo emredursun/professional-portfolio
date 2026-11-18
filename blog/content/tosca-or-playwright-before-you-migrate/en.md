@@ -5,6 +5,8 @@ publishedAt: 2026-11-18
 topic: testing
 kind: essay
 status: verified
+cover: cover-decision.webp
+coverAlt: 'Infographic: five questions to ask before you migrate a test suite from Tosca to Playwright: the problem, ownership, five-year cost, technology under test, and when not to migrate.'
 evidence:
   confidence: 'High for the tool facts, which I checked on the vendors'' own pages in November 2026. The "200+ technologies" figure is the vendor''s own statement, not something I verified. The lab is one small application, so my answers are an observation and not a general rule.'
   basedOn:
@@ -22,6 +24,8 @@ aiAssistance:
 A request to migrate a test suite often sounds like a tool question: "Should we move from Tosca to Playwright?" It can also come the other way round, from a team whose code-first suite has nobody left to maintain it. The tool is rarely the first thing to settle. A migration changes who owns quality, what the team pays and which skills it hires for. The technology under test can end the discussion early.
 
 Below are the questions I would put to such a team, in order. The facts about the tools were checked on the vendors' own pages in November 2026. My own experience comes from a lab: a fictional personal loan request application (PLR) that I built from a Pega Blueprint in a Pega Academy lab environment, on Pega Infinity '26.1 Constellation, tested with Tosca 26.1.2 (the [2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm) release line) and migrated to Playwright 1.65.0.
+
+![Decision flow: if the problem is suite design, fix the suite in place. If developers write the tests, code-first is the natural home; business testers who stay mean Tosca or a training budget. Browser applications fit Playwright, SAP GUI and desktop stay in Tosca, and mixed estates often use both.](decision-flow.webp)
 
 ## What problem are we solving?
 
