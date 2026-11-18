@@ -30,6 +30,10 @@ Bir ekip test paketini Tricentis Tosca’dan Playwright’a taşımaya karar ver
 
 Örneklerim bu amaçla kurduğum bir labdan geliyor: bir Pega Academy lab ortamında Pega Blueprint ile oluşturduğum kurgusal bir kişisel kredi talebi uygulaması (PLR). Uygulama Pega Infinity '26.1 Constellation üzerinde çalışıyor, Tosca 26.1.2 ile ([2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm) sürüm hattı) test edildi ve Playwright 1.65.0’a taşındı.
 
+![Pega App Studio’da Personal Loan Request case türü: Application Intake, Eligibility Review, Credit Review, Offer Management ve Funds Fulfilment aşamalarıyla iş akışı yaşam döngüsü ve Rework, Declined ile Approval Rejection alternatif aşamaları.](pega-plr-case-lifecycle.webp)
+
+*Pega App Studio’da PLR case türü, lab uygulamam. Kendi ekran görüntüm, kırpıldı.*
+
 ## Geçen bir test pek az şey kanıtlar
 
 Taşınan bir testin geçmesi pek az şey kanıtlar: hiçbir şeyi doğrulamayan bir test de geçer. Üretilmiş kodda da aynı risk var. Playwright dokümantasyonunun kendisi üretilen testlerin “may include initial errors” olabileceğini ve healer agent’ın, işlevin bozuk olduğuna inanırsa “a skipped test” döndürebileceğini söylüyor ([Playwright test agents](https://playwright.dev/docs/test-agents), 2026-11-17’de okundu). Özet görünümde bir skip, geçmiş gibi okunabilir.

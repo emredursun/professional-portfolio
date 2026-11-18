@@ -29,6 +29,10 @@ When a team has decided to move a test suite from Tricentis Tosca to Playwright,
 
 My examples come from a lab I built for this purpose: a fictional personal loan request application (PLR) that I built from a Pega Blueprint in a Pega Academy lab environment, on Pega Infinity '26.1 Constellation, tested with Tosca 26.1.2 (the [2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm) release line) and migrated to Playwright 1.65.0.
 
+![The Personal Loan Request case type in Pega App Studio: the workflow lifecycle with the stages Application Intake, Eligibility Review, Credit Review, Offer Management and Funds Fulfilment, and the alternate stages Rework, Declined and Approval Rejection.](pega-plr-case-lifecycle.webp)
+
+*The PLR case type in Pega App Studio, my lab application. Own screenshot, cropped.*
+
 ## A passing test proves little
 
 A migrated test that passes proves little: a test that asserts nothing passes too. Generated code has the same risk. The Playwright documentation itself says generated tests "may include initial errors", and that the healer agent can return "a skipped test if the healer believes that functionality is broken" ([Playwright test agents](https://playwright.dev/docs/test-agents), read 2026-11-17). On a summary view, a skip can be read as a pass.

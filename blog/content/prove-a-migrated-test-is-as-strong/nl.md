@@ -30,6 +30,10 @@ Als een team heeft besloten een testsuite van Tricentis Tosca naar Playwright te
 
 Mijn voorbeelden komen uit een lab dat ik hiervoor heb gebouwd: een fictieve applicatie voor persoonlijke leningaanvragen (PLR) die ik in een Pega Academy-labomgeving met een Pega Blueprint heb gebouwd. De applicatie draait op Pega Infinity '26.1 Constellation, is getest met Tosca 26.1.2 (de [2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm)-releaselijn) en gemigreerd naar Playwright 1.65.0.
 
+![Het casetype Personal Loan Request in Pega App Studio: de workflowlifecycle met de stages Application Intake, Eligibility Review, Credit Review, Offer Management en Funds Fulfilment, en de alternatieve stages Rework, Declined en Approval Rejection.](pega-plr-case-lifecycle.webp)
+
+*Het PLR-casetype in Pega App Studio, mijn labapplicatie. Eigen screenshot, bijgesneden.*
+
 ## Een slagende test bewijst weinig
 
 Een gemigreerde test die slaagt bewijst weinig: een test die niets controleert, slaagt ook. Gegenereerde code heeft hetzelfde risico. De Playwright-documentatie zelf zegt dat gegenereerde tests “may include initial errors” kunnen bevatten, en dat de healer agent “a skipped test” kan teruggeven als die denkt dat de functionaliteit kapot is ([Playwright test agents](https://playwright.dev/docs/test-agents), gelezen op 2026-11-17). In een samenvattend overzicht kan een skip worden gelezen als een pass.
