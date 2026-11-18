@@ -25,7 +25,7 @@ A request to migrate a test suite often sounds like a tool question: "Should we 
 
 Below are the questions I would put to such a team, in order. The facts about the tools were checked on the vendors' own pages in November 2026. My own experience comes from a lab: a fictional personal loan request application (PLR) that I built from a Pega Blueprint in a Pega Academy lab environment, on Pega Infinity '26.1 Constellation, tested with Tosca 26.1.2 (the [2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm) release line) and migrated to Playwright 1.65.0.
 
-![Decision flow: if the problem is suite design, fix the suite in place. If developers write the tests, code-first is the natural home; business testers who stay mean Tosca or a training budget. Browser applications fit Playwright, SAP GUI and desktop stay in Tosca, and mixed estates often use both.](decision-flow.webp)
+![Decision flow in four steps. Problem: if it is suite design, fixing the suite in place may be cheaper. Technology, which can end the discussion early: browser applications fit Playwright, SAP GUI and desktop stay in Tosca, mixed estates often use both. Authors: developers point to code-first; business testers who stay mean Tosca or a training budget. Cost: five years, including the migration and the parallel run.](decision-flow.webp)
 
 ## What problem are we solving?
 

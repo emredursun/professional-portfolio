@@ -26,7 +26,7 @@ Een verzoek om een testsuite te migreren klinkt vaak als een toolvraag: “Moete
 
 Hieronder staan de vragen die ik zo’n team in deze volgorde zou stellen. De feiten over de tools heb ik in november 2026 op de eigen pagina’s van de leveranciers gecontroleerd. Mijn eigen ervaring komt uit een lab: een fictieve applicatie voor persoonlijke leningaanvragen (PLR) die ik in een Pega Academy-labomgeving met een Pega Blueprint heb gebouwd. De applicatie draait op Pega Infinity '26.1 Constellation, is getest met Tosca 26.1.2 (de [2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm)-releaselijn) en gemigreerd naar Playwright 1.65.0.
 
-![Beslisschema: is het probleem het ontwerp van de suite, verbeter dan de suite ter plekke. Schrijven ontwikkelaars de tests, dan is code-first het natuurlijke thuis; business testers die blijven betekenen Tosca of een opleidingsbudget. Browserapplicaties passen bij Playwright, SAP GUI en desktop blijven in Tosca, en gemengde omgevingen gebruiken vaak allebei.](decision-flow.webp)
+![Beslisschema in vier stappen. Probleem: is het het ontwerp van de suite, dan kan de suite ter plekke verbeteren goedkoper zijn. Technologie, die de discussie vroeg kan beëindigen: browserapplicaties passen bij Playwright, SAP GUI en desktop blijven in Tosca, gemengde omgevingen gebruiken vaak allebei. Auteurs: schrijven ontwikkelaars de tests, dan is code-first het natuurlijke thuis; blijven business testers de auteurs, dan Tosca of een opleidingsbudget. Kosten: vijf jaar, inclusief de migratie en de parallelle periode.](decision-flow.webp)
 
 ## Welk probleem lossen we op?
 
