@@ -6,7 +6,7 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Lab sonuçları için yüksek: 2026-11-17 tarihli son çalıştırmadan geliyorlar. Tek bir küçük lab uygulaması, dolayısıyla genel bir kural değil, bir gözlem.'
+  confidence: 'Lab sonuçları için yüksek: yayımlanan dönüştürücüyle (1.0.0) 2026-11-17’de yapılan çalıştırmadan geliyorlar. Tek bir küçük lab uygulaması, dolayısıyla genel bir kural değil, bir gözlem.'
   basedOn:
     - 'Kendi labım: Pega Infinity 26.1 Constellation üzerinde kurgusal bir kişisel kredi talebi uygulaması, Tosca 26.1.2 ile test edildi ve Playwright 1.65.0’a taşındı'
     - 'Aynı lab hakkındaki önceki LinkedIn gönderim ve yazdığım dönüştürücü eklenti'
@@ -18,6 +18,7 @@ aiAssistance:
   assisted:
     - 'Claude kendi taslağımı iki ayrı yazıya böldü ve ifadeleri sıkılaştırdı'
     - 'Claude iddiaları atıf yapılan sayfalarla karşılaştırdı ve üç ayrıntıyı düzeltti (Airbnb zamanlaması, Node.js 20 ifadesi, desteklenen diller)'
+    - 'Claude lab rakamlarını dönüştürücünün sürüm kaydıyla karşılaştırdı ve 1.0.0 sürümüyle yapılan çalıştırmaya göre düzeltti'
 translation:
   from: 2026-11-18
   assistedByAi: true
@@ -70,11 +71,11 @@ L3, Google’ın kod incelemesinde büyük ölçekte kullandığı mutation test
 
 ## Lab ne gösterdi
 
-2026-11-17 tarihli son çalıştırmada kapsamda 20 TestCase vardı. Biri paylaşılan oturum açma ve ortam kontrolüyle karşılanıyordu, biri şablon tanımıydı, biri de sandbox TestCase’iydi; böylece 17’si taşındı. Aşağıdaki rakamlar, her biri Tosca’daki orijinaliyle tamı tamına aynı iş gereksinimlerini test eden bu taşınmış Playwright testlerine ait. Çalıştırmada iki hedef mimari kullanıldı, biri katmanlı, diğeri playwright-bdd üzerinde bir BDD mimarisi, ve kontrollerin 105 mutantının tamamı ikisinde de öldürüldü. Rakamlar [önceki LinkedIn gönderimden](https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi) farklı, çünkü son çalıştırma aşağıda anlatılan geçersiz parola TestCase’ini ekledi. O önceki çalıştırmada 16 TestCase ve 104 mutant vardı.
+Yayımlanan dönüştürücüyle (1.0.0, 2026-11-17) yapılan çalıştırmada kapsamda 20 TestCase vardı. Biri paylaşılan oturum açma ve ortam kontrolüyle karşılanıyordu, biri şablon tanımıydı, biri de sandbox TestCase’iydi. Kalan 17’nin 16’sı L1–L5 seviyesinde taşındı; her biri Tosca’daki orijinaliyle tamı tamına aynı iş gereksinimlerini test ediyor. Çalıştırmada iki hedef mimari kullanıldı, biri katmanlı, diğeri playwright-bdd üzerinde bir BDD mimarisi. İkisinde de kontrollerin 104 mutantının tamamı kendi kontrolünde öldürüldü, belirsiz kalan mutant olmadı ve taşınan testler aynı build’de Tosca ile aynı sonucu verdi. [LinkedIn gönderimde](https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi) de aynı rakamlar var.
 
-Bir test, tekrarlanan kararlılık çalıştırmalarında bir kez zaman aşımına uğradı; yeniden tekrarlandığında üç denemenin üçünde geçti. Bu çalıştırma yok sayılmak yerine kararlılık geçmişinde duruyor. L6 için iki tarafta da bir hata gerekir. Önceki çalıştırma bunu gösteremedi, çünkü Tosca’da hiçbir şey başarısız olmadı; bu yüzden son çalıştırma L6’yı bilerek enjekte edilmiş bir hatayla denetledi.
+Aynı gün yapılan daha önceki bir çalıştırmada bir test, tekrarlanan kararlılık çalıştırmalarında bir kez zaman aşımına uğradı; yeniden tekrarlandığında üç denemenin üçünde geçti. Bu çalıştırma yok sayılmak yerine kararlılık geçmişinde duruyor. L6 için iki tarafta da bir hata gerekir. Taşınan 16 testin hiçbiri Tosca’da başarısız olmadığı için lab bunu gösteremedi; bu yüzden L6, dönüştürücünün kendi uçtan uca testinde bilerek enjekte edilmiş bir hatayla denetleniyor.
 
-Taşınan 17 testin 16’sı aynı build’de Tosca ile aynı sonucu verdi. 17. test öğretici olanı. Adı, geçersiz parolayla bir oturum açmayı test ettiğini söylüyor. Ancak kontrolü oturum açmanın kabul edilmesini bekliyor. Tosca’da adım yanlış bir parola giriyor, Pega oturum açmayı reddediyor ve TestCase kendi kontrolünde başarısız oluyor. Taşınan test ise test hesabının parolasıyla oturum açıyor ve geçiyor. İki sonuç farklı ve kontrol ile ad birbirine ters düştüğü için vaka test sahibine gitti.
+17. TestCase öğretici olanı ve hâlâ açık. Adı, geçersiz parolayla bir oturum açmayı test ettiğini söylüyor. Ancak kontrolü oturum açmanın kabul edilmesini bekliyor. Tosca’da adım yanlış bir parola giriyor, Pega oturum açmayı reddediyor ve TestCase kendi kontrolünde başarısız oluyor. O önceki çalıştırmada taşınan test yine de test hesabının parolasını kullanıyor, oturum açıyor ve geçiyordu. İki sonuç farklıydı ve kontrol ile ad birbirine ters düştüğü için vaka test sahibine gitti. Yayımlanan dönüştürücü artık böyle bir teste hesap parolası vermiyor: test, sahibi testin yazacağı yanlış parolayı verene kadar bloke kalıyor.
 
 Bir geçiş, kimse fark etmeden bir testin amacını tersine çevirebilir. Labda bunu görünür kılan, test başına yapılan karşılaştırma oldu.
 
@@ -103,4 +104,4 @@ Başka bir yayın tarihi verilmediyse hepsi 2026-11-17’de okundu.
 - Ian Cartwright, Rob Horn, James Lewis, Patterns of Legacy Displacement: Divert the Flow (2022-01-20): https://martinfowler.com/articles/patterns-legacy-displacement/divert-the-flow.html
 - Goran Petrovic, Marko Ivankovic, State of Mutation Testing at Google (ICSE SEIP 2018): https://research.google/pubs/state-of-mutation-testing-at-google/
 - Airbnb Tech Blog, Accelerating Large-Scale Test Migration with LLMs: https://airbnb.tech/?p=366
-- Tosca’dan Playwright’a lab hakkındaki önceki LinkedIn gönderim (16 TestCase, 104 mutant): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
+- Tosca’dan Playwright’a lab hakkındaki LinkedIn gönderim (16 TestCase, 104 mutant): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi

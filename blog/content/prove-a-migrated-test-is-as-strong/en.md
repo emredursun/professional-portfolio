@@ -8,7 +8,7 @@ status: verified
 cover: cover-proof.webp
 coverAlt: 'Infographic: Tosca to a generated Playwright bridge to Playwright-native tests, proof levels L1 to L6, 17 TestCases migrated, 105 of 105 mutations caught, 16 of 17 same verdict.'
 evidence:
-  confidence: 'High for the lab results, which come from the latest run on 2026-11-17. One small lab application, so an observation and not a general rule.'
+  confidence: 'High for the lab results, which come from the run on the released converter (1.0.0) on 2026-11-17. One small lab application, so an observation and not a general rule.'
   basedOn:
     - 'A lab of my own: a fictional personal loan request application on Pega Infinity 26.1 Constellation, tested with Tosca 26.1.2 and migrated to Playwright 1.65.0'
     - 'My earlier LinkedIn post on the same lab, and the converter plugin I wrote'
@@ -20,6 +20,7 @@ aiAssistance:
   assisted:
     - 'Claude reworked my own draft into two separate posts and tightened the wording'
     - 'Claude checked claims against the cited pages and corrected three details (Airbnb timing, Node.js 20 wording, supported languages)'
+    - 'Claude checked the lab figures against the converter''s release record and corrected them to the run on version 1.0.0'
 ---
 
 ![Infographic: Tosca Commander to a generated Playwright bridge to Playwright-native tests, proof levels L1 to L6, and the figures 17 TestCases migrated, 105 of 105 check mutations caught, 16 of 17 with the same verdict as Tosca.](proof-levels.webp)
@@ -69,11 +70,11 @@ L3 borrows from mutation testing, which Google runs at scale in code review ([Pe
 
 ## What the lab showed
 
-In the latest run, on 2026-11-17, 20 TestCases were in scope. One was covered by the shared sign-in and environment check, one was a template definition and one a sandbox TestCase, so 17 were migrated. The figures below are for these migrated Playwright tests, each testing exactly the same business requirements as its Tosca original. The run used two target architectures, a layered one and a BDD one on playwright-bdd, and all 105 mutants of the checks were killed in both. The numbers differ from [my earlier LinkedIn post](https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi) because the latest run added the invalid-password TestCase described below. That earlier run had 16 TestCases and 104 mutants.
+In the run on the released converter (1.0.0, 2026-11-17), 20 TestCases were in scope. One was covered by the shared sign-in and environment check, one was a template definition and one a sandbox TestCase. Of the other 17, 16 were migrated at L1 to L5, each testing exactly the same business requirements as its Tosca original. The run used two target architectures, a layered one and a BDD one on playwright-bdd. In both, all 104 mutants of the checks were killed at their own check, with no inconclusive mutant, and the migrated tests gave the same verdict as Tosca on the same build. My [LinkedIn post](https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi) shows the same figures.
 
-One test timed out once in its repeated stability runs; repeated again, it passed three times out of three. That run stays in its stability history rather than being written off. L6 needs a failure on both sides. The earlier run could not show it, because nothing failed in Tosca, so the latest run checked L6 with a deliberately injected fault.
+In an earlier run that day, one test timed out once in its repeated stability runs; repeated again, it passed three times out of three. That run stays in its stability history rather than being written off. L6 needs a failure on both sides. The lab could not show it, because none of the 16 migrated tests failed in Tosca, so L6 is checked in the converter's own end-to-end test with a deliberately injected fault.
 
-16 of the 17 migrated tests gave the same verdict as Tosca on the same build. The 17th is the instructive one. Its name says it tests a login with an invalid password. Its check, however, expects the sign-in to be accepted. In Tosca the step enters a wrong password, Pega rejects the sign-in, so the TestCase fails at its own check. The migrated test signs in with the test account's password and passes. The two verdicts differ, and because the check and the name contradict each other, the case went to the test owner.
+The 17th TestCase is the instructive one, and it is still open. Its name says it tests a login with an invalid password. Its check, however, expects the sign-in to be accepted. In Tosca the step enters a wrong password, Pega rejects the sign-in, so the TestCase fails at its own check. In that earlier run, the migrated test still fell back to the test account's password, signed in and passed. The two verdicts differed, and because the check and the name contradict each other, the case went to the test owner. The released converter no longer gives such a test an account's password: it stays blocked until its owner supplies the wrong password it is meant to type.
 
 A migration can turn a test's intent around without anyone noticing. In the lab, the per-test comparison is what made it visible.
 
@@ -102,4 +103,4 @@ All read on 2026-11-17 unless a publication date is given.
 - Ian Cartwright, Rob Horn, James Lewis, Patterns of Legacy Displacement: Divert the Flow (2022-01-20): https://martinfowler.com/articles/patterns-legacy-displacement/divert-the-flow.html
 - Goran Petrovic, Marko Ivankovic, State of Mutation Testing at Google (ICSE SEIP 2018): https://research.google/pubs/state-of-mutation-testing-at-google/
 - Airbnb Tech Blog, Accelerating Large-Scale Test Migration with LLMs: https://airbnb.tech/?p=366
-- My earlier LinkedIn post on the Tosca to Playwright lab (16 TestCases, 104 mutants): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
+- My LinkedIn post on the Tosca to Playwright lab (16 TestCases, 104 mutants): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi

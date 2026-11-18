@@ -6,7 +6,7 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Hoog voor de labresultaten, die uit de laatste run van 2026-11-17 komen. Eén kleine labapplicatie, dus een waarneming en geen algemene regel.'
+  confidence: 'Hoog voor de labresultaten, die uit de run met de uitgebrachte converter (1.0.0) van 2026-11-17 komen. Eén kleine labapplicatie, dus een waarneming en geen algemene regel.'
   basedOn:
     - 'Een eigen lab: een fictieve applicatie voor persoonlijke leningaanvragen op Pega Infinity 26.1 Constellation, getest met Tosca 26.1.2 en gemigreerd naar Playwright 1.65.0'
     - 'Mijn eerdere LinkedIn-post over hetzelfde lab en de converterplugin die ik schreef'
@@ -18,6 +18,7 @@ aiAssistance:
   assisted:
     - 'Claude splitste mijn eigen concept in twee aparte posts en maakte de formuleringen strakker'
     - 'Claude controleerde beweringen tegen de aangehaalde pagina’s en corrigeerde drie details (timing van Airbnb, formulering over Node.js 20, ondersteunde talen)'
+    - 'Claude controleerde de labcijfers tegen het releaseverslag van de converter en corrigeerde ze naar de run met versie 1.0.0'
 translation:
   from: 2026-11-18
   assistedByAi: true
@@ -70,11 +71,11 @@ L3 leent van mutation testing, dat Google op grote schaal in code review draait 
 
 ## Wat het lab liet zien
 
-In de laatste run, op 2026-11-17, vielen 20 TestCases binnen de scope. Eén werd gedekt door de gedeelde inlog- en omgevingscheck, één was een templatedefinitie en één een sandbox-TestCase, dus 17 werden gemigreerd. De onderstaande cijfers gelden voor deze gemigreerde Playwright-tests, die elk precies dezelfde bedrijfsvereisten testen als hun Tosca-origineel. De run gebruikte twee doelarchitecturen, een gelaagde en een BDD-architectuur op playwright-bdd, en alle 105 mutanten van de checks werden in beide gedood. De cijfers verschillen van [mijn eerdere LinkedIn-post](https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi), omdat de laatste run de hieronder beschreven TestCase voor een ongeldig wachtwoord toevoegde. Die eerdere run had 16 TestCases en 104 mutanten.
+In de run met de uitgebrachte converter (1.0.0, 2026-11-17) vielen 20 TestCases binnen de scope. Eén werd gedekt door de gedeelde inlog- en omgevingscheck, één was een templatedefinitie en één een sandbox-TestCase. Van de overige 17 zijn er 16 gemigreerd op L1 tot en met L5; elk daarvan test precies dezelfde bedrijfsvereisten als zijn Tosca-origineel. De run gebruikte twee doelarchitecturen, een gelaagde en een BDD-architectuur op playwright-bdd. In beide werden alle 104 mutanten van de checks gedood op hun eigen check, zonder onbesliste mutanten, en gaven de gemigreerde tests hetzelfde oordeel als Tosca op dezelfde build. [Mijn LinkedIn-post](https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi) toont dezelfde cijfers.
 
-Eén test liep één keer op een time-out in zijn herhaalde stabiliteitsruns; opnieuw herhaald slaagde hij drie van de drie keer. Die run blijft in zijn stabiliteitshistorie staan in plaats van te worden weggewuifd. L6 vraagt om een falen aan beide kanten. De eerdere run kon dat niet laten zien, omdat er in Tosca niets faalde, dus de laatste run controleerde L6 met een bewust geïnjecteerde fout.
+In een eerdere run die dag liep één test één keer op een time-out in zijn herhaalde stabiliteitsruns; opnieuw herhaald slaagde hij drie van de drie keer. Die run blijft in zijn stabiliteitshistorie staan in plaats van te worden weggewuifd. L6 vraagt om een falen aan beide kanten. Het lab kon dat niet laten zien, omdat geen van de 16 gemigreerde tests in Tosca faalde. Daarom wordt L6 gecontroleerd in de eigen end-to-endtest van de converter, met een bewust geïnjecteerde fout.
 
-16 van de 17 gemigreerde tests gaven hetzelfde oordeel als Tosca op dezelfde build. De 17e is de leerzame. De naam zegt dat hij een login met een ongeldig wachtwoord test. De check verwacht echter dat het inloggen wordt geaccepteerd. In Tosca voert de stap een fout wachtwoord in, Pega wijst het inloggen af en de TestCase faalt op zijn eigen check. De gemigreerde test logt in met het wachtwoord van het testaccount en slaagt. De twee oordelen verschillen en omdat check en naam elkaar tegenspreken, ging de case naar de testeigenaar.
+De 17e TestCase is de leerzame, en die staat nog open. De naam zegt dat hij een login met een ongeldig wachtwoord test. De check verwacht echter dat het inloggen wordt geaccepteerd. In Tosca voert de stap een fout wachtwoord in, Pega wijst het inloggen af en de TestCase faalt op zijn eigen check. In die eerdere run viel de gemigreerde test nog terug op het wachtwoord van het testaccount, logde in en slaagde. De twee oordelen verschilden en omdat check en naam elkaar tegenspreken, ging de case naar de testeigenaar. De uitgebrachte converter geeft zo’n test geen accountwachtwoord meer: hij blijft geblokkeerd tot de eigenaar het foute wachtwoord aanlevert dat de test hoort te typen.
 
 Een migratie kan de bedoeling van een test omkeren zonder dat iemand het merkt. In het lab maakte de vergelijking per test dat zichtbaar.
 
@@ -103,4 +104,4 @@ Allemaal gelezen op 2026-11-17, tenzij een publicatiedatum is genoemd.
 - Ian Cartwright, Rob Horn, James Lewis, Patterns of Legacy Displacement: Divert the Flow (2022-01-20): https://martinfowler.com/articles/patterns-legacy-displacement/divert-the-flow.html
 - Goran Petrovic, Marko Ivankovic, State of Mutation Testing at Google (ICSE SEIP 2018): https://research.google/pubs/state-of-mutation-testing-at-google/
 - Airbnb Tech Blog, Accelerating Large-Scale Test Migration with LLMs: https://airbnb.tech/?p=366
-- Mijn eerdere LinkedIn-post over het Tosca-naar-Playwright-lab (16 TestCases, 104 mutanten): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
+- Mijn LinkedIn-post over het Tosca-naar-Playwright-lab (16 TestCases, 104 mutanten): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
