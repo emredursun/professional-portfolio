@@ -25,7 +25,7 @@ translation:
 
 ![İnfografik: Tosca Commander, üretilmiş bir Playwright köprüsü, Playwright’a özgü testler, L1’den L6’ya kanıt seviyeleri ve şu rakamlar: 17 TestCase taşındı, kontrol mutasyonlarının 105’inin 105’i yakalandı, 17 testin 16’sı Tosca ile aynı sonucu verdi.](proof-levels.webp)
 
-Bir ekip test paketini Tricentis Tosca’dan Playwright’a taşımaya karar verdiğinde en dikkatle baktığım kısım, dönüştürülen her testin orijinalin yakaladığını hâlâ yakaladığını bilmek. Kararın kendisi, yani taşınıp taşınmayacağı, [bir yoldaş yazıda](/tr/blog/tosca-or-playwright-before-you-migrate) ele alınıyor.
+Bir ekip test paketini Tricentis Tosca’dan Playwright’a taşımaya karar verdiğinde en dikkatle baktığım kısım, dönüştürülen her testin orijinalin yakaladığını hâlâ yakaladığını bilmek. Kararın kendisi, yani taşınıp taşınmayacağı, [ilk yazıda](/tr/blog/tosca-or-playwright-before-you-migrate) ele alınıyor.
 
 Örneklerim bu amaçla kurduğum bir labdan geliyor: bir Pega Academy lab ortamında Pega Blueprint ile oluşturduğum kurgusal bir kişisel kredi talebi uygulaması (PLR). Uygulama Pega Infinity '26.1 Constellation üzerinde çalışıyor, Tosca 26.1.2 ile ([2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm) sürüm hattı) test edildi ve Playwright 1.65.0’a taşındı.
 
