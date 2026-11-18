@@ -56,6 +56,10 @@ De gegenereerde code behoudt bewust de vorm van Tosca: één klasse per Module, 
 4. Bewijs per test, op zes niveaus (volgende sectie). Een test telt pas als gemigreerd wanneer zijn bewijs is vastgelegd tegen de code waarop het draaide.
 5. Parallelle run en uitfasering: draai beide suites op dezelfde builds, vergelijk de oordelen per test en fase Tosca-TestCases stap voor stap uit. Een cutover in één keer zou de vergelijking wegnemen die het bewijs mogelijk maakt.
 
+![Voorbeeld van een Playwright HTML-rapport uit de Playwright-documentatie: een lijst tests met een oordeel per test en per browser, hier 72 geslaagd en 6 gefaald.](playwright-html-report.webp)
+
+*Screenshot: Playwright-documentatie, © Microsoft, [Apache License 2.0](https://github.com/microsoft/playwright/blob/main/LICENSE), bijgesneden. Voorbeeldrapport, niet uit het lab.*
+
 ## Zes niveaus van bewijs
 
 | Niveau | Wat het bewijst |
@@ -68,6 +72,10 @@ De gegenereerde code behoudt bewust de vorm van Tosca: één klasse per Module, 
 | L6 | Als beide falen, falen ze bij dezelfde stap |
 
 L3 leent van mutation testing, dat Google op grote schaal in code review draait ([Petrovic en Ivankovic, State of Mutation Testing at Google](https://research.google/pubs/state-of-mutation-testing-at-google/)). L5 en L6 lenen van parallel draaien bij het vervangen van legacy, waarmee wordt gecontroleerd dat “key numbers match up” tussen oud en nieuw ([Cartwright, Horn en Lewis, Patterns of Legacy Displacement, 2022](https://martinfowler.com/articles/patterns-legacy-displacement/divert-the-flow.html)).
+
+![Voorbeeld van de Playwright Trace Viewer uit de Playwright-documentatie: de acties van een gefaalde test, met de mislukte klikstap gemarkeerd en de fout eronder.](playwright-trace-viewer.webp)
+
+*Screenshot: Playwright-documentatie, © Microsoft, [Apache License 2.0](https://github.com/microsoft/playwright/blob/main/LICENSE), bijgesneden. Voorbeeldtrace, niet uit het lab.*
 
 ## Wat het lab liet zien
 
@@ -107,3 +115,4 @@ Allemaal gelezen op 2026-11-17, tenzij een publicatiedatum is genoemd.
 - Goran Petrovic, Marko Ivankovic, State of Mutation Testing at Google (ICSE SEIP 2018): https://research.google/pubs/state-of-mutation-testing-at-google/
 - Airbnb Tech Blog, Accelerating Large-Scale Test Migration with LLMs: https://airbnb.tech/?p=366
 - Mijn LinkedIn-post over het Tosca-naar-Playwright-lab (16 TestCases, 104 mutanten): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
+- Afbeeldingen uit de Playwright-documentatie, HTML-rapport en Trace Viewer (Apache License 2.0, gedownload op 2026-11-19): https://github.com/microsoft/playwright/tree/main/docs/src/images/getting-started

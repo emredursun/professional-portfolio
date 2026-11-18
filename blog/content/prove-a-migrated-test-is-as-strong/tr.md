@@ -56,6 +56,10 @@ Tricentis Tosca’dan Playwright’a resmi bir dönüştürücü bulamadım, bu 
 4. Test başına kanıt, altı seviyede (sonraki bölüm). Bir test, ancak kanıtı çalıştığı kodla birlikte kaydedildiğinde taşınmış sayılır.
 5. Paralel çalıştırma ve emeklilik: iki paketi aynı build’lerde çalıştır, sonuçları test başına karşılaştır ve Tosca TestCase’lerini dilim dilim emekli et. Her şeyi bir seferde geçirmek, kanıtı mümkün kılan karşılaştırmayı ortadan kaldırırdı.
 
+![Playwright dokümantasyonundan örnek bir Playwright HTML raporu: her test ve tarayıcı için sonucuyla bir test listesi, burada 72 geçen ve 6 başarısız test.](playwright-html-report.webp)
+
+*Ekran görüntüsü: Playwright dokümantasyonu, © Microsoft, [Apache License 2.0](https://github.com/microsoft/playwright/blob/main/LICENSE), kırpıldı. Örnek rapor, labdan değil.*
+
 ## Altı kanıt seviyesi
 
 | Seviye | Neyi kanıtlar |
@@ -68,6 +72,10 @@ Tricentis Tosca’dan Playwright’a resmi bir dönüştürücü bulamadım, bu 
 | L6 | İkisi de başarısız olduğunda aynı adımda başarısız olurlar |
 
 L3, Google’ın kod incelemesinde büyük ölçekte kullandığı mutation testing’den ödünç alır ([Petrovic ve Ivankovic, State of Mutation Testing at Google](https://research.google/pubs/state-of-mutation-testing-at-google/)). L5 ve L6 ise eski sistemin değiştirilmesinde kullanılan paralel çalıştırmadan ödünç alır; bu yöntem eski ve yeni arasında “key numbers match up” olduğunu denetlemek için kullanılır ([Cartwright, Horn ve Lewis, Patterns of Legacy Displacement, 2022](https://martinfowler.com/articles/patterns-legacy-displacement/divert-the-flow.html)).
+
+![Playwright dokümantasyonundan örnek bir Playwright Trace Viewer görünümü: başarısız bir testin adımları; başarısız olan tıklama adımı vurgulanmış, hatası da altında.](playwright-trace-viewer.webp)
+
+*Ekran görüntüsü: Playwright dokümantasyonu, © Microsoft, [Apache License 2.0](https://github.com/microsoft/playwright/blob/main/LICENSE), kırpıldı. Örnek trace, labdan değil.*
 
 ## Lab ne gösterdi
 
@@ -107,3 +115,4 @@ Başka bir yayın tarihi verilmediyse hepsi 2026-11-17’de okundu.
 - Goran Petrovic, Marko Ivankovic, State of Mutation Testing at Google (ICSE SEIP 2018): https://research.google/pubs/state-of-mutation-testing-at-google/
 - Airbnb Tech Blog, Accelerating Large-Scale Test Migration with LLMs: https://airbnb.tech/?p=366
 - Tosca’dan Playwright’a lab hakkındaki LinkedIn gönderim (16 TestCase, 104 mutant): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
+- Playwright dokümantasyonu görselleri, HTML raporu ve Trace Viewer (Apache License 2.0, 2026-11-19’da indirildi): https://github.com/microsoft/playwright/tree/main/docs/src/images/getting-started
