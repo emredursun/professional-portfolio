@@ -6,7 +6,7 @@ topic: testing
 kind: essay
 status: verified
 cover: cover-proof.webp
-coverAlt: 'Infographic: Tosca to a generated Playwright bridge to Playwright-native tests, proof levels L1 to L6, 17 TestCases migrated, 105 of 105 mutations caught, 16 of 17 same verdict.'
+coverAlt: 'Infographic: Tosca to a generated Playwright bridge to Playwright-native tests, proof levels L1 to L6, 16 TestCases migrated, 104 of 104 mutations caught, 16 of 16 same verdict, 1 open.'
 evidence:
   confidence: 'High for the lab results, which come from the run on the released converter (1.0.0) on 2026-11-17. One small lab application, so an observation and not a general rule.'
   basedOn:
@@ -23,7 +23,7 @@ aiAssistance:
     - 'Claude checked the lab figures against the converter''s release record and corrected them to the run on version 1.0.0'
 ---
 
-![Infographic: Tosca Commander to a generated Playwright bridge to Playwright-native tests, proof levels L1 to L6, and the figures 17 TestCases migrated, 105 of 105 check mutations caught, 16 of 17 with the same verdict as Tosca.](proof-levels.webp)
+![Infographic: Tosca Commander to a generated Playwright bridge to Playwright-native tests, proof levels L1 to L6, and the figures 16 TestCases migrated, 104 of 104 check mutations caught, 16 of 16 with the same verdict as Tosca, 1 open.](proof-levels.webp)
 
 When a team has decided to move a test suite from Tricentis Tosca to Playwright, the part I scrutinise most is knowing that each converted test still catches what the original caught. The decision itself, whether to migrate at all, is in [a companion post](/blog/tosca-or-playwright-before-you-migrate).
 

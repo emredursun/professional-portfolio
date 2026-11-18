@@ -24,7 +24,7 @@ translation:
   assistedByAi: true
 ---
 
-![Infographic: Tosca Commander naar een gegenereerde Playwright-bridge naar Playwright-native tests, bewijsniveaus L1 tot en met L6 en de cijfers 17 gemigreerde TestCases, 105 van de 105 mutaties van checks gevangen, 16 van de 17 met hetzelfde oordeel als Tosca.](proof-levels.webp)
+![Infographic: Tosca Commander naar een gegenereerde Playwright-bridge naar Playwright-native tests, bewijsniveaus L1 tot en met L6 en de cijfers 16 gemigreerde TestCases, 104 van de 104 mutaties van checks gevangen, 16 van de 16 met hetzelfde oordeel als Tosca, 1 open.](proof-levels.webp)
 
 Als een team heeft besloten een testsuite van Tricentis Tosca naar Playwright te verplaatsen, is het onderdeel waar ik het kritiekst naar kijk: weten dat elke geconverteerde test nog steeds vangt wat het origineel ving. De beslissing zelf, of je überhaupt moet migreren, staat in [een bijbehorende post](/nl/blog/tosca-or-playwright-before-you-migrate).
 

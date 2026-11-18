@@ -24,7 +24,7 @@ translation:
   assistedByAi: true
 ---
 
-![İnfografik: Tosca Commander, üretilmiş bir Playwright köprüsü, Playwright’a özgü testler, L1’den L6’ya kanıt seviyeleri ve şu rakamlar: 17 TestCase taşındı, kontrol mutasyonlarının 105’inin 105’i yakalandı, 17 testin 16’sı Tosca ile aynı sonucu verdi.](proof-levels.webp)
+![İnfografik: Tosca Commander, üretilmiş bir Playwright köprüsü, Playwright’a özgü testler, L1’den L6’ya kanıt seviyeleri ve şu rakamlar: 16 TestCase taşındı, kontrol mutasyonlarının 104’ünün 104’ü yakalandı, 16 testin 16’sı Tosca ile aynı sonucu verdi, 1 açık.](proof-levels.webp)
 
 Bir ekip test paketini Tricentis Tosca’dan Playwright’a taşımaya karar verdiğinde en dikkatle baktığım kısım, dönüştürülen her testin orijinalin yakaladığını hâlâ yakaladığını bilmek. Kararın kendisi, yani taşınıp taşınmayacağı, [ilk yazıda](/tr/blog/tosca-or-playwright-before-you-migrate) ele alınıyor.
 
