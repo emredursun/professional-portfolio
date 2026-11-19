@@ -6,7 +6,7 @@ topic: life
 kind: essay
 status: hypothesis
 draft: true
-cover: cover-subscription-abstract.webp
+cover: cover-model-y-performance.webp
 evidence:
   confidence: 'Medium. The prices and the cost tables are my own arithmetic from the figures in the sources. The sources are news and comparison sites, read on 2026-11-19, and prices in a configurator can change. The UK maintenance figures come from a search result because the page itself could not be opened, so treat them as low confidence. The proposal is my opinion, not a finding.'
   basedOn:
@@ -14,6 +14,7 @@ evidence:
     - 'An energy cost comparison (Eleport) and UK maintenance figures (Dick Lovett)'
     - 'The texts of the EU directives and the General Safety Regulation on EUR-Lex'
     - 'My own experience as a new owner of a Tesla Model Y'
+    - 'Photos from Wikimedia Commons (CC BY-SA 4.0), credited under each photo and in the sources'
   recheckedAt: 2026-11-19
 aiAssistance:
   mine:
@@ -22,6 +23,7 @@ aiAssistance:
     - 'Claude checked each claim in my draft against the cited pages and flagged the ones the pages do not support'
     - 'Claude recomputed the cost tables and made the charts'
     - 'Claude edited my wording, added the source links and the hedges in the legal section, and applied the corrections from the fact check'
+    - 'Claude blurred the licence plates and faces in the Wikimedia Commons photos and resized them'
     - 'Claude converted my draft to the blog format; I decide what is published'
 ---
 
@@ -37,6 +39,20 @@ My goal is a constructive conversation with Tesla, not an attack on the brand.
 
 I took delivery of a Tesla Model Y Premium Long Range AWD in November 2026. Before choosing it, I compared several electric cars. Future FSD support mattered to me: I ruled out a used Model S Plaid because its Hardware 3 computer would not support FSD (Supervised), which in Europe is approved for Hardware 4 cars only. That is why the way these features are sold matters to me.
 
+*The Tesla photos on this page are not of my car. They come from Wikimedia Commons.*
+
+![Grey-blue Tesla Model Y Long Range AWD in a showroom, with visitors and staff in the background blurred.](model-y-long-range-showroom.webp)
+
+*Tesla Model Y Long Range AWD (2025) in a showroom. Photo: Chanokchon, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg). Faces blurred, resized. A display car, not mine.*
+
+![White Tesla Model Y Performance seen from the front left, parked outdoors, with the licence plate blurred.](model-y-performance-front.webp)
+
+*Tesla Model Y Performance, front. Photo: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg). Licence plate blurred, resized. This is the Performance trim, not my car.*
+
+![White Tesla Model Y Performance seen from the rear left, parked outdoors.](model-y-performance-rear.webp)
+
+*Tesla Model Y Performance, rear. Photo: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg). Licence plate and a sticker blurred, background people blurred, resized.*
+
 ## The facts
 
 These points come from public sources, listed at the end of this article.
@@ -46,6 +62,10 @@ These points come from public sources, listed at the end of this article.
 - The one-time purchase option is gone. It ended on 15 May 2026 in the Netherlands and on 21 May in most of the rest of Europe ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). Until then it cost €7,500 in the Dutch configurator ([Electrek, 12 May 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[OWNER SLOT: check tesla.com/nl_nl on the day you publish and say what the configurator shows.]*
 - Electrek reports that the Dutch base car no longer comes with lane centering (Autosteer) and that Basic Autopilot is no longer an option on new orders; the base car keeps only the emergency lane-keeping that EU law requires ([Electrek, 12 May 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[OWNER SLOT: confirm on your own car, add your screenshot, and say whether adaptive cruise control is still included.]*
 - Safety features required by EU law stay standard. Under the EU General Safety Regulation, automatic emergency braking and emergency lane-keeping are mandatory on new cars ([Regulation (EU) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) and are not part of the subscription. This article is about driver assistance that is sold separately, not about safety features required by law.
+
+![Interior of a Tesla Model Y Long Range AWD: the steering wheel and the centre touchscreen.](model-y-long-range-dashboard.webp)
+
+*Steering wheel and centre screen of a Tesla Model Y Long Range AWD. Photo: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg). Faces blurred, resized. A display car, not mine.*
 
 ## The cost over the life of a car
 
@@ -215,3 +235,11 @@ All links opened on 2026-11-19 unless noted.
 - Directive 2005/29/EC, unfair commercial practices: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029
 - Directive 93/13/EEC, unfair contract terms: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31993L0013
 - Directive (EU) 2019/2161, Omnibus: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L2161
+
+Photos from Wikimedia Commons, adapted as described and shared under the same licence, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/):
+
+- Cover photo (shown on the blog index only), Tesla Model Y Performance (2025), Alexander Migl. Licence plate blurred, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
+- Tesla Model Y Long Range AWD in a showroom, Chanokchon. Faces blurred, resized: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
+- Tesla Model Y Performance, front, Ethan Llamas. Licence plate blurred, resized: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg
+- Tesla Model Y Performance, rear, Ethan Llamas. A sticker and people in the background blurred, resized: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg
+- Tesla Model Y Long Range AWD, steering wheel and centre screen, Ethan Llamas. People in the background blurred, resized: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg

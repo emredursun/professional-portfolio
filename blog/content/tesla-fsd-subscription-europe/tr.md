@@ -13,6 +13,7 @@ evidence:
     - 'Bir enerji maliyeti karşılaştırması (Eleport) ve İngiltere bakım rakamları (Dick Lovett)'
     - 'AB direktiflerinin ve Genel Güvenlik Yönetmeliği’nin EUR-Lex metinleri'
     - 'Yeni bir Tesla Model Y sahibi olarak kendi deneyimim'
+    - 'Wikimedia Commons fotoğrafları (CC BY-SA 4.0), her fotoğrafın altında ve kaynaklarda anıldı'
   recheckedAt: 2026-11-19
 aiAssistance:
   mine:
@@ -21,6 +22,7 @@ aiAssistance:
     - 'Claude taslağımdaki her iddiayı atıf yapılan sayfalarla karşılaştırdı ve sayfaların desteklemediklerini işaretledi'
     - 'Claude maliyet tablolarını yeniden hesapladı ve grafikleri yaptı'
     - 'Claude ifadelerimi düzenledi, kaynak linklerini, hukuki bölümdeki temkinli ifadeleri ve doğrulama kontrolünden gelen düzeltmeleri ekledi'
+    - 'Claude, Wikimedia Commons fotoğraflarındaki plakaları ve yüzleri bulanıklaştırdı ve boyutlarını küçülttü'
     - 'Claude taslağımı blog biçimine çevirdi; neyin yayımlanacağına ben karar veririm'
 translation:
   from: 2026-11-19
@@ -39,6 +41,20 @@ Amacım Tesla ile yapıcı bir diyalog kurmak, markaya saldırmak değil.
 
 Kasım 2026’da bir Tesla Model Y Premium Long Range AWD teslim aldım. Karar vermeden önce birçok elektrikli aracı karşılaştırdım. Gelecekte FSD desteği benim için önemliydi: ikinci el bir Model S Plaid’i, Hardware 3 bilgisayarı Avrupa’da yalnızca Hardware 4’lü araçlar için onaylanan FSD (Supervised)’ı desteklemediği için eledim. Bu özelliklerin nasıl satıldığı da bu yüzden benim için önemli.
 
+*Bu sayfadaki Tesla fotoğrafları benim aracım değil. Wikimedia Commons’tan alındı.*
+
+![Bir showroom’da gri-mavi Tesla Model Y Long Range AWD; arka plandaki ziyaretçiler ve çalışanlar bulanıklaştırıldı.](model-y-long-range-showroom.webp)
+
+*Showroom’da Tesla Model Y Long Range AWD (2025). Fotoğraf: Chanokchon, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), aracılığıyla [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg). Yüzler bulanıklaştırıldı, boyutu küçültüldü. Sergi aracı, benim aracım değil.*
+
+![Açık havada park etmiş beyaz Tesla Model Y Performance, sol önden görünüş; plaka bulanıklaştırıldı.](model-y-performance-front.webp)
+
+*Tesla Model Y Performance, ön. Fotoğraf: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), aracılığıyla [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg). Plaka bulanıklaştırıldı, boyutu küçültüldü. Bu Performance donanımı, benim aracım değil.*
+
+![Açık havada park etmiş beyaz Tesla Model Y Performance, sol arkadan görünüş.](model-y-performance-rear.webp)
+
+*Tesla Model Y Performance, arka. Fotoğraf: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), aracılığıyla [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg). Plaka ve bir çıkartma bulanıklaştırıldı, arka plandaki kişiler bulanıklaştırıldı, boyutu küçültüldü.*
+
 ## Gerçekler
 
 Bu bilgiler, yazının sonunda listelenen kamuya açık kaynaklardan alındı.
@@ -48,6 +64,10 @@ Bu bilgiler, yazının sonunda listelenen kamuya açık kaynaklardan alındı.
 - Tek seferlik satın alma seçeneği kalktı. Hollanda’da 15 Mayıs 2026’da, Avrupa’nın geri kalanının çoğunda 21 Mayıs’ta sona erdi ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). O zamana kadar Hollanda yapılandırıcısında €7.500’dü ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[SAHİP ALANI: yayın günü tesla.com/nl_nl adresini kontrol et ve yapılandırıcının ne gösterdiğini yaz.]*
 - Electrek, Hollanda’daki baz araçta artık şerit ortalamanın (Autosteer) gelmediğini ve yeni siparişlerde Basic Autopilot’un artık seçenek olarak sunulmadığını bildiriyor; baz araçta yalnızca AB yasasının zorunlu kıldığı acil şerit koruma kalıyor ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[SAHİP ALANI: kendi aracında doğrula, ekran görüntünü ekle ve adaptif hız sabitleyicinin hâlâ dahil olup olmadığını yaz.]*
 - AB yasasının zorunlu kıldığı güvenlik özellikleri standart kalıyor. AB Genel Güvenlik Yönetmeliği’ne göre otomatik acil fren ve acil şerit koruma yeni araçlarda zorunlu ([Yönetmelik (AB) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) ve aboneliğe dahil değil. Bu yazı yasal zorunlu güvenlik özellikleriyle değil, ayrıca satılan sürüş destek özellikleriyle ilgili.
+
+![Tesla Model Y Long Range AWD’nin içi: direksiyon ve orta dokunmatik ekran.](model-y-long-range-dashboard.webp)
+
+*Tesla Model Y Long Range AWD’nin direksiyonu ve orta ekranı. Fotoğraf: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), aracılığıyla [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg). Yüzler bulanıklaştırıldı, boyutu küçültüldü. Sergi aracı, benim aracım değil.*
 
 ## Bir aracın ömrü boyunca maliyet
 
@@ -217,3 +237,11 @@ Aksi belirtilmedikçe tüm linkler 2026-11-19’da açıldı.
 - Direktif 2005/29/AT, haksız ticari uygulamalar: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029
 - Direktif 93/13/AET, haksız sözleşme şartları: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31993L0013
 - Direktif (AB) 2019/2161, Omnibus: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L2161
+
+Wikimedia Commons fotoğrafları, belirtildiği gibi uyarlandı ve aynı lisansla, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), paylaşıldı:
+
+- Kapak fotoğrafı (yalnızca blog dizininde görünür), Tesla Model Y Performance (2025), Alexander Migl. Plaka bulanıklaştırıldı, boyutu küçültüldü, hafifçe yumuşatıldı: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
+- Showroom’da Tesla Model Y Long Range AWD, Chanokchon. Yüzler bulanıklaştırıldı, boyutu küçültüldü: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
+- Tesla Model Y Performance, ön, Ethan Llamas. Plaka bulanıklaştırıldı, boyutu küçültüldü: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg
+- Tesla Model Y Performance, arka, Ethan Llamas. Bir çıkartma ve arka plandaki kişiler bulanıklaştırıldı, boyutu küçültüldü: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg
+- Tesla Model Y Long Range AWD, direksiyon ve orta ekran, Ethan Llamas. Arka plandaki kişiler bulanıklaştırıldı, boyutu küçültüldü: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg

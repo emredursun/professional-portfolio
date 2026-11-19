@@ -13,6 +13,7 @@ evidence:
     - 'Een vergelijking van energiekosten (Eleport) en Britse onderhoudscijfers (Dick Lovett)'
     - 'De EUR-Lex-teksten van de EU-richtlijnen en de General Safety Regulation'
     - 'Mijn eigen ervaring als nieuwe eigenaar van een Tesla Model Y'
+    - 'Foto’s van Wikimedia Commons (CC BY-SA 4.0), vermeld bij elke foto en in de bronnen'
   recheckedAt: 2026-11-19
 aiAssistance:
   mine:
@@ -21,6 +22,7 @@ aiAssistance:
     - 'Claude controleerde elke bewering in mijn concept aan de hand van de genoemde pagina’s en markeerde wat die pagina’s niet ondersteunen'
     - 'Claude rekende de kostentabellen na en maakte de grafieken'
     - 'Claude bewerkte mijn formuleringen, voegde de bronlinks en de voorbehouden in het juridische deel toe en verwerkte de correcties uit de feitencontrole'
+    - 'Claude vervaagde de kentekens en gezichten in de foto’s van Wikimedia Commons en paste het formaat aan'
     - 'Claude zette mijn concept om naar het blogformaat; ik beslis wat er wordt gepubliceerd'
 translation:
   from: 2026-11-19
@@ -39,6 +41,20 @@ Mijn doel is een constructief gesprek met Tesla, geen aanval op het merk.
 
 In november 2026 nam ik een Tesla Model Y Premium Long Range AWD in ontvangst. Voordat ik koos, vergeleek ik meerdere elektrische auto’s. Toekomstige FSD-ondersteuning was voor mij belangrijk: ik viel af op een tweedehands Model S Plaid, omdat de Hardware 3-computer daarvan FSD (Supervised) niet ondersteunt, dat in Europa alleen voor auto’s met Hardware 4 is goedgekeurd. Daarom is de manier waarop deze functies worden verkocht belangrijk voor mij.
 
+*De Tesla-foto’s op deze pagina zijn niet van mijn auto. Ze komen van Wikimedia Commons.*
+
+![Grijsblauwe Tesla Model Y Long Range AWD in een showroom, met bezoekers en personeel op de achtergrond vervaagd.](model-y-long-range-showroom.webp)
+
+*Tesla Model Y Long Range AWD (2025) in een showroom. Foto: Chanokchon, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg). Gezichten vervaagd, formaat aangepast. Een toonzaalauto, niet de mijne.*
+
+![Witte Tesla Model Y Performance linksvoor gezien, buiten geparkeerd, met vervaagd kenteken.](model-y-performance-front.webp)
+
+*Tesla Model Y Performance, voorkant. Foto: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg). Kenteken vervaagd, formaat aangepast. Dit is de Performance-uitvoering, niet mijn auto.*
+
+![Witte Tesla Model Y Performance linksachter gezien, buiten geparkeerd.](model-y-performance-rear.webp)
+
+*Tesla Model Y Performance, achterkant. Foto: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg). Kenteken en een sticker vervaagd, mensen op de achtergrond vervaagd, formaat aangepast.*
+
 ## De feiten
 
 Deze punten komen uit openbare bronnen, die onderaan dit artikel staan.
@@ -48,6 +64,10 @@ Deze punten komen uit openbare bronnen, die onderaan dit artikel staan.
 - Eenmalige aankoop is niet meer mogelijk. Die optie eindigde op 15 mei 2026 in Nederland en op 21 mei in het grootste deel van de rest van Europa ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). Tot dan kostte het €7.500 in de Nederlandse configurator ([Electrek, 12 mei 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[EIGENAARSVAK: controleer op de dag van publicatie tesla.com/nl_nl en schrijf op wat de configurator toont.]*
 - Electrek meldt dat de Nederlandse basisauto niet langer rijstrookcentrering (Autosteer) heeft en dat Basic Autopilot bij nieuwe bestellingen niet meer als optie wordt aangeboden; de basisauto houdt alleen de noodrijstrookassistentie die de EU voorschrijft ([Electrek, 12 mei 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[EIGENAARSVAK: controleer dit op uw eigen auto, voeg uw screenshot toe en schrijf of adaptieve cruisecontrol nog is inbegrepen.]*
 - Wettelijk verplichte veiligheidsfuncties blijven standaard. Onder de Europese General Safety Regulation zijn automatisch noodremmen en noodrijstrookassistentie verplicht op nieuwe auto’s ([Verordening (EU) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) en vallen ze niet onder het abonnement. Dit artikel gaat over rijassistentie die apart wordt verkocht, niet over wettelijk verplichte veiligheidsfuncties.
+
+![Interieur van een Tesla Model Y Long Range AWD: het stuur en het middenscherm.](model-y-long-range-dashboard.webp)
+
+*Stuur en middenscherm van een Tesla Model Y Long Range AWD. Foto: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg). Gezichten vervaagd, formaat aangepast. Een toonzaalauto, niet de mijne.*
 
 ## De kosten over de levensduur van een auto
 
@@ -217,3 +237,11 @@ Alle links zijn op 2026-11-19 geopend, tenzij anders vermeld.
 - Richtlijn 2005/29/EG, oneerlijke handelspraktijken: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029
 - Richtlijn 93/13/EEG, oneerlijke bedingen: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31993L0013
 - Richtlijn (EU) 2019/2161, Omnibus: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L2161
+
+Foto’s van Wikimedia Commons, aangepast zoals beschreven en onder dezelfde licentie gedeeld, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/):
+
+- Omslagfoto (alleen zichtbaar op de blogindex), Tesla Model Y Performance (2025), Alexander Migl. Kenteken vervaagd, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
+- Tesla Model Y Long Range AWD in een showroom, Chanokchon. Gezichten vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
+- Tesla Model Y Performance, voorkant, Ethan Llamas. Kenteken vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg
+- Tesla Model Y Performance, achterkant, Ethan Llamas. Een sticker en mensen op de achtergrond vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg
+- Tesla Model Y Long Range AWD, stuur en middenscherm, Ethan Llamas. Mensen op de achtergrond vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg
