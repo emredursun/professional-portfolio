@@ -4,7 +4,7 @@
  */
 
 import { markup, raw } from '../html.js';
-import { PERSON_ID } from '../../lib/route-meta.js';
+import { PERSON_ID, SITE_NAME, SITE_URL } from '../../lib/route-meta.js';
 import { previewImage } from './head.js';
 import {
   blogUrl,
@@ -58,11 +58,25 @@ function articleMeta(post, assets) {
       inLanguage: post.lang,
       mainEntityOfPage: url,
       image: image.url,
-      author: { '@id': PERSON_ID },
-      publisher: { '@id': PERSON_ID },
+      author: personNode(post.lang),
+      publisher: personNode(post.lang),
       isPartOf: { '@id': `${blogUrl(post.lang)}#blog` },
       ...translationLinks(post),
     },
+  };
+}
+
+/**
+ * The site owner as a full Person node. Search engines resolve a reference
+ * only within the same page, so author and publisher carry the name inline;
+ * the @id still matches the site-wide node in index.html.
+ */
+function personNode(lang) {
+  return {
+    '@type': 'Person',
+    '@id': PERSON_ID,
+    name: SITE_NAME,
+    url: `${SITE_URL}${portfolioPath(lang, '/about')}`,
   };
 }
 
