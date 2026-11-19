@@ -2,13 +2,14 @@
 title: 'Beschrijf de uitkomst, controleer daarna: agentic AI en softwaretesten'
 description: 'Notities van The Collective 2026: agentic AI als nieuwe interfacelaag, onderzoek naar vertrouwen in AI-output en waarom testers blijven controleren.'
 publishedAt: 2026-11-13
+updatedAt: 2026-11-19
 topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Gemiddeld: mijn eigen kijk op waar ons werk naartoe gaat, na één bedrijfsevent. Geen voorspelling.'
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 november 2026'
+    - 'Officiële aftermovie en de openbare beschrijving op Vimeo, Sopra Steria Benelux, 19 november 2026'
     - 'De sessie Human & Tech: Agentic Development: Teams Reimagined op hetzelfde event'
     - 'Openbare LinkedIn-post van de host van de sessie'
     - 'Persbericht van Gartner over agentic AI, 25 juni 2025'
@@ -16,14 +17,9 @@ evidence:
     - 'Stack Overflow Developer Survey 2026'
     - 'DORA, State of AI-assisted Software Development 2025'
   recheckedAt: 2026-11-13
-aiAssistance:
-  mine:
-    - 'De dag, de foto’s, wat me bijbleef en hoe ik het in mijn werk toepas'
-  assisted:
-    - 'Claude maakte van mijn aantekeningen deze tekst en stelde de onderzoeksbronnen voor'
+aiAssisted: true
 translation:
-  from: 2026-11-13
-  assistedByAi: true
+  from: 2026-11-19
 ---
 
 ![Een rustige landweg bij zonsopkomst, met lage mist en kale bomen als silhouet tegen een oranje lucht.](unsplash-misty-road.webp)
@@ -36,9 +32,20 @@ Als steeds meer van ons werk begint met een beschreven uitkomst die een agent om
 
 Mijn dag begon eerder. Vanaf 10:30, voordat het hoofdprogramma ’s middags begon, was ik een van de facilitators van een workshop en begeleidde ik de deelnemers erdoorheen.
 
+![Eventkaart van The Collective ’26 met de datum, 11 november 2026, de tijden 14:00 tot 21:30 en de locatie, AFAS Theater, Leusden.](collective26-event-card.webp)
+
+Het hoofdprogramma liep van de middag tot in de avond. Sopra Steria Benelux heeft inmiddels een korte aftermovie van de dag gedeeld. In [de eigen beschrijving op Vimeo](https://vimeo.com/1248246223) noemt het bedrijf The Collective zijn strategie-event, met zo’n 800 collega’s. De CEO deelde de ambities voor 2030, een talk ging over de menselijke kant van AI, en collega’s stonden zelf op het podium in de HUMAN- en TECH-break-outsessies.
+
+```vimeo
+id: 1248246223
+title: The Collective 2026: where human and tech come together
+titleLang: en
+credit: Sopra Steria Benelux
+```
+
 ## Terugredeneren vanuit 2030
 
-De laatste sessie, Human & Tech: Agentic Development: Teams Reimagined, begon in 2030 en redeneerde terug naar vandaag. Zo’n 200 Nederlandse collega’s deden mee, en de vraag die erdoorheen liep was hoe wij, onze rollen en onze teams gaan veranderen. De sessie stelde het helder: welke nieuwe vaardigheden heb je nodig, hoe ziet je team eruit, en heb je straks nog een baan? De host vatte het achteraf samen als: de grootste verandering ligt meer bij ons, als mensen die zichzelf opnieuw uitvinden, dan bij de technologie.
+De laatste sessie, Human & Tech: Agentic Development: Teams Reimagined, begon in 2030 en redeneerde terug naar vandaag. Zo’n 200 collega’s deden mee, en de vraag die erdoorheen liep was hoe wij, onze rollen en onze teams gaan veranderen. De sessie stelde het helder: welke nieuwe vaardigheden heb je nodig, hoe ziet je team eruit, en heb je straks nog een baan? De host vatte het achteraf samen als: de grootste verandering ligt meer bij ons, als mensen die zichzelf opnieuw uitvinden, dan bij de technologie.
 
 Vanuit het eindpunt beginnen maakte de verandering voor mij een stuk minder abstract.
 

@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { BLOG_ENTRY } from '../../scripts/blog/manifest.js';
 
-/** Valid frontmatter; `extra` lines go in before aiAssistance. */
+/** Valid frontmatter; `extra` lines go in before aiAssisted. */
 const FRONTMATTER = `---
 title: A green test
 description: What a passing run tells you.
@@ -11,24 +11,20 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: High
   basedOn:
     - My own work
   recheckedAt: 2026-12-09
-aiAssistance:
-  mine:
-    - Everything
-  assisted: []
+aiAssisted: true
 ---
 `;
 
 /** The note every Turkish or Dutch file needs. */
-export const TRANSLATION = 'translation:\n  from: 2026-12-09\n  assistedByAi: true\n';
+export const TRANSLATION = 'translation:\n  from: 2026-12-09\n';
 
 export function writePost(contentDir: string, slug: string, body: string, extra = '', lang = 'en') {
   const dir = path.join(contentDir, slug);
   fs.mkdirSync(dir, { recursive: true });
-  const source = FRONTMATTER.replace('aiAssistance:', `${extra}aiAssistance:`) + body;
+  const source = FRONTMATTER.replace('aiAssisted:', `${extra}aiAssisted:`) + body;
   fs.writeFileSync(path.join(dir, `${lang}.md`), source);
 }
 

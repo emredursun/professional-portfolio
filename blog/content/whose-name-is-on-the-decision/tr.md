@@ -6,19 +6,13 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Orta: tek bir workshop ve her gün yapay zekâ agent’larıyla çalışan meslektaşlarımla yaptığım sohbetler.'
   basedOn:
     - 'Şirket içi bir AI-driven development aracıyla uygulamalı workshop, Eylül 2026'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'
   recheckedAt: 2026-10-29
-aiAssistance:
-  mine:
-    - 'Sorular ve onları doğuran deneyim'
-  assisted:
-    - 'Claude notlarımdan bu metni yazdı ve OWASP kaynağını önerdi'
+aiAssisted: true
 translation:
   from: 2026-10-29
-  assistedByAi: true
 ---
 
 ![Masada iki kişi: biri bir belgeyi imzalıyor, diğeri kâğıtları inceliyor.](signing.webp)

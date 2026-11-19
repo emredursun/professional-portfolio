@@ -2,13 +2,14 @@
 title: 'Sonucu tarif et, sonra kontrol et: agentic AI ve yazılım testi'
 description: 'The Collective 2026 notları: yeni arayüz katmanı olarak agentic AI, yapay zekâ çıktısına güven üzerine araştırmalar ve testçilerin sonucu neden kontrol ettiği.'
 publishedAt: 2026-11-13
+updatedAt: 2026-11-19
 topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Orta: tek bir şirket etkinliğinden sonra işimizin nereye gittiğine dair kendi görüşüm. Bir öngörü değil.'
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 Kasım 2026'
+    - 'Resmi aftermovie ve Vimeo’daki herkese açık açıklaması, Sopra Steria Benelux, 19 Kasım 2026'
     - 'Aynı etkinlikteki Human & Tech: Agentic Development: Teams Reimagined oturumu'
     - 'Oturumun host’unun paylaştığı herkese açık LinkedIn gönderisi'
     - 'Gartner’ın agentic AI üzerine basın açıklaması, 25 Haziran 2025'
@@ -16,14 +17,9 @@ evidence:
     - 'Stack Overflow Developer Survey 2026'
     - 'DORA, State of AI-assisted Software Development 2025'
   recheckedAt: 2026-11-13
-aiAssistance:
-  mine:
-    - 'Gün, fotoğraflar, aklımda kalanlar ve bunları işimde nasıl uyguladığım'
-  assisted:
-    - 'Claude notlarımdan bu metni yazdı ve araştırma kaynaklarını önerdi'
+aiAssisted: true
 translation:
-  from: 2026-11-13
-  assistedByAi: true
+  from: 2026-11-19
 ---
 
 ![Sessiz bir kır yolunda gün doğumu, alçak sis ve turuncu gökyüzüne karşı çıplak ağaç siluetleri.](unsplash-misty-road.webp)
@@ -36,9 +32,20 @@ translation:
 
 Günüm daha erken başladı. Öğleden sonra başlayan ana programdan önce, saat 10:30’dan itibaren bir workshop’un facilitator’larından biriydim ve katılımcılara workshop boyunca rehberlik ettim.
 
+![The Collective ’26 etkinlik kartı: tarih 11 Kasım 2026, saat 14:00 ile 21:30 arası, mekân AFAS Theater, Leusden.](collective26-event-card.webp)
+
+Ana program öğleden sonra başlayıp akşama kadar sürdü. Sopra Steria Benelux o günden kısa bir aftermovie paylaştı. Şirket, [Vimeo’daki kendi açıklamasında](https://vimeo.com/1248246223) The Collective’i strateji etkinliği olarak tanımlıyor ve orada yaklaşık 800 meslektaşın bulunduğunu belirtiyor. CEO 2030 hedeflerini paylaştı, bir konuşma yapay zekânın insani yönünü ele aldı ve meslektaşlar HUMAN ve TECH break-out oturumlarında kendileri sahneye çıktı.
+
+```vimeo
+id: 1248246223
+title: The Collective 2026: where human and tech come together
+titleLang: en
+credit: Sopra Steria Benelux
+```
+
 ## 2030’dan geriye doğru düşünmek
 
-Son oturum, Human & Tech: Agentic Development: Teams Reimagined, 2030’da başladı ve oradan bugüne doğru geri geldi. Yaklaşık 200 Hollandalı meslektaşımız katıldı ve oturumun ana sorusu bizim, rollerimizin ve ekiplerimizin nasıl değişeceğiydi. Oturum bunu açıkça sordu: Hangi yeni becerilere ihtiyacın olacak, ekibin nasıl görünecek ve hâlâ bir işin olacak mı? Oturumun host’u bunu sonradan şöyle özetledi: en büyük değişim teknolojiden çok bizde, kendimizi yeniden keşfeden insanlarda olacak.
+Son oturum, Human & Tech: Agentic Development: Teams Reimagined, 2030’da başladı ve oradan bugüne doğru geri geldi. Yaklaşık 200 meslektaşımız katıldı ve oturumun ana sorusu bizim, rollerimizin ve ekiplerimizin nasıl değişeceğiydi. Oturum bunu açıkça sordu: Hangi yeni becerilere ihtiyacın olacak, ekibin nasıl görünecek ve hâlâ bir işin olacak mı? Oturumun host’u bunu sonradan şöyle özetledi: en büyük değişim teknolojiden çok bizde, kendimizi yeniden keşfeden insanlarda olacak.
 
 Bitiş noktasından başlamak, değişimi benim için çok daha az soyut hâle getirdi.
 

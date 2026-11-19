@@ -1,7 +1,8 @@
 /**
- * The "Now" page (/blog/now, and under /tr and /nl): what Emre is working on,
- * newest first, as a dated list. Its date is the newest entry's, never the
- * build's, so the page stays deterministic.
+ * The "Now" page (/blog/now, and under /tr and /nl): what Emre is working on.
+ * One "last updated" line carries the newest entry's date (never the
+ * build's, so the page stays deterministic); the entries of that date are
+ * listed without a date of their own, older ones with theirs.
  */
 
 import { markup } from '../html.js';
@@ -24,6 +25,13 @@ export function nowChip(entries, lang) {
 `;
 }
 
+/** An entry's text, with its one linked phrase, if it has one. */
+function entryText({ text, link }) {
+  if (!link) return markup`${text}`;
+  const at = text.indexOf(link.text);
+  return markup`${text.slice(0, at)}<a href="${link.href}">${link.text}</a>${text.slice(at + link.text.length)}`;
+}
+
 /**
  * @param {{ entries: readonly { date: string, text: string }[], assets: object, launched: boolean, lang: string, languages: string[] }} options
  *   `languages`: every language with a Now log, for the alternate links.
@@ -37,13 +45,14 @@ export function renderNowPage({ entries, assets, launched, lang, languages }) {
 <p class="index-eyebrow"><a href="${blogPath(lang)}">${s.blogName}</a></p>
 <h1 class="index-lede">${s.nowTitle}</h1>
 <p class="index-intro">${s.nowIntro}</p>
+<p class="now-updated">${s.nowUpdated} <time datetime="${entries[0].date}">${formatDate(entries[0].date, lang)}</time></p>
 </header>
 </div>
 <div class="index index-posts">
-<ol class="now-list">${entries.map(
+<ul class="now-list">${entries.map(
     (entry) =>
-      markup`<li><time datetime="${entry.date}">${formatDate(entry.date, lang)}</time><p>${entry.text}</p></li>`,
-  )}</ol>
+      markup`<li>${entry.date === entries[0].date ? '' : markup`<time datetime="${entry.date}">${formatDate(entry.date, lang)}</time>`}<p>${entryText(entry)}</p></li>`,
+  )}</ul>
 </div>`;
   return renderPage({
     lang,

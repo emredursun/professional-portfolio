@@ -4,7 +4,7 @@
  */
 
 import { markup, raw } from '../html.js';
-import { PERSON_ID } from '../../lib/route-meta.js';
+import { PERSON_ID, SITE_NAME, SITE_URL } from '../../lib/route-meta.js';
 import { previewImage } from './head.js';
 import {
   blogUrl,
@@ -17,7 +17,7 @@ import {
 } from './format.js';
 import { renderPage } from './layout.js';
 import { statusChip } from './status.js';
-import { aiPanel, corrections, evidenceCard, tableOfContents } from './sections.js';
+import { corrections, evidenceCard, tableOfContents } from './sections.js';
 import { strings } from '../strings.js';
 
 /** The other language versions of a post, as JSON-LD links (schema.org translations). */
@@ -58,11 +58,25 @@ function articleMeta(post, assets) {
       inLanguage: post.lang,
       mainEntityOfPage: url,
       image: image.url,
-      author: { '@id': PERSON_ID },
-      publisher: { '@id': PERSON_ID },
+      author: personNode(post.lang),
+      publisher: personNode(post.lang),
       isPartOf: { '@id': `${blogUrl(post.lang)}#blog` },
       ...translationLinks(post),
     },
+  };
+}
+
+/**
+ * The site owner as a full Person node. Search engines resolve a reference
+ * only within the same page, so author and publisher carry the name inline;
+ * the @id still matches the site-wide node in index.html.
+ */
+function personNode(lang) {
+  return {
+    '@type': 'Person',
+    '@id': PERSON_ID,
+    name: SITE_NAME,
+    url: `${SITE_URL}${portfolioPath(lang, '/about')}`,
   };
 }
 
@@ -82,13 +96,20 @@ ${translationNote(post, s)}<p class="byline">Emre Dursun · <time datetime="${po
 </header>`;
 }
 
-function authorCard(s, lang) {
+/** Who wrote it and, when AI tools helped, one quiet sentence saying so and who answers for it. */
+function authorCard(post, s) {
+  const { lang } = post;
   return markup`<section class="author" aria-label="${s.aboutAuthor}">
 <img src="/images/emre-dursun-qa-consultant-400.webp" alt="" width="64" height="64" loading="lazy" decoding="async">
 <div>
 <p class="author-name">${s.writtenBy}</p>
 <p class="author-bio">${s.authorBio}</p>
-<p><a href="${portfolioPath(lang, '/about')}">${s.moreAboutMe}</a></p>
+${
+  post.aiAssisted
+    ? markup`<p class="ai-disclosure">${s.aiDisclosure}</p>
+`
+    : ''
+}<p><a href="${portfolioPath(lang, '/about')}">${s.moreAboutMe}</a></p>
 </div>
 </section>`;
 }
@@ -121,9 +142,8 @@ ${tableOfContents(post)}
 ${raw(post.html)}
 </div>
 ${evidenceCard(post)}
-${aiPanel(post)}
 ${corrections(post)}
-${authorCard(s, post.lang)}
+${authorCard(post, s)}
 </article>
 ${keepReading(related, s)}`;
   return renderPage({

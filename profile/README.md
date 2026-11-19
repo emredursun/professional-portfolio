@@ -3,7 +3,7 @@
 <div align="center">
 
 <a href="https://emredursun.nl/">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&duration=3200&pause=900&color=00B4D8&center=true&vCenter=true&width=780&lines=QA+Consultant+%7C+Pega+%26+Tricentis+Tosca;Model-based+test+automation+%40+Sopra+Steria;Ex-ING+%E2%80%94+real-time+international+payments;Reliability+%3E+a+green+build+today" alt="Emre Dursun — QA Consultant (Pega and Tricentis Tosca)" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&duration=3200&pause=900&color=00B4D8&center=true&vCenter=true&width=780&lines=QA+Consultant+%7C+Pega+%26+Tricentis+Tosca;Model-based+test+automation+%40+Sopra+Steria;Ex-ING+%E2%80%94+real-time+international+payments;Reliability+%3E+a+green+build+today" alt="Emre Dursun — QA Consultant (Pega, Tricentis Tosca and Playwright)" />
 </a>
 
 ### Hi, I'm Emre 👋

@@ -97,13 +97,6 @@
   padding-left: 1.1em;
 }
 
-.evidence-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 20px;
-  margin: 0;
-}
-
 /* Table of contents: a quiet list with a rail, the current section marked */
 .toc {
   margin: 0 0 32px;
@@ -342,13 +335,6 @@
   padding-left: 1.2em;
 }
 
-/* break-word does not shrink a table cell's minimum width; anywhere does, so
-   a bare URL or long code in a cell wraps instead of widening the page. The
-   table keeps its table semantics, unlike display: block with a scroll. */
-.prose :is(td, th) {
-  overflow-wrap: anywhere;
-}
-
 .prose li {
   margin-bottom: 0.4em;
 }
@@ -382,88 +368,30 @@
   font-size: 0.85em;
 }
 
-/* How this was written */
-.ai-note {
-  margin: 48px 0 0;
-  padding: 26px 28px;
-  border: 1.5px solid var(--line);
-  border-radius: 28px;
-}
-
-.ai-note h2 {
-  margin: 0 0 16px;
-  font-size: 1.375rem;
-  letter-spacing: -0.02em;
-}
-
-.ai-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 14px;
-}
-
-.ai-grid section {
-  padding: 16px 20px;
-  border-radius: 20px;
-}
-
-.ai-mine {
-  background: var(--sage);
-}
-
-.ai-assisted {
-  background: var(--lavender);
-}
-
-.ai-grid h3 {
-  margin: 0 0 8px;
-  font-size: 1rem;
-}
-
-.ai-grid ul,
-.ai-grid p {
-  margin: 0;
-  font-family: var(--font-reading);
-  font-size: 1.0625rem;
-  line-height: 1.55;
-}
-
-.ai-grid ul {
-  padding-left: 1.1em;
-}
-
-.ai-footer {
-  margin: 16px 0 0;
-  color: var(--ink-2);
-  font-size: 15px;
-}
-
-/* Corrections and reporting */
+/* Corrections log (only when there are entries) and the one-line report link */
 .corrections {
-  margin: 24px 0 0;
-  padding: 24px 28px;
-  border-radius: 28px;
-  background: var(--peach);
+  margin: 0 0 24px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-2);
 }
 
 .corrections h2 {
   margin: 0 0 6px;
-  font-size: 1.25rem;
-}
-
-.corrections h3 {
-  margin: 20px 0 6px;
-  font-size: 1rem;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .corrections p,
 .corrections ol {
   margin: 0;
-  font-size: 15px;
 }
 
 .corrections ol {
   padding-left: 1.2em;
+  margin-bottom: 10px;
 }
 
 .button {

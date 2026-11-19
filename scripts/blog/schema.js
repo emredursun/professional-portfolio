@@ -36,24 +36,6 @@ export const isoDate = z.string().refine((value) => {
 const correction = z.object({ date: isoDate, text }).strict();
 
 /**
- * An absolute https link to another site, returned in normalised form. zod's
- * own url() also accepts "https:host" (a relative path in a browser),
- * credentials and localhost.
- */
-const httpsUrl = z
-  .string()
-  .refine((value) => {
-    if (!/^https:\/\//.test(value)) return false;
-    try {
-      const url = new URL(value);
-      return !url.username && !url.password && url.hostname.includes('.');
-    } catch {
-      return false;
-    }
-  }, 'must be an absolute https:// link to a public host, without credentials')
-  .transform((value) => new URL(value).href);
-
-/**
  * A cover for the post's card on the index and topic pages: a photo in the
  * post's own folder, by its bare name (content.js checks it is there). Raster
  * only, since the build scales it down to card size.
@@ -76,18 +58,13 @@ const postSchema = z
     status: z.enum(['hypothesis', 'testing', 'verified', 'revised']),
     evidence: z
       .object({
-        confidence: text,
         basedOn: z.array(text).min(1),
         recheckedAt: isoDate,
       })
       .strict(),
-    aiAssistance: z
-      .object({
-        mine: z.array(text).min(1),
-        assisted: z.array(text),
-        promptsUrl: httpsUrl.optional(),
-      })
-      .strict(),
+    // One fixed sentence says AI tools helped and that the author is
+    // responsible; there is no list of tasks to grow.
+    aiAssisted: z.boolean(),
     corrections: z.array(correction).default([]),
     cover: z
       .string()
@@ -97,9 +74,8 @@ const postSchema = z
     // it the cover is decoration (empty alt).
     coverAlt: text.max(200).optional(),
     // Only on tr.md and nl.md (content.js checks which file has it): the
-    // date of the English version this one follows, and whether AI helped,
-    // which the "How this was written" panel then says.
-    translation: z.object({ from: isoDate, assistedByAi: z.boolean() }).strict().optional(),
+    // date of the English version this one follows.
+    translation: z.object({ from: isoDate }).strict().optional(),
     // A sample or stand-in, never real content: the launch gate refuses it.
     placeholder: z.literal(true).optional(),
     draft: z.boolean().default(false),
