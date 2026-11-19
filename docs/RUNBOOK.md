@@ -130,10 +130,13 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
   missing or stale card in a local Chromium (`npx playwright install
   chromium` once) and removes cards no post needs. The build never renders
   cards: it fails with the list of cards to re-render until you do.
-- **Now log:** add an entry at the top of `blog/now/en.md` (and `tr.md`,
-  `nl.md`): `- date: YYYY-MM-DD` and `text:` (280 characters at most),
-  newest first, frontmatter only. The newest entry shows on that
-  language's index; all of them on `/blog/now`.
+- **Now page:** `blog/now/en.md` (and `tr.md`, `nl.md`), frontmatter only:
+  entries of `- date: YYYY-MM-DD` and `text:` (280 characters at most),
+  newest first, optionally `link: { text, href }` to link one phrase of the
+  text. To update the page, rewrite the current focus with today's date on
+  every entry: the newest date is the page's "Last updated" line, and
+  entries of that date show without a date of their own. The first entry
+  shows on that language's index.
 - **Drafts:** `draft: true` keeps a post out of the build, but the repository
   is public: keep unfinished text out of Git until it is ready.
 - **Corrections:** add an entry to `corrections` with its date; the page,
