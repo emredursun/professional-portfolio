@@ -135,7 +135,7 @@ export const useCommandPalette = ({
               description: t('palette.commands.navBlog.description'),
               icon: <i aria-hidden="true" className="fas fa-pen-nib" />,
               category: 'Navigation' as const,
-              keywords: ['blog', 'insights', 'notes', 'articles', 'posts', 'writing'],
+              keywords: ['blog', 'insights', 'field notes', 'notes', 'articles', 'posts', 'writing'],
               action: () => {
                 onClose();
                 // The blog is static pages outside the router: a full page load.

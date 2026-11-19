@@ -288,3 +288,18 @@ a:hover {
     height: 38px;
   }
 }
+
+/* A 360 px phone: tighter lockup and language buttons keep one bar. */
+@media (max-width: 380px) {
+  .lockup {
+    gap: 8px;
+  }
+
+  .blog-name {
+    padding-left: 8px;
+  }
+
+  .lang-nav a {
+    min-width: 30px;
+  }
+}

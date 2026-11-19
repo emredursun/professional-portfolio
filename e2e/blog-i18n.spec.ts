@@ -274,6 +274,30 @@ test.describe('before launch, the portfolio does not link to the blog', () => {
   });
 });
 
+test.describe('the blog header on a small phone', () => {
+  for (const width of [360, 375]) {
+    test(`the lockup, languages and theme fit one bar at ${width} px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 780 });
+      for (const lang of languages) {
+        await page.goto(blogPath(lang));
+        const box = async (selector: string) => (await page.locator(selector).boundingBox())!;
+        const lockup = await box('.site-header .lockup');
+        const nav = await box('.site-header .lang-nav');
+        const theme = await box('.site-header .theme-toggle');
+        expect(lockup.x + lockup.width, `${lang} lockup meets languages`).toBeLessThanOrEqual(
+          nav.x,
+        );
+        expect(nav.x + nav.width, `${lang} languages meet theme`).toBeLessThanOrEqual(theme.x);
+        expect(theme.x + theme.width, `${lang} theme inside screen`).toBeLessThanOrEqual(width);
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        );
+        expect(overflow, `${lang} page overflow`).toBeLessThanOrEqual(0);
+      }
+    });
+  }
+});
+
 test.describe('the portfolio links to the blog', () => {
   test.skip(!BLOG_LAUNCHED, 'the nav links to the blog only once it has launched');
 
