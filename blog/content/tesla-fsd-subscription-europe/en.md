@@ -59,7 +59,7 @@ The page carries Tesla's own figures too (checked on 19 November 2026). Tesla sa
 
 | Pros | Cons |
 | --- | --- |
-| Drives routine trips under your supervision | Supervision is always required; the car is not autonomous |
+| Drives routine trips under your supervision | Current features require supervision; the car is not autonomous |
 | Regular over-the-air updates | Subscription only |
 | A one-month trial before billing starts | Lane centering is no longer standard on new Dutch orders |
 | Reported as approved in eleven European countries | Approval differs per country |

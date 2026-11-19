@@ -60,7 +60,7 @@ De pagina bevat ook eigen cijfers van Tesla (gecontroleerd op 19 november 2026).
 
 | Voordelen | Nadelen |
 | --- | --- |
-| Rijdt routineritten onder uw toezicht | Toezicht is altijd nodig; de auto is niet autonoom |
+| Rijdt routineritten onder uw toezicht | Huidige functies vereisen toezicht; de auto is niet autonoom |
 | Regelmatige draadloze updates | Alleen als abonnement |
 | Een maand proefperiode voordat de betaling begint | Rijstrookcentrering is bij nieuwe Nederlandse bestellingen niet meer standaard |
 | Naar verluidt goedgekeurd in elf Europese landen | Goedkeuring verschilt per land |

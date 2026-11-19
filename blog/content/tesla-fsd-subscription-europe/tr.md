@@ -60,7 +60,7 @@ Sayfada Tesla’nın kendi rakamları da var (19 Kasım 2026’da kontrol edildi
 
 | Artılar | Eksiler |
 | --- | --- |
-| Rutin sürüşleri gözetiminiz altında yapar | Gözetim her zaman gerekir; araç otonom değil |
+| Rutin sürüşleri gözetiminiz altında yapar | Mevcut özellikler gözetim gerektirir; araç otonom değil |
 | Düzenli kablosuz güncellemeler | Yalnızca abonelikle |
 | Faturalandırma başlamadan bir aylık deneme | Hollanda’daki yeni siparişlerde şerit ortalama artık standart değil |
 | On bir Avrupa ülkesinde onaylandığı bildiriliyor | Onay ülkeye göre değişiyor |
