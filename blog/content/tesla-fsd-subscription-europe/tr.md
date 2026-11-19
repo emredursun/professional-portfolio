@@ -64,7 +64,7 @@ Bu bilgiler, yazının sonunda listelenen kamuya açık kaynaklardan alındı.
 - Hollanda’da FSD (Supervised), bir aylık deneme süresinin ardından aylık €99 ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), 3 Ekim 2026’da güncellendi; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)). Tesla’nın Hollanda sayfası bunu aylık €99’luk bir abonelik olarak listeliyor ve Model Y yapılandırıcısı, faturalandırma başlamadan önce bir aylık deneme süresi gösteriyor ([Tesla Hollanda](https://www.tesla.com/nl_nl/tesla-assisted-driving), [yapılandırıcı](https://www.tesla.com/nl_nl/modely/design), ikisi de 19 Kasım 2026’da kontrol edildi).
 - Tek seferlik satın alma seçeneği kalktı. Hollanda’da 15 Mayıs 2026’da, Avrupa’nın geri kalanının çoğunda 21 Mayıs’ta sona erdi ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). O zamana kadar Hollanda yapılandırıcısında €7.500’dü ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). Tesla’nın Hollanda Model Y yapılandırıcısında, 19 Kasım 2026’da kontrol edildiğinde, Tesla Assisted Driving yalnızca aylık abonelik olarak sunuluyor; tek seferlik satın alma seçeneği yok ([Tesla Hollanda yapılandırıcısı](https://www.tesla.com/nl_nl/modely/design)).
 - Electrek, Hollanda’daki baz araçta artık şerit ortalamanın (Autosteer) gelmediğini ve yeni siparişlerde Basic Autopilot’un artık seçenek olarak sunulmadığını bildiriyor; baz araçta yalnızca AB yasasının zorunlu kıldığı acil şerit koruma kalıyor ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)).
-- Tesla’nın kendi Hollanda sayfaları, yeni bir araçta hangi sürüş destek özelliklerinin standart geldiğini söylemiyor. *[SAHİP ALANI: kendi aracında şerit ortalama ve adaptif hız sabitleyicinin dahil olup olmadığını yaz.]*
+- Kendi aracımda adaptif hız sabitleyici abonelik olmadan dahil, şerit ortalama (Autosteer) ise abonelik gerektiriyor.
 - AB yasasının zorunlu kıldığı güvenlik özellikleri standart kalıyor. AB Genel Güvenlik Yönetmeliği’ne göre otomatik acil fren ve acil şerit koruma yeni araçlarda zorunlu ([Yönetmelik (AB) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) ve aboneliğe dahil değil. Bu yazı yasal zorunlu güvenlik özellikleriyle değil, ayrıca satılan sürüş destek özellikleriyle ilgili.
 
 ![Tesla Model Y Long Range AWD’nin içi: direksiyon ve orta dokunmatik ekran.](model-y-long-range-dashboard.webp)
@@ -81,7 +81,7 @@ Aylık €99 ile abonelik şöyle birikiyor. Rakamlar 99 çarpı 12, 60 ve 120 a
 | 5 yıl | €5.940 |
 | 10 yıl | €11.880 |
 
-Zaten yaklaşık €55.000 olan bir araç için ([Model Y Premium Long Range AWD liste fiyatı €54.990, AutoReview.nl, Mayıs 2026](https://www.autoreview.nl/nieuws/id/37669/tesla-model-y-prijzen-1000-euro)) bu ciddi bir ek masraf. Bence birçok hane, donanımı araçlarında olduğu hâlde bu özelliği kapalı tutacak.
+Zaten €54.990 olan bir araç için (Model Y Premium Long Range AWD’nin Hollanda yapılandırıcısındaki fiyatı, [19 Kasım 2026’da kontrol edildi](https://www.tesla.com/nl_nl/modely/design)) bu ciddi bir ek masraf. Bence birçok hane, donanımı araçlarında olduğu hâlde bu özelliği kapalı tutacak.
 
 ## Elektrikliye geçişin tasarrufu nereye gidiyor
 
@@ -111,7 +111,7 @@ Donanım zaten araçta ve parası ödendi. Her yeni Model Y, Tesla’nın FSD (S
 
 Satın alma seçeneğinin kalkması tercih hakkını ortadan kaldırıyor. Bazı sahipler aylık ödemeyi tercih eder. Bazıları ise bir kez ödeyip özelliği araç kendisinde olduğu sürece kullanmak ister. Sadece abonelik sunmak bu tercihi elinden alıyor.
 
-Standart olan, standart kalmalı. Şerit ortalama daha önce standartsa, onun ücretli pakete alınması aynı fiyata daha azı demek.
+Standart olan, standart kalmalı. Şerit ortalama daha önce standartsa, onun ücretli pakete alınması aynı fiyata daha azı demek. Kendi aracımda adaptif hız sabitleyici hâlâ dahil; abonelik arkasında olan şerit ortalama.
 
 Avrupalı alıcılar açık ve kalıcı haklar bekler. [Haksız Ticari Uygulamalar Direktifi](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029) uyarınca bir uygulama, genel sunumu ortalama tüketiciyi yanıltabiliyorsa, kasıt olmasa da yanıltıcı sayılabilir. Tesla’nın bu yasayı çiğnediğini söylemiyorum. Avrupa’da şeffaflık ve sahiplik beklentisinin yüksek olduğunu ve fiyatlandırmanın buna uyması gerektiğini söylüyorum.
 
@@ -233,7 +233,6 @@ Aksi belirtilmedikçe tüm linkler 2026-11-19’da açıldı.
 - Eleport, Elektrikli araçlar gerçekten benzinlilerden pahalı mı? (100 km başına 21 kWh ve kWh başına €0,2896, 100 km başına 7,4 litre ve litre başına €1,91 AB ortalamaları): https://eleport.com/are-electric-cars-cheaper-to-run/
 - Dick Lovett, İngiltere’de elektrikli araç bakım maliyetleri (İngiltere rakamları; sayfa otomatik okuyucumu engelledi, rakamlar arama sonucundan): https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs
 - Motor1, BMW ısıtmalı koltuk aboneliği (2023-09-07): https://www.motor1.com/news/685653/bmw-heated-seat-subscription-dead-low-acceptance/
-- AutoReview.nl, Tesla Model Y fiyatları (2026-05-02): https://www.autoreview.nl/nieuws/id/37669/tesla-model-y-prijzen-1000-euro
 - Gizmodo, Musk Tesla’nın misyon cümlesini değiştirdi (2026-02-14): https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530
 - Yönetmelik (AB) 2019/2144, Genel Güvenlik Yönetmeliği: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144
 - Direktif (AB) 2019/770, dijital içerik ve hizmetler: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L0770

@@ -64,7 +64,7 @@ Deze punten komen uit openbare bronnen, die onderaan dit artikel staan.
 - In Nederland kost FSD (Supervised) €99 per maand na een proefperiode van een maand ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), bijgewerkt op 3 oktober 2026; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)). De Nederlandse pagina van Tesla noemt het een abonnement van €99 per maand, en de Model Y-configurator toont een proefperiode van een maand voordat de betaling begint ([Tesla Nederland](https://www.tesla.com/nl_nl/tesla-assisted-driving), [configurator](https://www.tesla.com/nl_nl/modely/design), beide gecontroleerd op 19 november 2026).
 - Eenmalige aankoop is niet meer mogelijk. Die optie eindigde op 15 mei 2026 in Nederland en op 21 mei in het grootste deel van de rest van Europa ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). Tot dan kostte het €7.500 in de Nederlandse configurator ([Electrek, 12 mei 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). In de Nederlandse Model Y-configurator van Tesla, gecontroleerd op 19 november 2026, wordt Tesla Assisted Driving alleen als maandabonnement aangeboden, zonder optie voor eenmalige aankoop ([Tesla Nederland, configurator](https://www.tesla.com/nl_nl/modely/design)).
 - Electrek meldt dat de Nederlandse basisauto niet langer rijstrookcentrering (Autosteer) heeft en dat Basic Autopilot bij nieuwe bestellingen niet meer als optie wordt aangeboden; de basisauto houdt alleen de noodrijstrookassistentie die de EU voorschrijft ([Electrek, 12 mei 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)).
-- De eigen Nederlandse pagina’s van Tesla zeggen niet welke rijassistentiefuncties standaard zijn op een nieuwe auto. *[EIGENAARSVAK: schrijf of rijstrookcentrering en adaptieve cruisecontrol in uw auto zijn inbegrepen.]*
+- In mijn eigen auto is adaptieve cruisecontrol zonder abonnement inbegrepen, en voor rijstrookcentrering (Autosteer) is het abonnement nodig.
 - Wettelijk verplichte veiligheidsfuncties blijven standaard. Onder de Europese General Safety Regulation zijn automatisch noodremmen en noodrijstrookassistentie verplicht op nieuwe auto’s ([Verordening (EU) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) en vallen ze niet onder het abonnement. Dit artikel gaat over rijassistentie die apart wordt verkocht, niet over wettelijk verplichte veiligheidsfuncties.
 
 ![Interieur van een Tesla Model Y Long Range AWD: het stuur en het middenscherm.](model-y-long-range-dashboard.webp)
@@ -81,7 +81,7 @@ Bij €99 per maand loopt het abonnement zo op. De cijfers zijn 99 maal 12, 60 e
 | 5 jaar | €5.940 |
 | 10 jaar | €11.880 |
 
-Voor een auto die al rond de €55.000 kost ([catalogusprijs €54.990 voor de Model Y Premium Long Range AWD, AutoReview.nl, mei 2026](https://www.autoreview.nl/nieuws/id/37669/tesla-model-y-prijzen-1000-euro)), is dat een flinke extra uitgave. Volgens mij laten veel huishoudens de functie uit staan, terwijl de hardware ervoor al in hun auto zit.
+Voor een auto die al €54.990 kost (de prijs van de Model Y Premium Long Range AWD in de Nederlandse configurator, [gecontroleerd op 19 november 2026](https://www.tesla.com/nl_nl/modely/design)), is dat een flinke extra uitgave. Volgens mij laten veel huishoudens de functie uit staan, terwijl de hardware ervoor al in hun auto zit.
 
 ## Waar de besparing van elektrisch rijden blijft
 
@@ -111,7 +111,7 @@ De hardware zit al in de auto en is al betaald. Elke nieuwe Model Y heeft de com
 
 Zonder aankoopoptie verdwijnt de keuze. Sommige eigenaren betalen liever maandelijks. Anderen betalen liever één keer en houden de functie zolang ze de auto hebben. Alleen een abonnement neemt die keuze weg.
 
-Wat standaard was, moet standaard blijven. Als rijstrookcentrering eerder standaard was, krijgen kopers voor dezelfde prijs minder als die achter een betaalmuur verdwijnt.
+Wat standaard was, moet standaard blijven. Als rijstrookcentrering eerder standaard was, krijgen kopers voor dezelfde prijs minder als die achter een betaalmuur verdwijnt. In mijn eigen auto is adaptieve cruisecontrol nog steeds inbegrepen; rijstrookcentrering is wat achter het abonnement zit.
 
 Europese kopers verwachten duidelijke en blijvende rechten. Onder de [Richtlijn oneerlijke handelspraktijken](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029) kan een praktijk misleidend zijn als de presentatie als geheel de gemiddelde consument waarschijnlijk misleidt, ongeacht de bedoeling. Ik zeg niet dat Tesla deze wet overtreedt. Ik zeg dat de Europese verwachtingen over transparantie en eigendom hoog zijn, en dat prijzen daarbij moeten passen.
 
@@ -233,7 +233,6 @@ Alle links zijn op 2026-11-19 geopend, tenzij anders vermeld.
 - Eleport, Zijn elektrische auto’s echt duurder dan benzineauto’s? (EU-gemiddelden van 21 kWh per 100 km à €0,2896 per kWh, en 7,4 liter per 100 km à €1,91 per liter): https://eleport.com/are-electric-cars-cheaper-to-run/
 - Dick Lovett, onderhoudskosten van elektrische auto’s in het VK (Britse cijfers; de pagina blokkeerde mijn automatische lezer, de cijfers komen uit het zoekresultaat): https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs
 - Motor1, BMW-abonnement op stoelverwarming (2023-09-07): https://www.motor1.com/news/685653/bmw-heated-seat-subscription-dead-low-acceptance/
-- AutoReview.nl, prijzen Tesla Model Y (2026-05-02): https://www.autoreview.nl/nieuws/id/37669/tesla-model-y-prijzen-1000-euro
 - Gizmodo, Musk heeft de missie van Tesla veranderd (2026-02-14): https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530
 - Verordening (EU) 2019/2144, General Safety Regulation: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144
 - Richtlijn (EU) 2019/770, digitale inhoud en diensten: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L0770

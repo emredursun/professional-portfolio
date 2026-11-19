@@ -62,7 +62,7 @@ These points come from public sources, listed at the end of this article.
 - In the Netherlands, FSD (Supervised) costs €99 a month after a one-month trial ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), updated 3 October 2026; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)). Tesla's Dutch page lists it as a subscription at €99 a month, and the Model Y configurator shows a one-month trial before billing starts ([Tesla Netherlands](https://www.tesla.com/nl_nl/tesla-assisted-driving), [configurator](https://www.tesla.com/nl_nl/modely/design), both checked on 19 November 2026).
 - The one-time purchase option is gone. It ended on 15 May 2026 in the Netherlands and on 21 May in most of the rest of Europe ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). Until then it cost €7,500 in the Dutch configurator ([Electrek, 12 May 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). In Tesla's Dutch Model Y configurator, checked on 19 November 2026, Tesla Assisted Driving is offered only as a monthly subscription, with no one-time purchase option ([Tesla Netherlands configurator](https://www.tesla.com/nl_nl/modely/design)).
 - Electrek reports that the Dutch base car no longer comes with lane centering (Autosteer) and that Basic Autopilot is no longer an option on new orders; the base car keeps only the emergency lane-keeping that EU law requires ([Electrek, 12 May 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)).
-- Tesla's own Dutch pages do not say which driver-assistance features come standard on a new car. *[OWNER SLOT: say whether lane centering and adaptive cruise control are included in your car.]*
+- In my own car, adaptive cruise control is included without the subscription, and lane centering (Autosteer) needs the subscription.
 - Safety features required by EU law stay standard. Under the EU General Safety Regulation, automatic emergency braking and emergency lane-keeping are mandatory on new cars ([Regulation (EU) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) and are not part of the subscription. This article is about driver assistance that is sold separately, not about safety features required by law.
 
 ![Interior of a Tesla Model Y Long Range AWD: the steering wheel and the centre touchscreen.](model-y-long-range-dashboard.webp)
@@ -79,7 +79,7 @@ At €99 a month, the subscription adds up as follows. The figures are 99 times 
 | 5 years | €5,940 |
 | 10 years | €11,880 |
 
-For a car that already costs around €55,000 ([list price €54,990 for the Model Y Premium Long Range AWD, AutoReview.nl, May 2026](https://www.autoreview.nl/nieuws/id/37669/tesla-model-y-prijzen-1000-euro)), that is a substantial extra expense. In my view, many households will leave the feature switched off, even though the hardware for it is already in their car.
+For a car that already costs €54,990 (the Dutch configurator price of the Model Y Premium Long Range AWD, [checked on 19 November 2026](https://www.tesla.com/nl_nl/modely/design)), that is a substantial extra expense. In my view, many households will leave the feature switched off, even though the hardware for it is already in their car.
 
 ## Where the savings of going electric end up
 
@@ -109,7 +109,7 @@ The hardware is already in the car and already paid for. Every new Model Y comes
 
 Removing the purchase option removes choice. Some owners prefer to pay monthly. Others prefer to pay once and keep the feature for the life of the car. A subscription-only model takes that choice away.
 
-What used to be standard should stay standard. If lane centering was included before, moving it behind a paywall gives buyers less for the same price.
+What used to be standard should stay standard. If lane centering was included before, moving it behind a paywall gives buyers less for the same price. In my own car, adaptive cruise control is still included; lane centering is what sits behind the subscription.
 
 European buyers expect clear, lasting rights. Under the [Unfair Commercial Practices Directive](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029), a practice can be misleading if its overall presentation is likely to deceive the average consumer, whatever the intent. I am not saying Tesla breaks this law. I am saying that European expectations of transparency and ownership are high, and pricing should reflect that.
 
@@ -231,7 +231,6 @@ All links opened on 2026-11-19 unless noted.
 - Eleport, Are EVs really more expensive than petrol cars? (EU averages of 21 kWh per 100 km at €0.2896 per kWh, and 7.4 litres per 100 km at €1.91 per litre): https://eleport.com/are-electric-cars-cheaper-to-run/
 - Dick Lovett, Electric car maintenance costs in the UK (UK figures; the page blocked my automated reader, so the figures come from the search result): https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs
 - Motor1, BMW heated seat subscription (2023-09-07): https://www.motor1.com/news/685653/bmw-heated-seat-subscription-dead-low-acceptance/
-- AutoReview.nl, Tesla Model Y prices (2026-05-02): https://www.autoreview.nl/nieuws/id/37669/tesla-model-y-prijzen-1000-euro
 - Gizmodo, Musk has changed Tesla's mission statement (2026-02-14): https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530
 - Regulation (EU) 2019/2144, General Safety Regulation: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144
 - Directive (EU) 2019/770, digital content and services: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L0770
