@@ -47,13 +47,9 @@ Ik kocht een Tesla Model Y Premium Long Range AWD. Voor de aankoop maakte ik een
 
 *Tesla Model Y Long Range AWD (2025) in een showroom. Foto: Chanokchon, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg). Gezichten vervaagd, formaat aangepast. Een toonzaalauto, niet de mijne.*
 
-![Witte Tesla Model Y linksvoor gezien, buiten geparkeerd, met vervaagd kenteken.](model-y-performance-front.webp)
+![Grijze Tesla Model Y Dual Motor in Quicksilver linksachter gezien, geparkeerd voor bomen, met vervaagd kenteken.](model-y-quicksilver-rear.webp)
 
-*Tesla Model Y, voorkant (op Wikimedia Commons als Performance aangeduid). Foto: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg). Kenteken vervaagd, formaat aangepast. Niet mijn auto.*
-
-![Witte Tesla Model Y linksachter gezien, buiten geparkeerd.](model-y-performance-rear.webp)
-
-*Tesla Model Y, achterkant (op Wikimedia Commons als Performance aangeduid). Foto: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg). Een sticker en mensen op de achtergrond vervaagd, formaat aangepast.*
+*Tesla Model Y Dual Motor (AWD) in Quicksilver (2025). Foto: Damian B Oh, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg). Kenteken vervaagd, bijgesneden en formaat aangepast. Niet mijn auto.*
 
 ## De feiten
 
@@ -245,6 +241,5 @@ Foto’s van Wikimedia Commons, aangepast zoals beschreven en onder dezelfde lic
 
 - Omslagfoto (alleen zichtbaar op de blogindex), Tesla Model Y Performance (2025), Alexander Migl. Kenteken vervaagd, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
 - Tesla Model Y Long Range AWD in een showroom, Chanokchon. Gezichten vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
-- Tesla Model Y, voorkant (titel op Commons: Performance), Ethan Llamas. Kenteken vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg
-- Tesla Model Y, achterkant (titel op Commons: Performance), Ethan Llamas. Een sticker en mensen op de achtergrond vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg
+- Tesla Model Y Dual Motor (AWD) in Quicksilver, Damian B Oh. Kentekens vervaagd, bijgesneden, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg
 - Tesla Model Y Long Range AWD, stuur en middenscherm, Ethan Llamas. Mensen op de achtergrond vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg

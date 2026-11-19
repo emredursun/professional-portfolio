@@ -45,13 +45,9 @@ I bought a Tesla Model Y Premium Long Range AWD. Before buying, I took a test dr
 
 *Tesla Model Y Long Range AWD (2025) in a showroom. Photo: Chanokchon, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg). Faces blurred, resized. A display car, not mine.*
 
-![White Tesla Model Y seen from the front left, parked outdoors, with the licence plate blurred.](model-y-performance-front.webp)
+![Grey Tesla Model Y Dual Motor in Quicksilver seen from the rear left, parked in front of trees, with the licence plate blurred.](model-y-quicksilver-rear.webp)
 
-*Tesla Model Y, front (labelled Performance on Wikimedia Commons). Photo: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg). Licence plate blurred, resized. Not my car.*
-
-![White Tesla Model Y seen from the rear left, parked outdoors.](model-y-performance-rear.webp)
-
-*Tesla Model Y, rear (labelled Performance on Wikimedia Commons). Photo: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg). A sticker and people in the background blurred, resized.*
+*Tesla Model Y Dual Motor (AWD) in Quicksilver (2025). Photo: Damian B Oh, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg). Licence plate blurred, cropped and resized. Not my car.*
 
 ## The facts
 
@@ -243,6 +239,5 @@ Photos from Wikimedia Commons, adapted as described and shared under the same li
 
 - Cover photo (shown on the blog index only), Tesla Model Y Performance (2025), Alexander Migl. Licence plate blurred, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
 - Tesla Model Y Long Range AWD in a showroom, Chanokchon. Faces blurred, resized: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
-- Tesla Model Y, front (titled Performance on Commons), Ethan Llamas. Licence plate blurred, resized: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg
-- Tesla Model Y, rear (titled Performance on Commons), Ethan Llamas. A sticker and people in the background blurred, resized: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg
+- Tesla Model Y Dual Motor (AWD) in Quicksilver, Damian B Oh. Licence plates blurred, cropped, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg
 - Tesla Model Y Long Range AWD, steering wheel and centre screen, Ethan Llamas. People in the background blurred, resized: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg

@@ -47,13 +47,9 @@ Bir Tesla Model Y Premium Long Range AWD satın aldım. Satın almadan önce tes
 
 *Showroom’da Tesla Model Y Long Range AWD (2025). Fotoğraf: Chanokchon, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg) aracılığıyla. Yüzler bulanıklaştırıldı, boyutu küçültüldü. Sergi aracı, benim aracım değil.*
 
-![Açık havada park etmiş beyaz Tesla Model Y, sol önden görünüş; plaka bulanıklaştırıldı.](model-y-performance-front.webp)
+![Ağaçların önünde park etmiş, sol arkadan görünen gri (Quicksilver) Tesla Model Y Dual Motor; plaka bulanıklaştırıldı.](model-y-quicksilver-rear.webp)
 
-*Tesla Model Y, ön (Wikimedia Commons’ta Performance olarak etiketli). Fotoğraf: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg) aracılığıyla. Plaka bulanıklaştırıldı, boyutu küçültüldü. Benim aracım değil.*
-
-![Açık havada park etmiş beyaz Tesla Model Y, sol arkadan görünüş.](model-y-performance-rear.webp)
-
-*Tesla Model Y, arka (Wikimedia Commons’ta Performance olarak etiketli). Fotoğraf: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg) aracılığıyla. Bir çıkartma ve arka plandaki kişiler bulanıklaştırıldı, boyutu küçültüldü.*
+*Quicksilver renginde Tesla Model Y Dual Motor (AWD) (2025). Fotoğraf: Damian B Oh, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg) aracılığıyla. Plaka bulanıklaştırıldı, kırpıldı ve boyutu küçültüldü. Benim aracım değil.*
 
 ## Gerçekler
 
@@ -245,6 +241,5 @@ Wikimedia Commons fotoğrafları, belirtildiği gibi uyarlandı ve aynı lisansl
 
 - Kapak fotoğrafı (yalnızca blog dizininde görünür), Tesla Model Y Performance (2025), Alexander Migl. Plaka bulanıklaştırıldı, boyutu küçültüldü, hafifçe yumuşatıldı: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
 - Showroom’da Tesla Model Y Long Range AWD, Chanokchon. Yüzler bulanıklaştırıldı, boyutu küçültüldü: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
-- Tesla Model Y, ön (Commons’ta başlığı Performance), Ethan Llamas. Plaka bulanıklaştırıldı, boyutu küçültüldü: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg
-- Tesla Model Y, arka (Commons’ta başlığı Performance), Ethan Llamas. Bir çıkartma ve arka plandaki kişiler bulanıklaştırıldı, boyutu küçültüldü: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg
+- Quicksilver renginde Tesla Model Y Dual Motor (AWD), Damian B Oh. Plakalar bulanıklaştırıldı, kırpıldı, boyutu küçültüldü, hafifçe yumuşatıldı: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg
 - Tesla Model Y Long Range AWD, direksiyon ve orta ekran, Ethan Llamas. Arka plandaki kişiler bulanıklaştırıldı, boyutu küçültüldü: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg
