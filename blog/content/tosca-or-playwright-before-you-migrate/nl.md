@@ -6,20 +6,13 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Hoog voor de feiten over de tools, die ik in november 2026 op de eigen pagina’s van de leveranciers heb gecontroleerd. Het cijfer “200+ technologies” is de eigen bewering van de leverancier, niet iets wat ik heb geverifieerd. Het lab is één kleine applicatie, dus mijn antwoorden zijn een waarneming en geen algemene regel.'
   basedOn:
     - 'Leveranciers- en projectpagina’s van Tosca en Playwright, gelezen op 2026-11-17 en 2026-11-18'
     - 'Een eigen lab: een fictieve applicatie voor persoonlijke leningaanvragen op Pega Infinity 26.1 Constellation, getest met Tosca 26.1.2 en gemigreerd naar Playwright 1.65.0'
   recheckedAt: 2026-11-18
-aiAssistance:
-  mine:
-    - 'De ervaring, het lab, de vragen en de antwoorden'
-  assisted:
-    - 'Claude splitste mijn eigen concept in twee aparte posts en maakte de formuleringen strakker'
-    - 'Claude controleerde beweringen tegen de aangehaalde pagina’s en corrigeerde drie details (timing van Airbnb, formulering over Node.js 20, ondersteunde talen)'
+aiAssisted: true
 translation:
   from: 2026-11-18
-  assistedByAi: true
 ---
 
 Een verzoek om een testsuite te migreren klinkt vaak als een toolvraag: “Moeten we van Tosca naar Playwright?” Het kan ook andersom komen, van een team met een code-first suite waar niemand meer voor kan zorgen. De tool is zelden het eerste wat beslist moet worden. Een migratie verandert wie de kwaliteit bezit, wat het team betaalt en op welke vaardigheden het werft. De technologie die getest wordt, kan de discussie vroeg beëindigen.

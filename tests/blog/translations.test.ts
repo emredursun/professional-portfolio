@@ -378,17 +378,15 @@ describe('buildBlog: what a reader sees in another language', () => {
     expect(doc('nl', 'blog', 'hello.html').querySelector('.translation-note')).toBeNull();
   });
 
-  it('says how the translation was made in the "How this was written" panel', async () => {
-    write('hello', 'Body\n');
-    write('hello', 'Gövde\n', TRANSLATION, 'tr');
-    write('hello', 'Tekst\n', TRANSLATION.replace('true', 'false'), 'nl');
+  it('says in each language that AI helped and who answers for the text', async () => {
+    write('hello', 'Body');
+    write('hello', 'Govde', TRANSLATION, 'tr');
+    write('hello', 'Tekst', TRANSLATION, 'nl');
     const { doc } = await build();
-    const footer = (lang: string) =>
-      doc(lang, 'blog', 'hello.html').querySelector('.ai-footer')!.textContent;
-    expect(footer('tr')).toContain('Yapay zekânın yardımıyla çevrildi');
-    expect(footer('nl')).toContain('Door mij vertaald.');
-    expect(doc('blog', 'hello.html').querySelector('.ai-footer')!.textContent).not.toMatch(
-      /Translated/,
-    );
+    const note = (...path: string[]) =>
+      doc(...path).querySelector('.author .ai-disclosure')!.textContent;
+    expect(note('blog', 'hello.html')).toContain('I reviewed every claim');
+    expect(note('tr', 'blog', 'hello.html')).toContain('sorumluyum');
+    expect(note('nl', 'blog', 'hello.html')).toContain('verantwoordelijk');
   });
 });

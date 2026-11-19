@@ -7,7 +7,6 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Gemiddeld: mijn eigen kijk op waar ons werk naartoe gaat, na één bedrijfsevent. Geen voorspelling.'
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 november 2026'
     - 'Officiële aftermovie en de openbare beschrijving op Vimeo, Sopra Steria Benelux, 19 november 2026'
@@ -18,14 +17,9 @@ evidence:
     - 'Stack Overflow Developer Survey 2026'
     - 'DORA, State of AI-assisted Software Development 2025'
   recheckedAt: 2026-11-13
-aiAssistance:
-  mine:
-    - 'De dag, de foto’s, wat me bijbleef en hoe ik het in mijn werk toepas'
-  assisted:
-    - 'Claude maakte van mijn aantekeningen deze tekst en stelde de onderzoeksbronnen voor'
+aiAssisted: true
 translation:
   from: 2026-11-19
-  assistedByAi: true
 ---
 
 ![Een rustige landweg bij zonsopkomst, met lage mist en kale bomen als silhouet tegen een oranje lucht.](unsplash-misty-road.webp)

@@ -24,21 +24,17 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: High
   basedOn:
     - My own work
   recheckedAt: 2026-12-09
-aiAssistance:
-  mine:
-    - Everything
-  assisted: []
+aiAssisted: false
 ---
 `;
 
 function writePost(slug: string, body: string, extra = '', lang = 'en') {
   const dir = path.join(contentDir, slug);
   fs.mkdirSync(dir, { recursive: true });
-  const source = FRONTMATTER.replace('aiAssistance:', `${extra}aiAssistance:`) + body;
+  const source = FRONTMATTER.replace('aiAssisted:', `${extra}aiAssisted:`) + body;
   fs.writeFileSync(path.join(dir, `${lang}.md`), source);
 }
 

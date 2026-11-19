@@ -6,19 +6,13 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Yaşananlar için yüksek, oradaydım. Tek bir workshop ve tek bir feature: genel bir kural değil, bir gözlem.'
   basedOn:
     - 'Şirket içi bir AI-driven development aracıyla uygulamalı workshop, Sopra Steria, Eylül 2026'
     - 'Martin Fowler, ContractTest (martinfowler.com)'
   recheckedAt: 2026-10-29
-aiAssistance:
-  mine:
-    - 'Deneyim, fark ettiklerim ve çıkardığım dersler'
-  assisted:
-    - 'Claude notlarımdan bu metni yazdı ve benim talimatımla kısalttı'
+aiAssisted: true
 translation:
   from: 2026-10-29
-  assistedByAi: true
 ---
 
 ![Akşam gökyüzünde yeşil yanan bir trafik lambası.](green-light.webp)
