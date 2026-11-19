@@ -5,28 +5,16 @@ publishedAt: 2026-11-19
 topic: life
 kind: essay
 status: hypothesis
-draft: true
 cover: cover-model-y-performance.webp
 evidence:
-  confidence: 'Medium. The prices and the cost tables are my own arithmetic from the figures in the sources. The sources are news and comparison sites, read on 2026-11-19, and prices in a configurator can change. The UK maintenance figures come from a search result because the page itself could not be opened, so treat them as low confidence. The proposal is my opinion, not a finding.'
   basedOn:
     - 'Public reporting on Tesla FSD (Supervised) in the Netherlands and Europe: Electrek, teslablog.eu, Not a Tesla App, InsideEVs, ArenaEV and Evannex, listed at the end'
     - 'An energy cost comparison (Eleport) and UK maintenance figures (Dick Lovett)'
     - 'The texts of the EU directives and the General Safety Regulation on EUR-Lex'
     - 'My own experience as a new owner of a Tesla Model Y'
     - 'Tesla''s official Dutch pages for Tesla Assisted Driving and the Model Y configurator, checked on 2026-11-19'
-    - 'Photos from Wikimedia Commons (CC BY-SA 4.0), credited under each photo and in the sources'
   recheckedAt: 2026-11-19
-aiAssistance:
-  mine:
-    - 'The opinion, the proposal, the pricing model and my experience as an owner'
-  assisted:
-    - 'Claude checked each claim in my draft against the cited pages and flagged the ones the pages do not support'
-    - 'Claude recomputed the cost tables and made the charts'
-    - 'Claude edited my wording, added the source links and the hedges in the legal section, and applied the corrections from the fact check'
-    - 'Claude blurred the licence plates and faces in the Wikimedia Commons photos and resized them'
-    - 'Claude filled the open slots from my own statements and the official Tesla pages'
-    - 'Claude converted my draft to the blog format; I decide what is published'
+aiAssisted: true
 ---
 
 ![Chart: the Tesla Assisted Driving subscription at 99 euros a month adds up to 1,188 euros after 1 year, 5,940 euros after 5 years and 11,880 euros after 10 years.](cost-over-time-en.webp)
@@ -38,8 +26,6 @@ My goal is a constructive conversation with Tesla, not an attack on the brand.
 ## Why this matters to me
 
 I bought a Tesla Model Y Premium Long Range AWD. Before buying, I took a test drive and compared several electric cars. Compared with the other brands, my experience with Tesla was better, so I chose Tesla. Future Tesla Assisted Driving support mattered to me: I ruled out a used Model S Plaid because its Hardware 3 computer would not support it, and in Europe it is approved for Hardware 4 cars only. The one thing I do not like about Tesla is that Tesla Assisted Driving is subscription-only and, in my view, expensive. That is why the way these features are sold matters to me.
-
-*The Tesla photos on this page are not of my car. They come from Wikimedia Commons.*
 
 ![Grey-blue Tesla Model Y Long Range AWD in a showroom, with visitors and staff in the background blurred.](model-y-long-range-showroom.webp)
 
@@ -241,14 +227,4 @@ All links opened on 2026-11-19 unless noted.
 - Directive 2005/29/EC, unfair commercial practices: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029
 - Directive 93/13/EEC, unfair contract terms: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31993L0013
 - Directive (EU) 2019/2161, Omnibus: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L2161
-
-Photos from Wikimedia Commons, adapted as described and shared under the same licence, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/):
-
 - Cover photo (shown on the blog index only), Tesla Model Y Performance (2025), Alexander Migl. Licence plate blurred, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
-- Tesla Model Y Long Range AWD in a showroom, Chanokchon. Faces blurred, resized: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
-- Tesla Model Y Dual Motor (AWD) in Quicksilver, Damian B Oh. Licence plates blurred, cropped, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg
-- Tesla Model Y Dual Motor (AWD) in Quicksilver, front, Damian B Oh. Licence plate and a passer-by blurred, cropped, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg
-
-Photo from Unsplash, used under the Unsplash License (free to use):
-
-- Inside a Tesla Model Y at the Tesla Center in Hannover, Maxim. A person in the background blurred, cropped, resized: https://unsplash.com/photos/the-interior-of-a-car-with-a-laptop-on-the-dashboard-I7GNlRbI9HA

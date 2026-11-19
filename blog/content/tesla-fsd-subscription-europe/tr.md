@@ -5,30 +5,17 @@ publishedAt: 2026-11-19
 topic: life
 kind: essay
 status: hypothesis
-draft: true
 evidence:
-  confidence: 'Orta. Fiyatlar ve maliyet tabloları, kaynaklardaki rakamlardan kendi hesabımla çıkardığım değerler. Kaynaklar haber ve karşılaştırma siteleri, 2026-11-19’da okundu; yapılandırıcıdaki fiyatlar değişebilir. İngiltere bakım rakamları, sayfanın kendisi açılamadığı için bir arama sonucundan alındı; düşük güvenle okunmalı. Öneri bir bulgu değil, benim görüşüm.'
   basedOn:
     - 'Hollanda ve Avrupa’daki Tesla FSD (Supervised) hakkında kamuya açık haberler: Electrek, teslablog.eu, ArenaEV, Not a Tesla App ve diğerleri, sonda listelendi'
     - 'Bir enerji maliyeti karşılaştırması (Eleport) ve İngiltere bakım rakamları (Dick Lovett)'
     - 'AB direktiflerinin ve Genel Güvenlik Yönetmeliği’nin EUR-Lex metinleri'
     - 'Yeni bir Tesla Model Y sahibi olarak kendi deneyimim'
     - 'Tesla’nın Tesla Assisted Driving ve Model Y yapılandırıcısı için resmi Hollanda sayfaları, 2026-11-19’da kontrol edildi'
-    - 'Wikimedia Commons fotoğrafları (CC BY-SA 4.0), her fotoğrafın altında ve kaynaklarda anıldı'
   recheckedAt: 2026-11-19
-aiAssistance:
-  mine:
-    - 'Görüş, öneri, fiyat modeli ve sahip olarak deneyimim'
-  assisted:
-    - 'Claude taslağımdaki her iddiayı atıf yapılan sayfalarla karşılaştırdı ve sayfaların desteklemediklerini işaretledi'
-    - 'Claude maliyet tablolarını yeniden hesapladı ve grafikleri yaptı'
-    - 'Claude ifadelerimi düzenledi, kaynak linklerini, hukuki bölümdeki temkinli ifadeleri ve doğrulama kontrolünden gelen düzeltmeleri ekledi'
-    - 'Claude, Wikimedia Commons fotoğraflarındaki plakaları ve yüzleri bulanıklaştırdı ve boyutlarını küçülttü'
-    - 'Claude açık alanları kendi ifadelerimden ve resmi Tesla sayfalarından doldurdu'
-    - 'Claude taslağımı blog biçimine çevirdi; neyin yayımlanacağına ben karar veririm'
+aiAssisted: true
 translation:
   from: 2026-11-19
-  assistedByAi: true
 ---
 
 ![Grafik: aylık €99 olan Tesla Assisted Driving aboneliği 1 yılda €1.188, 5 yılda €5.940 ve 10 yılda €11.880 tutuyor.](cost-over-time-tr.webp)
@@ -40,8 +27,6 @@ Amacım Tesla ile yapıcı bir diyalog kurmak, markaya saldırmak değil.
 ## Bu konu benim için neden önemli
 
 Bir Tesla Model Y Premium Long Range AWD satın aldım. Satın almadan önce test sürüşü yaptım ve birçok elektrikli aracı karşılaştırdım. Diğer markalarla kıyasladığımda Tesla deneyimim daha iyiydi, bu yüzden Tesla’yı seçtim. Gelecekte Tesla Assisted Driving desteği benim için önemliydi: ikinci el bir Model S Plaid’i, Hardware 3 bilgisayarı onu desteklemediği ve Avrupa’da yalnızca Hardware 4’lü araçlar için onaylandığı için eledim. Tesla’da beğenmediğim tek şey, Tesla Assisted Driving’in yalnızca abonelikle sunulması ve bence pahalı olması. Bu özelliklerin nasıl satıldığı da bu yüzden benim için önemli.
-
-*Bu sayfadaki Tesla fotoğrafları benim aracıma ait değil. Wikimedia Commons’tan alındı.*
 
 ![Bir showroom’da gri-mavi Tesla Model Y Long Range AWD; arka plandaki ziyaretçiler ve çalışanlar bulanıklaştırıldı.](model-y-long-range-showroom.webp)
 
@@ -243,14 +228,4 @@ Aksi belirtilmedikçe tüm linkler 2026-11-19’da açıldı.
 - Direktif 2005/29/AT, haksız ticari uygulamalar: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029
 - Direktif 93/13/AET, haksız sözleşme şartları: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31993L0013
 - Direktif (AB) 2019/2161, Omnibus: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L2161
-
-Wikimedia Commons fotoğrafları, belirtildiği gibi uyarlandı ve aynı lisansla, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), paylaşıldı:
-
 - Kapak fotoğrafı (yalnızca blog dizininde görünür), Tesla Model Y Performance (2025), Alexander Migl. Plaka bulanıklaştırıldı, boyutu küçültüldü, hafifçe yumuşatıldı: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
-- Showroom’da Tesla Model Y Long Range AWD, Chanokchon. Yüzler bulanıklaştırıldı, boyutu küçültüldü: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
-- Quicksilver renginde Tesla Model Y Dual Motor (AWD), Damian B Oh. Plakalar bulanıklaştırıldı, kırpıldı, boyutu küçültüldü, hafifçe yumuşatıldı: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg
-- Quicksilver renginde Tesla Model Y Dual Motor (AWD), ön, Damian B Oh. Plaka ve bir yoldan geçen kişi bulanıklaştırıldı, kırpıldı, boyutu küçültüldü, hafifçe yumuşatıldı: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg
-
-Unsplash’tan fotoğraf, Unsplash Lisansı kapsamında (ücretsiz kullanım):
-
-- Hannover’deki Tesla Center’da bir Tesla Model Y’nin içi, Maxim. Arka plandaki bir kişi bulanıklaştırıldı, kırpıldı, boyutu küçültüldü: https://unsplash.com/photos/the-interior-of-a-car-with-a-laptop-on-the-dashboard-I7GNlRbI9HA

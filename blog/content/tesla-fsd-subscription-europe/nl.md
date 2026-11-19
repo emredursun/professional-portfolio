@@ -5,30 +5,17 @@ publishedAt: 2026-11-19
 topic: life
 kind: essay
 status: hypothesis
-draft: true
 evidence:
-  confidence: 'Gemiddeld. De prijzen en kostentabellen zijn mijn eigen berekeningen met cijfers uit de bronnen. De bronnen zijn nieuws- en vergelijkingssites, gelezen op 2026-11-19, en prijzen in een configurator kunnen veranderen. De Britse onderhoudscijfers komen uit een zoekresultaat omdat de pagina zelf niet te openen was; lees ze met lage zekerheid. Het voorstel is mijn mening, geen bevinding.'
   basedOn:
     - 'Openbare berichtgeving over Tesla FSD (Supervised) in Nederland en Europa: Electrek, teslablog.eu, ArenaEV, Not a Tesla App en andere, onderaan vermeld'
     - 'Een vergelijking van energiekosten (Eleport) en Britse onderhoudscijfers (Dick Lovett)'
     - 'De EUR-Lex-teksten van de EU-richtlijnen en de General Safety Regulation'
     - 'Mijn eigen ervaring als nieuwe eigenaar van een Tesla Model Y'
     - 'De officiële Nederlandse pagina’s van Tesla over Tesla Assisted Driving en de Model Y-configurator, gecontroleerd op 2026-11-19'
-    - 'Foto’s van Wikimedia Commons (CC BY-SA 4.0), vermeld bij elke foto en in de bronnen'
   recheckedAt: 2026-11-19
-aiAssistance:
-  mine:
-    - 'De mening, het voorstel, het prijsmodel en mijn ervaring als eigenaar'
-  assisted:
-    - 'Claude controleerde elke bewering in mijn concept aan de hand van de genoemde pagina’s en markeerde wat die pagina’s niet ondersteunen'
-    - 'Claude rekende de kostentabellen na en maakte de grafieken'
-    - 'Claude bewerkte mijn formuleringen, voegde de bronlinks en de voorbehouden in het juridische deel toe en verwerkte de correcties uit de feitencontrole'
-    - 'Claude vervaagde de kentekens en gezichten in de foto’s van Wikimedia Commons en paste het formaat aan'
-    - 'Claude vulde de open vakken in met mijn eigen uitspraken en de officiële Tesla-pagina’s'
-    - 'Claude zette mijn concept om naar het blogformaat; ik beslis wat er wordt gepubliceerd'
+aiAssisted: true
 translation:
   from: 2026-11-19
-  assistedByAi: true
 ---
 
 ![Grafiek: het Tesla Assisted Driving-abonnement van €99 per maand loopt op tot €1.188 na 1 jaar, €5.940 na 5 jaar en €11.880 na 10 jaar.](cost-over-time-nl.webp)
@@ -40,8 +27,6 @@ Mijn doel is een constructief gesprek met Tesla, geen aanval op het merk.
 ## Waarom dit voor mij belangrijk is
 
 Ik kocht een Tesla Model Y Premium Long Range AWD. Voor de aankoop maakte ik een proefrit en vergeleek ik meerdere elektrische auto’s. Vergeleken met de andere merken was mijn ervaring met Tesla beter, dus koos ik voor Tesla. Toekomstige ondersteuning voor Tesla Assisted Driving was voor mij belangrijk: ik viel af op een tweedehands Model S Plaid, omdat de Hardware 3-computer daarvan het niet ondersteunt en het in Europa alleen voor auto’s met Hardware 4 is goedgekeurd. Het enige wat ik niet leuk vind aan Tesla is dat Tesla Assisted Driving alleen als abonnement beschikbaar is en volgens mij duur is. Daarom is de manier waarop deze functies worden verkocht belangrijk voor mij.
-
-*De Tesla-foto’s op deze pagina zijn niet van mijn auto. Ze komen van Wikimedia Commons.*
 
 ![Grijsblauwe Tesla Model Y Long Range AWD in een showroom, met bezoekers en personeel op de achtergrond vervaagd.](model-y-long-range-showroom.webp)
 
@@ -243,14 +228,4 @@ Alle links zijn op 2026-11-19 geopend, tenzij anders vermeld.
 - Richtlijn 2005/29/EG, oneerlijke handelspraktijken: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029
 - Richtlijn 93/13/EEG, oneerlijke bedingen: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31993L0013
 - Richtlijn (EU) 2019/2161, Omnibus: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L2161
-
-Foto’s van Wikimedia Commons, aangepast zoals beschreven en onder dezelfde licentie gedeeld, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/):
-
 - Omslagfoto (alleen zichtbaar op de blogindex), Tesla Model Y Performance (2025), Alexander Migl. Kenteken vervaagd, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
-- Tesla Model Y Long Range AWD in een showroom, Chanokchon. Gezichten vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
-- Tesla Model Y Dual Motor (AWD) in Quicksilver, Damian B Oh. Kentekens vervaagd, bijgesneden, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg
-- Tesla Model Y Dual Motor (AWD) in Quicksilver, voorkant, Damian B Oh. Kenteken en een voorbijganger vervaagd, bijgesneden, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg
-
-Foto van Unsplash, gebruikt onder de Unsplash-licentie (gratis te gebruiken):
-
-- Binnenin een Tesla Model Y in het Tesla Center in Hannover, Maxim. Een persoon op de achtergrond vervaagd, bijgesneden, formaat aangepast: https://unsplash.com/photos/the-interior-of-a-car-with-a-laptop-on-the-dashboard-I7GNlRbI9HA
