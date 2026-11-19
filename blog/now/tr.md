@@ -1,7 +1,7 @@
 ---
 entries:
   - date: 2026-11-19
-    text: 'Sopra Steria’nın Pega Practice ekibinde Pega uygulamaları için QA ve test otomasyonu; model tabanlı otomasyon için Tricentis Tosca. Hedef, test edilebilirliğin en baştan case tasarımına yerleşmesi.'
+    text: 'Sopra Steria’nın Pega Practice ekibinde Pega uygulamaları için QA ve test otomasyonu; model tabanlı otomasyon için Tricentis Tosca, web için Playwright. Hedef, test edilebilirliğin en baştan case tasarımına yerleşmesi.'
   - date: 2026-11-19
     text: 'Sopra Steria’nın yapay zekâ destekli teslimat için kurum içi platformuna Tosca becerileri ve iş akışları geliştiriyorum; temelinde açık kaynak projem devran-ai/kit var. İkisinin ardındaki soru aynı: bir çıktıyı güvenilir kılan ne ve bu güven nasıl denetlenebilir hale gelir?'
     link:

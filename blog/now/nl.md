@@ -1,7 +1,7 @@
 ---
 entries:
   - date: 2026-11-19
-    text: 'QA en testautomatisering voor Pega-applicaties in de Pega Practice van Sopra Steria, met Tricentis Tosca voor modelgebaseerde automatisering. Het doel: testbaarheid vanaf het begin in het case-ontwerp.'
+    text: 'QA en testautomatisering voor Pega-applicaties in de Pega Practice van Sopra Steria, met Tricentis Tosca voor modelgebaseerde automatisering en Playwright voor het web. Het doel: testbaarheid vanaf het begin in het case-ontwerp.'
   - date: 2026-11-19
     text: 'Ik bouw Tosca-skills en -workflows voor het interne platform van Sopra Steria voor AI-ondersteunde oplevering, met devran-ai/kit, mijn open-sourceproject, als basis. De vraag achter beide: wat maakt output betrouwbaar, en hoe maak je dat vertrouwen controleerbaar?'
     link:
