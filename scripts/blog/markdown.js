@@ -20,6 +20,7 @@ import MarkdownIt from 'markdown-it';
 import { escapeHtml } from './html.js';
 import { RESERVED_IDS } from './config.js';
 import { POST_IMAGE } from './images.js';
+import { strings } from './strings.js';
 
 const SITE_HOST = 'emredursun.nl';
 const SITE = new URL(`https://${SITE_HOST}/`);
@@ -150,6 +151,17 @@ function createRenderer(file, highlight, image) {
     );
   };
 
+  // A table scrolls inside its own region, so a wide one never widens the page.
+  // The region is focusable so a keyboard reader can scroll it, and named (with
+  // a number, so two on one page stay distinct landmarks). Columns whose cells
+  // are all numbers get a class the stylesheet right-aligns.
+  md.core.ruler.push('table_columns', markNumericColumns);
+  md.renderer.rules.table_open = (tokens, idx, options, _env, self) =>
+    `<div class="table-wrap" role="region" tabindex="0" aria-label="${escapeHtml(tokens[idx].meta.label)}">` +
+    self.renderToken(tokens, idx, options);
+  md.renderer.rules.table_close = (tokens, idx, options, _env, self) =>
+    self.renderToken(tokens, idx, options) + '</div>\n';
+
   md.renderer.rules.fence = (tokens, idx) => {
     const token = tokens[idx];
     const lang = token.info.trim().split(/\s+/)[0] || 'text';
@@ -166,6 +178,69 @@ function createRenderer(file, highlight, image) {
   };
 
   return md;
+}
+
+// A number or amount: optional sign and currency, grouped digits, optional
+// percent or multiplication sign. "€99 a month" is prose, so it is not.
+const NUMERIC = /^[+\-−~≈]?\s?[€$£]?\s?[+\-−]?\d[\d.,\s]*\s?[%×x]?$/u;
+const NO_VALUE = /^(?:[-–—]|n\/a)?$/i;
+
+/** Text of a table cell's inline token. */
+const cellText = (inline) =>
+  (inline?.children ?? [])
+    .map((child) => child.content)
+    .join('')
+    .trim();
+
+/**
+ * Names each table and marks right-aligned columns: those a markdown author
+ * aligned with ---:, and those where every filled body cell is a number.
+ * markdown-it's own inline text-align style would break the site's CSP, so it
+ * is dropped in favour of the class.
+ */
+function markNumericColumns(state) {
+  const { tokens } = state;
+  const name = strings(state.env?.lang ?? 'en').tableLabel;
+  let count = 0;
+  tokens.forEach((table, start) => {
+    if (table.type !== 'table_open') return;
+    count += 1;
+    const end = tokens.findIndex((token, i) => i > start && token.type === 'table_close');
+    const cells = [];
+    let col = 0;
+    let inHead = false;
+    for (let i = start; i < end; i += 1) {
+      const token = tokens[i];
+      if (token.type === 'thead_open') inHead = true;
+      if (token.type === 'thead_close') inHead = false;
+      if (token.type === 'tr_open') col = 0;
+      if (token.type === 'th_open' || token.type === 'td_open') {
+        cells.push({ open: token, col, head: inHead, text: cellText(tokens[i + 1]) });
+        col += 1;
+      }
+    }
+    const columns = new Map();
+    for (const cell of cells) {
+      const entry = columns.get(cell.col) ?? { numeric: 0, other: 0, right: false };
+      if (!cell.head && !NO_VALUE.test(cell.text)) {
+        if (NUMERIC.test(cell.text)) entry.numeric += 1;
+        else entry.other += 1;
+      }
+      if (/text-align:\s*right/.test(cell.open.attrGet('style') ?? '')) entry.right = true;
+      columns.set(cell.col, entry);
+    }
+    for (const cell of cells) {
+      cell.open.attrs = (cell.open.attrs ?? []).filter(([attr]) => attr !== 'style');
+      const entry = columns.get(cell.col);
+      if (entry.right || (entry.numeric > 0 && entry.other === 0)) {
+        cell.open.attrJoin('class', 'num');
+      }
+      // A figure never breaks across lines, even in a column that mixes in words.
+      if (!cell.head && NUMERIC.test(cell.text)) cell.open.attrJoin('class', 'fig');
+    }
+    const heads = cells.filter((cell) => cell.head && cell.text).map((cell) => cell.text);
+    table.meta = { label: `${name} ${count}${heads.length ? `: ${heads.join(', ')}` : ''}` };
+  });
 }
 
 /** The first of base, base-2, base-3, ... that is not taken yet. */
@@ -203,14 +278,15 @@ function outline(tokens, file) {
 
 /**
  * @param {string} source
- * @param {{ file: string, highlight?: (code: string, lang: string) => string, image?: (name: string) => { src: string, width: number, height: number } | undefined }} options
+ * @param {{ file: string, highlight?: (code: string, lang: string) => string, image?: (name: string) => { src: string, width: number, height: number } | undefined, lang?: string }} options
+ *   `lang`: the post's language, for the words the renderer adds (table labels).
  *   `image`: the post's own images by bare name (images.js), as served.
  * @returns {{ html: string, toc: Array<{ level: number, id: string, text: string }>, hasCode: boolean }}
  */
-export function renderMarkdown(source, { file, highlight, image }) {
+export function renderMarkdown(source, { file, highlight, image, lang }) {
   const md = createRenderer(file, highlight, image);
-  const tokens = md.parse(source, {});
+  const tokens = md.parse(source, { lang });
   const toc = outline(tokens, file);
   const hasCode = tokens.some((token) => token.type === 'fence');
-  return { html: md.renderer.render(tokens, md.options, {}), toc, hasCode };
+  return { html: md.renderer.render(tokens, md.options, { lang }), toc, hasCode };
 }

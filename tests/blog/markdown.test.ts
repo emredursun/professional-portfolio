@@ -209,3 +209,54 @@ describe('renderMarkdown: review findings', () => {
     expect(() => render('Text\n\n    indented code\n')).toThrow(/fenced block/);
   });
 });
+
+describe('renderMarkdown: tables', () => {
+  const table = [
+    '| Item | Electric | Note |',
+    '|---|---:|---|',
+    '| Energy | €912 | saved |',
+    '| Fuel | €2,121 | - |',
+    '',
+  ].join('\n');
+
+  it('wraps each table in a focusable, labelled scroll region', () => {
+    const { html } = render(`${table}\n${table}`);
+    expect(html.match(/<div class="table-wrap" role="region" tabindex="0"/g)).toHaveLength(2);
+    expect(html).toContain('aria-label="Table 1: Item, Electric, Note"');
+    expect(html).toContain('aria-label="Table 2: Item, Electric, Note"');
+    expect(html.match(/<table>/g)).toHaveLength(2);
+    expect(html.match(/<\/table>\n<\/div>/g)).toHaveLength(2);
+  });
+
+  it('labels the table in the post language', () => {
+    expect(render(table, { lang: 'tr' }).html).toContain('aria-label="Tablo 1:');
+    expect(render(table, { lang: 'nl' }).html).toContain('aria-label="Tabel 1:');
+  });
+
+  it('marks a column of numbers, and any figure, but never words', () => {
+    const { html } = render(table);
+    expect(html).toContain('<th class="num">Electric</th>');
+    expect(html).toContain('<td class="num fig">€2,121</td>');
+    expect(html).toContain('<td>Energy</td>');
+    expect(html).not.toContain('<th class="num">Item');
+    expect(html).not.toContain('<td class="num">saved');
+  });
+
+  it('detects a numeric column without the author aligning it', () => {
+    const { html } = render('| A | B |\n|---|---|\n| x | 1.5 |\n| y | 20% |\n| z | - |\n');
+    expect(html).toContain('<th class="num">B</th>');
+    expect(html).toContain('<td class="num fig">20%</td>');
+    expect(html).toContain('<td class="num">-</td>');
+  });
+
+  it('keeps a column with words in it left-aligned, figures still on one line', () => {
+    const { html } = render('| A |\n|---|\n| €99 a month |\n| €891.00 |\n');
+    expect(html).not.toContain('class="num"');
+    expect(html).toContain('<td class="fig">€891.00</td>');
+    expect(html).not.toContain('<td class="fig">€99 a month');
+  });
+
+  it('never lets markdown alignment become an inline style', () => {
+    expect(render(table).html).not.toContain('style=');
+  });
+});

@@ -1,0 +1,95 @@
+/*
+ * Tables in a post (rendered by scripts/blog/markdown.js).
+ *
+ * Every table sits in .table-wrap, a focusable, labelled region that scrolls
+ * sideways by itself, so a wide table never widens the page. Words and numbers
+ * are never broken mid-word: cells wrap at spaces only, headers and figures
+ * not at all, and a cell has a minimum width so a column is never squeezed to
+ * one word per line (the table scrolls instead). Cell tints are translucent,
+ * so the edge shadows that show where the table scrolls stay visible.
+ */
+.table-wrap {
+  --edge: color-mix(in srgb, var(--ink) 22%, transparent);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-box);
+  /* Cover (local) fades the shadow out at each end; the scroll-fixed shadow
+     shows only on a side that has more to see, and nowhere when it all fits. */
+  background:
+    linear-gradient(to right, var(--paper) 30%, transparent) left center / 40px 100% local no-repeat,
+    linear-gradient(to left, var(--paper) 30%, transparent) right center / 40px 100% local no-repeat,
+    radial-gradient(farthest-side at 0 50%, var(--edge), transparent) left center / 14px 100% scroll
+      no-repeat,
+    radial-gradient(farthest-side at 100% 50%, var(--edge), transparent) right center / 14px 100%
+      scroll no-repeat;
+}
+
+.table-wrap:focus-visible {
+  outline-offset: 2px;
+  border-radius: var(--radius-box);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  /* Never squeeze a cell's words onto a line each, nor break one in two. */
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+  font-variant-numeric: lining-nums;
+}
+
+.prose :is(th, td) {
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+  vertical-align: baseline;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: normal;
+  hyphens: manual;
+}
+
+.prose td {
+  min-width: 7.5rem;
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.prose th {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border-bottom: 1px solid var(--ink-2);
+}
+
+.prose tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--ink) 2.5%, transparent);
+}
+
+@media (hover: hover) {
+  .prose tbody tr:hover {
+    background: color-mix(in srgb, var(--underline) 10%, transparent);
+  }
+}
+
+/* Numbers and amounts: right-aligned, aligned digits, one line. */
+.prose :is(th, td).num {
+  text-align: right;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.prose td.fig {
+  white-space: nowrap;
+  min-width: 0;
+}
