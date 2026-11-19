@@ -2,6 +2,11 @@
   max-width: calc(var(--measure) + 2 * var(--gutter));
   margin: 0 auto;
   padding: 48px var(--gutter) 88px;
+  /* A word longer than the line, such as a bare URL in a source list, wraps
+     instead of widening the page. On a phone a wider page grows the layout
+     viewport past the screen, and the sticky table of contents bar then
+     sticks above what the reader sees (e2e/blog.spec.ts). */
+  overflow-wrap: break-word;
 }
 
 /* Header */
@@ -335,6 +340,13 @@
 .prose ul,
 .prose ol {
   padding-left: 1.2em;
+}
+
+/* break-word does not shrink a table cell's minimum width; anywhere does, so
+   a bare URL or long code in a cell wraps instead of widening the page. The
+   table keeps its table semantics, unlike display: block with a scroll. */
+.prose :is(td, th) {
+  overflow-wrap: anywhere;
 }
 
 .prose li {

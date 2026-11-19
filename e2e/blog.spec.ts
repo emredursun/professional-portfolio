@@ -1,7 +1,15 @@
 import AxeBuilder from '@axe-core/playwright';
 import { type Page } from '@playwright/test';
 import { BLOG_LAUNCHED } from '../scripts/blog/config.js';
-import { hasNotes, postPath, postWithToc, recheckRange, slugs } from './blog-content';
+import {
+  allPostPaths,
+  hasNotes,
+  postPath,
+  postsWithToc,
+  postWithToc,
+  recheckRange,
+  slugs,
+} from './blog-content';
 import { expect, test } from './fixtures';
 
 /**
@@ -384,6 +392,46 @@ test.describe('table of contents placement', () => {
       // The folded bar, at the top of the screen.
       expect((await toc.boundingBox())!.y).toBeLessThanOrEqual(1);
       await expect(toc.getByRole('link').first()).toBeHidden();
+    }
+  });
+
+  // A phone pins sticky and fixed elements to its layout viewport. When
+  // anything is wider than the screen (a long bare URL once was), the layout
+  // viewport grows past the visible area and the bar sticks above the screen,
+  // where the reader cannot see it. So no post may be wider than the screen,
+  // and the bar is checked on the visual viewport, scrolled the way a reader
+  // scrolls, on every post that has a table of contents.
+  test('no post is wider than the screen, in any language', async ({ page, isMobile }) => {
+    test.skip(!isMobile, 'a phone is where a wide page hides the bar');
+    test.slow(); // one page per post and language
+    for (const path of allPostPaths()) {
+      await page.goto(path);
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      );
+      expect(overflow, path).toBeLessThanOrEqual(0);
+    }
+  });
+
+  test('the bar stays on screen while a reader scrolls any post', async ({ page, isMobile }) => {
+    test.skip(!isMobile, 'the bar is for phones');
+    const paths = postsWithToc();
+    test.skip(paths.length === 0, 'no post with headings yet');
+    test.slow(); // one page per post and language
+    for (const path of paths) {
+      await page.goto(path);
+      // Named in the page's language, so found by its class.
+      const toc = page.locator('nav.toc');
+      // Far down the post, or to its end if it is short.
+      const room = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
+      const target = Math.min(2000, room - 1);
+      await page.mouse.move(200, 400);
+      while ((await page.evaluate(() => scrollY)) < target) await page.mouse.wheel(0, 250);
+      await expect.poll(() => page.evaluate(() => scrollY), { message: path }).toBeGreaterThan(0);
+      const top = await toc.evaluate((el) =>
+        Math.round(el.getBoundingClientRect().top - visualViewport!.offsetTop),
+      );
+      expect(top, path).toBe(0);
     }
   });
 });
