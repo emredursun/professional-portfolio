@@ -54,6 +54,10 @@ const en = {
     'QA consultant for Pega and Tricentis Tosca in the Netherlands. I write here to think more clearly about my work.',
   moreAboutMe: 'More about me',
   keepReading: 'Keep reading',
+  videoPlay: 'Play video',
+  videoNote: 'Playing it loads the video from Vimeo, which may set cookies.',
+  videoCredit: 'Video:',
+  videoWatch: 'Watch on Vimeo',
   evidenceTitle: 'Sources',
   aiDisclosure:
     'AI tools helped with research, fact-checking and editing; I reviewed every claim and am responsible for what is published.',
@@ -137,6 +141,10 @@ const tr = {
     'Hollanda’da Pega ve Tricentis Tosca için QA danışmanıyım. İşim hakkında daha net düşünmek için burada yazıyorum.',
   moreAboutMe: 'Hakkımda daha fazlası',
   keepReading: 'Okumaya devam edin',
+  videoPlay: 'Videoyu oynat',
+  videoNote: 'Oynattığınızda video Vimeo üzerinden yüklenir ve Vimeo çerez bırakabilir.',
+  videoCredit: 'Video:',
+  videoWatch: 'Vimeo’da izleyin',
   evidenceTitle: 'Kaynaklar',
   aiDisclosure:
     'Yapay zekâ araçları araştırma, doğrulama, düzenleme ve çeviride yardımcı oldu; her iddiayı kendim gözden geçirdim ve yayımlanan her şeyden ben sorumluyum.',
@@ -221,6 +229,10 @@ const nl = {
     'QA-consultant voor Pega en Tricentis Tosca in Nederland. Ik schrijf hier om helderder over mijn werk na te denken.',
   moreAboutMe: 'Meer over mij',
   keepReading: 'Lees verder',
+  videoPlay: 'Video afspelen',
+  videoNote: 'Bij afspelen wordt de video van Vimeo geladen, dat cookies kan plaatsen.',
+  videoCredit: 'Video:',
+  videoWatch: 'Bekijk op Vimeo',
   evidenceTitle: 'Bronnen',
   aiDisclosure:
     'AI-tools hielpen bij onderzoek, factchecking, redactie en vertaling; ik heb elke bewering zelf gecontroleerd en ben verantwoordelijk voor wat er wordt gepubliceerd.',

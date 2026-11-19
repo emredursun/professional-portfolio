@@ -2,6 +2,7 @@
 title: 'Describe the outcome, then check it: agentic AI and software testing'
 description: 'Notes from The Collective 2026: agentic AI as a new interface layer, what research says about trust in AI output, and why testers keep checking the result.'
 publishedAt: 2026-11-13
+updatedAt: 2026-11-19
 topic: ai
 kind: note
 status: hypothesis
@@ -9,6 +10,7 @@ cover: cover-misty-road.webp
 evidence:
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 November 2026'
+    - 'Official aftermovie and its public description on Vimeo, Sopra Steria Benelux, 19 November 2026'
     - 'Human & Tech: Agentic Development: Teams Reimagined session at the same event'
     - 'Public LinkedIn post by the session host'
     - 'Gartner press release on agentic AI, 25 June 2025'
@@ -29,9 +31,20 @@ If more of our work starts as a described outcome that an agent turns into actio
 
 My day started earlier. From 10:30, before the main programme began in the afternoon, I was one of the facilitators of a workshop, guiding participants through it.
 
+![The Collective '26 event card with the date, 11 November 2026, the hours 14:00 to 21:30 and the venue, AFAS Theater, Leusden.](collective26-event-card.webp)
+
+The main programme ran from the afternoon into the evening. Sopra Steria Benelux has since shared a short aftermovie of the day. In [its own description on Vimeo](https://vimeo.com/1248246223), the company calls The Collective its strategy event and counts around 800 colleagues there. The CEO shared the ambitions for 2030, a talk explored the human side of AI, and colleagues took the stage themselves in the HUMAN and TECH break-out sessions.
+
+```vimeo
+id: 1248246223
+title: The Collective 2026: where human and tech come together
+titleLang: en
+credit: Sopra Steria Benelux
+```
+
 ## Working back from 2030
 
-The last session, Human & Tech: Agentic Development: Teams Reimagined, began in 2030 and worked its way back to the present. Some 200 Dutch colleagues took part, and the question running through it was how we, our roles and our teams will change. The session put it in plain terms: which new skills will you need, what will your team look like, and will you still have a job? The host later summed it up as: the biggest change will be in us, as people reinventing ourselves, more than in the technology.
+The last session, Human & Tech: Agentic Development: Teams Reimagined, began in 2030 and worked its way back to the present. Some 200 colleagues took part, and the question running through it was how we, our roles and our teams will change. The session put it in plain terms: which new skills will you need, what will your team look like, and will you still have a job? The host later summed it up as: the biggest change will be in us, as people reinventing ourselves, more than in the technology.
 
 Starting from the end point made the change feel a lot less abstract to me.
 

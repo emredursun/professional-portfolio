@@ -70,6 +70,7 @@ export default defineConfig(() => {
           'scripts/lib/blog-preview-routes.js',
           'blog/client/theme-toggle.ts',
           'blog/client/stale.ts',
+          'blog/client/video.ts',
           'src/utils/decor.ts',
           'src/utils/tween.ts',
           'src/bootstrap.ts',

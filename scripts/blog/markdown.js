@@ -20,6 +20,7 @@ import MarkdownIt from 'markdown-it';
 import { escapeHtml } from './html.js';
 import { RESERVED_IDS } from './config.js';
 import { POST_IMAGE } from './images.js';
+import { renderVideo } from './video.js';
 import { strings } from './strings.js';
 
 const SITE_HOST = 'emredursun.nl';
@@ -99,8 +100,9 @@ function inlineText(token) {
  * @param {string} file
  * @param {(code: string, lang: string) => string} [highlight]
  * @param {(name: string) => { src: string, width: number, height: number } | undefined} [image]
+ * @param {string} [lang]  The post's language, for the words around a video embed.
  */
-function createRenderer(file, highlight, image) {
+function createRenderer(file, highlight, image, lang) {
   const md = new MarkdownIt({ html: false, linkify: false, typographer: false });
 
   md.validateLink = (url) => {
@@ -165,12 +167,16 @@ function createRenderer(file, highlight, image) {
 
   md.renderer.rules.fence = (tokens, idx) => {
     const token = tokens[idx];
-    const lang = token.info.trim().split(/\s+/)[0] || 'text';
-    if (!LANGUAGES.has(lang)) {
-      throw new Error(`${file}: code language "${lang}" is not supported`);
+    const info = token.info.trim().split(/\s+/)[0] || 'text';
+    if (info === 'vimeo') {
+      if (!lang) throw new Error(`${file}: a vimeo block needs the post's language`);
+      return renderVideo(token.content, { file, lang });
+    }
+    if (!LANGUAGES.has(info)) {
+      throw new Error(`${file}: code language "${info}" is not supported`);
     }
     return highlight
-      ? highlight(token.content, lang)
+      ? highlight(token.content, info)
       : `<pre><code>${escapeHtml(token.content)}</code></pre>\n`;
   };
 
@@ -288,15 +294,16 @@ function outline(tokens, file) {
 
 /**
  * @param {string} source
- * @param {{ file: string, highlight?: (code: string, lang: string) => string, image?: (name: string) => { src: string, width: number, height: number } | undefined, lang?: string }} options
- *   `lang`: the post's language, for the words the renderer adds (table labels).
+ * @param {{ file: string, lang?: string, highlight?: (code: string, lang: string) => string, image?: (name: string) => { src: string, width: number, height: number } | undefined }} options
+ *   `lang`: the post's language, for the words the renderer adds (table labels, video embed).
  *   `image`: the post's own images by bare name (images.js), as served.
  * @returns {{ html: string, toc: Array<{ level: number, id: string, text: string }>, hasCode: boolean }}
  */
-export function renderMarkdown(source, { file, highlight, image, lang }) {
-  const md = createRenderer(file, highlight, image);
+export function renderMarkdown(source, { file, lang, highlight, image }) {
+  const md = createRenderer(file, highlight, image, lang);
   const tokens = md.parse(source, { lang });
   const toc = outline(tokens, file);
-  const hasCode = tokens.some((token) => token.type === 'fence');
+  // A video embed is a fence too, but brings no code to highlight.
+  const hasCode = tokens.some((token) => token.type === 'fence' && token.info.trim() !== 'vimeo');
   return { html: md.renderer.render(tokens, md.options, { lang }), toc, hasCode };
 }
