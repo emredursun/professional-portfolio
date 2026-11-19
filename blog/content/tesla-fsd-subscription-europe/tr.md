@@ -87,11 +87,13 @@ Zaten €54.990 olan bir araç için (Model Y Premium Long Range AWD’nin Holla
 
 Yılda 15.000 km ve evde şarj için, Avrupa’daki bir karşılaştırmanın ([Eleport](https://eleport.com/are-electric-cars-cheaper-to-run/)) 100 km maliyetleriyle bir örnek; karşılaştırma AB ortalamalarını kullanıyor:
 
-| Kalem | Elektrikli | Benzinli | Fark |
+| Yıllık | Elektrikli | Benzinli | Fark |
 | --- | --- | --- | --- |
-| Yıllık enerji veya yakıt | €912 | €2.121 | EV ile €1.209 tasarruf |
-| Yıllık FSD (Supervised) aboneliği | €1.188 | - | |
-| Abonelik sonrası kalan enerji tasarrufu | | | €21 |
+| Enerji veya yakıt | €912 | €2.121 | €1.209 |
+| FSD (Supervised) aboneliği | €1.188 | - | |
+| Abonelik sonrası kalan | | | €21 |
+
+Elektrikli araç enerjide yılda €1.209 tasarruf ettiriyor; abonelikten sonra €21 kalıyor.
 
 Hesaplamada evde şarj için 100 km başına €6,08, benzin için €14,14 baz alındı. Bakımdaki tasarruf da sınırlı. İngiltere verilerine göre lastik dahil yıllık bakım, elektrikli araçta £720 ile £1.180, benzinli veya dizel araçta £820 ile £1.530 arasında ([Dick Lovett](https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs)). Bu sayfayı kendim açamadım; rakamlar arama sonucundaki özetten, bu yüzden temkinle okuyun.
 
@@ -152,15 +154,16 @@ Bence bazı müşterilerin eleştirdiği bir modeli değiştirmek markayı güç
 
 Dördüncü öneriyi somutlaştırmak için, bugünkü aylık €99 fiyatı baz alınarak bir örnek. İndirimler benim kendi örneğim, Tesla teklifi değil.
 
-| Paket | İndirim | Toplam fiyat | Aylık efektif fiyat | Aylık ödemeye göre tasarruf |
+| Paket | İndirim | Toplam | Aylık | Aylığa göre tasarruf |
 | --- | --- | --- | --- | --- |
-| Aylık (bugünkü gibi) | %0 | Aylık €99 | €99,00 | - |
+| Aylık, bugünkü gibi (aylık €99) | %0 | - | €99,00 | - |
 | 1 yıl peşin | %25 | €891,00 | €74,25 | €297,00 |
 | 2 yıl peşin | %30 | €1.663,20 | €69,30 | €712,80 |
 | 3 yıl peşin | %35 | €2.316,60 | €64,35 | €1.247,40 |
 | 4 yıl peşin | %40 | €2.851,20 | €59,40 | €1.900,80 |
 | 5 yıl peşin | %50 | €2.970,00 | €49,50 | €2.970,00 |
-| Ömür boyu lisans | Tek seferlik fiyat | Tesla belirler | - | Lisans araçla birlikte kalır |
+
+Fiyatını Tesla’nın belirlediği bir ömür boyu lisans araçla birlikte kalırdı.
 
 5 yıllık paket, 4 yıllıktan 12 ay daha fazla süre için yaklaşık €119 (€118,80) daha pahalı; bu da en uzun taahhüdü en cazip seçenek yapıyor.
 

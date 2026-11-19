@@ -87,11 +87,13 @@ Mensen stappen onder meer over op een elektrische auto om hun gebruikskosten te 
 
 Voorbeeld bij 15.000 km per jaar met thuisladen, op basis van de kosten per 100 km uit één Europese vergelijking ([Eleport](https://eleport.com/are-electric-cars-cheaper-to-run/)), die EU-gemiddelden gebruikt:
 
-| Post | Elektrisch | Benzine | Verschil |
+| Per jaar | Elektrisch | Benzine | Verschil |
 | --- | --- | --- | --- |
-| Energie of brandstof per jaar | €912 | €2.121 | €1.209 bespaard met de EV |
-| FSD (Supervised)-abonnement per jaar | €1.188 | - | |
-| Resterende energiebesparing na abonnement | | | €21 |
+| Energie of brandstof | €912 | €2.121 | €1.209 |
+| FSD (Supervised)-abonnement | €1.188 | - | |
+| Over na het abonnement | | | €21 |
+
+De EV bespaart €1.209 per jaar op energie; na het abonnement blijft €21 over.
 
 De berekening gaat uit van €6,08 per 100 km voor thuisladen en €14,14 per 100 km voor benzine. Ook de besparing op onderhoud is beperkt. Britse cijfers komen inclusief banden uit op £720 tot £1.180 per jaar voor een EV en £820 tot £1.530 voor een benzine- of dieselauto ([Dick Lovett](https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs)). Ik kon die pagina zelf niet openen; de cijfers komen uit de samenvatting in het zoekresultaat, dus wees voorzichtig.
 
@@ -152,15 +154,16 @@ Volgens mij kan het aanpassen van een model waar sommige klanten kritiek op hebb
 
 Om voorstel 4 concreet te maken, een voorbeeld op basis van de huidige prijs van €99 per maand. De kortingen zijn mijn eigen illustratie, geen aanbod van Tesla.
 
-| Pakket | Korting | Totaalprijs | Effectief per maand | Besparing t.o.v. maandelijks |
+| Pakket | Korting | Totaal | Per maand | Besparing t.o.v. maand |
 | --- | --- | --- | --- | --- |
-| Maandelijks (zoals nu) | 0% | €99 per maand | €99,00 | - |
+| Maandelijks, zoals nu (€99 per maand) | 0% | - | €99,00 | - |
 | 1 jaar vooruit | 25% | €891,00 | €74,25 | €297,00 |
 | 2 jaar vooruit | 30% | €1.663,20 | €69,30 | €712,80 |
 | 3 jaar vooruit | 35% | €2.316,60 | €64,35 | €1.247,40 |
 | 4 jaar vooruit | 40% | €2.851,20 | €59,40 | €1.900,80 |
 | 5 jaar vooruit | 50% | €2.970,00 | €49,50 | €2.970,00 |
-| Levenslange licentie | Eenmalige prijs | Vast te stellen door Tesla | - | Licentie blijft bij de auto |
+
+Een levenslange licentie, met een prijs die Tesla bepaalt, blijft bij de auto.
 
 Het 5-jarenpakket kost ongeveer €119 (€118,80) meer dan het 4-jarenpakket voor nog eens 12 maanden, waardoor de langste looptijd het aantrekkelijkst is.
 

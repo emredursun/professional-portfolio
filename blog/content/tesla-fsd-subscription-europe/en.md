@@ -85,11 +85,13 @@ People switch to an electric car partly to lower their running costs. The subscr
 
 Example for 15,000 km a year with home charging, using the cost per 100 km from one European comparison ([Eleport](https://eleport.com/are-electric-cars-cheaper-to-run/)), which uses EU averages:
 
-| Item | Electric | Petrol | Difference |
+| Per year | Electric | Petrol | Difference |
 | --- | --- | --- | --- |
-| Energy or fuel per year | €912 | €2,121 | €1,209 saved by the EV |
-| FSD (Supervised) subscription per year | €1,188 | - | |
-| Energy saving left after the subscription | | | €21 |
+| Energy or fuel | €912 | €2,121 | €1,209 |
+| FSD (Supervised) subscription | €1,188 | - | |
+| Left after the subscription | | | €21 |
+
+The EV saves €1,209 a year on energy; after the subscription, €21 is left.
 
 The calculation uses €6.08 per 100 km for home charging and €14.14 per 100 km for petrol. Maintenance savings are also modest. UK figures put yearly maintenance, including tires, at £720 to £1,180 for an EV and £820 to £1,530 for a petrol or diesel car ([Dick Lovett](https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs)). I could not open that page myself; the figures come from its search-result summary, so treat them with caution.
 
@@ -113,7 +115,7 @@ European buyers expect clear, lasting rights. Under the [Unfair Commercial Pract
 
 *I am not a lawyer. The rules below are context, not a claim that Tesla breaks them. Whether they apply to a specific case is for regulators and courts to decide.*
 
-| EU rule | What it says, in short | Why it is relevant |
+| EU rule | What it says | Why it matters |
 | --- | --- | --- |
 | Sale of Goods Directive (EU) 2019/771 | For goods with digital elements, the seller must supply the updates needed to keep the goods in conformity for the period a consumer can reasonably expect | EU law treats software that comes with the car as part of the product |
 | Digital Content Directive (EU) 2019/770 | Consumers have clear rights for digital content and services, including conditions for changes made by the trader. Software that comes with the goods under the sales contract falls under 2019/771 instead | A subscription sold separately from the car may be a digital service under this directive. Whether it is, is for courts to decide |
@@ -150,15 +152,16 @@ In my view, adjusting a model that some customers criticise can strengthen a bra
 
 To make proposal 4 concrete, here is an example based on today's price of €99 a month. The discounts are my own illustration, not a Tesla offer.
 
-| Plan | Discount | Total price | Effective price per month | Saving vs. monthly |
+| Plan | Discount | Total | Per month | Saved vs. monthly |
 | --- | --- | --- | --- | --- |
-| Monthly (as today) | 0% | €99 a month | €99.00 | - |
+| Monthly, as today (€99 a month) | 0% | - | €99.00 | - |
 | 1 year prepaid | 25% | €891.00 | €74.25 | €297.00 |
 | 2 years prepaid | 30% | €1,663.20 | €69.30 | €712.80 |
 | 3 years prepaid | 35% | €2,316.60 | €64.35 | €1,247.40 |
 | 4 years prepaid | 40% | €2,851.20 | €59.40 | €1,900.80 |
 | 5 years prepaid | 50% | €2,970.00 | €49.50 | €2,970.00 |
-| Lifetime license | One-time price | Set by Tesla | - | License stays with the car |
+
+A lifetime license, priced by Tesla, would stay with the car.
 
 The 5-year plan costs about €119 more (€118.80) than the 4-year plan for a further 12 months, which makes the longest commitment the most attractive.
 
