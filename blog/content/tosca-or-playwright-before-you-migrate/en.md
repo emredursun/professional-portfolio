@@ -5,7 +5,7 @@ publishedAt: 2026-11-18
 topic: testing
 kind: essay
 status: verified
-cover: cover-decision-abstract.webp
+cover: cover-tosca-commander.webp
 evidence:
   basedOn:
     - 'Vendor and project pages for Tosca and Playwright, read 2026-11-17 and 2026-11-18'
