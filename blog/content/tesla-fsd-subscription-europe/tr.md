@@ -7,7 +7,7 @@ kind: essay
 status: hypothesis
 draft: true
 evidence:
-  confidence: 'Orta. Fiyatlar ve maliyet tabloları, kaynaklardaki rakamlardan kendi hesabımla çıkardığım değerler. Kaynaklar haber ve karşılaştırma siteleri, 2026-11-19’da okundu; yapılandırıcıdaki fiyatlar değişebilir. Öneri bir bulgu değil, benim görüşüm.'
+  confidence: 'Orta. Fiyatlar ve maliyet tabloları, kaynaklardaki rakamlardan kendi hesabımla çıkardığım değerler. Kaynaklar haber ve karşılaştırma siteleri, 2026-11-19’da okundu; yapılandırıcıdaki fiyatlar değişebilir. İngiltere bakım rakamları, sayfanın kendisi açılamadığı için bir arama sonucundan alındı; düşük güvenle okunmalı. Öneri bir bulgu değil, benim görüşüm.'
   basedOn:
     - 'Hollanda ve Avrupa’daki Tesla FSD (Supervised) hakkında kamuya açık haberler: Electrek, teslablog.eu, ArenaEV, Not a Tesla App ve diğerleri, sonda listelendi'
     - 'Bir enerji maliyeti karşılaştırması (Eleport) ve İngiltere bakım rakamları (Dick Lovett)'
@@ -20,6 +20,7 @@ aiAssistance:
   assisted:
     - 'Claude taslağımdaki her iddiayı atıf yapılan sayfalarla karşılaştırdı ve sayfaların desteklemediklerini işaretledi'
     - 'Claude maliyet tablolarını yeniden hesapladı ve grafikleri yaptı'
+    - 'Claude ifadelerimi düzenledi, kaynak linklerini, hukuki bölümdeki temkinli ifadeleri ve doğrulama kontrolünden gelen düzeltmeleri ekledi'
     - 'Claude taslağımı blog biçimine çevirdi; neyin yayımlanacağına ben karar veririm'
 translation:
   from: 2026-11-19
@@ -44,9 +45,9 @@ Bu bilgiler, yazının sonunda listelenen kamuya açık kaynaklardan alındı.
 
 - FSD (Supervised) Hollanda’da onaylandı. Hollanda araç kurumu RDW, 10 Nisan 2026’da Hardware 4’lü araçlar için onayladı; Electrek bunu Avrupa’daki ilk onay olarak bildiriyor ([Electrek, 14 Nisan 2026](https://electrek.co/2026/04/14/tesla-fsd-europe-hw3-owners-dutch-claim/)).
 - Hollanda’da FSD (Supervised), bir aylık deneme süresinin ardından aylık €99 ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), 3 Ekim 2026’da güncellendi; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)).
-- Tek seferlik satın alma seçeneği kalktı. Hollanda’da 15 Mayıs 2026’da, Avrupa’nın geri kalanında 21 Mayıs’ta sona erdi ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). O zamana kadar Hollanda yapılandırıcısında €7.500’dü ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[SAHİP ALANI: yayın günü tesla.com/nl_nl adresini kontrol et ve yapılandırıcının ne gösterdiğini yaz.]*
-- Electrek, Hollanda yapılandırıcısının yeni siparişlerde Basic Autopilot’u (şerit ortalama ve adaptif hız sabitleyici) artık standart olarak sunmadığını bildiriyor; baz araçta yalnızca AB yasasının zorunlu kıldığı acil şerit koruma kalıyor ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[SAHİP ALANI: kendi aracında doğrula ve ekran görüntünü ekle.]*
-- AB yasasının zorunlu kıldığı güvenlik özellikleri standart kalıyor. AB Genel Güvenlik Yönetmeliği’ne göre otomatik acil fren ve acil şerit koruma yeni araçlarda zorunlu ([Yönetmelik (AB) 2019/2144, madde 7](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) ve aboneliğe dahil değil. Bu yazı yasal zorunlu güvenlik özellikleriyle değil, ayrıca satılan sürüş destek özellikleriyle ilgili.
+- Tek seferlik satın alma seçeneği kalktı. Hollanda’da 15 Mayıs 2026’da, Avrupa’nın geri kalanının çoğunda 21 Mayıs’ta sona erdi ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). O zamana kadar Hollanda yapılandırıcısında €7.500’dü ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[SAHİP ALANI: yayın günü tesla.com/nl_nl adresini kontrol et ve yapılandırıcının ne gösterdiğini yaz.]*
+- Electrek, Hollanda’daki baz araçta artık şerit ortalamanın (Autosteer) gelmediğini ve yeni siparişlerde Basic Autopilot’un artık seçenek olarak sunulmadığını bildiriyor; baz araçta yalnızca AB yasasının zorunlu kıldığı acil şerit koruma kalıyor ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[SAHİP ALANI: kendi aracında doğrula, ekran görüntünü ekle ve adaptif hız sabitleyicinin hâlâ dahil olup olmadığını yaz.]*
+- AB yasasının zorunlu kıldığı güvenlik özellikleri standart kalıyor. AB Genel Güvenlik Yönetmeliği’ne göre otomatik acil fren ve acil şerit koruma yeni araçlarda zorunlu ([Yönetmelik (AB) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) ve aboneliğe dahil değil. Bu yazı yasal zorunlu güvenlik özellikleriyle değil, ayrıca satılan sürüş destek özellikleriyle ilgili.
 
 ## Bir aracın ömrü boyunca maliyet
 
@@ -74,11 +75,11 @@ Yılda 15.000 km ve evde şarj için, Avrupa’daki bir karşılaştırmanın ([
 | Yıllık FSD (Supervised) aboneliği | €1.188 | - | |
 | Abonelik sonrası kalan enerji tasarrufu | | | €21 |
 
-Hesaplamada evde şarj için 100 km başına €6,08, benzin için €14,14 baz alındı. Bakımdaki tasarruf da sınırlı. İngiltere verilerine göre lastik dahil yıllık bakım, elektrikli araçta £720 ile £1.180, benzinli veya dizel araçta £820 ile £1.530 arasında ([Dick Lovett](https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs)).
+Hesaplamada evde şarj için 100 km başına €6,08, benzin için €14,14 baz alındı. Bakımdaki tasarruf da sınırlı. İngiltere verilerine göre lastik dahil yıllık bakım, elektrikli araçta £720 ile £1.180, benzinli veya dizel araçta £820 ile £1.530 arasında ([Dick Lovett](https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs)). Bu sayfayı kendim açamadım; rakamlar arama sonucundaki özetten, bu yüzden temkinle okuyun.
 
 Elektrikli araçların toplamda daha pahalı olduğunu iddia etmiyorum. Satın alma fiyatı, vergiler, sigorta ve değer kaybı toplamı değiştirir. Söylediğim daha dar kapsamlı: FSD’ye abone olan bir sahip, enerji tasarrufunun neredeyse tamamını geri ödüyor ve birçok insan için bu tasarruf elektrikliye geçmenin başlıca sebeplerinden biri. Bu, Tesla’nın dünyanın sürdürülebilir enerjiye geçişini hızlandırma yönündeki uzun süredir bilinen misyonuyla zor bağdaşıyor; şirket misyon cümlesini sonradan değiştirmiş olsa da ([Gizmodo](https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530)).
 
-*Bunlar AB ortalamaları. Bir Model Y, varsayılan 100 km başına 21 kWh’den daha az tüketiyor ve Hollanda tarifeleri farklı. Sonuç elektrik tarifene, kilometrene ve yerel yakıt fiyatlarına bağlı. [SAHİP ALANI: birkaç aylık sürüşten sonra kendi rakamlarınla değiştir.]*
+*Bunlar AB ortalamaları. Bir Model Y varsayılan 100 km başına 21 kWh’den daha az tüketebilir ve Hollanda tarifeleri farklı. Sonuç elektrik tarifene, kilometrene ve yerel yakıt fiyatlarına bağlı. [SAHİP ALANI: birkaç aylık sürüşten sonra kendi rakamlarınla değiştir.]*
 
 ## Mevcut yaklaşım neden değişmeli
 
@@ -88,7 +89,7 @@ Donanım zaten araçta ve parası ödendi. Her yeni Model Y, Tesla’nın FSD (S
 
 Satın alma seçeneğinin kalkması tercih hakkını ortadan kaldırıyor. Bazı sahipler aylık ödemeyi tercih eder. Bazıları ise bir kez ödeyip özelliği araç kendisinde olduğu sürece kullanmak ister. Sadece abonelik sunmak bu tercihi elinden alıyor.
 
-Standart olan, standart kalmalı. Şerit ortalama ve adaptif hız sabitleyici daha önce standartsa, bunların ücretli pakete alınması aynı fiyata daha azı demek.
+Standart olan, standart kalmalı. Şerit ortalama daha önce standartsa, onun ücretli pakete alınması aynı fiyata daha azı demek.
 
 Avrupalı alıcılar açık ve kalıcı haklar bekler. [Haksız Ticari Uygulamalar Direktifi](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029) uyarınca bir uygulama, genel sunumu ortalama tüketiciyi yanıltabiliyorsa, kasıt olmasa da yanıltıcı sayılabilir. Tesla’nın bu yasayı çiğnediğini söylemiyorum. Avrupa’da şeffaflık ve sahiplik beklentisinin yüksek olduğunu ve fiyatlandırmanın buna uyması gerektiğini söylüyorum.
 
@@ -111,17 +112,17 @@ Bu kuralların hiçbiri aboneliği yasaklamıyor. Birlikte bir Avrupa ilkesini y
 - BMW, bazı pazarlarda ısıtmalı koltuk gibi özellikler için abonelik sundu. Müşteri eleştirilerinin ardından 2023’te ısıtmalı koltuk gibi donanım özelliklerini artık abonelikle satmayacağını açıkladı. BMW yazılım abonelikleri, sürüş ve park desteği dahil, sürdürüyor ([Motor1, 7 Eylül 2023](https://www.motor1.com/news/685653/bmw-heated-seat-subscription-dead-low-acceptance/)).
 - Tesla’nın kendisi FSD’yi Avrupa’da Mayıs 2026’ya kadar tek seferlik satın alma ile sattı; Hollanda’da fiyatı €7.500’dü. Bu seçeneği geri getirmek, Tesla’nın zaten bildiği bir modele dönmek olur.
 
-Bence müşterilerin adil bulmadığı bir modeli değiştirmek markayı güçlendirebilir.
+Bence bazı müşterilerin eleştirdiği bir modeli değiştirmek markayı güçlendirebilir.
 
 ## Avrupalı sahiplerin diğer kaygıları
 
 - FSD için binlerce euro ödemiş Hardware 3 sahipleri [hw3claim.nl](https://hw3claim.nl) üzerinden örgütleniyor. Electrek Haziran 2026’da yaklaşık 7.000 sahibe ulaşıldığını ve toplu dava için Kennedy Van der Laan hukuk bürosunun desteğini bildirdi ([Electrek, 18 Haziran 2026](https://electrek.co/2026/06/18/tesla-hw3-claim-netherlands-7000-owners-kennedy-van-der-laan/)). Site şimdi yaklaşık 9.000 katılımcı gösteriyor ve Tesla’nın iki ihtarnameyi reddettiğini söylüyor. Electrek ayrıca Nisan’da organizatörlerin önce Tesla ile müzakere etmeyi, olmazsa hukuki yolu hedeflediğini aktardı.
-- FSD (Supervised) Mayıs’ta yalnızca Hollanda ve Litvanya’da onaylıydı ([ArenaEV, 23 Mayıs 2026](https://www.arenaev.com/tesla_switches_to_subscriptiononly_full_selfdriving_in_europe-news-5907.php)). Kasım ortasında yaklaşık on Avrupa ülkesinde olduğu bildirildi, sonuncusu Finlandiya ([Evannex](https://evannex.com/blogs/news/finland-becomes-the-11th-european-country-to-approve-tesla-fsd-with-a-new-name)). Fransa, Almanya, İtalya, İspanya, İsveç ve Birleşik Krallık bunların arasında değildi. Onay ile pazarlama ayrı şeyler; altıncı öneri bu yüzden ülke ülke açık bir görünüm istiyor.
+- FSD (Supervised) Mayıs’ta yalnızca Hollanda ve Litvanya’da onaylıydı ([ArenaEV, 23 Mayıs 2026](https://www.arenaev.com/tesla_switches_to_subscriptiononly_full_selfdriving_in_europe-news-5907.php)). Kasım ortasında on bir Avrupa ülkesinde olduğu bildirildi, on birincisi Finlandiya ([Evannex](https://evannex.com/blogs/news/finland-becomes-the-11th-european-country-to-approve-tesla-fsd-with-a-new-name)). Fransa, Almanya, İtalya ve İsveç bu listede yoktu. Onay ile pazarlama ayrı şeyler; altıncı öneri bu yüzden ülke ülke açık bir görünüm istiyor.
 
 ## Tesla’ya altı öneri
 
 1. Tek seferlik satın almayı geri getirin. Sahipler aylık abonelik ile araca bağlı ömür boyu lisans arasında seçim yapabilsin.
-2. Basic Autopilot’u yeniden standart yapın. Şerit ortalama ve adaptif hız sabitleyici artık dahil değilse, her yeni araçla yeniden gelmeli.
+2. Şerit ortalamayı yeniden standart yapın. Artık dahil değilse, her yeni araçla yeniden gelmeli.
 3. Daha uygun fiyatlı bir paket ekleyin; örneğin sadece otoyol asistanı, tam FSD (Supervised) ise premium seçenek olsun.
 4. Uzun süreli taahhüdü ödüllendiren indirimli, peşin ödemeli yıllık ve çok yıllık paketler sunun.
 5. Satın alınan lisansı devredilebilir yapın, araç satıldığında araçla birlikte kalsın.
