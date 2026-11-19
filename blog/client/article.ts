@@ -22,6 +22,7 @@ import './styles/extras.css';
 import { markStaleEvidence } from './stale';
 import { bindTableOfContents, bindTocDisclosure } from './toc';
 import { bindThemeToggle } from './theme-toggle';
+import { bindScrollableTables } from './tables';
 
 const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
 bindThemeToggle(document, () => darkQuery.matches, {
@@ -30,3 +31,4 @@ bindThemeToggle(document, () => darkQuery.matches, {
 markStaleEvidence(document, new Date());
 bindTableOfContents(document, window);
 bindTocDisclosure(document, window.matchMedia('(min-width: 1180px)'));
+bindScrollableTables(document, window);

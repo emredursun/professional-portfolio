@@ -152,12 +152,13 @@ function createRenderer(file, highlight, image) {
   };
 
   // A table scrolls inside its own region, so a wide one never widens the page.
-  // The region is focusable so a keyboard reader can scroll it, and named (with
-  // a number, so two on one page stay distinct landmarks). Columns whose cells
-  // are all numbers get a class the stylesheet right-aligns.
+  // The region is named (with a number, so two on one page stay distinct
+  // landmarks); blog/client/tables.ts makes it focusable while it scrolls.
+  // Columns of figures get a class the stylesheet right-aligns, columns of
+  // long text one that gives them a readable minimum width.
   md.core.ruler.push('table_columns', markNumericColumns);
   md.renderer.rules.table_open = (tokens, idx, options, _env, self) =>
-    `<div class="table-wrap" role="region" tabindex="0" aria-label="${escapeHtml(tokens[idx].meta.label)}">` +
+    `<div class="table-wrap" role="region" aria-label="${escapeHtml(tokens[idx].meta.label)}">` +
     self.renderToken(tokens, idx, options);
   md.renderer.rules.table_close = (tokens, idx, options, _env, self) =>
     self.renderToken(tokens, idx, options) + '</div>\n';
@@ -182,7 +183,10 @@ function createRenderer(file, highlight, image) {
 
 // A number or amount: optional sign and currency, grouped digits, optional
 // percent or multiplication sign. "€99 a month" is prose, so it is not.
-const NUMERIC = /^[+\-−~≈]?\s?[€$£]?\s?[+\-−]?\d[\d.,\s]*\s?[%×x]?$/u;
+const NUMERIC = /^[+\-−~≈]?\s?[€$£]?\s?[+\-−]?%?\d[\d.,\s]*\s?[%×x€$£]?$/u;
+// A column whose cells average more than this many characters is prose, and
+// gets a readable minimum width so the table scrolls instead of growing tall.
+const LONG_TEXT = 40;
 const NO_VALUE = /^(?:[-–—]|n\/a)?$/i;
 
 /** Text of a table cell's inline token. */
@@ -194,7 +198,8 @@ const cellText = (inline) =>
 
 /**
  * Names each table and marks right-aligned columns: those a markdown author
- * aligned with ---:, and those where every filled body cell is a number.
+ * aligned with ---:, and those where most filled body cells are figures
+ * (1,209  €1.663,20  1.663,20 €  25%  %25). Columns of long text get "txt".
  * markdown-it's own inline text-align style would break the site's CSP, so it
  * is dropped in favour of the class.
  */
@@ -221,10 +226,11 @@ function markNumericColumns(state) {
     }
     const columns = new Map();
     for (const cell of cells) {
-      const entry = columns.get(cell.col) ?? { numeric: 0, other: 0, right: false };
+      const entry = columns.get(cell.col) ?? { numeric: 0, other: 0, right: false, chars: 0 };
       if (!cell.head && !NO_VALUE.test(cell.text)) {
         if (NUMERIC.test(cell.text)) entry.numeric += 1;
         else entry.other += 1;
+        entry.chars += cell.text.length;
       }
       if (/text-align:\s*right/.test(cell.open.attrGet('style') ?? '')) entry.right = true;
       columns.set(cell.col, entry);
@@ -232,8 +238,12 @@ function markNumericColumns(state) {
     for (const cell of cells) {
       cell.open.attrs = (cell.open.attrs ?? []).filter(([attr]) => attr !== 'style');
       const entry = columns.get(cell.col);
-      if (entry.right || (entry.numeric > 0 && entry.other === 0)) {
+      // Mostly figures: right-aligned. A stray word (a "-", "Set by Tesla")
+      // does not veto it, and wraps normally.
+      if (entry.right || (entry.numeric >= 2 && entry.numeric > entry.other)) {
         cell.open.attrJoin('class', 'num');
+      } else if (entry.chars / Math.max(entry.numeric + entry.other, 1) > LONG_TEXT) {
+        cell.open.attrJoin('class', 'txt');
       }
       // A figure never breaks across lines, even in a column that mixes in words.
       if (!cell.head && NUMERIC.test(cell.text)) cell.open.attrJoin('class', 'fig');

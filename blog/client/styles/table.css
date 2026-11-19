@@ -53,8 +53,15 @@
   hyphens: manual;
 }
 
+/* A short column may shrink to a word or two; a column of prose (the
+   renderer's "txt") keeps a readable measure, so a text-heavy table scrolls
+   sideways instead of growing very tall and narrow. */
 .prose td {
-  min-width: 7.5rem;
+  min-width: 4rem;
+}
+
+.prose :is(th, td).txt {
+  min-width: 13.5rem;
 }
 
 .prose tbody tr:last-child td {
@@ -62,6 +69,7 @@
 }
 
 .prose th {
+  vertical-align: bottom;
   font-family: var(--font-display);
   font-size: 0.78rem;
   font-weight: 650;
@@ -92,4 +100,20 @@
 .prose td.fig {
   white-space: nowrap;
   min-width: 0;
+}
+
+@media print {
+  .table-wrap {
+    overflow: visible;
+    background: none;
+  }
+
+  .prose td,
+  .prose :is(th, td).txt {
+    min-width: 0;
+  }
+
+  .prose tbody tr {
+    break-inside: avoid;
+  }
 }
