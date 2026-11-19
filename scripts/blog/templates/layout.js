@@ -15,9 +15,15 @@ import { strings } from '../strings.js';
  * the portfolio's React switcher: these pages run without the app. Each name
  * is in its own language, so a screen reader pronounces it right.
  */
+/** The switcher's order, matching the portfolio's: English, Dutch, Turkish. */
+const SWITCHER_ORDER = ['en', 'nl', 'tr'];
+
 function languageNav(s, lang, alternates) {
   if (alternates.length < 2) return '';
-  return markup`<nav class="lang-nav" aria-label="${s.languageNav}">${alternates.map(
+  const ordered = [...alternates].sort(
+    (a, b) => SWITCHER_ORDER.indexOf(a.lang) - SWITCHER_ORDER.indexOf(b.lang),
+  );
+  return markup`<nav class="lang-nav" aria-label="${s.languageNav}">${ordered.map(
     ({ lang: other, url }) =>
       markup`<a href="${new URL(url).pathname}" lang="${other}" hreflang="${other}"${other === lang ? markup` aria-current="page"` : ''}><span>${other.toUpperCase()}</span><span class="visually-hidden"> ${s.languageNames[other]}</span></a>`,
   )}</nav>\n`;

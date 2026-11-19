@@ -47,3 +47,20 @@ describe('the header brand lockup', () => {
     expect(blogLinks).toHaveLength(1);
   });
 });
+
+describe('the header language switcher', () => {
+  it.each(cases)('lists EN, NL, TR in that order on the %s index', (lang) => {
+    const html = renderIndexPage({
+      posts: [post],
+      assets,
+      launched: true,
+      lang,
+      languages: ['en', 'tr', 'nl'],
+    });
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const codes = [...doc.querySelectorAll('.site-header .lang-nav a')].map((a) =>
+      a.getAttribute('hreflang'),
+    );
+    expect(codes).toEqual(['en', 'nl', 'tr']);
+  });
+});
