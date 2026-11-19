@@ -13,7 +13,7 @@ import {
 import { expect, test } from './fixtures';
 
 /**
- * The static Field Notes pages (scripts/build-blog.js), served by vite preview
+ * The static Insights pages (scripts/build-blog.js), served by vite preview
  * with the production headers. The fixture fails every test on a console
  * error or CSP violation, so each test here also proves the page is clean.
  */

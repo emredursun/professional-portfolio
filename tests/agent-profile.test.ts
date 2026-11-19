@@ -93,7 +93,7 @@ describe('llms.txt', () => {
   });
 
   it('has no blog section before launch', () => {
-    expect(llms).not.toContain('Field Notes');
+    expect(llms).not.toContain('Insights');
   });
 
   it('lists the blog and its English posts once launched', async () => {
@@ -107,12 +107,12 @@ describe('llms.txt', () => {
       },
     ];
     const launched = buildLlmsTxt({ constants, about, resumeJson, blog });
-    expect(launched).toContain('## Field Notes');
-    expect(launched).toContain('- [Field Notes](https://emredursun.nl/blog): ');
+    expect(launched).toContain('## Insights');
+    expect(launched).toContain('- [Insights](https://emredursun.nl/blog): ');
     expect(launched).toContain(
       '- [A green test](https://emredursun.nl/blog/a-green-test): What a pass proves.',
     );
-    expect(launched.indexOf('## Field Notes')).toBeLessThan(launched.indexOf('## Optional'));
+    expect(launched.indexOf('## Insights')).toBeLessThan(launched.indexOf('## Optional'));
   });
 
   it('keeps a post with brackets or line breaks on one valid Markdown line', async () => {

@@ -4,7 +4,7 @@
  * translation is one place to look and tests/blog/strings.test.ts can check
  * that no language is missing a key.
  *
- * "Field Notes" stays the name in every language: it is the brand, like the
+ * "Insights" stays the name in every language: it is the brand, like the
  * mark. Post content (titles, evidence, corrections) comes from the posts.
  */
 
@@ -12,7 +12,7 @@
 export const BLOG_LANGUAGES = Object.freeze(['en', 'tr', 'nl']);
 
 const en = {
-  blogName: 'Field Notes',
+  blogName: 'Insights',
   tagline: 'Notes on quality, and the rest of life.',
   description:
     'Notes on software quality, test automation and working with AI, by Emre Dursun, QA consultant in the Netherlands.',
@@ -100,7 +100,7 @@ const en = {
 
 /** @type {typeof en} */
 const tr = {
-  blogName: 'Field Notes',
+  blogName: 'Insights',
   tagline: 'Kalite üzerine notlar ve hayatın geri kalanı.',
   description:
     'Yazılım kalitesi, test otomasyonu ve yapay zekâyla çalışmak üzerine notlar. Yazan: Hollanda’da QA danışmanı Emre Dursun.',
@@ -190,7 +190,7 @@ const tr = {
 
 /** @type {typeof en} */
 const nl = {
-  blogName: 'Field Notes',
+  blogName: 'Insights',
   tagline: 'Notities over kwaliteit, en de rest van het leven.',
   description:
     'Notities over softwarekwaliteit, testautomatisering en werken met AI, door Emre Dursun, QA-consultant in Nederland.',

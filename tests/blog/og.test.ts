@@ -70,7 +70,7 @@ describe('ogCards and ogHash', () => {
     expect(OG_DESIGN_FILES.filter((file) => !fs.existsSync(path.join(blogDir, file)))).toEqual([]);
     // Likewise only the strings the card renders, not a footer label.
     expect(cardStrings('tr')).toEqual({
-      blogName: 'Field Notes',
+      blogName: 'Insights',
       tagline: strings('tr').tagline,
       statusLabels: strings('tr').statusLabels,
       topicLabels: strings('tr').topicLabels,

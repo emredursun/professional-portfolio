@@ -14,7 +14,7 @@ import {
 import { copy, expect, test } from './fixtures';
 
 /**
- * Field Notes in every language the build wrote (scripts/build-blog.js).
+ * Insights in every language the build wrote (scripts/build-blog.js).
  * Accessible names come from scripts/blog/strings.js, so a copy change never
  * breaks a test, and every case is taken from dist (e2e/blog-content.ts), so
  * real posts can replace the samples; a case the content lacks is skipped
@@ -265,7 +265,7 @@ test.describe('before launch, the portfolio does not link to the blog', () => {
     await page.keyboard.press('Control+k');
     await page
       .getByRole('combobox', { name: copy('en', 'common').palette.search })
-      .fill('Field Notes');
+      .fill('Insights');
     await expect(
       page.getByRole('option', {
         name: new RegExp(copy('en', 'common').palette.commands.navBlog.label),
@@ -332,7 +332,7 @@ test.describe('the portfolio links to the blog', () => {
     expect(at(commands.navBlog.label)).toBe(at(commands.navContact.label) - 1);
   });
 
-  test('the command palette has a Field Notes command', async ({ page }) => {
+  test('the command palette has a Insights command', async ({ page }) => {
     await page.goto('/nl/about');
     await page.keyboard.press('Control+k');
     const command = copy('nl', 'common').palette.commands.navBlog.label;

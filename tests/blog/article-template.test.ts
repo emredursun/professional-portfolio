@@ -128,7 +128,7 @@ describe('renderArticlePage: search and sharing', () => {
     expect(doc.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
       'https://emredursun.nl/blog/a-green-test',
     );
-    expect(doc.title).toBe(`${post.title} · Field Notes`);
+    expect(doc.title).toBe(`${post.title} · Insights`);
     expect(doc.querySelector('meta[name="description"]')?.getAttribute('content')).toBe(
       post.description,
     );

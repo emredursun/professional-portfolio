@@ -4,7 +4,7 @@
     "resume": "CV",
     "projects": "Projecten",
     "contact": "Contact",
-    "blog": "Blog",
+    "blog": "Insights",
     "search": "Zoeken"
   },
   "buttons": {
@@ -60,8 +60,8 @@
     "home": "Naar Over mij",
     "projects": "Projecten bekijken",
     "blogTitle": "Deze notitie bestaat (nog) niet",
-    "blogDescription": "Er staat geen Field Notes-bericht op dit adres. Het is misschien hernoemd, of het is nog niet geschreven.",
-    "blogIndex": "Alle Field Notes"
+    "blogDescription": "Er staat geen Insights-bericht op dit adres. Het is misschien hernoemd, of het is nog niet geschreven.",
+    "blogIndex": "Alle Insights"
   },
   "quality": {
     "title": "Kwaliteitsrapport",
@@ -135,7 +135,7 @@
         "description": "Neem contact op"
       },
       "navBlog": {
-        "label": "Ga naar Field Notes",
+        "label": "Ga naar Insights",
         "description": "Notities over testen, AI en de rest van het leven"
       },
       "downloadResume": {

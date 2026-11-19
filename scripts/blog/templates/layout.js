@@ -25,8 +25,10 @@ function languageNav(s, lang, alternates) {
 
 function siteHeader(s, lang, alternates) {
   return markup`<header class="site-header">
+<div class="lockup">
 <a class="brand" href="${portfolioPath(lang, '/about')}" aria-label="${s.brandHome}">${verificationMark({ size: 28 })}<span class="brand-name">emre<span class="brand-dot">.</span></span></a>
 <a class="blog-name" href="${blogPath(lang)}">${s.blogName}</a>
+</div>
 <nav class="site-nav" aria-label="${s.siteNav}">
 <a href="${portfolioPath(lang, '/about')}">${s.navPortfolio}</a>
 <a href="${portfolioPath(lang, '/contact')}">${s.navContact}</a>

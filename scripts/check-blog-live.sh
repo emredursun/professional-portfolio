@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Checks Field Notes on a live site: the deploy smoke test, the uptime check
+# Checks Insights on a live site: the deploy smoke test, the uptime check
 # and the preview channel run it with their base URL.
 #
 #   scripts/check-blog-live.sh https://emredursun.nl

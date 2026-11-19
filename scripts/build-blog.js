@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Builds the Field Notes blog: one static HTML file per post and language.
+ * Builds the Insights blog: one static HTML file per post and language.
  *
  * Runs in postbuild, after `vite build` has produced the blog's hashed CSS,
  * fonts and client script (the second entry in vite.config.ts) and after

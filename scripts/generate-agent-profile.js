@@ -166,7 +166,7 @@ const linkText = (text) => oneLine(text).replace(/[[\]]/g, '\\$&');
  * llms.txt: H1, summary blockquote, a few facts, then link lists.
  *
  * @param {{ constants: any, about: any, resumeJson: ReturnType<typeof buildResume>, blog?: ReturnType<typeof blogForAgents> }} input
- *   `blog`: the Field Notes posts; empty (no section) until the blog launches.
+ *   `blog`: the Insights posts; empty (no section) until the blog launches.
  */
 export function buildLlmsTxt({ constants, about, resumeJson, blog = [] }) {
   const { PERSONAL_INFO, SERVICES, PROJECTS } = constants;
@@ -211,9 +211,9 @@ ${PROJECTS.map((project) => `- [${project.title}](${SITE_URL}/projects/${project
 
 ${
   blog.length > 0
-    ? `## Field Notes
+    ? `## Insights
 
-- [Field Notes](${SITE_URL}/blog): ${strings('en').description}
+- [Insights](${SITE_URL}/blog): ${strings('en').description}
 ${blog.map((post) => `- [${linkText(post.title)}](${post.url}): ${oneLine(post.description)}`).join('\n')}
 
 `

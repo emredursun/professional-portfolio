@@ -102,12 +102,12 @@ A few decisions worth knowing about:
 
 ## Blog
 
-"Field Notes" lives at `/blog`: static pages generated after the app from
+"Insights" lives at `/blog`: static pages generated after the app from
 Markdown in `blog/content/`, outside the React SPA, under the same strict
 CSP. Every post shows its evidence, how AI was used and a corrections log.
 It is not launched yet (pages are noindex). Why it is built this way:
 [ADR 0001](docs/adr/0001-static-blog-build.md); how to write a post:
-[RUNBOOK](docs/RUNBOOK.md#blog-field-notes).
+[RUNBOOK](docs/RUNBOOK.md#blog-insights).
 
 ## Deployment and operations
 

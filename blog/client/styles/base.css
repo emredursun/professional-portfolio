@@ -89,6 +89,15 @@ a:hover {
   text-decoration: none;
 }
 
+/* The wordmark text carries the brand's baseline; the mark centres on it. */
+.brand {
+  align-items: baseline;
+}
+
+.brand svg {
+  align-self: center;
+}
+
 .brand-name {
   font-size: 22px;
   font-weight: 800;
@@ -99,9 +108,20 @@ a:hover {
   color: var(--check);
 }
 
+/* Brand lockup: the wordmark, a hairline divider, then the blog's name. */
+.lockup {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
 .blog-name {
-  color: var(--ink-2);
+  padding: 4px 0 4px 14px;
+  border-left: 1.5px solid var(--line);
+  color: var(--ink);
   font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
   text-decoration-color: transparent;
 }
 
@@ -214,18 +234,20 @@ a:hover {
     grid-template-columns: auto 1fr auto auto;
     grid-template-areas:
       'brand . lang theme'
-      'blog nav nav nav';
+      'nav nav nav nav';
     gap: 6px 8px;
     padding-block: 10px 6px;
   }
 
-  .brand {
+  .lockup {
     grid-area: brand;
+    gap: 10px;
   }
 
   .blog-name {
-    grid-area: blog;
+    padding-left: 10px;
     font-size: 14px;
+    min-height: 0;
   }
 
   .site-nav {

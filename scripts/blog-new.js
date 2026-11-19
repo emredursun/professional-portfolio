@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Starts a new Field Notes post as drafts in three languages:
+ * Starts a new Insights post as drafts in three languages:
  *
  *   npm run blog:new -- <slug> [--kind essay|note] [--topic testing|ai|life]
  *

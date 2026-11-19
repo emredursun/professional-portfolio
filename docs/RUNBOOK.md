@@ -67,7 +67,7 @@ CI fails if the regenerated sitemap or profile README differs from what is commi
 
 The CV PDFs (`/cv/Emre-Dursun-CV-<lang>.pdf`) are not committed: CI renders them from the build on every deploy, so a content change reaches the PDF automatically. To check one locally: `npm run build && npm run generate:cv`, then open `dist/cv/`.
 
-## Blog (Field Notes)
+## Blog (Insights)
 
 Static pages built after the app by `scripts/build-blog.js`; the design and
 the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
