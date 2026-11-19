@@ -51,7 +51,7 @@ credit: Sopra Steria Benelux
 
 ## Terugredeneren vanuit 2030
 
-De laatste sessie, Human & Tech: Agentic Development: Teams Reimagined, begon in 2030 en redeneerde terug naar vandaag. Zo’n 200 Nederlandse collega’s deden mee, en de vraag die erdoorheen liep was hoe wij, onze rollen en onze teams gaan veranderen. De sessie stelde het helder: welke nieuwe vaardigheden heb je nodig, hoe ziet je team eruit, en heb je straks nog een baan? De host vatte het achteraf samen als: de grootste verandering ligt meer bij ons, als mensen die zichzelf opnieuw uitvinden, dan bij de technologie.
+De laatste sessie, Human & Tech: Agentic Development: Teams Reimagined, begon in 2030 en redeneerde terug naar vandaag. Zo’n 200 collega’s deden mee, en de vraag die erdoorheen liep was hoe wij, onze rollen en onze teams gaan veranderen. De sessie stelde het helder: welke nieuwe vaardigheden heb je nodig, hoe ziet je team eruit, en heb je straks nog een baan? De host vatte het achteraf samen als: de grootste verandering ligt meer bij ons, als mensen die zichzelf opnieuw uitvinden, dan bij de technologie.
 
 Vanuit het eindpunt beginnen maakte de verandering voor mij een stuk minder abstract.
 

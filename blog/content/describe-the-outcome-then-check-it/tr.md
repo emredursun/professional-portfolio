@@ -51,7 +51,7 @@ credit: Sopra Steria Benelux
 
 ## 2030’dan geriye doğru düşünmek
 
-Son oturum, Human & Tech: Agentic Development: Teams Reimagined, 2030’da başladı ve oradan bugüne doğru geri geldi. Yaklaşık 200 Hollandalı meslektaşımız katıldı ve oturumun ana sorusu bizim, rollerimizin ve ekiplerimizin nasıl değişeceğiydi. Oturum bunu açıkça sordu: Hangi yeni becerilere ihtiyacın olacak, ekibin nasıl görünecek ve hâlâ bir işin olacak mı? Oturumun host’u bunu sonradan şöyle özetledi: en büyük değişim teknolojiden çok bizde, kendimizi yeniden keşfeden insanlarda olacak.
+Son oturum, Human & Tech: Agentic Development: Teams Reimagined, 2030’da başladı ve oradan bugüne doğru geri geldi. Yaklaşık 200 meslektaşımız katıldı ve oturumun ana sorusu bizim, rollerimizin ve ekiplerimizin nasıl değişeceğiydi. Oturum bunu açıkça sordu: Hangi yeni becerilere ihtiyacın olacak, ekibin nasıl görünecek ve hâlâ bir işin olacak mı? Oturumun host’u bunu sonradan şöyle özetledi: en büyük değişim teknolojiden çok bizde, kendimizi yeniden keşfeden insanlarda olacak.
 
 Bitiş noktasından başlamak, değişimi benim için çok daha az soyut hâle getirdi.
 

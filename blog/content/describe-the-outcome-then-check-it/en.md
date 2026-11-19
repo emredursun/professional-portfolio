@@ -49,7 +49,7 @@ credit: Sopra Steria Benelux
 
 ## Working back from 2030
 
-The last session, Human & Tech: Agentic Development: Teams Reimagined, began in 2030 and worked its way back to the present. Some 200 Dutch colleagues took part, and the question running through it was how we, our roles and our teams will change. The session put it in plain terms: which new skills will you need, what will your team look like, and will you still have a job? The host later summed it up as: the biggest change will be in us, as people reinventing ourselves, more than in the technology.
+The last session, Human & Tech: Agentic Development: Teams Reimagined, began in 2030 and worked its way back to the present. Some 200 colleagues took part, and the question running through it was how we, our roles and our teams will change. The session put it in plain terms: which new skills will you need, what will your team look like, and will you still have a job? The host later summed it up as: the biggest change will be in us, as people reinventing ourselves, more than in the technology.
 
 Starting from the end point made the change feel a lot less abstract to me.
 
