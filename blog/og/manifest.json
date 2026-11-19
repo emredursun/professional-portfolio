@@ -47,6 +47,18 @@
     "card": "b7068f97ee546552ef98c93c890550254a78d4152ba9e8ab53fc4869e09ec383",
     "png": "e1b2a0be0a3a9cc5cdec1f7800b31ad5487a147dcc38d13b17f275ddf9f36039"
   },
+  "tesla-fsd-subscription-europe.en": {
+    "card": "cf5763011bf96c025d9a80e477d76ea43aace60b97f464aa3196ea62a349238d",
+    "png": "dd50a23143c56b8789b058f5249fb1d14096a5ade2af2d476c37d2cfe8ff9332"
+  },
+  "tesla-fsd-subscription-europe.nl": {
+    "card": "9b13065a574273a3d90f0c92e26ce46bb037fdeebe6e7fb9e24cc68771edc580",
+    "png": "f7c27e02d152e94e6c7adbda1f9d7c503db9ec8f45b49319b84d1ef4a56fcc9c"
+  },
+  "tesla-fsd-subscription-europe.tr": {
+    "card": "fa8324fee881fc53896539f3cb539671ba98fe6abb2c7246a76566acb0215dc3",
+    "png": "3d03895e7e0ccd89dd4440f7e7eb0c446b2bd7a449329b4fc13f51fe1f8932b1"
+  },
   "tosca-or-playwright-before-you-migrate.en": {
     "card": "0bcd6164ec6b40845e25e4997bb5cbefb424d324351049a2f39ff373725a0f7d",
     "png": "4ff14277e4c87687f6d3c93e4a41eb9689631cd640aefb5d25ec6488ffef8386"
