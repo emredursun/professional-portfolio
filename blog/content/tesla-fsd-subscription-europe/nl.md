@@ -47,13 +47,13 @@ In november 2026 nam ik een Tesla Model Y Premium Long Range AWD in ontvangst. V
 
 *Tesla Model Y Long Range AWD (2025) in een showroom. Foto: Chanokchon, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg). Gezichten vervaagd, formaat aangepast. Een toonzaalauto, niet de mijne.*
 
-![Witte Tesla Model Y Performance linksvoor gezien, buiten geparkeerd, met vervaagd kenteken.](model-y-performance-front.webp)
+![Witte Tesla Model Y linksvoor gezien, buiten geparkeerd, met vervaagd kenteken.](model-y-performance-front.webp)
 
-*Tesla Model Y Performance, voorkant. Foto: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg). Kenteken vervaagd, formaat aangepast. Dit is de Performance-uitvoering, niet mijn auto.*
+*Tesla Model Y, voorkant (op Wikimedia Commons als Performance aangeduid). Foto: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg). Kenteken vervaagd, formaat aangepast. Niet mijn auto.*
 
-![Witte Tesla Model Y Performance linksachter gezien, buiten geparkeerd.](model-y-performance-rear.webp)
+![Witte Tesla Model Y linksachter gezien, buiten geparkeerd.](model-y-performance-rear.webp)
 
-*Tesla Model Y Performance, achterkant. Foto: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg). Kenteken en een sticker vervaagd, mensen op de achtergrond vervaagd, formaat aangepast.*
+*Tesla Model Y, achterkant (op Wikimedia Commons als Performance aangeduid). Foto: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg). Een sticker en mensen op de achtergrond vervaagd, formaat aangepast.*
 
 ## De feiten
 
@@ -142,7 +142,7 @@ Volgens mij kan het aanpassen van een model waar sommige klanten kritiek op hebb
 ## Zes voorstellen aan Tesla
 
 1. Breng de eenmalige aankoop terug. Laat eigenaren kiezen tussen een maandabonnement en een levenslange licentie die aan de auto gekoppeld is.
-2. Maak rijstrookcentrering weer standaard. Als die niet meer is inbegrepen, moet elke nieuwe auto haar weer krijgen.
+2. Maak rijstrookcentrering weer standaard. Als die niet meer is inbegrepen, moet elke nieuwe auto die weer krijgen.
 3. Voeg een goedkoper pakket toe, bijvoorbeeld alleen snelwegassistentie, met volledige FSD (Supervised) als premiumoptie.
 4. Bied vooruitbetaalde jaar- en meerjarenpakketten aan, met een korting die langere looptijden beloont.
 5. Maak een gekochte licentie overdraagbaar, zodat die bij verkoop bij de auto blijft.
@@ -242,6 +242,6 @@ Foto’s van Wikimedia Commons, aangepast zoals beschreven en onder dezelfde lic
 
 - Omslagfoto (alleen zichtbaar op de blogindex), Tesla Model Y Performance (2025), Alexander Migl. Kenteken vervaagd, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
 - Tesla Model Y Long Range AWD in een showroom, Chanokchon. Gezichten vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
-- Tesla Model Y Performance, voorkant, Ethan Llamas. Kenteken vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg
-- Tesla Model Y Performance, achterkant, Ethan Llamas. Een sticker en mensen op de achtergrond vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg
+- Tesla Model Y, voorkant (titel op Commons: Performance), Ethan Llamas. Kenteken vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_01.jpg
+- Tesla Model Y, achterkant (titel op Commons: Performance), Ethan Llamas. Een sticker en mensen op de achtergrond vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Performance_White_Pearl_02.jpg
 - Tesla Model Y Long Range AWD, stuur en middenscherm, Ethan Llamas. Mensen op de achtergrond vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg
