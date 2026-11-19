@@ -385,8 +385,8 @@ describe('buildBlog: what a reader sees in another language', () => {
     const { doc } = await build();
     const note = (...path: string[]) =>
       doc(...path).querySelector('.author .ai-disclosure')!.textContent;
-    expect(note('blog', 'hello.html')).toContain('reviewed the content before publishing');
-    expect(note('tr', 'blog', 'hello.html')).toContain('gözden geçirdim');
-    expect(note('nl', 'blog', 'hello.html')).toContain('nagelezen');
+    expect(note('blog', 'hello.html')).toContain('are my own');
+    expect(note('tr', 'blog', 'hello.html')).toContain('bana ait');
+    expect(note('nl', 'blog', 'hello.html')).toContain('mijn eigen');
   });
 });
