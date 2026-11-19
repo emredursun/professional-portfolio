@@ -77,7 +77,7 @@ const NavButton: React.FC<{
 });
 
 /**
- * The blog, styled like the other entries but a plain link: Field Notes is
+ * The blog, styled like the other entries but a plain link: Insights is
  * static pages outside the router, so it is never the active route here.
  */
 const BlogNavButton: React.FC<{ language: string }> = React.memo(({ language }) => {

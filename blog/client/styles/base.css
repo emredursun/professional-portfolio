@@ -89,6 +89,15 @@ a:hover {
   text-decoration: none;
 }
 
+/* The wordmark text carries the brand's baseline; the mark centres on it. */
+.brand {
+  align-items: baseline;
+}
+
+.brand svg {
+  align-self: center;
+}
+
 .brand-name {
   font-size: 22px;
   font-weight: 800;
@@ -99,9 +108,21 @@ a:hover {
   color: var(--check);
 }
 
+/* Brand lockup: the wordmark, a hairline divider, then the blog's name. */
+.lockup {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
 .blog-name {
-  color: var(--ink-2);
-  font-size: 15px;
+  padding: 2px 0 2px 14px;
+  border-left: 1.5px solid var(--line);
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
   text-decoration-color: transparent;
 }
 
@@ -208,24 +229,38 @@ a:hover {
  * of links under it. A fixed grid, not wrapping, so the web-font swap cannot
  * move anything between rows (that shifted the page before: CLS 0.12).
  */
+/* Just above the phone layout the one-row header is tight: a smaller name
+   and tighter gaps keep it one row. */
+@media (max-width: 720px) {
+  .site-header {
+    column-gap: 12px;
+  }
+
+  .blog-name {
+    font-size: 17px;
+  }
+}
+
 @media (max-width: 600px) {
   .site-header {
     display: grid;
     grid-template-columns: auto 1fr auto auto;
     grid-template-areas:
       'brand . lang theme'
-      'blog nav nav nav';
+      'nav nav nav nav';
     gap: 6px 8px;
     padding-block: 10px 6px;
   }
 
-  .brand {
+  .lockup {
     grid-area: brand;
+    gap: 10px;
   }
 
   .blog-name {
-    grid-area: blog;
-    font-size: 14px;
+    padding-left: 10px;
+    font-size: 17px;
+    min-height: 0;
   }
 
   .site-nav {
@@ -264,5 +299,21 @@ a:hover {
     grid-area: theme;
     width: 38px;
     height: 38px;
+  }
+}
+
+/* A 360 px phone: tighter lockup and language buttons keep one bar. */
+@media (max-width: 380px) {
+  .lockup {
+    gap: 8px;
+  }
+
+  .blog-name {
+    padding-left: 8px;
+    font-size: 16px;
+  }
+
+  .lang-nav a {
+    min-width: 30px;
   }
 }

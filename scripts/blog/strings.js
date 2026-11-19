@@ -4,7 +4,7 @@
  * translation is one place to look and tests/blog/strings.test.ts can check
  * that no language is missing a key.
  *
- * "Field Notes" stays the name in every language: it is the brand, like the
+ * "Insights" stays the name in every language: it is the brand, like the
  * mark. Post content (titles, evidence, corrections) comes from the posts.
  */
 
@@ -12,7 +12,7 @@
 export const BLOG_LANGUAGES = Object.freeze(['en', 'tr', 'nl']);
 
 const en = {
-  blogName: 'Field Notes',
+  blogName: 'Insights',
   tagline: 'Notes on quality, and the rest of life.',
   description:
     'Notes on software quality, test automation and working with AI, by Emre Dursun, QA consultant in the Netherlands.',
@@ -60,7 +60,7 @@ const en = {
   videoWatch: 'Watch on Vimeo',
   evidenceTitle: 'Sources',
   aiDisclosure:
-    'AI tools helped with research, fact-checking and editing; I reviewed every claim and am responsible for what is published.',
+    'The insights and experiences in this post are my own; AI tools supported the research, fact-checking and editing.',
   reportMistake: 'Found a mistake?',
   reportLink: 'Report it.',
   correctionsLog: 'Corrections',
@@ -100,7 +100,7 @@ const en = {
 
 /** @type {typeof en} */
 const tr = {
-  blogName: 'Field Notes',
+  blogName: 'Insights',
   tagline: 'Kalite üzerine notlar ve hayatın geri kalanı.',
   description:
     'Yazılım kalitesi, test otomasyonu ve yapay zekâyla çalışmak üzerine notlar. Yazan: Hollanda’da QA danışmanı Emre Dursun.',
@@ -149,7 +149,7 @@ const tr = {
   videoWatch: 'Vimeo’da izleyin',
   evidenceTitle: 'Kaynaklar',
   aiDisclosure:
-    'Yapay zekâ araçları araştırma, doğrulama, düzenleme ve çeviride yardımcı oldu; her iddiayı kendim gözden geçirdim ve yayımlanan her şeyden ben sorumluyum.',
+    'Bu yazıdaki fikirler ve deneyimler bana ait; yapay zekâ araçları araştırma, doğrulama, düzenleme ve çeviride destek oldu.',
   reportMistake: 'Bir hata mı buldunuz?',
   reportLink: 'Bildirin.',
   correctionsLog: 'Düzeltmeler',
@@ -190,7 +190,7 @@ const tr = {
 
 /** @type {typeof en} */
 const nl = {
-  blogName: 'Field Notes',
+  blogName: 'Insights',
   tagline: 'Notities over kwaliteit, en de rest van het leven.',
   description:
     'Notities over softwarekwaliteit, testautomatisering en werken met AI, door Emre Dursun, QA-consultant in Nederland.',
@@ -238,7 +238,7 @@ const nl = {
   videoWatch: 'Bekijk op Vimeo',
   evidenceTitle: 'Bronnen',
   aiDisclosure:
-    'AI-tools hielpen bij onderzoek, factchecking, redactie en vertaling; ik heb elke bewering zelf gecontroleerd en ben verantwoordelijk voor wat er wordt gepubliceerd.',
+    'De inzichten en ervaringen in dit stuk zijn mijn eigen; AI-tools ondersteunden bij onderzoek, factchecking, redactie en vertaling.',
   reportMistake: 'Een fout gevonden?',
   reportLink: 'Meld het.',
   correctionsLog: 'Correcties',

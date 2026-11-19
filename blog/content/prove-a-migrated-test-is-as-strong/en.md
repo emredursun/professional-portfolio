@@ -5,7 +5,7 @@ publishedAt: 2026-11-18
 topic: testing
 kind: essay
 status: verified
-cover: cover-proof-abstract.webp
+cover: cover-playwright-report.webp
 evidence:
   basedOn:
     - 'A lab of my own: a fictional personal loan request application on Pega Infinity 26.1 Constellation, tested with Tosca 26.1.2 and migrated to Playwright 1.65.0'

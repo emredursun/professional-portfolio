@@ -62,8 +62,8 @@ const postSchema = z
         recheckedAt: isoDate,
       })
       .strict(),
-    // One fixed sentence says AI tools helped and that the author is
-    // responsible; there is no list of tasks to grow.
+    // One fixed sentence: the insights are the author's own and AI tools
+    // supported the work; there is no list of tasks to grow.
     aiAssisted: z.boolean(),
     corrections: z.array(correction).default([]),
     cover: z

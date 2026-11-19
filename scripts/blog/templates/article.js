@@ -96,7 +96,7 @@ ${translationNote(post, s)}<p class="byline">Emre Dursun · <time datetime="${po
 </header>`;
 }
 
-/** Who wrote it and, when AI tools helped, one quiet sentence saying so and who answers for it. */
+/** Who wrote it and, when AI tools helped, one quiet sentence: the insights are the author's own, AI tools supported the work. */
 function authorCard(post, s) {
   const { lang } = post;
   return markup`<section class="author" aria-label="${s.aboutAuthor}">

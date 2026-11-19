@@ -15,9 +15,15 @@ import { strings } from '../strings.js';
  * the portfolio's React switcher: these pages run without the app. Each name
  * is in its own language, so a screen reader pronounces it right.
  */
+/** The switcher's order, matching the portfolio's: English, Dutch, Turkish. */
+const SWITCHER_ORDER = ['en', 'nl', 'tr'];
+
 function languageNav(s, lang, alternates) {
   if (alternates.length < 2) return '';
-  return markup`<nav class="lang-nav" aria-label="${s.languageNav}">${alternates.map(
+  const ordered = [...alternates].sort(
+    (a, b) => SWITCHER_ORDER.indexOf(a.lang) - SWITCHER_ORDER.indexOf(b.lang),
+  );
+  return markup`<nav class="lang-nav" aria-label="${s.languageNav}">${ordered.map(
     ({ lang: other, url }) =>
       markup`<a href="${new URL(url).pathname}" lang="${other}" hreflang="${other}"${other === lang ? markup` aria-current="page"` : ''}><span>${other.toUpperCase()}</span><span class="visually-hidden"> ${s.languageNames[other]}</span></a>`,
   )}</nav>\n`;
@@ -25,8 +31,10 @@ function languageNav(s, lang, alternates) {
 
 function siteHeader(s, lang, alternates) {
   return markup`<header class="site-header">
+<div class="lockup">
 <a class="brand" href="${portfolioPath(lang, '/about')}" aria-label="${s.brandHome}">${verificationMark({ size: 28 })}<span class="brand-name">emre<span class="brand-dot">.</span></span></a>
 <a class="blog-name" href="${blogPath(lang)}">${s.blogName}</a>
+</div>
 <nav class="site-nav" aria-label="${s.siteNav}">
 <a href="${portfolioPath(lang, '/about')}">${s.navPortfolio}</a>
 <a href="${portfolioPath(lang, '/contact')}">${s.navContact}</a>

@@ -10,5 +10,5 @@ entries:
   - date: 2026-11-19
     text: 'Certified this year as a Tricentis Tosca Product Consultant and a Tricentis Testim Product Consultant, both at Advanced proficiency. Now building out my web automation in Playwright.'
   - date: 2026-11-19
-    text: 'Writing Field Notes: short notes from QA and delivery work, in English, Turkish and Dutch.'
+    text: 'Writing Insights: short notes from QA and delivery work, in English, Turkish and Dutch.'
 ---

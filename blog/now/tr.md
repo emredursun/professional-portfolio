@@ -10,5 +10,5 @@ entries:
   - date: 2026-11-19
     text: 'Bu yıl Tricentis Tosca Product Consultant ve Tricentis Testim Product Consultant sertifikalarını, ikisini de Advanced seviyede aldım. Şimdi Playwright ile web otomasyonumu geliştiriyorum.'
   - date: 2026-11-19
-    text: 'Field Notes’u yazıyorum: QA ve teslimat işlerinden kısa notlar; İngilizce, Türkçe ve Hollandaca.'
+    text: 'Insights’ı yazıyorum: QA ve teslimat işlerinden kısa notlar; İngilizce, Türkçe ve Hollandaca.'
 ---

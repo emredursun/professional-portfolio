@@ -4,7 +4,7 @@
     "resume": "Resume",
     "projects": "Projects",
     "contact": "Contact",
-    "blog": "Blog",
+    "blog": "Insights",
     "search": "Search"
   },
   "buttons": {
@@ -60,8 +60,8 @@
     "home": "Go to About",
     "projects": "Browse projects",
     "blogTitle": "This note doesn’t exist (yet)",
-    "blogDescription": "There is no Field Notes post at this address. It may have been renamed, or it has not been written yet.",
-    "blogIndex": "All Field Notes"
+    "blogDescription": "There is no Insights post at this address. It may have been renamed, or it has not been written yet.",
+    "blogIndex": "All Insights"
   },
   "quality": {
     "title": "Quality report",
@@ -135,7 +135,7 @@
         "description": "Get in touch"
       },
       "navBlog": {
-        "label": "Go to Field Notes",
+        "label": "Go to Insights",
         "description": "Notes on testing, AI and the rest of life"
       },
       "downloadResume": {

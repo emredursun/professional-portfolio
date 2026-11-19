@@ -128,7 +128,7 @@ describe('renderArticlePage: search and sharing', () => {
     expect(doc.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
       'https://emredursun.nl/blog/a-green-test',
     );
-    expect(doc.title).toBe(`${post.title} · Field Notes`);
+    expect(doc.title).toBe(`${post.title} · Insights`);
     expect(doc.querySelector('meta[name="description"]')?.getAttribute('content')).toBe(
       post.description,
     );
@@ -203,8 +203,10 @@ describe('renderArticlePage: trust sections', () => {
   it('says AI helped in one quiet sentence inside the author card', () => {
     const { doc } = page();
     const note = doc.querySelector('.author .ai-disclosure');
-    expect(note?.textContent).toContain('AI tools helped with research');
-    expect(note?.textContent).toContain('responsible for what is published');
+    expect(note?.textContent).toContain('The insights and experiences in this post are my own');
+    expect(note?.textContent).toContain('AI tools supported the research');
+    expect(note?.textContent).not.toContain('responsible');
+    expect(note?.textContent).not.toContain('every claim');
     expect(doc.querySelector('.ai-note, .ai-grid, [aria-labelledby="ai-title"]')).toBeNull();
     expect(note?.closest('.author')?.querySelector('ul, a[href^="https://github.com"]')).toBeNull();
   });
@@ -217,10 +219,16 @@ describe('renderArticlePage: trust sections', () => {
 
   it('says it in the language of the post', () => {
     expect(page({ lang: 'nl' }).doc.querySelector('.ai-disclosure')?.textContent).toContain(
-      'verantwoordelijk',
+      'mijn eigen',
     );
     expect(page({ lang: 'tr' }).doc.querySelector('.ai-disclosure')?.textContent).toContain(
-      'sorumluyum',
+      'bana ait',
+    );
+    expect(page({ lang: 'tr' }).doc.querySelector('.ai-disclosure')?.textContent).not.toContain(
+      'sorumlu',
+    );
+    expect(page({ lang: 'nl' }).doc.querySelector('.ai-disclosure')?.textContent).not.toContain(
+      'verantwoord',
     );
   });
 

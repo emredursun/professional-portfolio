@@ -15,7 +15,7 @@ let themeInitPath: string;
 const NOW = `---
 entries:
   - date: 2026-10-28
-    text: Writing the first Field Notes posts.
+    text: Writing the first Insights posts.
   - date: 2026-09-01
     text: Starting a Pega project in Utrecht.
 ---
@@ -138,7 +138,7 @@ describe('the Now page', () => {
     expect(page.querySelector('.now-updated')!.textContent).toBe('Son güncelleme 28 Ekim 2026');
     expect(page.querySelector('.now-updated time')!.getAttribute('datetime')).toBe('2026-10-28');
     expect([...page.querySelectorAll('.now-list li')].map((li) => li.textContent)).toEqual([
-      'Writing the first Field Notes posts.',
+      'Writing the first Insights posts.',
       '1 Eylül 2026Starting a Pega project in Utrecht.',
     ]);
     expect(page.querySelectorAll('link[rel="alternate"][hreflang]')).toHaveLength(3);
@@ -148,7 +148,7 @@ describe('the Now page', () => {
     writeNow('en', WITH_LINK);
     const { dist } = await build();
     const item = doc(dist, 'blog', 'now.html').querySelector('.now-list li')!;
-    expect(item.textContent).toBe('Writing the first Field Notes posts on devran-ai/kit.');
+    expect(item.textContent).toBe('Writing the first Insights posts on devran-ai/kit.');
     const link = item.querySelector('a')!;
     expect(link.textContent).toBe('devran-ai/kit');
     expect(link.getAttribute('href')).toBe('https://github.com/devran-ai/kit');
@@ -169,7 +169,7 @@ describe('the Now page', () => {
     const { dist } = await build();
     const page = doc(dist, 'blog.html');
     const chip = page.querySelector('.index-hero .now-chip')!;
-    expect(chip.textContent).toContain('Writing the first Field Notes posts.');
+    expect(chip.textContent).toContain('Writing the first Insights posts.');
     expect(chip.querySelector('a')!.getAttribute('href')).toBe('/blog/now');
     expect(chip.querySelector('time')!.getAttribute('datetime')).toBe('2026-10-28');
     expect(chip.querySelector('.now-dot')!.getAttribute('aria-hidden')).toBe('true');

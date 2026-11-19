@@ -81,6 +81,6 @@ jobs:
             got="$(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' "https://emredursun.nl${pair%%:*}")"
             [ "$got" = "301 https://emredursun.nl${pair#*:}" ] || { echo "::error::${pair%%:*} answered $got"; exit 1; }
           done
-          # Field Notes: checks itself once launched (no feed before then).
+          # Insights: checks itself once launched (no feed before then).
           bash scripts/check-blog-live.sh https://emredursun.nl
           echo "Live: $live"

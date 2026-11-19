@@ -44,7 +44,7 @@ jobs:
           locs="$(curl -fsS --max-time 20 https://emredursun.nl/sitemap.xml | grep -c '<loc>')"
           [ "$locs" -ge 15 ] || { echo "::error::sitemap.xml lists $locs URLs"; exit 1; }
 
-      - name: Field Notes blog (checks itself once launched)
+      - name: Insights blog (checks itself once launched)
         run: bash scripts/check-blog-live.sh https://emredursun.nl
 
       - name: Social preview image stays under WhatsApp's limit

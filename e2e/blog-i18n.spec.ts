@@ -14,7 +14,7 @@ import {
 import { copy, expect, test } from './fixtures';
 
 /**
- * Field Notes in every language the build wrote (scripts/build-blog.js).
+ * Insights in every language the build wrote (scripts/build-blog.js).
  * Accessible names come from scripts/blog/strings.js, so a copy change never
  * breaks a test, and every case is taken from dist (e2e/blog-content.ts), so
  * real posts can replace the samples; a case the content lacks is skipped
@@ -265,13 +265,53 @@ test.describe('before launch, the portfolio does not link to the blog', () => {
     await page.keyboard.press('Control+k');
     await page
       .getByRole('combobox', { name: copy('en', 'common').palette.search })
-      .fill('Field Notes');
+      .fill('Insights');
     await expect(
       page.getByRole('option', {
         name: new RegExp(copy('en', 'common').palette.commands.navBlog.label),
       }),
     ).toHaveCount(0);
   });
+});
+
+test.describe('the blog header on a small phone', () => {
+  for (const width of [360, 375]) {
+    test(`the lockup, languages and theme fit one bar at ${width} px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 780 });
+      for (const lang of languages) {
+        await page.goto(blogPath(lang));
+        const box = async (selector: string) => (await page.locator(selector).boundingBox())!;
+        const lockup = await box('.site-header .lockup');
+        const nav = await box('.site-header .lang-nav');
+        const theme = await box('.site-header .theme-toggle');
+        expect(lockup.x + lockup.width, `${lang} lockup meets languages`).toBeLessThanOrEqual(
+          nav.x,
+        );
+        expect(nav.x + nav.width, `${lang} languages meet theme`).toBeLessThanOrEqual(theme.x);
+        expect(theme.x + theme.width, `${lang} theme inside screen`).toBeLessThanOrEqual(width);
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        );
+        expect(overflow, `${lang} page overflow`).toBeLessThanOrEqual(0);
+      }
+    });
+  }
+});
+
+test.describe('the blog header above the phone layout', () => {
+  for (const width of [601, 640, 720, 721, 1024]) {
+    test(`the header stays one row at ${width} px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 780 });
+      for (const lang of languages) {
+        await page.goto(blogPath(lang));
+        const lockup = (await page.locator('.site-header .lockup').boundingBox())!;
+        const nav = (await page.locator('.site-header .site-nav').boundingBox())!;
+        expect(Math.abs(lockup.y - nav.y), `${lang} lockup and nav share a row`).toBeLessThan(
+          lockup.height,
+        );
+      }
+    });
+  }
 });
 
 test.describe('the portfolio links to the blog', () => {
@@ -332,7 +372,7 @@ test.describe('the portfolio links to the blog', () => {
     expect(at(commands.navBlog.label)).toBe(at(commands.navContact.label) - 1);
   });
 
-  test('the command palette has a Field Notes command', async ({ page }) => {
+  test('the command palette has a Insights command', async ({ page }) => {
     await page.goto('/nl/about');
     await page.keyboard.press('Control+k');
     const command = copy('nl', 'common').palette.commands.navBlog.label;
