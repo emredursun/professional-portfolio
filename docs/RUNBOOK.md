@@ -16,6 +16,8 @@ This returns the deployed commit, branch and build time, written by `scripts/wri
 2. Merge to `main` once the `quality` check is green; branch protection allows nothing else (see below). [`deploy.yml`](../.github/workflows/deploy.yml) runs the same gates, then waits for your approval (Actions → the run → Review deployments → Approve).
 3. After approval it deploys the exact build that passed the gates and smoke-tests production. The deploy job finishes only when `/version.json` on the live site reports the merged commit and every route returns 200.
 
+`quality.yml` runs its jobs in parallel (checks, build, e2e, two Lighthouse jobs) and ends with a `verify` job named `Typecheck, test, build, e2e, Lighthouse`, the one check branch protection requires; it passes only if every other job did. Pull requests run Lighthouse 3 times per page, `main` and deploys 5 (same budgets). A PR takes about 10 minutes. If `main` fails Lighthouse after a green PR, re-run once, then investigate the page nearest its budget.
+
 **Guards (active).** `main` is protected: changes arrive only through a pull request whose `quality / Typecheck, test, build, e2e, Lighthouse` check passed; force pushes and deleting the branch are refused, for admins too. The `production` environment requires the owner's approval for every deploy and accepts deploys only from protected branches. Both are set in Settings → Branches and Settings → Environments → `production`.
 
 Only one production deploy runs at a time (`concurrency: production`).
@@ -156,7 +158,7 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
 
 ## Quality report
 
-`/quality` reads `dist/quality.json`, which the last step of `quality.yml` writes from that run's Vitest, Playwright, Lighthouse and audit reports. If the page says the report isn't available, the deployed build has no complete `quality.json`: check that step in the deploy run. Locally: run the unit tests with coverage, the e2e suite and Lighthouse, write `reports/audit.json` with `npm audit --omit=dev --json`, then `node scripts/write-quality.js`.
+`/quality` reads `dist/quality.json`, which the `report` job of `quality.yml` writes from that run's Vitest, Playwright, Lighthouse and audit reports. If the page says the report isn't available, the deployed build has no complete `quality.json`: check that job in the deploy run. Locally: run the unit tests with coverage, the e2e suite and Lighthouse, write `reports/audit.json` with `npm audit --omit=dev --json`, then `node scripts/write-quality.js`.
 
 ## Search Console
 
