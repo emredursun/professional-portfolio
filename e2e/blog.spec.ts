@@ -430,3 +430,107 @@ test.describe('table of contents placement', () => {
     }
   });
 });
+
+// A table scrolls inside its own region and never widens the page, and no word
+// or figure in it breaks in two. The post's own table is checked as published;
+// a wide copy of it (extra columns, a bare URL, a long amount) stands in for
+// the widest table a post may hold.
+test.describe('tables in a post', () => {
+  const TABLE_POST = postPath('en', 'prove-a-migrated-test-is-as-strong');
+
+  test('a table is a labelled region with a header row, and passes axe in both themes', async ({
+    page,
+  }) => {
+    test.skip(!TABLE_POST, 'no post with a table yet');
+    for (const colorScheme of ['light', 'dark'] as const) {
+      // Set the scheme before the page loads, so no colour is mid-transition.
+      await page.emulateMedia({ colorScheme });
+      await page.goto(TABLE_POST!);
+      const region = page.getByRole('region', { name: /^Table 1: Level, What it proves/ });
+      await expect(region.getByRole('columnheader', { name: 'Level' })).toBeVisible();
+      await expect(region.getByRole('row')).not.toHaveCount(1);
+      const results = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+        .analyze();
+      expect(results.violations, colorScheme).toEqual([]);
+    }
+  });
+
+  test('a wide table scrolls inside itself; page and words stay whole', async ({ page }) => {
+    test.skip(!TABLE_POST, 'no post with a table yet');
+    await page.goto(TABLE_POST!);
+    await page
+      .locator('.table-wrap')
+      .first()
+      .evaluate((wrap) => {
+        const table = wrap.querySelector('table')!;
+        table.querySelectorAll('tr').forEach((row, i) => {
+          const cell = document.createElement(i === 0 ? 'th' : 'td');
+          cell.className = i === 0 ? 'num' : 'num fig';
+          cell.textContent = i === 0 ? 'Electric' : '€1,663.20';
+          row.append(cell);
+          const prose = document.createElement(i === 0 ? 'th' : 'td');
+          prose.textContent =
+            i === 0
+              ? 'Why it is relevant'
+              : 'https://example.com/averylongaddresswithoutanybreakatallinit/andstillgoingonandon';
+          row.append(prose);
+        });
+      });
+    const wrap = page.locator('.table-wrap').first();
+    // The tab stop is added while a table scrolls (blog/client/tables.ts).
+    await page.evaluate(() => window.dispatchEvent(new Event('resize')));
+    await expect(wrap).toHaveAttribute('tabindex', '0');
+    await wrap.focus();
+    await expect(wrap).toBeFocused();
+    const widths = await wrap.evaluate((el) => [el.scrollWidth, el.clientWidth]);
+    expect(widths[0]).toBeGreaterThan(widths[1]);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+    // Scrolling it moves the table, not the page.
+    await wrap.evaluate((el) => (el.scrollLeft = 80));
+    expect(await wrap.evaluate((el) => el.scrollLeft)).toBeGreaterThan(0);
+    expect(await page.evaluate(() => window.scrollX)).toBe(0);
+    // One line each: a Range over the text has a single client rect.
+    const split = await wrap.evaluate((el) =>
+      [...el.querySelectorAll('th, td')]
+        .filter((cell) => {
+          const range = document.createRange();
+          range.selectNodeContents(cell);
+          // Text with spaces may wrap at them; a word, a figure or a bare URL may not.
+          return cell.textContent!.includes(' ') ? false : range.getClientRects().length !== 1;
+        })
+        .map((cell) => cell.textContent),
+    );
+    expect(split).toEqual([]);
+    expect(
+      await wrap.evaluate((el) => getComputedStyle(el.querySelector('td')!).overflowWrap),
+    ).toBe('normal');
+  });
+
+  test('a numeric column is right-aligned with tabular digits', async ({ page }) => {
+    test.skip(!TABLE_POST, 'no post with a table yet');
+    await page.goto(TABLE_POST!);
+    await page
+      .locator('.table-wrap')
+      .first()
+      .evaluate((wrap) => {
+        wrap.querySelectorAll('tr').forEach((row, i) => {
+          const cell = document.createElement(i === 0 ? 'th' : 'td');
+          cell.className = i === 0 ? 'num' : 'num fig';
+          cell.textContent = i === 0 ? 'Cost' : '€1,663.20';
+          row.append(cell);
+        });
+      });
+    const cell = page.locator('.table-wrap td.num').first();
+    const style = await cell.evaluate((el) => {
+      const css = getComputedStyle(el);
+      return [css.textAlign, css.fontVariantNumeric, css.whiteSpace];
+    });
+    expect(style[0]).toBe('right');
+    expect(style[1]).toContain('tabular-nums');
+    expect(style[2]).toBe('nowrap');
+  });
+});

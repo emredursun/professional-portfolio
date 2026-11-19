@@ -209,3 +209,99 @@ describe('renderMarkdown: review findings', () => {
     expect(() => render('Text\n\n    indented code\n')).toThrow(/fenced block/);
   });
 });
+
+describe('renderMarkdown: tables', () => {
+  const table = [
+    '| Item | Electric | Note |',
+    '|---|---:|---|',
+    '| Energy | €912 | saved |',
+    '| Fuel | €2,121 | - |',
+    '',
+  ].join('\n');
+
+  it('wraps each table in a labelled scroll region, focusable by script only', () => {
+    const { html } = render(`${table}\n${table}`);
+    expect(html.match(/<div class="table-wrap" role="region" aria-label/g)).toHaveLength(2);
+    expect(html).toContain('aria-label="Table 1: Item, Electric, Note"');
+    expect(html).toContain('aria-label="Table 2: Item, Electric, Note"');
+    expect(html).not.toContain('tabindex');
+    expect(html.match(/<table>/g)).toHaveLength(2);
+    expect(html.match(/<\/table>\n<\/div>/g)).toHaveLength(2);
+  });
+
+  it('labels the table in the post language', () => {
+    expect(render(table, { lang: 'tr' }).html).toContain('aria-label="Tablo 1:');
+    expect(render(table, { lang: 'nl' }).html).toContain('aria-label="Tabel 1:');
+  });
+
+  it('marks a column of numbers, and any figure, but never words', () => {
+    const { html } = render(table);
+    expect(html).toContain('<th class="num">Electric</th>');
+    expect(html).toContain('<td class="num fig">€2,121</td>');
+    expect(html).toContain('<td>Energy</td>');
+    expect(html).not.toContain('<th class="num">Item');
+    expect(html).not.toContain('<td class="num">saved');
+  });
+
+  it('detects a numeric column without the author aligning it', () => {
+    const { html } = render('| A | B |\n|---|---|\n| x | 1.5 |\n| y | 20% |\n| z | - |\n');
+    expect(html).toContain('<th class="num">B</th>');
+    expect(html).toContain('<td class="num fig">20%</td>');
+    expect(html).toContain('<td class="num">-</td>');
+  });
+
+  it('keeps a column with words in it left-aligned, figures still on one line', () => {
+    const { html } = render('| A |\n|---|\n| €99 a month |\n| €891.00 |\n');
+    expect(html).not.toContain('class="num"');
+    expect(html).toContain('<td class="fig">€891.00</td>');
+    expect(html).not.toContain('<td class="fig">€99 a month');
+  });
+
+  it('right-aligns a column that is mostly figures, whatever prose sits in it', () => {
+    const rows = ['a', 'b', 'c', 'd', 'e'].map(
+      (p, i) => `| ${p} | €${i + 1}.00 | ${(i + 1) * 10}% |`,
+    );
+    const { html } = render(
+      [
+        '| Plan | Total | Discount |',
+        '|---|---|---|',
+        ...rows,
+        '| f | €99 a month | One-time price |',
+        '',
+      ].join('\n'),
+    );
+    expect(html).toContain('<th class="num">Total</th>');
+    expect(html).toContain('<td class="num fig">€1.00</td>');
+    expect(html).toContain('<td class="num">€99 a month</td>');
+    expect(html).toContain('<th class="num">Discount</th>');
+    expect(html).toContain('<td class="num">One-time price</td>');
+  });
+
+  it.each(['%25', '25%', '€2.316,60', '€1,663.20', '1.663,20 €', '1 663,20 €', '−4,5'])(
+    'treats %s as a figure',
+    (value) => {
+      const { html } = render(`| A |\n|---|\n| ${value} |\n| ${value} |\n`);
+      expect(html).toContain('<th class="num">A</th>');
+      expect(html).toContain(`<td class="num fig">${value}</td>`);
+    },
+  );
+
+  it('treats a dash and an en dash as empty', () => {
+    const { html } = render('| A |\n|---|\n| 1 |\n| 2 |\n| – |\n| - |\n');
+    expect(html).toContain('<th class="num">A</th>');
+  });
+
+  it('gives a column of long text the "txt" class, and short ones not', () => {
+    const long = 'A practice can be misleading if its overall presentation is likely to deceive';
+    const { html } = render(
+      `| Rule | Says |\n|---|---|\n| Short | ${long} |\n| Other | ${long} |\n`,
+    );
+    expect(html).toContain('<th class="txt">Says</th>');
+    expect(html).toContain(`<td class="txt">${long}</td>`);
+    expect(html).toContain('<td>Short</td>');
+  });
+
+  it('never lets markdown alignment become an inline style', () => {
+    expect(render(table).html).not.toContain('style=');
+  });
+});

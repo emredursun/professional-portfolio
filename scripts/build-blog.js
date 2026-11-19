@@ -247,6 +247,7 @@ export async function buildBlog({
     coverImage: coverImage(post, covers),
     ...renderMarkdown(post.body, {
       file: post.file,
+      lang: post.lang,
       highlight,
       image: (name) => images.get(`${post.slug}/${name}`),
     }),
