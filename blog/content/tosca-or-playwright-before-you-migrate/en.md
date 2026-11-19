@@ -7,7 +7,6 @@ kind: essay
 status: verified
 cover: cover-decision-abstract.webp
 evidence:
-  confidence: 'High for the tool facts, which I checked on the vendors'' own pages in November 2026. The "200+ technologies" figure is the vendor''s own statement, not something I verified. The lab is one small application, so my answers are an observation and not a general rule.'
   basedOn:
     - 'Vendor and project pages for Tosca and Playwright, read 2026-11-17 and 2026-11-18'
     - 'A lab of my own: a fictional personal loan request application on Pega Infinity 26.1 Constellation, tested with Tosca 26.1.2 and migrated to Playwright 1.65.0'

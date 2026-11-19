@@ -22,7 +22,6 @@ topic: ${topic}
 kind: ${kind}
 status: hypothesis
 evidence:
-  confidence: 'How sure you are, and about what'
   basedOn:
     - 'What this rests on: work, sources, experiments'
   recheckedAt: ${today}

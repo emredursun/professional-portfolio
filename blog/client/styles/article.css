@@ -97,13 +97,6 @@
   padding-left: 1.1em;
 }
 
-.evidence-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 20px;
-  margin: 0;
-}
-
 /* Table of contents: a quiet list with a rail, the current section marked */
 .toc {
   margin: 0 0 32px;
@@ -382,32 +375,30 @@
   font-size: 0.85em;
 }
 
-/* Corrections and reporting */
+/* Corrections log (only when there are entries) and the one-line report link */
 .corrections {
-  margin: 24px 0 0;
-  padding: 24px 28px;
-  border-radius: 28px;
-  background: var(--peach);
+  margin: 0 0 24px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-2);
 }
 
 .corrections h2 {
   margin: 0 0 6px;
-  font-size: 1.25rem;
-}
-
-.corrections h3 {
-  margin: 20px 0 6px;
-  font-size: 1rem;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .corrections p,
 .corrections ol {
   margin: 0;
-  font-size: 15px;
 }
 
 .corrections ol {
   padding-left: 1.2em;
+  margin-bottom: 10px;
 }
 
 .button {

@@ -13,7 +13,6 @@ function valid(overrides: Record<string, unknown> = {}) {
     kind: 'essay',
     status: 'verified',
     evidence: {
-      confidence: 'High for UI tests, untested for APIs',
       basedOn: ['My own Pega and Tosca work'],
       recheckedAt: '2026-12-09',
     },

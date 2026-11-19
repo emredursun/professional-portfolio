@@ -6,7 +6,6 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Hoog voor wat er gebeurde: ik was erbij. Eén workshop en één feature, dus een observatie en geen algemene regel.'
   basedOn:
     - 'Hands-on workshop met een interne AI-driven development tool, Sopra Steria, september 2026'
     - 'Martin Fowler, ContractTest (martinfowler.com)'

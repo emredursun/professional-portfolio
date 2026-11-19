@@ -14,33 +14,33 @@ export function nextRecheck(isoDate) {
   return `${Number(year) + 1}-${month}-${month === '02' && day === '29' ? '28' : day}`;
 }
 
-/**
- * Sources and confidence, after the text: a quiet footnote rather than a
- * banner. The status chip is already in the header, so it is not repeated.
- */
+/** The sources after the text: a quiet footnote. Status and freshness are already in the header. */
 export function evidenceCard(post) {
-  const { evidence } = post;
   const s = strings(post.lang);
-  return markup`<aside class="evidence" aria-labelledby="evidence-title" data-recheck-by="${nextRecheck(evidence.recheckedAt)}">
+  return markup`<aside class="evidence" aria-labelledby="evidence-title">
 <h2 id="evidence-title">${s.evidenceTitle}</h2>
-<ul class="evidence-sources">${evidence.basedOn.map((source) => markup`<li>${source}</li>`)}</ul>
-<p class="evidence-meta"><span>${s.confidence}: ${evidence.confidence}</span> <span>${s.rechecked} <time datetime="${evidence.recheckedAt}">${formatDate(evidence.recheckedAt, post.lang)}</time></span></p>
-<p class="stale-note" hidden>${s.staleEvidence}</p>
+<ul class="evidence-sources">${post.evidence.basedOn.map((source) => markup`<li>${source}</li>`)}</ul>
 </aside>`;
 }
 
+/**
+ * One quiet line to report a mistake, and a dated log only when the post has
+ * corrections (never an empty "None yet").
+ */
 export function corrections(post) {
   const s = strings(post.lang);
   const entries = post.corrections.map(
     (entry) =>
       markup`<li><time datetime="${entry.date}">${formatDate(entry.date, post.lang)}</time>: ${entry.text}</li>`,
   );
-  return markup`<section class="corrections" aria-labelledby="corrections-title">
-<h2 id="corrections-title">${s.correctionsTitle}</h2>
-<p>${s.correctionsIntro}</p>
-<p><a class="button" href="${portfolioPath(post.lang, '/contact')}">${s.reportBug}</a></p>
-<h3>${s.correctionsLog}</h3>
-${entries.length > 0 ? markup`<ol class="corrections-log">${entries}</ol>` : markup`<p>${s.correctionsNone}</p>`}
+  const log =
+    entries.length > 0
+      ? markup`<h2 id="corrections-title">${s.correctionsLog}</h2>
+<ol class="corrections-log">${entries}</ol>
+`
+      : '';
+  return markup`<section class="corrections"${entries.length > 0 ? markup` aria-labelledby="corrections-title"` : markup` aria-label="${s.reportMistake}"`}>
+${log}<p class="report-line">${s.reportMistake} <a href="${portfolioPath(post.lang, '/contact')}">${s.reportLink}</a></p>
 </section>`;
 }
 

@@ -6,7 +6,6 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Hoog voor de feiten over de tools, die ik in november 2026 op de eigen pagina’s van de leveranciers heb gecontroleerd. Het cijfer “200+ technologies” is de eigen bewering van de leverancier, niet iets wat ik heb geverifieerd. Het lab is één kleine applicatie, dus mijn antwoorden zijn een waarneming en geen algemene regel.'
   basedOn:
     - 'Leveranciers- en projectpagina’s van Tosca en Playwright, gelezen op 2026-11-17 en 2026-11-18'
     - 'Een eigen lab: een fictieve applicatie voor persoonlijke leningaanvragen op Pega Infinity 26.1 Constellation, getest met Tosca 26.1.2 en gemigreerd naar Playwright 1.65.0'

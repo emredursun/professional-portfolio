@@ -7,7 +7,6 @@ kind: note
 status: hypothesis
 cover: cover-misty-road.webp
 evidence:
-  confidence: 'Medium: my own view about where our work is heading, after one company event. Not a prediction.'
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 November 2026'
     - 'Human & Tech: Agentic Development: Teams Reimagined session at the same event'

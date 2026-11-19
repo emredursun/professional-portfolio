@@ -12,7 +12,6 @@ const base = Object.freeze({
   kind: 'essay',
   status: 'verified',
   evidence: {
-    confidence: 'High',
     basedOn: ['My own work'],
     recheckedAt: '2026-12-09',
   },

@@ -6,7 +6,6 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Lab sonuçları için yüksek: yayımlanan dönüştürücüyle (1.0.0) 2026-11-17’de yapılan çalıştırmadan geliyorlar. Tek bir küçük lab uygulaması, dolayısıyla genel bir kural değil, bir gözlem.'
   basedOn:
     - 'Kendi labım: Pega Infinity 26.1 Constellation üzerinde kurgusal bir kişisel kredi talebi uygulaması, Tosca 26.1.2 ile test edildi ve Playwright 1.65.0’a taşındı'
     - 'Aynı lab hakkındaki önceki LinkedIn gönderim ve yazdığım dönüştürücü eklenti'

@@ -6,7 +6,6 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Yaşananlar için yüksek, oradaydım. Tek bir workshop ve tek bir feature: genel bir kural değil, bir gözlem.'
   basedOn:
     - 'Şirket içi bir AI-driven development aracıyla uygulamalı workshop, Sopra Steria, Eylül 2026'
     - 'Martin Fowler, ContractTest (martinfowler.com)'

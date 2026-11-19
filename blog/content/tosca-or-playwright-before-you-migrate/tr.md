@@ -6,7 +6,6 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Araç bilgileri için yüksek: Kasım 2026’da üreticilerin kendi sayfalarından kontrol ettim. “200+ technologies” rakamı üreticinin kendi ifadesi, doğrulamadım. Lab tek bir küçük uygulama, dolayısıyla yanıtlarım genel bir kural değil, bir gözlem.'
   basedOn:
     - 'Tosca ve Playwright için üretici ve proje sayfaları, 2026-11-17 ve 2026-11-18 tarihlerinde okundu'
     - 'Kendi labım: Pega Infinity 26.1 Constellation üzerinde kurgusal bir kişisel kredi talebi uygulaması, Tosca 26.1.2 ile test edildi ve Playwright 1.65.0’a taşındı'

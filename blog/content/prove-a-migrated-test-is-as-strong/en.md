@@ -7,7 +7,6 @@ kind: essay
 status: verified
 cover: cover-proof-abstract.webp
 evidence:
-  confidence: 'High for the lab results, which come from the run on the released converter (1.0.0) on 2026-11-17. One small lab application, so an observation and not a general rule.'
   basedOn:
     - 'A lab of my own: a fictional personal loan request application on Pega Infinity 26.1 Constellation, tested with Tosca 26.1.2 and migrated to Playwright 1.65.0'
     - 'My earlier LinkedIn post on the same lab, and the converter plugin I wrote'

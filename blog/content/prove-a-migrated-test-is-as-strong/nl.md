@@ -6,7 +6,6 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Hoog voor de labresultaten, die uit de run met de uitgebrachte converter (1.0.0) van 2026-11-17 komen. Eén kleine labapplicatie, dus een waarneming en geen algemene regel.'
   basedOn:
     - 'Een eigen lab: een fictieve applicatie voor persoonlijke leningaanvragen op Pega Infinity 26.1 Constellation, getest met Tosca 26.1.2 en gemigreerd naar Playwright 1.65.0'
     - 'Mijn eerdere LinkedIn-post over hetzelfde lab en de converterplugin die ik schreef'

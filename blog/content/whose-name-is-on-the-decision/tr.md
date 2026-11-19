@@ -6,7 +6,6 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Orta: tek bir workshop ve her gün yapay zekâ agent’larıyla çalışan meslektaşlarımla yaptığım sohbetler.'
   basedOn:
     - 'Şirket içi bir AI-driven development aracıyla uygulamalı workshop, Eylül 2026'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'

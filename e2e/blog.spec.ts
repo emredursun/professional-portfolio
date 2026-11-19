@@ -333,25 +333,19 @@ test.describe('blog index and feed', () => {
 });
 
 test.describe('stale evidence', () => {
-  test('is flagged on the index and the article once the re-check date passes', async ({
-    page,
-  }) => {
+  test('is flagged on the index once the re-check date passes', async ({ page }) => {
     // Evidence goes stale a year after its re-check; a day past the latest
     // such date in the content, everything is stale.
     await page.clock.setFixedTime(dayAfter(yearAfter(recheckRange().last)));
-    for (const url of ['/blog', POST]) {
-      await page.goto(url);
-      await expect(page.locator('.stale-note').first(), url).toBeVisible();
-    }
+    await page.goto('/blog');
+    await expect(page.locator('.stale-note').first()).toBeVisible();
   });
 
   test('is not flagged while the evidence is current', async ({ page }) => {
     // The day after the earliest re-check, every post's evidence is current.
     await page.clock.setFixedTime(dayAfter(recheckRange().first));
-    for (const url of ['/blog', POST]) {
-      await page.goto(url);
-      await expect(page.locator('.stale-note').first(), url).toBeHidden();
-    }
+    await page.goto('/blog');
+    await expect(page.locator('.stale-note').first()).toBeHidden();
   });
 });
 

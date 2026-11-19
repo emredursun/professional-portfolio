@@ -58,7 +58,6 @@ const postSchema = z
     status: z.enum(['hypothesis', 'testing', 'verified', 'revised']),
     evidence: z
       .object({
-        confidence: text,
         basedOn: z.array(text).min(1),
         recheckedAt: isoDate,
       })

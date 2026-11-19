@@ -6,7 +6,6 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Gemiddeld: één workshop en gesprekken met collega’s die dagelijks met AI-agents werken.'
   basedOn:
     - 'Hands-on workshop met een interne AI-driven development tool, september 2026'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'

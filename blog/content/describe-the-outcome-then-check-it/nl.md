@@ -6,7 +6,6 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Gemiddeld: mijn eigen kijk op waar ons werk naartoe gaat, na één bedrijfsevent. Geen voorspelling.'
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 november 2026'
     - 'De sessie Human & Tech: Agentic Development: Teams Reimagined op hetzelfde event'

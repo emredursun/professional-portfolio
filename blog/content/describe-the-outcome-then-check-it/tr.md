@@ -6,7 +6,6 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Orta: tek bir şirket etkinliğinden sonra işimizin nereye gittiğine dair kendi görüşüm. Bir öngörü değil.'
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 Kasım 2026'
     - 'Aynı etkinlikteki Human & Tech: Agentic Development: Teams Reimagined oturumu'

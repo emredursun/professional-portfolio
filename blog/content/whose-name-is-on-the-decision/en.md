@@ -7,7 +7,6 @@ kind: note
 status: hypothesis
 cover: keys.webp
 evidence:
-  confidence: 'Medium: one workshop and conversations with colleagues who use AI agents every day.'
   basedOn:
     - 'Hands-on workshop with an internal AI-driven development tool, September 2026'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'
