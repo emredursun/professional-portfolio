@@ -5,8 +5,7 @@ publishedAt: 2026-11-18
 topic: testing
 kind: essay
 status: verified
-cover: cover-decision.webp
-coverAlt: 'Infographic: five questions to ask before you migrate a test suite from Tosca to Playwright: the problem, ownership, five-year cost, technology under test, and when not to migrate.'
+cover: cover-decision-abstract.webp
 evidence:
   confidence: 'High for the tool facts, which I checked on the vendors'' own pages in November 2026. The "200+ technologies" figure is the vendor''s own statement, not something I verified. The lab is one small application, so my answers are an observation and not a general rule.'
   basedOn:

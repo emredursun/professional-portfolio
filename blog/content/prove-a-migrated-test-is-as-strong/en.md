@@ -5,8 +5,7 @@ publishedAt: 2026-11-18
 topic: testing
 kind: essay
 status: verified
-cover: cover-proof.webp
-coverAlt: 'Infographic: Tosca to a generated Playwright bridge to Playwright-native tests, proof levels L1 to L6, 16 TestCases migrated, 104 of 104 mutations caught, 16 of 16 same verdict, 1 open.'
+cover: cover-proof-abstract.webp
 evidence:
   confidence: 'High for the lab results, which come from the run on the released converter (1.0.0) on 2026-11-17. One small lab application, so an observation and not a general rule.'
   basedOn:
