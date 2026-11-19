@@ -203,8 +203,9 @@ describe('renderArticlePage: trust sections', () => {
   it('says AI helped in one quiet sentence inside the author card', () => {
     const { doc } = page();
     const note = doc.querySelector('.author .ai-disclosure');
-    expect(note?.textContent).toContain('AI tools helped with research');
-    expect(note?.textContent).toContain('responsible for what is published');
+    expect(note?.textContent).toContain('I used AI tools for research');
+    expect(note?.textContent).toContain('reviewed the content before publishing');
+    expect(note?.textContent).not.toContain('responsible');
     expect(doc.querySelector('.ai-note, .ai-grid, [aria-labelledby="ai-title"]')).toBeNull();
     expect(note?.closest('.author')?.querySelector('ul, a[href^="https://github.com"]')).toBeNull();
   });
@@ -217,10 +218,10 @@ describe('renderArticlePage: trust sections', () => {
 
   it('says it in the language of the post', () => {
     expect(page({ lang: 'nl' }).doc.querySelector('.ai-disclosure')?.textContent).toContain(
-      'verantwoordelijk',
+      'nagelezen',
     );
     expect(page({ lang: 'tr' }).doc.querySelector('.ai-disclosure')?.textContent).toContain(
-      'sorumluyum',
+      'gözden geçirdim',
     );
   });
 

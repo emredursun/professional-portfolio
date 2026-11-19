@@ -60,7 +60,7 @@ const en = {
   videoWatch: 'Watch on Vimeo',
   evidenceTitle: 'Sources',
   aiDisclosure:
-    'AI tools helped with research, fact-checking and editing; I reviewed every claim and am responsible for what is published.',
+    'I used AI tools for research, fact-checking and editing, and reviewed the content before publishing.',
   reportMistake: 'Found a mistake?',
   reportLink: 'Report it.',
   correctionsLog: 'Corrections',
@@ -149,7 +149,7 @@ const tr = {
   videoWatch: 'Vimeo’da izleyin',
   evidenceTitle: 'Kaynaklar',
   aiDisclosure:
-    'Yapay zekâ araçları araştırma, doğrulama, düzenleme ve çeviride yardımcı oldu; her iddiayı kendim gözden geçirdim ve yayımlanan her şeyden ben sorumluyum.',
+    'Araştırma, doğrulama, düzenleme ve çeviride yapay zekâ araçlarından yararlandım; içeriği yayımlamadan önce gözden geçirdim.',
   reportMistake: 'Bir hata mı buldunuz?',
   reportLink: 'Bildirin.',
   correctionsLog: 'Düzeltmeler',
@@ -238,7 +238,7 @@ const nl = {
   videoWatch: 'Bekijk op Vimeo',
   evidenceTitle: 'Bronnen',
   aiDisclosure:
-    'AI-tools hielpen bij onderzoek, factchecking, redactie en vertaling; ik heb elke bewering zelf gecontroleerd en ben verantwoordelijk voor wat er wordt gepubliceerd.',
+    'Bij onderzoek, factchecking, redactie en vertaling heb ik AI-tools gebruikt; de inhoud heb ik voor publicatie nagelezen.',
   reportMistake: 'Een fout gevonden?',
   reportLink: 'Meld het.',
   correctionsLog: 'Correcties',
