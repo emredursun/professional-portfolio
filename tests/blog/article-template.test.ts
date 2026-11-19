@@ -19,11 +19,7 @@ const post = Object.freeze({
     basedOn: ['My own Pega and Tosca work'],
     recheckedAt: '2026-12-09',
   },
-  aiAssistance: {
-    mine: ['The idea and every example'],
-    assisted: ['Proofreading'],
-    promptsUrl: 'https://github.com/emredursun/prompts',
-  },
+  aiAssisted: true,
   corrections: [{ date: '2026-12-12', text: 'Fixed a typo.' }],
   draft: false,
   minutes: 7,
@@ -73,7 +69,7 @@ describe('renderArticlePage: document', () => {
     expect(doc.querySelector('main article')).not.toBeNull();
     expect(doc.querySelector('nav[aria-label="On this page"]')).not.toBeNull();
     expect(doc.querySelector('footer')).not.toBeNull();
-    expect(doc.querySelectorAll('aside').length).toBeGreaterThanOrEqual(2);
+    expect(doc.querySelectorAll('aside').length).toBeGreaterThanOrEqual(1);
   });
 
   it('keeps heading levels in order across the whole page', () => {
@@ -205,12 +201,28 @@ describe('renderArticlePage: trust sections', () => {
     );
   });
 
-  it('shows how AI was used, with the prompts link when there is one', () => {
-    const panel = page().doc.querySelector('[aria-labelledby="ai-title"]');
-    expect(panel?.textContent).toContain('Proofreading');
-    expect(panel?.querySelector('a')?.getAttribute('href')).toBe(post.aiAssistance.promptsUrl);
-    const without = page({ aiAssistance: { mine: ['All of it'], assisted: [] } }).doc;
-    expect(without.querySelector('[aria-labelledby="ai-title"] a')).toBeNull();
+  it('says AI helped in one quiet sentence inside the author card', () => {
+    const { doc } = page();
+    const note = doc.querySelector('.author .ai-disclosure');
+    expect(note?.textContent).toContain('AI tools helped with research');
+    expect(note?.textContent).toContain('responsible for what is published');
+    expect(doc.querySelector('.ai-note, .ai-grid, [aria-labelledby="ai-title"]')).toBeNull();
+    expect(note?.closest('.author')?.querySelector('ul, a[href^="https://github.com"]')).toBeNull();
+  });
+
+  it('leaves the AI sentence out when no AI tool helped', () => {
+    const { doc } = page({ aiAssisted: false });
+    expect(doc.querySelector('.ai-disclosure')).toBeNull();
+    expect(doc.querySelector('.author-name')?.textContent).toBe('Written by Emre Dursun');
+  });
+
+  it('says it in the language of the post', () => {
+    expect(page({ lang: 'nl' }).doc.querySelector('.ai-disclosure')?.textContent).toContain(
+      'verantwoordelijk',
+    );
+    expect(page({ lang: 'tr' }).doc.querySelector('.ai-disclosure')?.textContent).toContain(
+      'sorumluyum',
+    );
   });
 
   it('lists corrections, or says there are none', () => {

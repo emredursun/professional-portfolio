@@ -12,12 +12,7 @@ evidence:
     - 'Vendor and project pages for Tosca and Playwright, read 2026-11-17 and 2026-11-18'
     - 'A lab of my own: a fictional personal loan request application on Pega Infinity 26.1 Constellation, tested with Tosca 26.1.2 and migrated to Playwright 1.65.0'
   recheckedAt: 2026-11-18
-aiAssistance:
-  mine:
-    - 'The experience, the lab, the questions and the answers'
-  assisted:
-    - 'Claude reworked my own draft into two separate posts and tightened the wording'
-    - 'Claude checked claims against the cited pages and corrected three details (Airbnb timing, Node.js 20 wording, supported languages)'
+aiAssisted: true
 ---
 
 A request to migrate a test suite often sounds like a tool question: "Should we move from Tosca to Playwright?" It can also come the other way round, from a team whose code-first suite has nobody left to maintain it. The tool is rarely the first thing to settle. A migration changes who owns quality, what the team pays and which skills it hires for. The technology under test can end the discussion early.

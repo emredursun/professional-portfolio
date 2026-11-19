@@ -16,11 +16,7 @@ const base = Object.freeze({
     basedOn: ['My own work'],
     recheckedAt: '2026-12-09',
   },
-  aiAssistance: {
-    mine: ['The idea'],
-    assisted: ['Proofreading'],
-    promptsUrl: 'https://github.com/emredursun/prompts',
-  },
+  aiAssisted: true,
   corrections: [],
   draft: false,
   minutes: 7,

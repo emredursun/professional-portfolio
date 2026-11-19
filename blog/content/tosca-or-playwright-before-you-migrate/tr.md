@@ -11,15 +11,9 @@ evidence:
     - 'Tosca ve Playwright için üretici ve proje sayfaları, 2026-11-17 ve 2026-11-18 tarihlerinde okundu'
     - 'Kendi labım: Pega Infinity 26.1 Constellation üzerinde kurgusal bir kişisel kredi talebi uygulaması, Tosca 26.1.2 ile test edildi ve Playwright 1.65.0’a taşındı'
   recheckedAt: 2026-11-18
-aiAssistance:
-  mine:
-    - 'Deneyim, lab, sorular ve yanıtlar'
-  assisted:
-    - 'Claude kendi taslağımı iki ayrı yazıya böldü ve ifadeleri sıkılaştırdı'
-    - 'Claude iddiaları atıf yapılan sayfalarla karşılaştırdı ve üç ayrıntıyı düzeltti (Airbnb zamanlaması, Node.js 20 ifadesi, desteklenen diller)'
+aiAssisted: true
 translation:
   from: 2026-11-18
-  assistedByAi: true
 ---
 
 Bir test paketini taşıma talebi çoğu zaman bir araç sorusu gibi duyulur: “Tosca’dan Playwright’a geçelim mi?” Tersi de olabilir: kod tabanlı paketine bakacak kimsesi kalmayan bir ekipten gelir. Araç nadiren ilk karara bağlanacak şeydir. Bir geçiş, kalitenin sahibini, ekibin ne ödediğini ve hangi becerilere işe alım yapılacağını değiştirir. Test edilen teknoloji tartışmayı baştan bitirebilir.

@@ -17,7 +17,7 @@ import {
 } from './format.js';
 import { renderPage } from './layout.js';
 import { statusChip } from './status.js';
-import { aiPanel, corrections, evidenceCard, tableOfContents } from './sections.js';
+import { corrections, evidenceCard, tableOfContents } from './sections.js';
 import { strings } from '../strings.js';
 
 /** The other language versions of a post, as JSON-LD links (schema.org translations). */
@@ -96,13 +96,20 @@ ${translationNote(post, s)}<p class="byline">Emre Dursun · <time datetime="${po
 </header>`;
 }
 
-function authorCard(s, lang) {
+/** Who wrote it and, when AI tools helped, one quiet sentence saying so and who answers for it. */
+function authorCard(post, s) {
+  const { lang } = post;
   return markup`<section class="author" aria-label="${s.aboutAuthor}">
 <img src="/images/emre-dursun-qa-consultant-400.webp" alt="" width="64" height="64" loading="lazy" decoding="async">
 <div>
 <p class="author-name">${s.writtenBy}</p>
 <p class="author-bio">${s.authorBio}</p>
-<p><a href="${portfolioPath(lang, '/about')}">${s.moreAboutMe}</a></p>
+${
+  post.aiAssisted
+    ? markup`<p class="ai-disclosure">${s.aiDisclosure}</p>
+`
+    : ''
+}<p><a href="${portfolioPath(lang, '/about')}">${s.moreAboutMe}</a></p>
 </div>
 </section>`;
 }
@@ -135,9 +142,8 @@ ${tableOfContents(post)}
 ${raw(post.html)}
 </div>
 ${evidenceCard(post)}
-${aiPanel(post)}
 ${corrections(post)}
-${authorCard(s, post.lang)}
+${authorCard(post, s)}
 </article>
 ${keepReading(related, s)}`;
   return renderPage({

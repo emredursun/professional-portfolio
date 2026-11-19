@@ -12,11 +12,7 @@ evidence:
     - 'Hands-on workshop with an internal AI-driven development tool, September 2026'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'
   recheckedAt: 2026-10-29
-aiAssistance:
-  mine:
-    - 'The questions and what prompted them'
-  assisted:
-    - 'Claude turned my notes into this text and suggested the OWASP source'
+aiAssisted: true
 ---
 
 ![Two people at a table, one signing a document while the other reviews the papers.](signing.webp)

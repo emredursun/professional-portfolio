@@ -504,6 +504,14 @@
   line-height: 1.55;
 }
 
+/* The one-line AI disclosure inside the author card: small and quiet. */
+.author .ai-disclosure {
+  margin: 0 0 8px;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
 /* An English post on another language's index, before its translation exists. */
 .lang-chip {
   display: inline-block;

@@ -17,10 +17,7 @@ function valid(overrides: Record<string, unknown> = {}) {
       basedOn: ['My own Pega and Tosca work'],
       recheckedAt: '2026-12-09',
     },
-    aiAssistance: {
-      mine: ['The idea, the argument and every example'],
-      assisted: ['Proofreading'],
-    },
+    aiAssisted: true,
     ...overrides,
   };
 }
@@ -84,13 +81,13 @@ describe('validatePost', () => {
     expect(() => validatePost(valid({ evidence }), FILE)).toThrow(/basedOn/);
   });
 
-  it('only accepts an https link for the prompts', () => {
-    const aiAssistance = { ...valid().aiAssistance, promptsUrl: 'http://example.com' };
-    expect(() => validatePost(valid({ aiAssistance }), FILE)).toThrow(/promptsUrl/);
-    const ok = { ...valid().aiAssistance, promptsUrl: 'https://github.com/x' };
-    expect(validatePost(valid({ aiAssistance: ok }), FILE).aiAssistance.promptsUrl).toBe(
-      'https://github.com/x',
-    );
+  it('takes AI assistance as a plain yes or no, never a list', () => {
+    expect(validatePost(valid({ aiAssisted: false }), FILE).aiAssisted).toBe(false);
+    expect(() => validatePost(valid({ aiAssisted: undefined }), FILE)).toThrow(/aiAssisted/);
+    expect(() => validatePost(valid({ aiAssisted: ['Proofreading'] }), FILE)).toThrow(/aiAssisted/);
+    expect(() =>
+      validatePost(valid({ aiAssistance: { mine: ['x'], assisted: [] } }), FILE),
+    ).toThrow();
   });
 
   it('limits the description to what a search result shows', () => {
@@ -101,25 +98,6 @@ describe('validatePost', () => {
 
   it('rejects empty strings', () => {
     expect(() => validatePost(valid({ title: '  ' }), FILE)).toThrow(/title/);
-  });
-});
-
-describe('validatePost: review findings', () => {
-  it.each([
-    'https:evil.example',
-    'https://user:pw@example.com',
-    'https://localhost/x',
-    'HTTPS://example.com',
-  ])('rejects the prompts link %s', (promptsUrl) => {
-    const aiAssistance = { ...valid().aiAssistance, promptsUrl };
-    expect(() => validatePost(valid({ aiAssistance }), FILE)).toThrow(/promptsUrl/);
-  });
-
-  it('returns the prompts link in normalised form', () => {
-    const aiAssistance = { ...valid().aiAssistance, promptsUrl: 'https://Example.com/a b' };
-    expect(validatePost(valid({ aiAssistance }), FILE).aiAssistance.promptsUrl).toBe(
-      'https://example.com/a%20b',
-    );
   });
 });
 

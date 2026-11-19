@@ -12,16 +12,9 @@ evidence:
     - 'Aynı lab hakkındaki önceki LinkedIn gönderim ve yazdığım dönüştürücü eklenti'
     - 'Playwright, Tosca, Google ve Airbnb sayfaları ile martinfowler.com makaleleri (Vocke; Cartwright, Horn ve Lewis), sonda listelendi, 2026-11-17’de okundu'
   recheckedAt: 2026-11-18
-aiAssistance:
-  mine:
-    - 'Deneyim, lab, dönüştürücü eklenti, yöntem ve sonuçlar'
-  assisted:
-    - 'Claude kendi taslağımı iki ayrı yazıya böldü ve ifadeleri sıkılaştırdı'
-    - 'Claude iddiaları atıf yapılan sayfalarla karşılaştırdı ve üç ayrıntıyı düzeltti (Airbnb zamanlaması, Node.js 20 ifadesi, desteklenen diller)'
-    - 'Claude lab rakamlarını dönüştürücünün sürüm kaydıyla karşılaştırdı ve 1.0.0 sürümüyle yapılan çalıştırmaya göre düzeltti'
+aiAssisted: true
 translation:
   from: 2026-11-18
-  assistedByAi: true
 ---
 
 ![İnfografik: Tosca Commander, üretilmiş bir Playwright köprüsü, Playwright’a özgü testler, L1’den L6’ya kanıt seviyeleri ve şu rakamlar: 16 TestCase taşındı, kontrol mutasyonlarının 104’ünün 104’ü yakalandı, 16 testin 16’sı Tosca ile aynı sonucu verdi, 1 açık.](proof-levels.webp)

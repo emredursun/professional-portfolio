@@ -11,14 +11,9 @@ evidence:
     - 'Hands-on workshop met een interne AI-driven development tool, Sopra Steria, september 2026'
     - 'Martin Fowler, ContractTest (martinfowler.com)'
   recheckedAt: 2026-10-29
-aiAssistance:
-  mine:
-    - 'De ervaring, wat mij opviel en wat ik eruit meeneem'
-  assisted:
-    - 'Claude maakte van mijn aantekeningen deze tekst en kortte die in op mijn aanwijzingen'
+aiAssisted: true
 translation:
   from: 2026-10-29
-  assistedByAi: true
 ---
 
 ![Een verkeerslicht dat groen geeft tegen een avondlucht.](green-light.webp)

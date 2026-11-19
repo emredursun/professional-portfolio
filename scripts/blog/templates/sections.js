@@ -1,5 +1,5 @@
 /**
- * The trust sections of an article: the evidence card, the AI note, the
+ * The trust sections of an article: the evidence card, the
  * corrections log and the table of contents. Each is a small pure function of
  * the validated post.
  */
@@ -26,23 +26,6 @@ export function evidenceCard(post) {
 <ul class="evidence-sources">${evidence.basedOn.map((source) => markup`<li>${source}</li>`)}</ul>
 <p class="evidence-meta"><span>${s.confidence}: ${evidence.confidence}</span> <span>${s.rechecked} <time datetime="${evidence.recheckedAt}">${formatDate(evidence.recheckedAt, post.lang)}</time></span></p>
 <p class="stale-note" hidden>${s.staleEvidence}</p>
-</aside>`;
-}
-
-export function aiPanel(post) {
-  const { mine, assisted, promptsUrl } = post.aiAssistance;
-  const s = strings(post.lang);
-  const translated = post.translation
-    ? `${post.translation.assistedByAi ? s.aiTranslatedWithAi : s.aiTranslatedByMe} `
-    : '';
-  const list = (items) => markup`<ul>${items.map((item) => markup`<li>${item}</li>`)}</ul>`;
-  return markup`<aside class="ai-note" aria-labelledby="ai-title">
-<h2 id="ai-title">${s.aiTitle}</h2>
-<div class="ai-grid">
-<section class="ai-mine" aria-labelledby="ai-mine"><h3 id="ai-mine">${s.aiMine}</h3>${list(mine)}</section>
-<section class="ai-assisted" aria-labelledby="ai-assisted"><h3 id="ai-assisted">${s.aiAssisted}</h3>${assisted.length > 0 ? list(assisted) : markup`<p>${s.aiNothing}</p>`}</section>
-</div>
-<p class="ai-footer">${translated}${s.aiChecked}${promptsUrl ? markup` <a href="${promptsUrl}" rel="noopener noreferrer">${s.aiPrompts}</a>` : ''}</p>
 </aside>`;
 }
 

@@ -16,14 +16,9 @@ evidence:
     - 'Stack Overflow Developer Survey 2026'
     - 'DORA, State of AI-assisted Software Development 2025'
   recheckedAt: 2026-11-13
-aiAssistance:
-  mine:
-    - 'De dag, de foto’s, wat me bijbleef en hoe ik het in mijn werk toepas'
-  assisted:
-    - 'Claude maakte van mijn aantekeningen deze tekst en stelde de onderzoeksbronnen voor'
+aiAssisted: true
 translation:
   from: 2026-11-13
-  assistedByAi: true
 ---
 
 ![Een rustige landweg bij zonsopkomst, met lage mist en kale bomen als silhouet tegen een oranje lucht.](unsplash-misty-road.webp)

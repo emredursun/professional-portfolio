@@ -12,11 +12,7 @@ evidence:
     - 'Hands-on workshop with an internal AI-driven development tool, Sopra Steria, September 2026'
     - 'Martin Fowler, ContractTest (martinfowler.com)'
   recheckedAt: 2026-10-29
-aiAssistance:
-  mine:
-    - 'The experience, what I noticed and what I took from it'
-  assisted:
-    - 'Claude turned my notes into this text and shortened it on my instructions'
+aiAssisted: true
 ---
 
 ![A traffic light showing green against an evening sky.](green-light.webp)

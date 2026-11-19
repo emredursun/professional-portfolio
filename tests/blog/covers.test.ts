@@ -26,7 +26,7 @@ const frontmatter = (overrides: Record<string, unknown> = {}) => ({
   kind: 'essay',
   status: 'verified',
   evidence: { confidence: 'High', basedOn: ['Work'], recheckedAt: '2026-12-09' },
-  aiAssistance: { mine: ['All'], assisted: [] },
+  aiAssisted: false,
   ...overrides,
 });
 
@@ -158,7 +158,7 @@ const base = {
   status: 'verified',
   minutes: 4,
   evidence: { confidence: 'High', basedOn: ['Work'], recheckedAt: '2026-10-01' },
-  aiAssistance: { mine: ['All of it'], assisted: [] },
+  aiAssisted: false,
   corrections: [],
   html: '<p>Body</p>',
   toc: [],

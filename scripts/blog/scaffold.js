@@ -13,10 +13,7 @@ import { BLOG_LANGUAGES } from './strings.js';
 
 /** Frontmatter for one language; English is the original, the others its translations. */
 function frontmatter({ lang, kind, topic, today }) {
-  const translation =
-    lang === 'en'
-      ? ''
-      : `translation:\n  from: ${today}\n  assistedByAi: false # true if AI helped translate\n`;
+  const translation = lang === 'en' ? '' : `translation:\n  from: ${today}\n`;
   return `---
 title: 'Working title (${lang})'
 description: 'One or two sentences for the index, search results and link previews.'
@@ -29,10 +26,7 @@ evidence:
   basedOn:
     - 'What this rests on: work, sources, experiments'
   recheckedAt: ${today}
-aiAssistance:
-  mine:
-    - 'What is yours'
-  assisted: []
+aiAssisted: true # false if no AI tool helped
 ${translation}# Remove both once this version is written: until then it cannot launch.
 placeholder: true
 draft: true

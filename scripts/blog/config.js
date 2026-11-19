@@ -11,9 +11,6 @@
 export const RESERVED_IDS = Object.freeze([
   'main',
   'evidence-title',
-  'ai-title',
-  'ai-mine',
-  'ai-assisted',
   'corrections-title',
   'more-title',
   'essays-title',

@@ -44,7 +44,8 @@ test.describe('blog article', () => {
     await expect(page.locator('h1')).toHaveCount(1);
     await expectIndexing(page);
     await expect(page.getByRole('complementary', { name: 'Sources' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'How this was written' })).toBeVisible();
+    await expect(page.locator('.author .ai-disclosure')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'How this was written' })).toHaveCount(0);
 
     const ld = await page.locator('script[type="application/ld+json"]').textContent();
     expect(JSON.parse(ld ?? '{}')['@type']).toBe('BlogPosting');
@@ -202,7 +203,7 @@ test.describe('blog without JavaScript', () => {
     expect(await toc.evaluate((el) => getComputedStyle(el).position)).toBe('static');
 
     // Mid-article, the list has scrolled away with the text.
-    await page.locator('.ai-note').scrollIntoViewIfNeeded();
+    await page.locator('.author').scrollIntoViewIfNeeded();
     await expect(toc).not.toBeInViewport();
 
     // A jump lands the heading in view, and nothing is drawn over it.
@@ -385,7 +386,7 @@ test.describe('table of contents placement', () => {
     test.skip(!TOC_POST, 'no post with headings yet');
     await page.goto(TOC_POST!);
     const toc = page.getByRole('navigation', { name: 'On this page' });
-    await page.locator('.ai-note').scrollIntoViewIfNeeded();
+    await page.locator('.author').scrollIntoViewIfNeeded();
     expect(await toc.evaluate((el) => getComputedStyle(el).position)).toBe('sticky');
     await expect(toc).toBeInViewport();
     if (isMobile) {

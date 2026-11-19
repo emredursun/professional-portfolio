@@ -13,13 +13,7 @@ evidence:
     - 'My earlier LinkedIn post on the same lab, and the converter plugin I wrote'
     - 'Playwright, Tosca, Google and Airbnb pages and martinfowler.com articles (Vocke; Cartwright, Horn and Lewis), listed at the end, read 2026-11-17'
   recheckedAt: 2026-11-18
-aiAssistance:
-  mine:
-    - 'The experience, the lab, the converter plugin, the method and the results'
-  assisted:
-    - 'Claude reworked my own draft into two separate posts and tightened the wording'
-    - 'Claude checked claims against the cited pages and corrected three details (Airbnb timing, Node.js 20 wording, supported languages)'
-    - 'Claude checked the lab figures against the converter''s release record and corrected them to the run on version 1.0.0'
+aiAssisted: true
 ---
 
 ![Infographic: Tosca Commander to a generated Playwright bridge to Playwright-native tests, proof levels L1 to L6, and the figures 16 TestCases migrated, 104 of 104 check mutations caught, 16 of 16 with the same verdict as Tosca, 1 open.](proof-levels.webp)

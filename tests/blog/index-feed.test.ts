@@ -13,7 +13,7 @@ const base = {
   minutes: 4,
   hasCode: false,
   evidence: { confidence: 'High', basedOn: ['Work'], recheckedAt: '2026-10-01' },
-  aiAssistance: { mine: ['All of it'], assisted: [] },
+  aiAssisted: false,
   corrections: [],
   html: '<p>Body</p>',
   toc: [],
