@@ -58,9 +58,9 @@ The generated code keeps Tosca's shape on purpose: one class per Module, one flo
 4. Proof per test, on six levels (next section). A test counts as migrated only when its proof is recorded against the code it ran on.
 5. Parallel run and retirement: run both suites on the same builds, compare verdicts per test, and retire Tosca TestCases slice by slice. An all-at-once cutover would remove the comparison that makes the proof possible.
 
-![Example Playwright HTML report from the Playwright documentation: a list of tests with a verdict per test and per browser, here 72 passed and 6 failed.](playwright-html-report.webp)
+![Playwright HTML report of a run of my PLR lab on 19 November 2026: all tests passed, with the eligibility spec expanded to show the EligibilityCheck tests TC002.01 to TC002.09 on Chromium.](plr-playwright-report.webp)
 
-*Screenshot: Playwright documentation, © Microsoft, [Apache License 2.0](https://github.com/microsoft/playwright/blob/main/LICENSE), cropped. Example report, not from the lab.*
+*Playwright's HTML report of a later local run of my PLR lab. Own screenshot, cropped.*
 
 ## Six levels of proof
 
@@ -117,4 +117,4 @@ All read on 2026-11-17 unless a publication date is given.
 - Goran Petrovic, Marko Ivankovic, State of Mutation Testing at Google (ICSE SEIP 2018): https://research.google/pubs/state-of-mutation-testing-at-google/
 - Airbnb Tech Blog, Accelerating Large-Scale Test Migration with LLMs: https://airbnb.tech/?p=366
 - My LinkedIn post on the Tosca to Playwright lab (16 TestCases, 104 mutants): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
-- Playwright documentation images, HTML report and Trace Viewer (Apache License 2.0, downloaded 2026-11-19): https://github.com/microsoft/playwright/tree/main/docs/src/images/getting-started
+- Playwright documentation image, Trace Viewer (Apache License 2.0, downloaded 2026-11-19): https://github.com/microsoft/playwright/tree/main/docs/src/images/getting-started

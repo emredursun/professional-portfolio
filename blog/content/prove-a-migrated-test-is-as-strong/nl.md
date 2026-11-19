@@ -60,9 +60,9 @@ De gegenereerde code behoudt bewust de vorm van Tosca: één klasse per Module, 
 4. Bewijs per test, op zes niveaus (volgende sectie). Een test telt pas als gemigreerd wanneer zijn bewijs is vastgelegd tegen de code waarop het draaide.
 5. Parallelle run en uitfasering: draai beide suites op dezelfde builds, vergelijk de oordelen per test en fase Tosca-TestCases stap voor stap uit. Een cutover in één keer zou de vergelijking wegnemen die het bewijs mogelijk maakt.
 
-![Voorbeeld van een Playwright HTML-rapport uit de Playwright-documentatie: een lijst tests met een oordeel per test en per browser, hier 72 geslaagd en 6 gefaald.](playwright-html-report.webp)
+![Playwright HTML-rapport van een run van mijn PLR-lab op 19 november 2026: alle tests geslaagd, met de eligibility-spec uitgeklapt met de EligibilityCheck-tests TC002.01 tot en met TC002.09 op Chromium.](plr-playwright-report.webp)
 
-*Screenshot: Playwright-documentatie, © Microsoft, [Apache License 2.0](https://github.com/microsoft/playwright/blob/main/LICENSE), bijgesneden. Voorbeeldrapport, niet uit het lab.*
+*Het HTML-rapport van Playwright van een latere lokale run van mijn PLR-lab. Eigen screenshot, bijgesneden.*
 
 ## Zes niveaus van bewijs
 
@@ -119,4 +119,4 @@ Allemaal gelezen op 2026-11-17, tenzij een publicatiedatum is genoemd.
 - Goran Petrovic, Marko Ivankovic, State of Mutation Testing at Google (ICSE SEIP 2018): https://research.google/pubs/state-of-mutation-testing-at-google/
 - Airbnb Tech Blog, Accelerating Large-Scale Test Migration with LLMs: https://airbnb.tech/?p=366
 - Mijn LinkedIn-post over het Tosca-naar-Playwright-lab (16 TestCases, 104 mutanten): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
-- Afbeeldingen uit de Playwright-documentatie, HTML-rapport en Trace Viewer (Apache License 2.0, gedownload op 2026-11-19): https://github.com/microsoft/playwright/tree/main/docs/src/images/getting-started
+- Afbeelding uit de Playwright-documentatie, Trace Viewer (Apache License 2.0, gedownload op 2026-11-19): https://github.com/microsoft/playwright/tree/main/docs/src/images/getting-started
