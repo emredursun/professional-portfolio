@@ -15,15 +15,10 @@ const post = Object.freeze({
   kind: 'essay',
   status: 'verified',
   evidence: {
-    confidence: 'High for UI tests, untested for APIs',
     basedOn: ['My own Pega and Tosca work'],
     recheckedAt: '2026-12-09',
   },
-  aiAssistance: {
-    mine: ['The idea and every example'],
-    assisted: ['Proofreading'],
-    promptsUrl: 'https://github.com/emredursun/prompts',
-  },
+  aiAssisted: true,
   corrections: [{ date: '2026-12-12', text: 'Fixed a typo.' }],
   draft: false,
   minutes: 7,
@@ -73,7 +68,7 @@ describe('renderArticlePage: document', () => {
     expect(doc.querySelector('main article')).not.toBeNull();
     expect(doc.querySelector('nav[aria-label="On this page"]')).not.toBeNull();
     expect(doc.querySelector('footer')).not.toBeNull();
-    expect(doc.querySelectorAll('aside').length).toBeGreaterThanOrEqual(2);
+    expect(doc.querySelectorAll('aside').length).toBeGreaterThanOrEqual(1);
   });
 
   it('keeps heading levels in order across the whole page', () => {
@@ -190,14 +185,14 @@ describe('renderArticlePage: escaping', () => {
 });
 
 describe('renderArticlePage: trust sections', () => {
-  it('lists the sources, confidence and re-check date after the text, without repeating the status', () => {
+  it('lists only the sources after the text, without repeating the status, confidence or re-check date', () => {
     const { doc } = page();
     const card = doc.querySelector('[aria-labelledby="evidence-title"]');
-    expect(card?.textContent).toContain(post.evidence.confidence);
     expect([...card!.querySelectorAll('li')].map((li) => li.textContent)).toEqual(
       post.evidence.basedOn,
     );
-    expect(card?.querySelector('time')?.getAttribute('datetime')).toBe(post.evidence.recheckedAt);
+    expect(card?.querySelector('time, .evidence-meta, .stale-note')).toBeNull();
+    expect(card?.hasAttribute('data-recheck-by')).toBe(false);
     expect(card?.textContent).not.toContain('Verified');
     expect(doc.querySelector('.article-header')?.textContent).toContain('Verified');
     expect(card?.compareDocumentPosition(doc.querySelector('.prose')!)).toBe(
@@ -205,20 +200,45 @@ describe('renderArticlePage: trust sections', () => {
     );
   });
 
-  it('shows how AI was used, with the prompts link when there is one', () => {
-    const panel = page().doc.querySelector('[aria-labelledby="ai-title"]');
-    expect(panel?.textContent).toContain('Proofreading');
-    expect(panel?.querySelector('a')?.getAttribute('href')).toBe(post.aiAssistance.promptsUrl);
-    const without = page({ aiAssistance: { mine: ['All of it'], assisted: [] } }).doc;
-    expect(without.querySelector('[aria-labelledby="ai-title"] a')).toBeNull();
+  it('says AI helped in one quiet sentence inside the author card', () => {
+    const { doc } = page();
+    const note = doc.querySelector('.author .ai-disclosure');
+    expect(note?.textContent).toContain('AI tools helped with research');
+    expect(note?.textContent).toContain('responsible for what is published');
+    expect(doc.querySelector('.ai-note, .ai-grid, [aria-labelledby="ai-title"]')).toBeNull();
+    expect(note?.closest('.author')?.querySelector('ul, a[href^="https://github.com"]')).toBeNull();
   });
 
-  it('lists corrections, or says there are none', () => {
-    expect(page().doc.body.textContent).toContain('Fixed a typo.');
-    expect(page({ corrections: [] }).doc.body.textContent).toContain('None yet.');
+  it('leaves the AI sentence out when no AI tool helped', () => {
+    const { doc } = page({ aiAssisted: false });
+    expect(doc.querySelector('.ai-disclosure')).toBeNull();
+    expect(doc.querySelector('.author-name')?.textContent).toBe('Written by Emre Dursun');
   });
 
-  it('offers a way to report a mistake', () => {
+  it('says it in the language of the post', () => {
+    expect(page({ lang: 'nl' }).doc.querySelector('.ai-disclosure')?.textContent).toContain(
+      'verantwoordelijk',
+    );
+    expect(page({ lang: 'tr' }).doc.querySelector('.ai-disclosure')?.textContent).toContain(
+      'sorumluyum',
+    );
+  });
+
+  it('lists corrections only when there are some, never an empty log', () => {
+    const withLog = page().doc;
+    expect(withLog.querySelector('.corrections-log')?.textContent).toContain('Fixed a typo.');
+    expect(withLog.querySelector('.corrections h2')?.textContent).toBe('Corrections');
+    const none = page({ corrections: [] }).doc;
+    expect(none.querySelector('.corrections-log')).toBeNull();
+    expect(none.querySelector('.corrections h2')).toBeNull();
+    expect(none.body.textContent).not.toContain('None yet');
+  });
+
+  it('offers a way to report a mistake in one line, labelled for screen readers', () => {
+    const none = page({ corrections: [] }).doc;
+    expect(none.querySelector('.corrections')?.getAttribute('aria-label')).toBe('Found a mistake?');
+    expect(none.querySelector('.report-line')?.textContent).toBe('Found a mistake? Report it.');
+    expect(none.querySelector('.corrections .button')).toBeNull();
     const link = [...page().doc.querySelectorAll('a')].find((a) =>
       /report/i.test(a.textContent ?? ''),
     );

@@ -6,19 +6,13 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Gemiddeld: één workshop en gesprekken met collega’s die dagelijks met AI-agents werken.'
   basedOn:
     - 'Hands-on workshop met een interne AI-driven development tool, september 2026'
     - 'OWASP Top 10 for LLM Applications 2025, LLM06 Excessive Agency'
   recheckedAt: 2026-10-29
-aiAssistance:
-  mine:
-    - 'De vragen en wat ze opriep'
-  assisted:
-    - 'Claude maakte van mijn aantekeningen deze tekst en stelde de OWASP-bron voor'
+aiAssisted: true
 translation:
   from: 2026-10-29
-  assistedByAi: true
 ---
 
 ![Twee mensen aan een tafel: de een tekent een document, de ander bekijkt de papieren.](signing.webp)

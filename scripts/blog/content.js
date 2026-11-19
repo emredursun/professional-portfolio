@@ -70,7 +70,7 @@ function checkTranslation(post, original) {
     return;
   }
   if (!post.translation) {
-    throw new Error(`${post.file}: translation is required (from, assistedByAi)`);
+    throw new Error(`${post.file}: translation is required (from)`);
   }
   for (const [key, read] of Object.entries(SHARED)) {
     if (read(post) !== read(original)) {

@@ -53,11 +53,7 @@ for (const lang of translated) {
       await page.goto(post!);
       await expect(page.locator('html')).toHaveAttribute('lang', lang);
       await expect(page.getByRole('complementary', { name: s.evidenceTitle })).toBeVisible();
-      await expect(page.getByRole('heading', { name: s.aiTitle })).toBeVisible();
-      // Says how the translation was made, whichever way it was.
-      await expect(page.locator('.ai-footer')).toContainText(
-        new RegExp(`${s.aiTranslatedWithAi}|${s.aiTranslatedByMe}`),
-      );
+      await expect(page.locator('.ai-disclosure')).toHaveText(s.aiDisclosure);
       const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
       expect(results.violations).toEqual([]);
     });
