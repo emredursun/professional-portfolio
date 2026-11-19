@@ -516,7 +516,13 @@
   vertical-align: middle;
 }
 
-/* The Now page's dated list. */
+/* The Now page: its "last updated" line and its list. */
+.now-updated {
+  margin: 12px 0 0;
+  color: var(--ink-2);
+  font-size: var(--text-sm);
+}
+
 .now-list {
   margin: 0;
   padding: 0;
