@@ -30,6 +30,10 @@ Bir ekip test paketini Tricentis Tosca’dan Playwright’a taşımaya karar ver
 
 Örneklerim bu amaçla kurduğum bir labdan geliyor: bir Pega Academy lab ortamında Pega Blueprint ile oluşturduğum kurgusal bir kişisel kredi talebi uygulaması (PLR). Uygulama Pega Infinity '26.1 Constellation üzerinde çalışıyor, Tosca 26.1.2 ile ([2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm) sürüm hattı) test edildi ve Playwright 1.65.0’a taşındı.
 
+![Pega App Studio’da Personal Loan Request case türü: Application Intake, Eligibility Review, Credit Review, Offer Management ve Funds Fulfilment aşamalarıyla iş akışı yaşam döngüsü ve Rework, Declined ile Approval Rejection alternatif aşamaları.](pega-plr-case-lifecycle.webp)
+
+*Pega App Studio’da PLR case türü, lab uygulamam. Kendi ekran görüntüm, kırpıldı.*
+
 ## Geçen bir test pek az şey kanıtlar
 
 Taşınan bir testin geçmesi pek az şey kanıtlar: hiçbir şeyi doğrulamayan bir test de geçer. Üretilmiş kodda da aynı risk var. Playwright dokümantasyonunun kendisi üretilen testlerin “may include initial errors” olabileceğini ve healer agent’ın, işlevin bozuk olduğuna inanırsa “a skipped test” döndürebileceğini söylüyor ([Playwright test agents](https://playwright.dev/docs/test-agents), 2026-11-17’de okundu). Özet görünümde bir skip, geçmiş gibi okunabilir.
@@ -56,6 +60,10 @@ Tricentis Tosca’dan Playwright’a resmi bir dönüştürücü bulamadım, bu 
 4. Test başına kanıt, altı seviyede (sonraki bölüm). Bir test, ancak kanıtı çalıştığı kodla birlikte kaydedildiğinde taşınmış sayılır.
 5. Paralel çalıştırma ve emeklilik: iki paketi aynı build’lerde çalıştır, sonuçları test başına karşılaştır ve Tosca TestCase’lerini dilim dilim emekli et. Her şeyi bir seferde geçirmek, kanıtı mümkün kılan karşılaştırmayı ortadan kaldırırdı.
 
+![PLR labımın 19 Kasım 2026 tarihli bir çalıştırmasına ait Playwright HTML raporu: tüm testler geçti; uygunluk spec’i açık ve Chromium üzerindeki TC002.01’den TC002.09’a EligibilityCheck testlerini gösteriyor.](plr-playwright-report.webp)
+
+*PLR labımın daha sonraki bir yerel çalıştırmasına ait Playwright HTML raporu. Kendi ekran görüntüm, kırpıldı.*
+
 ## Altı kanıt seviyesi
 
 | Seviye | Neyi kanıtlar |
@@ -69,6 +77,10 @@ Tricentis Tosca’dan Playwright’a resmi bir dönüştürücü bulamadım, bu 
 
 L3, Google’ın kod incelemesinde büyük ölçekte kullandığı mutation testing’den ödünç alır ([Petrovic ve Ivankovic, State of Mutation Testing at Google](https://research.google/pubs/state-of-mutation-testing-at-google/)). L5 ve L6 ise eski sistemin değiştirilmesinde kullanılan paralel çalıştırmadan ödünç alır; bu yöntem eski ve yeni arasında “key numbers match up” olduğunu denetlemek için kullanılır ([Cartwright, Horn ve Lewis, Patterns of Legacy Displacement, 2022](https://martinfowler.com/articles/patterns-legacy-displacement/divert-the-flow.html)).
 
+![Playwright dokümantasyonundan örnek bir Playwright Trace Viewer görünümü: başarısız bir testin adımları; başarısız olan tıklama adımı vurgulanmış, hatası da altında.](playwright-trace-viewer.webp)
+
+*Ekran görüntüsü: Playwright dokümantasyonu, © Microsoft, [Apache License 2.0](https://github.com/microsoft/playwright/blob/main/LICENSE), kırpıldı. Örnek trace, labdan değil.*
+
 ## Lab ne gösterdi
 
 Yayımlanan dönüştürücüyle (1.0.0, 2026-11-17) yapılan çalıştırmada kapsamda 20 TestCase vardı. Biri paylaşılan oturum açma ve ortam kontrolüyle karşılanıyordu, biri şablon tanımıydı, biri de sandbox TestCase’iydi. Kalan 17’nin 16’sı L1–L5 seviyesinde taşındı; her biri Tosca’daki orijinaliyle tamı tamına aynı iş gereksinimlerini test ediyor. Çalıştırmada iki hedef mimari kullanıldı, biri katmanlı, diğeri playwright-bdd üzerinde bir BDD mimarisi. İkisinde de kontrollerin 104 mutantının tamamı kendi kontrolünde öldürüldü, belirsiz kalan mutant olmadı ve taşınan testler aynı build’de Tosca ile aynı sonucu verdi. [LinkedIn gönderimde](https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi) de aynı rakamlar var.
@@ -76,6 +88,8 @@ Yayımlanan dönüştürücüyle (1.0.0, 2026-11-17) yapılan çalıştırmada k
 Aynı gün yapılan daha önceki bir çalıştırmada bir test, tekrarlanan kararlılık çalıştırmalarında bir kez zaman aşımına uğradı; yeniden tekrarlandığında üç denemenin üçünde geçti. Bu çalıştırma yok sayılmak yerine kararlılık geçmişinde duruyor. L6 için iki tarafta da bir hata gerekir. Taşınan 16 testin hiçbiri Tosca’da başarısız olmadığı için lab bunu gösteremedi; bu yüzden L6, dönüştürücünün kendi uçtan uca testinde bilerek enjekte edilmiş bir hatayla denetleniyor.
 
 17. TestCase öğretici olanı ve hâlâ açık. Adı, geçersiz parolayla bir oturum açmayı test ettiğini söylüyor. Ancak kontrolü oturum açmanın kabul edilmesini bekliyor. Tosca’da adım yanlış bir parola giriyor, Pega oturum açmayı reddediyor ve TestCase kendi kontrolünde başarısız oluyor. O önceki çalıştırmada taşınan test yine de test hesabının parolasını kullanıyor, oturum açıyor ve geçiyordu. İki sonuç farklıydı ve kontrol ile ad birbirine ters düştüğü için vaka test sahibine gitti. Yayımlanan dönüştürücü artık böyle bir teste hesap parolası vermiyor: test, sahibi testin yazacağı yanlış parolayı verene kadar bloke kalıyor.
+
+![17. TestCase’in diyagramı: adı geçersiz parolayla bir oturum açmayı söylüyor, ancak kontrolü oturum açmanın kabul edilmesini bekliyor. Tosca yanlış bir parola giriyor, Pega oturum açmayı reddediyor ve test kendi kontrolünde başarısız oluyor. Önceki bir çalıştırmada taşınan test, test hesabının parolasını kullandı, oturum açtı ve geçti. Vaka test sahibine gitti ve hâlâ açık. Yayımlanan dönüştürücü 1.0.0 artık böyle bir teste hesap parolası vermiyor.](invalid-password-case.webp)
 
 Bir geçiş, kimse fark etmeden bir testin amacını tersine çevirebilir. Labda bunu görünür kılan, test başına yapılan karşılaştırma oldu.
 
@@ -105,3 +119,4 @@ Başka bir yayın tarihi verilmediyse hepsi 2026-11-17’de okundu.
 - Goran Petrovic, Marko Ivankovic, State of Mutation Testing at Google (ICSE SEIP 2018): https://research.google/pubs/state-of-mutation-testing-at-google/
 - Airbnb Tech Blog, Accelerating Large-Scale Test Migration with LLMs: https://airbnb.tech/?p=366
 - Tosca’dan Playwright’a lab hakkındaki LinkedIn gönderim (16 TestCase, 104 mutant): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
+- Playwright dokümantasyonu görseli, Trace Viewer (Apache License 2.0, 2026-11-19’da indirildi): https://github.com/microsoft/playwright/tree/main/docs/src/images/getting-started

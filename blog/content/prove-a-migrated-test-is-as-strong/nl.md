@@ -30,6 +30,10 @@ Als een team heeft besloten een testsuite van Tricentis Tosca naar Playwright te
 
 Mijn voorbeelden komen uit een lab dat ik hiervoor heb gebouwd: een fictieve applicatie voor persoonlijke leningaanvragen (PLR) die ik in een Pega Academy-labomgeving met een Pega Blueprint heb gebouwd. De applicatie draait op Pega Infinity '26.1 Constellation, is getest met Tosca 26.1.2 (de [2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm)-releaselijn) en gemigreerd naar Playwright 1.65.0.
 
+![Het casetype Personal Loan Request in Pega App Studio: de workflowlifecycle met de stages Application Intake, Eligibility Review, Credit Review, Offer Management en Funds Fulfilment, en de alternatieve stages Rework, Declined en Approval Rejection.](pega-plr-case-lifecycle.webp)
+
+*Het PLR-casetype in Pega App Studio, mijn labapplicatie. Eigen screenshot, bijgesneden.*
+
 ## Een slagende test bewijst weinig
 
 Een gemigreerde test die slaagt bewijst weinig: een test die niets controleert, slaagt ook. Gegenereerde code heeft hetzelfde risico. De Playwright-documentatie zelf zegt dat gegenereerde tests “may include initial errors” kunnen bevatten, en dat de healer agent “a skipped test” kan teruggeven als die denkt dat de functionaliteit kapot is ([Playwright test agents](https://playwright.dev/docs/test-agents), gelezen op 2026-11-17). In een samenvattend overzicht kan een skip worden gelezen als een pass.
@@ -56,6 +60,10 @@ De gegenereerde code behoudt bewust de vorm van Tosca: één klasse per Module, 
 4. Bewijs per test, op zes niveaus (volgende sectie). Een test telt pas als gemigreerd wanneer zijn bewijs is vastgelegd tegen de code waarop het draaide.
 5. Parallelle run en uitfasering: draai beide suites op dezelfde builds, vergelijk de oordelen per test en fase Tosca-TestCases stap voor stap uit. Een cutover in één keer zou de vergelijking wegnemen die het bewijs mogelijk maakt.
 
+![Playwright HTML-rapport van een run van mijn PLR-lab op 19 november 2026: alle tests geslaagd, met de eligibility-spec uitgeklapt met de EligibilityCheck-tests TC002.01 tot en met TC002.09 op Chromium.](plr-playwright-report.webp)
+
+*Het HTML-rapport van Playwright van een latere lokale run van mijn PLR-lab. Eigen screenshot, bijgesneden.*
+
 ## Zes niveaus van bewijs
 
 | Niveau | Wat het bewijst |
@@ -69,6 +77,10 @@ De gegenereerde code behoudt bewust de vorm van Tosca: één klasse per Module, 
 
 L3 leent van mutation testing, dat Google op grote schaal in code review draait ([Petrovic en Ivankovic, State of Mutation Testing at Google](https://research.google/pubs/state-of-mutation-testing-at-google/)). L5 en L6 lenen van parallel draaien bij het vervangen van legacy, waarmee wordt gecontroleerd dat “key numbers match up” tussen oud en nieuw ([Cartwright, Horn en Lewis, Patterns of Legacy Displacement, 2022](https://martinfowler.com/articles/patterns-legacy-displacement/divert-the-flow.html)).
 
+![Voorbeeld van de Playwright Trace Viewer uit de Playwright-documentatie: de acties van een gefaalde test, met de mislukte klikstap gemarkeerd en de fout eronder.](playwright-trace-viewer.webp)
+
+*Screenshot: Playwright-documentatie, © Microsoft, [Apache License 2.0](https://github.com/microsoft/playwright/blob/main/LICENSE), bijgesneden. Voorbeeldtrace, niet uit het lab.*
+
 ## Wat het lab liet zien
 
 In de run met de uitgebrachte converter (1.0.0, 2026-11-17) vielen 20 TestCases binnen de scope. Eén werd gedekt door de gedeelde inlog- en omgevingscheck, één was een templatedefinitie en één een sandbox-TestCase. Van de overige 17 zijn er 16 gemigreerd op L1 tot en met L5; elk daarvan test precies dezelfde bedrijfsvereisten als zijn Tosca-origineel. De run gebruikte twee doelarchitecturen, een gelaagde en een BDD-architectuur op playwright-bdd. In beide werden alle 104 mutanten van de checks gedood op hun eigen check, zonder onbesliste mutanten, en gaven de gemigreerde tests hetzelfde oordeel als Tosca op dezelfde build. [Mijn LinkedIn-post](https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi) toont dezelfde cijfers.
@@ -76,6 +88,8 @@ In de run met de uitgebrachte converter (1.0.0, 2026-11-17) vielen 20 TestCases 
 In een eerdere run die dag liep één test één keer op een time-out in zijn herhaalde stabiliteitsruns; opnieuw herhaald slaagde hij drie van de drie keer. Die run blijft in zijn stabiliteitshistorie staan in plaats van te worden weggewuifd. L6 vraagt om een falen aan beide kanten. Het lab kon dat niet laten zien, omdat geen van de 16 gemigreerde tests in Tosca faalde. Daarom wordt L6 gecontroleerd in de eigen end-to-endtest van de converter, met een bewust geïnjecteerde fout.
 
 De 17e TestCase is de leerzame, en die staat nog open. De naam zegt dat hij een login met een ongeldig wachtwoord test. De check verwacht echter dat het inloggen wordt geaccepteerd. In Tosca voert de stap een fout wachtwoord in, Pega wijst het inloggen af en de TestCase faalt op zijn eigen check. In die eerdere run viel de gemigreerde test nog terug op het wachtwoord van het testaccount, logde in en slaagde. De twee oordelen verschilden en omdat check en naam elkaar tegenspreken, ging de case naar de testeigenaar. De uitgebrachte converter geeft zo’n test geen accountwachtwoord meer: hij blijft geblokkeerd tot de eigenaar het foute wachtwoord aanlevert dat de test hoort te typen.
+
+![Schema van de 17e TestCase: de naam zegt een login met een ongeldig wachtwoord, maar de check verwacht dat het inloggen wordt geaccepteerd. Tosca voert een fout wachtwoord in, Pega wijst het inloggen af en de test faalt op zijn eigen check. In een eerdere run viel de gemigreerde test terug op het wachtwoord van het testaccount, logde in en slaagde. De case ging naar de testeigenaar en staat nog open. De uitgebrachte converter 1.0.0 geeft zo’n test geen accountwachtwoord meer.](invalid-password-case.webp)
 
 Een migratie kan de bedoeling van een test omkeren zonder dat iemand het merkt. In het lab maakte de vergelijking per test dat zichtbaar.
 
@@ -105,3 +119,4 @@ Allemaal gelezen op 2026-11-17, tenzij een publicatiedatum is genoemd.
 - Goran Petrovic, Marko Ivankovic, State of Mutation Testing at Google (ICSE SEIP 2018): https://research.google/pubs/state-of-mutation-testing-at-google/
 - Airbnb Tech Blog, Accelerating Large-Scale Test Migration with LLMs: https://airbnb.tech/?p=366
 - Mijn LinkedIn-post over het Tosca-naar-Playwright-lab (16 TestCases, 104 mutanten): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
+- Afbeelding uit de Playwright-documentatie, Trace Viewer (Apache License 2.0, gedownload op 2026-11-19): https://github.com/microsoft/playwright/tree/main/docs/src/images/getting-started

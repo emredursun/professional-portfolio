@@ -26,6 +26,8 @@ Een verzoek om een testsuite te migreren klinkt vaak als een toolvraag: “Moete
 
 Hieronder staan de vragen die ik zo’n team in deze volgorde zou stellen. De feiten over de tools heb ik in november 2026 op de eigen pagina’s van de leveranciers gecontroleerd. Mijn eigen ervaring komt uit een lab: een fictieve applicatie voor persoonlijke leningaanvragen (PLR) die ik in een Pega Academy-labomgeving met een Pega Blueprint heb gebouwd. De applicatie draait op Pega Infinity '26.1 Constellation, is getest met Tosca 26.1.2 (de [2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm)-releaselijn) en gemigreerd naar Playwright 1.65.0.
 
+![Beslisschema in vier stappen. Probleem: is het het ontwerp van de suite, dan kan de suite ter plekke verbeteren goedkoper zijn. Technologie, die de discussie vroeg kan beëindigen: browserapplicaties passen bij Playwright, SAP GUI en desktop blijven in Tosca, gemengde omgevingen gebruiken vaak allebei. Auteurs: schrijven ontwikkelaars de tests, dan is code-first het natuurlijke thuis; blijven business testers de auteurs, dan Tosca of een opleidingsbudget. Kosten: vijf jaar, inclusief de migratie en de parallelle periode.](decision-flow.webp)
+
 ## Welk probleem lossen we op?
 
 “Tosca is duur” of “ontwikkelaars houden niet van Tosca” zijn symptomen. Ik vraag naar het concrete probleem erachter:
@@ -43,6 +45,10 @@ Naar mijn mening weegt deze vraag het zwaarst, en ze heeft drie delen: wie schri
 
 Tricentis beschrijft de kracht van Tosca helder op de productpagina: “Codeless authoring removes the programming requirement”, zodat handmatige testers, business analisten en domeinexperts samen met engineers automatisering kunnen bouwen ([productpagina Tricentis Tosca](https://www.tricentis.com/products/automate-continuous-testing-tosca), gelezen op 2026-11-17). Dat is een echt voordeel wanneer de mensen die het bedrijfsproces kennen geen ontwikkelaars zijn en de belangrijkste auteurs blijven.
 Playwright is een code-first framework. De [pagina over talen](https://playwright.dev/docs/languages) noemt TypeScript, JavaScript, Python, Java en .NET. Een goed gebouwd Playwright-framework kan schermen en flows hergebruiken, zoals Tosca Modules hergebruikt (gedeelde, herbruikbare beschrijvingen van de schermen van de applicatie), maar alleen als iemand die laag ontwerpt. Zonder die laag verzamelt een code-first suite snel gekopieerde locators. Code-first brengt leesbare diffs, typecontroles en lintregels die lege tests vangen, en neemt de lage instapdrempel voor niet-programmeurs weg.
+
+![Tosca Commander met mijn PLR-labwerkruimte: de projectboom met Modules, TestCases en ExecutionLists, en een geopende regressie-ExecutionList met zijn TestCases.](tosca-commander-plr.webp)
+
+*Tosca Commander met mijn PLR-labwerkruimte. Eigen screenshot, bijgesneden.*
 
 Houd de tests waar mogelijk in de repository van de applicatie. Ontwikkelaars zien een rode test dan als hun eigen probleem en repareren hem in de pull request die hem brak. Wanneer de tests in een aparte tool staan die alleen testers openen, wordt een rode test vaak een ticket. Playwright draait vanaf de commandoregel en past daardoor als gewone job in een pipeline ([Playwright-documentatie](https://playwright.dev/docs/intro)).
 

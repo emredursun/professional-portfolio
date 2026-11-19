@@ -5,8 +5,7 @@ publishedAt: 2026-11-18
 topic: testing
 kind: essay
 status: verified
-cover: cover-proof.webp
-coverAlt: 'Infographic: Tosca to a generated Playwright bridge to Playwright-native tests, proof levels L1 to L6, 16 TestCases migrated, 104 of 104 mutations caught, 16 of 16 same verdict, 1 open.'
+cover: cover-proof-abstract.webp
 evidence:
   confidence: 'High for the lab results, which come from the run on the released converter (1.0.0) on 2026-11-17. One small lab application, so an observation and not a general rule.'
   basedOn:
@@ -28,6 +27,10 @@ aiAssistance:
 When a team has decided to move a test suite from Tricentis Tosca to Playwright, the part I scrutinise most is knowing that each converted test still catches what the original caught. The decision itself, whether to migrate at all, is in [a companion post](/blog/tosca-or-playwright-before-you-migrate).
 
 My examples come from a lab I built for this purpose: a fictional personal loan request application (PLR) that I built from a Pega Blueprint in a Pega Academy lab environment, on Pega Infinity '26.1 Constellation, tested with Tosca 26.1.2 (the [2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm) release line) and migrated to Playwright 1.65.0.
+
+![The Personal Loan Request case type in Pega App Studio: the workflow lifecycle with the stages Application Intake, Eligibility Review, Credit Review, Offer Management and Funds Fulfilment, and the alternate stages Rework, Declined and Approval Rejection.](pega-plr-case-lifecycle.webp)
+
+*The PLR case type in Pega App Studio, my lab application. Own screenshot, cropped.*
 
 ## A passing test proves little
 
@@ -55,6 +58,10 @@ The generated code keeps Tosca's shape on purpose: one class per Module, one flo
 4. Proof per test, on six levels (next section). A test counts as migrated only when its proof is recorded against the code it ran on.
 5. Parallel run and retirement: run both suites on the same builds, compare verdicts per test, and retire Tosca TestCases slice by slice. An all-at-once cutover would remove the comparison that makes the proof possible.
 
+![Playwright HTML report of a run of my PLR lab on 19 November 2026: all tests passed, with the eligibility spec expanded to show the EligibilityCheck tests TC002.01 to TC002.09 on Chromium.](plr-playwright-report.webp)
+
+*Playwright's HTML report of a later local run of my PLR lab. Own screenshot, cropped.*
+
 ## Six levels of proof
 
 | Level | What it proves |
@@ -68,6 +75,10 @@ The generated code keeps Tosca's shape on purpose: one class per Module, one flo
 
 L3 borrows from mutation testing, which Google runs at scale in code review ([Petrovic and Ivankovic, State of Mutation Testing at Google](https://research.google/pubs/state-of-mutation-testing-at-google/)). L5 and L6 borrow from parallel running in legacy replacement, which is used to check that "key numbers match up" between old and new ([Cartwright, Horn and Lewis, Patterns of Legacy Displacement, 2022](https://martinfowler.com/articles/patterns-legacy-displacement/divert-the-flow.html)).
 
+![Example Playwright Trace Viewer from the Playwright documentation: the actions of a failed test, with the failing click step highlighted and its error below.](playwright-trace-viewer.webp)
+
+*Screenshot: Playwright documentation, © Microsoft, [Apache License 2.0](https://github.com/microsoft/playwright/blob/main/LICENSE), cropped. Example trace, not from the lab.*
+
 ## What the lab showed
 
 In the run on the released converter (1.0.0, 2026-11-17), 20 TestCases were in scope. One was covered by the shared sign-in and environment check, one was a template definition and one a sandbox TestCase. Of the other 17, 16 were migrated at L1 to L5, each testing exactly the same business requirements as its Tosca original. The run used two target architectures, a layered one and a BDD one on playwright-bdd. In both, all 104 mutants of the checks were killed at their own check, with no inconclusive mutant, and the migrated tests gave the same verdict as Tosca on the same build. My [LinkedIn post](https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi) shows the same figures.
@@ -75,6 +86,8 @@ In the run on the released converter (1.0.0, 2026-11-17), 20 TestCases were in s
 In an earlier run that day, one test timed out once in its repeated stability runs; repeated again, it passed three times out of three. That run stays in its stability history rather than being written off. L6 needs a failure on both sides. The lab could not show it, because none of the 16 migrated tests failed in Tosca, so L6 is checked in the converter's own end-to-end test with a deliberately injected fault.
 
 The 17th TestCase is the instructive one, and it is still open. Its name says it tests a login with an invalid password. Its check, however, expects the sign-in to be accepted. In Tosca the step enters a wrong password, Pega rejects the sign-in, so the TestCase fails at its own check. In that earlier run, the migrated test still fell back to the test account's password, signed in and passed. The two verdicts differed, and because the check and the name contradict each other, the case went to the test owner. The released converter no longer gives such a test an account's password: it stays blocked until its owner supplies the wrong password it is meant to type.
+
+![Diagram of the 17th TestCase: its name says a login with an invalid password, but its check expects the sign-in to be accepted. Tosca enters a wrong password, Pega rejects the sign-in and the test fails at its own check. In an earlier run the migrated test fell back to the test account's password, signed in and passed. The case went to the test owner and is still open. The released converter 1.0.0 no longer gives such a test an account's password.](invalid-password-case.webp)
 
 A migration can turn a test's intent around without anyone noticing. In the lab, the per-test comparison is what made it visible.
 
@@ -104,3 +117,4 @@ All read on 2026-11-17 unless a publication date is given.
 - Goran Petrovic, Marko Ivankovic, State of Mutation Testing at Google (ICSE SEIP 2018): https://research.google/pubs/state-of-mutation-testing-at-google/
 - Airbnb Tech Blog, Accelerating Large-Scale Test Migration with LLMs: https://airbnb.tech/?p=366
 - My LinkedIn post on the Tosca to Playwright lab (16 TestCases, 104 mutants): https://www.linkedin.com/posts/emre-dursun-nl_tosca-playwright-testautomation-activity-7528389765512171525-Ajmi
+- Playwright documentation image, Trace Viewer (Apache License 2.0, downloaded 2026-11-19): https://github.com/microsoft/playwright/tree/main/docs/src/images/getting-started

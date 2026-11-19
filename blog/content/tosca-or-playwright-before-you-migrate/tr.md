@@ -26,6 +26,8 @@ Bir test paketini taşıma talebi çoğu zaman bir araç sorusu gibi duyulur: �
 
 Aşağıda böyle bir ekibe sırasıyla soracağım soruları veriyorum. Araçlarla ilgili bilgileri Kasım 2026’da üreticilerin kendi sayfalarından kontrol ettim. Kendi deneyimim bir labdan geliyor: bir Pega Academy lab ortamında Pega Blueprint ile oluşturduğum kurgusal bir kişisel kredi talebi uygulaması (PLR). Uygulama Pega Infinity '26.1 Constellation üzerinde çalışıyor, Tosca 26.1.2 ile ([2026.1 LTS](https://docs.tricentis.com/tosca-2026.1/en-us/content/release_notes/key_features.htm) sürüm hattı) test edildi ve Playwright 1.65.0’a taşındı.
 
+![Dört adımlı karar akışı. Sorun: paket tasarımıysa paketi yerinde düzeltmek daha ucuz olabilir. Tartışmayı baştan bitirebilecek teknoloji: tarayıcı uygulamaları Playwright’a uyar, SAP GUI ve masaüstü Tosca’da kalır, karma ortamlarda çoğu zaman ikisi birden kullanılır. Yazarlar: testleri geliştiriciler yazıyorsa kod tabanlı yaklaşım en doğal yeridir; kalacak iş testçileri yazıyorsa Tosca ya da bütçeli bir eğitim programı. Maliyet: geçiş ve paralel çalışma dahil beş yıl.](decision-flow.webp)
+
 ## Hangi sorunu çözüyoruz?
 
 “Tosca pahalı” ya da “geliştiriciler Tosca’yı sevmiyor” birer belirtidir. Bunların ardındaki somut sorunu sorarım:
@@ -43,6 +45,10 @@ Bence en çok ağırlık taşıyan soru bu ve üç parçası var: testleri kim y
 
 Tricentis, Tosca’nın gücünü ürün sayfasında açıkça anlatıyor: “Codeless authoring removes the programming requirement”, böylece manuel testçiler, iş analistleri ve konu uzmanları mühendislerle birlikte otomasyon kurabiliyor ([Tricentis Tosca ürün sayfası](https://www.tricentis.com/products/automate-continuous-testing-tosca), 2026-11-17’de okundu). İş sürecini bilen kişiler geliştirici değilse ve asıl yazarlar olarak kalacaksa, bu gerçek bir avantajdır.
 Playwright kod tabanlı bir framework. [Diller sayfası](https://playwright.dev/docs/languages) TypeScript, JavaScript, Python, Java ve .NET’i sayıyor. İyi kurulmuş bir Playwright framework’ü, Tosca’nın Module’leri (uygulamanın ekranlarının paylaşılan, yeniden kullanılabilir tanımları) yeniden kullanması gibi ekranları ve akışları yeniden kullanabilir, ama bu katmanı birinin tasarlaması gerekir. O olmadan kod tabanlı bir paket hızla kopyalanmış locator’lar biriktirir. Kod tabanlı yaklaşım okunabilir diff’ler, tip kontrolleri ve boş testleri yakalayan lint kuralları getirir; programcı olmayanlar için düşük giriş eşiğini ise ortadan kaldırır.
+
+![PLR lab çalışma alanımla Tosca Commander: Modules, TestCases ve ExecutionLists içeren proje ağacı ve TestCase’leriyle açık bir regresyon ExecutionList’i.](tosca-commander-plr.webp)
+
+*PLR lab çalışma alanımla Tosca Commander. Kendi ekran görüntüm, kırpıldı.*
 
 Testleri mümkünse uygulamanın deposunda tutun. Böylece geliştiriciler kırmızı bir testi kendi sorunları olarak görür ve onu bozan pull request içinde düzeltir. Testler yalnızca testçilerin açtığı ayrı bir araçta durduğunda, kırmızı bir test genellikle bir bilete dönüşür. Playwright komut satırından çalışır, bu yüzden bir pipeline’a sıradan bir iş olarak oturur ([Playwright dokümantasyonu](https://playwright.dev/docs/intro)).
 

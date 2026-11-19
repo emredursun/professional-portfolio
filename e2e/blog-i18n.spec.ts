@@ -117,6 +117,10 @@ test.describe('switching language', () => {
   });
 
   test('every hreflang alternate exists and links back', async ({ page, request }) => {
+    // Opens every post in every language and each of its alternates, and every
+    // navigation waits for network idle (fixtures.ts). It takes 28 to 30 s on
+    // its own, against a 30 s default, and grows with each post and language.
+    test.slow();
     const alternatesOf = async (url: string) => {
       await page.goto(url);
       return page
