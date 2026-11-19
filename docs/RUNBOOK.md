@@ -16,7 +16,7 @@ This returns the deployed commit, branch and build time, written by `scripts/wri
 2. Merge to `main` once the `quality` check is green; branch protection allows nothing else (see below). [`deploy.yml`](../.github/workflows/deploy.yml) runs the same gates, then waits for your approval (Actions → the run → Review deployments → Approve).
 3. After approval it deploys the exact build that passed the gates and smoke-tests production. The deploy job finishes only when `/version.json` on the live site reports the merged commit and every route returns 200.
 
-`quality.yml` runs its jobs in parallel (checks, build, e2e, two Lighthouse jobs) and ends with a `verify` job named `Typecheck, test, build, e2e, Lighthouse`, the one check branch protection requires; it passes only if every other job did. Pull requests run Lighthouse 3 times per page, `main` and deploys 5 (same budgets). A PR takes about 10 minutes.
+`quality.yml` runs its jobs in parallel (checks, build, e2e, two Lighthouse jobs) and ends with a `verify` job named `Typecheck, test, build, e2e, Lighthouse`, the one check branch protection requires; it passes only if every other job did. Pull requests run Lighthouse 3 times per page, `main` and deploys 5 (same budgets). A PR takes about 10 minutes. If `main` fails Lighthouse after a green PR, re-run once, then investigate the page nearest its budget.
 
 **Guards (active).** `main` is protected: changes arrive only through a pull request whose `quality / Typecheck, test, build, e2e, Lighthouse` check passed; force pushes and deleting the branch are refused, for admins too. The `production` environment requires the owner's approval for every deploy and accepts deploys only from protected branches. Both are set in Settings → Branches and Settings → Environments → `production`.
 
@@ -77,14 +77,15 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
   the URL (`/blog/<slug>`): lowercase words and dashes, fixed once
   published. Frontmatter is validated strictly (`scripts/blog/schema.js`):
   title, description (160 characters at most), publishedAt, optional
-  updatedAt, topic, kind (essay or note), status, evidence, aiAssistance,
-  corrections.
+  updatedAt, topic, kind (essay or note), status, evidence, aiAssisted
+  (true or false), corrections.
 - **Before publishing a post, check:**
   1. The evidence says how sure you are, what it rests on, and when you
      re-checked it.
-  2. "How this was written" lists what is yours and what AI helped with.
-  3. Each translation has `translation.from` (the English version's date)
-     and `assistedByAi`, and you have read it yourself.
+  2. `aiAssisted` is true if an AI tool helped at all: the author card then
+     shows one fixed sentence (AI helped; you reviewed and answer for it).
+     There is no list of tasks to write.
+  3. Each translation has `translation.from` (the English version's date), and you have read it yourself.
   4. `draft: true` is gone from each version you publish.
   5. `npm run blog:og` has rendered its link-preview cards, committed.
   6. `npm run build` passes; with `BLOG_LAUNCHED` it also refuses any
@@ -118,8 +119,7 @@ the launch checklist are in [ADR 0001](adr/0001-static-blog-build.md).
   `/tr/blog/<slug>` and `/nl/blog/<slug>`; the slug stays English). It must
   keep the English publishedAt, kind, topic, status and evidence
   recheckedAt, and needs
-  `translation: { from: <date of the English version you translated>,
-  assistedByAi: true|false }`; the AI panel says how it was translated.
+  `translation: { from: <date of the English version you translated> }`.
   When the English post changes later (updatedAt or a correction), the
   translation shows "the English version has changed" until you update it
   and move `from` forward. A post without a translation still appears on

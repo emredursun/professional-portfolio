@@ -7,7 +7,6 @@ kind: note
 status: hypothesis
 cover: cover-misty-road.webp
 evidence:
-  confidence: 'Medium: my own view about where our work is heading, after one company event. Not a prediction.'
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 November 2026'
     - 'Human & Tech: Agentic Development: Teams Reimagined session at the same event'
@@ -17,11 +16,7 @@ evidence:
     - 'Stack Overflow Developer Survey 2026'
     - 'DORA, State of AI-assisted Software Development 2025'
   recheckedAt: 2026-11-13
-aiAssistance:
-  mine:
-    - 'The day, the photos, what stayed with me and how I apply it in my work'
-  assisted:
-    - 'Claude turned my notes into this text and suggested the research sources'
+aiAssisted: true
 ---
 
 ![A quiet country road at sunrise, with low mist and bare trees silhouetted against an orange sky.](unsplash-misty-road.webp)

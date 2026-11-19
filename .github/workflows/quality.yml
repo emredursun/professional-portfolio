@@ -117,7 +117,7 @@ jobs:
     name: End-to-end tests
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
@@ -153,7 +153,7 @@ jobs:
     name: Lighthouse budgets (desktop)
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
@@ -162,6 +162,11 @@ jobs:
         with:
           name: build-dist
           path: dist
+
+      # System fonts and libraries only (no browser download), so the Lighthouse
+      # environment, and its CLS/LCP baselines, match the old single job.
+      - name: Install Chromium system dependencies
+        run: npx playwright install-deps chromium
 
       - name: Lighthouse budgets (desktop)
         env:
@@ -188,7 +193,7 @@ jobs:
     name: Lighthouse budgets (mobile)
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
@@ -197,6 +202,11 @@ jobs:
         with:
           name: build-dist
           path: dist
+
+      # System fonts and libraries only (no browser download), so the Lighthouse
+      # environment, and its CLS/LCP baselines, match the old single job.
+      - name: Install Chromium system dependencies
+        run: npx playwright install-deps chromium
 
       - name: Lighthouse budgets (mobile)
         env:
