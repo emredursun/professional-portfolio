@@ -229,6 +229,13 @@ a:hover {
  * of links under it. A fixed grid, not wrapping, so the web-font swap cannot
  * move anything between rows (that shifted the page before: CLS 0.12).
  */
+/* Just above the phone layout the one-row header is tight: a smaller name keeps it one row. */
+@media (max-width: 720px) {
+  .blog-name {
+    font-size: 17px;
+  }
+}
+
 @media (max-width: 600px) {
   .site-header {
     display: grid;

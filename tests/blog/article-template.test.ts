@@ -206,6 +206,7 @@ describe('renderArticlePage: trust sections', () => {
     expect(note?.textContent).toContain('The insights and experiences in this post are my own');
     expect(note?.textContent).toContain('AI tools supported the research');
     expect(note?.textContent).not.toContain('responsible');
+    expect(note?.textContent).not.toContain('every claim');
     expect(doc.querySelector('.ai-note, .ai-grid, [aria-labelledby="ai-title"]')).toBeNull();
     expect(note?.closest('.author')?.querySelector('ul, a[href^="https://github.com"]')).toBeNull();
   });
@@ -222,6 +223,12 @@ describe('renderArticlePage: trust sections', () => {
     );
     expect(page({ lang: 'tr' }).doc.querySelector('.ai-disclosure')?.textContent).toContain(
       'bana ait',
+    );
+    expect(page({ lang: 'tr' }).doc.querySelector('.ai-disclosure')?.textContent).not.toContain(
+      'sorumlu',
+    );
+    expect(page({ lang: 'nl' }).doc.querySelector('.ai-disclosure')?.textContent).not.toContain(
+      'verantwoord',
     );
   });
 

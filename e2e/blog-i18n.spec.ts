@@ -298,6 +298,22 @@ test.describe('the blog header on a small phone', () => {
   }
 });
 
+test.describe('the blog header above the phone layout', () => {
+  for (const width of [601, 640, 720, 721, 1024]) {
+    test(`the header stays one row at ${width} px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 780 });
+      for (const lang of languages) {
+        await page.goto(blogPath(lang));
+        const lockup = (await page.locator('.site-header .lockup').boundingBox())!;
+        const nav = (await page.locator('.site-header .site-nav').boundingBox())!;
+        expect(Math.abs(lockup.y - nav.y), `${lang} lockup and nav share a row`).toBeLessThan(
+          lockup.height,
+        );
+      }
+    });
+  }
+});
+
 test.describe('the portfolio links to the blog', () => {
   test.skip(!BLOG_LAUNCHED, 'the nav links to the blog only once it has launched');
 
