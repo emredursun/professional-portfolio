@@ -64,6 +64,15 @@ export const postsWithToc = (): string[] =>
       .map((post) => postPath(lang, post.slug)!),
   );
 
+/** Every post, in every language, with a video embed (```vimeo), and the video's id. */
+export const postsWithVideo = (): Array<{ path: string; id: string }> =>
+  languages.flatMap((lang) =>
+    postsIn(lang).flatMap((post) => {
+      const id = /^```vimeo\r?\n(?:.*\n)*?id:\s*(\d+)/m.exec(post.body)?.[1];
+      return id ? [{ path: postPath(lang, post.slug)!, id }] : [];
+    }),
+  );
+
 /** The earliest and latest re-check dates (YYYY-MM-DD) of the English posts. */
 export function recheckRange(): { first: string; last: string } {
   const dates = postsIn('en')

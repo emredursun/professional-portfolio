@@ -2,6 +2,7 @@
 title: 'Beschrijf de uitkomst, controleer daarna: agentic AI en softwaretesten'
 description: 'Notities van The Collective 2026: agentic AI als nieuwe interfacelaag, onderzoek naar vertrouwen in AI-output en waarom testers blijven controleren.'
 publishedAt: 2026-11-13
+updatedAt: 2026-11-19
 topic: ai
 kind: note
 status: hypothesis
@@ -9,6 +10,7 @@ evidence:
   confidence: 'Gemiddeld: mijn eigen kijk op waar ons werk naartoe gaat, na één bedrijfsevent. Geen voorspelling.'
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 november 2026'
+    - 'Officiële aftermovie en de openbare beschrijving op Vimeo, Sopra Steria Benelux, 19 november 2026'
     - 'De sessie Human & Tech: Agentic Development: Teams Reimagined op hetzelfde event'
     - 'Openbare LinkedIn-post van de host van de sessie'
     - 'Persbericht van Gartner over agentic AI, 25 juni 2025'
@@ -22,7 +24,7 @@ aiAssistance:
   assisted:
     - 'Claude maakte van mijn aantekeningen deze tekst en stelde de onderzoeksbronnen voor'
 translation:
-  from: 2026-11-13
+  from: 2026-11-19
   assistedByAi: true
 ---
 
@@ -35,6 +37,17 @@ Als steeds meer van ons werk begint met een beschreven uitkomst die een agent om
 ![Wijds zicht op een volle theaterzaal in AFAS Theater, Leusden, met rode wanden en blauw podiumlicht. Op het grote scherm op het podium staat een wand met voornamen.](collective26-auditorium.webp)
 
 Mijn dag begon eerder. Vanaf 10:30, voordat het hoofdprogramma ’s middags begon, was ik een van de facilitators van een workshop en begeleidde ik de deelnemers erdoorheen.
+
+![Eventkaart van The Collective ’26 met de datum, 11 november 2026, de tijden 14:00 tot 21:30 en de locatie, AFAS Theater, Leusden.](collective26-event-card.webp)
+
+Het hoofdprogramma liep van de middag tot in de avond. Sopra Steria Benelux heeft inmiddels een korte aftermovie van de dag gedeeld. In [de eigen beschrijving op Vimeo](https://vimeo.com/1248246223) noemt het bedrijf The Collective zijn strategie-event, met zo’n 800 collega’s. De CEO deelde de ambities voor 2030, een talk ging over de menselijke kant van AI, en collega’s stonden zelf op het podium in de HUMAN- en TECH-break-outsessies.
+
+```vimeo
+id: 1248246223
+title: The Collective 2026: where human and tech come together
+titleLang: en
+credit: Sopra Steria Benelux
+```
 
 ## Terugredeneren vanuit 2030
 
