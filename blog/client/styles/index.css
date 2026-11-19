@@ -380,7 +380,7 @@
   font-weight: 400;
 }
 
-/* Evidence card past its re-check date (blog/client/stale.ts) */
+/* Index card past its re-check date (blog/client/stale.ts) */
 .stale-note {
   margin: 14px 0 0;
   padding: 8px 14px;
@@ -400,8 +400,7 @@
   margin: 4px 0 0;
 }
 
-.card.is-stale,
-.evidence.is-stale {
+.card.is-stale {
   box-shadow: inset 0 0 0 2px var(--underline);
 }
 
@@ -502,6 +501,14 @@
   font-family: var(--font-reading);
   font-size: 1.0625rem;
   line-height: 1.55;
+}
+
+/* The one-line AI disclosure inside the author card: small and quiet. */
+.author .ai-disclosure {
+  margin: 0 0 8px;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 /* An English post on another language's index, before its translation exists. */

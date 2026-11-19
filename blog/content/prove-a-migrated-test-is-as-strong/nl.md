@@ -6,22 +6,14 @@ topic: testing
 kind: essay
 status: verified
 evidence:
-  confidence: 'Hoog voor de labresultaten, die uit de run met de uitgebrachte converter (1.0.0) van 2026-11-17 komen. Eén kleine labapplicatie, dus een waarneming en geen algemene regel.'
   basedOn:
     - 'Een eigen lab: een fictieve applicatie voor persoonlijke leningaanvragen op Pega Infinity 26.1 Constellation, getest met Tosca 26.1.2 en gemigreerd naar Playwright 1.65.0'
     - 'Mijn eerdere LinkedIn-post over hetzelfde lab en de converterplugin die ik schreef'
     - 'Pagina’s van Playwright, Tosca, Google en Airbnb en artikelen van martinfowler.com (Vocke; Cartwright, Horn en Lewis), onderaan vermeld, gelezen op 2026-11-17'
   recheckedAt: 2026-11-18
-aiAssistance:
-  mine:
-    - 'De ervaring, het lab, de converterplugin, de methode en de resultaten'
-  assisted:
-    - 'Claude splitste mijn eigen concept in twee aparte posts en maakte de formuleringen strakker'
-    - 'Claude controleerde beweringen tegen de aangehaalde pagina’s en corrigeerde drie details (timing van Airbnb, formulering over Node.js 20, ondersteunde talen)'
-    - 'Claude controleerde de labcijfers tegen het releaseverslag van de converter en corrigeerde ze naar de run met versie 1.0.0'
+aiAssisted: true
 translation:
   from: 2026-11-18
-  assistedByAi: true
 ---
 
 ![Infographic: Tosca Commander naar een gegenereerde Playwright-bridge naar Playwright-native tests, bewijsniveaus L1 tot en met L6 en de cijfers 16 gemigreerde TestCases, 104 van de 104 mutaties van checks gevangen, 16 van de 16 met hetzelfde oordeel als Tosca, 1 open.](proof-levels.webp)

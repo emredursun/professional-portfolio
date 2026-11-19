@@ -41,10 +41,7 @@ describe('scaffoldPost', () => {
     const posts = loadPosts(contentDir);
     expect(posts.map((post) => post.lang)).toEqual(['en', 'nl', 'tr']);
     expect(posts.every((post) => post.kind === 'note' && post.topic === 'ai')).toBe(true);
-    expect(posts.find((post) => post.lang === 'tr')!.translation).toEqual({
-      from: '2026-11-02',
-      assistedByAi: false,
-    });
+    expect(posts.find((post) => post.lang === 'tr')!.translation).toEqual({ from: '2026-11-02' });
     // Still placeholders until written: publishing an unwritten version
     // (only draft removed) cannot launch.
     expect(posts.every((post) => post.placeholder === true)).toBe(true);

@@ -44,7 +44,8 @@ test.describe('blog article', () => {
     await expect(page.locator('h1')).toHaveCount(1);
     await expectIndexing(page);
     await expect(page.getByRole('complementary', { name: 'Sources' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'How this was written' })).toBeVisible();
+    await expect(page.locator('.author .ai-disclosure')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'How this was written' })).toHaveCount(0);
 
     const ld = await page.locator('script[type="application/ld+json"]').textContent();
     expect(JSON.parse(ld ?? '{}')['@type']).toBe('BlogPosting');
@@ -202,7 +203,7 @@ test.describe('blog without JavaScript', () => {
     expect(await toc.evaluate((el) => getComputedStyle(el).position)).toBe('static');
 
     // Mid-article, the list has scrolled away with the text.
-    await page.locator('.ai-note').scrollIntoViewIfNeeded();
+    await page.locator('.author').scrollIntoViewIfNeeded();
     await expect(toc).not.toBeInViewport();
 
     // A jump lands the heading in view, and nothing is drawn over it.
@@ -332,25 +333,19 @@ test.describe('blog index and feed', () => {
 });
 
 test.describe('stale evidence', () => {
-  test('is flagged on the index and the article once the re-check date passes', async ({
-    page,
-  }) => {
+  test('is flagged on the index once the re-check date passes', async ({ page }) => {
     // Evidence goes stale a year after its re-check; a day past the latest
     // such date in the content, everything is stale.
     await page.clock.setFixedTime(dayAfter(yearAfter(recheckRange().last)));
-    for (const url of ['/blog', POST]) {
-      await page.goto(url);
-      await expect(page.locator('.stale-note').first(), url).toBeVisible();
-    }
+    await page.goto('/blog');
+    await expect(page.locator('.stale-note').first()).toBeVisible();
   });
 
   test('is not flagged while the evidence is current', async ({ page }) => {
     // The day after the earliest re-check, every post's evidence is current.
     await page.clock.setFixedTime(dayAfter(recheckRange().first));
-    for (const url of ['/blog', POST]) {
-      await page.goto(url);
-      await expect(page.locator('.stale-note').first(), url).toBeHidden();
-    }
+    await page.goto('/blog');
+    await expect(page.locator('.stale-note').first()).toBeHidden();
   });
 });
 
@@ -385,7 +380,7 @@ test.describe('table of contents placement', () => {
     test.skip(!TOC_POST, 'no post with headings yet');
     await page.goto(TOC_POST!);
     const toc = page.getByRole('navigation', { name: 'On this page' });
-    await page.locator('.ai-note').scrollIntoViewIfNeeded();
+    await page.locator('.author').scrollIntoViewIfNeeded();
     expect(await toc.evaluate((el) => getComputedStyle(el).position)).toBe('sticky');
     await expect(toc).toBeInViewport();
     if (isMobile) {
@@ -433,5 +428,109 @@ test.describe('table of contents placement', () => {
       );
       expect(top, path).toBe(0);
     }
+  });
+});
+
+// A table scrolls inside its own region and never widens the page, and no word
+// or figure in it breaks in two. The post's own table is checked as published;
+// a wide copy of it (extra columns, a bare URL, a long amount) stands in for
+// the widest table a post may hold.
+test.describe('tables in a post', () => {
+  const TABLE_POST = postPath('en', 'prove-a-migrated-test-is-as-strong');
+
+  test('a table is a labelled region with a header row, and passes axe in both themes', async ({
+    page,
+  }) => {
+    test.skip(!TABLE_POST, 'no post with a table yet');
+    for (const colorScheme of ['light', 'dark'] as const) {
+      // Set the scheme before the page loads, so no colour is mid-transition.
+      await page.emulateMedia({ colorScheme });
+      await page.goto(TABLE_POST!);
+      const region = page.getByRole('region', { name: /^Table 1: Level, What it proves/ });
+      await expect(region.getByRole('columnheader', { name: 'Level' })).toBeVisible();
+      await expect(region.getByRole('row')).not.toHaveCount(1);
+      const results = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+        .analyze();
+      expect(results.violations, colorScheme).toEqual([]);
+    }
+  });
+
+  test('a wide table scrolls inside itself; page and words stay whole', async ({ page }) => {
+    test.skip(!TABLE_POST, 'no post with a table yet');
+    await page.goto(TABLE_POST!);
+    await page
+      .locator('.table-wrap')
+      .first()
+      .evaluate((wrap) => {
+        const table = wrap.querySelector('table')!;
+        table.querySelectorAll('tr').forEach((row, i) => {
+          const cell = document.createElement(i === 0 ? 'th' : 'td');
+          cell.className = i === 0 ? 'num' : 'num fig';
+          cell.textContent = i === 0 ? 'Electric' : '€1,663.20';
+          row.append(cell);
+          const prose = document.createElement(i === 0 ? 'th' : 'td');
+          prose.textContent =
+            i === 0
+              ? 'Why it is relevant'
+              : 'https://example.com/averylongaddresswithoutanybreakatallinit/andstillgoingonandon';
+          row.append(prose);
+        });
+      });
+    const wrap = page.locator('.table-wrap').first();
+    // The tab stop is added while a table scrolls (blog/client/tables.ts).
+    await page.evaluate(() => window.dispatchEvent(new Event('resize')));
+    await expect(wrap).toHaveAttribute('tabindex', '0');
+    await wrap.focus();
+    await expect(wrap).toBeFocused();
+    const widths = await wrap.evaluate((el) => [el.scrollWidth, el.clientWidth]);
+    expect(widths[0]).toBeGreaterThan(widths[1]);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+    // Scrolling it moves the table, not the page.
+    await wrap.evaluate((el) => (el.scrollLeft = 80));
+    expect(await wrap.evaluate((el) => el.scrollLeft)).toBeGreaterThan(0);
+    expect(await page.evaluate(() => window.scrollX)).toBe(0);
+    // One line each: a Range over the text has a single client rect.
+    const split = await wrap.evaluate((el) =>
+      [...el.querySelectorAll('th, td')]
+        .filter((cell) => {
+          const range = document.createRange();
+          range.selectNodeContents(cell);
+          // Text with spaces may wrap at them; a word, a figure or a bare URL may not.
+          return cell.textContent!.includes(' ') ? false : range.getClientRects().length !== 1;
+        })
+        .map((cell) => cell.textContent),
+    );
+    expect(split).toEqual([]);
+    expect(
+      await wrap.evaluate((el) => getComputedStyle(el.querySelector('td')!).overflowWrap),
+    ).toBe('normal');
+  });
+
+  test('a numeric column is right-aligned with tabular digits', async ({ page }) => {
+    test.skip(!TABLE_POST, 'no post with a table yet');
+    await page.goto(TABLE_POST!);
+    await page
+      .locator('.table-wrap')
+      .first()
+      .evaluate((wrap) => {
+        wrap.querySelectorAll('tr').forEach((row, i) => {
+          const cell = document.createElement(i === 0 ? 'th' : 'td');
+          cell.className = i === 0 ? 'num' : 'num fig';
+          cell.textContent = i === 0 ? 'Cost' : '€1,663.20';
+          row.append(cell);
+        });
+      });
+    const cell = page.locator('.table-wrap td.num').first();
+    const style = await cell.evaluate((el) => {
+      const css = getComputedStyle(el);
+      return [css.textAlign, css.fontVariantNumeric, css.whiteSpace];
+    });
+    expect(style[0]).toBe('right');
+    expect(style[1]).toContain('tabular-nums');
+    expect(style[2]).toBe('nowrap');
   });
 });

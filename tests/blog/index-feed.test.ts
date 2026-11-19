@@ -12,8 +12,8 @@ const base = {
   status: 'verified',
   minutes: 4,
   hasCode: false,
-  evidence: { confidence: 'High', basedOn: ['Work'], recheckedAt: '2026-10-01' },
-  aiAssistance: { mine: ['All of it'], assisted: [] },
+  evidence: { basedOn: ['Work'], recheckedAt: '2026-10-01' },
+  aiAssisted: false,
   corrections: [],
   html: '<p>Body</p>',
   toc: [],
@@ -163,18 +163,18 @@ describe('article: keep reading', () => {
     expect(links.map((a) => a.getAttribute('href'))).toEqual(['/blog/newer-essay', '/blog/a-note']);
   });
 
-  it('carries the re-check date for the stale marker, with the note hidden', () => {
+  it('keeps the stale marker off the article, where no re-check date is shown', () => {
     const doc = parse(renderArticlePage({ post: posts[0], assets, launched: false }));
-    const card = doc.querySelector('.evidence');
-    expect(card?.getAttribute('data-recheck-by')).toBe('2027-10-01');
-    expect(card?.querySelector('.stale-note')?.hasAttribute('hidden')).toBe(true);
+    expect(doc.querySelector('[data-recheck-by], .stale-note')).toBeNull();
   });
 });
 
 describe('reserved ids', () => {
   it('lists exactly the ids the page templates use, so headings can avoid them', () => {
+    // The corrections heading only exists once a post has a correction.
+    const corrected = { ...posts[0], corrections: [{ date: '2026-10-02', text: 'Fixed.' }] };
     const article = parse(
-      renderArticlePage({ post: posts[0], related: posts.slice(1), assets, launched: false }),
+      renderArticlePage({ post: corrected, related: posts.slice(1), assets, launched: false }),
     );
     const used = new Set(
       // A newer essay is featured, so the index also lists both sections.

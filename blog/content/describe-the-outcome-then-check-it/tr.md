@@ -6,7 +6,6 @@ topic: ai
 kind: note
 status: hypothesis
 evidence:
-  confidence: 'Orta: tek bir şirket etkinliğinden sonra işimizin nereye gittiğine dair kendi görüşüm. Bir öngörü değil.'
   basedOn:
     - 'The Collective 2026, Sopra Steria, AFAS Theater Leusden, 11 Kasım 2026'
     - 'Aynı etkinlikteki Human & Tech: Agentic Development: Teams Reimagined oturumu'
@@ -16,14 +15,9 @@ evidence:
     - 'Stack Overflow Developer Survey 2026'
     - 'DORA, State of AI-assisted Software Development 2025'
   recheckedAt: 2026-11-13
-aiAssistance:
-  mine:
-    - 'Gün, fotoğraflar, aklımda kalanlar ve bunları işimde nasıl uyguladığım'
-  assisted:
-    - 'Claude notlarımdan bu metni yazdı ve araştırma kaynaklarını önerdi'
+aiAssisted: true
 translation:
   from: 2026-11-13
-  assistedByAi: true
 ---
 
 ![Sessiz bir kır yolunda gün doğumu, alçak sis ve turuncu gökyüzüne karşı çıplak ağaç siluetleri.](unsplash-misty-road.webp)
