@@ -380,7 +380,7 @@
   font-weight: 400;
 }
 
-/* Evidence card past its re-check date (blog/client/stale.ts) */
+/* Index card past its re-check date (blog/client/stale.ts) */
 .stale-note {
   margin: 14px 0 0;
   padding: 8px 14px;

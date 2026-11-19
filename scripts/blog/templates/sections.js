@@ -14,7 +14,7 @@ export function nextRecheck(isoDate) {
   return `${Number(year) + 1}-${month}-${month === '02' && day === '29' ? '28' : day}`;
 }
 
-/** The sources after the text: a quiet footnote. Status and freshness are already in the header. */
+/** The sources after the text: a quiet footnote. Status is already in the header. */
 export function evidenceCard(post) {
   const s = strings(post.lang);
   return markup`<aside class="evidence" aria-labelledby="evidence-title">

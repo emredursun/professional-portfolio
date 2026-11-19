@@ -55,9 +55,6 @@ const en = {
   moreAboutMe: 'More about me',
   keepReading: 'Keep reading',
   evidenceTitle: 'Sources',
-  status: 'Status',
-  basedOn: 'Based on',
-  nextBy: 'next by',
   aiDisclosure:
     'AI tools helped with research, fact-checking and editing; I reviewed every claim and am responsible for what is published.',
   reportMistake: 'Found a mistake?',
@@ -140,9 +137,6 @@ const tr = {
   moreAboutMe: 'Hakkımda daha fazlası',
   keepReading: 'Okumaya devam edin',
   evidenceTitle: 'Kaynaklar',
-  status: 'Durum',
-  basedOn: 'Dayanak',
-  nextBy: 'sonraki kontrol',
   aiDisclosure:
     'Yapay zekâ araçları araştırma, doğrulama, düzenleme ve çeviride yardımcı oldu; her iddiayı kendim gözden geçirdim ve yayımlanan her şeyden ben sorumluyum.',
   reportMistake: 'Bir hata mı buldunuz?',
@@ -226,9 +220,6 @@ const nl = {
   moreAboutMe: 'Meer over mij',
   keepReading: 'Lees verder',
   evidenceTitle: 'Bronnen',
-  status: 'Status',
-  basedOn: 'Gebaseerd op',
-  nextBy: 'volgende vóór',
   aiDisclosure:
     'AI-tools hielpen bij onderzoek, factchecking, redactie en vertaling; ik heb elke bewering zelf gecontroleerd en ben verantwoordelijk voor wat er wordt gepubliceerd.',
   reportMistake: 'Een fout gevonden?',
