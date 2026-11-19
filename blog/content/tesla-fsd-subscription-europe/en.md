@@ -61,9 +61,9 @@ These points come from public sources, listed at the end of this article.
 - In my own car, adaptive cruise control is included without the subscription, and lane centering (Autosteer) needs the subscription.
 - Safety features required by EU law stay standard. Under the EU General Safety Regulation, automatic emergency braking and emergency lane-keeping are mandatory on new cars ([Regulation (EU) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) and are not part of the subscription. This article is about driver assistance that is sold separately, not about safety features required by law.
 
-![Interior of a Tesla Model Y Long Range AWD: the steering wheel and the centre touchscreen.](model-y-long-range-dashboard.webp)
+![Grey Tesla Model Y Dual Motor in Quicksilver seen from the front left, parked in warm evening light in front of trees, with the licence plate blurred.](model-y-quicksilver-front.webp)
 
-*Steering wheel and centre screen of a Tesla Model Y Long Range AWD. Photo: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg). Faces blurred, resized. A display car, not mine.*
+*Tesla Model Y Dual Motor (AWD) in Quicksilver (2025). Photo: Damian B Oh, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg). Licence plate and a passer-by blurred, cropped and resized. Not my car.*
 
 ## The cost over the life of a car
 
@@ -240,4 +240,4 @@ Photos from Wikimedia Commons, adapted as described and shared under the same li
 - Cover photo (shown on the blog index only), Tesla Model Y Performance (2025), Alexander Migl. Licence plate blurred, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
 - Tesla Model Y Long Range AWD in a showroom, Chanokchon. Faces blurred, resized: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
 - Tesla Model Y Dual Motor (AWD) in Quicksilver, Damian B Oh. Licence plates blurred, cropped, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg
-- Tesla Model Y Long Range AWD, steering wheel and centre screen, Ethan Llamas. People in the background blurred, resized: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg
+- Tesla Model Y Dual Motor (AWD) in Quicksilver, front, Damian B Oh. Licence plate and a passer-by blurred, cropped, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg

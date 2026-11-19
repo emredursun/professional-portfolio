@@ -63,9 +63,9 @@ Deze punten komen uit openbare bronnen, die onderaan dit artikel staan.
 - In mijn eigen auto is adaptieve cruisecontrol zonder abonnement inbegrepen, en voor rijstrookcentrering (Autosteer) is het abonnement nodig.
 - Wettelijk verplichte veiligheidsfuncties blijven standaard. Onder de Europese General Safety Regulation zijn automatisch noodremmen en noodrijstrookassistentie verplicht op nieuwe auto’s ([Verordening (EU) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) en vallen ze niet onder het abonnement. Dit artikel gaat over rijassistentie die apart wordt verkocht, niet over wettelijk verplichte veiligheidsfuncties.
 
-![Interieur van een Tesla Model Y Long Range AWD: het stuur en het middenscherm.](model-y-long-range-dashboard.webp)
+![Grijze Tesla Model Y Dual Motor in Quicksilver linksvoor gezien, geparkeerd in warm avondlicht voor bomen, met vervaagd kenteken.](model-y-quicksilver-front.webp)
 
-*Stuur en middenscherm van een Tesla Model Y Long Range AWD. Foto: Ethan Llamas, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg). Gezichten vervaagd, formaat aangepast. Een toonzaalauto, niet de mijne.*
+*Tesla Model Y Dual Motor (AWD) in Quicksilver (2025). Foto: Damian B Oh, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg). Kenteken en een voorbijganger vervaagd, bijgesneden en formaat aangepast. Niet mijn auto.*
 
 ## De kosten over de levensduur van een auto
 
@@ -242,4 +242,4 @@ Foto’s van Wikimedia Commons, aangepast zoals beschreven en onder dezelfde lic
 - Omslagfoto (alleen zichtbaar op de blogindex), Tesla Model Y Performance (2025), Alexander Migl. Kenteken vervaagd, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
 - Tesla Model Y Long Range AWD in een showroom, Chanokchon. Gezichten vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
 - Tesla Model Y Dual Motor (AWD) in Quicksilver, Damian B Oh. Kentekens vervaagd, bijgesneden, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg
-- Tesla Model Y Long Range AWD, stuur en middenscherm, Ethan Llamas. Mensen op de achtergrond vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Juniper_Long_Range_AWD_White_%2B_Black_02.jpg
+- Tesla Model Y Dual Motor (AWD) in Quicksilver, voorkant, Damian B Oh. Kenteken en een voorbijganger vervaagd, bijgesneden, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg
