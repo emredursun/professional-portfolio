@@ -13,6 +13,7 @@ evidence:
     - 'Bir enerji maliyeti karşılaştırması (Eleport) ve İngiltere bakım rakamları (Dick Lovett)'
     - 'AB direktiflerinin ve Genel Güvenlik Yönetmeliği’nin EUR-Lex metinleri'
     - 'Yeni bir Tesla Model Y sahibi olarak kendi deneyimim'
+    - 'Tesla’nın Tesla Assisted Driving ve Model Y yapılandırıcısı için resmi Hollanda sayfaları, 2026-11-19’da kontrol edildi'
     - 'Wikimedia Commons fotoğrafları (CC BY-SA 4.0), her fotoğrafın altında ve kaynaklarda anıldı'
   recheckedAt: 2026-11-19
 aiAssistance:
@@ -23,6 +24,7 @@ aiAssistance:
     - 'Claude maliyet tablolarını yeniden hesapladı ve grafikleri yaptı'
     - 'Claude ifadelerimi düzenledi, kaynak linklerini, hukuki bölümdeki temkinli ifadeleri ve doğrulama kontrolünden gelen düzeltmeleri ekledi'
     - 'Claude, Wikimedia Commons fotoğraflarındaki plakaları ve yüzleri bulanıklaştırdı ve boyutlarını küçülttü'
+    - 'Claude açık alanları kendi ifadelerimden ve resmi Tesla sayfalarından doldurdu'
     - 'Claude taslağımı blog biçimine çevirdi; neyin yayımlanacağına ben karar veririm'
 translation:
   from: 2026-11-19
@@ -37,9 +39,7 @@ Amacım Tesla ile yapıcı bir diyalog kurmak, markaya saldırmak değil.
 
 ## Bu konu benim için neden önemli
 
-*[SAHİP ALANI: teslim tarihi, ilk sürüşle ilgili bir iki cümle ve araçta ile Tesla uygulamasında görünen Autopilot ve FSD seçeneklerinin kendi ekran görüntün. Doldurunca bu satırı sil.]*
-
-Kasım 2026’da bir Tesla Model Y Premium Long Range AWD teslim aldım. Karar vermeden önce birçok elektrikli aracı karşılaştırdım. Gelecekte FSD desteği benim için önemliydi: ikinci el bir Model S Plaid’i, Hardware 3 bilgisayarı Avrupa’da yalnızca Hardware 4’lü araçlar için onaylanan FSD (Supervised)’ı desteklemediği için eledim. Bu özelliklerin nasıl satıldığı da bu yüzden benim için önemli.
+Bir Tesla Model Y Premium Long Range AWD satın aldım. Satın almadan önce test sürüşü yaptım ve birçok elektrikli aracı karşılaştırdım. Diğer markalarla kıyasladığımda Tesla deneyimim daha iyiydi, bu yüzden Tesla’yı seçtim. Gelecekte FSD desteği benim için önemliydi: ikinci el bir Model S Plaid’i, Hardware 3 bilgisayarı Avrupa’da yalnızca Hardware 4’lü araçlar için onaylanan FSD (Supervised)’ı desteklemediği için eledim. Tesla’da beğenmediğim tek şey, Avrupa’da Tesla Assisted Driving adıyla satılan sürüş desteğinin yalnızca abonelikle sunulması ve bence pahalı olması. Bu özelliklerin nasıl satıldığı da bu yüzden benim için önemli.
 
 *Bu sayfadaki Tesla fotoğrafları benim aracıma ait değil. Wikimedia Commons’tan alındı.*
 
@@ -59,10 +59,12 @@ Kasım 2026’da bir Tesla Model Y Premium Long Range AWD teslim aldım. Karar v
 
 Bu bilgiler, yazının sonunda listelenen kamuya açık kaynaklardan alındı.
 
+- Avrupa’da Tesla artık FSD (Supervised)’ı Tesla Assisted Driving adıyla satıyor ([Tesla Hollanda](https://www.tesla.com/nl_nl/tesla-assisted-driving)). Tesla’nın sayfası, şu anda sunulan özelliklerin sürücünün aktif gözetimini gerektirdiğini ve aracı otonom yapmadığını belirtiyor. Bu yazı, kaynakları kullandığı yerlerde FSD (Supervised) adını koruyor.
 - FSD (Supervised) Hollanda’da onaylandı. Hollanda araç kurumu RDW, 10 Nisan 2026’da Hardware 4’lü araçlar için onayladı; Electrek bunu Avrupa’daki ilk onay olarak bildiriyor ([Electrek, 14 Nisan 2026](https://electrek.co/2026/04/14/tesla-fsd-europe-hw3-owners-dutch-claim/)).
-- Hollanda’da FSD (Supervised), bir aylık deneme süresinin ardından aylık €99 ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), 3 Ekim 2026’da güncellendi; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)).
-- Tek seferlik satın alma seçeneği kalktı. Hollanda’da 15 Mayıs 2026’da, Avrupa’nın geri kalanının çoğunda 21 Mayıs’ta sona erdi ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). O zamana kadar Hollanda yapılandırıcısında €7.500’dü ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[SAHİP ALANI: yayın günü tesla.com/nl_nl adresini kontrol et ve yapılandırıcının ne gösterdiğini yaz.]*
-- Electrek, Hollanda’daki baz araçta artık şerit ortalamanın (Autosteer) gelmediğini ve yeni siparişlerde Basic Autopilot’un artık seçenek olarak sunulmadığını bildiriyor; baz araçta yalnızca AB yasasının zorunlu kıldığı acil şerit koruma kalıyor ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[SAHİP ALANI: kendi aracında doğrula, ekran görüntünü ekle ve adaptif hız sabitleyicinin hâlâ dahil olup olmadığını yaz.]*
+- Hollanda’da FSD (Supervised), bir aylık deneme süresinin ardından aylık €99 ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), 3 Ekim 2026’da güncellendi; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)). Tesla’nın Hollanda sayfası bunu aylık €99’luk bir abonelik olarak listeliyor ve Model Y yapılandırıcısı, faturalandırma başlamadan önce bir aylık deneme süresi gösteriyor ([Tesla Hollanda](https://www.tesla.com/nl_nl/tesla-assisted-driving), [yapılandırıcı](https://www.tesla.com/nl_nl/modely/design), ikisi de 19 Kasım 2026’da kontrol edildi).
+- Tek seferlik satın alma seçeneği kalktı. Hollanda’da 15 Mayıs 2026’da, Avrupa’nın geri kalanının çoğunda 21 Mayıs’ta sona erdi ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). O zamana kadar Hollanda yapılandırıcısında €7.500’dü ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). Tesla’nın Hollanda Model Y yapılandırıcısında, 19 Kasım 2026’da kontrol edildiğinde, Tesla Assisted Driving yalnızca aylık abonelik olarak sunuluyor; tek seferlik satın alma seçeneği yok ([Tesla Hollanda yapılandırıcısı](https://www.tesla.com/nl_nl/modely/design)).
+- Electrek, Hollanda’daki baz araçta artık şerit ortalamanın (Autosteer) gelmediğini ve yeni siparişlerde Basic Autopilot’un artık seçenek olarak sunulmadığını bildiriyor; baz araçta yalnızca AB yasasının zorunlu kıldığı acil şerit koruma kalıyor ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)).
+- Tesla’nın kendi Hollanda sayfaları, yeni bir araçta hangi sürüş destek özelliklerinin standart geldiğini söylemiyor. *[SAHİP ALANI: kendi aracında şerit ortalama ve adaptif hız sabitleyicinin dahil olup olmadığını yaz.]*
 - AB yasasının zorunlu kıldığı güvenlik özellikleri standart kalıyor. AB Genel Güvenlik Yönetmeliği’ne göre otomatik acil fren ve acil şerit koruma yeni araçlarda zorunlu ([Yönetmelik (AB) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) ve aboneliğe dahil değil. Bu yazı yasal zorunlu güvenlik özellikleriyle değil, ayrıca satılan sürüş destek özellikleriyle ilgili.
 
 ![Tesla Model Y Long Range AWD’nin içi: direksiyon ve orta dokunmatik ekran.](model-y-long-range-dashboard.webp)
@@ -99,7 +101,7 @@ Hesaplamada evde şarj için 100 km başına €6,08, benzin için €14,14 baz 
 
 Elektrikli araçların toplamda daha pahalı olduğunu iddia etmiyorum. Satın alma fiyatı, vergiler, sigorta ve değer kaybı toplamı değiştirir. Söylediğim daha dar kapsamlı: FSD’ye abone olan bir sahip, enerji tasarrufunun neredeyse tamamını geri ödüyor ve birçok insan için bu tasarruf elektrikliye geçmenin başlıca sebeplerinden biri. Bu, Tesla’nın dünyanın sürdürülebilir enerjiye geçişini hızlandırma yönündeki uzun süredir bilinen misyonuyla zor bağdaşıyor; şirket misyon cümlesini sonradan değiştirmiş olsa da ([Gizmodo](https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530)).
 
-*Bunlar AB ortalamaları. Bir Model Y varsayılan 100 km başına 21 kWh’den daha az tüketebilir ve Hollanda tarifeleri farklı. Sonuç elektrik tarifene, kilometrene ve yerel yakıt fiyatlarına bağlı. [SAHİP ALANI: birkaç aylık sürüşten sonra kendi rakamlarınla değiştir.]*
+*Bunlar AB ortalamaları. Bir Model Y varsayılan 100 km başına 21 kWh’den daha az tüketebilir ve Hollanda tarifeleri farklı. Sonuç elektrik tarifene, kilometrene ve yerel yakıt fiyatlarına bağlı.*
 
 ## Mevcut yaklaşım neden değişmeli
 
@@ -208,7 +210,7 @@ Bu kaygıları paylaşıyorsanız:
 - Belirsiz veya yanıltıcı bulduğunuz bir uygulamayı ConsuWijzer üzerinden ACM’ye (Autoriteit Consument & Markt) bildirin.
 - Hardware 3 sahipleri hw3claim.nl’ye göz atabilir.
 
-Bu konuyu yapıcı bir şekilde konuşmak isteyen sahipleri bir araya getirmek istiyorum. Siz de onlardan biriyseniz, bu sitedeki iletişim sayfasından bana ulaşın. *[SAHİP ALANI: iletişim sayfanın linki.]*
+Bu konuyu yapıcı bir şekilde konuşmak isteyen sahipleri bir araya getirmek istiyorum. Siz de onlardan biriyseniz, bu sitedeki [iletişim sayfasından](/tr/contact) bana ulaşın.
 
 *Bu yazı bir Tesla sahibi olarak kişisel görüşümdür, hukuki tavsiye değildir. Bilgiler Kasım 2026 itibarıyla aşağıdaki kaynaklardan alınmıştır.*
 
@@ -226,6 +228,8 @@ Aksi belirtilmedikçe tüm linkler 2026-11-19’da açıldı.
 - ArenaEV, Tesla Avrupa’da yalnızca abonelikli FSD’ye geçiyor (2026-05-23): https://www.arenaev.com/tesla_switches_to_subscriptiononly_full_selfdriving_in_europe-news-5907.php
 - Evannex, Finlandiya Tesla FSD’yi onaylayan 11. Avrupa ülkesi: https://evannex.com/blogs/news/finland-becomes-the-11th-european-country-to-approve-tesla-fsd-with-a-new-name
 - hw3claim.nl: https://hw3claim.nl
+- Tesla Hollanda, Tesla Assisted Driving (2026-11-19’da kontrol edildi): https://www.tesla.com/nl_nl/tesla-assisted-driving
+- Tesla Hollanda, Model Y yapılandırıcısı (2026-11-19’da kontrol edildi): https://www.tesla.com/nl_nl/modely/design
 - Eleport, Elektrikli araçlar gerçekten benzinlilerden pahalı mı? (100 km başına 21 kWh ve kWh başına €0,2896, 100 km başına 7,4 litre ve litre başına €1,91 AB ortalamaları): https://eleport.com/are-electric-cars-cheaper-to-run/
 - Dick Lovett, İngiltere’de elektrikli araç bakım maliyetleri (İngiltere rakamları; sayfa otomatik okuyucumu engelledi, rakamlar arama sonucundan): https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs
 - Motor1, BMW ısıtmalı koltuk aboneliği (2023-09-07): https://www.motor1.com/news/685653/bmw-heated-seat-subscription-dead-low-acceptance/

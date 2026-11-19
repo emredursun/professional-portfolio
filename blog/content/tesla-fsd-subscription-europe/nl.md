@@ -13,6 +13,7 @@ evidence:
     - 'Een vergelijking van energiekosten (Eleport) en Britse onderhoudscijfers (Dick Lovett)'
     - 'De EUR-Lex-teksten van de EU-richtlijnen en de General Safety Regulation'
     - 'Mijn eigen ervaring als nieuwe eigenaar van een Tesla Model Y'
+    - 'De officiële Nederlandse pagina’s van Tesla over Tesla Assisted Driving en de Model Y-configurator, gecontroleerd op 2026-11-19'
     - 'Foto’s van Wikimedia Commons (CC BY-SA 4.0), vermeld bij elke foto en in de bronnen'
   recheckedAt: 2026-11-19
 aiAssistance:
@@ -23,6 +24,7 @@ aiAssistance:
     - 'Claude rekende de kostentabellen na en maakte de grafieken'
     - 'Claude bewerkte mijn formuleringen, voegde de bronlinks en de voorbehouden in het juridische deel toe en verwerkte de correcties uit de feitencontrole'
     - 'Claude vervaagde de kentekens en gezichten in de foto’s van Wikimedia Commons en paste het formaat aan'
+    - 'Claude vulde de open vakken in met mijn eigen uitspraken en de officiële Tesla-pagina’s'
     - 'Claude zette mijn concept om naar het blogformaat; ik beslis wat er wordt gepubliceerd'
 translation:
   from: 2026-11-19
@@ -37,9 +39,7 @@ Mijn doel is een constructief gesprek met Tesla, geen aanval op het merk.
 
 ## Waarom dit voor mij belangrijk is
 
-*[EIGENAARSVAK: de datum van levering, een of twee zinnen over de eerste rit en uw eigen screenshot van de Autopilot- en FSD-opties in de auto en in de Tesla-app. Verwijder deze regel als het is ingevuld.]*
-
-In november 2026 nam ik een Tesla Model Y Premium Long Range AWD in ontvangst. Voordat ik koos, vergeleek ik meerdere elektrische auto’s. Toekomstige FSD-ondersteuning was voor mij belangrijk: ik viel af op een tweedehands Model S Plaid, omdat de Hardware 3-computer daarvan FSD (Supervised) niet ondersteunt, dat in Europa alleen voor auto’s met Hardware 4 is goedgekeurd. Daarom is de manier waarop deze functies worden verkocht belangrijk voor mij.
+Ik kocht een Tesla Model Y Premium Long Range AWD. Voor de aankoop maakte ik een proefrit en vergeleek ik meerdere elektrische auto’s. Vergeleken met de andere merken was mijn ervaring met Tesla beter, dus koos ik voor Tesla. Toekomstige FSD-ondersteuning was voor mij belangrijk: ik viel af op een tweedehands Model S Plaid, omdat de Hardware 3-computer daarvan FSD (Supervised) niet ondersteunt, dat in Europa alleen voor auto’s met Hardware 4 is goedgekeurd. Het enige wat ik niet leuk vind aan Tesla is dat de rijassistentie, in Europa verkocht als Tesla Assisted Driving, alleen als abonnement beschikbaar is en volgens mij duur is. Daarom is de manier waarop deze functies worden verkocht belangrijk voor mij.
 
 *De Tesla-foto’s op deze pagina zijn niet van mijn auto. Ze komen van Wikimedia Commons.*
 
@@ -59,10 +59,12 @@ In november 2026 nam ik een Tesla Model Y Premium Long Range AWD in ontvangst. V
 
 Deze punten komen uit openbare bronnen, die onderaan dit artikel staan.
 
+- In Europa verkoopt Tesla FSD (Supervised) inmiddels onder de naam Tesla Assisted Driving ([Tesla Nederland](https://www.tesla.com/nl_nl/tesla-assisted-driving)). Volgens de pagina van Tesla vereisen de nu beschikbare functies actief toezicht van de bestuurder en maken ze de auto niet autonoom. Dit artikel houdt de naam FSD (Supervised) aan waar de bronnen die gebruiken.
 - FSD (Supervised) is goedgekeurd in Nederland. De RDW keurde het op 10 april 2026 goed voor auto’s met Hardware 4, en Electrek meldt het als de eerste goedkeuring in Europa ([Electrek, 14 april 2026](https://electrek.co/2026/04/14/tesla-fsd-europe-hw3-owners-dutch-claim/)).
-- In Nederland kost FSD (Supervised) €99 per maand na een proefperiode van een maand ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), bijgewerkt op 3 oktober 2026; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)).
-- Eenmalige aankoop is niet meer mogelijk. Die optie eindigde op 15 mei 2026 in Nederland en op 21 mei in het grootste deel van de rest van Europa ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). Tot dan kostte het €7.500 in de Nederlandse configurator ([Electrek, 12 mei 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[EIGENAARSVAK: controleer op de dag van publicatie tesla.com/nl_nl en schrijf op wat de configurator toont.]*
-- Electrek meldt dat de Nederlandse basisauto niet langer rijstrookcentrering (Autosteer) heeft en dat Basic Autopilot bij nieuwe bestellingen niet meer als optie wordt aangeboden; de basisauto houdt alleen de noodrijstrookassistentie die de EU voorschrijft ([Electrek, 12 mei 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). *[EIGENAARSVAK: controleer dit op uw eigen auto, voeg uw screenshot toe en schrijf of adaptieve cruisecontrol nog is inbegrepen.]*
+- In Nederland kost FSD (Supervised) €99 per maand na een proefperiode van een maand ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), bijgewerkt op 3 oktober 2026; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)). De Nederlandse pagina van Tesla noemt het een abonnement van €99 per maand, en de Model Y-configurator toont een proefperiode van een maand voordat de betaling begint ([Tesla Nederland](https://www.tesla.com/nl_nl/tesla-assisted-driving), [configurator](https://www.tesla.com/nl_nl/modely/design), beide gecontroleerd op 19 november 2026).
+- Eenmalige aankoop is niet meer mogelijk. Die optie eindigde op 15 mei 2026 in Nederland en op 21 mei in het grootste deel van de rest van Europa ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). Tot dan kostte het €7.500 in de Nederlandse configurator ([Electrek, 12 mei 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). In de Nederlandse Model Y-configurator van Tesla, gecontroleerd op 19 november 2026, wordt Tesla Assisted Driving alleen als maandabonnement aangeboden, zonder optie voor eenmalige aankoop ([Tesla Nederland, configurator](https://www.tesla.com/nl_nl/modely/design)).
+- Electrek meldt dat de Nederlandse basisauto niet langer rijstrookcentrering (Autosteer) heeft en dat Basic Autopilot bij nieuwe bestellingen niet meer als optie wordt aangeboden; de basisauto houdt alleen de noodrijstrookassistentie die de EU voorschrijft ([Electrek, 12 mei 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)).
+- De eigen Nederlandse pagina’s van Tesla zeggen niet welke rijassistentiefuncties standaard zijn op een nieuwe auto. *[EIGENAARSVAK: schrijf of rijstrookcentrering en adaptieve cruisecontrol in uw auto zijn inbegrepen.]*
 - Wettelijk verplichte veiligheidsfuncties blijven standaard. Onder de Europese General Safety Regulation zijn automatisch noodremmen en noodrijstrookassistentie verplicht op nieuwe auto’s ([Verordening (EU) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) en vallen ze niet onder het abonnement. Dit artikel gaat over rijassistentie die apart wordt verkocht, niet over wettelijk verplichte veiligheidsfuncties.
 
 ![Interieur van een Tesla Model Y Long Range AWD: het stuur en het middenscherm.](model-y-long-range-dashboard.webp)
@@ -99,7 +101,7 @@ De berekening gaat uit van €6,08 per 100 km voor thuisladen en €14,14 per 10
 
 Ik beweer niet dat elektrische auto’s in totaal duurder zijn. Aanschafprijs, belastingen, verzekering en waardeverlies veranderen het totaal. Mijn punt is specifieker: wie zich abonneert op FSD, levert bijna de hele energiebesparing in, en voor veel mensen is die besparing een belangrijke reden om over te stappen. Dat past slecht bij Tesla’s al langer bestaande missie om de wereldwijde overgang naar duurzame energie te versnellen, ook al heeft het bedrijf die zin inmiddels anders geformuleerd ([Gizmodo](https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530)).
 
-*Dit zijn EU-gemiddelden. Een Model Y kan minder verbruiken dan de aangenomen 21 kWh per 100 km, en Nederlandse tarieven wijken af. Uw uitkomst hangt af van uw stroomtarief, kilometers en lokale brandstofprijzen. [EIGENAARSVAK: vervangen door uw eigen cijfers na een paar maanden rijden.]*
+*Dit zijn EU-gemiddelden. Een Model Y kan minder verbruiken dan de aangenomen 21 kWh per 100 km, en Nederlandse tarieven wijken af. Uw uitkomst hangt af van uw stroomtarief, kilometers en lokale brandstofprijzen.*
 
 ## Waarom de huidige aanpak volgens mij moet veranderen
 
@@ -208,7 +210,7 @@ Als u deze zorgen deelt:
 - Meld een praktijk die u onduidelijk of misleidend vindt bij de ACM (Autoriteit Consument & Markt) via ConsuWijzer.
 - Eigenaren met Hardware 3 kunnen kijken op hw3claim.nl.
 
-Ik wil eigenaren samenbrengen die hier constructief over willen praten. Hoort u daarbij, neem dan contact op via de contactpagina van deze site. *[EIGENAARSVAK: link naar uw contactpagina.]*
+Ik wil eigenaren samenbrengen die hier constructief over willen praten. Hoort u daarbij, neem dan contact op via de [contactpagina](/nl/contact) van deze site.
 
 *Dit artikel is mijn persoonlijke mening als Tesla-eigenaar en geen juridisch advies. Feiten per november 2026, uit de bronnen hieronder.*
 
@@ -226,6 +228,8 @@ Alle links zijn op 2026-11-19 geopend, tenzij anders vermeld.
 - ArenaEV, Tesla stapt in Europa over op FSD alleen met abonnement (2026-05-23): https://www.arenaev.com/tesla_switches_to_subscriptiononly_full_selfdriving_in_europe-news-5907.php
 - Evannex, Finland is het 11e Europese land dat Tesla FSD goedkeurt: https://evannex.com/blogs/news/finland-becomes-the-11th-european-country-to-approve-tesla-fsd-with-a-new-name
 - hw3claim.nl: https://hw3claim.nl
+- Tesla Nederland, Tesla Assisted Driving (gecontroleerd 2026-11-19): https://www.tesla.com/nl_nl/tesla-assisted-driving
+- Tesla Nederland, Model Y-configurator (gecontroleerd 2026-11-19): https://www.tesla.com/nl_nl/modely/design
 - Eleport, Zijn elektrische auto’s echt duurder dan benzineauto’s? (EU-gemiddelden van 21 kWh per 100 km à €0,2896 per kWh, en 7,4 liter per 100 km à €1,91 per liter): https://eleport.com/are-electric-cars-cheaper-to-run/
 - Dick Lovett, onderhoudskosten van elektrische auto’s in het VK (Britse cijfers; de pagina blokkeerde mijn automatische lezer, de cijfers komen uit het zoekresultaat): https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs
 - Motor1, BMW-abonnement op stoelverwarming (2023-09-07): https://www.motor1.com/news/685653/bmw-heated-seat-subscription-dead-low-acceptance/
