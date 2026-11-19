@@ -1,6 +1,6 @@
 ---
-title: 'Zaten sahip olduğumuz donanım için her ay ödeme: Tesla’ya Avrupa’da FSD konusunda bir öneri'
-description: 'FSD (Supervised) Hollanda’da aylık €99. Bir Model Y sahibi tek seferlik satın alma ve peşin paketler öneriyor; maliyetler, AB kuralları, kaynaklar.'
+title: 'Zaten sahip olduğumuz donanım için her ay ödeme: Tesla’ya Avrupa’da Assisted Driving (FSD) için bir öneri'
+description: 'Tesla Assisted Driving (FSD) Hollanda’da aylık €99. Bir Model Y sahibi tek seferlik satın alma ve peşin paketler öneriyor; maliyetler ve kaynaklarla.'
 publishedAt: 2026-11-19
 topic: life
 kind: essay
@@ -31,15 +31,15 @@ translation:
   assistedByAi: true
 ---
 
-![Grafik: aylık €99 olan FSD (Supervised) aboneliği 1 yılda €1.188, 5 yılda €5.940 ve 10 yılda €11.880 tutuyor.](cost-over-time-tr.webp)
+![Grafik: aylık €99 olan Tesla Assisted Driving aboneliği 1 yılda €1.188, 5 yılda €5.940 ve 10 yılda €11.880 tutuyor.](cost-over-time-tr.webp)
 
-Hollanda’da Tesla FSD (Supervised) aylık €99 ve yeni alıcılar artık bu özelliği tek seferde satın alamıyor. Tesla’dan aylık aboneliğin yanında tek seferlik satın alma ve peşin ödemeli çok yıllık paketler sunmasını istiyorum. Bu yazıda gerçekleri, bir aracın ömrü boyunca maliyeti ve somut bir fiyat önerisini paylaşıyorum.
+Hollanda’da Tesla Assisted Driving, yani FSD (Supervised) olarak satılanın Avrupa’daki adı, aylık €99 ve yeni alıcılar artık bu özelliği tek seferde satın alamıyor. Tesla’dan aylık aboneliğin yanında tek seferlik satın alma ve peşin ödemeli çok yıllık paketler sunmasını istiyorum. Bu yazıda gerçekleri, bir aracın ömrü boyunca maliyeti ve somut bir fiyat önerisini paylaşıyorum.
 
 Amacım Tesla ile yapıcı bir diyalog kurmak, markaya saldırmak değil.
 
 ## Bu konu benim için neden önemli
 
-Bir Tesla Model Y Premium Long Range AWD satın aldım. Satın almadan önce test sürüşü yaptım ve birçok elektrikli aracı karşılaştırdım. Diğer markalarla kıyasladığımda Tesla deneyimim daha iyiydi, bu yüzden Tesla’yı seçtim. Gelecekte FSD desteği benim için önemliydi: ikinci el bir Model S Plaid’i, Hardware 3 bilgisayarı Avrupa’da yalnızca Hardware 4’lü araçlar için onaylanan FSD (Supervised)’ı desteklemediği için eledim. Tesla’da beğenmediğim tek şey, Avrupa’da Tesla Assisted Driving adıyla satılan sürüş desteğinin yalnızca abonelikle sunulması ve bence pahalı olması. Bu özelliklerin nasıl satıldığı da bu yüzden benim için önemli.
+Bir Tesla Model Y Premium Long Range AWD satın aldım. Satın almadan önce test sürüşü yaptım ve birçok elektrikli aracı karşılaştırdım. Diğer markalarla kıyasladığımda Tesla deneyimim daha iyiydi, bu yüzden Tesla’yı seçtim. Gelecekte Tesla Assisted Driving desteği benim için önemliydi: ikinci el bir Model S Plaid’i, Hardware 3 bilgisayarı onu desteklemediği ve Avrupa’da yalnızca Hardware 4’lü araçlar için onaylandığı için eledim. Tesla’da beğenmediğim tek şey, Tesla Assisted Driving’in yalnızca abonelikle sunulması ve bence pahalı olması. Bu özelliklerin nasıl satıldığı da bu yüzden benim için önemli.
 
 *Bu sayfadaki Tesla fotoğrafları benim aracıma ait değil. Wikimedia Commons’tan alındı.*
 
@@ -55,9 +55,9 @@ Bir Tesla Model Y Premium Long Range AWD satın aldım. Satın almadan önce tes
 
 Bu bilgiler, yazının sonunda listelenen kamuya açık kaynaklardan alındı.
 
-- Avrupa’da Tesla artık FSD (Supervised)’ı Tesla Assisted Driving adıyla satıyor ([Tesla Hollanda](https://www.tesla.com/nl_nl/tesla-assisted-driving)). Tesla’nın sayfası, şu anda sunulan özelliklerin sürücünün aktif gözetimini gerektirdiğini ve aracı otonom yapmadığını belirtiyor. Bu yazı, kaynakları kullandığı yerlerde FSD (Supervised) adını koruyor.
-- FSD (Supervised) Hollanda’da onaylandı. Hollanda araç kurumu RDW, 10 Nisan 2026’da Hardware 4’lü araçlar için onayladı; Electrek bunu Avrupa’daki ilk onay olarak bildiriyor ([Electrek, 14 Nisan 2026](https://electrek.co/2026/04/14/tesla-fsd-europe-hw3-owners-dutch-claim/)).
-- Hollanda’da FSD (Supervised), bir aylık deneme süresinin ardından aylık €99 ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), 3 Ekim 2026’da güncellendi; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)). Tesla’nın Hollanda sayfası bunu aylık €99’luk bir abonelik olarak listeliyor ve Model Y yapılandırıcısı, faturalandırma başlamadan önce bir aylık deneme süresi gösteriyor ([Tesla Hollanda](https://www.tesla.com/nl_nl/tesla-assisted-driving), [yapılandırıcı](https://www.tesla.com/nl_nl/modely/design), ikisi de 19 Kasım 2026’da kontrol edildi).
+- Avrupa’da Tesla, FSD (Supervised) olarak satılan ürünü artık Tesla Assisted Driving adıyla satıyor ([Tesla Hollanda](https://www.tesla.com/nl_nl/tesla-assisted-driving)). Tesla’nın sayfası, şu anda sunulan özelliklerin sürücünün aktif gözetimini gerektirdiğini ve aracı otonom yapmadığını belirtiyor. Bu yazı bugünkü ürün için Tesla Assisted Driving adını kullanıyor; kaynakların ve geçmişin FSD dediği yerlerde FSD’yi koruyor.
+- Hollanda araç kurumu RDW, FSD (Supervised)’ı (şimdiki adıyla Tesla Assisted Driving) 10 Nisan 2026’da Hardware 4’lü araçlar için onayladı; Electrek bunu Avrupa’daki ilk onay olarak bildiriyor ([Electrek, 14 Nisan 2026](https://electrek.co/2026/04/14/tesla-fsd-europe-hw3-owners-dutch-claim/)).
+- Hollanda’da Tesla Assisted Driving, bir aylık deneme süresinin ardından aylık €99 ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), 3 Ekim 2026’da güncellendi; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)). Tesla’nın Hollanda sayfası bunu aylık €99’luk bir abonelik olarak listeliyor ve Model Y yapılandırıcısı, faturalandırma başlamadan önce bir aylık deneme süresi gösteriyor ([Tesla Hollanda](https://www.tesla.com/nl_nl/tesla-assisted-driving), [yapılandırıcı](https://www.tesla.com/nl_nl/modely/design), ikisi de 19 Kasım 2026’da kontrol edildi).
 - Tek seferlik satın alma seçeneği kalktı. Hollanda’da 15 Mayıs 2026’da, Avrupa’nın geri kalanının çoğunda 21 Mayıs’ta sona erdi ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). O zamana kadar Hollanda yapılandırıcısında €7.500’dü ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). Tesla’nın Hollanda Model Y yapılandırıcısında, 19 Kasım 2026’da kontrol edildiğinde, Tesla Assisted Driving yalnızca aylık abonelik olarak sunuluyor; tek seferlik satın alma seçeneği yok ([Tesla Hollanda yapılandırıcısı](https://www.tesla.com/nl_nl/modely/design)).
 - Electrek, Hollanda’daki baz araçta artık şerit ortalamanın (Autosteer) gelmediğini ve yeni siparişlerde Basic Autopilot’un artık seçenek olarak sunulmadığını bildiriyor; baz araçta yalnızca AB yasasının zorunlu kıldığı acil şerit koruma kalıyor ([Electrek, 12 Mayıs 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)).
 - Kendi aracımda adaptif hız sabitleyici abonelik olmadan dahil, şerit ortalama (Autosteer) ise abonelik gerektiriyor.
@@ -81,7 +81,7 @@ Zaten €54.990 olan bir araç için (Model Y Premium Long Range AWD’nin Holla
 
 ## Elektrikliye geçişin tasarrufu nereye gidiyor
 
-![Grafik: 15.000 km için yıllık maliyet. Benzin yakıtı €2.121, elektrikle evde şarj €912, yani €1.209 tasarruf; yıllık €1.188’lik FSD (Supervised) aboneliği sonrası €21 kalıyor.](ev-saving-vs-subscription-tr.webp)
+![Grafik: 15.000 km için yıllık maliyet. Benzin yakıtı €2.121, elektrikle evde şarj €912, yani €1.209 tasarruf; yıllık €1.188’lik Tesla Assisted Driving aboneliği sonrası €21 kalıyor.](ev-saving-vs-subscription-tr.webp)
 
 İnsanlar elektrikli araca kısmen işletme maliyetlerini düşürmek için geçiyor. Abonelik bu tasarrufun büyük kısmını geri alıyor.
 
@@ -90,14 +90,14 @@ Yılda 15.000 km ve evde şarj için, Avrupa’daki bir karşılaştırmanın ([
 | Yıllık | Elektrikli | Benzinli | Fark |
 | --- | --- | --- | --- |
 | Enerji veya yakıt | €912 | €2.121 | €1.209 |
-| FSD (Supervised) aboneliği | €1.188 | - | |
+| Tesla Assisted Driving aboneliği | €1.188 | - | |
 | Abonelik sonrası kalan | | | €21 |
 
 Elektrikli araç enerjide yılda €1.209 tasarruf ettiriyor; abonelikten sonra €21 kalıyor.
 
 Hesaplamada evde şarj için 100 km başına €6,08, benzin için €14,14 baz alındı. Bakımdaki tasarruf da sınırlı. İngiltere verilerine göre lastik dahil yıllık bakım, elektrikli araçta £720 ile £1.180, benzinli veya dizel araçta £820 ile £1.530 arasında ([Dick Lovett](https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs)). Bu sayfayı kendim açamadım; rakamlar arama sonucundaki özetten, bu yüzden temkinle okuyun.
 
-Elektrikli araçların toplamda daha pahalı olduğunu iddia etmiyorum. Satın alma fiyatı, vergiler, sigorta ve değer kaybı toplamı değiştirir. Söylediğim daha dar kapsamlı: FSD’ye abone olan bir sahip, enerji tasarrufunun neredeyse tamamını geri ödüyor ve birçok insan için bu tasarruf elektrikliye geçmenin başlıca sebeplerinden biri. Bu, Tesla’nın dünyanın sürdürülebilir enerjiye geçişini hızlandırma yönündeki uzun süredir bilinen misyonuyla zor bağdaşıyor; şirket misyon cümlesini sonradan değiştirmiş olsa da ([Gizmodo](https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530)).
+Elektrikli araçların toplamda daha pahalı olduğunu iddia etmiyorum. Satın alma fiyatı, vergiler, sigorta ve değer kaybı toplamı değiştirir. Söylediğim daha dar kapsamlı: Tesla Assisted Driving’e abone olan bir sahip, enerji tasarrufunun neredeyse tamamını geri ödüyor ve birçok insan için bu tasarruf elektrikliye geçmenin başlıca sebeplerinden biri. Bu, Tesla’nın dünyanın sürdürülebilir enerjiye geçişini hızlandırma yönündeki uzun süredir bilinen misyonuyla zor bağdaşıyor; şirket misyon cümlesini sonradan değiştirmiş olsa da ([Gizmodo](https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530)).
 
 *Bunlar AB ortalamaları. Bir Model Y varsayılan 100 km başına 21 kWh’den daha az tüketebilir ve Hollanda tarifeleri farklı. Sonuç elektrik tarifene, kilometrene ve yerel yakıt fiyatlarına bağlı.*
 
@@ -105,7 +105,7 @@ Elektrikli araçların toplamda daha pahalı olduğunu iddia etmiyorum. Satın a
 
 Aşağıdakiler benim görüşüm.
 
-Donanım zaten araçta ve parası ödendi. Her yeni Model Y, Tesla’nın FSD (Supervised) için kullandığı bilgisayar ve kameralarla geliyor ve alıcı bunların bedelini satın alma fiyatında ödüyor. Zaten sahip olduğum donanımı kullanmak için her ay ödemek, sahiplikten çok kiralamaya benziyor.
+Donanım zaten araçta ve parası ödendi. Her yeni Model Y, Tesla’nın Tesla Assisted Driving için kullandığı bilgisayar ve kameralarla geliyor ve alıcı bunların bedelini satın alma fiyatında ödüyor. Zaten sahip olduğum donanımı kullanmak için her ay ödemek, sahiplikten çok kiralamaya benziyor.
 
 Satın alma seçeneğinin kalkması tercih hakkını ortadan kaldırıyor. Bazı sahipler aylık ödemeyi tercih eder. Bazıları ise bir kez ödeyip özelliği araç kendisinde olduğu sürece kullanmak ister. Sadece abonelik sunmak bu tercihi elinden alıyor.
 
@@ -143,7 +143,7 @@ Bence bazı müşterilerin eleştirdiği bir modeli değiştirmek markayı güç
 
 1. Tek seferlik satın almayı geri getirin. Sahipler aylık abonelik ile araca bağlı ömür boyu lisans arasında seçim yapabilsin.
 2. Şerit ortalamayı yeniden standart yapın. Artık dahil değilse, her yeni araçla yeniden gelmeli.
-3. Daha uygun fiyatlı bir paket ekleyin; örneğin sadece otoyol asistanı, tam FSD (Supervised) ise premium seçenek olsun.
+3. Daha uygun fiyatlı bir paket ekleyin; örneğin sadece otoyol asistanı, tam Tesla Assisted Driving ise premium seçenek olsun.
 4. Uzun süreli taahhüdü ödüllendiren indirimli, peşin ödemeli yıllık ve çok yıllık paketler sunun.
 5. Satın alınan lisansı devredilebilir yapın, araç satıldığında araçla birlikte kalsın.
 6. Aboneliğin her ülkede neler sunduğunu ve onayın nerede beklendiğini açıkça gösterin.
@@ -170,7 +170,7 @@ Fiyatını Tesla’nın belirlediği bir ömür boyu lisans araçla birlikte kal
 Peşin paketler için adil koşullar:
 
 - Araç satılırsa kalan süre araçla birlikte devredilir ya da orantılı olarak iade edilir.
-- FSD (Supervised) sahibin ülkesinde henüz onaylı değilse, peşin süre onaydan sonra başlar.
+- Tesla Assisted Driving sahibin ülkesinde henüz onaylı değilse, peşin süre onaydan sonra başlar.
 - Ara sıra ihtiyaç duyanlar için aylık seçenek devam eder; örneğin bir tatil veya uzun bir yolculuk için.
 
 ## Bu neden Tesla için de iyi olabilir
@@ -183,7 +183,7 @@ Peşin paketler için adil koşullar:
 
 ## Beklediğim sorular
 
-### Abonelik, FSD’ye ara sıra ihtiyaç duyanlar için iyi değil mi?
+### Abonelik, Tesla Assisted Driving’e ara sıra ihtiyaç duyanlar için iyi değil mi?
 
 Evet. Bu yüzden Tesla’dan aylık seçeneği kaldırmasını değil, yanına yeni seçenekler eklemesini istiyorum.
 

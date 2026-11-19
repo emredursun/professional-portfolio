@@ -1,6 +1,6 @@
 ---
-title: 'Paying monthly for hardware we already own: a proposal to Tesla on FSD in Europe'
-description: 'FSD (Supervised) costs €99 a month in the Netherlands. A Model Y owner''s case for a one-time purchase and prepaid plans, with costs, EU rules and sources.'
+title: 'Paying monthly for hardware we already own: a proposal to Tesla on Assisted Driving (FSD) in Europe'
+description: 'Tesla Assisted Driving (FSD) costs €99 a month in the Netherlands. A Model Y owner''s case for a one-time purchase and prepaid plans, with costs and sources.'
 publishedAt: 2026-11-19
 topic: life
 kind: essay
@@ -10,7 +10,7 @@ cover: cover-model-y-performance.webp
 evidence:
   confidence: 'Medium. The prices and the cost tables are my own arithmetic from the figures in the sources. The sources are news and comparison sites, read on 2026-11-19, and prices in a configurator can change. The UK maintenance figures come from a search result because the page itself could not be opened, so treat them as low confidence. The proposal is my opinion, not a finding.'
   basedOn:
-    - 'Public reporting on Tesla FSD (Supervised) in the Netherlands and Europe: Electrek, teslablog.eu, TeslAnt, Hoopoz, ArenaEV, autoevolution and Not a Tesla App, listed at the end'
+    - 'Public reporting on Tesla FSD (Supervised) in the Netherlands and Europe: Electrek, teslablog.eu, Not a Tesla App, InsideEVs, ArenaEV and Evannex, listed at the end'
     - 'An energy cost comparison (Eleport) and UK maintenance figures (Dick Lovett)'
     - 'The texts of the EU directives and the General Safety Regulation on EUR-Lex'
     - 'My own experience as a new owner of a Tesla Model Y'
@@ -29,15 +29,15 @@ aiAssistance:
     - 'Claude converted my draft to the blog format; I decide what is published'
 ---
 
-![Chart: the FSD (Supervised) subscription at 99 euros a month adds up to 1,188 euros after 1 year, 5,940 euros after 5 years and 11,880 euros after 10 years.](cost-over-time-en.webp)
+![Chart: the Tesla Assisted Driving subscription at 99 euros a month adds up to 1,188 euros after 1 year, 5,940 euros after 5 years and 11,880 euros after 10 years.](cost-over-time-en.webp)
 
-In the Netherlands, Tesla FSD (Supervised) costs €99 a month, and new buyers can no longer pay once and own it. I am asking Tesla to offer a one-time purchase and prepaid multi-year plans next to the monthly subscription. This article sets out the facts, the cost over the life of a car and a concrete pricing proposal.
+In the Netherlands, Tesla Assisted Driving, the European name for what was sold as FSD (Supervised), costs €99 a month, and new buyers can no longer pay once and own it. I am asking Tesla to offer a one-time purchase and prepaid multi-year plans next to the monthly subscription. This article sets out the facts, the cost over the life of a car and a concrete pricing proposal.
 
 My goal is a constructive conversation with Tesla, not an attack on the brand.
 
 ## Why this matters to me
 
-I bought a Tesla Model Y Premium Long Range AWD. Before buying, I took a test drive and compared several electric cars. Compared with the other brands, my experience with Tesla was better, so I chose Tesla. Future FSD support mattered to me: I ruled out a used Model S Plaid because its Hardware 3 computer would not support FSD (Supervised), which in Europe is approved for Hardware 4 cars only. The one thing I do not like about Tesla is that its driver assistance, sold in Europe as Tesla Assisted Driving, is subscription-only and, in my view, expensive. That is why the way these features are sold matters to me.
+I bought a Tesla Model Y Premium Long Range AWD. Before buying, I took a test drive and compared several electric cars. Compared with the other brands, my experience with Tesla was better, so I chose Tesla. Future Tesla Assisted Driving support mattered to me: I ruled out a used Model S Plaid because its Hardware 3 computer would not support it, and in Europe it is approved for Hardware 4 cars only. The one thing I do not like about Tesla is that Tesla Assisted Driving is subscription-only and, in my view, expensive. That is why the way these features are sold matters to me.
 
 *The Tesla photos on this page are not of my car. They come from Wikimedia Commons.*
 
@@ -53,9 +53,9 @@ I bought a Tesla Model Y Premium Long Range AWD. Before buying, I took a test dr
 
 These points come from public sources, listed at the end of this article.
 
-- In Europe, Tesla now sells FSD (Supervised) under the name Tesla Assisted Driving ([Tesla Netherlands](https://www.tesla.com/nl_nl/tesla-assisted-driving)). Tesla's page says the features currently available require active driver supervision and do not make the car autonomous. This article keeps the name FSD (Supervised) where its sources use it.
-- FSD (Supervised) is approved in the Netherlands. The Dutch vehicle authority RDW approved it on 10 April 2026 for cars with Hardware 4, and Electrek reports it as the first approval in Europe ([Electrek, 14 April 2026](https://electrek.co/2026/04/14/tesla-fsd-europe-hw3-owners-dutch-claim/)).
-- In the Netherlands, FSD (Supervised) costs €99 a month after a one-month trial ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), updated 3 October 2026; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)). Tesla's Dutch page lists it as a subscription at €99 a month, and the Model Y configurator shows a one-month trial before billing starts ([Tesla Netherlands](https://www.tesla.com/nl_nl/tesla-assisted-driving), [configurator](https://www.tesla.com/nl_nl/modely/design), both checked on 19 November 2026).
+- In Europe, Tesla now sells what was FSD (Supervised) as Tesla Assisted Driving ([Tesla Netherlands](https://www.tesla.com/nl_nl/tesla-assisted-driving)). Tesla's page says the features currently available require active driver supervision and do not make the car autonomous. This article uses Tesla Assisted Driving for today's product and keeps FSD where its sources and the history use it.
+- The Dutch vehicle authority RDW approved FSD (Supervised), now sold as Tesla Assisted Driving, on 10 April 2026 for cars with Hardware 4, and Electrek reports it as the first approval in Europe ([Electrek, 14 April 2026](https://electrek.co/2026/04/14/tesla-fsd-europe-hw3-owners-dutch-claim/)).
+- In the Netherlands, Tesla Assisted Driving costs €99 a month after a one-month trial ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), updated 3 October 2026; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)). Tesla's Dutch page lists it as a subscription at €99 a month, and the Model Y configurator shows a one-month trial before billing starts ([Tesla Netherlands](https://www.tesla.com/nl_nl/tesla-assisted-driving), [configurator](https://www.tesla.com/nl_nl/modely/design), both checked on 19 November 2026).
 - The one-time purchase option is gone. It ended on 15 May 2026 in the Netherlands and on 21 May in most of the rest of Europe ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). Until then it cost €7,500 in the Dutch configurator ([Electrek, 12 May 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). In Tesla's Dutch Model Y configurator, checked on 19 November 2026, Tesla Assisted Driving is offered only as a monthly subscription, with no one-time purchase option ([Tesla Netherlands configurator](https://www.tesla.com/nl_nl/modely/design)).
 - Electrek reports that the Dutch base car no longer comes with lane centering (Autosteer) and that Basic Autopilot is no longer an option on new orders; the base car keeps only the emergency lane-keeping that EU law requires ([Electrek, 12 May 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)).
 - In my own car, adaptive cruise control is included without the subscription, and lane centering (Autosteer) needs the subscription.
@@ -79,7 +79,7 @@ For a car that already costs €54,990 (the Dutch configurator price of the Mode
 
 ## Where the savings of going electric end up
 
-![Chart: yearly cost at 15,000 km. Petrol fuel 2,121 euros, electric home charging 912 euros, a saving of 1,209 euros, against an FSD (Supervised) subscription of 1,188 euros, which leaves 21 euros.](ev-saving-vs-subscription-en.webp)
+![Chart: yearly cost at 15,000 km. Petrol fuel 2,121 euros, electric home charging 912 euros, a saving of 1,209 euros, against a Tesla Assisted Driving subscription of 1,188 euros, which leaves 21 euros.](ev-saving-vs-subscription-en.webp)
 
 People switch to an electric car partly to lower their running costs. The subscription takes back most of that saving.
 
@@ -88,14 +88,14 @@ Example for 15,000 km a year with home charging, using the cost per 100 km from 
 | Per year | Electric | Petrol | Difference |
 | --- | --- | --- | --- |
 | Energy or fuel | €912 | €2,121 | €1,209 |
-| FSD (Supervised) subscription | €1,188 | - | |
+| Tesla Assisted Driving subscription | €1,188 | - | |
 | Left after the subscription | | | €21 |
 
 The EV saves €1,209 a year on energy; after the subscription, €21 is left.
 
 The calculation uses €6.08 per 100 km for home charging and €14.14 per 100 km for petrol. Maintenance savings are also modest. UK figures put yearly maintenance, including tires, at £720 to £1,180 for an EV and £820 to £1,530 for a petrol or diesel car ([Dick Lovett](https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs)). I could not open that page myself; the figures come from its search-result summary, so treat them with caution.
 
-I am not claiming that electric cars cost more overall. Purchase price, taxes, insurance and depreciation all change the total. My point is narrower: an owner who subscribes to FSD gives back almost the entire energy saving, and for many people that saving is a main reason to switch. That sits uneasily with Tesla's long-standing mission to accelerate the world's transition to sustainable energy, even if the company has since rephrased it ([Gizmodo](https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530)).
+I am not claiming that electric cars cost more overall. Purchase price, taxes, insurance and depreciation all change the total. My point is narrower: an owner who subscribes to Tesla Assisted Driving gives back almost the entire energy saving, and for many people that saving is a main reason to switch. That sits uneasily with Tesla's long-standing mission to accelerate the world's transition to sustainable energy, even if the company has since rephrased it ([Gizmodo](https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530)).
 
 *These are EU averages. A Model Y may use less than the 21 kWh per 100 km assumed, and Dutch tariffs differ. Your result depends on your electricity tariff, mileage and local fuel prices.*
 
@@ -103,7 +103,7 @@ I am not claiming that electric cars cost more overall. Purchase price, taxes, i
 
 The points below are my opinion.
 
-The hardware is already in the car and already paid for. Every new Model Y comes with the computer and cameras Tesla uses for FSD (Supervised), and the buyer pays for them in the purchase price. A monthly fee to use hardware I already own feels closer to renting than to owning.
+The hardware is already in the car and already paid for. Every new Model Y comes with the computer and cameras Tesla uses for Tesla Assisted Driving, and the buyer pays for them in the purchase price. A monthly fee to use hardware I already own feels closer to renting than to owning.
 
 Removing the purchase option removes choice. Some owners prefer to pay monthly. Others prefer to pay once and keep the feature for the life of the car. A subscription-only model takes that choice away.
 
@@ -141,7 +141,7 @@ In my view, adjusting a model that some customers criticise can strengthen a bra
 
 1. Bring back a one-time purchase. Let owners choose between a monthly subscription and a lifetime license tied to the car.
 2. Restore lane centering as standard. If it is no longer included, every new car should come with it again.
-3. Add a lower-priced tier, for example highway assistance only, with full FSD (Supervised) as the premium option.
+3. Add a lower-priced tier, for example highway assistance only, with full Tesla Assisted Driving as the premium option.
 4. Offer prepaid annual and multi-year plans with a discount that rewards longer commitments.
 5. Make a purchased license transferable, so it stays with the car when it is sold.
 6. Show per country what the subscription delivers and where approval is still pending.
@@ -168,7 +168,7 @@ The 5-year plan costs about €119 more (€118.80) than the 4-year plan for a f
 Fair conditions for prepaid plans:
 
 - If the car is sold, the remaining period stays with the car or is refunded pro rata.
-- If FSD (Supervised) is not yet approved in the owner's country, the prepaid period starts only after approval.
+- If Tesla Assisted Driving is not yet approved in the owner's country, the prepaid period starts only after approval.
 - The monthly option stays for owners who need it occasionally, for example for a holiday or a long trip.
 
 ## Why this could be good for Tesla too
@@ -181,7 +181,7 @@ Fair conditions for prepaid plans:
 
 ## Questions I expect
 
-### Isn't a subscription good for people who only need FSD occasionally?
+### Isn't a subscription good for people who only need Tesla Assisted Driving occasionally?
 
 Yes. That is why I am not asking Tesla to remove the monthly option, only to add choices next to it.
 

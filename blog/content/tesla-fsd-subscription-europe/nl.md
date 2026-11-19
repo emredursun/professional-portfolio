@@ -1,6 +1,6 @@
 ---
-title: 'Maandelijks betalen voor hardware die we al bezitten: een voorstel aan Tesla over FSD in Europa'
-description: 'FSD (Supervised) kost in Nederland €99 per maand. Een Model Y-eigenaar pleit voor eenmalige aankoop en prepaid-pakketten, met kosten, EU-regels en bronnen.'
+title: 'Maandelijks betalen voor hardware die we al bezitten: een voorstel aan Tesla over Assisted Driving (FSD)'
+description: 'Tesla Assisted Driving (FSD) kost in Nederland €99 per maand. Een Model Y-eigenaar pleit voor eenmalige aankoop en prepaid-pakketten, met kosten en bronnen.'
 publishedAt: 2026-11-19
 topic: life
 kind: essay
@@ -31,15 +31,15 @@ translation:
   assistedByAi: true
 ---
 
-![Grafiek: het FSD (Supervised)-abonnement van €99 per maand loopt op tot €1.188 na 1 jaar, €5.940 na 5 jaar en €11.880 na 10 jaar.](cost-over-time-nl.webp)
+![Grafiek: het Tesla Assisted Driving-abonnement van €99 per maand loopt op tot €1.188 na 1 jaar, €5.940 na 5 jaar en €11.880 na 10 jaar.](cost-over-time-nl.webp)
 
-In Nederland kost Tesla FSD (Supervised) €99 per maand, en nieuwe kopers kunnen het niet meer eenmalig kopen. Ik vraag Tesla om naast het maandabonnement een eenmalige aankoop en vooruitbetaalde meerjarenpakketten aan te bieden. In dit artikel zet ik de feiten op een rij, de kosten over de levensduur van een auto en een concreet prijsvoorstel.
+In Nederland kost Tesla Assisted Driving, de Europese naam voor wat als FSD (Supervised) werd verkocht, €99 per maand, en nieuwe kopers kunnen het niet meer eenmalig kopen. Ik vraag Tesla om naast het maandabonnement een eenmalige aankoop en vooruitbetaalde meerjarenpakketten aan te bieden. In dit artikel zet ik de feiten op een rij, de kosten over de levensduur van een auto en een concreet prijsvoorstel.
 
 Mijn doel is een constructief gesprek met Tesla, geen aanval op het merk.
 
 ## Waarom dit voor mij belangrijk is
 
-Ik kocht een Tesla Model Y Premium Long Range AWD. Voor de aankoop maakte ik een proefrit en vergeleek ik meerdere elektrische auto’s. Vergeleken met de andere merken was mijn ervaring met Tesla beter, dus koos ik voor Tesla. Toekomstige FSD-ondersteuning was voor mij belangrijk: ik viel af op een tweedehands Model S Plaid, omdat de Hardware 3-computer daarvan FSD (Supervised) niet ondersteunt, dat in Europa alleen voor auto’s met Hardware 4 is goedgekeurd. Het enige wat ik niet leuk vind aan Tesla is dat de rijassistentie, in Europa verkocht als Tesla Assisted Driving, alleen als abonnement beschikbaar is en volgens mij duur is. Daarom is de manier waarop deze functies worden verkocht belangrijk voor mij.
+Ik kocht een Tesla Model Y Premium Long Range AWD. Voor de aankoop maakte ik een proefrit en vergeleek ik meerdere elektrische auto’s. Vergeleken met de andere merken was mijn ervaring met Tesla beter, dus koos ik voor Tesla. Toekomstige ondersteuning voor Tesla Assisted Driving was voor mij belangrijk: ik viel af op een tweedehands Model S Plaid, omdat de Hardware 3-computer daarvan het niet ondersteunt en het in Europa alleen voor auto’s met Hardware 4 is goedgekeurd. Het enige wat ik niet leuk vind aan Tesla is dat Tesla Assisted Driving alleen als abonnement beschikbaar is en volgens mij duur is. Daarom is de manier waarop deze functies worden verkocht belangrijk voor mij.
 
 *De Tesla-foto’s op deze pagina zijn niet van mijn auto. Ze komen van Wikimedia Commons.*
 
@@ -55,9 +55,9 @@ Ik kocht een Tesla Model Y Premium Long Range AWD. Voor de aankoop maakte ik een
 
 Deze punten komen uit openbare bronnen, die onderaan dit artikel staan.
 
-- In Europa verkoopt Tesla FSD (Supervised) inmiddels onder de naam Tesla Assisted Driving ([Tesla Nederland](https://www.tesla.com/nl_nl/tesla-assisted-driving)). Volgens de pagina van Tesla vereisen de nu beschikbare functies actief toezicht van de bestuurder en maken ze de auto niet autonoom. Dit artikel houdt de naam FSD (Supervised) aan waar de bronnen die gebruiken.
-- FSD (Supervised) is goedgekeurd in Nederland. De RDW keurde het op 10 april 2026 goed voor auto’s met Hardware 4, en Electrek meldt het als de eerste goedkeuring in Europa ([Electrek, 14 april 2026](https://electrek.co/2026/04/14/tesla-fsd-europe-hw3-owners-dutch-claim/)).
-- In Nederland kost FSD (Supervised) €99 per maand na een proefperiode van een maand ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), bijgewerkt op 3 oktober 2026; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)). De Nederlandse pagina van Tesla noemt het een abonnement van €99 per maand, en de Model Y-configurator toont een proefperiode van een maand voordat de betaling begint ([Tesla Nederland](https://www.tesla.com/nl_nl/tesla-assisted-driving), [configurator](https://www.tesla.com/nl_nl/modely/design), beide gecontroleerd op 19 november 2026).
+- In Europa verkoopt Tesla wat FSD (Supervised) was nu als Tesla Assisted Driving ([Tesla Nederland](https://www.tesla.com/nl_nl/tesla-assisted-driving)). Volgens de pagina van Tesla vereisen de nu beschikbare functies actief toezicht van de bestuurder en maken ze de auto niet autonoom. Dit artikel gebruikt Tesla Assisted Driving voor het huidige product en houdt FSD aan waar bronnen en geschiedenis die naam gebruiken.
+- De RDW keurde FSD (Supervised), nu verkocht als Tesla Assisted Driving, op 10 april 2026 goed voor auto’s met Hardware 4, en Electrek meldt het als de eerste goedkeuring in Europa ([Electrek, 14 april 2026](https://electrek.co/2026/04/14/tesla-fsd-europe-hw3-owners-dutch-claim/)).
+- In Nederland kost Tesla Assisted Driving €99 per maand na een proefperiode van een maand ([teslablog.eu](https://teslablog.eu/blog/tesla-fsd-vs-enhanced-autopilot-europe-2026/), bijgewerkt op 3 oktober 2026; [Not a Tesla App](https://www.notateslaapp.com/news/3956/tesla-launches-fsd-subscriptions-in-the-netherlands)). De Nederlandse pagina van Tesla noemt het een abonnement van €99 per maand, en de Model Y-configurator toont een proefperiode van een maand voordat de betaling begint ([Tesla Nederland](https://www.tesla.com/nl_nl/tesla-assisted-driving), [configurator](https://www.tesla.com/nl_nl/modely/design), beide gecontroleerd op 19 november 2026).
 - Eenmalige aankoop is niet meer mogelijk. Die optie eindigde op 15 mei 2026 in Nederland en op 21 mei in het grootste deel van de rest van Europa ([Not a Tesla App](https://www.notateslaapp.com/news/4104/tesla-to-end-one-time-fsd-purchases-across-europe-this-month), [InsideEVs](https://insideevs.com/news/796684/tesla-fsd-subscription-europe/)). Tot dan kostte het €7.500 in de Nederlandse configurator ([Electrek, 12 mei 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)). In de Nederlandse Model Y-configurator van Tesla, gecontroleerd op 19 november 2026, wordt Tesla Assisted Driving alleen als maandabonnement aangeboden, zonder optie voor eenmalige aankoop ([Tesla Nederland, configurator](https://www.tesla.com/nl_nl/modely/design)).
 - Electrek meldt dat de Nederlandse basisauto niet langer rijstrookcentrering (Autosteer) heeft en dat Basic Autopilot bij nieuwe bestellingen niet meer als optie wordt aangeboden; de basisauto houdt alleen de noodrijstrookassistentie die de EU voorschrijft ([Electrek, 12 mei 2026](https://electrek.co/2026/05/12/tesla-removes-basic-autopilot-netherlands-fsd-only/)).
 - In mijn eigen auto is adaptieve cruisecontrol zonder abonnement inbegrepen, en voor rijstrookcentrering (Autosteer) is het abonnement nodig.
@@ -81,7 +81,7 @@ Voor een auto die al €54.990 kost (de prijs van de Model Y Premium Long Range 
 
 ## Waar de besparing van elektrisch rijden blijft
 
-![Grafiek: jaarlijkse kosten bij 15.000 km. Benzine €2.121, elektrisch thuisladen €912, een besparing van €1.209, tegenover een FSD (Supervised)-abonnement van €1.188, waarmee €21 overblijft.](ev-saving-vs-subscription-nl.webp)
+![Grafiek: jaarlijkse kosten bij 15.000 km. Benzine €2.121, elektrisch thuisladen €912, een besparing van €1.209, tegenover een Tesla Assisted Driving-abonnement van €1.188, waarmee €21 overblijft.](ev-saving-vs-subscription-nl.webp)
 
 Mensen stappen onder meer over op een elektrische auto om hun gebruikskosten te verlagen. Het abonnement neemt het grootste deel van die besparing weer terug.
 
@@ -90,14 +90,14 @@ Voorbeeld bij 15.000 km per jaar met thuisladen, op basis van de kosten per 100 
 | Per jaar | Elektrisch | Benzine | Verschil |
 | --- | --- | --- | --- |
 | Energie of brandstof | €912 | €2.121 | €1.209 |
-| FSD (Supervised)-abonnement | €1.188 | - | |
+| Tesla Assisted Driving-abonnement | €1.188 | - | |
 | Over na het abonnement | | | €21 |
 
 De EV bespaart €1.209 per jaar op energie; na het abonnement blijft €21 over.
 
 De berekening gaat uit van €6,08 per 100 km voor thuisladen en €14,14 per 100 km voor benzine. Ook de besparing op onderhoud is beperkt. Britse cijfers komen inclusief banden uit op £720 tot £1.180 per jaar voor een EV en £820 tot £1.530 voor een benzine- of dieselauto ([Dick Lovett](https://www.dicklovett.co.uk/electric/guides/electric-car-maintenance-costs)). Ik kon die pagina zelf niet openen; de cijfers komen uit de samenvatting in het zoekresultaat, dus wees voorzichtig.
 
-Ik beweer niet dat elektrische auto’s in totaal duurder zijn. Aanschafprijs, belastingen, verzekering en waardeverlies veranderen het totaal. Mijn punt is specifieker: wie zich abonneert op FSD, levert bijna de hele energiebesparing in, en voor veel mensen is die besparing een belangrijke reden om over te stappen. Dat past slecht bij Tesla’s al langer bestaande missie om de wereldwijde overgang naar duurzame energie te versnellen, ook al heeft het bedrijf die zin inmiddels anders geformuleerd ([Gizmodo](https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530)).
+Ik beweer niet dat elektrische auto’s in totaal duurder zijn. Aanschafprijs, belastingen, verzekering en waardeverlies veranderen het totaal. Mijn punt is specifieker: wie zich abonneert op Tesla Assisted Driving, levert bijna de hele energiebesparing in, en voor veel mensen is die besparing een belangrijke reden om over te stappen. Dat past slecht bij Tesla’s al langer bestaande missie om de wereldwijde overgang naar duurzame energie te versnellen, ook al heeft het bedrijf die zin inmiddels anders geformuleerd ([Gizmodo](https://gizmodo.com/elon-musk-has-changed-his-mission-statement-2000721530)).
 
 *Dit zijn EU-gemiddelden. Een Model Y kan minder verbruiken dan de aangenomen 21 kWh per 100 km, en Nederlandse tarieven wijken af. Uw uitkomst hangt af van uw stroomtarief, kilometers en lokale brandstofprijzen.*
 
@@ -105,7 +105,7 @@ Ik beweer niet dat elektrische auto’s in totaal duurder zijn. Aanschafprijs, b
 
 De punten hieronder zijn mijn mening.
 
-De hardware zit al in de auto en is al betaald. Elke nieuwe Model Y heeft de computer en camera’s die Tesla gebruikt voor FSD (Supervised), en de koper betaalt ervoor in de aanschafprijs. Maandelijks betalen voor hardware die ik al bezit, voelt meer als huren dan als bezitten.
+De hardware zit al in de auto en is al betaald. Elke nieuwe Model Y heeft de computer en camera’s die Tesla gebruikt voor Tesla Assisted Driving, en de koper betaalt ervoor in de aanschafprijs. Maandelijks betalen voor hardware die ik al bezit, voelt meer als huren dan als bezitten.
 
 Zonder aankoopoptie verdwijnt de keuze. Sommige eigenaren betalen liever maandelijks. Anderen betalen liever één keer en houden de functie zolang ze de auto hebben. Alleen een abonnement neemt die keuze weg.
 
@@ -143,7 +143,7 @@ Volgens mij kan het aanpassen van een model waar sommige klanten kritiek op hebb
 
 1. Breng de eenmalige aankoop terug. Laat eigenaren kiezen tussen een maandabonnement en een levenslange licentie die aan de auto gekoppeld is.
 2. Maak rijstrookcentrering weer standaard. Als die niet meer is inbegrepen, moet elke nieuwe auto die weer krijgen.
-3. Voeg een goedkoper pakket toe, bijvoorbeeld alleen snelwegassistentie, met volledige FSD (Supervised) als premiumoptie.
+3. Voeg een goedkoper pakket toe, bijvoorbeeld alleen snelwegassistentie, met volledige Tesla Assisted Driving als premiumoptie.
 4. Bied vooruitbetaalde jaar- en meerjarenpakketten aan, met een korting die langere looptijden beloont.
 5. Maak een gekochte licentie overdraagbaar, zodat die bij verkoop bij de auto blijft.
 6. Laat per land zien wat het abonnement levert en waar de goedkeuring nog ontbreekt.
@@ -170,7 +170,7 @@ Het 5-jarenpakket kost ongeveer €119 (€118,80) meer dan het 4-jarenpakket vo
 Eerlijke voorwaarden voor vooruitbetaalde pakketten:
 
 - Bij verkoop van de auto gaat de resterende periode mee met de auto of wordt die naar rato terugbetaald.
-- Is FSD (Supervised) in het land van de eigenaar nog niet goedgekeurd, dan start de vooruitbetaalde periode pas na goedkeuring.
+- Is Tesla Assisted Driving in het land van de eigenaar nog niet goedgekeurd, dan start de vooruitbetaalde periode pas na goedkeuring.
 - Het maandabonnement blijft bestaan voor wie het af en toe nodig heeft, bijvoorbeeld voor een vakantie of een lange reis.
 
 ## Waarom dit ook goed kan zijn voor Tesla
@@ -183,7 +183,7 @@ Eerlijke voorwaarden voor vooruitbetaalde pakketten:
 
 ## Vragen die ik verwacht
 
-### Is een abonnement niet juist handig voor wie FSD af en toe nodig heeft?
+### Is een abonnement niet juist handig voor wie Tesla Assisted Driving af en toe nodig heeft?
 
 Ja. Daarom vraag ik Tesla niet om het maandabonnement te schrappen, alleen om er keuzes naast te zetten.
 
