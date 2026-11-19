@@ -5,7 +5,7 @@ publishedAt: 2026-11-19
 topic: life
 kind: essay
 status: hypothesis
-cover: cover-model-y-performance.webp
+cover: cover-model-y-quicksilver.webp
 evidence:
   basedOn:
     - 'Public reporting on Tesla FSD (Supervised) in the Netherlands and Europe: Electrek, teslablog.eu, Not a Tesla App, InsideEVs, ArenaEV and Evannex, listed at the end'
@@ -240,4 +240,4 @@ All links opened on 2026-11-19 unless noted.
 - Directive 2005/29/EC, unfair commercial practices: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029
 - Directive 93/13/EEC, unfair contract terms: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31993L0013
 - Directive (EU) 2019/2161, Omnibus: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L2161
-- Cover photo (shown on the blog index only), Tesla Model Y Performance (2025), Alexander Migl. Licence plate blurred, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
+- Cover photo (shown on the blog index only), Tesla Model Y Dual Motor in Quicksilver (2025), Damian B Oh. Cropped, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_(17).jpg

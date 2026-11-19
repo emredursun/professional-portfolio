@@ -241,4 +241,4 @@ Aksi belirtilmedikçe tüm linkler 2026-11-19’da açıldı.
 - Direktif 2005/29/AT, haksız ticari uygulamalar: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029
 - Direktif 93/13/AET, haksız sözleşme şartları: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31993L0013
 - Direktif (AB) 2019/2161, Omnibus: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L2161
-- Kapak fotoğrafı (yalnızca blog dizininde görünür), Tesla Model Y Performance (2025), Alexander Migl. Plaka bulanıklaştırıldı, boyutu küçültüldü, hafifçe yumuşatıldı: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
+- Kapak fotoğrafı (yalnızca blog dizininde görünür), Quicksilver renkli Tesla Model Y Dual Motor (2025), Damian B Oh. Kırpıldı, boyutu küçültüldü, hafifçe yumuşatıldı: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_(17).jpg

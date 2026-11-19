@@ -241,4 +241,4 @@ Alle links zijn op 2026-11-19 geopend, tenzij anders vermeld.
 - Richtlijn 2005/29/EG, oneerlijke handelspraktijken: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32005L0029
 - Richtlijn 93/13/EEG, oneerlijke bedingen: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31993L0013
 - Richtlijn (EU) 2019/2161, Omnibus: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L2161
-- Omslagfoto (alleen zichtbaar op de blogindex), Tesla Model Y Performance (2025), Alexander Migl. Kenteken vervaagd, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Performance_%282025%29_autoMOBIL_T%C3%BCbingen_2025_DSC_2801.jpg
+- Omslagfoto (alleen zichtbaar op de blogindex), Tesla Model Y Dual Motor in Quicksilver (2025), Damian B Oh. Bijgesneden, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_(17).jpg
