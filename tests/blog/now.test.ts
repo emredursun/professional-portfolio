@@ -21,6 +21,12 @@ entries:
 ---
 `;
 
+// The first entry links one phrase of its text.
+const WITH_LINK = NOW.replace(
+  'posts.\n',
+  'posts on devran-ai/kit.\n    link:\n      text: devran-ai/kit\n      href: https://github.com/devran-ai/kit\n',
+);
+
 function writeNow(lang: string, source = NOW) {
   fs.mkdirSync(nowDir, { recursive: true });
   fs.writeFileSync(path.join(nowDir, `${lang}.md`), source);
@@ -77,6 +83,26 @@ describe('loadNow', () => {
     expect(() => loadNow(nowDir)).toThrow(/now\/en\.md/);
   });
 
+  it('takes one linked phrase per entry', () => {
+    writeNow('en', WITH_LINK);
+    expect(loadNow(nowDir).en[0].link).toEqual({
+      text: 'devran-ai/kit',
+      href: 'https://github.com/devran-ai/kit',
+    });
+  });
+
+  it.each([
+    ['a phrase that is not in the text', 'elsewhere', 'https://example.com'],
+    ['a link that is not https', 'posts', 'http://example.com'],
+    ['a relative link', 'posts', '/blog'],
+  ])('rejects a link to %s', (_, phrase, href) => {
+    writeNow(
+      'en',
+      NOW.replace('posts.\n', `posts.\n    link:\n      text: ${phrase}\n      href: ${href}\n`),
+    );
+    expect(() => loadNow(nowDir)).toThrow(/now\/en\.md/);
+  });
+
   it('rejects a file that is not a language', () => {
     writeNow('en');
     writeNow('de');
@@ -107,11 +133,26 @@ describe('the Now page', () => {
     expect(written).toContain('tr/blog/now.html');
     const page = doc(dist, 'tr', 'blog', 'now.html');
     expect(page.documentElement.lang).toBe('tr');
-    expect([...page.querySelectorAll('.now-list time')].map((t) => t.textContent)).toEqual([
-      '28 Ekim 2026',
-      '1 Eylül 2026',
+    // One "last updated" line with the newest date; the newest entries carry
+    // no date of their own, older ones keep theirs.
+    expect(page.querySelector('.now-updated')!.textContent).toBe('Son güncelleme 28 Ekim 2026');
+    expect(page.querySelector('.now-updated time')!.getAttribute('datetime')).toBe('2026-10-28');
+    expect([...page.querySelectorAll('.now-list li')].map((li) => li.textContent)).toEqual([
+      'Writing the first Field Notes posts.',
+      '1 Eylül 2026Starting a Pega project in Utrecht.',
     ]);
     expect(page.querySelectorAll('link[rel="alternate"][hreflang]')).toHaveLength(3);
+  });
+
+  it('links an entry’s phrase, and keeps the index chip plain text', async () => {
+    writeNow('en', WITH_LINK);
+    const { dist } = await build();
+    const item = doc(dist, 'blog', 'now.html').querySelector('.now-list li')!;
+    expect(item.textContent).toBe('Writing the first Field Notes posts on devran-ai/kit.');
+    const link = item.querySelector('a')!;
+    expect(link.textContent).toBe('devran-ai/kit');
+    expect(link.getAttribute('href')).toBe('https://github.com/devran-ai/kit');
+    expect(doc(dist, 'blog.html').querySelectorAll('.now-chip a')).toHaveLength(1);
   });
 
   it('preloads its heading font, so the Bricolage h1 does not re-wrap when fonts load', async () => {

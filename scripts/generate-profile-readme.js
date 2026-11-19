@@ -407,7 +407,7 @@ function renderHeader({ constants, role }) {
 <div align="center">
 
 <a href="${site}">
-  <img src="${typingUrl}" alt="${constants.PERSONAL_INFO.name} — QA Consultant (Pega and Tricentis Tosca)" />
+  <img src="${typingUrl}" alt="${constants.PERSONAL_INFO.name} — QA Consultant (Pega, Tricentis Tosca and Playwright)" />
 </a>
 
 ### Hi, I'm Emre 👋

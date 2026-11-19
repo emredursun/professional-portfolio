@@ -1,8 +1,10 @@
 /**
  * The "Now" log: what Emre is working on, as short dated entries, one file
  * per language at blog/now/<lang>.md (frontmatter only). English is required,
- * like every post. Entries are written newest first and stay in the file, so
- * the page doubles as a small history.
+ * like every post. Entries are written newest first. The newest date is the
+ * page's "last updated" date: entries that share it are the current focus,
+ * and older entries, if kept, show their own date. An entry may link one
+ * phrase of its text (`link: { text, href }`) to another site.
  */
 
 import fs from 'fs';
@@ -12,12 +14,21 @@ import { parseFrontmatter } from './frontmatter.js';
 import { isoDate, text } from './schema.js';
 import { BLOG_LANGUAGES } from './strings.js';
 
+const httpsLink = z
+  .string()
+  .regex(/^https:\/\/[a-z0-9-]+(?:\.[a-z0-9-]+)+(?:\/\S*)?$/i, 'must be an https:// link');
+
 const nowSchema = z
   .object({
     entries: z
       .array(
         z
-          .object({ date: isoDate, text: text.max(280), placeholder: z.literal(true).optional() })
+          .object({
+            date: isoDate,
+            text: text.max(280),
+            link: z.object({ text, href: httpsLink }).strict().optional(),
+            placeholder: z.literal(true).optional(),
+          })
           .strict(),
       )
       .min(1),
@@ -43,6 +54,9 @@ function readNow(dir, name) {
     if (index > 0 && entry.date > entries[index - 1].date) {
       throw new Error(`${file}: entries must be newest first (${entry.date})`);
     }
+    if (entry.link && !entry.text.includes(entry.link.text)) {
+      throw new Error(`${file}: link text "${entry.link.text}" is not in its entry's text`);
+    }
   });
   return [lang, Object.freeze(entries.map((entry) => Object.freeze(entry)))];
 }
@@ -50,7 +64,7 @@ function readNow(dir, name) {
 /**
  * Each language's entries, newest first; {} when there is no log.
  * @param {string} nowDir
- * @returns {Record<string, readonly { date: string, text: string, placeholder?: true }[]>}
+ * @returns {Record<string, readonly { date: string, text: string, link?: { text: string, href: string }, placeholder?: true }[]>}
  */
 export function loadNow(nowDir) {
   if (!nowDir || !fs.existsSync(nowDir)) return {};
