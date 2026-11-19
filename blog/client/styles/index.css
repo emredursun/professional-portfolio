@@ -507,8 +507,8 @@
 .author .ai-disclosure {
   margin: 0 0 8px;
   color: var(--ink-2);
-  font-size: 0.875rem;
-  line-height: 1.5;
+  font-size: 0.75rem;
+  line-height: 1.45;
 }
 
 /* An English post on another language's index, before its translation exists. */
