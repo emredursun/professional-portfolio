@@ -52,6 +52,10 @@ const hasHeadings = (post: { body: string }) => /^##\s/m.test(post.body);
 /** The first English post with a section heading, which gets a table of contents. */
 export const postWithToc = () => postsIn('en').find(hasHeadings)?.slug;
 
+/** The paths of every post in every language. */
+export const allPostPaths = (): string[] =>
+  languages.flatMap((lang) => postsIn(lang).map((post) => postPath(lang, post.slug)!));
+
 /** The paths of every post, in every language, that has a table of contents. */
 export const postsWithToc = (): string[] =>
   languages.flatMap((lang) =>
