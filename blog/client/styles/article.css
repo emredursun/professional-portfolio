@@ -342,13 +342,6 @@
   padding-left: 1.2em;
 }
 
-/* break-word does not shrink a table cell's minimum width; anywhere does, so
-   a bare URL or long code in a cell wraps instead of widening the page. The
-   table keeps its table semantics, unlike display: block with a scroll. */
-.prose :is(td, th) {
-  overflow-wrap: anywhere;
-}
-
 .prose li {
   margin-bottom: 0.4em;
 }
