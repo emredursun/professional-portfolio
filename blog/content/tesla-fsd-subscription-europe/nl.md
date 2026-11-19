@@ -52,6 +52,19 @@ Deze punten komen uit openbare bronnen, die onderaan dit artikel staan.
 
 *Binnenin een Tesla Model Y in het Tesla Center in Hannover. Foto: Maxim op [Unsplash](https://unsplash.com/photos/the-interior-of-a-car-with-a-laptop-on-the-dashboard-I7GNlRbI9HA), gebruikt onder de Unsplash-licentie. Een persoon op de achtergrond vervaagd, bijgesneden en formaat aangepast. Niet mijn auto.*
 
+## Wat Tesla Assisted Driving is
+
+Tesla Assisted Driving is het rijassistentiepakket van Tesla. Volgens de [Nederlandse pagina](https://www.tesla.com/nl_nl/tesla-assisted-driving) van Tesla kan het dagelijkse ritten aan, inclusief veelvoorkomende, foutgevoelige rijtaken, met buitencamera’s die 360 graden zicht geven, en brengen draadloze software-updates de nieuwste veiligheidsverbeteringen. Tesla zegt ook dat de nu beschikbare functies actief toezicht van de bestuurder vereisen en de auto niet autonoom maken.
+
+De pagina bevat ook eigen cijfers van Tesla (gecontroleerd op 19 november 2026). Tesla zegt dat Tesla Assisted Driving, als het is ingeschakeld, zevenmaal veiliger is dan een menselijke bestuurder, vergeleken met de eigen schatting van het gemiddelde in de VS, en dat het is getraind op meer dan 100 jaar aan rijervaring uit de praktijk. Dit zijn beweringen van Tesla zelf, geen onafhankelijke gegevens.
+
+| Voordelen | Nadelen |
+| --- | --- |
+| Rijdt routineritten onder uw toezicht | Toezicht is altijd nodig; de auto is niet autonoom |
+| Regelmatige draadloze updates | Alleen als abonnement |
+| Een maand proefperiode voordat de betaling begint | Rijstrookcentrering is bij nieuwe Nederlandse bestellingen niet meer standaard |
+| Naar verluidt goedgekeurd in elf Europese landen | Goedkeuring verschilt per land |
+
 ## De kosten over de levensduur van een auto
 
 Bij €99 per maand loopt het abonnement zo op. De cijfers zijn 99 maal 12, 60 en 120 maanden.

@@ -51,6 +51,19 @@ These points come from public sources, listed at the end of this article.
 
 *Inside a Tesla Model Y at the Tesla Center in Hannover. Photo: Maxim on [Unsplash](https://unsplash.com/photos/the-interior-of-a-car-with-a-laptop-on-the-dashboard-I7GNlRbI9HA), used under the Unsplash License. A person in the background blurred, cropped and resized. Not my car.*
 
+## What Tesla Assisted Driving is
+
+Tesla Assisted Driving is Tesla's driver-assistance package. On its [Dutch page](https://www.tesla.com/nl_nl/tesla-assisted-driving), Tesla says it can handle daily drives, including common error-prone driving tasks. It says the car uses exterior cameras with a 360-degree view, and that over-the-air updates bring the latest safety improvements. Tesla also says the features currently available require active driver supervision and do not make the car autonomous.
+
+The page carries Tesla's own figures too (checked on 19 November 2026). Tesla says Tesla Assisted Driving is seven times safer than a human driver when engaged, compared with its estimate of the US average, and that it is trained on more than 100 years of real-world driving experience. These are Tesla's own claims, not independent data.
+
+| Pros | Cons |
+| --- | --- |
+| Drives routine trips under your supervision | Supervision is always required; the car is not autonomous |
+| Regular over-the-air updates | Subscription only |
+| A one-month trial before billing starts | Lane centering is no longer standard on new Dutch orders |
+| Reported as approved in eleven European countries | Approval differs per country |
+
 ## The cost over the life of a car
 
 At €99 a month, the subscription adds up as follows. The figures are 99 times 12, 60 and 120 months.

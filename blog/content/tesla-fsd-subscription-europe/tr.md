@@ -52,6 +52,19 @@ Bu bilgiler, yazının sonunda listelenen kamuya açık kaynaklardan alındı.
 
 *Hannover’deki Tesla Center’da bir Tesla Model Y’nin içi. Fotoğraf: Maxim, [Unsplash](https://unsplash.com/photos/the-interior-of-a-car-with-a-laptop-on-the-dashboard-I7GNlRbI9HA), Unsplash Lisansı kapsamında kullanıldı. Arka plandaki bir kişi bulanıklaştırıldı, kırpıldı ve boyutu küçültüldü. Benim aracım değil.*
 
+## Tesla Assisted Driving nedir
+
+Tesla Assisted Driving, Tesla’nın sürüş destek paketi. Tesla’nın [Hollanda sayfası](https://www.tesla.com/nl_nl/tesla-assisted-driving), paketin günlük sürüşleri, hata riski yüksek yaygın sürüş görevleri dahil, üstlenebildiğini söylüyor; 360 derecelik görüş sağlayan dış kameralar kullandığını ve kablosuz yazılım güncellemelerinin en yeni güvenlik iyileştirmelerini getirdiğini belirtiyor. Tesla ayrıca şu anda sunulan özelliklerin sürücünün aktif gözetimini gerektirdiğini ve aracı otonom yapmadığını belirtiyor.
+
+Sayfada Tesla’nın kendi rakamları da var (19 Kasım 2026’da kontrol edildi). Tesla, Tesla Assisted Driving etkinken insan sürücüden yedi kat daha güvenli olduğunu, bunu ABD ortalamasına ilişkin kendi tahminiyle kıyasladığını ve 100 yıldan fazla gerçek sürüş deneyimiyle eğitildiğini söylüyor. Bunlar Tesla’nın kendi iddiaları, bağımsız veri değil.
+
+| Artılar | Eksiler |
+| --- | --- |
+| Rutin sürüşleri gözetiminiz altında yapar | Gözetim her zaman gerekir; araç otonom değil |
+| Düzenli kablosuz güncellemeler | Yalnızca abonelikle |
+| Faturalandırma başlamadan bir aylık deneme | Hollanda’daki yeni siparişlerde şerit ortalama artık standart değil |
+| On bir Avrupa ülkesinde onaylandığı bildiriliyor | Onay ülkeye göre değişiyor |
+
 ## Bir aracın ömrü boyunca maliyet
 
 Aylık €99 ile abonelik şöyle birikiyor. Rakamlar 99 çarpı 12, 60 ve 120 ay.
