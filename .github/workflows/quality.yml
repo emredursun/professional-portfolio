@@ -1,5 +1,16 @@
 # Quality gates shared by preview.yml (pull requests) and deploy.yml (main).
-# Nothing deploys unless every step here passes.
+# Nothing deploys unless every gate here passes.
+#
+# Job graph (jobs run in parallel wherever they can):
+#
+#   checks ──────────────────────────────────┐
+#   build ─┬─ e2e ──────────────────────────┤
+#          ├─ lighthouse-desktop ───────────┼─ report ─ verify
+#          └─ lighthouse-mobile ────────────┘
+#
+# `verify` keeps the name branch protection requires
+# ("quality / Typecheck, test, build, e2e, Lighthouse"): it is green only when
+# every other job is green, so no gate is weaker than the single job it replaces.
 name: Quality gates
 
 on:
@@ -9,20 +20,14 @@ permissions:
   contents: read
 
 jobs:
-  verify:
-    name: Typecheck, test, build, e2e, Lighthouse
+  # Fast static gates and unit tests. No build needed.
+  checks:
+    name: Checks (types, lint, unit tests)
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+      - uses: ./.github/actions/setup
 
       # The JSON copy feeds the /quality page (scripts/write-quality.js).
       - name: Dependency audit (runtime)
@@ -48,10 +53,29 @@ jobs:
       - name: Unit tests with coverage gate
         run: npm run test:coverage
 
-      # Before the build: postbuild renders every page in Chromium to put its
-      # content in the HTML (scripts/prerender-content.js).
-      - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
+      - name: Upload test reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: reports-checks
+          path: |
+            coverage
+            reports
+          retention-days: 14
+
+  # Builds once; e2e and both Lighthouse jobs test exactly these bytes.
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      # postbuild renders every page in Chromium to put its content in the
+      # HTML (scripts/prerender-content.js), and generate:cv needs it too.
+      - uses: ./.github/actions/setup
+        with:
+          playwright: 'true'
 
       - name: Build
         run: npm run build
@@ -76,40 +100,150 @@ jobs:
           [ "$before" = "$after" ] || { diff <(echo "$before") <(echo "$after") || true; echo "::error::Rebuilding the blog changed its output"; exit 1; }
 
       # Renders dist/cv/Emre-Dursun-CV-<lang>.pdf from the built print layout.
-      # Before the e2e step, which checks the files, and before the dist
-      # upload that deploy.yml ships.
+      # Before the upload: e2e checks the files and deploy.yml ships them.
       - name: Generate CV PDFs
         run: npm run generate:cv
+
+      # Named build-dist, not dist: the `report` job publishes the final `dist`
+      # (this build plus quality.json) that the deploy jobs download.
+      - name: Upload build
+        uses: actions/upload-artifact@v6
+        with:
+          name: build-dist
+          path: dist
+          retention-days: 7
+
+  e2e:
+    name: End-to-end tests
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup
+        with:
+          playwright: 'true'
+
+      - uses: actions/download-artifact@v7
+        with:
+          name: build-dist
+          path: dist
 
       - name: End-to-end tests
         run: npm run test:e2e
         env:
           CI: true
 
-      # Mobile first: every LHCI collect clears .lighthouseci, so the desktop
-      # run below leaves only desktop results there for the quality report.
-      # The mobile reports are kept in .lighthouseci-mobile.
-      # The portfolio pages come from the lighthouserc file, the blog pages
-      # from what the build wrote (scripts/lighthouse-urls.js), so real posts
-      # can replace the samples without a CI change.
-      - name: Lighthouse budgets (mobile)
-        # A plain assignment, so a failing script stops the step (inside the
-        # command's arguments its failure would be ignored).
-        run: |
-          set -euo pipefail
-          urls="$(node scripts/lighthouse-urls.js lighthouserc.mobile.json)"
-          npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.mobile.json $urls
+      - name: Upload test reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: reports-e2e
+          path: |
+            playwright-report
+            reports
+          retention-days: 14
+
+  # The portfolio pages come from the lighthouserc file, the blog pages from
+  # what the build wrote (scripts/lighthouse-urls.js), so real posts can replace
+  # the samples without a CI change. Budgets and assertions are identical for
+  # every run; only the number of runs per URL differs: 3 on pull requests for
+  # speed, 5 on main (deploy) where the medians gate a release.
+  lighthouse-desktop:
+    name: Lighthouse budgets (desktop)
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup
+
+      - uses: actions/download-artifact@v7
+        with:
+          name: build-dist
+          path: dist
 
       - name: Lighthouse budgets (desktop)
+        env:
+          # github.event_name is the caller's event inside a reusable workflow.
+          RUNS: ${{ github.event_name == 'pull_request' && '3' || '5' }}
         # A plain assignment, so a failing script stops the step (inside the
         # command's arguments its failure would be ignored).
         run: |
           set -euo pipefail
           urls="$(node scripts/lighthouse-urls.js lighthouserc.json)"
-          npx --yes @lhci/cli@0.15.1 autorun $urls
+          npx --yes @lhci/cli@0.15.1 autorun --collect.numberOfRuns="$RUNS" $urls
 
-      # dist/quality.json for the /quality page, from this run's reports.
-      # After every gate, so it can only describe a run that passed them.
+      # The desktop reports feed the /quality page (scripts/write-quality.js).
+      - name: Upload Lighthouse reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: lighthouse-desktop
+          path: .lighthouseci
+          include-hidden-files: true
+          retention-days: 14
+
+  lighthouse-mobile:
+    name: Lighthouse budgets (mobile)
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup
+
+      - uses: actions/download-artifact@v7
+        with:
+          name: build-dist
+          path: dist
+
+      - name: Lighthouse budgets (mobile)
+        env:
+          RUNS: ${{ github.event_name == 'pull_request' && '3' || '5' }}
+        run: |
+          set -euo pipefail
+          urls="$(node scripts/lighthouse-urls.js lighthouserc.mobile.json)"
+          npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.mobile.json --collect.numberOfRuns="$RUNS" $urls
+
+      - name: Upload Lighthouse reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: lighthouse-mobile
+          path: .lighthouseci-mobile
+          include-hidden-files: true
+          retention-days: 14
+
+  # Adds dist/quality.json for the /quality page, from this run's reports, and
+  # publishes the `dist` artifact the deploy jobs download. After every gate
+  # (needs), so it can only describe a run that passed them.
+  report:
+    name: Quality report
+    needs: [checks, build, e2e, lighthouse-desktop, lighthouse-mobile]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - uses: actions/download-artifact@v7
+        with:
+          name: build-dist
+          path: dist
+      - uses: actions/download-artifact@v7
+        with:
+          name: reports-checks
+      - uses: actions/download-artifact@v7
+        with:
+          name: reports-e2e
+      - uses: actions/download-artifact@v7
+        with:
+          name: lighthouse-desktop
+          path: .lighthouseci
+
       - name: Quality report
         run: node scripts/write-quality.js
 
@@ -120,18 +254,21 @@ jobs:
           path: dist
           retention-days: 7
 
-      - name: Upload test reports
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v6
-        with:
-          name: test-reports
-          path: |
-            playwright-report
-            coverage
-            .lighthouseci
-            .lighthouseci-mobile
-            reports
-          # .lighthouseci* are hidden folders, which upload-artifact skips by
-          # default: the Lighthouse reports were never uploaded.
-          include-hidden-files: true
-          retention-days: 14
+  # The one check branch protection requires. A skipped job counts as passing
+  # for a required check, so this runs always() and fails unless every job
+  # (report included) succeeded. Same name as the old single job.
+  verify:
+    name: Typecheck, test, build, e2e, Lighthouse
+    needs: [checks, build, e2e, lighthouse-desktop, lighthouse-mobile, report]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Every quality job succeeded
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Job results: $RESULTS"
+          for result in $RESULTS; do
+            [ "$result" = success ] || { echo "::error::A quality job did not succeed"; exit 1; }
+          done

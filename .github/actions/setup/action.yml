@@ -1,0 +1,49 @@
+# Shared by every job in quality.yml: Node, dependencies and (optionally)
+# Playwright's Chromium. Each job runs on its own runner, so each needs these.
+name: Set up Node and dependencies
+description: Node 22, npm ci with the npm cache, and optionally a cached Playwright Chromium.
+
+inputs:
+  playwright:
+    description: Install Playwright's Chromium ("true" or "false").
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v5
+      with:
+        node-version: 22
+        cache: npm
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+
+    # Browsers are cached per Playwright version, so a version bump (the only
+    # thing that changes which Chromium is needed) misses the cache and
+    # reinstalls. OS libraries are not part of the cache, so a hit still runs
+    # install-deps (apt; a few seconds, most are preinstalled).
+    - name: Playwright version
+      if: inputs.playwright == 'true'
+      id: pw
+      shell: bash
+      run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+    - name: Cache Playwright browsers
+      if: inputs.playwright == 'true'
+      id: pw-cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
+
+    - name: Install Playwright browser
+      if: inputs.playwright == 'true' && steps.pw-cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: npx playwright install --with-deps chromium
+
+    - name: Install Playwright system dependencies
+      if: inputs.playwright == 'true' && steps.pw-cache.outputs.cache-hit == 'true'
+      shell: bash
+      run: npx playwright install-deps chromium
