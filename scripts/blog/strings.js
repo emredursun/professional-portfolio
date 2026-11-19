@@ -17,7 +17,7 @@ const en = {
   description:
     'Notes on software quality, test automation and working with AI, by Emre Dursun, QA consultant in the Netherlands.',
   intro:
-    'I am a QA consultant in the Netherlands, working on Pega, Tricentis Tosca and test automation. Here I write about what I see in practice: in projects, with AI, and in between.',
+    'I am a QA consultant in the Netherlands, working on Pega, Tricentis Tosca and Playwright test automation. Here I write about what I see in practice: in projects, with AI, and in between.',
   latest: 'Latest',
   kindLabels: {
     essay: 'Essay',
@@ -51,7 +51,7 @@ const en = {
   aboutAuthor: 'About the author',
   writtenBy: 'Written by Emre Dursun',
   authorBio:
-    'QA consultant for Pega and Tricentis Tosca in the Netherlands. I write here to think more clearly about my work.',
+    'QA consultant for Pega, Tricentis Tosca and Playwright in the Netherlands. I write here to think more clearly about my work.',
   moreAboutMe: 'More about me',
   keepReading: 'Keep reading',
   evidenceTitle: 'Sources',
@@ -101,7 +101,7 @@ const tr = {
   description:
     'Yazılım kalitesi, test otomasyonu ve yapay zekâyla çalışmak üzerine notlar. Yazan: Hollanda’da QA danışmanı Emre Dursun.',
   intro:
-    'Hollanda’da Pega, Tricentis Tosca ve test otomasyonu üzerine çalışan bir QA danışmanıyım. Burada sahada gördüklerimi yazıyorum: projelerde, yapay zekâyla ve ikisinin arasında.',
+    'Hollanda’da Pega, Tricentis Tosca ve Playwright ile test otomasyonu üzerine çalışan bir QA danışmanıyım. Burada sahada gördüklerimi yazıyorum: projelerde, yapay zekâyla ve ikisinin arasında.',
   latest: 'En yeni',
   kindLabels: {
     essay: 'Deneme',
@@ -136,7 +136,7 @@ const tr = {
   aboutAuthor: 'Yazar hakkında',
   writtenBy: 'Yazan: Emre Dursun',
   authorBio:
-    'Hollanda’da Pega ve Tricentis Tosca için QA danışmanıyım. İşim hakkında daha net düşünmek için burada yazıyorum.',
+    'Hollanda’da Pega, Tricentis Tosca ve Playwright için QA danışmanıyım. İşim hakkında daha net düşünmek için burada yazıyorum.',
   moreAboutMe: 'Hakkımda daha fazlası',
   keepReading: 'Okumaya devam edin',
   evidenceTitle: 'Kaynaklar',
@@ -187,7 +187,7 @@ const nl = {
   description:
     'Notities over softwarekwaliteit, testautomatisering en werken met AI, door Emre Dursun, QA-consultant in Nederland.',
   intro:
-    'Ik ben QA-consultant in Nederland en werk met Pega, Tricentis Tosca en testautomatisering. Hier schrijf ik over wat ik in de praktijk zie: in projecten, met AI en alles daartussen.',
+    'Ik ben QA-consultant in Nederland en werk met Pega, Tricentis Tosca en Playwright-testautomatisering. Hier schrijf ik over wat ik in de praktijk zie: in projecten, met AI en alles daartussen.',
   latest: 'Nieuwste',
   kindLabels: {
     essay: 'Essay',
@@ -221,7 +221,7 @@ const nl = {
   aboutAuthor: 'Over de auteur',
   writtenBy: 'Geschreven door Emre Dursun',
   authorBio:
-    'QA-consultant voor Pega en Tricentis Tosca in Nederland. Ik schrijf hier om helderder over mijn werk na te denken.',
+    'QA-consultant voor Pega, Tricentis Tosca en Playwright in Nederland. Ik schrijf hier om helderder over mijn werk na te denken.',
   moreAboutMe: 'Meer over mij',
   keepReading: 'Lees verder',
   evidenceTitle: 'Bronnen',
