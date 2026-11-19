@@ -61,9 +61,9 @@ These points come from public sources, listed at the end of this article.
 - In my own car, adaptive cruise control is included without the subscription, and lane centering (Autosteer) needs the subscription.
 - Safety features required by EU law stay standard. Under the EU General Safety Regulation, automatic emergency braking and emergency lane-keeping are mandatory on new cars ([Regulation (EU) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) and are not part of the subscription. This article is about driver assistance that is sold separately, not about safety features required by law.
 
-![Grey Tesla Model Y Dual Motor in Quicksilver seen from the front left, parked in warm evening light in front of trees, with the licence plate blurred.](model-y-quicksilver-front.webp)
+![Interior of a Tesla Model Y seen from the driver’s door: the steering wheel and the centre touchscreen showing a picture of the car.](model-y-interior.webp)
 
-*Tesla Model Y Dual Motor (AWD) in Quicksilver (2025). Photo: Damian B Oh, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg). Licence plate and a passer-by blurred, cropped and resized. Not my car.*
+*Inside a Tesla Model Y at the Tesla Center in Hannover. Photo: Maxim on [Unsplash](https://unsplash.com/photos/the-interior-of-a-car-with-a-laptop-on-the-dashboard-I7GNlRbI9HA), used under the Unsplash License. A person in the background blurred, cropped and resized. Not my car.*
 
 ## The cost over the life of a car
 
@@ -102,6 +102,10 @@ I am not claiming that electric cars cost more overall. Purchase price, taxes, i
 ## Why I think the current approach should change
 
 The points below are my opinion.
+
+![Grey Tesla Model Y Dual Motor in Quicksilver seen from the front left, parked in warm evening light in front of trees, with the licence plate blurred.](model-y-quicksilver-front.webp)
+
+*Tesla Model Y Dual Motor (AWD) in Quicksilver (2025). Photo: Damian B Oh, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg). Licence plate and a passer-by blurred, cropped and resized. Not my car.*
 
 The hardware is already in the car and already paid for. Every new Model Y comes with the computer and cameras Tesla uses for Tesla Assisted Driving, and the buyer pays for them in the purchase price. A monthly fee to use hardware I already own feels closer to renting than to owning.
 
@@ -244,3 +248,7 @@ Photos from Wikimedia Commons, adapted as described and shared under the same li
 - Tesla Model Y Long Range AWD in a showroom, Chanokchon. Faces blurred, resized: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
 - Tesla Model Y Dual Motor (AWD) in Quicksilver, Damian B Oh. Licence plates blurred, cropped, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg
 - Tesla Model Y Dual Motor (AWD) in Quicksilver, front, Damian B Oh. Licence plate and a passer-by blurred, cropped, resized, lightly smoothed: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg
+
+Photo from Unsplash, used under the Unsplash License (free to use):
+
+- Inside a Tesla Model Y at the Tesla Center in Hannover, Maxim. A person in the background blurred, cropped, resized: https://unsplash.com/photos/the-interior-of-a-car-with-a-laptop-on-the-dashboard-I7GNlRbI9HA

@@ -63,9 +63,9 @@ Deze punten komen uit openbare bronnen, die onderaan dit artikel staan.
 - In mijn eigen auto is adaptieve cruisecontrol zonder abonnement inbegrepen, en voor rijstrookcentrering (Autosteer) is het abonnement nodig.
 - Wettelijk verplichte veiligheidsfuncties blijven standaard. Onder de Europese General Safety Regulation zijn automatisch noodremmen en noodrijstrookassistentie verplicht op nieuwe auto’s ([Verordening (EU) 2019/2144](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R2144)) en vallen ze niet onder het abonnement. Dit artikel gaat over rijassistentie die apart wordt verkocht, niet over wettelijk verplichte veiligheidsfuncties.
 
-![Grijze Tesla Model Y Dual Motor in Quicksilver linksvoor gezien, geparkeerd in warm avondlicht voor bomen, met vervaagd kenteken.](model-y-quicksilver-front.webp)
+![Interieur van een Tesla Model Y gezien vanaf het bestuurdersportier: het stuur en het middenscherm met een afbeelding van de auto.](model-y-interior.webp)
 
-*Tesla Model Y Dual Motor (AWD) in Quicksilver (2025). Foto: Damian B Oh, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg). Kenteken en een voorbijganger vervaagd, bijgesneden en formaat aangepast. Niet mijn auto.*
+*Binnenin een Tesla Model Y in het Tesla Center in Hannover. Foto: Maxim op [Unsplash](https://unsplash.com/photos/the-interior-of-a-car-with-a-laptop-on-the-dashboard-I7GNlRbI9HA), gebruikt onder de Unsplash-licentie. Een persoon op de achtergrond vervaagd, bijgesneden en formaat aangepast. Niet mijn auto.*
 
 ## De kosten over de levensduur van een auto
 
@@ -104,6 +104,10 @@ Ik beweer niet dat elektrische auto’s in totaal duurder zijn. Aanschafprijs, b
 ## Waarom de huidige aanpak volgens mij moet veranderen
 
 De punten hieronder zijn mijn mening.
+
+![Grijze Tesla Model Y Dual Motor in Quicksilver linksvoor gezien, geparkeerd in warm avondlicht voor bomen, met vervaagd kenteken.](model-y-quicksilver-front.webp)
+
+*Tesla Model Y Dual Motor (AWD) in Quicksilver (2025). Foto: Damian B Oh, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg). Kenteken en een voorbijganger vervaagd, bijgesneden en formaat aangepast. Niet mijn auto.*
 
 De hardware zit al in de auto en is al betaald. Elke nieuwe Model Y heeft de computer en camera’s die Tesla gebruikt voor Tesla Assisted Driving, en de koper betaalt ervoor in de aanschafprijs. Maandelijks betalen voor hardware die ik al bezit, voelt meer als huren dan als bezitten.
 
@@ -246,3 +250,7 @@ Foto’s van Wikimedia Commons, aangepast zoals beschreven en onder dezelfde lic
 - Tesla Model Y Long Range AWD in een showroom, Chanokchon. Gezichten vervaagd, formaat aangepast: https://commons.wikimedia.org/wiki/File:2025_Tesla_Model_Y_Juniper_Long_Range_AWD.jpg
 - Tesla Model Y Dual Motor (AWD) in Quicksilver, Damian B Oh. Kentekens vervaagd, bijgesneden, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2816%29.jpg
 - Tesla Model Y Dual Motor (AWD) in Quicksilver, voorkant, Damian B Oh. Kenteken en een voorbijganger vervaagd, bijgesneden, formaat aangepast, licht afgevlakt: https://commons.wikimedia.org/wiki/File:Tesla_Model_Y_Dual_Motor_First_Edition_Juniper_Quicksilver_%2810%29.jpg
+
+Foto van Unsplash, gebruikt onder de Unsplash-licentie (gratis te gebruiken):
+
+- Binnenin een Tesla Model Y in het Tesla Center in Hannover, Maxim. Een persoon op de achtergrond vervaagd, bijgesneden, formaat aangepast: https://unsplash.com/photos/the-interior-of-a-car-with-a-laptop-on-the-dashboard-I7GNlRbI9HA
